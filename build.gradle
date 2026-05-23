@@ -28,7 +28,7 @@ sourceSets.main.resources {
 
 repositories {
     // Add here additional repositories if required by some of the dependencies below.
-    maven {
+    maven { // KubeJS
         url "https://maven.latvian.dev/releases"
         content {
             includeGroup "dev.latvian.mods"
@@ -42,6 +42,22 @@ repositories {
             includeGroup "com.github.rtyley"
         }
     }
+    maven { url = "https://www.cursemaven.com" }
+    maven { url = "https://api.modrinth.com/maven" }
+    maven { url = "https://maven.ftb.dev/releases" } // FTB Mods
+    maven { url = "https://maven.architectury.dev" } // Arch API
+    maven { url = "https://maven.theillusivec4.top/" } // Curios API
+    maven { url = "https://maven.squiddev.cc" } // CC: Tweaked
+    maven {
+        url = "https://jm.gserv.me/repository/maven-public" // JourneyMap
+        content {
+            includeGroup "info.journeymap"
+            includeGroup "mysticdrew"
+        }
+    }
+    maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
+    maven { url "https://maven.blamejared.com/" } // JEI
+    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
 }
 
 base {
@@ -154,6 +170,9 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     api("dev.latvian.mods:kubejs-neoforge:2101.7.2-build.368")
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.27.0.340"
+    localRuntime "mezz.jei:jei-1.21.1-neoforge:19.27.0.340"
+    api("com.simibubi.create:create-1.21.1:6.0.10-280")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
