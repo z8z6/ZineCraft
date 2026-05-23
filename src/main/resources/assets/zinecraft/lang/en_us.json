@@ -1,0 +1,13 @@
+{
+  "itemGroup.zinecraft": "Example Mod Tab",
+  "block.zinecraft.example_block": "Example Block",
+  "item.zinecraft.example_item": "Example Item",
+
+  "zinecraft.configuration.title": "ZineCraft Configs",
+  "zinecraft.configuration.section.zinecraft.common.toml": "ZineCraft Configs",
+  "zinecraft.configuration.section.zinecraft.common.toml.title": "ZineCraft Configs",
+  "zinecraft.configuration.items": "Item List",
+  "zinecraft.configuration.logDirtBlock": "Log Dirt Block",
+  "zinecraft.configuration.magicNumberIntroduction": "Magic Number Text",
+  "zinecraft.configuration.magicNumber": "Magic Number"
+}
