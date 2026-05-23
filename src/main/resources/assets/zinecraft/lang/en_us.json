@@ -1,7 +1,9 @@
 {
-  "itemGroup.zinecraft": "Example Mod Tab",
+  "itemGroup.zinecraft": "ZineCraft",
   "block.zinecraft.example_block": "Example Block",
+  "block.zinecraft.originite": "originite",
   "item.zinecraft.example_item": "Example Item",
+  "item.zinecraft.originite": "originite",
 
   "zinecraft.configuration.title": "ZineCraft Configs",
   "zinecraft.configuration.section.zinecraft.common.toml": "ZineCraft Configs",
