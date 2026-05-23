@@ -1,7 +1,7 @@
 {
-  "itemGroup.zinecraft": "ZineCraft",
-  "block.zinecraft.example_block": "ZineCraft Example Block",
-  "item.zinecraft.example_item": "ZineCraft Example Item",
+  "itemGroup.zinecraft": "Example Mod Tab",
+  "block.zinecraft.example_block": "Example Block",
+  "item.zinecraft.example_item": "Example Item",
 
   "zinecraft.configuration.title": "ZineCraft Configs",
   "zinecraft.configuration.section.zinecraft.common.toml": "ZineCraft Configs",
