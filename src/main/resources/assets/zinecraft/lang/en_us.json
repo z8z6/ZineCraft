@@ -1,8 +1,10 @@
 {
   "itemGroup.zinecraft": "ZineCraft",
   "block.zinecraft.example_block": "Example Block",
+  "block.zinecraft.example_entity_block": "Example Entity Block",
   "block.zinecraft.originite": "originite",
   "item.zinecraft.example_item": "Example Item",
+  "item.zinecraft.example_entity_block": "Example Entity Block",
   "item.zinecraft.originite": "originite",
 
   "zinecraft.configuration.title": "ZineCraft Configs",

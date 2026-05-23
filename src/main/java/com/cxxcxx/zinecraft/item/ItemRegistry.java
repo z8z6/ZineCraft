@@ -37,6 +37,9 @@ public class ItemRegistry {
     public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
 
+    public static final DeferredItem<BlockItem> EXAMPLE_ENTITY_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("example_entity_block", EXAMPLE_ENTITY_BLOCK);
+
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
@@ -48,6 +51,7 @@ public class ItemRegistry {
                     .displayItems((parameters, output) -> {
                         output.accept(EXAMPLE_ITEM.get());
                         output.accept(EXAMPLE_BLOCK_ITEM.get());
+                        output.accept(EXAMPLE_ENTITY_BLOCK_ITEM.get());
                         output.accept(Originite.get());
                     }).build());
 }

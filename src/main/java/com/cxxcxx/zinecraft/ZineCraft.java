@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft;
 
+import com.cxxcxx.zinecraft.entity.BlockEntityRegistry;
 import com.cxxcxx.zinecraft.item.BlockRegistry;
 import com.cxxcxx.zinecraft.item.ItemRegistry;
 import org.slf4j.Logger;
@@ -28,10 +29,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
+
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(ZineCraft.MODID)
@@ -46,8 +44,9 @@ public class ZineCraft {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        com.cxxcxx.zinecraft.item.ItemRegistry.init(modEventBus);
-        com.cxxcxx.zinecraft.item.BlockRegistry.init(modEventBus);
+        ItemRegistry.init(modEventBus);
+        BlockRegistry.init(modEventBus);
+        BlockEntityRegistry.init(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ZineCraft) to respond directly to events.
