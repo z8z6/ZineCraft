@@ -42,6 +42,13 @@ repositories {
             includeGroup "com.github.rtyley"
         }
     }
+
+    maven { url "https://maven.blamejared.com/" }
+
+    maven {
+        name = "CurseForge"
+        url = "https://www.curseforge.com/api/maven"
+    }
 }
 
 base {
@@ -154,6 +161,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     api("dev.latvian.mods:kubejs-neoforge:2101.7.2-build.368")
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.27.0.340"
+    localRuntime "mezz.jei:jei-1.21.1-neoforge:19.27.0.340"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
