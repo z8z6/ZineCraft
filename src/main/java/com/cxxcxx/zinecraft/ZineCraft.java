@@ -3,6 +3,7 @@ package com.cxxcxx.zinecraft;
 import com.cxxcxx.zinecraft.entity.BlockEntityRegistry;
 import com.cxxcxx.zinecraft.item.BlockRegistry;
 import com.cxxcxx.zinecraft.item.ItemRegistry;
+import com.cxxcxx.zinecraft.menu.MenuRegistry;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -35,6 +36,7 @@ public class ZineCraft {
 
         ItemRegistry.init(modEventBus);
         BlockRegistry.init(modEventBus);
+        MenuRegistry.init(modEventBus);
         BlockEntityRegistry.init(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.

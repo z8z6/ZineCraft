@@ -1,5 +1,7 @@
 package com.cxxcxx.zinecraft;
 
+import com.cxxcxx.zinecraft.menu.ExampleScreen;
+import com.cxxcxx.zinecraft.menu.MenuRegistry;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -7,6 +9,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
@@ -27,5 +30,12 @@ public class ZineCraftClient {
         // Some client setup code
         ZineCraft.LOGGER.info("HELLO FROM CLIENT SETUP");
         ZineCraft.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    }
+
+    @SubscribeEvent
+    public static void registerScreens(RegisterMenuScreensEvent event) {
+        // 注册菜单对应的界面
+        event.register(MenuRegistry.EXAMPLE_MENU.get(), ExampleScreen::new);
+        ZineCraft.LOGGER.info("注册 ExampleScreen 成功！");
     }
 }

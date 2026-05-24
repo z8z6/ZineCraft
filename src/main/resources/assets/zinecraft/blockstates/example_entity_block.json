@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "zinecraft:block/example_entity_block" }
+  }
+}
