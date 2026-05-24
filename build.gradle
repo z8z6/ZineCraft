@@ -58,6 +58,7 @@ repositories {
     maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
     maven { url "https://maven.blamejared.com/" } // JEI
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
+    maven { url = "https://maven.firstdark.dev/snapshots" } // LDLib2
 }
 
 base {
@@ -169,10 +170,15 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    api("dev.latvian.mods:kubejs-neoforge:2101.7.2-build.368")
-    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.27.0.340"
-    localRuntime "mezz.jei:jei-1.21.1-neoforge:19.27.0.340"
-    api("com.simibubi.create:create-1.21.1:6.0.10-280")
+
+    // compileOnly 表示只在编译时依赖，例如 json 数据生成
+    // localRuntime 表示本地调试运行时依赖，但不会打包进jar,例如JEI
+    // api 表示编译和运行都需要，但依赖会在所有父项目可见
+    // implementation 表示编译和运行都需要，但依赖只在当前项目可见
+    api("dev.latvian.mods:kubejs-neoforge:${kubejs_version}")
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    implementation "com.simibubi.create:create-1.21.1:${create_version}"
+    implementation "com.lowdragmc.ldlib2:ldlib2-neoforge-${minecraft_version}:${ldlib2_version}"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
