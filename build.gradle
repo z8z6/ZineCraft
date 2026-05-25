@@ -230,3 +230,9 @@ idea {
         downloadJavadoc = true
     }
 }
+
+javadoc {
+    // 核心：让 JavaDoc 界面变成中文
+    options.locale = "zh_CN"
+    options.encoding = "UTF-8"
+}
