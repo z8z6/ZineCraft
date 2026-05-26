@@ -1,5 +1,5 @@
 
-![Zinecraft](doc/zinecraft.png)
+![Zinecraft](docs/zinecraft.png)
 
 # Installation information
 

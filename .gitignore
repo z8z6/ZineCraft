@@ -34,9 +34,7 @@ bin/
 
 ### Minecraft Modding ###
 run/**/*
-!run/kubejs/
-!run/kubejs/**
-!**/src/**/run/
+main/run/**/*
 **/src/generated/**/.cache/
 repo/
 !**/src/**/repo/
