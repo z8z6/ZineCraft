@@ -30,6 +30,7 @@ loom {
 }
 
 fabricApi {
+    // 启用数据生成
     configureDataGeneration {
         client = true
     }
