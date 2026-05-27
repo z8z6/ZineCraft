@@ -2,6 +2,7 @@ package com.cxxcxx.zinecraft.core.item
 
 
 import com.cxxcxx.zinecraft.core.ZinecraftCore
+import com.cxxcxx.zinecraft.core.block.ModBlock
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
@@ -29,6 +30,7 @@ object ModItem {
     ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS)
       .register(ModifyEntries { content: FabricItemGroupEntries ->
         content.accept(CUSTOM_ITEM)
+        content.accept(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem())
       })
   }
 

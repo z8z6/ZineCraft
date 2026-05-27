@@ -1,5 +1,7 @@
 package com.cxxcxx.zinecraft.core
 
+import com.cxxcxx.zinecraft.core.block.ModBlock
+import com.cxxcxx.zinecraft.core.entity.ModBlockEntity
 import com.cxxcxx.zinecraft.core.item.ModItem
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
@@ -10,5 +12,7 @@ object ZinecraftCore : ModInitializer {
 
   override fun onInitialize() {
     ModItem.init()
+    ModBlock.init()
+    ModBlockEntity.init()
   }
 }
