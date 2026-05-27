@@ -1,0 +1,75 @@
+plugins {
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}" apply false
+	id "org.jetbrains.kotlin.jvm" version "2.3.21" apply false
+	id 'com.diffplug.spotless' version '6.25.0' apply false
+	// id 'net.neoforged.moddev' version '2.0.141' apply false
+}
+
+version = project.mod_version
+group = project.maven_group
+
+def configureModSubprojects(String modName) {
+	configure(subprojects.findAll { it.path.startsWith(":${modName}:") }) {
+		def modProps = new Properties()
+		file("${rootProject.projectDir}/${modName}/gradle.properties").withInputStream { modProps.load(it) }
+
+		modProps.each { key, value ->
+			project.ext.set(key.toString(), value)
+		}
+
+		version = project.mod_version
+		group = project.group
+		// description = modProps.description
+	}
+}
+
+configureModSubprojects('core')
+configureModSubprojects('main')
+
+subprojects {
+	repositories {
+		maven {
+			url = "https://maven.aliyun.com/repository/public"
+		}
+
+		mavenLocal()
+		mavenCentral()
+
+		maven { // KubeJS
+			url "https://maven.latvian.dev/releases"
+			content {
+				includeGroup "dev.latvian.mods"
+				includeGroup "dev.latvian.apps"
+			}
+		}
+
+		maven {
+			url 'https://jitpack.io'
+			content {
+				includeGroup "com.github.rtyley"
+			}
+		}
+		maven { url = "https://www.cursemaven.com" }
+		maven { url = "https://api.modrinth.com/maven" }
+		maven { url = "https://maven.ftb.dev/releases" }    // FTB Mods
+		maven { url = "https://maven.architectury.dev" }    // Arch API
+		maven { url = "https://maven.theillusivec4.top/" }  // Curios API
+		maven { url = "https://maven.squiddev.cc" }         // CC: Tweaked
+		maven {
+			url = "https://jm.gserv.me/repository/maven-public"                     // JourneyMap
+			content {
+				includeGroup "info.journeymap"
+				includeGroup "mysticdrew"
+			}
+		}
+		maven { url = "https://maven.ithundxr.dev/snapshots" }  // Registrate
+		maven { url = "https://maven.blamejared.com/" }           // JEI
+		maven { url = "https://maven.createmod.net" }           // Create, Ponder, Flywheel
+		maven { url = "https://maven.firstdark.dev/snapshots" } // LDLib2
+		maven {	// Mod Menu
+			name = "Terraformers"
+			url = "https://maven.terraformersmc.com/"
+		}
+	}
+}
+
