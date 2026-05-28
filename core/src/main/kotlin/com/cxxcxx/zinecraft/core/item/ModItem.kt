@@ -15,7 +15,7 @@ import net.minecraft.world.item.Item
 
 object ModItem {
 
-  val CUSTOM_ITEM: Item = register("custom_item", Item(Item.Properties()))
+  val EXAMPLE_ITEM: Item = register("example_item", Item(Item.Properties()))
 
   fun <T : Item> register(path: String, item: T): T {
     val id = ResourceLocation.fromNamespaceAndPath(ZinecraftCore.MOD_ID, path)
@@ -29,7 +29,7 @@ object ModItem {
   fun initCreativeTab() {
     ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS)
       .register(ModifyEntries { content: FabricItemGroupEntries ->
-        content.accept(CUSTOM_ITEM)
+        content.accept(EXAMPLE_ITEM)
         content.accept(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem())
       })
   }

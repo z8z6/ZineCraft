@@ -7,15 +7,14 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.HolderLookup
 import java.util.concurrent.CompletableFuture
 
-
-class EnLanguageProvider(
+class ZhLanguageProvider(
   dataOutput: FabricDataOutput?,
   registryLookup: CompletableFuture<HolderLookup.Provider?>?
-) : FabricLanguageProvider(dataOutput, "en_us", registryLookup) {
+) : FabricLanguageProvider(dataOutput, "zh_cn", registryLookup) {
 
-  // generated/assets/zinecraft-core/lang/en_us.json
+  // generated/assets/zinecraft-core/lang/zh_cn.json
   override fun generateTranslations(holderLookup: HolderLookup.Provider?, translationBuilder: TranslationBuilder?) {
-    translationBuilder?.add(ModItem.EXAMPLE_ITEM, "Example Item")
-    translationBuilder?.add(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem(), "Example Entity Block")
+    translationBuilder?.add(ModItem.EXAMPLE_ITEM, "示例物品")
+    translationBuilder?.add(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem(), "示例实体方块")
   }
 }
