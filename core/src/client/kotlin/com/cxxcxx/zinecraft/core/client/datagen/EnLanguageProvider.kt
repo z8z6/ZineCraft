@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.client.datagen
 
+import com.cxxcxx.zinecraft.core.ZinecraftCore
 import com.cxxcxx.zinecraft.core.block.ModBlock
 import com.cxxcxx.zinecraft.core.item.ModItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -15,6 +16,8 @@ class EnLanguageProvider(
 
   // generated/assets/zinecraft-core/lang/en_us.json
   override fun generateTranslations(holderLookup: HolderLookup.Provider?, translationBuilder: TranslationBuilder?) {
+    // 创造模式物品栏标题
+    translationBuilder?.add("itemGroup." + ZinecraftCore.MOD_ID, "Zinecraft")
     translationBuilder?.add(ModItem.EXAMPLE_ITEM, "Example Item")
 
     translationBuilder?.add(ModItem.ORIROCK_CUBE, "Orirock Cube")
