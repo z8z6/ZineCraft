@@ -12,6 +12,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -20,6 +21,9 @@ import net.minecraft.world.item.ItemStack
 object ModItem {
 
   val EXAMPLE_ITEM: Item = register("example_item", Item(Item.Properties()))
+
+  // 源岩
+  val ORIROCK: Item = register("orirock", Item(Item.Properties()))
 
   // 固源岩
   val ORIROCK_CUBE: Item = register("orirock_cube", Item(Item.Properties()))
@@ -40,7 +44,7 @@ object ModItem {
   val GRINDSTONE: Item = register("grindstone", Item(Item.Properties()))
 
   // 五水研磨石
-  val GRINDSTONE_PENTAHYDRATE: Item = register("grindstone_penta", Item(Item.Properties()))
+  val GRINDSTONE_PENTAHYDRATE: Item = register("grindstone_pentahydrate", Item(Item.Properties()))
 
   // 轻锰矿
   val MANGANESE_ORE: Item = register("manganese_ore", Item(Item.Properties()))
@@ -69,6 +73,9 @@ object ModItem {
   // 聚酸酯
   val POLYESTER: Item = register("polyester", Item(Item.Properties()))
 
+  // 聚酸酯组
+  val POLYESTER_GROUP: Item = register("polyester_group", Item(Item.Properties()))
+
   // 聚酸酯块
   val POLYESTER_BLOCK: Item = register("polyester_block", Item(Item.Properties()))
 
@@ -92,6 +99,9 @@ object ModItem {
 
   // 半自然溶剂
   val SEMI_SYNTHETIC_SOLVENT: Item = register("semi_synthetic_solvent", Item(Item.Properties()))
+
+  // 精练溶剂
+  val REFINED_SOLVENT: Item = register("refined_solvent", Item(Item.Properties()))
 
   // 破损装置
   val DAMAGED_DEVICE: Item = register("damaged_device", Item(Item.Properties()))
@@ -117,6 +127,9 @@ object ModItem {
   // 异铁
   val ORIRON: Item = register("oriron", Item(Item.Properties()))
 
+  // 异铁组
+  val ORIRON_GROUP: Item = register("oriron_group", Item(Item.Properties()))
+
   // 异铁块
   val ORIRON_CLUSTER: Item = register("oriron_cluster", Item(Item.Properties()))
 
@@ -131,6 +144,9 @@ object ModItem {
 
   // 酮阵列
   val KETON_COLLOID: Item = register("keton_colloid", Item(Item.Properties()))
+
+  // 聚合剂
+  val POLYMER_AGENT: Item = register("polymer_agent", Item(Item.Properties()))
 
   // 炽合金
   val LOXIC_KOHL: Item = register("loxic_kohl", Item(Item.Properties()))
@@ -164,6 +180,12 @@ object ModItem {
 
   // 龙门币
   val LMD: Item = register("lmd", Item(Item.Properties()))
+
+  // 先锋芯片
+  val CHIP_VANGUARD: Item = register("chip_vanguard", Item(Item.Properties()))
+
+  // 先锋芯片组
+  val CHIP_VANGUARD_GROUP: Item = register("chip_vanguard_group", Item(Item.Properties()))
 
   // 近卫芯片
   val CHIP_GUARD: Item = register("chip_guard", Item(Item.Properties()))
@@ -207,6 +229,9 @@ object ModItem {
   // 医疗芯片组
   val CHIP_MEDIC_GROUP: Item = register("chip_medic_group", Item(Item.Properties()))
 
+  // 魔法粉尘
+  val MAGIC_DUST: Item = register("magic_dust", Item(Item.Properties().food(FoodProperties.Builder().build())))
+
 
   fun <T : Item> register(path: String, item: T): T {
     val id = ResourceLocation.fromNamespaceAndPath(ZinecraftCore.MOD_ID, path)
@@ -234,6 +259,7 @@ object ModItem {
     ItemGroupEvents.modifyEntriesEvent(ZINECRAFT_CORE_ITEM_GROUP_KEY)
       .register(ModifyEntries { content: FabricItemGroupEntries ->
         content.accept(EXAMPLE_ITEM)
+        content.accept(ORIROCK)
         content.accept(ModItem.ORIROCK_CUBE)
         content.accept(ModItem.ORIROCK_CLUSTER)
         content.accept(ModItem.ORIROCK_CONCENTRATION)
@@ -250,6 +276,7 @@ object ModItem {
         content.accept(ModItem.CRYSTALLINE_CIRCUIT)
         content.accept(ModItem.ESTER_RAW)
         content.accept(ModItem.POLYESTER)
+        content.accept(ModItem.POLYESTER_GROUP)
         content.accept(ModItem.POLYESTER_BLOCK)
         content.accept(ModItem.SUGAR_SUBSTITUTE)
         content.accept(ModItem.SUGAR)
@@ -258,6 +285,7 @@ object ModItem {
         content.accept(ModItem.COMBINED_CUTTING_FLUID)
         content.accept(ModItem.CUTTING_FLUID_SOLUTION)
         content.accept(ModItem.SEMI_SYNTHETIC_SOLVENT)
+        content.accept(REFINED_SOLVENT)
         content.accept(ModItem.DAMAGED_DEVICE)
         content.accept(ModItem.DEVICE_CORE)
         content.accept(ModItem.DEVICE_GROUP)
@@ -266,11 +294,13 @@ object ModItem {
         content.accept(ModItem.D32_STEEL)
         content.accept(ModItem.ORIRON_SHARD)
         content.accept(ModItem.ORIRON)
+        content.accept(ORIRON_GROUP)
         content.accept(ModItem.ORIRON_CLUSTER)
         content.accept(ModItem.DIKETONE)
         content.accept(ModItem.AKETON)
         content.accept(ModItem.POLYKETON)
         content.accept(ModItem.KETON_COLLOID)
+        content.accept(POLYMER_AGENT)
         content.accept(ModItem.LOXIC_KOHL)
         content.accept(ModItem.INCANDESCENT_ALLOY)
         content.accept(ModItem.GEL)
@@ -282,6 +312,8 @@ object ModItem {
         content.accept(ModItem.SKILL_SUMMARY_3)
         content.accept(ModItem.HEADHUNT_TICKET)
         content.accept(ModItem.LMD)
+        content.accept(CHIP_VANGUARD)
+        content.accept(CHIP_VANGUARD_GROUP)
         content.accept(ModItem.CHIP_GUARD)
         content.accept(ModItem.CHIP_GUARD_GROUP)
         content.accept(ModItem.CHIP_SNIPER)
@@ -296,6 +328,8 @@ object ModItem {
         content.accept(ModItem.CHIP_DEFENDER_GROUP)
         content.accept(ModItem.CHIP_MEDIC)
         content.accept(ModItem.CHIP_MEDIC_GROUP)
+        content.accept(MAGIC_DUST)
+
         content.accept(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem())
       })
   }
