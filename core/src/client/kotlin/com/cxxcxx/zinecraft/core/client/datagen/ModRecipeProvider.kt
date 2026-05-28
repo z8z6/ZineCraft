@@ -16,7 +16,8 @@ class ModRecipeProvider(
 ) : FabricRecipeProvider(output, registriesFuture) {
 
   override fun buildRecipes(exporter: RecipeOutput) {
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.DIRT)
+    ShapelessRecipeBuilder
+      .shapeless(RecipeCategory.BUILDING_BLOCKS, Items.DIRT)
       .requires(Items.COARSE_DIRT)
       .unlockedBy(getHasName(Items.COARSE_DIRT), has(Items.COARSE_DIRT))
       .save(exporter);

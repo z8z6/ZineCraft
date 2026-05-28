@@ -3,19 +3,210 @@ package com.cxxcxx.zinecraft.core.item
 
 import com.cxxcxx.zinecraft.core.ZinecraftCore
 import com.cxxcxx.zinecraft.core.block.ModBlock
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.CreativeModeTabs
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 
 
 object ModItem {
 
   val EXAMPLE_ITEM: Item = register("example_item", Item(Item.Properties()))
+
+  // 固源岩
+  val ORIROCK_CUBE: Item = register("orirock_cube", Item(Item.Properties()))
+
+  // 固源岩组
+  val ORIROCK_CLUSTER: Item = register("orirock_cluster", Item(Item.Properties()))
+
+  // 提纯源岩
+  val ORIROCK_CONCENTRATION: Item = register("orirock_concentration", Item(Item.Properties()))
+
+  // 源石
+  val ORIGINITE: Item = register("originite", Item(Item.Properties()))
+
+  // 源石碎片
+  val ORIGINIUM_POWDER: Item = register("originium_powder", Item(Item.Properties()))
+
+  // 研磨石
+  val GRINDSTONE: Item = register("grindstone", Item(Item.Properties()))
+
+  // 五水研磨石
+  val GRINDSTONE_PENTAHYDRATE: Item = register("grindstone_penta", Item(Item.Properties()))
+
+  // 轻锰矿
+  val MANGANESE_ORE: Item = register("manganese_ore", Item(Item.Properties()))
+
+  // 三水锰矿
+  val MANGANESE_TRIHYDRATE: Item = register("manganese_trihydrate", Item(Item.Properties()))
+
+  // RMA70-12
+  val RMA70_12: Item = register("rma70_12", Item(Item.Properties()))
+
+  // RMA70-24
+  val RMA70_24: Item = register("rma70_24", Item(Item.Properties()))
+
+  // 晶体元件
+  val CRYSTAL_ELEMENT: Item = register("crystal_element", Item(Item.Properties()))
+
+  // 晶体电路
+  val CRYSTAL_GROUP: Item = register("crystal_group", Item(Item.Properties()))
+
+  // 晶体电子单元
+  val CRYSTALLINE_CIRCUIT: Item = register("crystalline_circuit", Item(Item.Properties()))
+
+  // 酯原料
+  val ESTER_RAW: Item = register("ester_raw", Item(Item.Properties()))
+
+  // 聚酸酯
+  val POLYESTER: Item = register("polyester", Item(Item.Properties()))
+
+  // 聚酸酯块
+  val POLYESTER_BLOCK: Item = register("polyester_block", Item(Item.Properties()))
+
+  // 代糖
+  val SUGAR_SUBSTITUTE: Item = register("sugar_substitute", Item(Item.Properties()))
+
+  // 糖
+  val SUGAR: Item = register("sugar", Item(Item.Properties()))
+
+  // 糖组
+  val SUGAR_GROUP: Item = register("sugar_group", Item(Item.Properties()))
+
+  // 糖聚块
+  val SUGAR_POLYMER: Item = register("sugar_polymer", Item(Item.Properties()))
+
+  // 化合切削液
+  val COMBINED_CUTTING_FLUID: Item = register("compound_cutting_fluid", Item(Item.Properties()))
+
+  // 切削原液
+  val CUTTING_FLUID_SOLUTION: Item = register("cutting_fluid_solution", Item(Item.Properties()))
+
+  // 半自然溶剂
+  val SEMI_SYNTHETIC_SOLVENT: Item = register("semi_synthetic_solvent", Item(Item.Properties()))
+
+  // 破损装置
+  val DAMAGED_DEVICE: Item = register("damaged_device", Item(Item.Properties()))
+
+  // 装置
+  val DEVICE_CORE: Item = register("device", Item(Item.Properties()))
+
+  // 全新装置
+  val DEVICE_GROUP: Item = register("integrated_device", Item(Item.Properties()))
+
+  // 改良装置
+  val OPTIMIZED_DEVICE: Item = register("optimized_device", Item(Item.Properties()))
+
+  // 双极纳米片
+  val BIPOLAR_NANOSHEET: Item = register("bipolar_nanosheet", Item(Item.Properties()))
+
+  // D32钢
+  val D32_STEEL: Item = register("d32_steel", Item(Item.Properties()))
+
+  // 异铁碎片
+  val ORIRON_SHARD: Item = register("oriron_shard", Item(Item.Properties()))
+
+  // 异铁
+  val ORIRON: Item = register("oriron", Item(Item.Properties()))
+
+  // 异铁块
+  val ORIRON_CLUSTER: Item = register("oriron_cluster", Item(Item.Properties()))
+
+  // 双酮
+  val DIKETONE: Item = register("diketon", Item(Item.Properties()))
+
+  // 酮凝集
+  val AKETON: Item = register("aketone", Item(Item.Properties()))
+
+  // 酮凝集组
+  val POLYKETON: Item = register("polyketon", Item(Item.Properties()))
+
+  // 酮阵列
+  val KETON_COLLOID: Item = register("keton_colloid", Item(Item.Properties()))
+
+  // 炽合金
+  val LOXIC_KOHL: Item = register("loxic_kohl", Item(Item.Properties()))
+
+  // 炽合金块
+  val INCANDESCENT_ALLOY: Item = register("incandescent_alloy", Item(Item.Properties()))
+
+  // 凝胶
+  val GEL: Item = register("gel", Item(Item.Properties()))
+
+  // 聚合凝胶
+  val COAGULATING_GEL: Item = register("coagulating_gel", Item(Item.Properties()))
+
+  // 扭转醇
+  val TWISTED_ALCOHOL: Item = register("twisted_alcohol", Item(Item.Properties()))
+
+  // 白马醇
+  val WHITE_HORSE_KOHL: Item = register("white_horse_kohl", Item(Item.Properties()))
+
+  // 技巧概要·卷1
+  val SKILL_SUMMARY_1: Item = register("skill_summary_1", Item(Item.Properties()))
+
+  // 技巧概要·卷2
+  val SKILL_SUMMARY_2: Item = register("skill_summary_2", Item(Item.Properties()))
+
+  // 技巧概要·卷3
+  val SKILL_SUMMARY_3: Item = register("skill_summary_3", Item(Item.Properties()))
+
+  // 寻访凭证
+  val HEADHUNT_TICKET: Item = register("headhunt_ticket", Item(Item.Properties()))
+
+  // 龙门币
+  val LMD: Item = register("lmd", Item(Item.Properties()))
+
+  // 近卫芯片
+  val CHIP_GUARD: Item = register("chip_guard", Item(Item.Properties()))
+
+  // 近卫芯片组
+  val CHIP_GUARD_GROUP: Item = register("chip_guard_group", Item(Item.Properties()))
+
+  // 狙击芯片
+  val CHIP_SNIPER: Item = register("chip_sniper", Item(Item.Properties()))
+
+  // 狙击芯片组
+  val CHIP_SNIPER_GROUP: Item = register("chip_sniper_group", Item(Item.Properties()))
+
+  // 术士芯片
+  val CHIP_CASTER: Item = register("chip_caster", Item(Item.Properties()))
+
+  // 术士芯片组
+  val CHIP_CASTER_GROUP: Item = register("chip_caster_group", Item(Item.Properties()))
+
+  // 特种芯片
+  val CHIP_SPECIAL: Item = register("chip_special", Item(Item.Properties()))
+
+  // 特种芯片组
+  val CHIP_SPECIAL_GROUP: Item = register("chip_special_group", Item(Item.Properties()))
+
+  // 辅助芯片
+  val CHIP_SUPPORT: Item = register("chip_support", Item(Item.Properties()))
+
+  // 辅助芯片组
+  val CHIP_SUPPORT_GROUP: Item = register("chip_support_group", Item(Item.Properties()))
+
+  // 重装芯片
+  val CHIP_DEFENDER: Item = register("chip_defender", Item(Item.Properties()))
+
+  // 重装芯片组
+  val CHIP_DEFENDER_GROUP: Item = register("chip_defender_group", Item(Item.Properties()))
+
+  // 医疗芯片
+  val CHIP_MEDIC: Item = register("chip_medic", Item(Item.Properties()))
+
+  // 医疗芯片组
+  val CHIP_MEDIC_GROUP: Item = register("chip_medic_group", Item(Item.Properties()))
+
 
   fun <T : Item> register(path: String, item: T): T {
     val id = ResourceLocation.fromNamespaceAndPath(ZinecraftCore.MOD_ID, path)
@@ -26,10 +217,85 @@ object ModItem {
     initCreativeTab()
   }
 
+
+  val ZINECRAFT_CORE_ITEM_GROUP_KEY: ResourceKey<CreativeModeTab?> = ResourceKey.create(
+    BuiltInRegistries.CREATIVE_MODE_TAB.key(),
+    ResourceLocation.fromNamespaceAndPath(ZinecraftCore.MOD_ID, "item")
+  )
+  val ZINECRAFT_CORE_ITEM_GROUP: CreativeModeTab = FabricItemGroup.builder()
+    .icon({ ItemStack(D32_STEEL) })
+    .title(Component.translatable("itemGroup." + ZinecraftCore.MOD_ID))
+    .build()
+
   fun initCreativeTab() {
-    ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS)
+    // Register the group.
+    Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ZINECRAFT_CORE_ITEM_GROUP_KEY, ZINECRAFT_CORE_ITEM_GROUP);
+
+    ItemGroupEvents.modifyEntriesEvent(ZINECRAFT_CORE_ITEM_GROUP_KEY)
       .register(ModifyEntries { content: FabricItemGroupEntries ->
         content.accept(EXAMPLE_ITEM)
+        content.accept(ModItem.ORIROCK_CUBE)
+        content.accept(ModItem.ORIROCK_CLUSTER)
+        content.accept(ModItem.ORIROCK_CONCENTRATION)
+        content.accept(ModItem.ORIGINITE)
+        content.accept(ModItem.ORIGINIUM_POWDER)
+        content.accept(ModItem.GRINDSTONE)
+        content.accept(ModItem.GRINDSTONE_PENTAHYDRATE)
+        content.accept(ModItem.MANGANESE_ORE)
+        content.accept(ModItem.MANGANESE_TRIHYDRATE)
+        content.accept(ModItem.RMA70_12)
+        content.accept(ModItem.RMA70_24)
+        content.accept(ModItem.CRYSTAL_ELEMENT)
+        content.accept(ModItem.CRYSTAL_GROUP)
+        content.accept(ModItem.CRYSTALLINE_CIRCUIT)
+        content.accept(ModItem.ESTER_RAW)
+        content.accept(ModItem.POLYESTER)
+        content.accept(ModItem.POLYESTER_BLOCK)
+        content.accept(ModItem.SUGAR_SUBSTITUTE)
+        content.accept(ModItem.SUGAR)
+        content.accept(ModItem.SUGAR_GROUP)
+        content.accept(ModItem.SUGAR_POLYMER)
+        content.accept(ModItem.COMBINED_CUTTING_FLUID)
+        content.accept(ModItem.CUTTING_FLUID_SOLUTION)
+        content.accept(ModItem.SEMI_SYNTHETIC_SOLVENT)
+        content.accept(ModItem.DAMAGED_DEVICE)
+        content.accept(ModItem.DEVICE_CORE)
+        content.accept(ModItem.DEVICE_GROUP)
+        content.accept(ModItem.OPTIMIZED_DEVICE)
+        content.accept(ModItem.BIPOLAR_NANOSHEET)
+        content.accept(ModItem.D32_STEEL)
+        content.accept(ModItem.ORIRON_SHARD)
+        content.accept(ModItem.ORIRON)
+        content.accept(ModItem.ORIRON_CLUSTER)
+        content.accept(ModItem.DIKETONE)
+        content.accept(ModItem.AKETON)
+        content.accept(ModItem.POLYKETON)
+        content.accept(ModItem.KETON_COLLOID)
+        content.accept(ModItem.LOXIC_KOHL)
+        content.accept(ModItem.INCANDESCENT_ALLOY)
+        content.accept(ModItem.GEL)
+        content.accept(ModItem.COAGULATING_GEL)
+        content.accept(ModItem.TWISTED_ALCOHOL)
+        content.accept(ModItem.WHITE_HORSE_KOHL)
+        content.accept(ModItem.SKILL_SUMMARY_1)
+        content.accept(ModItem.SKILL_SUMMARY_2)
+        content.accept(ModItem.SKILL_SUMMARY_3)
+        content.accept(ModItem.HEADHUNT_TICKET)
+        content.accept(ModItem.LMD)
+        content.accept(ModItem.CHIP_GUARD)
+        content.accept(ModItem.CHIP_GUARD_GROUP)
+        content.accept(ModItem.CHIP_SNIPER)
+        content.accept(ModItem.CHIP_SNIPER_GROUP)
+        content.accept(ModItem.CHIP_CASTER)
+        content.accept(ModItem.CHIP_CASTER_GROUP)
+        content.accept(ModItem.CHIP_SPECIAL)
+        content.accept(ModItem.CHIP_SPECIAL_GROUP)
+        content.accept(ModItem.CHIP_SUPPORT)
+        content.accept(ModItem.CHIP_SUPPORT_GROUP)
+        content.accept(ModItem.CHIP_DEFENDER)
+        content.accept(ModItem.CHIP_DEFENDER_GROUP)
+        content.accept(ModItem.CHIP_MEDIC)
+        content.accept(ModItem.CHIP_MEDIC_GROUP)
         content.accept(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem())
       })
   }
