@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.client.datagen
+package com.cxxcxx.zinecraft.core.datagen
 
 import com.cxxcxx.zinecraft.core.block.ModBlock
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput

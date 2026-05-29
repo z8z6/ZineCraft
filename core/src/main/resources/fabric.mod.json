@@ -30,7 +30,7 @@
     ],
     "fabric-datagen": [
       {
-        "value": "com.cxxcxx.zinecraft.core.client.ZinecraftCoreDataGenerator",
+        "value": "com.cxxcxx.zinecraft.core.datagen.ZinecraftCoreDataGenerator",
         "adapter": "kotlin"
       }
     ]

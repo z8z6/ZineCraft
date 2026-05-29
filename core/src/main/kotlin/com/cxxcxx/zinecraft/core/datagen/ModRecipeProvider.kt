@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.client.datagen
+package com.cxxcxx.zinecraft.core.datagen
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
@@ -8,7 +8,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Items
 import java.util.concurrent.CompletableFuture
-
 
 class ModRecipeProvider(
   output: FabricDataOutput,
