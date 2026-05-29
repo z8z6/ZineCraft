@@ -5,11 +5,12 @@
   "name": "zinecraft-core",
   "description": "Zinecraft core mod.",
   "authors": [
-    "Me!"
+    "z8z6",
+    "YeXingChenAWA"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/z8z6/ZineCraft",
+    "sources": "https://github.com/z8z6/ZineCraft"
   },
   "license": "CC0-1.0",
   "icon": "assets/zinecraft-core/icon.png",
