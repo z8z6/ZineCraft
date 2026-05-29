@@ -33,6 +33,9 @@
         "value": "com.cxxcxx.zinecraft.core.datagen.ZinecraftCoreDataGenerator",
         "adapter": "kotlin"
       }
+    ],
+    "terrablender": [
+      "com.cxxcxx.zinecraft.core.biome.ModTerraBlender"
     ]
   },
   "mixins": [

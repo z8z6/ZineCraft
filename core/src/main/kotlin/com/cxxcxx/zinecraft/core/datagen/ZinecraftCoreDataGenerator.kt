@@ -21,7 +21,8 @@ object ZinecraftCoreDataGenerator : DataGeneratorEntrypoint {
   }
 
   override fun buildRegistry(registryBuilder: RegistrySetBuilder?) {
-    registryBuilder?.add(Registries.CONFIGURED_FEATURE, ModWorldConfiguredFeatures::configure);
-    registryBuilder?.add(Registries.PLACED_FEATURE, ModWorldPlacedFeatures::configure);
+    registryBuilder?.add(Registries.CONFIGURED_FEATURE, ModWorldConfiguredFeatures::configure)
+    registryBuilder?.add(Registries.PLACED_FEATURE, ModWorldPlacedFeatures::configure)
+    registryBuilder?.add(Registries.BIOME, ModBiomeProvider::configure)
   }
 }

@@ -30,8 +30,10 @@ subprojects {
 	repositories {
 		maven { url "https://maven.fabricmc.net/" }
 		maven { url = "https://api.modrinth.com/maven" }
+        maven { url = 'https://maven.minecraftforge.net/' }
 
-		mavenLocal()
+
+        mavenLocal()
 		mavenCentral()
 
 		maven { // KubeJS

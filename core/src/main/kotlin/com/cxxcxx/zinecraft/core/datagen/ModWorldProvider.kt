@@ -15,6 +15,7 @@ class ModWorldProvider(
     // #region worldgen-add-entries
     entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE))
     entries.addAll(registries.lookupOrThrow(Registries.PLACED_FEATURE))
+    entries.addAll(registries.lookupOrThrow(Registries.BIOME))
     // #endregion worldgen-add-entries
   }
 

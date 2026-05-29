@@ -11,7 +11,8 @@ import net.minecraft.world.level.levelgen.GenerationStep
 import org.slf4j.LoggerFactory
 
 object ZinecraftCore : ModInitializer {
-  val MOD_ID = "zinecraft-core"
+  @JvmField
+  var MOD_ID = "zinecraft-core"
   private val logger = LoggerFactory.getLogger(MOD_ID)
 
   override fun onInitialize() {
