@@ -4,7 +4,9 @@ import com.cxxcxx.zinecraft.core.block.ModBlock
 import com.cxxcxx.zinecraft.core.datagen.ModWorldPlacedFeatures
 import com.cxxcxx.zinecraft.core.entity.ModBlockEntity
 import com.cxxcxx.zinecraft.core.item.ModItem
+import com.cxxcxx.zinecraft.core.structure.ESStructurePoolElementTypes
 import com.cxxcxx.zinecraft.core.structure.ModStructure
+import com.cxxcxx.zinecraft.core.structure.ModTemplatePool
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
@@ -21,6 +23,8 @@ object ZinecraftCore : ModInitializer {
     ModBlock.init()
     ModBlockEntity.init()
     initBiome()
+    ModTemplatePool.init()
+    ESStructurePoolElementTypes.init()
     ModStructure.init()
   }
 

@@ -2,6 +2,8 @@ package com.cxxcxx.zinecraft.core.datagen
 
 import com.cxxcxx.zinecraft.core.structure.ModStructure
 import com.cxxcxx.zinecraft.core.structure.ModStructure.EXAMPLE_STRUCTURE_SET
+import com.cxxcxx.zinecraft.core.structure.ModStructure.PORTAL_RUINS_COMMON
+import com.cxxcxx.zinecraft.core.structure.ModStructure.PORTAL_RUINS_COMMON_SET
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
@@ -28,6 +30,16 @@ object ModStructureSetProvider {
         RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 14357619)
       )
     )
+
+
+    ctx.register(
+      PORTAL_RUINS_COMMON_SET,
+      StructureSet(
+        holdergetter.getOrThrow(PORTAL_RUINS_COMMON),
+        RandomSpreadStructurePlacement(36, 30, RandomSpreadType.LINEAR, 958853901)
+      )
+    )
+
   }
 
 }

@@ -31,11 +31,22 @@ object ModStructure {
 
   val EXAMPLE_STRUCTURE: ResourceKey<Structure?> = registerKey("example_structure")
 
+  val PORTAL_RUINS_COMMON_SET: ResourceKey<StructureSet?> = register("portal_ruins_common")
+
+  val PORTAL_RUINS_COMMON: ResourceKey<Structure?> = registerKey("portal_ruins_common")
+
+
+
+
+
+
   fun init() {
     EXAMPLE_STRUCTURE
     EXAMPLE_STRUCTURE_TYPE
     EXAMPLE_STRUCTURE_PIECE_TYPE
     EXAMPLE_STRUCTURE_SET
+    PORTAL_RUINS_COMMON
+    PORTAL_RUINS_COMMON_SET
   }
 
   private fun <S : Structure?> register(

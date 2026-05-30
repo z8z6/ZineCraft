@@ -24,7 +24,9 @@ object ZinecraftCoreDataGenerator : DataGeneratorEntrypoint {
     registryBuilder?.add(Registries.CONFIGURED_FEATURE, ModWorldConfiguredFeatures::configure)
     registryBuilder?.add(Registries.PLACED_FEATURE, ModWorldPlacedFeatures::configure)
     registryBuilder?.add(Registries.BIOME, ModBiomeProvider::configure)
-    registryBuilder?.add(Registries.STRUCTURE_SET, ModStructureSetProvider::configure)
+    registryBuilder?.add(Registries.PROCESSOR_LIST, ModTemplatePoolProvider::bootstrapProcessors)
+    registryBuilder?.add(Registries.TEMPLATE_POOL, ModTemplatePoolProvider::configure)
     registryBuilder?.add(Registries.STRUCTURE, ModStructureProvider::configure)
+    registryBuilder?.add(Registries.STRUCTURE_SET, ModStructureSetProvider::configure)
   }
 }
