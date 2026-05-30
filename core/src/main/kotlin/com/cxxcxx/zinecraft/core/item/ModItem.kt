@@ -230,8 +230,13 @@ object ModItem {
   val CHIP_MEDIC_GROUP: Item = register("chip_medic_group", Item(Item.Properties()))
 
   // 魔法粉尘
-  val MAGIC_DUST: Item = register("magic_dust", Item(Item.Properties().food(FoodProperties.Builder().build())))
-
+  val MAGIC_DUST: Item = register(
+      "magic_dust",
+      Item(
+          Item.Properties()
+              .food(FoodProperties.Builder().nutrition(6).saturationModifier(0.8f).alwaysEdible().build())
+      )
+  )
 
   fun <T : Item> register(path: String, item: T): T {
     val id = ResourceLocation.fromNamespaceAndPath(ZinecraftCore.MOD_ID, path)
