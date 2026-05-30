@@ -35,7 +35,10 @@
       }
     ],
     "terrablender": [
-      "com.cxxcxx.zinecraft.core.biome.ModTerraBlender"
+      {
+        "value": "com.cxxcxx.zinecraft.core.biome.ModTerraBlender",
+        "adapter": "kotlin"
+      }
     ]
   },
   "mixins": [
