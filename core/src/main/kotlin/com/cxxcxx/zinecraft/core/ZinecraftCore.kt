@@ -3,6 +3,8 @@ package com.cxxcxx.zinecraft.core
 import com.cxxcxx.zinecraft.core.block.ModBlock
 import com.cxxcxx.zinecraft.core.datagen.ModWorldPlacedFeatures
 import com.cxxcxx.zinecraft.core.entity.ModBlockEntity
+import com.cxxcxx.zinecraft.core.item.CompostableItemRegistry
+import com.cxxcxx.zinecraft.core.item.FuelRegister
 import com.cxxcxx.zinecraft.core.item.ModItem
 import com.cxxcxx.zinecraft.core.structure.ESStructurePoolElementTypes
 import com.cxxcxx.zinecraft.core.structure.ModStructure
@@ -20,6 +22,8 @@ object ZinecraftCore : ModInitializer {
 
   override fun onInitialize() {
     ModItem.init()
+    FuelRegister.init()
+    CompostableItemRegistry.init()
     ModBlock.init()
     ModBlockEntity.init()
     initBiome()
