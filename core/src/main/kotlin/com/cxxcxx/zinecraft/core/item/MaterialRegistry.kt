@@ -8,11 +8,22 @@ import net.minecraft.world.level.block.Block
 
 
 class MaterialRegistry : Tier {
+    @JvmField
     var uses: Int = 1
+
+    @JvmField
     var speed: Float = 1.0F
+
+    @JvmField
     var attackDamageBonus: Float = 1.0F
+
+    @JvmField
     var incorrectBlocksForDrops: TagKey<Block?> = BlockTags.INCORRECT_FOR_WOODEN_TOOL
+
+    @JvmField
     var enchantmentValue: Int=1
+
+    @JvmField
     var repairIngredient: Ingredient?= Ingredient.EMPTY
 
     fun setUses(uses: Int): MaterialRegistry {
