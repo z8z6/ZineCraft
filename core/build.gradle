@@ -46,10 +46,16 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
     modImplementation "com.github.glitchfiend:TerraBlender-fabric:${terrablender_version}"
+    modImplementation "dev.emi:trinkets:${trinkets_version}"
+    modImplementation "net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}"
 
+    modLocalRuntime "squeek.appleskin:appleskin-fabric:mc${appleskin_version}"
     modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
     modLocalRuntime "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
     modLocalRuntime "maven.modrinth:jade:${project.jade_version}+fabric"
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${clothconfig_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 
     compileOnly project(":api")
     annotationProcessor project(":api")

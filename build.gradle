@@ -36,6 +36,9 @@ subprojects {
         mavenLocal()
 		mavenCentral()
 
+		maven { url "https://maven.shedaniel.me/" }    // Cloth Config
+		maven { url "https://maven.terraformersmc.com/releases/" }
+
 		maven { // KubeJS
 			url "https://maven.latvian.dev/releases"
 			content {
@@ -54,7 +57,6 @@ subprojects {
 		maven { url = "https://api.modrinth.com/maven" }
 		maven { url = "https://maven.ftb.dev/releases" }    // FTB Mods
 		maven { url = "https://maven.architectury.dev" }    // Arch API
-		maven { url = "https://maven.theillusivec4.top/" }  // Curios API
 		maven { url = "https://maven.squiddev.cc" }         // CC: Tweaked
 		maven {
 			url = "https://jm.gserv.me/repository/maven-public"                     // JourneyMap
@@ -65,12 +67,18 @@ subprojects {
 		}
 		maven { url = "https://maven.ithundxr.dev/snapshots" }  // Registrate
 		maven { url = "https://maven.blamejared.com/" }           // JEI
+		maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }    // Ponder
 		maven { url = "https://maven.createmod.net" }           // Create, Ponder, Flywheel
 		maven { url = "https://maven.firstdark.dev/snapshots" } // LDLib2
 		maven {	// Mod Menu
 			name = "Terraformers"
 			url = "https://maven.terraformersmc.com/"
 		}
+		maven {    // Trinkets
+			name = "Ladysnake Libs"
+			url = 'https://maven.ladysnake.org/releases'
+		}
+		maven { url "https://maven.ryanliptak.com/" }    // Apple Skin
 	}
 }
 
