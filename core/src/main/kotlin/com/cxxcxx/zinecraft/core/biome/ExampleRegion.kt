@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.biome
 
+import com.cxxcxx.zinecraft.core.data.ModBiome
 import com.mojang.datafixers.util.Pair
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey

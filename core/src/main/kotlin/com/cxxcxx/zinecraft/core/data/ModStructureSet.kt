@@ -1,21 +1,23 @@
-package com.cxxcxx.zinecraft.core.datagen
+package com.cxxcxx.zinecraft.core.data
 
-import com.cxxcxx.zinecraft.core.structure.ModStructure
-import com.cxxcxx.zinecraft.core.structure.ModStructure.EXAMPLE_STRUCTURE_SET
-import com.cxxcxx.zinecraft.core.structure.ModStructure.PORTAL_RUINS_COMMON
-import com.cxxcxx.zinecraft.core.structure.ModStructure.PORTAL_RUINS_COMMON_SET
+import com.cxxcxx.zinecraft.core.ZinecraftCore
+import com.cxxcxx.zinecraft.core.data.ModStructure.PORTAL_RUINS_COMMON
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.levelgen.structure.StructureSet
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType
 
 
-object ModStructureSetProvider {
+object ModStructureSet {
 
-  fun configure(ctx: BootstrapContext<StructureSet?>) {
+  val PORTAL_RUINS_COMMON_SET: ResourceKey<StructureSet> = key("portal_ruins_common")
+  val EXAMPLE_STRUCTURE_SET: ResourceKey<StructureSet> = key("example_structure")
+
+  fun configure(ctx: BootstrapContext<StructureSet>) {
     val holdergetter: HolderGetter<Structure?> = ctx.lookup(Registries.STRUCTURE)
 
     // RandomSpreadStructurePlacement 是随机放置
@@ -41,5 +43,12 @@ object ModStructureSetProvider {
     )
 
   }
+
+
+  private fun key(name: String): ResourceKey<StructureSet> {
+    return ZinecraftCore.key(Registries.STRUCTURE_SET, name)
+  }
+
+  fun init() {}
 
 }

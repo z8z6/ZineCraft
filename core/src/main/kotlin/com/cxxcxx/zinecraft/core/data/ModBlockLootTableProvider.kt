@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.datagen
+package com.cxxcxx.zinecraft.core.data
 
 import com.cxxcxx.zinecraft.core.block.ModBlock
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -10,7 +10,7 @@ class ModBlockLootTableProvider(
   dataOutput: FabricDataOutput?,
   registryLookup: CompletableFuture<HolderLookup.Provider?>?
 ) : FabricBlockLootTableProvider(dataOutput, registryLookup) {
-  public override fun generate() {
+  override fun generate() {
     dropSelf(ModBlock.EXAMPLE_ENTITY_BLOCK)
   }
 }

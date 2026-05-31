@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.datagen
+package com.cxxcxx.zinecraft.core.data
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
@@ -11,12 +11,15 @@ class ModWorldProvider(
   registriesFuture: CompletableFuture<HolderLookup.Provider?>?
 ) : FabricDynamicRegistryProvider(output, registriesFuture) {
 
+  // generated/data/zinecraft-core/worldgen
   override fun configure(registries: HolderLookup.Provider, entries: Entries) {
-    // #region worldgen-add-entries
     entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE))
     entries.addAll(registries.lookupOrThrow(Registries.PLACED_FEATURE))
     entries.addAll(registries.lookupOrThrow(Registries.BIOME))
-    // #endregion worldgen-add-entries
+    entries.addAll(registries.lookupOrThrow(Registries.PROCESSOR_LIST))
+    entries.addAll(registries.lookupOrThrow(Registries.TEMPLATE_POOL))
+    entries.addAll(registries.lookupOrThrow(Registries.STRUCTURE))
+    entries.addAll(registries.lookupOrThrow(Registries.STRUCTURE_SET))
   }
 
   override fun getName(): String {

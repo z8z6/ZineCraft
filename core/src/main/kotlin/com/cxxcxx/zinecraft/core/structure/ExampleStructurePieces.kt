@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.core.structure
 
 import com.cxxcxx.zinecraft.core.ZinecraftCore
+import com.cxxcxx.zinecraft.core.data.ModStructure
 import com.google.common.collect.ImmutableMap
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
@@ -28,7 +29,7 @@ import java.util.function.Function
 
 object ExampleStructurePieces {
   val STRUCTURE_LOCATION_MY_STRUCTURE: ResourceLocation =
-    ResourceLocation.fromNamespaceAndPath(ZinecraftCore.MOD_ID, "example_structure")
+    ZinecraftCore.id("example_structure")
 
   val PIVOTS: MutableMap<ResourceLocation?, BlockPos?> = ImmutableMap.of(
     STRUCTURE_LOCATION_MY_STRUCTURE, BlockPos(4, 0, 4)
@@ -87,7 +88,7 @@ object ExampleStructurePieces {
     // 在序列化之后，从nbt读取数据之前，向nbt数据附加一些内容
     override fun addAdditionalSaveData(pContext: StructurePieceSerializationContext, pTag: CompoundTag) {
       super.addAdditionalSaveData(pContext, pTag)
-      pTag.putString("Rot", this.placeSettings.getRotation().name)
+      pTag.putString("Rot", this.placeSettings.rotation.name)
     }
 
     // 例如给结构中的一些位置添加战利品箱子，可以利用这个方法实现

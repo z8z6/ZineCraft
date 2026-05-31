@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.biome
 
+import com.cxxcxx.zinecraft.core.data.ModBiome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.SurfaceRules

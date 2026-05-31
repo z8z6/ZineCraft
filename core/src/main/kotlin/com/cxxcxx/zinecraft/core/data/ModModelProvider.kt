@@ -14,7 +14,7 @@ class ModModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
   // generated/assets/zinecraft-core/blockstates
   // generated/assets/zinecraft-core/models/block
   override fun generateBlockStateModels(blockStateModelGenerator: BlockModelGenerators?) {
-    blockStateModelGenerator?.createTrivialCube(ModBlock.EXAMPLE_ENTITY_BLOCK);
+    blockStateModelGenerator?.createTrivialCube(ModBlock.EXAMPLE_ENTITY_BLOCK)
   }
 
   override fun generateItemModels(itemModelGenerator: ItemModelGenerators?) {

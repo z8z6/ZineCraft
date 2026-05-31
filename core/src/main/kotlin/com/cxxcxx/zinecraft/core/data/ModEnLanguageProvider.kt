@@ -9,7 +9,7 @@ import net.minecraft.core.HolderLookup
 import java.util.concurrent.CompletableFuture
 
 
-class EnLanguageProvider(
+class ModEnLanguageProvider(
   dataOutput: FabricDataOutput?,
   registryLookup: CompletableFuture<HolderLookup.Provider?>?
 ) : FabricLanguageProvider(dataOutput, "en_us", registryLookup) {
@@ -45,7 +45,7 @@ class EnLanguageProvider(
     translationBuilder?.add(ModItem.COMBINED_CUTTING_FLUID, "Compound Cutting Fluid")
     translationBuilder?.add(ModItem.CUTTING_FLUID_SOLUTION, "Cutting Fluid Solution")
     translationBuilder?.add(ModItem.SEMI_SYNTHETIC_SOLVENT, "Semi-Synthetic Solvent")
-    translationBuilder?.add(ModItem.REFINED_SOLVENT,"Refined Solvent")
+    translationBuilder?.add(ModItem.REFINED_SOLVENT, "Refined Solvent")
     translationBuilder?.add(ModItem.DAMAGED_DEVICE, "Damaged Device")
     translationBuilder?.add(ModItem.DEVICE_CORE, "Device")
     translationBuilder?.add(ModItem.DEVICE_GROUP, "Integrated Device")
@@ -60,7 +60,7 @@ class EnLanguageProvider(
     translationBuilder?.add(ModItem.AKETON, "Aketon")
     translationBuilder?.add(ModItem.POLYKETON, "Polyketon")
     translationBuilder?.add(ModItem.KETON_COLLOID, "Keton Colloid")
-    translationBuilder?.add(ModItem.POLYMER_AGENT,"Polymer agent")
+    translationBuilder?.add(ModItem.POLYMER_AGENT, "Polymer agent")
     translationBuilder?.add(ModItem.LOXIC_KOHL, "Loxic Kohl")
     translationBuilder?.add(ModItem.INCANDESCENT_ALLOY, "Incandescent Alloy")
     translationBuilder?.add(ModItem.GEL, "Gel")
@@ -72,8 +72,8 @@ class EnLanguageProvider(
     translationBuilder?.add(ModItem.SKILL_SUMMARY_3, "Skill Summary Vol.3")
     translationBuilder?.add(ModItem.HEADHUNT_TICKET, "Headhunting Ticket")
     translationBuilder?.add(ModItem.LMD, "LMD")
-    translationBuilder?.add(ModItem.CHIP_VANGUARD,"Vanguard Chip")
-    translationBuilder?.add(ModItem.CHIP_VANGUARD_GROUP,"Vanguard Chip Set")
+    translationBuilder?.add(ModItem.CHIP_VANGUARD, "Vanguard Chip")
+    translationBuilder?.add(ModItem.CHIP_VANGUARD_GROUP, "Vanguard Chip Set")
     translationBuilder?.add(ModItem.CHIP_GUARD, "Guard Chip")
     translationBuilder?.add(ModItem.CHIP_GUARD_GROUP, "Guard Chip Set")
     translationBuilder?.add(ModItem.CHIP_SNIPER, "Sniper Chip")

@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.HolderLookup
 import java.util.concurrent.CompletableFuture
 
-class ZhLanguageProvider(
+class ModZhLanguageProvider(
   dataOutput: FabricDataOutput?,
   registryLookup: CompletableFuture<HolderLookup.Provider?>?
 ) : FabricLanguageProvider(dataOutput, "zh_cn", registryLookup) {
@@ -41,7 +41,7 @@ class ZhLanguageProvider(
     translationBuilder?.add(ModItem.COMBINED_CUTTING_FLUID, "化合切削液")
     translationBuilder?.add(ModItem.CUTTING_FLUID_SOLUTION, "切削原液")
     translationBuilder?.add(ModItem.SEMI_SYNTHETIC_SOLVENT, "半自然溶剂")
-    translationBuilder?.add(ModItem.REFINED_SOLVENT,"精炼溶剂")
+    translationBuilder?.add(ModItem.REFINED_SOLVENT, "精炼溶剂")
     translationBuilder?.add(ModItem.DAMAGED_DEVICE, "破损装置")
     translationBuilder?.add(ModItem.DEVICE_CORE, "装置")
     translationBuilder?.add(ModItem.DEVICE_GROUP, "全新装置")
@@ -56,7 +56,7 @@ class ZhLanguageProvider(
     translationBuilder?.add(ModItem.AKETON, "酮凝集")
     translationBuilder?.add(ModItem.POLYKETON, "酮凝集组")
     translationBuilder?.add(ModItem.KETON_COLLOID, "酮阵列")
-    translationBuilder?.add(ModItem.POLYMER_AGENT,"聚合剂")
+    translationBuilder?.add(ModItem.POLYMER_AGENT, "聚合剂")
     translationBuilder?.add(ModItem.LOXIC_KOHL, "炽合金")
     translationBuilder?.add(ModItem.INCANDESCENT_ALLOY, "炽合金块")
     translationBuilder?.add(ModItem.GEL, "凝胶")
@@ -68,8 +68,8 @@ class ZhLanguageProvider(
     translationBuilder?.add(ModItem.SKILL_SUMMARY_3, "技巧概要·卷3")
     translationBuilder?.add(ModItem.HEADHUNT_TICKET, "寻访凭证")
     translationBuilder?.add(ModItem.LMD, "龙门币")
-    translationBuilder?.add(ModItem.CHIP_VANGUARD,"先锋芯片")
-    translationBuilder?.add(ModItem.CHIP_VANGUARD_GROUP,"先锋芯片组")
+    translationBuilder?.add(ModItem.CHIP_VANGUARD, "先锋芯片")
+    translationBuilder?.add(ModItem.CHIP_VANGUARD_GROUP, "先锋芯片组")
     translationBuilder?.add(ModItem.CHIP_GUARD, "近卫芯片")
     translationBuilder?.add(ModItem.CHIP_GUARD_GROUP, "近卫芯片组")
     translationBuilder?.add(ModItem.CHIP_SNIPER, "狙击芯片")

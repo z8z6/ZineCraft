@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.structure
 
+import com.cxxcxx.zinecraft.core.data.ModStructure
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.ChunkPos
@@ -26,7 +27,7 @@ class ExampleStructure(
   private fun generatePieces(pBuilder: StructurePiecesBuilder, pContext: GenerationContext) {
     val chunkpos: ChunkPos = pContext.chunkPos()
     val worldgenrandom: WorldgenRandom = pContext.random()
-    val blockpos = BlockPos(chunkpos.minBlockX, 64, chunkpos.getMinBlockZ())
+    val blockpos = BlockPos(chunkpos.minBlockX, 64, chunkpos.minBlockZ)
     val rotation: Rotation = Rotation.getRandom(worldgenrandom)
     ExampleStructurePieces.addPieces(
       pContext.structureTemplateManager(),
@@ -41,6 +42,6 @@ class ExampleStructure(
 
 
   companion object {
-    val CODEC: MapCodec<ExampleStructure?>? = simpleCodec(::ExampleStructure)
+    val CODEC: MapCodec<ExampleStructure> = simpleCodec(::ExampleStructure)
   }
 }

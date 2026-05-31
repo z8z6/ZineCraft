@@ -1,8 +1,8 @@
-package com.cxxcxx.zinecraft.core.datagen
+package com.cxxcxx.zinecraft.core.data
 
-import com.cxxcxx.zinecraft.core.client.datagen.EnLanguageProvider
+import com.cxxcxx.zinecraft.core.client.datagen.ModEnLanguageProvider
 import com.cxxcxx.zinecraft.core.client.datagen.ModModelProvider
-import com.cxxcxx.zinecraft.core.client.datagen.ZhLanguageProvider
+import com.cxxcxx.zinecraft.core.client.datagen.ModZhLanguageProvider
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.core.RegistrySetBuilder
@@ -12,8 +12,8 @@ import net.minecraft.core.registries.Registries
 object ZinecraftCoreDataGenerator : DataGeneratorEntrypoint {
   override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
     val pack = fabricDataGenerator.createPack()
-    pack.addProvider(::EnLanguageProvider)
-    pack.addProvider(::ZhLanguageProvider)
+    pack.addProvider(::ModEnLanguageProvider)
+    pack.addProvider(::ModZhLanguageProvider)
     pack.addProvider(::ModModelProvider)
     pack.addProvider(::ModBlockLootTableProvider)
     pack.addProvider(::ModRecipeProvider)
@@ -23,10 +23,10 @@ object ZinecraftCoreDataGenerator : DataGeneratorEntrypoint {
   override fun buildRegistry(registryBuilder: RegistrySetBuilder?) {
     registryBuilder?.add(Registries.CONFIGURED_FEATURE, ModWorldConfiguredFeatures::configure)
     registryBuilder?.add(Registries.PLACED_FEATURE, ModWorldPlacedFeatures::configure)
-    registryBuilder?.add(Registries.BIOME, ModBiomeProvider::configure)
-    registryBuilder?.add(Registries.PROCESSOR_LIST, ModTemplatePoolProvider::bootstrapProcessors)
-    registryBuilder?.add(Registries.TEMPLATE_POOL, ModTemplatePoolProvider::configure)
-    registryBuilder?.add(Registries.STRUCTURE, ModStructureProvider::configure)
-    registryBuilder?.add(Registries.STRUCTURE_SET, ModStructureSetProvider::configure)
+    registryBuilder?.add(Registries.BIOME, ModBiome::configure)
+    registryBuilder?.add(Registries.PROCESSOR_LIST, ModTemplatePool::configureProcessors)
+    registryBuilder?.add(Registries.TEMPLATE_POOL, ModTemplatePool::configureTemplate)
+    registryBuilder?.add(Registries.STRUCTURE, ModStructure::configure)
+    registryBuilder?.add(Registries.STRUCTURE_SET, ModStructureSet::configure)
   }
 }

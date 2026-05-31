@@ -238,19 +238,10 @@ object ModItem {
             Item.Properties()
                 .food(
                     FoodProperties.Builder().nutrition(6).saturationModifier(0.8f).alwaysEdible().fast()
-                        .effect(MobEffectInstance(MobEffects.JUMP,20*30,2),1.0f).build()
+                        .effect(MobEffectInstance(MobEffects.JUMP, 20 * 30, 2), 1.0f).build()
                 )
         )
     )
-
-    fun <T : Item> register(path: String, item: T): T {
-        val id = ResourceLocation.fromNamespaceAndPath(ZinecraftCore.MOD_ID, path)
-        return Registry.register(BuiltInRegistries.ITEM, id, item)
-    }
-
-    fun init() {
-        initCreativeTab()
-    }
 
 
     val ZINECRAFT_CORE_ITEM_GROUP_KEY: ResourceKey<CreativeModeTab?> = ResourceKey.create(
@@ -268,7 +259,7 @@ object ModItem {
             BuiltInRegistries.CREATIVE_MODE_TAB,
             ZINECRAFT_CORE_ITEM_GROUP_KEY,
             ZINECRAFT_CORE_ITEM_GROUP
-        );
+        )
 
         ItemGroupEvents.modifyEntriesEvent(ZINECRAFT_CORE_ITEM_GROUP_KEY)
             .register(ModifyEntries { content: FabricItemGroupEntries ->
@@ -347,6 +338,15 @@ object ModItem {
                 content.accept(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem())
             })
     }
+
+    private fun <T : Item> register(name: String, item: T): T {
+        return ZinecraftCore.register(BuiltInRegistries.ITEM, name, item)
+    }
+
+    fun init() {
+        initCreativeTab()
+    }
+
 
 }
 

@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.datagen
+package com.cxxcxx.zinecraft.core.data
 
 import com.cxxcxx.zinecraft.core.ZinecraftCore
 import com.cxxcxx.zinecraft.core.block.ModBlock
