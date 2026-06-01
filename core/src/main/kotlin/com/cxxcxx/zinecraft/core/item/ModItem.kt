@@ -3,6 +3,7 @@ package com.cxxcxx.zinecraft.core.item
 
 import com.cxxcxx.zinecraft.core.ZinecraftCore
 import com.cxxcxx.zinecraft.core.block.ModBlock
+import com.cxxcxx.zinecraft.core.data.ModSound
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
@@ -11,13 +12,13 @@ import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
 
 
 object ModItem {
@@ -243,10 +244,40 @@ object ModItem {
         )
     )
 
+    // 唱片
+    val PICTURES_OF_THE_PAST: Item = register(
+        "pictures_of_the_past",
+        Item(
+            Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+                .jukeboxPlayable(ModSound.KEY_PICTURES_OF_THE_PAST_SONG)
+        )
+    )
+    val MUSIC_SUNDOWN: Item = register(
+        "music_sundown",
+        Item(
+            Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+                .jukeboxPlayable(ModSound.KEY_MUSIC_SUNDOWN_SONG)
+        )
+    )
+    val RANDOM_GODS: Item = register(
+        "random_gods",
+        Item(
+            Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+                .jukeboxPlayable(ModSound.KEY_RANDOM_GODS_SONG)
+        )
+    )
+    val STRANGER_THINK: Item = register(
+        "stranger_think",
+        Item(
+            Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+                .jukeboxPlayable(ModSound.KEY_STRANGER_THINK_SONG)
+        )
+    )
+
 
     val ZINECRAFT_CORE_ITEM_GROUP_KEY: ResourceKey<CreativeModeTab?> = ResourceKey.create(
         BuiltInRegistries.CREATIVE_MODE_TAB.key(),
-        ResourceLocation.fromNamespaceAndPath(ZinecraftCore.MOD_ID, "item")
+        ZinecraftCore.id("item")
     )
     val ZINECRAFT_CORE_ITEM_GROUP: CreativeModeTab = FabricItemGroup.builder()
         .icon({ ItemStack(D32_STEEL) })
@@ -334,6 +365,10 @@ object ModItem {
                 content.accept(CHIP_MEDIC)
                 content.accept(CHIP_MEDIC_GROUP)
                 content.accept(MAGIC_DUST)
+                content.accept(PICTURES_OF_THE_PAST)
+                content.accept(STRANGER_THINK)
+                content.accept(RANDOM_GODS)
+                content.accept(MUSIC_SUNDOWN)
 
                 content.accept(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem())
             })

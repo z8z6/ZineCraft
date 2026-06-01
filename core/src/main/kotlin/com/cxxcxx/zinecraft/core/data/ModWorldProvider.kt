@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import java.util.concurrent.CompletableFuture
 
+// 动态注册器
 class ModWorldProvider(
   output: FabricDataOutput?,
   registriesFuture: CompletableFuture<HolderLookup.Provider?>?
@@ -20,9 +21,10 @@ class ModWorldProvider(
     entries.addAll(registries.lookupOrThrow(Registries.TEMPLATE_POOL))
     entries.addAll(registries.lookupOrThrow(Registries.STRUCTURE))
     entries.addAll(registries.lookupOrThrow(Registries.STRUCTURE_SET))
+    entries.addAll(registries.lookupOrThrow(Registries.JUKEBOX_SONG))
   }
 
   override fun getName(): String {
-    return "World Generation"
+    return "Dynamic Data Generation"
   }
 }

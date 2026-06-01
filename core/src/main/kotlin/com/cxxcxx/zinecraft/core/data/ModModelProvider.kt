@@ -89,6 +89,11 @@ class ModModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
     itemModelGenerator?.generateFlatItem(ModItem.CHIP_MEDIC, ModelTemplates.FLAT_ITEM)
     itemModelGenerator?.generateFlatItem(ModItem.CHIP_MEDIC_GROUP, ModelTemplates.FLAT_ITEM)
     itemModelGenerator?.generateFlatItem(ModItem.MAGIC_DUST, ModelTemplates.FLAT_ITEM)
+    // 唱片模型
+    itemModelGenerator?.generateFlatItem(ModItem.PICTURES_OF_THE_PAST, ModelTemplates.MUSIC_DISC)
+    itemModelGenerator?.generateFlatItem(ModItem.MUSIC_SUNDOWN, ModelTemplates.MUSIC_DISC)
+    itemModelGenerator?.generateFlatItem(ModItem.STRANGER_THINK, ModelTemplates.MUSIC_DISC)
+    itemModelGenerator?.generateFlatItem(ModItem.RANDOM_GODS, ModelTemplates.MUSIC_DISC)
 
     itemModelGenerator?.generateFlatItem(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem(), ModelTemplates.FLAT_ITEM)
   }

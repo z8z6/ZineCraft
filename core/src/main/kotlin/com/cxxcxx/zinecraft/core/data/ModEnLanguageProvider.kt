@@ -89,6 +89,15 @@ class ModEnLanguageProvider(
     translationBuilder?.add(ModItem.CHIP_MEDIC, "Medic Chip")
     translationBuilder?.add(ModItem.CHIP_MEDIC_GROUP, "Medic Chip Set")
     translationBuilder?.add(ModItem.MAGIC_DUST, "Magic Dust")
+    translationBuilder?.add(ModItem.PICTURES_OF_THE_PAST, "Music Disk")
+    translationBuilder?.add(ModItem.RANDOM_GODS, "Music Disk")
+    translationBuilder?.add(ModItem.MUSIC_SUNDOWN, "Music Disk")
+    translationBuilder?.add(ModItem.STRANGER_THINK, "Music Disk")
+    // 唱片描述
+    translationBuilder?.add("music.pictures_of_the_past", "James Primate - Pictures of the Past")
+    translationBuilder?.add("music.music_sundown", "James Primate - Sundown (Theme I)")
+    translationBuilder?.add("music.random_gods", "James Primate - Random Gods (Theme III)")
+    translationBuilder?.add("music.stranger_think", "C418 - Stranger Think")
 
     translationBuilder?.add(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem(), "Example Entity Block")
   }

@@ -1,10 +1,7 @@
 package com.cxxcxx.zinecraft.core
 
 import com.cxxcxx.zinecraft.core.block.ModBlock
-import com.cxxcxx.zinecraft.core.data.ModBiome
-import com.cxxcxx.zinecraft.core.data.ModStructure
-import com.cxxcxx.zinecraft.core.data.ModTemplatePool
-import com.cxxcxx.zinecraft.core.data.ModWorldPlacedFeatures
+import com.cxxcxx.zinecraft.core.data.*
 import com.cxxcxx.zinecraft.core.entity.ModBlockEntity
 import com.cxxcxx.zinecraft.core.item.CompostableItemRegistry
 import com.cxxcxx.zinecraft.core.item.FuelRegister
@@ -25,15 +22,16 @@ object ZinecraftCore : ModInitializer {
   val logger = LoggerFactory.getLogger(MOD_ID)
 
   override fun onInitialize() {
+    ModSound.init()
     ModItem.init()
     FuelRegister.init()
     CompostableItemRegistry.init()
     ModBlock.init()
     ModBlockEntity.init()
     ModBiome.init()
-    initBiome()
     ModTemplatePool.init()
     ModStructure.init()
+    initBiome()
   }
 
   fun initBiome() {

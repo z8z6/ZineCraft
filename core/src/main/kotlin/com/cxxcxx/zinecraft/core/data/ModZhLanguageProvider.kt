@@ -85,6 +85,10 @@ class ModZhLanguageProvider(
     translationBuilder?.add(ModItem.CHIP_MEDIC, "医疗芯片")
     translationBuilder?.add(ModItem.CHIP_MEDIC_GROUP, "医疗芯片组")
     translationBuilder?.add(ModItem.MAGIC_DUST, "魔法粉尘")
+    translationBuilder?.add(ModItem.PICTURES_OF_THE_PAST, "音乐唱片")
+    translationBuilder?.add(ModItem.RANDOM_GODS, "音乐唱片")
+    translationBuilder?.add(ModItem.MUSIC_SUNDOWN, "音乐唱片")
+    translationBuilder?.add(ModItem.STRANGER_THINK, "音乐唱片")
 
     translationBuilder?.add(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem(), "示例实体方块")
   }

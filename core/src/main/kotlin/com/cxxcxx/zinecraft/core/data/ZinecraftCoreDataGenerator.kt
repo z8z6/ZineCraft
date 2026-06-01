@@ -28,5 +28,6 @@ object ZinecraftCoreDataGenerator : DataGeneratorEntrypoint {
     registryBuilder?.add(Registries.TEMPLATE_POOL, ModTemplatePool::configureTemplate)
     registryBuilder?.add(Registries.STRUCTURE, ModStructure::configure)
     registryBuilder?.add(Registries.STRUCTURE_SET, ModStructureSet::configure)
+    registryBuilder?.add(Registries.JUKEBOX_SONG, ModSound::configure)
   }
 }
