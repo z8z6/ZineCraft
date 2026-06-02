@@ -22,15 +22,15 @@ object ZinecraftCore : ModInitializer {
   val logger = LoggerFactory.getLogger(MOD_ID)
 
   override fun onInitialize() {
-    ModSound.init()
-    ModItem.init()
-    FuelRegister.init()
-    CompostableItemRegistry.init()
-    ModBlock.init()
-    ModBlockEntity.init()
-    ModBiome.init()
-    ModTemplatePool.init()
-    ModStructure.init()
+    ModSound
+    ModItem
+    FuelRegister
+    CompostableItemRegistry
+    ModBlock
+    ModBlockEntity
+    ModBiome
+    ModTemplatePool
+    ModStructure
     initBiome()
   }
 

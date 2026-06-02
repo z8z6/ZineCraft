@@ -34,7 +34,4 @@ object ModBlockEntity {
     )
   }
 
-  fun init() {
-    EXAMPLE_BLOCK_ENTITY
-  }
 }

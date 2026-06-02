@@ -25,7 +25,8 @@ object ModBlock {
       : Block {
 
     // 有些方块不应该有物品
-    // `minecraft:air` or `minecraft:end_gateway`
+    // minecraft:air 空气
+    // minecraft:end_gateway 末地传送门
     if (shouldRegisterItem) {
       val blockItem = BlockItem(block, Item.Properties())
       ZinecraftCore.register(BuiltInRegistries.ITEM, name, blockItem)
@@ -34,5 +35,4 @@ object ModBlock {
     return ZinecraftCore.register(BuiltInRegistries.BLOCK, name, block)
   }
 
-  fun init() {}
 }

@@ -65,16 +65,16 @@ class ModRecipeProvider(
 
 
     ShapelessRecipeBuilder
-      .shapeless(RecipeCategory.MISC, ModItem.MAGIC_DUST, 4)
-      .requires(ModItem.MAGIC_DUST, 2)
-      .unlockedBy(getHasName(ModItem.MAGIC_DUST), has(ModItem.MAGIC_DUST))
+      .shapeless(RecipeCategory.MISC, ModItem.MAGIC_DUST.item, 4)
+      .requires(ModItem.MAGIC_DUST.item, 2)
+      .unlockedBy(getHasName(ModItem.MAGIC_DUST.item), has(ModItem.MAGIC_DUST.item))
       .save(exporter)
 
     oreSmelting(
       exporter,
-      listOf(ModItem.MAGIC_DUST),
+      listOf(ModItem.MAGIC_DUST.item),
       RecipeCategory.MISC,
-      ModItem.MAGIC_DUST,
+      ModItem.MAGIC_DUST.item,
       0.1f,
       20,
       "magic_dust_copy"

@@ -1,7 +1,5 @@
 package com.cxxcxx.zinecraft.core.data
 
-import com.cxxcxx.zinecraft.core.client.datagen.ModEnLanguageProvider
-import com.cxxcxx.zinecraft.core.client.datagen.ModModelProvider
 import com.cxxcxx.zinecraft.core.client.datagen.ModZhLanguageProvider
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator

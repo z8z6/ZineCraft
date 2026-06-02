@@ -10,6 +10,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.data.models.model.ModelTemplate
+import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.effect.MobEffectInstance
@@ -23,365 +25,176 @@ import net.minecraft.world.item.Rarity
 
 object ModItem {
 
-    val EXAMPLE_ITEM: Item = register("example_item", Item(Item.Properties()))
-
-    // 源岩
-    val ORIROCK: Item = register("orirock", Item(Item.Properties()))
-
-    // 固源岩
-    val ORIROCK_CUBE: Item = register("orirock_cube", Item(Item.Properties()))
-
-    // 固源岩组
-    val ORIROCK_CLUSTER: Item = register("orirock_cluster", Item(Item.Properties()))
-
-    // 提纯源岩
-    val ORIROCK_CONCENTRATION: Item = register("orirock_concentration", Item(Item.Properties()))
-
-    // 源石
-    val ORIGINITE: Item = register("originite", Item(Item.Properties()))
-
-    // 源石碎片
-    val ORIGINIUM_POWDER: Item = register("originium_powder", Item(Item.Properties()))
-
-    // 研磨石
-    val GRINDSTONE: Item = register("grindstone", Item(Item.Properties()))
-
-    // 五水研磨石
-    val GRINDSTONE_PENTAHYDRATE: Item = register("grindstone_pentahydrate", Item(Item.Properties()))
-
-    // 轻锰矿
-    val MANGANESE_ORE: Item = register("manganese_ore", Item(Item.Properties()))
-
-    // 三水锰矿
-    val MANGANESE_TRIHYDRATE: Item = register("manganese_trihydrate", Item(Item.Properties()))
-
-    // RMA70-12
-    val RMA70_12: Item = register("rma70_12", Item(Item.Properties()))
-
-    // RMA70-24
-    val RMA70_24: Item = register("rma70_24", Item(Item.Properties()))
-
-    // 晶体元件
-    val CRYSTAL_ELEMENT: Item = register("crystal_element", Item(Item.Properties()))
-
-    // 晶体电路
-    val CRYSTAL_GROUP: Item = register("crystal_group", Item(Item.Properties()))
-
-    // 晶体电子单元
-    val CRYSTALLINE_CIRCUIT: Item = register("crystalline_circuit", Item(Item.Properties()))
-
-    // 酯原料
-    val ESTER_RAW: Item = register("ester_raw", Item(Item.Properties()))
-
-    // 聚酸酯
-    val POLYESTER: Item = register("polyester", Item(Item.Properties()))
-
-    // 聚酸酯组
-    val POLYESTER_GROUP: Item = register("polyester_group", Item(Item.Properties()))
-
-    // 聚酸酯块
-    val POLYESTER_BLOCK: Item = register("polyester_block", Item(Item.Properties()))
-
-    // 代糖
-    val SUGAR_SUBSTITUTE: Item = register("sugar_substitute", Item(Item.Properties()))
-
-    // 糖
-    val SUGAR: Item = register("sugar", Item(Item.Properties()))
-
-    // 糖组
-    val SUGAR_GROUP: Item = register("sugar_group", Item(Item.Properties()))
-
-    // 糖聚块
-    val SUGAR_POLYMER: Item = register("sugar_polymer", Item(Item.Properties()))
-
-    // 化合切削液
-    val COMBINED_CUTTING_FLUID: Item = register("compound_cutting_fluid", Item(Item.Properties()))
-
-    // 切削原液
-    val CUTTING_FLUID_SOLUTION: Item = register("cutting_fluid_solution", Item(Item.Properties()))
-
-    // 半自然溶剂
-    val SEMI_SYNTHETIC_SOLVENT: Item = register("semi_synthetic_solvent", Item(Item.Properties()))
-
-    // 精练溶剂
-    val REFINED_SOLVENT: Item = register("refined_solvent", Item(Item.Properties()))
-
-    // 破损装置
-    val DAMAGED_DEVICE: Item = register("damaged_device", Item(Item.Properties()))
-
-    // 装置
-    val DEVICE_CORE: Item = register("device", Item(Item.Properties()))
-
-    // 全新装置
-    val DEVICE_GROUP: Item = register("integrated_device", Item(Item.Properties()))
-
-    // 改良装置
-    val OPTIMIZED_DEVICE: Item = register("optimized_device", Item(Item.Properties()))
-
-    // 双极纳米片
-    val BIPOLAR_NANOSHEET: Item = register("bipolar_nanosheet", Item(Item.Properties()))
-
-    // D32钢
-    val D32_STEEL: Item = register("d32_steel", Item(Item.Properties()))
-
-    // 异铁碎片
-    val ORIRON_SHARD: Item = register("oriron_shard", Item(Item.Properties()))
-
-    // 异铁
-    val ORIRON: Item = register("oriron", Item(Item.Properties()))
-
-    // 异铁组
-    val ORIRON_GROUP: Item = register("oriron_group", Item(Item.Properties()))
-
-    // 异铁块
-    val ORIRON_CLUSTER: Item = register("oriron_cluster", Item(Item.Properties()))
-
-    // 双酮
-    val DIKETONE: Item = register("diketon", Item(Item.Properties()))
-
-    // 酮凝集
-    val AKETON: Item = register("aketone", Item(Item.Properties()))
-
-    // 酮凝集组
-    val POLYKETON: Item = register("polyketon", Item(Item.Properties()))
-
-    // 酮阵列
-    val KETON_COLLOID: Item = register("keton_colloid", Item(Item.Properties()))
-
-    // 聚合剂
-    val POLYMER_AGENT: Item = register("polymer_agent", Item(Item.Properties()))
-
-    // 炽合金
-    val LOXIC_KOHL: Item = register("loxic_kohl", Item(Item.Properties()))
-
-    // 炽合金块
-    val INCANDESCENT_ALLOY: Item = register("incandescent_alloy", Item(Item.Properties()))
-
-    // 凝胶
-    val GEL: Item = register("gel", Item(Item.Properties()))
-
-    // 聚合凝胶
-    val COAGULATING_GEL: Item = register("coagulating_gel", Item(Item.Properties()))
-
-    // 扭转醇
-    val TWISTED_ALCOHOL: Item = register("twisted_alcohol", Item(Item.Properties()))
-
-    // 白马醇
-    val WHITE_HORSE_KOHL: Item = register("white_horse_kohl", Item(Item.Properties()))
-
-    // 技巧概要·卷1
-    val SKILL_SUMMARY_1: Item = register("skill_summary_1", Item(Item.Properties()))
-
-    // 技巧概要·卷2
-    val SKILL_SUMMARY_2: Item = register("skill_summary_2", Item(Item.Properties()))
-
-    // 技巧概要·卷3
-    val SKILL_SUMMARY_3: Item = register("skill_summary_3", Item(Item.Properties()))
-
-    // 寻访凭证
-    val HEADHUNT_TICKET: Item = register("headhunt_ticket", Item(Item.Properties()))
-
-    // 龙门币
-    val LMD: Item = register("lmd", Item(Item.Properties()))
-
-    // 先锋芯片
-    val CHIP_VANGUARD: Item = register("chip_vanguard", Item(Item.Properties()))
-
-    // 先锋芯片组
-    val CHIP_VANGUARD_GROUP: Item = register("chip_vanguard_group", Item(Item.Properties()))
-
-    // 近卫芯片
-    val CHIP_GUARD: Item = register("chip_guard", Item(Item.Properties()))
-
-    // 近卫芯片组
-    val CHIP_GUARD_GROUP: Item = register("chip_guard_group", Item(Item.Properties()))
-
-    // 狙击芯片
-    val CHIP_SNIPER: Item = register("chip_sniper", Item(Item.Properties()))
-
-    // 狙击芯片组
-    val CHIP_SNIPER_GROUP: Item = register("chip_sniper_group", Item(Item.Properties()))
-
-    // 术士芯片
-    val CHIP_CASTER: Item = register("chip_caster", Item(Item.Properties()))
-
-    // 术士芯片组
-    val CHIP_CASTER_GROUP: Item = register("chip_caster_group", Item(Item.Properties()))
-
-    // 特种芯片
-    val CHIP_SPECIAL: Item = register("chip_special", Item(Item.Properties()))
-
-    // 特种芯片组
-    val CHIP_SPECIAL_GROUP: Item = register("chip_special_group", Item(Item.Properties()))
-
-    // 辅助芯片
-    val CHIP_SUPPORT: Item = register("chip_support", Item(Item.Properties()))
-
-    // 辅助芯片组
-    val CHIP_SUPPORT_GROUP: Item = register("chip_support_group", Item(Item.Properties()))
-
-    // 重装芯片
-    val CHIP_DEFENDER: Item = register("chip_defender", Item(Item.Properties()))
-
-    // 重装芯片组
-    val CHIP_DEFENDER_GROUP: Item = register("chip_defender_group", Item(Item.Properties()))
-
-    // 医疗芯片
-    val CHIP_MEDIC: Item = register("chip_medic", Item(Item.Properties()))
-
-    // 医疗芯片组
-    val CHIP_MEDIC_GROUP: Item = register("chip_medic_group", Item(Item.Properties()))
-
-    // 魔法粉尘
-    val MAGIC_DUST: Item = register(
-        "magic_dust",
-        Item(
-            Item.Properties()
-                .food(
-                    FoodProperties.Builder().nutrition(6).saturationModifier(0.8f).alwaysEdible().fast()
-                        .effect(MobEffectInstance(MobEffects.JUMP, 20 * 30, 2), 1.0f).build()
-                )
+  val EXAMPLE_ITEM: ItemWrap<Item> = ItemWrap("example_item", "")
+
+  val ORIROCK: ItemWrap<Item> = ItemWrap("orirock", "源岩")
+  val ORIROCK_CUBE: ItemWrap<Item> = ItemWrap("orirock_cube", "固源岩")
+  val ORIROCK_CLUSTER: ItemWrap<Item> = ItemWrap("orirock_cluster", "固源岩组")
+  val ORIROCK_CONCENTRATION: ItemWrap<Item> = ItemWrap("orirock_concentration", "提纯源岩")
+  val ORIGINITE: ItemWrap<Item> = ItemWrap("originite", "源石")
+  val ORIGINIUM_POWDER: ItemWrap<Item> = ItemWrap("originium_powder", "源石碎片")
+  val GRINDSTONE: ItemWrap<Item> = ItemWrap("grindstone", "研磨石")
+  val GRINDSTONE_PENTAHYDRATE: ItemWrap<Item> = ItemWrap("grindstone_pentahydrate", "五水研磨石")
+  val MANGANESE_ORE: ItemWrap<Item> = ItemWrap("manganese_ore", "轻锰矿")
+  val MANGANESE_TRIHYDRATE: ItemWrap<Item> = ItemWrap("manganese_trihydrate", "三水锰矿")
+  val RMA70_12: ItemWrap<Item> = ItemWrap("rma70_12", "RMA70-12")
+  val RMA70_24: ItemWrap<Item> = ItemWrap("rma70_24", "RMA70-24")
+  val CRYSTAL_ELEMENT: ItemWrap<Item> = ItemWrap("crystal_element", "晶体元件")
+  val CRYSTAL_GROUP: ItemWrap<Item> = ItemWrap("crystal_group", "晶体电路")
+  val CRYSTALLINE_CIRCUIT: ItemWrap<Item> = ItemWrap("crystalline_circuit", "晶体电子单元")
+  val ESTER_RAW: ItemWrap<Item> = ItemWrap("ester_raw", "酯原料")
+  val POLYESTER: ItemWrap<Item> = ItemWrap("polyester", "聚酸酯")
+  val POLYESTER_GROUP: ItemWrap<Item> = ItemWrap("polyester_group", "聚酸酯组")
+  val POLYESTER_BLOCK: ItemWrap<Item> = ItemWrap("polyester_block", "聚酸酯块")
+  val SUGAR_SUBSTITUTE: ItemWrap<Item> = ItemWrap("sugar_substitute", "代糖")
+  val SUGAR: ItemWrap<Item> = ItemWrap("sugar", "糖")
+  val SUGAR_GROUP: ItemWrap<Item> = ItemWrap("sugar_group", "糖组")
+  val SUGAR_POLYMER: ItemWrap<Item> = ItemWrap("sugar_polymer", "糖聚块")
+  val COMBINED_CUTTING_FLUID: ItemWrap<Item> = ItemWrap("compound_cutting_fluid", "化合切削液")
+  val CUTTING_FLUID_SOLUTION: ItemWrap<Item> = ItemWrap("cutting_fluid_solution", "切削原液")
+  val SEMI_SYNTHETIC_SOLVENT: ItemWrap<Item> = ItemWrap("semi_synthetic_solvent", "半自然溶剂")
+  val REFINED_SOLVENT: ItemWrap<Item> = ItemWrap("refined_solvent", "精练溶剂")
+  val DAMAGED_DEVICE: ItemWrap<Item> = ItemWrap("damaged_device", "破损装置")
+  val DEVICE_CORE: ItemWrap<Item> = ItemWrap("device", "装置")
+  val DEVICE_GROUP: ItemWrap<Item> = ItemWrap("integrated_device", "全新装置")
+  val OPTIMIZED_DEVICE: ItemWrap<Item> = ItemWrap("optimized_device", "改良装置")
+  val BIPOLAR_NANOSHEET: ItemWrap<Item> = ItemWrap("bipolar_nanosheet", "双极纳米片")
+  val D32_STEEL: ItemWrap<Item> = ItemWrap("d32_steel", "D32钢")
+  val ORIRON_SHARD: ItemWrap<Item> = ItemWrap("oriron_shard", "异铁碎片")
+  val ORIRON: ItemWrap<Item> = ItemWrap("oriron", "异铁")
+  val ORIRON_GROUP: ItemWrap<Item> = ItemWrap("oriron_group", "异铁组")
+  val ORIRON_CLUSTER: ItemWrap<Item> = ItemWrap("oriron_cluster", "异铁块")
+  val DIKETONE: ItemWrap<Item> = ItemWrap("diketon", "双酮")
+  val AKETON: ItemWrap<Item> = ItemWrap("aketone", "酮凝集")
+  val POLYKETON: ItemWrap<Item> = ItemWrap("polyketon", "酮凝集组")
+  val KETON_COLLOID: ItemWrap<Item> = ItemWrap("keton_colloid", "酮阵列")
+  val POLYMER_AGENT: ItemWrap<Item> = ItemWrap("polymer_agent", "聚合剂")
+  val LOXIC_KOHL: ItemWrap<Item> = ItemWrap("loxic_kohl", "炽合金")
+  val INCANDESCENT_ALLOY: ItemWrap<Item> = ItemWrap("incandescent_alloy", "炽合金块")
+  val GEL: ItemWrap<Item> = ItemWrap("gel", "凝胶")
+  val COAGULATING_GEL: ItemWrap<Item> = ItemWrap("coagulating_gel", "聚合凝胶")
+  val TWISTED_ALCOHOL: ItemWrap<Item> = ItemWrap("twisted_alcohol", "扭转醇")
+  val WHITE_HORSE_KOHL: ItemWrap<Item> = ItemWrap("white_horse_kohl", "白马醇")
+  val SKILL_SUMMARY_1: ItemWrap<Item> = ItemWrap("skill_summary_1", "技巧概要·卷1")
+  val SKILL_SUMMARY_2: ItemWrap<Item> = ItemWrap("skill_summary_2", "技巧概要·卷2")
+  val SKILL_SUMMARY_3: ItemWrap<Item> = ItemWrap("skill_summary_3", "技巧概要·卷3")
+  val HEADHUNT_TICKET: ItemWrap<Item> = ItemWrap("headhunt_ticket", "寻访凭证")
+  val LMD: ItemWrap<Item> = ItemWrap("lmd", "龙门币")
+  val CHIP_VANGUARD: ItemWrap<Item> = ItemWrap("chip_vanguard", "先锋芯片")
+  val CHIP_VANGUARD_GROUP: ItemWrap<Item> = ItemWrap("chip_vanguard_group", "先锋芯片组")
+  val CHIP_GUARD: ItemWrap<Item> = ItemWrap("chip_guard", "近卫芯片")
+  val CHIP_GUARD_GROUP: ItemWrap<Item> = ItemWrap("chip_guard_group", "近卫芯片组")
+  val CHIP_SNIPER: ItemWrap<Item> = ItemWrap("chip_sniper", "狙击芯片")
+  val CHIP_SNIPER_GROUP: ItemWrap<Item> = ItemWrap("chip_sniper_group", "狙击芯片组")
+  val CHIP_CASTER: ItemWrap<Item> = ItemWrap("chip_caster", "术士芯片")
+  val CHIP_CASTER_GROUP: ItemWrap<Item> = ItemWrap("chip_caster_group", "术士芯片组")
+  val CHIP_SPECIAL: ItemWrap<Item> = ItemWrap("chip_special", "特种芯片")
+  val CHIP_SPECIAL_GROUP: ItemWrap<Item> = ItemWrap("chip_special_group", "特种芯片组")
+  val CHIP_SUPPORT: ItemWrap<Item> = ItemWrap("chip_support", "辅助芯片")
+  val CHIP_SUPPORT_GROUP: ItemWrap<Item> = ItemWrap("chip_support_group", "辅助芯片组")
+  val CHIP_DEFENDER: ItemWrap<Item> = ItemWrap("chip_defender", "重装芯片")
+  val CHIP_DEFENDER_GROUP: ItemWrap<Item> = ItemWrap("chip_defender_group", "重装芯片组")
+  val CHIP_MEDIC: ItemWrap<Item> = ItemWrap("chip_medic", "医疗芯片")
+  val CHIP_MEDIC_GROUP: ItemWrap<Item> = ItemWrap("chip_medic_group", "医疗芯片组")
+
+  val MAGIC_DUST: ItemWrap<Item> = ItemWrap(
+    "magic_dust", "魔法粉尘",
+    Item(
+      Item.Properties()
+        .food(
+          FoodProperties.Builder().nutrition(6).saturationModifier(0.8f).alwaysEdible().fast()
+            .effect(MobEffectInstance(MobEffects.JUMP, 20 * 30, 2), 1.0f).build()
         )
     )
+  )
 
-    // 唱片
-    val PICTURES_OF_THE_PAST: Item = register(
-        "pictures_of_the_past",
-        Item(
-            Item.Properties().stacksTo(1).rarity(Rarity.RARE)
-                .jukeboxPlayable(ModSound.KEY_PICTURES_OF_THE_PAST_SONG)
-        )
+  val PICTURES_OF_THE_PAST: ItemWrap<Item> = ItemWrap(
+    ModSound.AMBIENT_PICTURES_OF_THE_PAST.name, "音乐唱片",
+    Item(
+      Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+        .jukeboxPlayable(ModSound.AMBIENT_PICTURES_OF_THE_PAST.keySong)
+    ),
+    ModelTemplates.MUSIC_DISC
+  )
+  val RANDOM_GODS: ItemWrap<Item> = ItemWrap(
+    ModSound.AMBIENT_RANDOM_GODS.name, "音乐唱片",
+    Item(
+      Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+        .jukeboxPlayable(ModSound.AMBIENT_RANDOM_GODS.keySong)
+    ),
+    ModelTemplates.MUSIC_DISC
+  )
+  val STRANGER_THINK: ItemWrap<Item> = ItemWrap(
+    ModSound.AMBIENT_STRANGER_THINK.name, "音乐唱片",
+    Item(
+      Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+        .jukeboxPlayable(ModSound.AMBIENT_STRANGER_THINK.keySong)
+    ),
+    ModelTemplates.MUSIC_DISC
+  )
+
+
+  val ZINECRAFT_CORE_ITEM_GROUP_KEY: ResourceKey<CreativeModeTab?> = ResourceKey.create(
+    BuiltInRegistries.CREATIVE_MODE_TAB.key(),
+    ZinecraftCore.id("item")
+  )
+  val ZINECRAFT_CORE_ITEM_GROUP: CreativeModeTab = FabricItemGroup.builder()
+    .icon({ ItemStack(D32_STEEL.item) })
+    .title(Component.translatable("itemGroup." + ZinecraftCore.MOD_ID))
+    .build()
+
+  fun initCreativeTab() {
+    // Register the group.
+    Registry.register(
+      BuiltInRegistries.CREATIVE_MODE_TAB,
+      ZINECRAFT_CORE_ITEM_GROUP_KEY,
+      ZINECRAFT_CORE_ITEM_GROUP
     )
-    val MUSIC_SUNDOWN: Item = register(
-        "music_sundown",
-        Item(
-            Item.Properties().stacksTo(1).rarity(Rarity.RARE)
-                .jukeboxPlayable(ModSound.KEY_MUSIC_SUNDOWN_SONG)
-        )
-    )
-    val RANDOM_GODS: Item = register(
-        "random_gods",
-        Item(
-            Item.Properties().stacksTo(1).rarity(Rarity.RARE)
-                .jukeboxPlayable(ModSound.KEY_RANDOM_GODS_SONG)
-        )
-    )
-    val STRANGER_THINK: Item = register(
-        "stranger_think",
-        Item(
-            Item.Properties().stacksTo(1).rarity(Rarity.RARE)
-                .jukeboxPlayable(ModSound.KEY_STRANGER_THINK_SONG)
-        )
-    )
+
+    ItemGroupEvents.modifyEntriesEvent(ZINECRAFT_CORE_ITEM_GROUP_KEY)
+      .register(ModifyEntries { content: FabricItemGroupEntries ->
+        ItemWrap.List.forEach { content.accept { it.item } }
+        content.accept(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem())
+      })
+  }
 
 
-    val ZINECRAFT_CORE_ITEM_GROUP_KEY: ResourceKey<CreativeModeTab?> = ResourceKey.create(
-        BuiltInRegistries.CREATIVE_MODE_TAB.key(),
-        ZinecraftCore.id("item")
-    )
-    val ZINECRAFT_CORE_ITEM_GROUP: CreativeModeTab = FabricItemGroup.builder()
-        .icon({ ItemStack(D32_STEEL) })
-        .title(Component.translatable("itemGroup." + ZinecraftCore.MOD_ID))
-        .build()
+  class ItemWrap<T : Item>(
+    var name: String,
+    var zh_cn: String,
+    var item: T = Item(Item.Properties()) as T,
+    var model: ModelTemplate = ModelTemplates.FLAT_ITEM,
+    var en_us: String = zh_cn.toSpaceTitleCase()
+  ) {
 
-    fun initCreativeTab() {
-        // Register the group.
-        Registry.register(
-            BuiltInRegistries.CREATIVE_MODE_TAB,
-            ZINECRAFT_CORE_ITEM_GROUP_KEY,
-            ZINECRAFT_CORE_ITEM_GROUP
-        )
-
-        ItemGroupEvents.modifyEntriesEvent(ZINECRAFT_CORE_ITEM_GROUP_KEY)
-            .register(ModifyEntries { content: FabricItemGroupEntries ->
-                content.accept(EXAMPLE_ITEM)
-                content.accept(ORIROCK)
-                content.accept(ORIROCK_CUBE)
-                content.accept(ORIROCK_CLUSTER)
-                content.accept(ORIROCK_CONCENTRATION)
-                content.accept(ORIGINITE)
-                content.accept(ORIGINIUM_POWDER)
-                content.accept(GRINDSTONE)
-                content.accept(GRINDSTONE_PENTAHYDRATE)
-                content.accept(MANGANESE_ORE)
-                content.accept(MANGANESE_TRIHYDRATE)
-                content.accept(RMA70_12)
-                content.accept(RMA70_24)
-                content.accept(CRYSTAL_ELEMENT)
-                content.accept(CRYSTAL_GROUP)
-                content.accept(CRYSTALLINE_CIRCUIT)
-                content.accept(ESTER_RAW)
-                content.accept(POLYESTER)
-                content.accept(POLYESTER_GROUP)
-                content.accept(POLYESTER_BLOCK)
-                content.accept(SUGAR_SUBSTITUTE)
-                content.accept(SUGAR)
-                content.accept(SUGAR_GROUP)
-                content.accept(SUGAR_POLYMER)
-                content.accept(COMBINED_CUTTING_FLUID)
-                content.accept(CUTTING_FLUID_SOLUTION)
-                content.accept(SEMI_SYNTHETIC_SOLVENT)
-                content.accept(REFINED_SOLVENT)
-                content.accept(DAMAGED_DEVICE)
-                content.accept(DEVICE_CORE)
-                content.accept(DEVICE_GROUP)
-                content.accept(OPTIMIZED_DEVICE)
-                content.accept(BIPOLAR_NANOSHEET)
-                content.accept(D32_STEEL)
-                content.accept(ORIRON_SHARD)
-                content.accept(ORIRON)
-                content.accept(ORIRON_GROUP)
-                content.accept(ORIRON_CLUSTER)
-                content.accept(DIKETONE)
-                content.accept(AKETON)
-                content.accept(POLYKETON)
-                content.accept(KETON_COLLOID)
-                content.accept(POLYMER_AGENT)
-                content.accept(LOXIC_KOHL)
-                content.accept(INCANDESCENT_ALLOY)
-                content.accept(GEL)
-                content.accept(COAGULATING_GEL)
-                content.accept(TWISTED_ALCOHOL)
-                content.accept(WHITE_HORSE_KOHL)
-                content.accept(SKILL_SUMMARY_1)
-                content.accept(SKILL_SUMMARY_2)
-                content.accept(SKILL_SUMMARY_3)
-                content.accept(HEADHUNT_TICKET)
-                content.accept(LMD)
-                content.accept(CHIP_VANGUARD)
-                content.accept(CHIP_VANGUARD_GROUP)
-                content.accept(CHIP_GUARD)
-                content.accept(CHIP_GUARD_GROUP)
-                content.accept(CHIP_SNIPER)
-                content.accept(CHIP_SNIPER_GROUP)
-                content.accept(CHIP_CASTER)
-                content.accept(CHIP_CASTER_GROUP)
-                content.accept(CHIP_SPECIAL)
-                content.accept(CHIP_SPECIAL_GROUP)
-                content.accept(CHIP_SUPPORT)
-                content.accept(CHIP_SUPPORT_GROUP)
-                content.accept(CHIP_DEFENDER)
-                content.accept(CHIP_DEFENDER_GROUP)
-                content.accept(CHIP_MEDIC)
-                content.accept(CHIP_MEDIC_GROUP)
-                content.accept(MAGIC_DUST)
-                content.accept(PICTURES_OF_THE_PAST)
-                content.accept(STRANGER_THINK)
-                content.accept(RANDOM_GODS)
-                content.accept(MUSIC_SUNDOWN)
-
-                content.accept(ModBlock.EXAMPLE_ENTITY_BLOCK.asItem())
-            })
+    init {
+      item = register(name, item)
+      List.add(this)
     }
 
-    private fun <T : Item> register(name: String, item: T): T {
+    companion object {
+      val List: MutableList<ItemWrap<*>> = mutableListOf()
+
+      private fun <I : Item> register(name: String, item: I): I {
         return ZinecraftCore.register(BuiltInRegistries.ITEM, name, item)
-    }
+      }
 
-    fun init() {
-        initCreativeTab()
+      fun String.toSpaceTitleCase(): String {
+        return split("_") // 按下划线分割成单词列表
+          .filter { it.isNotEmpty() } // 过滤空字符串
+          .joinToString(" ") { word ->
+            // 每个单词首字母大写，其余小写
+            word.replaceFirstChar { char ->
+              if (char.isLowerCase()) char.titlecase() else char.toString()
+            }
+          }
+      }
     }
+  }
 
+  init {
+    initCreativeTab()
+  }
 
 }
 
