@@ -19,6 +19,7 @@ import com.cxxcxx.zinecraft.core.item.ModItem
 import com.cxxcxx.zinecraft.core.sound.ModSound
 import com.cxxcxx.zinecraft.core.structure.ModStructure
 import com.cxxcxx.zinecraft.core.structure.NationLandmarks
+import com.cxxcxx.zinecraft.core.structure.NationSettlements
 import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
@@ -50,6 +51,7 @@ object Zinecraft : ModInitializer {
     ModBlockEntity
     NationBiomes
     NationLandmarks
+    NationSettlements
     ModWorldFeatures
     ModStructure
     WORLDGEN.initialize()

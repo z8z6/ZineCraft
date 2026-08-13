@@ -6,7 +6,7 @@ import net.minecraft.world.entity.MobCategory
 
 /** 泰拉十九个现存国家的 Minecraft 群系化表达；城市建筑为缩略地标，并非一比一复刻。 */
 object NationBiomes {
-  /** 阿戈尔深海：暗海晶石海床，海豚巡游，唯一地标为弥利亚留姆火山能源信标。 */
+  /** 阿戈尔深海：暗海晶石海床、海豚与海底聚居区，唯一地标为弥利亚留姆火山能源信标。 */
   val AEGIR_ABYSSAL_SEA = Zinecraft.BIOMES.register("aegir_abyssal_sea") {
     precipitation = false
     temperature = 0.4f
@@ -18,7 +18,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.WATER_CREATURE, EntityType.DOLPHIN, 8, 1, 2)
   }
 
-  /** 玻利瓦尔平原：战争侵蚀的砂土，鹦鹉象征多索雷斯热带风情，唯一地标为多索雷斯游艇。 */
+  /** 玻利瓦尔平原：战争侵蚀的砂土、鹦鹉与多索雷斯街区，唯一地标为多索雷斯游艇。 */
   val BOLIVAR_PLAIN = Zinecraft.BIOMES.register("bolivar_plain") {
     temperature = 0.9f
     downfall = 0.35f
@@ -28,7 +28,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.PARROT, 12, 1, 2)
   }
 
-  /** 东国常暗裂谷：灰化土山林与狐群，唯一地标为裂谷神社。 */
+  /** 东国常暗裂谷：灰化土山林、狐群与锁川町，唯一地标为裂谷神社。 */
   val HIGASHI_SHADOW_RIFT = Zinecraft.BIOMES.register("higashi_shadow_rift") {
     temperature = 0.6f
     downfall = 0.75f
@@ -39,7 +39,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.FOX, 10, 1, 2)
   }
 
-  /** 杜林地下花园：苔藓洞穴与发光鱿鱼，唯一地标为际崖城穹顶车站。 */
+  /** 杜林地下花园：苔藓洞穴、发光鱿鱼与理想城街区，唯一地标为际崖城穹顶车站。 */
   val DURIN_UNDERGROUND_GARDEN = Zinecraft.BIOMES.register("durin_underground_garden") {
     precipitation = false
     temperature = 1.0f
@@ -51,7 +51,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.UNDERGROUND_WATER_CREATURE, EntityType.GLOW_SQUID, 16, 2, 4)
   }
 
-  /** 哥伦比亚砂岩荒野：红砂峡谷与犰狳，唯一地标为拓荒区科研站。 */
+  /** 哥伦比亚砂岩荒野：红砂峡谷、犰狳与拓荒镇，唯一地标为拓荒区科研站。 */
   val COLUMBIA_SANDSTONE_WILDS = Zinecraft.BIOMES.register("columbia_sandstone_wilds") {
     precipitation = false
     temperature = 1.4f
@@ -62,7 +62,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.ARMADILLO, 14, 1, 3)
   }
 
-  /** 卡西米尔骑士领：草原与马群，唯一地标为大骑士竞技场门楼。 */
+  /** 卡西米尔骑士领：草原、马群与骑士城区，唯一地标为大骑士竞技场门楼。 */
   val KAZIMIERZ_KNIGHTLAND = Zinecraft.BIOMES.register("kazimierz_knightland") {
     temperature = 0.75f
     downfall = 0.35f
@@ -72,7 +72,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.HORSE, 18, 2, 5)
   }
 
-  /** 卡兹戴尔伤痕荒地：黑石废土与洞穴蜘蛛，唯一地标为巴别塔遗迹。 */
+  /** 卡兹戴尔伤痕荒地：黑石废土、洞穴蜘蛛与萨卡兹聚落，唯一地标为巴别塔遗迹。 */
   val KAZDEL_SCARRED_WASTES = Zinecraft.BIOMES.register("kazdel_scarred_wastes") {
     precipitation = false
     temperature = 0.8f
@@ -84,7 +84,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.MONSTER, EntityType.CAVE_SPIDER, 30, 1, 2)
   }
 
-  /** 拉特兰圣田：白色方解石地表与蜜蜂，唯一地标为启示石塔。 */
+  /** 拉特兰圣田：白色方解石地表、蜜蜂与修道院镇，唯一地标为启示石塔。 */
   val LATERANO_HOLY_FIELDS = Zinecraft.BIOMES.register("laterano_holy_fields") {
     temperature = 0.9f
     downfall = 0.5f
@@ -95,7 +95,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.BEE, 16, 2, 4)
   }
 
-  /** 莱塔尼亚暮色林：盘根森林与狼群，唯一地标为崔林特尔梅双塔。 */
+  /** 莱塔尼亚暮色林：盘根森林、狼群与音乐镇，唯一地标为崔林特尔梅双塔。 */
   val LEITHANIEN_TWILIGHT_FOREST = Zinecraft.BIOMES.register("leithanien_twilight_forest") {
     temperature = 0.55f
     downfall = 0.8f
@@ -106,7 +106,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.WOLF, 12, 2, 4)
   }
 
-  /** 雷姆必拓矿业荒地：陶土矿场与尸壳威胁，唯一地标为源石采掘井架。 */
+  /** 雷姆必拓矿业荒地：陶土矿场、尸壳与矿业营地，唯一地标为源石采掘井架。 */
   val RIM_BILLITON_MINING_BADLANDS = Zinecraft.BIOMES.register("rim_billiton_mining_badlands") {
     precipitation = false
     temperature = 1.5f
@@ -117,7 +117,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.MONSTER, EntityType.HUSK, 35, 1, 3)
   }
 
-  /** 米诺斯日照丘陵：夯土山坡与山羊，唯一地标为十二英雄神殿。 */
+  /** 米诺斯日照丘陵：夯土山坡、山羊与英雄城邦，唯一地标为十二英雄神殿。 */
   val MINOS_SUNLIT_HILLS = Zinecraft.BIOMES.register("minos_sunlit_hills") {
     temperature = 1.1f
     downfall = 0.35f
@@ -127,7 +127,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.GOAT, 14, 2, 4)
   }
 
-  /** 萨尔贡岩漠：沙海与骆驼，唯一地标为黄金之城宝石集市。 */
+  /** 萨尔贡岩漠：沙海、骆驼与绿洲镇，唯一地标为黄金之城宝石集市。 */
   val SARGON_ROCKY_DESERT = Zinecraft.BIOMES.register("sargon_rocky_desert") {
     precipitation = false
     temperature = 2.0f
@@ -137,7 +137,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.CAMEL, 12, 1, 2)
   }
 
-  /** 萨米冻林：积雪针叶林与北极熊，唯一地标为独眼巨人祭坛。 */
+  /** 萨米冻林：积雪针叶林、北极熊与雪祀村，唯一地标为独眼巨人祭坛。 */
   val SAMI_FROZEN_FOREST = Zinecraft.BIOMES.register("sami_frozen_forest") {
     temperature = -0.5f
     downfall = 0.8f
@@ -148,7 +148,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.POLAR_BEAR, 10, 1, 2)
   }
 
-  /** 维多利亚雾岭：泥泞高地与羊群，唯一地标为伦蒂尼姆城防炮。 */
+  /** 维多利亚雾岭：泥泞高地、羊群与工业城区，唯一地标为伦蒂尼姆城防炮。 */
   val VICTORIA_MISTY_HIGHLANDS = Zinecraft.BIOMES.register("victoria_misty_highlands") {
     temperature = 0.65f
     downfall = 0.9f
@@ -159,7 +159,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.SHEEP, 18, 2, 4)
   }
 
-  /** 乌萨斯冻原：坚冰台地与流髑，唯一地标为切尔诺伯格石棺站。 */
+  /** 乌萨斯冻原：坚冰台地、流髑与北方城镇，唯一地标为切尔诺伯格石棺站。 */
   val URSUS_FROZEN_STEPPE = Zinecraft.BIOMES.register("ursus_frozen_steppe") {
     temperature = -0.2f
     downfall = 0.3f
@@ -170,7 +170,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.MONSTER, EntityType.STRAY, 40, 1, 3)
   }
 
-  /** 谢拉格雪峰：蓝冰山脊与雪兔，唯一地标为喀兰峰蔓珠院。 */
+  /** 谢拉格雪峰：蓝冰山脊、雪兔与山村，唯一地标为喀兰峰蔓珠院。 */
   val KJERAG_SNOWY_PEAKS = Zinecraft.BIOMES.register("kjerag_snowy_peaks") {
     temperature = -0.7f
     downfall = 0.7f
@@ -181,7 +181,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.RABBIT, 14, 2, 3)
   }
 
-  /** 叙拉古雨林：苔石湿林与蜘蛛，唯一地标为家族联合法院。 */
+  /** 叙拉古雨林：苔石湿林、蜘蛛与家族镇，唯一地标为家族联合法院。 */
   val SIRACUSA_RAINY_WOODLAND = Zinecraft.BIOMES.register("siracusa_rainy_woodland") {
     temperature = 0.8f
     downfall = 0.95f
@@ -192,7 +192,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.MONSTER, EntityType.SPIDER, 45, 1, 3)
   }
 
-  /** 炎国山林：凝灰岩峰林与熊猫，唯一地标为玉门烽火台。 */
+  /** 炎国山林：凝灰岩峰林、熊猫与尚蜀山城，唯一地标为玉门烽火台。 */
   val YAN_MOUNTAIN_GROVE = Zinecraft.BIOMES.register("yan_mountain_grove") {
     temperature = 0.7f
     downfall = 0.8f
@@ -203,7 +203,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.CREATURE, EntityType.PANDA, 12, 1, 2)
   }
 
-  /** 伊比利亚盐风三角洲：砾石海岸与溺尸，唯一地标为伊比利亚之眼灯塔。 */
+  /** 伊比利亚盐风三角洲：砾石海岸、溺尸与海岸镇，唯一地标为伊比利亚之眼灯塔。 */
   val IBERIA_SALT_DELTA = Zinecraft.BIOMES.register("iberia_salt_delta") {
     temperature = 1.0f
     downfall = 0.8f

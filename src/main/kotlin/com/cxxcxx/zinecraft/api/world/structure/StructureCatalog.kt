@@ -83,6 +83,58 @@ class StructureCatalog(private val registrar: ModRegistrar) {
     }
   }
 
+  /**
+   * 注册可重复生成的大型 Jigsaw 聚落。
+   *
+   * 模板目录约定包含 `center`、四种 `street_*` 道路；功能建筑由 [buildingTemplates] 指定。
+   * 道路池自动使用地形贴合投影，中心和建筑保持刚性投影。
+   */
+  fun settlement(
+    path: String,
+    templateRoot: String,
+    biome: ResourceKey<Biome>,
+    salt: Int,
+    buildingTemplates: Map<String, Int>,
+    spacing: Int = 48,
+    separation: Int = 24,
+    size: Int = 7,
+    maxDistanceFromCenter: Int = 112,
+    heightmap: Heightmap.Types? = Heightmap.Types.WORLD_SURFACE_WG,
+    startHeight: Int = 0,
+    removeVinesChance: Float = 0f
+  ): JigsawBuildingEntry {
+    require(buildingTemplates.size >= 4) { "大型聚落至少需要四种功能建筑模板" }
+    return jigsawBuilding(
+      path = path,
+      spacing = spacing,
+      separation = separation,
+      salt = salt,
+      size = size,
+      maxDistanceFromCenter = maxDistanceFromCenter,
+      removeVinesChance = removeVinesChance,
+      biome = biome,
+      heightmap = heightmap,
+      startHeight = startHeight,
+      useExpansionHack = true
+    ) {
+      startPool = "center"
+      pool("center") {
+        template("$templateRoot/center")
+      }
+      pool("streets", StructureTemplatePool.Projection.TERRAIN_MATCHING) {
+        template("$templateRoot/street_straight", 5)
+        template("$templateRoot/street_corner", 3)
+        template("$templateRoot/street_cross", 2)
+        template("$templateRoot/street_end", 2)
+      }
+      pool("buildings") {
+        buildingTemplates.forEach { (templateName, weight) ->
+          template("$templateRoot/$templateName", weight)
+        }
+      }
+    }
+  }
+
   fun jigsawBuilding(
     path: String,
     spacing: Int = 32,
@@ -96,11 +148,12 @@ class StructureCatalog(private val registrar: ModRegistrar) {
     ringDistance: Int = 32,
     heightmap: Heightmap.Types? = Heightmap.Types.WORLD_SURFACE_WG,
     startHeight: Int = 0,
+    useExpansionHack: Boolean = false,
     build: JigsawBuildingBuilder.() -> Unit
   ): JigsawBuildingEntry {
     require(spacing > separation) { "spacing 必须大于 separation" }
     require(size in 0..20) { "Jigsaw 展开深度必须在 0 到 20 之间" }
-    require(maxDistanceFromCenter in 1..128) { "结构中心最大距离必须在 1 到 128 之间" }
+    require(maxDistanceFromCenter in 1..112) { "结构中心最大距离必须在 1 到 112 之间，以预留地形适配边界" }
     require(removeVinesChance in 0f..1f) { "藤蔓移除概率必须在 0 到 1 之间" }
     val definition = JigsawBuildingBuilder(path).apply(build).build()
     val poolKeys = definition.pools.associate { pool ->
@@ -123,7 +176,8 @@ class StructureCatalog(private val registrar: ModRegistrar) {
       unique,
       ringDistance,
       heightmap,
-      startHeight
+      startHeight,
+      useExpansionHack
     ).also(buildings::add)
   }
 
@@ -173,7 +227,7 @@ class StructureCatalog(private val registrar: ModRegistrar) {
         registrar.dynamic(
           context,
           building.poolKeys.getValue(pool.name),
-          StructureTemplatePool(emptyPool, elements, StructureTemplatePool.Projection.RIGID)
+          StructureTemplatePool(emptyPool, elements, pool.projection)
         )
       }
     }
@@ -199,7 +253,7 @@ class StructureCatalog(private val registrar: ModRegistrar) {
           Optional.empty(),
           building.size,
           ConstantHeight.of(VerticalAnchor.absolute(building.startHeight)),
-          false,
+          building.useExpansionHack,
           Optional.ofNullable(building.heightmap),
           building.maxDistanceFromCenter,
           emptyList<PoolAliasBinding>(),
@@ -261,17 +315,22 @@ class JigsawBuildingEntry internal constructor(
   internal val unique: Boolean,
   internal val ringDistance: Int,
   internal val heightmap: Heightmap.Types?,
-  internal val startHeight: Int
+  internal val startHeight: Int,
+  internal val useExpansionHack: Boolean
 )
 
 class JigsawBuildingBuilder internal constructor(private val path: String) {
   var startPool: String = "start"
   private val pools = mutableListOf<JigsawPoolDefinition>()
 
-  fun pool(name: String, build: JigsawPoolBuilder.() -> Unit) {
+  fun pool(
+    name: String,
+    projection: StructureTemplatePool.Projection = StructureTemplatePool.Projection.RIGID,
+    build: JigsawPoolBuilder.() -> Unit
+  ) {
     require(name.isNotBlank()) { "Jigsaw pool 名称不能为空" }
     require(pools.none { it.name == name }) { "Jigsaw pool 重复: $path/$name" }
-    pools += JigsawPoolBuilder(name).apply(build).build()
+    pools += JigsawPoolBuilder(name, projection).apply(build).build()
   }
 
   internal fun build(): JigsawBuildingDefinition {
@@ -281,7 +340,10 @@ class JigsawBuildingBuilder internal constructor(private val path: String) {
   }
 }
 
-class JigsawPoolBuilder internal constructor(private val name: String) {
+class JigsawPoolBuilder internal constructor(
+  private val name: String,
+  private val projection: StructureTemplatePool.Projection
+) {
   private val templates = mutableListOf<JigsawTemplateElement>()
 
   fun template(path: String, weight: Int = 1) {
@@ -292,7 +354,7 @@ class JigsawPoolBuilder internal constructor(private val name: String) {
 
   internal fun build(): JigsawPoolDefinition {
     require(templates.isNotEmpty()) { "Jigsaw 模板池不能为空: $name" }
-    return JigsawPoolDefinition(name, templates.toList())
+    return JigsawPoolDefinition(name, templates.toList(), projection)
   }
 }
 
@@ -301,6 +363,10 @@ internal data class JigsawBuildingDefinition(
   val pools: List<JigsawPoolDefinition>
 )
 
-data class JigsawPoolDefinition(val name: String, val templates: List<JigsawTemplateElement>)
+data class JigsawPoolDefinition(
+  val name: String,
+  val templates: List<JigsawTemplateElement>,
+  val projection: StructureTemplatePool.Projection
+)
 
 data class JigsawTemplateElement(val template: String, val weight: Int)

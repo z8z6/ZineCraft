@@ -17,7 +17,7 @@
 | `ENCHANTMENTS`   | `EnchantmentCatalog` | 1.21.1 动态附魔、翻译、等级成本、装备槽和效果 builder |
 | `BIOMES`         | `BiomeCatalog`       | 群系资源键及 bootstrap                   |
 | `FEATURES`       | `FeatureCatalog`     | 配置地物、放置地物和运行时群系注入                  |
-| `STRUCTURES`     | `StructureCatalog`   | 处理器、模板池、Jigsaw 结构和结构集              |
+| `STRUCTURES`     | `StructureCatalog`   | 简易建筑、大型 Jigsaw 聚落、唯一地标及其数据生成       |
 | `RECIPES`        | `RecipeCatalog`      | 可组合的配方生成回调                         |
 
 `REGISTRAR` 是底层命名空间注册器。具体内容优先使用上述领域目录；只有目录尚未覆盖的特殊注册表才直接使用它。

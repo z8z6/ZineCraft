@@ -11,6 +11,7 @@ import com.cxxcxx.zinecraft.core.recipe.ModRecipeProvider
 import com.cxxcxx.zinecraft.core.sound.ModSound
 import com.cxxcxx.zinecraft.core.structure.ModStructure
 import com.cxxcxx.zinecraft.core.structure.NationLandmarks
+import com.cxxcxx.zinecraft.core.structure.NationSettlements
 import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -25,6 +26,7 @@ object ZinecraftDataGenerator : DataGeneratorEntrypoint {
     ModBlock
     NationBiomes
     NationLandmarks
+    NationSettlements
     ModWorldFeatures
     ModStructure
     val pack = fabricDataGenerator.createPack()

@@ -1,5 +1,46 @@
 # 添加结构
 
+## 大型 Jigsaw 聚落
+
+城市、村落、营地等可重复生成的建筑群使用 `settlement`：
+
+```kotlin
+val MINING_CAMP = Zinecraft.STRUCTURES.settlement(
+  path = "mining_camp",
+  templateRoot = "settlements/mining_camp",
+  biome = ModBiomes.MINING_BADLANDS,
+  salt = 41002001,
+  buildingTemplates = linkedMapOf(
+    "bunkhouse" to 4,
+    "ore_workshop" to 3,
+    "freight_depot" to 2,
+    "canteen" to 2
+  ),
+  spacing = 52,
+  separation = 24,
+  size = 7
+)
+```
+
+封装自动建立三个模板池：
+
+- `center`：聚落中心，使用 `RIGID` 投影。
+- `streets`：直路、转角、十字路和道路末端，使用 `TERRAIN_MATCHING` 贴合地形。
+- `buildings`：至少四种带权重的功能建筑，使用 `RIGID` 投影。
+
+模板目录必须提供 `center.nbt`、`street_straight.nbt`、`street_corner.nbt`、`street_cross.nbt`、
+`street_end.nbt` 以及 `buildingTemplates` 中声明的建筑。`size` 控制道路网络的最大展开层数；建议大型聚落使用 6—8，
+并将 `maxDistanceFromCenter` 设为 96—112；封装将上限保留在 112，为原版地形适配边界预留空间。
+
+`NationSettlements` 已为十九个国家分别注册一套聚落，每套包含中心、四种道路和四种当地功能建筑。运行以下脚本可确定性重建
+全部 171 个模板：
+
+```powershell
+python script/generate_nation_settlements.py
+```
+
+普通聚落使用随机散布结构集，可以在不同区域重复出现；这与下方每世界一次的唯一地标是两种独立机制。
+
 ## 每世界唯一建筑
 
 绑定指定群系、每个世界只自然生成一次的建筑使用：

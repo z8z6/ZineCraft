@@ -1,4 +1,4 @@
-"""生成十九个泰拉国家唯一地标的 Minecraft structure NBT。"""
+"""生成十九个泰拉国家共三十八座唯一地标的 Minecraft structure NBT。"""
 
 from __future__ import annotations
 

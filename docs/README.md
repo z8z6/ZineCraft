@@ -125,6 +125,7 @@ Fabric Loader
    ├─ ModBlockEntity           注册示例方块实体类型
    ├─ NationBiomes            声明 19 个泰拉国家动态群系键与特色生物
    ├─ NationLandmarks         声明 38 个绑定群系的世界唯一地标
+   ├─ NationSettlements       声明 19 套可重复生成的大型 Jigsaw 聚落
    ├─ ModBuildings             声明并自动生成简单 Jigsaw 建筑数据
    └─ initBiome()              向所有主世界群系加入示例矿脉
 ```
@@ -234,6 +235,8 @@ bootstrap 并导出为 JSON。
    36 区块，最小间隔为 30。
 3. `NationLandmarks` 为 19 个国家群系各声明两座代表建筑，共 38 座。每座建筑拥有独立的同心环结构集，`count = 1`，
    并同时在结构与放置器层绑定目标群系，因此每个世界最多自然生成一次；杜林地标使用固定地下高度，阿戈尔地标投影至海床。
+4. `NationSettlements` 为每个国家注册一套可重复生成的城市、村落或营地。每套聚落由中心、四类道路和四类当地功能建筑组成，
+   默认展开七层；道路使用地形贴合投影，聚落结构和随机散布结构集都精确绑定所属国家群系。
 
 前两种通用示例结构限制在带 `minecraft:is_overworld` 标签的群系中；国家地标只在各自的国家群系中生成。
 
