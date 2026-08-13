@@ -5,7 +5,7 @@
 ## 普通立方体方块
 
 ```kotlin
-val ORIROCK_BLOCK = ZinecraftCore.BLOCKS.register(
+val ORIROCK_BLOCK = Zinecraft.BLOCKS.register(
   path = "orirock_block",
   zhCn = "源岩块",
   enUs = "Orirock Block"
@@ -37,7 +37,7 @@ src/main/resources/assets/zinecraft/textures/block/orirock_block.png
 复杂方块可以逐项关闭默认行为：
 
 ```kotlin
-val MACHINE = ZinecraftCore.BLOCKS.register(
+val MACHINE = Zinecraft.BLOCKS.register(
   path = "machine",
   zhCn = "机器",
   enUs = "Machine",
@@ -60,7 +60,7 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
   BlockEntity(ModBlockEntities.MACHINE, pos, state)
 
 object ModBlockEntities {
-  val MACHINE = ZinecraftCore.BLOCK_ENTITIES.register(
+  val MACHINE = Zinecraft.BLOCK_ENTITIES.register(
     "machine",
     ::MachineBlockEntity,
     ModBlocks.MACHINE

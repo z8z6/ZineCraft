@@ -1,11 +1,11 @@
 # 添加实体与 Mob
 
-普通实体和 Mob 都通过 `ZinecraftCore.ENTITIES` 注册。Mob 接口额外封装默认属性、生成限制、自然生成和生成蛋。
+普通实体和 Mob 都通过 `Zinecraft.ENTITIES` 注册。Mob 接口额外封装默认属性、生成限制、自然生成和生成蛋。
 
 ## 普通实体
 
 ```kotlin
-val PROJECTILE = ZinecraftCore.ENTITIES.register(
+val PROJECTILE = Zinecraft.ENTITIES.register(
   path = "example_projectile",
   zhCn = "示例投射物",
   enUs = "Example Projectile",
@@ -47,7 +47,7 @@ class ExampleMob(type: EntityType<out PathfinderMob>, level: Level) :
 ## 注册属性与生成限制
 
 ```kotlin
-val EXAMPLE_MOB = ZinecraftCore.ENTITIES.mob(
+val EXAMPLE_MOB = Zinecraft.ENTITIES.mob(
   path = "example_mob",
   zhCn = "示例生物",
   enUs = "Example Mob",
@@ -70,7 +70,7 @@ val EXAMPLE_MOB = ZinecraftCore.ENTITIES.mob(
 ## 自然生成与生成蛋
 
 ```kotlin
-val EXAMPLE_MOB = ZinecraftCore.ENTITIES.mob(/* ... */)
+val EXAMPLE_MOB = Zinecraft.ENTITIES.mob(/* ... */)
   .naturalSpawn(
     weight = 10,
     minGroupSize = 1,

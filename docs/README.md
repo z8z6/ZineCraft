@@ -10,6 +10,7 @@
 - [添加附魔](enchantment/README.md)
 - [添加结构与三段式 Jigsaw 示例](structure/README.md)
 - [添加群系](biome/README.md)
+- [泰拉 19 国群系与资料依据](biome/TERRA_NATIONS.md)
 - [声明式 API 总览](API.md)
 
 ## 1. 项目概览
@@ -94,40 +95,41 @@ JAR。
 .\gradlew.bat tasks
 ```
 
-数据生成由 `ZinecraftCoreDataGenerator` 统一注册。生成内容通常写入 Loom 配置的 generated resources
+数据生成由 `ZinecraftDataGenerator` 统一注册。生成内容通常写入 Loom 配置的 generated resources
 目录；执行后应检查实际输出，并将需要随模组发布的数据纳入资源集或版本控制。
 
 ### 模组入口
 
-| 模组 ID       | 环境           | 入口类                          | 状态                            |
-|-------------|--------------|------------------------------|-------------------------------|
-| `zinecraft` | 通用           | `ZinecraftCore`              | 初始化声音、物品、燃料、堆肥、方块、方块实体和世界生成注册 |
-| `zinecraft` | 客户端          | `ZinecraftCoreClient`        | 空入口                           |
-| `zinecraft` | 数据生成         | `ZinecraftCoreDataGenerator` | 注册全部数据生成器和动态注册表 bootstrap     |
-| `zinecraft` | TerraBlender | `ModTerraBlender`            | 注册主世界区域及地表规则                  |
+| 模组 ID       | 环境           | 入口类                      | 状态                            |
+|-------------|--------------|--------------------------|-------------------------------|
+| `zinecraft` | 通用           | `Zinecraft`              | 初始化声音、物品、燃料、堆肥、方块、方块实体和世界生成注册 |
+| `zinecraft` | 客户端          | `ZinecraftCoreClient`    | 空入口                           |
+| `zinecraft` | 数据生成         | `ZinecraftDataGenerator` | 注册全部数据生成器和动态注册表 bootstrap     |
+| `zinecraft` | TerraBlender | `ModTerraBlender`        | 注册主世界区域及地表规则                  |
 
 项目使用 Loom 的 split environment source sets，将客户端代码与通用代码分开。通用源码不应引用仅客户端可用的 Minecraft 类。
 
 ## 4. 初始化与注册架构
 
-`ZinecraftCore.onInitialize()` 是核心初始化入口。多数注册器采用 Kotlin `object` 的初始化副作用：入口通过访问对象来触发其
+`Zinecraft.onInitialize()` 是核心初始化入口。多数注册器采用 Kotlin `object` 的初始化副作用：入口通过访问对象来触发其
 `init` 块或属性初始化。
 
 ```text
 Fabric Loader
-└─ ZinecraftCore.onInitialize()
+└─ Zinecraft.onInitialize()
    ├─ ModSound                  注册 SoundEvent
    ├─ ModItem                   注册物品和创造模式标签页
    ├─ ITEMS / BLOCKS           分别注册物品与方块，并记录数据生成元数据
    ├─ ENTITIES / ENCHANTMENTS  注册实体、Mob 与动态附魔
    ├─ ModBlock                 注册示例方块及其 BlockItem
    ├─ ModBlockEntity           注册示例方块实体类型
-   ├─ ModBiome                 持有动态群系键
+   ├─ NationBiomes            声明 19 个泰拉国家动态群系键与特色生物
+   ├─ NationLandmarks         声明 38 个绑定群系的世界唯一地标
    ├─ ModBuildings             声明并自动生成简单 Jigsaw 建筑数据
    └─ initBiome()              向所有主世界群系加入示例矿脉
 ```
 
-`ZinecraftCore.REGISTRAR` 使用同一模组内的 API 封装，并集中提供以下能力：
+`Zinecraft.REGISTRAR` 使用同一模组内的 API 封装，并集中提供以下能力：
 
 - `id(name)`：创建 `zinecraft:<name>` 资源位置。
 - `key(registry, name)`：为指定动态注册表创建资源键。
@@ -145,7 +147,7 @@ bootstrap 并导出为 JSON。
 将模组命名空间与注册操作绑定，提供资源位置、动态注册表资源键、普通物品、方块及其物品、方块实体、普通实体、创造模式标签页、声音事件、结构类型、结构片段和结构池元素的统一注册方法；动态注册表内容还可通过
 `dynamic` 方法写入 `BootstrapContext`。
 
-`ZinecraftCore` 创建 `ModRegistrar("zinecraft")` 并通过 `REGISTRAR` 使用这些能力，不再直接调用底层
+`Zinecraft` 创建 `ModRegistrar("zinecraft")` 并通过 `REGISTRAR` 使用这些能力，不再直接调用底层
 `Registry.register`。封装与内容被编译进同一个 Zinecraft JAR，部署时无需额外安装 API 模组。
 
 ### 5.2 物品与创造模式标签页
@@ -212,14 +214,15 @@ bootstrap 并导出为 JSON。
 
 由于生成的是带方块实体的交互示例方块，这套配置主要用于验证世界生成链路，不适合作为最终矿物设定。
 
-#### 示例群系
+#### 泰拉国家群系
 
-`example_biome` 以原版沙漠特征为基础：无降水、温度 2.0、降水量 0，并使用沙漠生物生成和背景音乐。TerraBlender 通过权重为 2 的
-`ExampleRegion`，在寒冷至冰冻、干旱、内陆等参数范围内将该群系覆盖进主世界。
+`NationBiomes` 为 PRTS 当前列出的 19 个现存国家各声明一个群系。`NationBiomePresets` 复用原版植被、刷怪与地下生成组合，
+`NationBiomePlacements` 单独维护 TerraBlender 气候点，`TerraNationRegion` 负责批量加入主世界。阿戈尔映射到深海，杜林映射到地下，
+其余国家按地貌和气候映射到地表。
 
-`ModSurfaceRule` 会让该群系使用红色陶瓦地表；随后的一般地表规则为水面以上的地面铺草方块、下层铺泥土。
-
-`EndBiome` 提供了一个复制原版末地主岛生成逻辑的辅助实现，`NetherBiome` 目前为空；二者都没有注册到实际世界生成。
+`ModSurfaceRule` 只匹配项目自己的国家群系，为每国应用一种不重复的主表层，并按需要混入草方块或雪块生态斑块，既保留视觉特色，
+也满足树木与特色生物的生成条件，不会用通用兜底规则改写原版群系。每个群系还单独配置一种有辨识度的原版生物。
+各国家、代表城市、设计依据与资料链接见[泰拉国家群系设计](biome/TERRA_NATIONS.md)。
 
 #### 结构系统
 
@@ -229,12 +232,14 @@ bootstrap 并导出为 JSON。
 2. `portal_ruins_common` 是单模板简易建筑。`ModBuildings` 只声明 NBT 模板、间距、盐值和藤蔓处理概率，API
    自动生成处理器、模板池、Jigsaw 结构及结构集。模板引用 `structure/portal_ruins/common.nbt`，处理器以 60% 概率将藤蔓替换为空气；结构间距为
    36 区块，最小间隔为 30。
+3. `NationLandmarks` 为 19 个国家群系各声明两座代表建筑，共 38 座。每座建筑拥有独立的同心环结构集，`count = 1`，
+   并同时在结构与放置器层绑定目标群系，因此每个世界最多自然生成一次；杜林地标使用固定地下高度，阿戈尔地标投影至海床。
 
-两种结构都限制在带 `minecraft:is_overworld` 标签的群系中。
+前两种通用示例结构限制在带 `minecraft:is_overworld` 标签的群系中；国家地标只在各自的国家群系中生成。
 
 ### 5.6 数据生成
 
-`ZinecraftCoreDataGenerator` 注册以下 provider：
+`ZinecraftDataGenerator` 注册以下 provider：
 
 | Provider                     | 输出内容                          |
 |------------------------------|-------------------------------|
@@ -289,7 +294,7 @@ python -m pip install Pillow
 ### 添加世界生成内容
 
 1. 在对应 `Mod*` 对象中定义稳定的 `ResourceKey`。
-2. 将 bootstrap 方法加入 `ZinecraftCoreDataGenerator.buildRegistry()`。
+2. 将 bootstrap 方法加入 `ZinecraftDataGenerator.buildRegistry()`。
 3. 确保 `ModDynamicRegistryProvider.configure()` 导出对应动态注册表。
 4. 使用 Fabric biome modification、TerraBlender region 或结构集接入世界。
 5. 运行数据生成并新建世界验证；已有区块不会重新生成内容。
@@ -318,7 +323,7 @@ python -m pip install Pillow
 
 - 项目仍含大量 `example_*` 示例命名、空入口和空 Mixin，发布前需要替换或删除。
 - `com.cxxcxx.zinecraft.api` 目前是同一模组中的公共封装包，尚未定义稳定性或兼容性承诺。
-- 项目使用 TerraBlender 入口和类型，但 `fabric.mod.json` 没有声明 TerraBlender 依赖。生产环境应明确它是必需依赖还是可选集成，并相应调整元数据及类加载边界。
+- TerraBlender 是国家群系注入主世界所需的必需依赖；发布包应与 `fabric.mod.json` 中声明的版本约束一并验证。
 - Trinkets、Ponder 和 Cloth Config 已声明为依赖，但当前源码未使用；过早保留依赖会增加开发启动与分发维护成本。
 - `sounds.json` 声明了 `engine`，但资源目录中没有对应的 `engine.ogg`。
 - 中文语言 provider 没有生成创造模式标签页和唱片描述翻译；唱片组件当前使用的翻译键也应与 `sounds.json` 的 subtitle 键统一检查。

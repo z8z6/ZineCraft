@@ -4,12 +4,13 @@ import com.cxxcxx.zinecraft.api.datagen.CatalogLanguageProvider
 import com.cxxcxx.zinecraft.api.datagen.CatalogLootTableProvider
 import com.cxxcxx.zinecraft.api.datagen.CatalogModelProvider
 import com.cxxcxx.zinecraft.core.Zinecraft
-import com.cxxcxx.zinecraft.core.biome.ModBiome
+import com.cxxcxx.zinecraft.core.biome.NationBiomes
 import com.cxxcxx.zinecraft.core.block.ModBlock
 import com.cxxcxx.zinecraft.core.item.ModItem
 import com.cxxcxx.zinecraft.core.recipe.ModRecipeProvider
 import com.cxxcxx.zinecraft.core.sound.ModSound
 import com.cxxcxx.zinecraft.core.structure.ModStructure
+import com.cxxcxx.zinecraft.core.structure.NationLandmarks
 import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -22,7 +23,8 @@ object ZinecraftDataGenerator : DataGeneratorEntrypoint {
     ModSound
     ModItem
     ModBlock
-    ModBiome
+    NationBiomes
+    NationLandmarks
     ModWorldFeatures
     ModStructure
     val pack = fabricDataGenerator.createPack()

@@ -1,5 +1,24 @@
 # 添加结构
 
+## 每世界唯一建筑
+
+绑定指定群系、每个世界只自然生成一次的建筑使用：
+
+```kotlin
+val UNIQUE_TOWER = Zinecraft.STRUCTURES.uniqueLandmark(
+  path = "unique_tower",
+  template = "landmarks/unique_tower",
+  biome = ModBiomes.TARGET_BIOME,
+  ringDistance = 32,
+  heightmap = Heightmap.Types.WORLD_SURFACE_WG
+)
+```
+
+该封装生成独立的 Jigsaw 结构、模板池、处理器和结构集。结构集使用原版同心环放置器并设置 `count = 1`，结构与放置器均绑定
+目标群系，因此保持原版区块生成、存档及 `/locate structure` 兼容性。`ringDistance` 是以区块为单位的首环距离。
+地表、海床建筑可分别传入 `WORLD_SURFACE_WG`、`OCEAN_FLOOR_WG`；地下建筑应传入 `heightmap = null` 与明确的
+`startHeight`，避免被高度图投影到地面。
+
 结构分为两类：
 
 - 简易 Jigsaw 建筑：使用 `StructureCatalog.jigsawBuilding`，自动生成模板池、结构和结构集。
@@ -10,7 +29,7 @@
 仓库内置一个可运行的 `start → middle → end` 示例：
 
 ```kotlin
-val THREE_PIECE_JIGSAW = ZinecraftCore.STRUCTURES.jigsawBuilding(
+val THREE_PIECE_JIGSAW = Zinecraft.STRUCTURES.jigsawBuilding(
   path = "jigsaw_example",
   spacing = 40,
   separation = 20,
@@ -76,7 +95,7 @@ pool("middle") {
 不需要继续拼接时可以使用快捷方法：
 
 ```kotlin
-val RUINS = ZinecraftCore.STRUCTURES.simpleBuilding(
+val RUINS = Zinecraft.STRUCTURES.simpleBuilding(
   path = "ruins",
   template = "ruins/common",
   spacing = 36,
@@ -111,8 +130,8 @@ val RUINS = ZinecraftCore.STRUCTURES.simpleBuilding(
 
 ```kotlin
 init {
-  ZinecraftCore.STRUCTURES.structures(::configureStructures)
-  ZinecraftCore.STRUCTURES.structureSets(::configureStructureSets)
+  Zinecraft.STRUCTURES.structures(::configureStructures)
+  Zinecraft.STRUCTURES.structureSets(::configureStructureSets)
 }
 ```
 

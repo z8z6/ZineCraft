@@ -24,7 +24,7 @@
 
 ## 初始化
 
-项目在 `ZinecraftCore` 中只创建一次目录：
+项目在 `Zinecraft` 中只创建一次目录：
 
 ```kotlin
 val REGISTRAR = ModRegistrar(MOD_ID)
@@ -58,13 +58,13 @@ WORLDGEN.addDataGeneration(registryBuilder)
 ## 示例
 
 ```kotlin
-val MAGIC_DUST = ZinecraftCore.ITEMS.register(
+val MAGIC_DUST = Zinecraft.ITEMS.register(
   "magic_dust",
   "魔法粉尘",
   "Magic Dust"
 ).fuel(600).compost(0.3f)
 
-val MACHINE = ZinecraftCore.BLOCKS.register(
+val MACHINE = Zinecraft.BLOCKS.register(
   "machine",
   "机器",
   "Machine"
@@ -72,7 +72,7 @@ val MACHINE = ZinecraftCore.BLOCKS.register(
   Block(BlockBehaviour.Properties.of().strength(4.0f))
 }
 
-val ORE = ZinecraftCore.FEATURES.ore(
+val ORE = Zinecraft.FEATURES.ore(
   path = "machine_ore",
   block = MACHINE.block,
   veinSize = 8,

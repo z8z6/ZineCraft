@@ -1,15 +1,15 @@
 # 添加群系
 
-群系通过 `BiomeCatalog.register` 声明，并由动态注册表数据生成器自动导出。
+群系通过 `Zinecraft.BIOMES.register` 声明，并由动态注册表数据生成器自动导出。项目中的 19 个泰拉国家群系及资料依据见
+[泰拉国家群系设计](TERRA_NATIONS.md)。
 
 ## 基础示例
 
 ```kotlin
-val EXAMPLE_BIOME = ZinecraftCore.BIOMES.register("example_biome") {
+val EXAMPLE_BIOME = Zinecraft.BIOMES.register("example_biome") {
   precipitation = false
   temperature = 2.0f
   downfall = 0.0f
-  music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_DESERT)
 
   BiomeDefaultFeatures.desertSpawns(spawns)
   defaultOverworldGeneration()
@@ -34,21 +34,29 @@ val EXAMPLE_BIOME = ZinecraftCore.BIOMES.register("example_biome") {
 
 ## 加入主世界
 
-注册群系数据不等于群系会自然出现。当前项目使用 TerraBlender，在 `Region.addBiomes` 中把资源键映射到气候参数：
+注册群系数据不等于群系会自然出现。当前项目通过 `NationBiomePlacement` 把资源键与 TerraBlender 气候参数分离：
 
 ```kotlin
-ParameterPointListBuilder()
-  .temperature(Temperature.COOL)
-  .humidity(Humidity.DRY)
-  .continentalness(Continentalness.INLAND)
-  .build()
-  .forEach { point -> builder.add(point, ModBiome.EXAMPLE_BIOME) }
+NationBiomePlacement(
+  biome = NationBiomes.KAZIMIERZ_KNIGHTLAND,
+  temperature = Temperature.NEUTRAL,
+  humidity = Humidity.DRY,
+  continentalness = Continentalness.MID_INLAND,
+  erosion = Erosion.EROSION_5,
+  weirdness = Weirdness.MID_SLICE_NORMAL_DESCENDING
+)
 ```
 
-还应在 TerraBlender 入口注册区域。自定义地表可通过 `SurfaceRuleManager` 添加，并使用 `SurfaceRules.isBiome(EXAMPLE_BIOME)`
-限定群系。
+`TerraNationRegion` 会遍历配置并加入主世界。新增群系时，应同时添加一个不与现有配置完全重复的气候点。自定义地表必须用
+`SurfaceRules.isBiome(...)` 限定作用范围，不能添加影响全部原版群系的兜底规则。
 
 ## 数据生成
 
-`ZinecraftCore.WORLDGEN.addDataGeneration(registryBuilder)` 会注册群系 bootstrap；`ModDynamicRegistryProvider` 会将
-`Registries.BIOME` 导出。新增普通群系时不需要再修改数据生成入口。
+`Zinecraft.WORLDGEN.addDataGeneration(registryBuilder)` 已注册群系 bootstrap；`ModDynamicRegistryProvider` 会导出
+`Registries.BIOME`。新增普通群系时不需要修改数据生成入口，运行：
+
+```powershell
+.\gradlew.bat runDatagen
+```
+
+生成目录已被 Git 忽略，应把需要发布的稳定数据移动到 `src/main/resources`，或在构建流程中显式包含生成目录。

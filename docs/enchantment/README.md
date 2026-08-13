@@ -1,12 +1,12 @@
 # 添加附魔
 
-Minecraft 1.21.1 的附魔属于动态注册表内容。项目使用 `ZinecraftCore.ENCHANTMENTS` 声明附魔，并由数据生成器导出
+Minecraft 1.21.1 的附魔属于动态注册表内容。项目使用 `Zinecraft.ENCHANTMENTS` 声明附魔，并由数据生成器导出
 `data/zinecraft/enchantment/<path>.json`。
 
 ## 基础附魔
 
 ```kotlin
-val ORIGINITE_EDGE = ZinecraftCore.ENCHANTMENTS.register(
+val ORIGINITE_EDGE = Zinecraft.ENCHANTMENTS.register(
   path = "originite_edge",
   zhCn = "源石锋芒",
   enUs = "Originite Edge",
@@ -25,7 +25,7 @@ val ORIGINITE_EDGE = ZinecraftCore.ENCHANTMENTS.register(
 ## 主物品与互斥标签
 
 ```kotlin
-val PRECISE_EDGE = ZinecraftCore.ENCHANTMENTS.register(
+val PRECISE_EDGE = Zinecraft.ENCHANTMENTS.register(
   path = "precise_edge",
   zhCn = "精密锋刃",
   supportedItems = ItemTags.WEAPON_ENCHANTABLE,
@@ -46,7 +46,7 @@ val PRECISE_EDGE = ZinecraftCore.ENCHANTMENTS.register(
 `register` 最后的 DSL 接收原版 `Enchantment.Builder`，可组合 1.21.1 的数据组件效果：
 
 ```kotlin
-val EXAMPLE = ZinecraftCore.ENCHANTMENTS.register(/* 定义参数 */) {
+val EXAMPLE = Zinecraft.ENCHANTMENTS.register(/* 定义参数 */) {
   withEffect(
     EnchantmentEffectComponents.DAMAGE,
     AddValue(LevelBasedValue.perLevel(1.0f))
@@ -61,7 +61,7 @@ val EXAMPLE = ZinecraftCore.ENCHANTMENTS.register(/* 定义参数 */) {
 项目入口已经包含：
 
 ```kotlin
-registryBuilder.add(Registries.ENCHANTMENT, ZinecraftCore.ENCHANTMENTS::bootstrap)
+registryBuilder.add(Registries.ENCHANTMENT, Zinecraft.ENCHANTMENTS::bootstrap)
 ```
 
 `ModDynamicRegistryProvider` 也会导出 `Registries.ENCHANTMENT`，新增附魔时不需要修改数据生成入口。运行：

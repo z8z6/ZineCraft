@@ -12,12 +12,13 @@ import com.cxxcxx.zinecraft.api.registry.ModRegistrar
 import com.cxxcxx.zinecraft.api.sound.SongCatalog
 import com.cxxcxx.zinecraft.api.sound.SoundCatalog
 import com.cxxcxx.zinecraft.api.world.WorldgenManager
-import com.cxxcxx.zinecraft.core.biome.ModBiome
+import com.cxxcxx.zinecraft.core.biome.NationBiomes
 import com.cxxcxx.zinecraft.core.block.ModBlock
 import com.cxxcxx.zinecraft.core.entity.ModBlockEntity
 import com.cxxcxx.zinecraft.core.item.ModItem
 import com.cxxcxx.zinecraft.core.sound.ModSound
 import com.cxxcxx.zinecraft.core.structure.ModStructure
+import com.cxxcxx.zinecraft.core.structure.NationLandmarks
 import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
@@ -47,7 +48,8 @@ object Zinecraft : ModInitializer {
     ModItem
     ModBlock
     ModBlockEntity
-    ModBiome
+    NationBiomes
+    NationLandmarks
     ModWorldFeatures
     ModStructure
     WORLDGEN.initialize()
