@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "zinecraft-core",
+  "id": "zinecraft",
   "version": "${version}",
-  "name": "zinecraft-core",
-  "description": "Zinecraft core mod.",
+  "name": "Zinecraft",
+  "description": "Zinecraft mod.",
   "authors": [
     "z8z6",
     "YeXingChenAWA"
@@ -13,12 +13,12 @@
     "sources": "https://github.com/z8z6/ZineCraft"
   },
   "license": "CC0-1.0",
-  "icon": "assets/zinecraft-core/icon.png",
+  "icon": "assets/zinecraft/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
       {
-        "value": "com.cxxcxx.zinecraft.core.ZinecraftCore",
+        "value": "com.cxxcxx.zinecraft.core.Zinecraft",
         "adapter": "kotlin"
       }
     ],
@@ -30,7 +30,7 @@
     ],
     "fabric-datagen": [
       {
-        "value": "com.cxxcxx.zinecraft.core.data.ZinecraftCoreDataGenerator",
+        "value": "com.cxxcxx.zinecraft.core.datagen.ZinecraftDataGenerator",
         "adapter": "kotlin"
       }
     ],

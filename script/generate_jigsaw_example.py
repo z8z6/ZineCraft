@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "src/main/resources/data/zinecraft-core/structure/jigsaw_example"
+OUTPUT = ROOT / "src/main/resources/data/zinecraft/structure/jigsaw_example"
 DATA_VERSION = 3955
 
 
@@ -113,9 +113,9 @@ write_structure(
         (
             (4, 1, 2),
             "east_up",
-            "zinecraft-core:jigsaw_example/start_exit",
-            "zinecraft-core:jigsaw_example/middle_in",
-            "zinecraft-core:jigsaw_example/middle",
+            "zinecraft:jigsaw_example/start_exit",
+            "zinecraft:jigsaw_example/middle_in",
+            "zinecraft:jigsaw_example/middle",
         )
     ],
 )
@@ -126,16 +126,16 @@ write_structure(
         (
             (0, 1, 2),
             "west_up",
-            "zinecraft-core:jigsaw_example/middle_in",
+            "zinecraft:jigsaw_example/middle_in",
             "minecraft:empty",
             "minecraft:empty",
         ),
         (
             (4, 1, 2),
             "east_up",
-            "zinecraft-core:jigsaw_example/middle_exit",
-            "zinecraft-core:jigsaw_example/end_in",
-            "zinecraft-core:jigsaw_example/end",
+            "zinecraft:jigsaw_example/middle_exit",
+            "zinecraft:jigsaw_example/end_in",
+            "zinecraft:jigsaw_example/end",
         ),
     ],
 )
@@ -146,7 +146,7 @@ write_structure(
         (
             (0, 1, 2),
             "west_up",
-            "zinecraft-core:jigsaw_example/end_in",
+            "zinecraft:jigsaw_example/end_in",
             "minecraft:empty",
             "minecraft:empty",
         )

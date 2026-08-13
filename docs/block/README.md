@@ -1,11 +1,11 @@
 # 添加方块
 
-`ContentCatalog.block` 将方块注册、`BlockItem`、双语名称、简单模型和默认掉落合并为一次声明。
+`BlockCatalog.register` 将方块注册、`BlockItem`、双语名称、简单模型和默认掉落合并为一次声明。
 
 ## 普通立方体方块
 
 ```kotlin
-val ORIROCK_BLOCK = ZinecraftCore.CONTENT.block(
+val ORIROCK_BLOCK = ZinecraftCore.BLOCKS.register(
   path = "orirock_block",
   zhCn = "源岩块",
   enUs = "Orirock Block"
@@ -29,7 +29,7 @@ val ORIROCK_BLOCK = ZinecraftCore.CONTENT.block(
 方块贴图放在：
 
 ```text
-src/main/resources/assets/zinecraft-core/textures/block/orirock_block.png
+src/main/resources/assets/zinecraft/textures/block/orirock_block.png
 ```
 
 ## 关闭默认生成
@@ -37,7 +37,7 @@ src/main/resources/assets/zinecraft-core/textures/block/orirock_block.png
 复杂方块可以逐项关闭默认行为：
 
 ```kotlin
-val MACHINE = ZinecraftCore.CONTENT.block(
+val MACHINE = ZinecraftCore.BLOCKS.register(
   path = "machine",
   zhCn = "机器",
   enUs = "Machine",
@@ -53,14 +53,14 @@ val MACHINE = ZinecraftCore.CONTENT.block(
 
 ## 方块实体
 
-先声明方块，再通过 `REGISTRAR.blockEntity` 注册方块实体类型：
+先声明方块，再通过 `BLOCK_ENTITIES` 注册方块实体类型：
 
 ```kotlin
 class MachineBlockEntity(pos: BlockPos, state: BlockState) :
   BlockEntity(ModBlockEntities.MACHINE, pos, state)
 
 object ModBlockEntities {
-  val MACHINE = ZinecraftCore.REGISTRAR.blockEntity(
+  val MACHINE = ZinecraftCore.BLOCK_ENTITIES.register(
     "machine",
     ::MachineBlockEntity,
     ModBlocks.MACHINE

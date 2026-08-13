@@ -31,8 +31,6 @@ bin/
 # fabric
 
 run/
-api/run
-core/run
 src/main/generated/
 
 # java
@@ -41,7 +39,3 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
-
-# json
-
-core/src/main/generated

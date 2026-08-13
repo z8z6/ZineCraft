@@ -1,6 +1,6 @@
 # 添加物品
 
-物品通过 `ZinecraftCore.CONTENT` 声明。声明时会立即注册物品，并记录语言和模型元数据；数据生成器随后自动生成 `zh_cn`、`en_us`
+物品通过 `ZinecraftCore.ITEMS` 声明。声明时会立即注册物品，并记录语言和模型元数据；数据生成器随后自动生成 `zh_cn`、`en_us`
 和普通物品模型。
 
 ## 普通物品
@@ -8,7 +8,7 @@
 在 `ModItem` 中添加：
 
 ```kotlin
-val ORIROCK = ZinecraftCore.CONTENT.item(
+val ORIROCK = ZinecraftCore.ITEMS.register(
   path = "orirock",
   zhCn = "源岩",
   enUs = "Orirock"
@@ -19,7 +19,7 @@ val ORIROCK = ZinecraftCore.CONTENT.item(
 
 ```kotlin
 private fun item(path: String, zhCn: String, enUs: String) =
-  ZinecraftCore.CONTENT.item(path, zhCn, enUs)
+  ZinecraftCore.ITEMS.register(path, zhCn, enUs)
 
 val ORIROCK = item("orirock", "源岩", "Orirock")
 ```
@@ -37,7 +37,7 @@ ItemStack(ModItem.ORIROCK.item)
 通过 factory 创建具体物品：
 
 ```kotlin
-val MAGIC_DUST = ZinecraftCore.CONTENT.item(
+val MAGIC_DUST = ZinecraftCore.ITEMS.register(
   path = "magic_dust",
   zhCn = "魔法粉尘",
   enUs = "Magic Dust"
@@ -63,7 +63,7 @@ val MAGIC_DUST = ZinecraftCore.CONTENT.item(
 ```kotlin
 class ScannerItem(properties: Properties) : Item(properties)
 
-val SCANNER = ZinecraftCore.CONTENT.item(
+val SCANNER = ZinecraftCore.ITEMS.register(
   "scanner",
   "扫描器",
   "Scanner"
@@ -79,13 +79,13 @@ val SCANNER = ZinecraftCore.CONTENT.item(
 默认模型为 `ModelTemplates.FLAT_ITEM`。贴图放在：
 
 ```text
-src/main/resources/assets/zinecraft-core/textures/item/<path>.png
+src/main/resources/assets/zinecraft/textures/item/<path>.png
 ```
 
 唱片等特殊模板可传入 `model`：
 
 ```kotlin
-CONTENT.item(
+ZinecraftCore.ITEMS.register(
   "example_disc",
   "示例唱片",
   "Example Disc",
@@ -94,14 +94,14 @@ CONTENT.item(
 ```
 
 运行 `./gradlew runDatagen` 后会生成模型 JSON。复杂的手持模型、动态模型或多层模型不能由普通声明推断，应自行提供模型
-JSON，或扩展 `ContentModelProvider`。
+JSON，或扩展 `CatalogModelProvider`。
 
 ## 创造模式标签页
 
 目录中的物品可自动加入标签页：
 
 ```kotlin
-val TAB = ZinecraftCore.CONTENT.creativeTab(
+val TAB = ZinecraftCore.CREATIVE_TABS.register(
   path = "item",
   zhCn = "Zinecraft",
   enUs = "Zinecraft",

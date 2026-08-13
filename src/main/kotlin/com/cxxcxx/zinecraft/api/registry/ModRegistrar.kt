@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.api.registry
 
 import com.mojang.serialization.MapCodec
+import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricEntityType
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
@@ -8,15 +9,15 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.EntityType
-import net.minecraft.world.entity.MobCategory
+import net.minecraft.world.entity.*
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.levelgen.structure.StructureType
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType
@@ -36,13 +37,13 @@ class ModRegistrar(val namespace: String) {
   fun id(path: String): ResourceLocation =
     ResourceLocation.fromNamespaceAndPath(namespace, path)
 
-  fun <T> key(registryKey: ResourceKey<out Registry<T>>, path: String): ResourceKey<T> =
+  fun <T : Any> key(registryKey: ResourceKey<out Registry<T>>, path: String): ResourceKey<T> =
     ResourceKey.create(registryKey, id(path))
 
-  fun <V, T : V> register(registry: Registry<V>, path: String, value: T): T =
+  fun <V : Any, T : V> register(registry: Registry<V>, path: String, value: T): T =
     Registry.register(registry, id(path), value)
 
-  fun <T> dynamic(
+  fun <T : Any> dynamic(
     context: BootstrapContext<T>,
     registryKey: ResourceKey<out Registry<T>>,
     path: String,
@@ -53,7 +54,7 @@ class ModRegistrar(val namespace: String) {
     return resourceKey
   }
 
-  fun <T> dynamic(context: BootstrapContext<T>, key: ResourceKey<T>, value: T): T {
+  fun <T : Any> dynamic(context: BootstrapContext<T>, key: ResourceKey<T>, value: T): T {
     context.register(key, value)
     return value
   }
@@ -90,6 +91,29 @@ class ModRegistrar(val namespace: String) {
     configure: EntityType.Builder<T>.() -> Unit = {}
   ): EntityType<T> {
     val builder = EntityType.Builder.of(factory, category).apply(configure)
+    return register(BuiltInRegistries.ENTITY_TYPE, path, builder.build(path))
+  }
+
+  fun <T : Mob> mob(
+    path: String,
+    factory: EntityType.EntityFactory<T>,
+    category: MobCategory,
+    attributes: () -> AttributeSupplier.Builder,
+    placement: SpawnPlacementType? = null,
+    heightmap: Heightmap.Types? = null,
+    predicate: SpawnPlacements.SpawnPredicate<T>? = null,
+    configure: EntityType.Builder<T>.() -> Unit = {}
+  ): EntityType<T> {
+    require((placement == null) == (heightmap == null) && (heightmap == null) == (predicate == null)) {
+      "生成限制的 placement、heightmap 和 predicate 必须同时提供"
+    }
+    val builder = FabricEntityType.Builder.createMob(factory, category) { mobBuilder ->
+      mobBuilder.defaultAttributes(attributes).also { configured ->
+        if (predicate != null) {
+          configured.spawnRestriction(placement!!, heightmap!!, predicate)
+        }
+      }
+    }.apply(configure)
     return register(BuiltInRegistries.ENTITY_TYPE, path, builder.build(path))
   }
 

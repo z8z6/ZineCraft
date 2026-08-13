@@ -1,11 +1,11 @@
 # 添加群系
 
-群系通过 `WorldgenCatalog.biome` 声明，并由动态注册表数据生成器自动导出。
+群系通过 `BiomeCatalog.register` 声明，并由动态注册表数据生成器自动导出。
 
 ## 基础示例
 
 ```kotlin
-val EXAMPLE_BIOME = ZinecraftCore.WORLDGEN.biome("example_biome") {
+val EXAMPLE_BIOME = ZinecraftCore.BIOMES.register("example_biome") {
   precipitation = false
   temperature = 2.0f
   downfall = 0.0f
@@ -50,5 +50,5 @@ ParameterPointListBuilder()
 
 ## 数据生成
 
-`ZinecraftCore.WORLDGEN.addDataGeneration(registryBuilder)` 会注册群系 bootstrap；`ModWorldProvider` 会将
+`ZinecraftCore.WORLDGEN.addDataGeneration(registryBuilder)` 会注册群系 bootstrap；`ModDynamicRegistryProvider` 会将
 `Registries.BIOME` 导出。新增普通群系时不需要再修改数据生成入口。

@@ -40,7 +40,7 @@ loom {
 fabricApi {
     configureDataGeneration {
         client = true
-        modId = "zinecraft-core"
+        modId = "zinecraft"
     }
 }
 

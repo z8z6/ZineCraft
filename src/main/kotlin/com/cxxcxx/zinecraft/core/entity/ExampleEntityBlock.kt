@@ -1,6 +1,6 @@
 package com.cxxcxx.zinecraft.core.entity
 
-import com.cxxcxx.zinecraft.core.ZinecraftCore.MOD_ID
+import com.cxxcxx.zinecraft.core.Zinecraft.MOD_ID
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component

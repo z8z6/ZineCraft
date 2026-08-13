@@ -2,7 +2,7 @@
 
 结构分为两类：
 
-- 简易 Jigsaw 建筑：使用 `WorldgenCatalog.jigsawBuilding`，自动生成模板池、结构和结构集。
+- 简易 Jigsaw 建筑：使用 `StructureCatalog.jigsawBuilding`，自动生成模板池、结构和结构集。
 - 高级自定义结构：自行实现 `Structure` / `StructurePiece`，通过目录回调接入统一动态注册表。
 
 ## 三段式 Jigsaw 示例
@@ -10,7 +10,7 @@
 仓库内置一个可运行的 `start → middle → end` 示例：
 
 ```kotlin
-val THREE_PIECE_JIGSAW = ZinecraftCore.WORLDGEN.jigsawBuilding(
+val THREE_PIECE_JIGSAW = ZinecraftCore.STRUCTURES.jigsawBuilding(
   path = "jigsaw_example",
   spacing = 40,
   separation = 20,
@@ -32,7 +32,7 @@ val THREE_PIECE_JIGSAW = ZinecraftCore.WORLDGEN.jigsawBuilding(
 三个结构模板位于：
 
 ```text
-src/main/resources/data/zinecraft-core/structure/jigsaw_example/
+src/main/resources/data/zinecraft/structure/jigsaw_example/
 ├─ start.nbt
 ├─ middle.nbt
 └─ end.nbt
@@ -46,12 +46,12 @@ python script/generate_jigsaw_example.py
 
 ### 连接关系
 
-| 片段        | Jigsaw name                                 | target                                    | pool                                   |
-|-----------|---------------------------------------------|-------------------------------------------|----------------------------------------|
-| start 出口  | `zinecraft-core:jigsaw_example/start_exit`  | `zinecraft-core:jigsaw_example/middle_in` | `zinecraft-core:jigsaw_example/middle` |
-| middle 入口 | `zinecraft-core:jigsaw_example/middle_in`   | `minecraft:empty`                         | `minecraft:empty`                      |
-| middle 出口 | `zinecraft-core:jigsaw_example/middle_exit` | `zinecraft-core:jigsaw_example/end_in`    | `zinecraft-core:jigsaw_example/end`    |
-| end 入口    | `zinecraft-core:jigsaw_example/end_in`      | `minecraft:empty`                         | `minecraft:empty`                      |
+| 片段        | Jigsaw name                            | target                               | pool                              |
+|-----------|----------------------------------------|--------------------------------------|-----------------------------------|
+| start 出口  | `zinecraft:jigsaw_example/start_exit`  | `zinecraft:jigsaw_example/middle_in` | `zinecraft:jigsaw_example/middle` |
+| middle 入口 | `zinecraft:jigsaw_example/middle_in`   | `minecraft:empty`                    | `minecraft:empty`                 |
+| middle 出口 | `zinecraft:jigsaw_example/middle_exit` | `zinecraft:jigsaw_example/end_in`    | `zinecraft:jigsaw_example/end`    |
+| end 入口    | `zinecraft:jigsaw_example/end_in`      | `minecraft:empty`                    | `minecraft:empty`                 |
 
 这是三个建筑片段，但需要四个 Jigsaw 方块完成两次连接。连接时父片段的 `target` 必须等于候选子片段的 `name`，两个 Jigsaw
 的朝向必须相对。
@@ -76,7 +76,7 @@ pool("middle") {
 不需要继续拼接时可以使用快捷方法：
 
 ```kotlin
-val RUINS = ZinecraftCore.WORLDGEN.simpleBuilding(
+val RUINS = ZinecraftCore.STRUCTURES.simpleBuilding(
   path = "ruins",
   template = "ruins/common",
   spacing = 36,
@@ -101,20 +101,20 @@ val RUINS = ZinecraftCore.WORLDGEN.simpleBuilding(
 2. 在创造模式搭建片段，每个连接处放置 Jigsaw 方块。
 3. 配置 `name`、`target`、`pool` 和 `final_state`。
 4. 用结构方块保存模板。
-5. 将世界目录下生成的 NBT 复制到 `src/main/resources/data/zinecraft-core/structure/<path>.nbt`。
+5. 将世界目录下生成的 NBT 复制到 `src/main/resources/data/zinecraft/structure/<path>.nbt`。
 
-开发时可用 `/place structure zinecraft-core:jigsaw_example` 验证结构数据。
+开发时可用 `/place structure zinecraft:jigsaw_example` 验证结构数据。
 
-## 高级自定义结构
+## 高级扩展
 
-需要数据标记、战利品箱、自定义高度算法或特殊序列化时，实现自己的结构类型，然后接入目录：
+若 Jigsaw 建筑仍不能满足特殊生成逻辑，可注册额外的结构 bootstrap：
 
 ```kotlin
 init {
-  ZinecraftCore.WORLDGEN.structures(::configureStructures)
-  ZinecraftCore.WORLDGEN.structureSets(::configureStructureSets)
+  ZinecraftCore.STRUCTURES.structures(::configureStructures)
+  ZinecraftCore.STRUCTURES.structureSets(::configureStructureSets)
 }
 ```
 
-自定义结构仍可使用 `REGISTRAR.structureType` 和 `REGISTRAR.structurePiece` 注册静态类型。仓库中的 `ExampleStructure` /
-`ExampleStructurePieces` 展示了模板片段、旋转、NBT 保存及数据标记处理。
+只有确实需要自定义序列化和结构片段行为时，才使用 `REGISTRAR.structureType` 和 `REGISTRAR.structurePiece`
+；项目不再保留无实际用途的自定义结构示例类。

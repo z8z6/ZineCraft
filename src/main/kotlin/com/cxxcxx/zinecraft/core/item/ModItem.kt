@@ -1,9 +1,9 @@
 package com.cxxcxx.zinecraft.core.item
 
 
-import com.cxxcxx.zinecraft.api.content.ItemEntry
-import com.cxxcxx.zinecraft.core.ZinecraftCore
-import com.cxxcxx.zinecraft.core.data.ModSound
+import com.cxxcxx.zinecraft.api.item.ItemEntry
+import com.cxxcxx.zinecraft.core.Zinecraft
+import com.cxxcxx.zinecraft.core.sound.ModSound
 import net.minecraft.data.models.model.ModelTemplate
 import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.world.effect.MobEffectInstance
@@ -15,7 +15,7 @@ import net.minecraft.world.item.Item
 object ModItem {
 
   private fun item(path: String, zhCn: String, enUs: String = path.toDisplayName()) =
-    ZinecraftCore.CONTENT.item(path, zhCn, enUs)
+    Zinecraft.ITEMS.register(path, zhCn, enUs)
 
   private fun ItemWrap(path: String, zhCn: String): ItemEntry<Item> = item(path, zhCn)
 
@@ -25,7 +25,7 @@ object ModItem {
     item: T,
     model: ModelTemplate = ModelTemplates.FLAT_ITEM,
     enUs: String = path.toDisplayName()
-  ): ItemEntry<T> = ZinecraftCore.CONTENT.item(path, zhCn, enUs, model) { item }
+  ): ItemEntry<T> = Zinecraft.ITEMS.register(path, zhCn, enUs, model) { item }
 
   val EXAMPLE_ITEM = item("example_item", "")
 
@@ -115,7 +115,7 @@ object ModItem {
   val STRANGER_THINK = ModSound.AMBIENT_STRANGER_THINK.itemEntry
 
 
-  private val ITEM_GROUP = ZinecraftCore.CONTENT.creativeTab(
+  private val ITEM_GROUP = Zinecraft.CREATIVE_TABS.register(
     "item",
     "Zinecraft",
     "Zinecraft",
