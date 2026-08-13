@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "zinecraft-core:magic_dust"
+    },
+    {
+      "item": "zinecraft-core:magic_dust"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "zinecraft-core:magic_dust"
+  }
+}

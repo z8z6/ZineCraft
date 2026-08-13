@@ -1,84 +1,108 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}" apply false
-	id "org.jetbrains.kotlin.jvm" version "2.3.21" apply false
-	id 'com.diffplug.spotless' version '6.25.0' apply false
-	// id 'net.neoforged.moddev' version '2.0.141' apply false
+    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+    id "org.jetbrains.kotlin.jvm" version "2.3.21"
+    id 'maven-publish'
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
 version = project.mod_version
 group = project.maven_group
 
-def configureModSubprojects(String modName) {
-	configure(subprojects.findAll { it.path.startsWith(":${modName}:") }) {
-		def modProps = new Properties()
-		file("${rootProject.projectDir}/${modName}/gradle.properties").withInputStream { modProps.load(it) }
-
-		modProps.each { key, value ->
-			project.ext.set(key.toString(), value)
-		}
-
-		version = project.mod_version
-		group = project.group
-		// description = modProps.description
-	}
+repositories {
+    maven { url "https://maven.fabricmc.net/" }
+    maven { url "https://maven.minecraftforge.net/" }
+    mavenCentral()
+    mavenLocal()
+    maven { url "https://api.modrinth.com/maven" }
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+    maven { url "https://maven.ladysnake.org/releases" }
+    maven { url "https://maven.ryanliptak.com/" }
+    maven { url "https://www.cursemaven.com" }
+    maven { url "https://maven.createmod.net" }
+    maven { url "https://maven.blamejared.com/" }
+    maven { url "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
 }
 
-configureModSubprojects('core')
-configureModSubprojects('main')
+loom {
+    splitEnvironmentSourceSets()
 
-subprojects {
-	repositories {
-		maven { url "https://maven.fabricmc.net/" }
-		maven { url = "https://api.modrinth.com/maven" }
-        maven { url = 'https://maven.minecraftforge.net/' }
-
-
-        mavenLocal()
-		mavenCentral()
-
-		maven { url "https://maven.shedaniel.me/" }    // Cloth Config
-		maven { url "https://maven.terraformersmc.com/releases/" }
-
-		maven { // KubeJS
-			url "https://maven.latvian.dev/releases"
-			content {
-				includeGroup "dev.latvian.mods"
-				includeGroup "dev.latvian.apps"
-			}
-		}
-
-		maven {
-			url 'https://jitpack.io'
-			content {
-				includeGroup "com.github.rtyley"
-			}
-		}
-		maven { url = "https://www.cursemaven.com" }
-		maven { url = "https://api.modrinth.com/maven" }
-		maven { url = "https://maven.ftb.dev/releases" }    // FTB Mods
-		maven { url = "https://maven.architectury.dev" }    // Arch API
-		maven { url = "https://maven.squiddev.cc" }         // CC: Tweaked
-		maven {
-			url = "https://jm.gserv.me/repository/maven-public"                     // JourneyMap
-			content {
-				includeGroup "info.journeymap"
-				includeGroup "mysticdrew"
-			}
-		}
-		maven { url = "https://maven.ithundxr.dev/snapshots" }  // Registrate
-		maven { url = "https://maven.blamejared.com/" }           // JEI
-		maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }    // Ponder
-		maven { url = "https://maven.createmod.net" }           // Create, Ponder, Flywheel
-		maven { url = "https://maven.firstdark.dev/snapshots" } // LDLib2
-		maven {	// Mod Menu
-			name = "Terraformers"
-			url = "https://maven.terraformersmc.com/"
-		}
-		maven {    // Trinkets
-			name = "Ladysnake Libs"
-			url = 'https://maven.ladysnake.org/releases'
-		}
-		maven { url "https://maven.ryanliptak.com/" }    // Apple Skin
-	}
+    mods {
+        "zinecraft" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
 }
 
+fabricApi {
+    configureDataGeneration {
+        client = true
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+
+    modImplementation "com.github.glitchfiend:TerraBlender-fabric:${terra_blender_version}"
+    modImplementation "dev.emi:trinkets:${trinkets_version}"
+    modImplementation "net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}"
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+    modLocalRuntime "curse.maven:advanced-loot-info-1205426:${advanced_loot_info_version}"
+    modLocalRuntime "squeek.appleskin:appleskin-fabric:mc${appleskin_version}"
+    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
+    modLocalRuntime "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+    modLocalRuntime "maven.modrinth:jade:${project.jade_version}+fabric"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_21
+    }
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.name}" }
+    }
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+javadoc {
+    options.locale = "zh_CN"
+    options.encoding = "UTF-8"
+}

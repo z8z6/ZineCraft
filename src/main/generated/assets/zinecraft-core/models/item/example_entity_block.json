@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "zinecraft-core:item/example_entity_block"
+  }
+}

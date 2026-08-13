@@ -11,6 +11,3 @@ pluginManagement {
 
 // Should match your modid
 rootProject.name = 'zinecraft'
-
-include 'api'
-include 'core'

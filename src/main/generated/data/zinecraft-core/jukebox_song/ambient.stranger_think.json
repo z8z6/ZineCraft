@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "ambient.stranger_think"
+  },
+  "length_in_seconds": 240.0,
+  "sound_event": "zinecraft-core:ambient.stranger_think"
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "zinecraft-core:item/white_horse_kohl"
+  }
+}
