@@ -1,9 +1,11 @@
 package com.cxxcxx.zinecraft.core.client
 
+import com.cxxcxx.zinecraft.core.client.ponder.ZinecraftPonderPlugin
+import net.createmod.ponder.foundation.PonderIndex
 import net.fabricmc.api.ClientModInitializer
 
 object ZinecraftCoreClient : ClientModInitializer {
   override fun onInitializeClient() {
-    // This entrypoint is suitable for setting up client-specific logic, such as rendering.
+    PonderIndex.addPlugin(ZinecraftPonderPlugin)
   }
 }

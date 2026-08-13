@@ -8,6 +8,7 @@
 - [添加方块与方块实体](block/README.md)
 - [添加实体](entity/README.md)
 - [添加附魔](enchantment/README.md)
+- [添加技能与 Ponder 演示](skill/README.md)
 - [添加结构与三段式 Jigsaw 示例](structure/README.md)
 - [添加群系](biome/README.md)
 - [泰拉 19 国群系与资料依据](biome/TERRA_NATIONS.md)
@@ -18,7 +19,7 @@
 Zinecraft 是一个以《明日方舟》及《明日方舟：终末地》内容为主题的 Minecraft 模组原型。当前版本以 Fabric 为目标平台，主要使用
 Kotlin 编写，并保留少量 Java Mixin 示例。
 
-目前仓库更接近“功能验证模板”而非可直接发布的完整模组：物品与贴图已经有一定规模，方块实体、数据生成、群系、矿物和结构生成链路也有示例实现；任务、剧情、生物、技能、UI
+目前仓库更接近“功能验证模板”而非可直接发布的完整模组：物品与贴图已经有一定规模，方块实体、数据生成、群系、矿物、结构和技能演示链路也有示例实现；任务、剧情、UI
 等内容仍处于规划阶段。项目现为单模块结构，注册与数据生成封装通过 `com.cxxcxx.zinecraft.api` 包组织，但不再产生独立 API 模组。
 
 ### 技术基线
@@ -37,7 +38,7 @@ Kotlin 编写，并保留少量 Java Mixin 示例。
 | 许可证                    | CC0-1.0（第三方题材和音频、图像素材仍受其原权利方约束）            |
 
 项目还声明了 TerraBlender、Trinkets、Ponder 和 Cloth Config 等开发依赖，并配置了 Mod Menu、JEI、Jade、AppleSkin
-等本地运行时辅助模组。其中只有 TerraBlender 已在当前源码中实际接入；其余多数是后续开发预留或开发环境辅助。
+等本地运行时辅助模组。其中 TerraBlender 负责国家群系注入，Ponder 负责技能可视化演示；其余多数是后续开发预留或开发环境辅助。
 
 ## 2. 仓库结构
 
@@ -123,6 +124,7 @@ Fabric Loader
    ├─ ENTITIES / ENCHANTMENTS  注册实体、Mob 与动态附魔
    ├─ ModBlock                 注册示例方块及其 BlockItem
    ├─ ModBlockEntity           注册示例方块实体类型
+   ├─ ModSkills               声明八职业代表技能物品与 Ponder 演示数据
    ├─ NationBiomes            声明 19 个泰拉国家动态群系键与特色生物
    ├─ NationLandmarks         声明 38 个绑定群系的世界唯一地标
    ├─ NationSettlements       声明 19 套可重复生成的大型 Jigsaw 聚落
@@ -327,7 +329,7 @@ python -m pip install Pillow
 - 项目仍含大量 `example_*` 示例命名、空入口和空 Mixin，发布前需要替换或删除。
 - `com.cxxcxx.zinecraft.api` 目前是同一模组中的公共封装包，尚未定义稳定性或兼容性承诺。
 - TerraBlender 是国家群系注入主世界所需的必需依赖；发布包应与 `fabric.mod.json` 中声明的版本约束一并验证。
-- Trinkets、Ponder 和 Cloth Config 已声明为依赖，但当前源码未使用；过早保留依赖会增加开发启动与分发维护成本。
+- Trinkets 和 Cloth Config 已声明为依赖但当前源码未使用；过早保留依赖会增加开发启动与分发维护成本。
 - `sounds.json` 声明了 `engine`，但资源目录中没有对应的 `engine.ogg`。
 - 中文语言 provider 没有生成创造模式标签页和唱片描述翻译；唱片组件当前使用的翻译键也应与 `sounds.json` 的 subtitle 键统一检查。
 - 多个普通物品的英文名称由中文名自动推导，因此英文语言文件会得到中文文本，而不是可靠英文翻译。

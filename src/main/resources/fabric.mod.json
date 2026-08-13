@@ -54,6 +54,7 @@
     "java": ">=21",
     "fabric-api": "*",
     "fabric-language-kotlin": "*",
-    "terrablender": "*"
+    "terrablender": "*",
+    "ponder": ">=1.0.69"
   }
 }

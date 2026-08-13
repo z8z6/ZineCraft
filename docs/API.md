@@ -15,6 +15,7 @@
 | `CREATIVE_TABS`  | `CreativeTabCatalog` | 标签页注册、翻译和目录内容收集                    |
 | `ENTITIES`       | `EntityCatalog`      | 普通实体、Mob、默认属性、生成限制、自然生成和生成蛋        |
 | `ENCHANTMENTS`   | `EnchantmentCatalog` | 1.21.1 动态附魔、翻译、等级成本、装备槽和效果 builder |
+| `SKILLS`         | `SkillCatalog`       | 技能物品、资料校验、双语名称与多行说明                |
 | `BIOMES`         | `BiomeCatalog`       | 群系资源键及 bootstrap                   |
 | `FEATURES`       | `FeatureCatalog`     | 配置地物、放置地物和运行时群系注入                  |
 | `STRUCTURES`     | `StructureCatalog`   | 简易建筑、大型 Jigsaw 聚落、唯一地标及其数据生成       |
