@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "zinecraft-core:block/example_entity_block"
-  }
-}

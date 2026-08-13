@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "": {
-      "model": "zinecraft-core:block/example_entity_block"
-    }
-  }
-}

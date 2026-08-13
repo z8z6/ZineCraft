@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "zinecraft-core:item/ester_raw"
-  }
-}
