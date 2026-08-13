@@ -33,6 +33,7 @@ bin/
 run/
 api/run
 core/run
+src/main/generated/
 
 # java
 

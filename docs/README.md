@@ -2,6 +2,15 @@
 
 本文档依据当前仓库中的 Gradle 配置、源码和资源整理，描述的是项目的实际实现状态。长期设想请另见 [开发计划](Plan.md)。
 
+## 开发指南目录
+
+- [添加物品](item/README.md)
+- [添加方块与方块实体](block/README.md)
+- [添加实体](entity/README.md)
+- [添加结构与三段式 Jigsaw 示例](structure/README.md)
+- [添加群系](biome/README.md)
+- [声明式 API 总览](API.md)
+
 ## 1. 项目概览
 
 Zinecraft 是一个以《明日方舟》及《明日方舟：终末地》内容为主题的 Minecraft 模组原型。当前版本以 Fabric 为目标平台，主要使用

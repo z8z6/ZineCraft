@@ -1,7 +1,6 @@
 package com.cxxcxx.zinecraft.api.world
 
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar
-import com.google.common.collect.ImmutableList
 import com.mojang.datafixers.util.Pair
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext
@@ -92,13 +91,43 @@ class WorldgenCatalog(val registrar: ModRegistrar) {
     maxDistanceFromCenter: Int = 50,
     removeVinesChance: Float = 0f
   ): SimpleBuildingEntry {
+    return jigsawBuilding(
+      path,
+      spacing,
+      separation,
+      salt,
+      size,
+      maxDistanceFromCenter,
+      removeVinesChance
+    ) {
+      pool("start") {
+        template(template)
+      }
+    }
+  }
+
+  fun jigsawBuilding(
+    path: String,
+    spacing: Int = 32,
+    separation: Int = 8,
+    salt: Int,
+    size: Int = 3,
+    maxDistanceFromCenter: Int = 80,
+    removeVinesChance: Float = 0f,
+    build: JigsawBuildingBuilder.() -> Unit
+  ): SimpleBuildingEntry {
     require(spacing > separation) { "spacing 必须大于 separation" }
+    val definition = JigsawBuildingBuilder(path).apply(build).build()
+    val poolKeys = definition.pools.associate { pool ->
+      pool.name to registrar.key(Registries.TEMPLATE_POOL, "${path}/${pool.name}")
+    }
     val entry = SimpleBuildingEntry(
       registrar.key(Registries.PROCESSOR_LIST, "${path}_processors"),
-      registrar.key(Registries.TEMPLATE_POOL, path),
+      poolKeys,
+      definition.startPool,
       registrar.key(Registries.STRUCTURE, path),
       registrar.key(Registries.STRUCTURE_SET, path),
-      registrar.id(template).toString(),
+      definition.pools,
       spacing,
       separation,
       salt,
@@ -216,23 +245,27 @@ class WorldgenCatalog(val registrar: ModRegistrar) {
     val emptyPool = context.lookup(Registries.TEMPLATE_POOL).getOrThrow(Pools.EMPTY)
     val processors = context.lookup(Registries.PROCESSOR_LIST)
     buildings.forEach { building ->
-      registrar.dynamic(
-        context,
-        building.poolKey,
-        StructureTemplatePool(
-          emptyPool,
-          ImmutableList.of(
-            Pair.of(
+      building.pools.forEach { pool ->
+        val elements: List<Pair<java.util.function.Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int>> =
+          pool.templates.map { template ->
+            Pair.of<java.util.function.Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int>(
               StructurePoolElement.single(
-                building.template,
+                registrar.id(template.template).toString(),
                 processors.getOrThrow(building.processorKey)
               ),
-              1
+              template.weight
             )
-          ),
-          StructureTemplatePool.Projection.RIGID
+          }
+        registrar.dynamic(
+          context,
+          building.poolKeys.getValue(pool.name),
+          StructureTemplatePool(
+            emptyPool,
+            elements,
+            StructureTemplatePool.Projection.RIGID
+          )
         )
-      )
+      }
     }
   }
 
@@ -250,7 +283,7 @@ class WorldgenCatalog(val registrar: ModRegistrar) {
             GenerationStep.Decoration.SURFACE_STRUCTURES,
             TerrainAdjustment.BEARD_THIN
           ),
-          pools.getOrThrow(building.poolKey),
+          pools.getOrThrow(building.poolKeys.getValue(building.startPool)),
           Optional.empty(),
           building.size,
           ConstantHeight.of(VerticalAnchor.absolute(0)),
@@ -305,14 +338,60 @@ class OreEntry internal constructor(
 
 class SimpleBuildingEntry internal constructor(
   val processorKey: ResourceKey<StructureProcessorList>,
-  val poolKey: ResourceKey<StructureTemplatePool>,
+  val poolKeys: Map<String, ResourceKey<StructureTemplatePool>>,
+  val startPool: String,
   val structureKey: ResourceKey<Structure>,
   val setKey: ResourceKey<StructureSet>,
-  val template: String,
+  val pools: List<JigsawPoolDefinition>,
   val spacing: Int,
   val separation: Int,
   val salt: Int,
   val size: Int,
   val maxDistanceFromCenter: Int,
   val removeVinesChance: Float
+)
+
+class JigsawBuildingBuilder internal constructor(private val path: String) {
+  var startPool: String = "start"
+  private val pools = mutableListOf<JigsawPoolDefinition>()
+
+  fun pool(name: String, build: JigsawPoolBuilder.() -> Unit) {
+    require(pools.none { it.name == name }) { "Jigsaw pool 重复: $path/$name" }
+    pools += JigsawPoolBuilder(name).apply(build).build()
+  }
+
+  internal fun build(): JigsawBuildingDefinition {
+    require(pools.isNotEmpty()) { "Jigsaw 建筑至少需要一个模板池: $path" }
+    require(pools.any { it.name == startPool }) { "找不到起始模板池: $path/$startPool" }
+    return JigsawBuildingDefinition(startPool, pools.toList())
+  }
+}
+
+class JigsawPoolBuilder internal constructor(private val name: String) {
+  private val templates = mutableListOf<JigsawTemplateElement>()
+
+  fun template(path: String, weight: Int = 1) {
+    require(weight > 0) { "Jigsaw 模板权重必须大于 0" }
+    templates += JigsawTemplateElement(path, weight)
+  }
+
+  internal fun build(): JigsawPoolDefinition {
+    require(templates.isNotEmpty()) { "Jigsaw 模板池不能为空: $name" }
+    return JigsawPoolDefinition(name, templates.toList())
+  }
+}
+
+internal data class JigsawBuildingDefinition(
+  val startPool: String,
+  val pools: List<JigsawPoolDefinition>
+)
+
+data class JigsawPoolDefinition(
+  val name: String,
+  val templates: List<JigsawTemplateElement>
+)
+
+data class JigsawTemplateElement(
+  val template: String,
+  val weight: Int
 )

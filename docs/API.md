@@ -4,6 +4,14 @@
 管理动态世界生成内容。它与具体内容位于同一 Gradle 模块和同一个模组 JAR 中；内容代码只需要进行声明，不应直接调用 Minecraft
 注册表。
 
+分类型的完整指南：
+
+- [物品](item/README.md)
+- [方块](block/README.md)
+- [实体](entity/README.md)
+- [结构](structure/README.md)
+- [群系](biome/README.md)
+
 ## 普通内容
 
 每个模组创建一次目录：
