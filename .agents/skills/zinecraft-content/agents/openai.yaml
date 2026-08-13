@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft 内容开发"
+  short_description: "按项目规范添加建筑、技能、物品、实体、音效、附魔与群系内容"
+  default_prompt: "使用 $zinecraft-content 为 Zinecraft 添加一项完整内容，并运行数据生成与构建验证。"
