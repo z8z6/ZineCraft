@@ -35,7 +35,7 @@ jobs:
       - name: Upload Documentation
         uses: actions/upload-pages-artifact@v3
         with:
-          path: core/build/docs/javadoc
+          path: build/docs/javadoc
           name: github-pages-${{ github.run_id }}
 
   deploy-docs:
