@@ -3,9 +3,8 @@
   "package": "com.cxxcxx.zinecraft.core.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ExampleClientMixin",
-    "WeaponAttackMixin",
-    "TaczHumanoidAnimationMixin"
+    "TaczHumanoidAnimationMixin",
+    "WeaponAttackMixin"
   ],
   "injectors": {
     "defaultRequire": 1

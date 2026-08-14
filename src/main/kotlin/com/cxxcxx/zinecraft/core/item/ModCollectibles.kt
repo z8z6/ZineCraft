@@ -19,7 +19,14 @@ object ModCollectibles {
   private const val EXPECTED_COUNT = 245
 
   init {
-    Zinecraft.COLLECTIBLES.registerSharedTranslations()
+    Zinecraft.TRANSLATIONS.add(
+      "item.zinecraft.collectible.series",
+      "集成战略「傀影与猩红孤钻」 · No.%s",
+      "Integrated Strategies: Phantom & Crimson Solitaire · No.%s"
+    )
+    Zinecraft.TRANSLATIONS.add("item.zinecraft.collectible.original_effect", "原效果：%s", "Original effect: %s")
+    Zinecraft.TRANSLATIONS.add("item.zinecraft.collectible.minecraft_effect", "装备效果：%s", "Equipped effect: %s")
+    Zinecraft.TRANSLATIONS.add("trinkets.slot.chest.relic", "藏品", "Collectible")
   }
 
   /**
@@ -151,7 +158,7 @@ object ModCollectibles {
         minecraftEffectZhCn = override.minecraftEffectZhCn,
         minecraftEffectEnUs = override.minecraftEffectEnUs,
         power = override.power,
-        rarity = Rarity.valueOf(imported.rarity)
+        rarity = parseRarity(imported)
       )
     )
   }
@@ -171,8 +178,40 @@ object ModCollectibles {
     require(imported.map { it.path }.distinct().size == imported.size) { "藏品目录存在重复物品 ID" }
     require(imported.map { it.orderId }.distinct().size == imported.size) { "藏品目录存在重复档案编号" }
     require(imported.map { it.sourceId }.distinct().size == imported.size) { "藏品目录存在重复来源 ID" }
+    require(imported.map { it.iconId }.distinct().size == imported.size) { "藏品目录存在重复图片 ID" }
+    imported.forEach(::validateImported)
+    val unknownOverrides = powerOverrides.keys - imported.mapTo(hashSetOf()) { it.sourceId }
+    require(unknownOverrides.isEmpty()) { "玩法覆盖引用了不存在的来源 ID：${unknownOverrides.sorted()}" }
     return imported
   }
+
+  private fun validateImported(imported: ImportedCollectible) {
+    require(!imported.path.isNullOrBlank() && imported.path.matches(Regex("[a-z0-9_]+"))) {
+      "藏品物品 ID 格式无效：${imported.path}"
+    }
+    require(!imported.orderId.isNullOrBlank() && imported.orderId.matches(Regex("(?:[0-9]{3}|PCS[0-9]{2})"))) {
+      "藏品档案编号格式无效：${imported.orderId}"
+    }
+    require(!imported.sourceId.isNullOrBlank() && imported.sourceId.matches(Regex("rogue_1_relic_[a-z0-9_]+"))) {
+      "藏品来源 ID 格式无效：${imported.sourceId}"
+    }
+    require(!imported.iconId.isNullOrBlank() && imported.iconId.matches(Regex("rogue_1_relic_[a-z0-9_]+"))) {
+      "藏品图片 ID 格式无效：${imported.iconId}"
+    }
+    require(imported.sourceId == imported.iconId) { "藏品来源 ID 与图片 ID 不一致：${imported.sourceId}" }
+    require(!imported.zhCn.isNullOrBlank() && !imported.enUs.isNullOrBlank()) { "藏品名称不能为空：${imported.sourceId}" }
+    require(!imported.originalEffectZhCn.isNullOrBlank() && !imported.originalEffectEnUs.isNullOrBlank()) {
+      "藏品原效果不能为空：${imported.sourceId}"
+    }
+    require(!imported.descriptionZhCn.isNullOrBlank() && !imported.descriptionEnUs.isNullOrBlank()) {
+      "藏品原描述不能为空：${imported.sourceId}"
+    }
+    parseRarity(imported)
+  }
+
+  private fun parseRarity(imported: ImportedCollectible): Rarity = runCatching {
+    Rarity.valueOf(imported.rarity)
+  }.getOrElse { throw IllegalArgumentException("藏品稀有度无效：${imported.sourceId}=${imported.rarity}", it) }
 
   private fun boost(
     attribute: Holder<Attribute>,

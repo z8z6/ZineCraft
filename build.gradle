@@ -1,4 +1,7 @@
+import groovy.json.JsonSlurper
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+import java.util.zip.ZipFile
 
 plugins {
     id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
@@ -52,6 +55,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
     include implementation("org.luaj:luaj-jse:${project.luaj_version}")
+    testImplementation "org.jetbrains.kotlin:kotlin-test"
 
     modImplementation "com.github.glitchfiend:TerraBlender-fabric:${terra_blender_version}"
     modImplementation "dev.emi:trinkets:${trinkets_version}"
@@ -110,4 +114,76 @@ publishing {
 javadoc {
     options.locale = "zh_CN"
     options.encoding = "UTF-8"
+}
+
+tasks.register('verifyCollectibleJarResources') {
+    group = 'verification'
+    description = 'Verifies that every imported collectible has its runtime resources in the remapped JAR.'
+    dependsOn tasks.named('remapJar')
+
+    doLast {
+        def archive = tasks.named('remapJar').get().archiveFile.get().asFile
+        new ZipFile(archive).withCloseable { zip ->
+            def readJson = { String path ->
+                def entry = zip.getEntry(path)
+                if (entry == null) throw new GradleException("Missing JAR resource: ${path}")
+                zip.getInputStream(entry).withCloseable { stream ->
+                    new JsonSlurper().parse(new InputStreamReader(stream, 'UTF-8'))
+                }
+            }
+            def catalog = readJson('zinecraft/collectibles/phantom_crimson_solitaire.json')
+            if (catalog.size() != 245) {
+                throw new GradleException("Expected 245 collectibles in JAR catalog, found ${catalog.size()}")
+            }
+            ['path', 'orderId', 'sourceId', 'iconId'].each { field ->
+                def values = catalog.collect { it[field] }
+                if (values.any { it == null } || values.size() != (values as Set).size()) {
+                    throw new GradleException("Collectible catalog field is missing or duplicated: ${field}")
+                }
+            }
+            def tag = readJson('data/trinkets/tags/item/chest/relic.json')
+            def zhCn = readJson('assets/zinecraft/lang/zh_cn.json')
+            def enUs = readJson('assets/zinecraft/lang/en_us.json')
+            def expectedTagValues = catalog.collect { "zinecraft:${it.path}".toString() } as Set
+            if (tag.values.size() != (tag.values as Set).size()) {
+                throw new GradleException('Trinkets relic tag contains duplicate values')
+            }
+            if ((tag.values as Set) != expectedTagValues) {
+                throw new GradleException('Trinkets relic tag does not exactly match the collectible catalog')
+            }
+            catalog.each { collectible ->
+                def path = collectible.path
+                def modelPath = "assets/zinecraft/models/item/${path}.json".toString()
+                def texturePath = "assets/zinecraft/textures/item/${path}.png".toString()
+                if (zip.getEntry(texturePath) == null) throw new GradleException("Missing JAR resource: ${texturePath}")
+                def model = readJson(modelPath)
+                if (model.textures?.layer0 != "zinecraft:item/${path}".toString()) {
+                    throw new GradleException("Collectible model references wrong texture: ${modelPath}")
+                }
+                def translationKey = "item.zinecraft.${path}".toString()
+                ['', '.original_effect', '.description', '.minecraft_effect'].each { suffix ->
+                    def key = "${translationKey}${suffix}".toString()
+                    if (!zhCn.containsKey(key) || !enUs.containsKey(key)) {
+                        throw new GradleException("Missing collectible translation: ${key}")
+                    }
+                }
+                ['original_effect', 'description'].each { field ->
+                    def prefix = "${translationKey}.${field}.".toString()
+                    def zhLineKeys = zhCn.keySet().findAll { it.startsWith(prefix) && it.substring(prefix.length()) ==~ /[0-9]+/ } as Set
+                    def enLineKeys = enUs.keySet().findAll { it.startsWith(prefix) && it.substring(prefix.length()) ==~ /[0-9]+/ } as Set
+                    if (zhLineKeys.isEmpty() || zhLineKeys != enLineKeys) {
+                        throw new GradleException("Missing or mismatched tooltip line translations: ${prefix}*")
+                    }
+                    def expectedLines = (0..<zhLineKeys.size()).collect { "${prefix}${it}".toString() } as Set
+                    if (zhLineKeys != expectedLines) {
+                        throw new GradleException("Tooltip line translations are not contiguous: ${prefix}*")
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyCollectibleJarResources')
 }

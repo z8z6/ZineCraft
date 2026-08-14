@@ -7,29 +7,20 @@ import com.cxxcxx.zinecraft.core.Zinecraft
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import net.minecraft.client.Minecraft
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
-import org.luaj.vm2.Globals
-import org.luaj.vm2.LoadState
-import org.luaj.vm2.LuaFunction
-import org.luaj.vm2.LuaTable
-import org.luaj.vm2.LuaValue
-import org.luaj.vm2.Varargs
+import org.luaj.vm2.*
 import org.luaj.vm2.compiler.LuaC
-import org.luaj.vm2.lib.Bit32Lib
-import org.luaj.vm2.lib.PackageLib
-import org.luaj.vm2.lib.TableLib
-import org.luaj.vm2.lib.StringLib
-import org.luaj.vm2.lib.ZeroArgFunction
+import org.luaj.vm2.lib.*
 import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import org.luaj.vm2.lib.jse.JseBaseLib
 import org.luaj.vm2.lib.jse.JseMathLib
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 import kotlin.math.max
-import net.minecraft.sounds.SoundEvent
-import net.minecraft.sounds.SoundSource
-import net.minecraft.resources.ResourceLocation
 
 /** Independent TaCZ Lua animation compatibility runtime; external scripts stay in their packs. */
 internal class TaczLuaAnimationRuntime(
@@ -77,7 +68,8 @@ internal class TaczLuaAnimationRuntime(
   fun sample(entity: LivingEntity? = null): Map<String, TaczBoneTransform> {
     entity?.let(context::bind)
     val now = System.nanoTime()
-    if (now - lastUpdateNanos >= 1_000_000L) {
+    // Lua 状态机只需要与服务端 20 TPS 同步；骨骼混合仍按每帧采样，动画保持平滑。
+    if (now - lastUpdateNanos >= LUA_UPDATE_INTERVAL_NANOS) {
       val owner = script
       if (owner != null) {
         val luaContext = CoerceJavaToLua.coerce(context)
@@ -150,6 +142,8 @@ internal class TaczLuaAnimationRuntime(
   private fun LuaTable.function(name: String): LuaFunction? = get(name).takeIf(LuaValue::isfunction) as? LuaFunction
 
   companion object {
+    private const val LUA_UPDATE_INTERVAL_NANOS = 50_000_000L
+
     private fun secureGlobals(): Globals = Globals().also { globals ->
       globals.load(JseBaseLib())
       globals.load(PackageLib())

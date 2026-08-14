@@ -48,7 +48,7 @@ object Zinecraft : ModInitializer {
   val REGISTRAR = ModRegistrar(MOD_ID)
   val TRANSLATIONS = TranslationCatalog()
   val ITEMS = ItemCatalog(REGISTRAR, TRANSLATIONS)
-  val COLLECTIBLES = CollectibleCatalog(ITEMS, TRANSLATIONS)
+  val COLLECTIBLES = CollectibleCatalog(ITEMS, TRANSLATIONS, MOD_ID)
   val BLOCKS = BlockCatalog(REGISTRAR, TRANSLATIONS)
   val BLOCK_ENTITIES = BlockEntityCatalog(REGISTRAR)
   val SOUNDS = SoundCatalog(REGISTRAR)

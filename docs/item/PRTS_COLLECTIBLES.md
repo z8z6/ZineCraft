@@ -8,6 +8,8 @@ No.001–238 与 PCS01–PCS07，共 245 件。中文名、编号、原效果和
 - PRTS 图片资源域：<https://torappu.prts.wiki/assets/roguelike_topic_itempic/>
 -
 游戏数据镜像：<https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/master/zh_CN/gamedata/excel/roguelike_topic_table.json>
+- 固定输入 SHA-256：`2d3a34926fc4c71c105e5d5eb2541b81ce52e832393b476761a5001604b1b1f4`
+- PNG SHA-256 清单：`script/data/prts_is2_image_sha256.json`
 - 导入脚本：`script/import_prts_is2_collectibles.py`
 
 ## 逐文件来源
@@ -260,7 +262,7 @@ No.001–238 与 PCS01–PCS07，共 245 件。中文名、编号、原效果和
 | `collectible_is2_pcs06.png`                 | `rogue_1_relic_sp06.png` | No.PCS06 “夜骇”            |
 | `collectible_is2_pcs07.png`                 | `rogue_1_relic_sp07.png` | No.PCS07 “无度”            |
 
-下载/核对日期：2026-08-14。脚本会校验藏品总数、字段完整性、ID 唯一性和 PNG 文件头。
+脚本每次运行都会核对固定输入摘要、藏品总数、字段完整性、ID 唯一性、PNG 文件头和逐图 SHA-256。
 
 ## 权利说明
 

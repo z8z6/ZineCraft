@@ -264,10 +264,8 @@ bootstrap 并导出为 JSON。
 
 ### 5.7 Mixin 与客户端代码
 
-`ExampleMixin` 注入 `MinecraftServer.loadLevel()` 开头，`ExampleClientMixin` 注入 `Minecraft.run()`
-开头；两个注入方法都没有实际逻辑。通用端和客户端初始化入口也保留了 Fabric 模板注释。
-
-这些类证明 Mixin 配置和环境拆分已经接通，但在添加真实行为前可以视作占位代码。
+项目只保留具有实际行为的客户端 Mixin：`WeaponAttackMixin` 将动作武器的左键输入交给服务端
+Weapon Runtime，`TaczHumanoidAnimationMixin` 接入 TaCZ 第三人称骨骼动画。通用端不加载空的 Mixin 配置。
 
 ### 5.8 美术资源脚本
 

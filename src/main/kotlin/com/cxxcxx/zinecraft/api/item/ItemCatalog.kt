@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.data.models.model.ModelTemplate
 import net.minecraft.data.models.model.ModelTemplates
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 
@@ -24,6 +25,10 @@ class ItemCatalog(
     includeInCreative: Boolean = true,
     factory: () -> T
   ): ItemEntry<T> {
+    require(ResourceLocation.isValidPath(path)) { "物品 ID 路径无效：$path" }
+    require(zhCn.isNotBlank()) { "物品中文名不能为空：$path" }
+    require(enUs.isNotBlank()) { "物品英文名不能为空：$path" }
+    require(entries.none { it.path == path }) { "物品 ID 重复：$path" }
     val entry = ItemEntry(path, registrar.item(path, factory()), model, includeInCreative)
     entries += entry
     translations.add(entry.item.descriptionId, zhCn, enUs)

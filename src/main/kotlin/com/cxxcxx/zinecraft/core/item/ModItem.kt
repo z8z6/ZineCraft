@@ -27,7 +27,7 @@ object ModItem {
     enUs: String = path.toDisplayName()
   ): ItemEntry<T> = Zinecraft.ITEMS.register(path, zhCn, enUs, model) { item }
 
-  val EXAMPLE_ITEM = item("example_item", "")
+  val EXAMPLE_ITEM = item("example_item", "示例物品")
 
   val ORIROCK = item("orirock", "源岩")
   val ORIROCK_CUBE: ItemWrap<Item> = ItemWrap("orirock_cube", "固源岩")

@@ -50,9 +50,12 @@ description: Add or revise Zinecraft accessory items based on PRTS Integrated St
 
 1. 运行 `python script/import_prts_is2_collectibles.py`。需要离线复核时传入
    `--game-data <roguelike_topic_table.json>`；只重建元数据时使用 `--skip-images`。
+   脚本默认也会核对 `script/data/prts_is2_image_sha256.json` 中的逐图摘要；只有人工核对过
+   PRTS 图片确实变更后，才使用 `--update-image-digests` 显式更新受版本控制的清单。
 2. 脚本生成藏品目录、Trinkets `chest/relic` 标签和来源清单，并直接从 PRTS 下载 PNG；
    不手动复制或转换图片。
-3. 脚本必须校验预期数量、必填字段、ID 唯一性和 PNG 文件头；失败时停止，不生成占位图。
+3. 脚本必须校验预期数量、必填字段、ID 唯一性、PNG 文件头和摘要；所有输出先暂存并整体发布，
+   发布失败时回滚，不生成占位图或留下部分更新。
 4. 新增忠实玩法适配时，只在 `ModCollectibles.powerOverrides` 中按来源 ID 增加能力。
 5. 常规模型和翻译由目录数据生成，不手写重复 JSON。只有新增顶层内容对象时才改初始化入口。
 

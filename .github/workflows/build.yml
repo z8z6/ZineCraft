@@ -21,7 +21,11 @@ jobs:
           distribution: 'microsoft'
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: build
+      # Generated language/model data is intentionally ignored by Git. Keep these
+      # as separate invocations so a clean checkout exercises the real release order.
+      - name: generate data
+        run: ./gradlew runDatagen
+      - name: build and verify packaged collectible resources
         run: ./gradlew build
       - name: capture build artifacts
         uses: actions/upload-artifact@v7

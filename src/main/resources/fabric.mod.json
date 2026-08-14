@@ -42,7 +42,6 @@
     ]
   },
   "mixins": [
-    "zinecraft.mixins.json",
     {
       "config": "zinecraft.client.mixins.json",
       "environment": "client"

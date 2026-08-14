@@ -3,7 +3,6 @@ package com.cxxcxx.zinecraft.api.accessory
 import com.cxxcxx.zinecraft.api.item.ItemCatalog
 import com.cxxcxx.zinecraft.api.item.ItemEntry
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog
-import com.cxxcxx.zinecraft.core.Zinecraft
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
 import dev.emi.trinkets.api.SlotReference
@@ -26,46 +25,112 @@ import net.minecraft.world.item.TooltipFlag
  */
 class CollectibleCatalog(
   private val items: ItemCatalog,
-  private val translations: TranslationCatalog
+  private val translations: TranslationCatalog,
+  private val namespace: String
 ) {
   private val entries = mutableListOf<CollectibleEntry>()
+  private val seriesTranslationKey = "item.$namespace.collectible.series"
+  private val originalEffectLabelTranslationKey = "item.$namespace.collectible.original_effect"
+  private val minecraftEffectLabelTranslationKey = "item.$namespace.collectible.minecraft_effect"
 
   fun register(spec: CollectibleSpec): CollectibleEntry {
-    require(spec.path.matches(Regex("[a-z0-9_]+"))) { "藏品 ID 必须是 snake_case：${spec.path}" }
-    require(spec.orderId.matches(Regex("(?:[0-9]{3}|PCS[0-9]{2})"))) {
-      "藏品编号必须是三位数字或 PCS 编号：${spec.orderId}"
-    }
-    require(spec.zhCn.isNotBlank()) { "藏品中文名不能为空" }
-    require(spec.originalEffectZhCn.isNotBlank()) { "藏品原效果不能为空" }
-    require(spec.descriptionZhCn.isNotBlank()) { "藏品原描述不能为空" }
     require(entries.none { it.spec.path == spec.path }) { "藏品 ID 重复：${spec.path}" }
+    val originalEffectLines = wrapLocalizedTooltip(
+      spec.originalEffectZhCn,
+      spec.originalEffectEnUs,
+      firstLineCharacters = ORIGINAL_EFFECT_FIRST_LINE_CHARACTERS
+    )
+    val descriptionLines = wrapLocalizedTooltip(spec.descriptionZhCn, spec.descriptionEnUs)
+    val registeredSpec = spec.copy(
+      originalEffectLineCount = originalEffectLines.size,
+      descriptionLineCount = descriptionLines.size
+    )
 
     val itemEntry = items.register(
       path = spec.path,
       zhCn = spec.zhCn,
       enUs = spec.enUs
     ) {
-      CollectibleItem(spec)
+      CollectibleItem(
+        registeredSpec,
+        namespace,
+        seriesTranslationKey,
+        originalEffectLabelTranslationKey,
+        minecraftEffectLabelTranslationKey
+      )
     }
     val translationPrefix = itemEntry.item.descriptionId
     translations.add("$translationPrefix.original_effect", spec.originalEffectZhCn, spec.originalEffectEnUs)
+    originalEffectLines.forEachIndexed { index, line ->
+      translations.add("$translationPrefix.original_effect.$index", line.zhCn, line.enUs)
+    }
     translations.add("$translationPrefix.description", spec.descriptionZhCn, spec.descriptionEnUs)
+    descriptionLines.forEachIndexed { index, line ->
+      translations.add("$translationPrefix.description.$index", line.zhCn, line.enUs)
+    }
     translations.add("$translationPrefix.minecraft_effect", spec.minecraftEffectZhCn, spec.minecraftEffectEnUs)
 
-    return CollectibleEntry(spec, itemEntry).also(entries::add)
+    return CollectibleEntry(registeredSpec, itemEntry).also(entries::add)
   }
 
-  internal fun registerSharedTranslations() {
-    translations.add(
-      "item.zinecraft.collectible.series",
-      "集成战略「傀影与猩红孤钻」 · No.%s",
-      "Integrated Strategies: Phantom & Crimson Solitaire · No.%s"
-    )
-    translations.add("item.zinecraft.collectible.original_effect", "原效果：%s", "Original effect: %s")
-    translations.add("item.zinecraft.collectible.minecraft_effect", "装备效果：%s", "Equipped effect: %s")
-    translations.add("trinkets.slot.chest.relic", "藏品", "Collectible")
+  private companion object {
+    /** 为“原效果：”/“Original effect:”标签预留首行宽度。 */
+    const val ORIGINAL_EFFECT_FIRST_LINE_CHARACTERS = 24
   }
 }
+
+internal data class LocalizedTooltipLine(val zhCn: String, val enUs: String)
+
+/**
+ * 把两种语言分配到相同数量的 tooltip 组件。语言长度可以不同；较短文本会重新均匀分配，
+ * 极端情况下使用不可见占位行，拼接可见字符后仍与原文完全一致。
+ */
+internal fun wrapLocalizedTooltip(
+  zhCn: String,
+  enUs: String,
+  firstLineCharacters: Int = TOOLTIP_LINE_CHARACTERS,
+  continuationCharacters: Int = TOOLTIP_LINE_CHARACTERS
+): List<LocalizedTooltipLine> {
+  require(zhCn.isNotEmpty() && enUs.isNotEmpty()) { "tooltip 文本不能为空" }
+  require(firstLineCharacters > 0 && continuationCharacters > 0) { "tooltip 行宽必须大于 0" }
+  val lineCount = maxOf(
+    requiredTooltipLines(zhCn, firstLineCharacters, continuationCharacters),
+    requiredTooltipLines(enUs, firstLineCharacters, continuationCharacters)
+  )
+  val zhLines = splitTooltipText(zhCn, lineCount, firstLineCharacters, continuationCharacters)
+  val enLines = splitTooltipText(enUs, lineCount, firstLineCharacters, continuationCharacters)
+  return List(lineCount) { LocalizedTooltipLine(zhLines[it], enLines[it]) }
+}
+
+private fun requiredTooltipLines(text: String, firstLineCharacters: Int, continuationCharacters: Int): Int {
+  val length = text.codePointCount(0, text.length)
+  if (length <= firstLineCharacters) return 1
+  return 1 + (length - firstLineCharacters + continuationCharacters - 1) / continuationCharacters
+}
+
+private fun splitTooltipText(
+  text: String,
+  lineCount: Int,
+  firstLineCharacters: Int,
+  continuationCharacters: Int
+): List<String> {
+  val codePoints = text.codePoints().toArray()
+  var offset = 0
+  return List(lineCount) { index ->
+    val remaining = codePoints.size - offset
+    if (remaining == 0) return@List ZERO_WIDTH_SPACE
+    val remainingLines = lineCount - index
+    val limit = if (index == 0) firstLineCharacters else continuationCharacters
+    val futureCapacity = (remainingLines - 1) * continuationCharacters
+    val minimum = maxOf(1, remaining - futureCapacity)
+    val balanced = (remaining + remainingLines - 1) / remainingLines
+    val count = balanced.coerceIn(minimum, minOf(limit, remaining))
+    String(codePoints, offset, count).also { offset += count }
+  }
+}
+
+private const val TOOLTIP_LINE_CHARACTERS = 42
+private const val ZERO_WIDTH_SPACE = "\u200B"
 
 data class CollectibleEntry(
   val spec: CollectibleSpec,
@@ -87,8 +152,19 @@ data class CollectibleSpec(
   val minecraftEffectZhCn: String,
   val minecraftEffectEnUs: String,
   val power: CollectiblePower,
-  val rarity: Rarity = Rarity.UNCOMMON
-)
+  val rarity: Rarity = Rarity.UNCOMMON,
+  internal val originalEffectLineCount: Int = 0,
+  internal val descriptionLineCount: Int = 0
+) {
+  init {
+    require(path.matches(Regex("[a-z0-9_]+"))) { "藏品 ID 必须是 snake_case：$path" }
+    require(orderId.matches(Regex("(?:[0-9]{3}|PCS[0-9]{2})"))) { "藏品编号格式无效：$orderId" }
+    require(zhCn.isNotBlank() && enUs.isNotBlank()) { "藏品名称不能为空：$path" }
+    require(originalEffectZhCn.isNotBlank() && originalEffectEnUs.isNotBlank()) { "藏品原效果不能为空：$path" }
+    require(descriptionZhCn.isNotBlank() && descriptionEnUs.isNotBlank()) { "藏品原描述不能为空：$path" }
+    require(minecraftEffectZhCn.isNotBlank() && minecraftEffectEnUs.isNotBlank()) { "藏品适配说明不能为空：$path" }
+  }
+}
 
 sealed interface CollectiblePower {
   /** 只保留档案资料；尚未把原作局内机制生硬替换成无关的 Minecraft 属性。 */
@@ -98,7 +174,11 @@ sealed interface CollectiblePower {
     val attribute: Holder<Attribute>,
     val amount: Double,
     val operation: AttributeModifier.Operation
-  ) : CollectiblePower
+  ) : CollectiblePower {
+    init {
+      require(amount.isFinite()) { "属性修饰值必须是有限数：$amount" }
+    }
+  }
 
   data class AttributeSet(
     val boosts: List<AttributeBoost>
@@ -114,14 +194,18 @@ sealed interface CollectiblePower {
     val intervalTicks: Int = 20
   ) : CollectiblePower {
     init {
-      require(maxHealthFraction > 0f) { "每次回复的最大生命比例必须大于 0" }
+      require(maxHealthFraction.isFinite() && maxHealthFraction > 0f) { "每次回复的最大生命比例必须是有限正数" }
       require(intervalTicks > 0) { "回复间隔必须大于 0" }
     }
   }
 }
 
 class CollectibleItem internal constructor(
-  val spec: CollectibleSpec
+  val spec: CollectibleSpec,
+  private val namespace: String,
+  private val seriesTranslationKey: String,
+  private val originalEffectLabelTranslationKey: String,
+  private val minecraftEffectLabelTranslationKey: String
 ) : TrinketItem(Item.Properties().stacksTo(1).rarity(spec.rarity)) {
   override fun canEquip(stack: ItemStack, slot: SlotReference, entity: LivingEntity): Boolean {
     val slotType = slot.inventory().slotType
@@ -145,7 +229,7 @@ class CollectibleItem internal constructor(
     }
     boosts.forEachIndexed { index, boost ->
       val modifierId = ResourceLocation.fromNamespaceAndPath(
-        Zinecraft.MOD_ID,
+        namespace,
         "collectible/${spec.path}/$index"
       )
       modifiers.put(boost.attribute, AttributeModifier(modifierId, boost.amount, boost.operation))
@@ -167,15 +251,22 @@ class CollectibleItem internal constructor(
     tooltipFlag: TooltipFlag
   ) {
     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag)
-    tooltipComponents += Component.translatable("item.zinecraft.collectible.series", spec.orderId)
+    tooltipComponents += Component.translatable(seriesTranslationKey, spec.orderId)
       .withStyle(ChatFormatting.DARK_AQUA)
+    repeat(spec.originalEffectLineCount) { index ->
+      val effectLine = Component.translatable("$descriptionId.original_effect.$index")
+      tooltipComponents += if (index == 0) {
+        Component.translatable(originalEffectLabelTranslationKey, effectLine)
+          .withStyle(ChatFormatting.GOLD)
+      } else {
+        effectLine.withStyle(ChatFormatting.GOLD)
+      }
+    }
+    repeat(spec.descriptionLineCount) { index ->
+      tooltipComponents += Component.translatable("$descriptionId.description.$index").withStyle(ChatFormatting.GRAY)
+    }
     tooltipComponents += Component.translatable(
-      "item.zinecraft.collectible.original_effect",
-      Component.translatable("$descriptionId.original_effect")
-    ).withStyle(ChatFormatting.GOLD)
-    tooltipComponents += Component.translatable("$descriptionId.description").withStyle(ChatFormatting.GRAY)
-    tooltipComponents += Component.translatable(
-      "item.zinecraft.collectible.minecraft_effect",
+      minecraftEffectLabelTranslationKey,
       Component.translatable("$descriptionId.minecraft_effect")
     ).withStyle(ChatFormatting.GREEN)
   }

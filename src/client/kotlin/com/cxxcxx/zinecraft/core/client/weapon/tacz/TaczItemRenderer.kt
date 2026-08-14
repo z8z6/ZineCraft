@@ -10,29 +10,51 @@ import com.mojang.blaze3d.platform.NativeImage
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.math.Axis
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import org.joml.Vector3f
-import java.util.IdentityHashMap
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 object TaczItemRenderer {
   private val models = ConcurrentHashMap<String, TaczBedrockModel>()
   private val animations = ConcurrentHashMap<String, Map<String, TaczAnimationClip>>()
   private val textures = ConcurrentHashMap<String, ResourceLocation>()
-  private val runtimes = java.util.Collections.synchronizedMap(IdentityHashMap<ItemStack, TaczLuaAnimationRuntime>())
+  private val runtimes = mutableMapOf<UUID, RuntimeEntry>()
+  private val runtimeOwners = IdentityHashMap<ItemStack, UUID>()
+  private var clientTick = 0L
 
   fun initialize() {
     BuiltinItemRendererRegistry.INSTANCE.register(ModTaczWeapons.GUN_ITEM.item, ::renderGun)
     BuiltinItemRendererRegistry.INSTANCE.register(ModTaczWeapons.AMMO_ITEM.item, ::renderAmmo)
+    ClientTickEvents.END_CLIENT_TICK.register { client ->
+      clientTick++
+      if (clientTick % RUNTIME_SWEEP_INTERVAL_TICKS == 0L) sweepRuntimes()
+    }
+    ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> clearRuntimes() }
+    ClientLifecycleEvents.CLIENT_STOPPING.register { clearCaches() }
+    ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(
+      object : SimpleSynchronousResourceReloadListener {
+        override fun getFabricId(): ResourceLocation =
+          ResourceLocation.fromNamespaceAndPath(Zinecraft.MOD_ID, "tacz_item_renderer")
+
+        override fun onResourceManagerReload(resourceManager: ResourceManager) = clearCaches()
+      }
+    )
     if (FabricLoader.getInstance().isDevelopmentEnvironment) {
       ClientLifecycleEvents.CLIENT_STARTED.register { validateExternalAssets() }
     }
@@ -348,8 +370,31 @@ object TaczItemRenderer {
   }
 
   private fun runtime(stack: ItemStack, entity: net.minecraft.world.entity.LivingEntity?): TaczLuaAnimationRuntime? {
-    runtimes[stack]?.let { runtime -> entity?.let(runtime::bind); return runtime }
+    if (entity == null) {
+      val owner = runtimeOwners[stack] ?: return null
+      val cached = runtimes[owner] ?: run {
+        runtimeOwners.remove(stack)
+        return null
+      }
+      if (cached.stack !== stack || cached.entity.isRemoved || !cached.entity.isAlive) {
+        removeRuntime(owner)
+        runtimeOwners.remove(stack)
+        return null
+      }
+      cached.lastSeenTick = clientTick
+      return cached.runtime
+    }
+    if (!entity.isAlive || entity.isRemoved) return null
     val gun = stack.get(WeaponStateComponents.TACZ_GUN_ID)?.let(TaczGunPacks::gun) ?: return null
+    val key = entity.uuid
+    runtimes[key]?.let { cached ->
+      if (cached.stack === stack && cached.runtime.gun.id == gun.id) {
+        cached.lastSeenTick = clientTick
+        cached.runtime.bind(entity)
+        return cached.runtime
+      }
+      removeRuntime(key)
+    }
     val clips = linkedMapOf<String, TaczAnimationClip>()
     gun.assets.defaultAnimationPath?.let { path ->
       clips += animations.computeIfAbsent(path) {
@@ -362,8 +407,59 @@ object TaczItemRenderer {
       }
     }
     if (clips.isEmpty()) return null
-    return TaczLuaAnimationRuntime(stack, gun, clips, entity).also { runtimes[stack] = it }
+    return TaczLuaAnimationRuntime(stack, gun, clips, entity).also {
+      runtimeOwners[stack]?.takeIf { it != key }?.let(::removeRuntime)
+      runtimes[key] = RuntimeEntry(stack, entity, it, clientTick)
+      runtimeOwners[stack] = key
+    }
   }
+
+  /** 未继续渲染的换栈、已移除实体都会在很短时间内释放 Lua globals 和 ItemStack 引用。 */
+  private fun sweepRuntimes() {
+    val iterator = runtimes.iterator()
+    while (iterator.hasNext()) {
+      val entry = iterator.next().value
+      if (
+        entry.entity.isRemoved || !entry.entity.isAlive || entry.entity.mainHandItem !== entry.stack ||
+        clientTick - entry.lastSeenTick > RUNTIME_TTL_TICKS
+      ) {
+        entry.runtime.stop()
+        if (runtimeOwners[entry.stack] == entry.entity.uuid) runtimeOwners.remove(entry.stack)
+        iterator.remove()
+      }
+    }
+  }
+
+  private fun clearRuntimes() {
+    runtimes.values.forEach { it.runtime.stop() }
+    runtimes.clear()
+    runtimeOwners.clear()
+  }
+
+  private fun removeRuntime(owner: UUID) {
+    val entry = runtimes.remove(owner) ?: return
+    if (runtimeOwners[entry.stack] == owner) runtimeOwners.remove(entry.stack)
+    entry.runtime.stop()
+  }
+
+  private fun clearCaches() {
+    clearRuntimes()
+    models.clear()
+    animations.clear()
+    val textureManager = Minecraft.getInstance().textureManager
+    textures.values.forEach(textureManager::release)
+    textures.clear()
+  }
+
+  private data class RuntimeEntry(
+    val stack: ItemStack,
+    val entity: net.minecraft.world.entity.LivingEntity,
+    val runtime: TaczLuaAnimationRuntime,
+    var lastSeenTick: Long
+  )
+
+  private const val RUNTIME_SWEEP_INTERVAL_TICKS = 1L
+  private const val RUNTIME_TTL_TICKS = 40L
 
   private fun model(path: String): TaczBedrockModel? = models[path] ?: runCatching {
     TaczGunPacks.snapshot.open(path)?.use(TaczBedrockParser::model) ?: return null
