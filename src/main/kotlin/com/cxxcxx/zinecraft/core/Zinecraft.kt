@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core
 
+import com.cxxcxx.zinecraft.api.accessory.CollectibleCatalog
 import com.cxxcxx.zinecraft.api.block.BlockCatalog
 import com.cxxcxx.zinecraft.api.block.BlockEntityCatalog
 import com.cxxcxx.zinecraft.api.enchantment.EnchantmentCatalog
@@ -24,6 +25,7 @@ import com.cxxcxx.zinecraft.core.block.NationBlocks
 import com.cxxcxx.zinecraft.core.dimension.ModDimensions
 import com.cxxcxx.zinecraft.core.entity.ModBlockEntity
 import com.cxxcxx.zinecraft.core.entity.ModEntities
+import com.cxxcxx.zinecraft.core.item.ModCollectibles
 import com.cxxcxx.zinecraft.core.item.ModItem
 import com.cxxcxx.zinecraft.core.item.NationFoods
 import com.cxxcxx.zinecraft.core.nation.TerraNationRelations
@@ -46,6 +48,7 @@ object Zinecraft : ModInitializer {
   val REGISTRAR = ModRegistrar(MOD_ID)
   val TRANSLATIONS = TranslationCatalog()
   val ITEMS = ItemCatalog(REGISTRAR, TRANSLATIONS)
+  val COLLECTIBLES = CollectibleCatalog(ITEMS, TRANSLATIONS)
   val BLOCKS = BlockCatalog(REGISTRAR, TRANSLATIONS)
   val BLOCK_ENTITIES = BlockEntityCatalog(REGISTRAR)
   val SOUNDS = SoundCatalog(REGISTRAR)
@@ -67,6 +70,7 @@ object Zinecraft : ModInitializer {
   override fun onInitialize() {
     ModSound
     ModItem
+    ModCollectibles
     NationFoods
     ModBlock
     MaterialOres

@@ -10,6 +10,7 @@ import com.cxxcxx.zinecraft.core.block.ModBlock
 import com.cxxcxx.zinecraft.core.block.NationBlocks
 import com.cxxcxx.zinecraft.core.dimension.ModDimensions
 import com.cxxcxx.zinecraft.core.entity.ModEntities
+import com.cxxcxx.zinecraft.core.item.ModCollectibles
 import com.cxxcxx.zinecraft.core.item.ModItem
 import com.cxxcxx.zinecraft.core.item.NationFoods
 import com.cxxcxx.zinecraft.core.recipe.ModRecipeProvider
@@ -32,6 +33,7 @@ object ZinecraftDataGenerator : DataGeneratorEntrypoint {
   override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
     ModSound
     ModItem
+    ModCollectibles
     NationFoods
     ModBlock
     MaterialOres
