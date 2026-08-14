@@ -12,6 +12,8 @@
 - [添加结构与三段式 Jigsaw 示例](structure/README.md)
 - [添加群系](biome/README.md)
 - [泰拉 19 国群系与资料依据](biome/TERRA_NATIONS.md)
+- [FTB Quests 泰拉远征任务指引](quest/README.md)
+- [泰拉国家关系系统](nation/README.md)
 - [声明式 API 总览](API.md)
 
 ## 1. 项目概览
@@ -19,8 +21,10 @@
 Zinecraft 是一个以《明日方舟》及《明日方舟：终末地》内容为主题的 Minecraft 模组原型。当前版本以 Fabric 为目标平台，主要使用
 Kotlin 编写，并保留少量 Java Mixin 示例。
 
-目前仓库更接近“功能验证模板”而非可直接发布的完整模组：物品与贴图已经有一定规模，方块实体、数据生成、群系、矿物、结构和技能演示链路也有示例实现；任务、剧情、UI
-等内容仍处于规划阶段。项目现为单模块结构，注册与数据生成封装通过 `com.cxxcxx.zinecraft.api` 包组织，但不再产生独立 API 模组。
+目前仓库更接近“功能验证模板”而非可直接发布的完整模组：物品与贴图已经有一定规模，方块实体、数据生成、群系、矿物、结构、技能演示链路和
+FTB Quests
+远征指引也有示例实现；剧情和自定义 UI 等内容仍处于规划阶段。项目现为单模块结构，注册与数据生成封装通过
+`com.cxxcxx.zinecraft.api` 包组织，但不再产生独立 API 模组。
 
 ### 技术基线
 
@@ -37,8 +41,9 @@ Kotlin 编写，并保留少量 Java Mixin 示例。
 | Maven Group            | `com.cxxcxx.zinecraft`                     |
 | 许可证                    | CC0-1.0（第三方题材和音频、图像素材仍受其原权利方约束）            |
 
-项目还声明了 TerraBlender、Trinkets、Ponder 和 Cloth Config 等开发依赖，并配置了 Mod Menu、JEI、Jade、AppleSkin
-等本地运行时辅助模组。其中 TerraBlender 负责国家群系注入，Ponder 负责技能可视化演示；其余多数是后续开发预留或开发环境辅助。
+项目还声明了 TerraBlender、Trinkets、Ponder、Cloth Config 和 FTB Quests 等依赖，并配置了 Mod Menu、JEI、Jade、AppleSkin
+等本地运行时辅助模组。其中 TerraBlender 负责国家群系地表规则，Ponder 负责技能可视化演示，FTB Quests
+提供泰拉远征指引；其余多数是后续开发预留或开发环境辅助。
 
 ## 2. 仓库结构
 
@@ -106,7 +111,7 @@ JAR。
 | `zinecraft` | 通用           | `Zinecraft`              | 初始化声音、物品、燃料、堆肥、方块、方块实体和世界生成注册 |
 | `zinecraft` | 客户端          | `ZinecraftCoreClient`    | 空入口                           |
 | `zinecraft` | 数据生成         | `ZinecraftDataGenerator` | 注册全部数据生成器和动态注册表 bootstrap     |
-| `zinecraft` | TerraBlender | `ModTerraBlender`        | 注册主世界区域及地表规则                  |
+| `zinecraft` | TerraBlender | `ModTerraBlender`        | 注册受国家群系条件限制的地表规则              |
 
 项目使用 Loom 的 split environment source sets，将客户端代码与通用代码分开。通用源码不应引用仅客户端可用的 Minecraft 类。
 
@@ -126,6 +131,7 @@ Fabric Loader
    ├─ ModBlockEntity           注册示例方块实体类型
    ├─ ModSkills               声明八职业代表技能物品与 Ponder 演示数据
    ├─ NationBiomes            声明 19 个泰拉国家动态群系键与特色生物
+   ├─ ModDimensions           注册泰拉维度及其多噪声群系源
    ├─ NationLandmarks         声明 38 个绑定群系的世界唯一地标
    ├─ NationSettlements       声明 19 套可重复生成的大型 Jigsaw 聚落
    ├─ ModBuildings             声明并自动生成简单 Jigsaw 建筑数据
@@ -204,7 +210,7 @@ bootstrap 并导出为 JSON。
 
 ### 5.5 世界生成
 
-世界生成由数据生成器导出动态注册表数据，并在运行时通过 Fabric 与 TerraBlender 接入。
+世界生成由数据生成器导出动态注册表数据；Fabric 负责地物注入，TerraBlender 保留国家群系表层规则扩展。
 
 #### 示例矿脉
 
@@ -220,8 +226,8 @@ bootstrap 并导出为 JSON。
 #### 泰拉国家群系
 
 `NationBiomes` 为 PRTS 当前列出的 19 个现存国家各声明一个群系。`NationBiomePresets` 复用原版植被、刷怪与地下生成组合，
-`NationBiomePlacements` 单独维护 TerraBlender 气候点，`TerraNationRegion` 负责批量加入主世界。阿戈尔映射到深海，杜林映射到地下，
-其余国家按地貌和气候映射到地表。
+`NationBiomePlacements` 单独维护原版多噪声气候点，`ModDimensions.TERRA` 负责批量加入 `zinecraft:terra`。阿戈尔映射到深海，
+杜林映射到地下，其余国家按地貌和气候映射到泰拉地表；主世界不再包含国家群系。
 
 `ModSurfaceRule` 只匹配项目自己的国家群系，为每国应用一种不重复的主表层，并按需要混入草方块或雪块生态斑块，既保留视觉特色，
 也满足树木与特色生物的生成条件，不会用通用兜底规则改写原版群系。每个群系还单独配置一种有辨识度的原版生物。
@@ -328,7 +334,7 @@ python -m pip install Pillow
 
 - 项目仍含大量 `example_*` 示例命名、空入口和空 Mixin，发布前需要替换或删除。
 - `com.cxxcxx.zinecraft.api` 目前是同一模组中的公共封装包，尚未定义稳定性或兼容性承诺。
-- TerraBlender 是国家群系注入主世界所需的必需依赖；发布包应与 `fabric.mod.json` 中声明的版本约束一并验证。
+- TerraBlender 当前只负责国家群系条件表层规则；国家群系分布由泰拉维度自身的多噪声群系源负责。
 - Trinkets 和 Cloth Config 已声明为依赖但当前源码未使用；过早保留依赖会增加开发启动与分发维护成本。
 - `sounds.json` 声明了 `engine`，但资源目录中没有对应的 `engine.ogg`。
 - 中文语言 provider 没有生成创造模式标签页和唱片描述翻译；唱片组件当前使用的翻译键也应与 `sounds.json` 的 subtitle 键统一检查。

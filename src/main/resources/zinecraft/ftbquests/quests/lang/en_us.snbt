@@ -1,0 +1,139 @@
+{
+	chapter.5A494E4543524146.title: "Zinecraft: Terra Expedition"
+	quest.1000000000000001.title: "Expedition Handbook"
+	quest.1000000000000001.quest_subtitle: "Dimensions, national biomes, and weapons"
+	quest.1000000000000001.quest_desc: ["This chapter guides you to an Overworld stargate, through the Terra dimension and its nineteen national biomes, and into Zinecraft sword, firearm, and staff training.\n\nCheck the task below to begin."]
+	quest.1000000000000002.title: "Find a Snowy-Plains Stargate"
+	quest.1000000000000002.quest_desc: ["Stargate ruins generate naturally only in Overworld snowy plains. Reach minecraft:snowy_plains, then search the snow for the cyan event horizon."]
+	quest.1000000000000003.title: "Cross the Stargate"
+	quest.1000000000000003.quest_desc: ["Enter the stargate to reach zinecraft:terra. Terra has Overworld-like terrain and daylight rules, but its biome source contains only the nineteen Terra national biomes. Use the Terra-side gate to return."]
+
+	quest.2000000000000001.title: "Aegir Abyssal Sea"
+	quest.2000000000000001.quest_desc: ["Dark-prismarine seabeds and deep-sea enclaves inhabited by dolphins, with Aegir-themed settlements and landmarks."]
+	quest.2000000000000002.title: "Bolivar Plain"
+	quest.2000000000000002.quest_desc: ["War-scarred coarse plains with parrots, Dossoles-inspired districts, and regional landmarks."]
+	quest.2000000000000003.title: "Higashi Shadow Rift"
+	quest.2000000000000003.quest_desc: ["A dim podzol mountain forest inhabited by foxes, with Sokogawa-style towns and a rift shrine."]
+	quest.2000000000000004.title: "Durin Underground Garden"
+	quest.2000000000000004.quest_desc: ["Moss and glow squid illuminate an underground garden where Ideal City districts hide among the caves."]
+	quest.2000000000000005.title: "Columbia Sandstone Wilds"
+	quest.2000000000000005.quest_desc: ["Red-sand canyons, armadillos, frontier towns, and research facilities define the Columbian frontier."]
+	quest.2000000000000006.title: "Kazimierz Knightland"
+	quest.2000000000000006.quest_desc: ["Wide grasslands support horses and knightly boroughs, crowned by competition-inspired architecture."]
+	quest.2000000000000007.title: "Kazdel Scarred Wastes"
+	quest.2000000000000007.quest_desc: ["Blackstone wastes hold the scars of war, cave spiders, Sarkaz settlements, and Babel-themed ruins."]
+	quest.2000000000000008.title: "Laterano Holy Fields"
+	quest.2000000000000008.quest_desc: ["Bright calcite fields surround bees, monastery towns, and Laterano citizens who carry firearms by default."]
+	quest.2000000000000009.title: "Leithanien Twilight Forest"
+	quest.2000000000000009.quest_desc: ["Rooted forests rest in twilight, populated by wolves, musical towns, and twin-tower landmarks."]
+	quest.200000000000000A.title: "Rim Billiton Mining Badlands"
+	quest.200000000000000A.quest_desc: ["Terracotta mines contain husks, mining camps, rail facilities, and industrial drilling landmarks."]
+	quest.200000000000000B.title: "Minos Sunlit Hills"
+	quest.200000000000000B.quest_desc: ["Sunlit packed-mud hills host goats, heroic city-states, and monuments inspired by the Twelve Heroes."]
+	quest.200000000000000C.title: "Sargon Rocky Desert"
+	quest.200000000000000C.quest_desc: ["Camels, oasis towns, and caravan routes cross the hot sand sea, concealing Golden City-inspired landmarks."]
+	quest.200000000000000D.title: "Sami Frozen Forest"
+	quest.200000000000000D.quest_desc: ["Polar bears and snow-priest villages inhabit the snowy taiga, where ancient altars lend the wilds an air of mystery."]
+	quest.200000000000000E.title: "Victoria Misty Highlands"
+	quest.200000000000000E.quest_desc: ["Muddy highlands remain shrouded in mist, combining sheep, industrial boroughs, steam works, and defensive structures."]
+	quest.200000000000000F.title: "Ursus Frozen Steppe"
+	quest.200000000000000F.quest_desc: ["Packed ice covers the northern plateau, where strays roam among towns, mines, and Sarcophagus-themed facilities."]
+	quest.2000000000000010.title: "Kjerag Snowy Peaks"
+	quest.2000000000000010.quest_desc: ["Rabbits inhabit blue-ice ridges dotted with mountain villages, trade routes, and Karlan religious architecture."]
+	quest.2000000000000011.title: "Siracusa Rainy Woodland"
+	quest.2000000000000011.quest_desc: ["Rain-soaked mossy woods contain spiders, family towns, theatres, and courts reflecting local order."]
+	quest.2000000000000012.title: "Yan Mountain Grove"
+	quest.2000000000000012.quest_desc: ["Pandas roam tuff peaks around Shangshu towns, pavilions, tea houses, and Yumen beacon architecture."]
+	quest.2000000000000013.title: "Iberia Salt Delta"
+	quest.2000000000000013.quest_desc: ["Salt winds scour gravel shores while drowned haunt coastal towns watched over by lighthouse landmarks."]
+	quest.2000000000000020.title: "Terra Geographer"
+	quest.2000000000000020.quest_desc: ["You have visited all nineteen national biomes. Confirm the completed survey and claim your expedition experience."]
+
+	quest.3000000000000001.title: "Training Loadout"
+	quest.3000000000000001.quest_subtitle: "Claim a test sword, rifle, ammunition, and staff"
+	quest.3000000000000001.quest_desc: ["Zinecraft's server-side action system controls weapon hits, damage, ammunition, and skill effects. Claim the training equipment, then complete the three basic drills."]
+	quest.3000000000000002.title: "Sword Drill"
+	quest.3000000000000002.quest_desc: ["Hold the Test Sword in your main hand and left-click to perform a light attack with wind-up and active frames. Practise on a safe target, then confirm completion."]
+	quest.3000000000000003.title: "Firearm Drill"
+	quest.3000000000000003.quest_desc: ["The Test Rifle holds 12 rounds. Left-click to fire, right-click to toggle aiming, and press R to reload from Test Cartridges in your inventory. Fire and reload once, then confirm completion."]
+	quest.3000000000000004.title: "Staff Drill"
+	quest.3000000000000004.quest_desc: ["Left-click the Test Staff to cast Arcane Bolt and right-click to cast Mending Light. Both effects execute server-side on the action's active frame. Practise both, then confirm completion."]
+	quest.3000000000000005.title: "TaCZ Firearm Adapter"
+	quest.3000000000000005.quest_subtitle: "Optional: requires external TaCZ gun-pack resources"
+	quest.3000000000000005.quest_desc: ["Zinecraft loads compatible TaCZ gun packs and maps every gun to a component-backed zinecraft:tacz_gun. Left-click fires, right-click aims, R reloads, B selects fire mode, X inspects, and V performs firearm melee.\n\nThis quest is optional and does not block progression when no gun-pack resources are installed."]
+	quest.3000000000000006.title: "Basic Weapons Certification"
+	quest.3000000000000006.quest_desc: ["Sword, firearm, and staff training are complete. Confirm your certification and claim the experience reward; the TaCZ adapter remains an independent optional challenge."]
+
+	task.1100000000000001.title: "Begin the Terra expedition"
+	task.2100000000000020.title: "Submit the complete survey"
+	task.3100000000000001.title: "Claim the training equipment"
+	task.3100000000000003.title: "I completed the light-attack drill"
+	task.3100000000000005.title: "I fired and reloaded the rifle"
+	task.3100000000000007.title: "I practised both staff spells"
+	task.3100000000000009.title: "I tested the TaCZ firearm actions"
+	task.310000000000000A.title: "Submit basic weapons certification"
+
+	chapter.54455252414E4554.title: "Terra Nation Relations"
+	quest.4000000000000000.title: "Network Legend"
+	quest.4000000000000000.quest_subtitle: "Select a national emblem to inspect diplomacy and state power"
+	quest.4000000000000000.quest_desc: ["Each node represents a nation. A line marks a significant bilateral relation backed by explicit PRTS evidence in TerraNationRelations. No line means the neutral default is in use or that the current sources are not explicit enough.\n\nState values: prosperity / stability / military / openness / aggression. Relation values: favor / war desire / trade / tension / trust. Most values use 0–100; favor and trust use -100–100.\n\nImportant: line colors only show FTB quest progress, not diplomatic sentiment. State and relation scores are gameplay-oriented initial estimates; the factual basis comes from PRTS.\n\nCheck the task to mark the legend as read."]
+	task.4100000000000000.title: "I understand the network legend"
+
+	quest.4000000000000001.title: "Aegir"
+	quest.4000000000000001.quest_subtitle: "Prosperity 72 / Stability 50 / Military 80 / Openness 10 / Aggression 15"
+	quest.4000000000000001.quest_desc: ["State: technologically advanced beneath the sea, but closed to land nations.\n\nKey relation:\n• Iberia: -25 / 10 / 18 / 52 / -45 (technology transfer; estrangement after the Profound Silence)"]
+	quest.4000000000000002.title: "Bolivar"
+	quest.4000000000000002.quest_subtitle: "Prosperity 35 / Stability 20 / Military 45 / Openness 55 / Aggression 55"
+	quest.4000000000000002.quest_desc: ["State: prolonged division and proxy conflict severely suppress stability and prosperity.\n\nKey relations:\n• Columbia: -55 / 72 / 25 / 85 / -65 (active and proxy conflict)\n• Leithanien: 25 / 22 / 55 / 55 / 15 (investment and proxy conflict)"]
+	quest.4000000000000003.title: "Higashi"
+	quest.4000000000000003.quest_subtitle: "Prosperity 62 / Stability 40 / Military 60 / Openness 45 / Aggression 40"
+	quest.4000000000000003.quest_desc: ["State: internally complex and historically pressured by the northern power.\n\nKey relation:\n• Ursus: -60 / 68 / 12 / 82 / -70 (historic war and border tension)"]
+	quest.4000000000000004.title: "Durin"
+	quest.4000000000000004.quest_subtitle: "Prosperity 82 / Stability 80 / Military 35 / Openness 55 / Aggression 15"
+	quest.4000000000000004.quest_desc: ["State: wealthy and stable underground cities with little appetite for military expansion.\n\nNo significant bilateral relation with sufficiently explicit PRTS evidence is currently recorded; the system uses neutral defaults toward other nations."]
+	quest.4000000000000005.title: "Columbia"
+	quest.4000000000000005.quest_subtitle: "Prosperity 88 / Stability 72 / Military 85 / Openness 90 / Aggression 65"
+	quest.4000000000000005.quest_desc: ["State: powerful economy, technology, and military, combining openness with clear expansionism.\n\nKey relations:\n• Bolivar: -55 / 72 / 25 / 85 / -65 (proxy conflict)\n• Leithanien: -40 / 52 / 35 / 72 / -45 (proxy rivalry)\n• Kjerag: 32 / 8 / 72 / 20 / 25 (investment and trade)\n• Victoria: -28 / 28 / 62 / 58 / -30 (trade and border tension)"]
+	quest.4000000000000006.title: "Kazimierz"
+	quest.4000000000000006.quest_subtitle: "Prosperity 78 / Stability 65 / Military 72 / Openness 75 / Aggression 45"
+	quest.4000000000000006.quest_desc: ["State: commercially prosperous and militarily capable, under lasting northern border pressure.\n\nKey relation:\n• Ursus: -65 / 78 / 12 / 85 / -72 (historic war and border tension)"]
+	quest.4000000000000007.title: "Kazdel"
+	quest.4000000000000007.quest_subtitle: "Prosperity 30 / Stability 30 / Military 88 / Openness 35 / Aggression 70"
+	quest.4000000000000007.quest_desc: ["State: low prosperity and stability, but very high military capability and conflict pressure.\n\nKey relations:\n• Victoria: -65 / 48 / 8 / 72 / -78 (historic war and occupation)\n• Laterano → Kazdel: -72 / 18 / 2 / 75 / -80 (diplomatic exclusion; one-way policy)"]
+	quest.4000000000000008.title: "Laterano"
+	quest.4000000000000008.quest_subtitle: "Prosperity 85 / Stability 88 / Military 78 / Openness 82 / Aggression 12"
+	quest.4000000000000008.quest_desc: ["State: highly prosperous and stable, frequently acting as an international witness and mediator.\n\nKey relations:\n• Iberia: 20 / 4 / 42 / 22 / 18 (religious ties and mediation)\n• Kazdel: -72 / 18 / 2 / 75 / -80 (diplomatic exclusion; Laterano's one-way policy)"]
+	quest.4000000000000009.title: "Leithanien"
+	quest.4000000000000009.quest_subtitle: "Prosperity 80 / Stability 70 / Military 82 / Openness 65 / Aggression 35"
+	quest.4000000000000009.quest_desc: ["State: strong across all major measures and influential through investment and proxies.\n\nKey relations:\n• Bolivar: 25 / 22 / 55 / 55 / 15 (investment and proxy conflict)\n• Columbia: -40 / 52 / 35 / 72 / -45 (proxy rivalry)\n• Kjerag: 28 / 6 / 65 / 16 / 24 (investment and trade)"]
+	quest.400000000000000A.title: "Rim Billiton"
+	quest.400000000000000A.quest_subtitle: "Prosperity 72 / Stability 75 / Military 45 / Openness 85 / Aggression 20"
+	quest.400000000000000A.quest_desc: ["State: an open, active mining economy with low military expansionism.\n\nKey relation:\n• Kjerag: 42 / 4 / 80 / 12 / 38 (investment and trade)"]
+	quest.400000000000000B.title: "Minos"
+	quest.400000000000000B.quest_subtitle: "Prosperity 60 / Stability 68 / Military 62 / Openness 55 / Aggression 30"
+	quest.400000000000000B.quest_desc: ["State: broadly moderate and stable, with mid-range national power.\n\nNo significant bilateral relation with sufficiently explicit PRTS evidence is currently recorded; the system uses neutral defaults toward other nations."]
+	quest.400000000000000C.title: "Sargon"
+	quest.400000000000000C.quest_subtitle: "Prosperity 65 / Stability 60 / Military 70 / Openness 70 / Aggression 40"
+	quest.400000000000000C.quest_desc: ["State: vast and trade-oriented, with upper-middle military power and conflict pressure.\n\nNo significant bilateral relation with sufficiently explicit PRTS evidence is currently recorded; the system uses neutral defaults toward other nations."]
+	quest.400000000000000D.title: "Sami"
+	quest.400000000000000D.quest_subtitle: "Prosperity 38 / Stability 70 / Military 75 / Openness 25 / Aggression 15"
+	quest.400000000000000D.quest_desc: ["State: closed to outsiders but capable in defence, with little appetite for offensive war.\n\nKey relation:\n• Ursus: -58 / 72 / 8 / 80 / -68 (historic war and border tension)"]
+	quest.400000000000000E.title: "Victoria"
+	quest.400000000000000E.quest_subtitle: "Prosperity 76 / Stability 40 / Military 90 / Openness 72 / Aggression 55"
+	quest.400000000000000E.quest_desc: ["State: militarily powerful and economically open, but internally unstable.\n\nKey relations:\n• Kazdel: -65 / 48 / 8 / 72 / -78 (historic war and occupation)\n• Kjerag: 38 / 6 / 62 / 16 / 32 (investment and trade)\n• Columbia: -28 / 28 / 62 / 58 / -30 (trade and border tension)"]
+	quest.400000000000000F.title: "Ursus"
+	quest.400000000000000F.quest_subtitle: "Prosperity 55 / Stability 38 / Military 92 / Openness 30 / Aggression 85"
+	quest.400000000000000F.quest_desc: ["State: exceptionally high military power and aggression, with low openness and internal stability.\n\nKey relations:\n• Kazimierz: -65 / 78 / 12 / 85 / -72\n• Sami: -58 / 72 / 8 / 80 / -68\n• Higashi: -60 / 68 / 12 / 82 / -70\nAll three are marked by historic war and border tension."]
+	quest.4000000000000010.title: "Kjerag"
+	quest.4000000000000010.quest_subtitle: "Prosperity 58 / Stability 72 / Military 48 / Openness 52 / Aggression 20"
+	quest.4000000000000010.quest_desc: ["State: stable and reluctant to wage war, gradually opening through reform.\n\nKey relations:\n• Victoria: 38 / 6 / 62 / 16 / 32\n• Columbia: 32 / 8 / 72 / 20 / 25\n• Leithanien: 28 / 6 / 65 / 16 / 24\n• Rim Billiton: 42 / 4 / 80 / 12 / 38\nAll four primarily involve investment and trade."]
+	quest.4000000000000011.title: "Siracusa"
+	quest.4000000000000011.quest_subtitle: "Prosperity 70 / Stability 55 / Military 65 / Openness 72 / Aggression 45"
+	quest.4000000000000011.quest_desc: ["State: open and commercially active, with family rule producing both order and conflict.\n\nNo significant bilateral relation with sufficiently explicit PRTS evidence is currently recorded; the system uses neutral defaults toward other nations."]
+	quest.4000000000000012.title: "Yan"
+	quest.4000000000000012.quest_subtitle: "Prosperity 88 / Stability 88 / Military 90 / Openness 60 / Aggression 20"
+	quest.4000000000000012.quest_desc: ["State: highly prosperous, stable, and militarily powerful, with low offensive aggression.\n\nNo significant bilateral relation with sufficiently explicit PRTS evidence is currently recorded; the system uses neutral defaults toward other nations."]
+	quest.4000000000000013.title: "Iberia"
+	quest.4000000000000013.quest_subtitle: "Prosperity 32 / Stability 52 / Military 65 / Openness 15 / Aggression 25"
+	quest.4000000000000013.quest_desc: ["State: prosperity and openness fell sharply after the Profound Silence, while some military strength remains.\n\nKey relations:\n• Aegir: -48 / 24 / 12 / 68 / -62 (technology transfer and diplomatic exclusion)\n• Laterano: 20 / 4 / 42 / 22 / 18 (religious ties and mediation)"]
+}

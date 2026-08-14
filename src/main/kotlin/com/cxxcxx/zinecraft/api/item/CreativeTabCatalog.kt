@@ -30,7 +30,7 @@ class CreativeTabCatalog(
       FabricItemGroup.builder().icon(icon).title(Component.translatable(translationKey)).build()
     )
     ItemGroupEvents.modifyEntriesEvent(registration.first).register { entries ->
-      items.entries.forEach { entries.accept(it.item) }
+      items.entries.filter { it.includeInCreative }.forEach { entries.accept(it.item) }
       if (includeBlocks) {
         blocks.entries.filter { it.registerItem }.forEach { entries.accept(it.block.asItem()) }
       }

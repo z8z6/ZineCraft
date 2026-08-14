@@ -101,3 +101,19 @@ EntityRendererRegistry.register(ModEntities.EXAMPLE_MOB.type) { context ->
 ```
 
 通用源码不能引用 renderer、model layer 或其他客户端类。
+
+## 拉特兰人形生物的默认枪械
+
+`LateranoCitizen.finalizeSpawn` 在服务端把枪械写入主手装备槽。`LateranoLoadout` 优先从已加载 TaCZ 枪包中稳定筛选手枪，
+没有手枪时选择枪包中的其他枪械；完全没有外置枪包时回退到 `test_rifle`，所以生成结果始终满足默认持枪语义。
+装备掉落率为零，避免把自然生成生物变成外置枪械复制来源。当前公民是和平生物；是否射击必须以后通过独立的服务端 Mob 武器 AI
+实现，
+不能复用玩家 C2S 输入或在客户端动画中结算伤害。
+
+## 十九国居民
+
+`ModEntities` 为每个国家群系提供对应居民。拉特兰继续使用 `LateranoCitizen`；其余十八国使用 `NationResident` 的国家专属实体类型，
+仅在对应群系自然生成，并持有不会掉落的职业意象物品。所有居民都实现 `NationAffiliated`，任务、声望或外交系统应读取
+`nation`，不要根据实体显示名、皮肤或所在群系反推国籍。
+
+客户端当前复用原版宽臂玩家模型与占位皮肤；国家专属原创皮肤仍可在不改变服务端实体和关系数据的情况下逐步替换。

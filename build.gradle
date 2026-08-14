@@ -23,6 +23,7 @@ repositories {
     maven { url "https://www.cursemaven.com" }
     maven { url "https://maven.createmod.net" }
     maven { url "https://maven.blamejared.com/" }
+    maven { url "https://maven.ftb.dev/releases" }
     maven { url "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
 }
 
@@ -50,10 +51,12 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+    include implementation("org.luaj:luaj-jse:${project.luaj_version}")
 
     modImplementation "com.github.glitchfiend:TerraBlender-fabric:${terra_blender_version}"
     modImplementation "dev.emi:trinkets:${trinkets_version}"
     modImplementation "net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}"
+    modImplementation "dev.ftb.mods:ftb-quests-fabric:${project.ftb_quests_version}"
     modApi("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
@@ -63,6 +66,7 @@ dependencies {
     modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
     modLocalRuntime "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
     modLocalRuntime "maven.modrinth:jade:${project.jade_version}+fabric"
+
 }
 
 processResources {

@@ -21,9 +21,10 @@ class ItemCatalog(
     zhCn: String,
     enUs: String = path.toDisplayName(),
     model: ModelTemplate = ModelTemplates.FLAT_ITEM,
+    includeInCreative: Boolean = true,
     factory: () -> T
   ): ItemEntry<T> {
-    val entry = ItemEntry(path, registrar.item(path, factory()), model)
+    val entry = ItemEntry(path, registrar.item(path, factory()), model, includeInCreative)
     entries += entry
     translations.add(entry.item.descriptionId, zhCn, enUs)
     return entry
@@ -34,14 +35,16 @@ class ItemCatalog(
     zhCn: String,
     enUs: String = path.toDisplayName(),
     model: ModelTemplate = ModelTemplates.FLAT_ITEM,
-    properties: Item.Properties = Item.Properties()
-  ): ItemEntry<Item> = register(path, zhCn, enUs, model) { Item(properties) }
+    properties: Item.Properties = Item.Properties(),
+    includeInCreative: Boolean = true
+  ): ItemEntry<Item> = register(path, zhCn, enUs, model, includeInCreative) { Item(properties) }
 }
 
 class ItemEntry<T : Item> internal constructor(
   val path: String,
   val item: T,
-  internal val model: ModelTemplate
+  internal val model: ModelTemplate,
+  internal val includeInCreative: Boolean
 ) : ItemLike {
   override fun asItem(): Item = item
 

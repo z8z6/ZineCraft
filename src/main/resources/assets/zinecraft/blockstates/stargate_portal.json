@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "zinecraft:block/stargate_portal"
+    }
+  }
+}

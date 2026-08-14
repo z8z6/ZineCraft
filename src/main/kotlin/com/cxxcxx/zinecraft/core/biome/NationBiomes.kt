@@ -84,7 +84,7 @@ object NationBiomes {
     NationBiomePresets.featuredSpawn(this, MobCategory.MONSTER, EntityType.CAVE_SPIDER, 30, 1, 2)
   }
 
-  /** 拉特兰圣田：白色方解石地表、蜜蜂与修道院镇，唯一地标为启示石塔。 */
+  /** 拉特兰圣田：白色方解石地表、蜜蜂、默认持铳的人形公民与修道院镇，唯一地标为启示石塔。 */
   val LATERANO_HOLY_FIELDS = Zinecraft.BIOMES.register("laterano_holy_fields") {
     temperature = 0.9f
     downfall = 0.5f

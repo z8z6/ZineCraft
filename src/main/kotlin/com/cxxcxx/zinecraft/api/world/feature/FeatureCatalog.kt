@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration
 import net.minecraft.world.level.levelgen.heightproviders.BiasedToBottomHeight
 import net.minecraft.world.level.levelgen.placement.*
@@ -21,6 +22,7 @@ import java.util.function.Predicate
 
 class FeatureCatalog(private val registrar: ModRegistrar) {
   private val ores = mutableListOf<OreEntry>()
+  private val simpleFeatures = mutableListOf<SimpleFeatureEntry>()
 
   fun ore(
     path: String,
@@ -46,6 +48,28 @@ class FeatureCatalog(private val registrar: ModRegistrar) {
     ).also(ores::add)
   }
 
+  /** 注册使用无参数配置的自定义地物，并把维度/群系限制保留在 Fabric 选择器中。 */
+  fun simple(
+    path: String,
+    feature: Feature<NoneFeatureConfiguration>,
+    placement: List<PlacementModifier>,
+    generationStep: GenerationStep.Decoration,
+    biomes: Predicate<BiomeSelectionContext>
+  ): SimpleFeatureEntry {
+    require(path.isNotBlank()) { "地物 ID 不能为空" }
+    require(placement.isNotEmpty()) { "地物放置规则不能为空: $path" }
+    require(simpleFeatures.none { it.path == path }) { "地物 ID 重复: $path" }
+    return SimpleFeatureEntry(
+      path,
+      registrar.key(Registries.CONFIGURED_FEATURE, path),
+      registrar.key(Registries.PLACED_FEATURE, path),
+      feature,
+      placement.toList(),
+      generationStep,
+      biomes
+    ).also(simpleFeatures::add)
+  }
+
   fun initialize() {
     ores.forEach { ore ->
       BiomeModifications.addFeature(
@@ -53,6 +77,9 @@ class FeatureCatalog(private val registrar: ModRegistrar) {
         GenerationStep.Decoration.UNDERGROUND_ORES,
         ore.placedKey
       )
+    }
+    simpleFeatures.forEach { feature ->
+      BiomeModifications.addFeature(feature.biomes, feature.generationStep, feature.placedKey)
     }
   }
 
@@ -66,6 +93,13 @@ class FeatureCatalog(private val registrar: ModRegistrar) {
         context,
         ore.configuredKey,
         ConfiguredFeature(Feature.ORE, OreConfiguration(targets, ore.veinSize, ore.discardChanceOnAirExposure))
+      )
+    }
+    simpleFeatures.forEach { entry ->
+      registrar.dynamic(
+        context,
+        entry.configuredKey,
+        ConfiguredFeature(entry.feature, NoneFeatureConfiguration.INSTANCE)
       )
     }
   }
@@ -89,8 +123,25 @@ class FeatureCatalog(private val registrar: ModRegistrar) {
         )
       )
     }
+    simpleFeatures.forEach { entry ->
+      registrar.dynamic(
+        context,
+        entry.placedKey,
+        PlacedFeature(configured.getOrThrow(entry.configuredKey), entry.placement)
+      )
+    }
   }
 }
+
+class SimpleFeatureEntry internal constructor(
+  val path: String,
+  val configuredKey: ResourceKey<ConfiguredFeature<*, *>>,
+  val placedKey: ResourceKey<PlacedFeature>,
+  internal val feature: Feature<NoneFeatureConfiguration>,
+  internal val placement: List<PlacementModifier>,
+  internal val generationStep: GenerationStep.Decoration,
+  internal val biomes: Predicate<BiomeSelectionContext>
+)
 
 class OreEntry internal constructor(
   val configuredKey: ResourceKey<ConfiguredFeature<*, *>>,

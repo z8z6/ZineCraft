@@ -1,0 +1,187 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "terra_relations"
+	icon: { id: "minecraft:filled_map" }
+	id: "54455252414E4554"
+	order_index: 1
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "4000000000000000"
+			icon: { id: "minecraft:spyglass" }
+			shape: "gear"
+			size: 2.0d
+			optional: true
+			tasks: [{ id: "4100000000000000", type: "checkmark" }]
+			x: 0.0d
+			y: -5.0d
+		}
+		{
+			id: "4000000000000001"
+			icon: { id: "minecraft:dark_prismarine" }
+			optional: true
+			tasks: [{ id: "4100000000000001", type: "checkmark" }]
+			x: -10.0d
+			y: 2.0d
+		}
+		{
+			dependencies: ["4000000000000005", "4000000000000009"]
+			id: "4000000000000002"
+			icon: { id: "minecraft:coarse_dirt" }
+			optional: true
+			tasks: [{ id: "4100000000000002", type: "checkmark" }]
+			x: 8.0d
+			y: 2.0d
+		}
+		{
+			dependencies: ["400000000000000F"]
+			id: "4000000000000003"
+			icon: { id: "minecraft:podzol" }
+			optional: true
+			tasks: [{ id: "4100000000000003", type: "checkmark" }]
+			x: 1.0d
+			y: 11.0d
+		}
+		{
+			id: "4000000000000004"
+			icon: { id: "minecraft:moss_block" }
+			optional: true
+			tasks: [{ id: "4100000000000004", type: "checkmark" }]
+			x: -10.0d
+			y: 7.0d
+		}
+		{
+			dependencies: ["400000000000000E", "4000000000000010"]
+			id: "4000000000000005"
+			icon: { id: "minecraft:red_sand" }
+			optional: true
+			tasks: [{ id: "4100000000000005", type: "checkmark" }]
+			x: 5.0d
+			y: 2.0d
+		}
+		{
+			dependencies: ["400000000000000F"]
+			id: "4000000000000006"
+			icon: { id: "minecraft:grass_block" }
+			optional: true
+			tasks: [{ id: "4100000000000006", type: "checkmark" }]
+			x: -5.0d
+			y: 10.0d
+		}
+		{
+			dependencies: ["400000000000000E"]
+			id: "4000000000000007"
+			icon: { id: "minecraft:blackstone" }
+			optional: true
+			tasks: [{ id: "4100000000000007", type: "checkmark" }]
+			x: -1.0d
+			y: 2.0d
+		}
+		{
+			dependencies: ["4000000000000007"]
+			id: "4000000000000008"
+			icon: { id: "minecraft:calcite" }
+			optional: true
+			tasks: [{ id: "4100000000000008", type: "checkmark" }]
+			x: -4.0d
+			y: 2.0d
+		}
+		{
+			dependencies: ["4000000000000005", "4000000000000010"]
+			id: "4000000000000009"
+			icon: { id: "minecraft:rooted_dirt" }
+			optional: true
+			tasks: [{ id: "4100000000000009", type: "checkmark" }]
+			x: 7.0d
+			y: 5.0d
+		}
+		{
+			dependencies: ["4000000000000010"]
+			id: "400000000000000A"
+			icon: { id: "minecraft:terracotta" }
+			optional: true
+			tasks: [{ id: "410000000000000A", type: "checkmark" }]
+			x: 1.0d
+			y: 8.0d
+		}
+		{
+			id: "400000000000000B"
+			icon: { id: "minecraft:packed_mud" }
+			optional: true
+			tasks: [{ id: "410000000000000B", type: "checkmark" }]
+			x: -8.0d
+			y: 10.0d
+		}
+		{
+			id: "400000000000000C"
+			icon: { id: "minecraft:sand" }
+			optional: true
+			tasks: [{ id: "410000000000000C", type: "checkmark" }]
+			x: 7.0d
+			y: 10.0d
+		}
+		{
+			dependencies: ["400000000000000F"]
+			id: "400000000000000D"
+			icon: { id: "minecraft:snow_block" }
+			optional: true
+			tasks: [{ id: "410000000000000D", type: "checkmark" }]
+			x: -2.0d
+			y: 11.0d
+		}
+		{
+			dependencies: ["4000000000000010"]
+			id: "400000000000000E"
+			icon: { id: "minecraft:mud" }
+			optional: true
+			tasks: [{ id: "410000000000000E", type: "checkmark" }]
+			x: 2.0d
+			y: 2.0d
+		}
+		{
+			id: "400000000000000F"
+			icon: { id: "minecraft:packed_ice" }
+			optional: true
+			tasks: [{ id: "410000000000000F", type: "checkmark" }]
+			x: -2.0d
+			y: 8.0d
+		}
+		{
+			id: "4000000000000010"
+			icon: { id: "minecraft:blue_ice" }
+			shape: "octagon"
+			size: 1.5d
+			optional: true
+			tasks: [{ id: "4100000000000010", type: "checkmark" }]
+			x: 3.0d
+			y: 5.0d
+		}
+		{
+			id: "4000000000000011"
+			icon: { id: "minecraft:mossy_cobblestone" }
+			optional: true
+			tasks: [{ id: "4100000000000011", type: "checkmark" }]
+			x: 10.0d
+			y: 8.0d
+		}
+		{
+			id: "4000000000000012"
+			icon: { id: "minecraft:tuff" }
+			optional: true
+			tasks: [{ id: "4100000000000012", type: "checkmark" }]
+			x: 11.0d
+			y: 5.0d
+		}
+		{
+			dependencies: ["4000000000000001", "4000000000000008"]
+			id: "4000000000000013"
+			icon: { id: "minecraft:gravel" }
+			optional: true
+			tasks: [{ id: "4100000000000013", type: "checkmark" }]
+			x: -7.0d
+			y: 2.0d
+		}
+	]
+}

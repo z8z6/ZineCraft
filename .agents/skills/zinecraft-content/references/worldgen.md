@@ -19,12 +19,25 @@ val VICTORIA_MISTY_HIGHLANDS = Zinecraft.BIOMES.register("victoria_misty_highlan
 一个可自然探索的完整群系至少检查：
 
 1. `NationBiomes` 中的气候、颜色、生成步骤和生物。
-2. `NationBiomePlacements.ALL` 中唯一且合理的 TerraBlender 气候点；仅注册资源键不会让群系出现在主世界。
+2. `NationBiomePlacements.ALL` 中唯一且合理的原版多噪声气候点，并同步 `terra.json`；国家群系只允许出现在泰拉维度。
 3. `ModSurfaceRule` 中受 `SurfaceRules.isBiome(...)` 限定的独特表层。禁止添加影响所有原版群系的兜底规则。
 4. 特色生物的群系选择器与合法生成地面。
 5. 一个可重复聚落和按需求设置的特色建筑或唯一地标。
 
 若内容依据官网或 PRTS，联网核对名称、地理、文化和建筑描述，并把 Minecraft 实现写成“基于资料的玩法化表达”，不要把推断冒充原文事实。
+
+## 维度与星门
+
+- 通过 `Zinecraft.DIMENSIONS.register` 声明维度；`DimensionCatalog` 负责资源键、维度类型和多噪声群系源 bootstrap。
+- Minecraft 1.21.1 的 `dimension` 注册表由世界创建数据包层加载，因此发布资源必须包含
+  `src/main/resources/data/<mod>/dimension/<id>.json`；不能把 `Registries.LEVEL_STEM` 交给
+  `FabricDynamicRegistryProvider.addAll`。
+- 维度类型可以由 `DimensionHelper.overworldLikeType()` 构造，避免在同一注册表 bootstrap 中读取尚未绑定的原版 Holder。
+- 限定某维度的地物应同时用群系键和 `BiomeSelectionContext.canGenerateIn(LevelStem.<key>)` 缩小注入范围，并在
+  `Feature.place` 用当前 `ServerLevel` 维度键做硬校验。Biome 实例会被复用，单靠选择器无法阻止其他维度复用同一群系后执行该地物。
+- 传送门实现原版 `Portal`，返回 `DimensionTransition`；跨维度实体复制、冷却和乘客处理交给原版流程，出口创建必须提供安全基座。
+- 泰拉国家群系不得重新注册 TerraBlender 主世界 Region。星门自然入口仅匹配主世界 `minecraft:snowy_plains`
+  ；泰拉侧星门只在首次抵达时创建，不参与自然生成。
 
 ## 选择建筑封装
 

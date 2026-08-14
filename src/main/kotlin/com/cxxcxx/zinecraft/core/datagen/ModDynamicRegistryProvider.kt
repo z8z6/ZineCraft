@@ -15,6 +15,7 @@ class ModDynamicRegistryProvider(
     entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE))
     entries.addAll(registries.lookupOrThrow(Registries.PLACED_FEATURE))
     entries.addAll(registries.lookupOrThrow(Registries.BIOME))
+    entries.addAll(registries.lookupOrThrow(Registries.DIMENSION_TYPE))
     entries.addAll(registries.lookupOrThrow(Registries.PROCESSOR_LIST))
     entries.addAll(registries.lookupOrThrow(Registries.TEMPLATE_POOL))
     entries.addAll(registries.lookupOrThrow(Registries.STRUCTURE))

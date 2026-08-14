@@ -1,0 +1,240 @@
+{
+  "type": "zinecraft:terra",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "minecraft:overworld",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "zinecraft:aegir_abyssal_sea",
+          "parameters": {
+            "temperature": -0.35,
+            "humidity": 0.65,
+            "continentalness": -1.05,
+            "erosion": 0.35,
+            "depth": 0.0,
+            "weirdness": -0.75,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:bolivar_plain",
+          "parameters": {
+            "temperature": 0.55,
+            "humidity": 0.0,
+            "continentalness": 0.1,
+            "erosion": 0.55,
+            "depth": 0.0,
+            "weirdness": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:higashi_shadow_rift",
+          "parameters": {
+            "temperature": -0.25,
+            "humidity": 0.35,
+            "continentalness": 0.35,
+            "erosion": -0.8,
+            "depth": 0.0,
+            "weirdness": -0.75,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:durin_underground_garden",
+          "parameters": {
+            "temperature": 0.35,
+            "humidity": 0.65,
+            "continentalness": 0.55,
+            "erosion": -0.4,
+            "depth": 1.0,
+            "weirdness": -0.75,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:columbia_sandstone_wilds",
+          "parameters": {
+            "temperature": 0.9,
+            "humidity": -0.75,
+            "continentalness": 0.9,
+            "erosion": -0.25,
+            "depth": 0.0,
+            "weirdness": 0.8,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:kazimierz_knightland",
+          "parameters": {
+            "temperature": 0.0,
+            "humidity": -0.35,
+            "continentalness": 0.35,
+            "erosion": 0.55,
+            "depth": 0.0,
+            "weirdness": -0.2,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:kazdel_scarred_wastes",
+          "parameters": {
+            "temperature": 0.0,
+            "humidity": -0.85,
+            "continentalness": 0.9,
+            "erosion": -0.8,
+            "depth": 0.0,
+            "weirdness": -0.55,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:laterano_holy_fields",
+          "parameters": {
+            "temperature": 0.45,
+            "humidity": 0.0,
+            "continentalness": 0.1,
+            "erosion": 0.35,
+            "depth": 0.0,
+            "weirdness": 0.3,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:leithanien_twilight_forest",
+          "parameters": {
+            "temperature": -0.3,
+            "humidity": 0.45,
+            "continentalness": 0.35,
+            "erosion": -0.4,
+            "depth": 0.0,
+            "weirdness": 0.55,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:rim_billiton_mining_badlands",
+          "parameters": {
+            "temperature": 0.85,
+            "humidity": -0.45,
+            "continentalness": 0.9,
+            "erosion": -0.75,
+            "depth": 0.0,
+            "weirdness": 0.9,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:minos_sunlit_hills",
+          "parameters": {
+            "temperature": 0.45,
+            "humidity": -0.25,
+            "continentalness": 0.1,
+            "erosion": -0.2,
+            "depth": 0.0,
+            "weirdness": 0.55,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:sargon_rocky_desert",
+          "parameters": {
+            "temperature": 0.95,
+            "humidity": -0.9,
+            "continentalness": 0.65,
+            "erosion": 0.05,
+            "depth": 0.0,
+            "weirdness": -0.1,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:sami_frozen_forest",
+          "parameters": {
+            "temperature": -0.85,
+            "humidity": 0.4,
+            "continentalness": 0.85,
+            "erosion": -0.45,
+            "depth": 0.0,
+            "weirdness": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:victoria_misty_highlands",
+          "parameters": {
+            "temperature": -0.2,
+            "humidity": 0.7,
+            "continentalness": 0.4,
+            "erosion": 0.0,
+            "depth": 0.0,
+            "weirdness": 0.65,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:ursus_frozen_steppe",
+          "parameters": {
+            "temperature": -0.75,
+            "humidity": -0.3,
+            "continentalness": 0.65,
+            "erosion": 0.5,
+            "depth": 0.0,
+            "weirdness": -0.25,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:kjerag_snowy_peaks",
+          "parameters": {
+            "temperature": -0.95,
+            "humidity": 0.35,
+            "continentalness": 0.95,
+            "erosion": -0.85,
+            "depth": 0.0,
+            "weirdness": 0.95,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:siracusa_rainy_woodland",
+          "parameters": {
+            "temperature": 0.05,
+            "humidity": 0.75,
+            "continentalness": 0.15,
+            "erosion": 0.35,
+            "depth": 0.0,
+            "weirdness": -0.65,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:yan_mountain_grove",
+          "parameters": {
+            "temperature": 0.05,
+            "humidity": 0.4,
+            "continentalness": 0.45,
+            "erosion": -0.2,
+            "depth": 0.0,
+            "weirdness": 0.8,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "zinecraft:iberia_salt_delta",
+          "parameters": {
+            "temperature": 0.5,
+            "humidity": 0.65,
+            "continentalness": -0.2,
+            "erosion": 0.8,
+            "depth": 0.0,
+            "weirdness": -0.75,
+            "offset": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

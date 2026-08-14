@@ -59,6 +59,16 @@ EntityRendererRegistry.register(ModEntities.SCOUT.type) { context ->
 
 实体类、AI、属性和自然生成属于通用端；renderer、模型、纹理装配属于客户端。专用服务器必须能在完全不加载客户端包的情况下启动。
 
+## 默认装备
+
+人形 Mob 的默认武器在服务端 `finalizeSpawn` 写入 `EquipmentSlot.MAINHAND`，不要由 renderer、客户端动画或生成蛋物品临时伪造。
+若装备来自 TaCZ 等可选外部内容，必须提供项目内置武器回退，确保专用服务器没有枪包时仍满足实体定义；外部枪械通过
+`ModTaczWeapons.gunStack` 创建，不能手写不完整的 Data Component。自然生成 Mob 的特殊装备应显式设置掉落概率，避免意外成为动态资源复制来源。
+
+“默认持枪”只表示装备与表现。需要 Mob 实际射击时应新增服务端权威的 Mob 武器 AI，不能复用玩家 C2S 输入，也不能让客户端动画直接结算伤害。
+
+国家居民还必须实现 `NationAffiliated`。十九国完整覆盖、关系系统连接方式和资料边界见 `references/nations.md`。
+
 ## 验证
 
 检查属性注册、生成限制、群系筛选、生成蛋模型和客户端渲染器。构建通过后，在目标群系验证自然生成，并使用生成蛋检查尺寸、碰撞箱、纹理和动画。

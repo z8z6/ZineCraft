@@ -1,6 +1,6 @@
 ---
 name: zinecraft-content
-description: Implement and extend Zinecraft through its declarative Kotlin catalogs. Use when adding or modifying items, blocks, block entities, mobs, entities, sounds, music discs, enchantments, character skill items with Ponder scenes, biomes, Jigsaw buildings, settlements, unique landmarks, translations, models, loot tables, or generated data in this Minecraft 1.21.1 Fabric project.
+description: Implement and extend Zinecraft through its declarative Kotlin catalogs and server-authoritative Weapon Runtime. Use when adding or modifying items, blocks, block entities, mobs, national residents, nation relationships, entities, weapons such as swords, firearms or staffs, WeaponAction timelines, ItemStack weapon state, sounds, music discs, enchantments, character skills, Ponder scenes, biomes, dimensions, FTB Quests guides, Jigsaw buildings, settlements, unique landmarks, translations, models, loot tables, or generated data in this Minecraft 1.21.1 Fabric project.
 ---
 
 # Zinecraft 内容开发
@@ -16,15 +16,21 @@ description: Implement and extend Zinecraft through its declarative Kotlin catal
 4. 按任务读取对应参考文件，不要一次加载全部：
     - 物品、方块、方块实体：`references/items-blocks.md`
     - 实体与 Mob：`references/entities.md`
+   - 十九国居民、国家状态与双边关系：`references/nations.md`
     - 群系、地表、Jigsaw 建筑、聚落、唯一地标：`references/worldgen.md`
     - 角色技能物品与 Ponder：`references/skills.md`
+   - 剑、枪械、法杖与 Weapon Runtime：`references/weapons.md`
+   - TaCZ 外置枪包加载、动态物品与客户端资源桥接：`references/tacz.md`
+   - FTB Quests 维度、群系、物品与教学任务：`references/ftbquests.md`
+       - 创建或修改任务后运行 `scripts/validate_ftbquests.ps1`，再执行数据生成与构建。
     - 音效、唱片、附魔、配方、创造模式页、矿物特征：`references/sound-enchantment.md`
 
 ## 实施流程
 
 1. 为内容选择稳定的 `snake_case` ID；确认翻译、纹理、模板和声音资源采用同一个 ID。
-2. 通过 `Zinecraft.ITEMS`、`BLOCKS`、`BLOCK_ENTITIES`、`ENTITIES`、`SOUNDS`、`SONGS`、`ENCHANTMENTS`、`SKILLS`、`BIOMES`、
-   `FEATURES`、`STRUCTURES` 或 `RECIPES` 声明内容。
+2. 通过 `Zinecraft.ITEMS`、`BLOCKS`、`BLOCK_ENTITIES`、`ENTITIES`、`SOUNDS`、`SONGS`、`ENCHANTMENTS`、`SKILLS`、`WEAPONS`、
+   `BIOMES`、
+   `FEATURES`、`STRUCTURES`、`DIMENSIONS` 或 `RECIPES` 声明内容。
 3. 将面向游戏内容的声明放入对应 `core/<domain>` 对象。只有新增目录能力时才修改 `api/<domain>`；通用端不得引用渲染器、Ponder
    场景等客户端类。
 4. 新增顶层内容对象时，在 `Zinecraft.onInitialize()` 和 `ZinecraftDataGenerator.onInitializeDataGenerator()`
@@ -51,9 +57,9 @@ description: Implement and extend Zinecraft through its declarative Kotlin catal
 - 普通城市、村落和营地使用可重复生成的 `settlement`；每世界一次的特殊建筑使用 `uniqueLandmark`；小型单模板建筑使用
   `simpleBuilding`。
 - Mob 的服务端属性/生成规则与客户端渲染分开；技能数据与 Ponder 场景分开；声音事件注册与声音文件声明分开。
+- 武器的命中、伤害、弹药与技能效果由服务端 Action Runtime 决定；客户端输入和动画关键帧不得直接产生 gameplay state。
 - 完成前至少通过数据生成和完整构建。若失败，区分代码错误、资源错误和环境/依赖下载错误，并报告实际验证范围。
 
 ## 完成报告
 
 说明新增了哪些声明与资源、哪些数据由目录自动生成、执行了哪些验证，以及仍需用户提供的美术或外部授权事项。引用关键文件的绝对路径和行号。
-

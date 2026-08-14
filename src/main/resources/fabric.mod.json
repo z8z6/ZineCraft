@@ -54,6 +54,7 @@
     "java": ">=21",
     "fabric-api": "*",
     "fabric-language-kotlin": "*",
+    "ftbquests": ">=2101.1.20",
     "terrablender": "*",
     "ponder": ">=1.0.69"
   }

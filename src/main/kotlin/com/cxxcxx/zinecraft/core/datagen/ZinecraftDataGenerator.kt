@@ -6,6 +6,8 @@ import com.cxxcxx.zinecraft.api.datagen.CatalogModelProvider
 import com.cxxcxx.zinecraft.core.Zinecraft
 import com.cxxcxx.zinecraft.core.biome.NationBiomes
 import com.cxxcxx.zinecraft.core.block.ModBlock
+import com.cxxcxx.zinecraft.core.dimension.ModDimensions
+import com.cxxcxx.zinecraft.core.entity.ModEntities
 import com.cxxcxx.zinecraft.core.item.ModItem
 import com.cxxcxx.zinecraft.core.recipe.ModRecipeProvider
 import com.cxxcxx.zinecraft.core.skill.ModSkills
@@ -14,6 +16,8 @@ import com.cxxcxx.zinecraft.core.structure.ModStructure
 import com.cxxcxx.zinecraft.core.structure.NationLandmarks
 import com.cxxcxx.zinecraft.core.structure.NationSettlements
 import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures
+import com.cxxcxx.zinecraft.core.weapon.ModWeapons
+import com.cxxcxx.zinecraft.core.weapon.ModTaczWeapons
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.core.RegistrySetBuilder
@@ -26,7 +30,11 @@ object ZinecraftDataGenerator : DataGeneratorEntrypoint {
     ModItem
     ModBlock
     ModSkills
+    ModWeapons
+    ModTaczWeapons
+    ModEntities
     NationBiomes
+    ModDimensions
     NationLandmarks
     NationSettlements
     ModWorldFeatures

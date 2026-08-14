@@ -1,0 +1,294 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "zinecraft_guide"
+	icon: { id: "minecraft:ender_eye" }
+	id: "5A494E4543524146"
+	order_index: 0
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "1000000000000001"
+			icon: { id: "minecraft:compass" }
+			shape: "gear"
+			size: 2.0d
+			tasks: [{ id: "1100000000000001", type: "checkmark" }]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1000000000000001"]
+			id: "1000000000000002"
+			icon: { id: "minecraft:snow_block" }
+			tasks: [{ biome: "minecraft:snowy_plains", id: "1100000000000002", type: "biome" }]
+			x: 0.0d
+			y: 2.0d
+		}
+		{
+			dependencies: ["1000000000000002"]
+			id: "1000000000000003"
+			icon: { id: "minecraft:ender_eye" }
+			shape: "octagon"
+			size: 2.0d
+			tasks: [{ dimension: "zinecraft:terra", id: "1100000000000003", type: "dimension" }]
+			x: 0.0d
+			y: 4.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000001"
+			icon: { id: "minecraft:dark_prismarine" }
+			tasks: [{ biome: "zinecraft:aegir_abyssal_sea", id: "2100000000000001", type: "biome" }]
+			x: -9.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000002"
+			icon: { id: "minecraft:coarse_dirt" }
+			tasks: [{ biome: "zinecraft:bolivar_plain", id: "2100000000000002", type: "biome" }]
+			x: -6.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000003"
+			icon: { id: "minecraft:podzol" }
+			tasks: [{ biome: "zinecraft:higashi_shadow_rift", id: "2100000000000003", type: "biome" }]
+			x: -3.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000004"
+			icon: { id: "minecraft:moss_block" }
+			tasks: [{ biome: "zinecraft:durin_underground_garden", id: "2100000000000004", type: "biome" }]
+			x: 0.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000005"
+			icon: { id: "minecraft:red_sand" }
+			tasks: [{ biome: "zinecraft:columbia_sandstone_wilds", id: "2100000000000005", type: "biome" }]
+			x: 3.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000006"
+			icon: { id: "minecraft:grass_block" }
+			tasks: [{ biome: "zinecraft:kazimierz_knightland", id: "2100000000000006", type: "biome" }]
+			x: 6.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000007"
+			icon: { id: "minecraft:blackstone" }
+			tasks: [{ biome: "zinecraft:kazdel_scarred_wastes", id: "2100000000000007", type: "biome" }]
+			x: 9.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000008"
+			icon: { id: "minecraft:calcite" }
+			tasks: [{ biome: "zinecraft:laterano_holy_fields", id: "2100000000000008", type: "biome" }]
+			x: -9.0d
+			y: 8.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000009"
+			icon: { id: "minecraft:rooted_dirt" }
+			tasks: [{ biome: "zinecraft:leithanien_twilight_forest", id: "2100000000000009", type: "biome" }]
+			x: -6.0d
+			y: 8.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "200000000000000A"
+			icon: { id: "minecraft:terracotta" }
+			tasks: [{ biome: "zinecraft:rim_billiton_mining_badlands", id: "210000000000000A", type: "biome" }]
+			x: -3.0d
+			y: 8.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "200000000000000B"
+			icon: { id: "minecraft:packed_mud" }
+			tasks: [{ biome: "zinecraft:minos_sunlit_hills", id: "210000000000000B", type: "biome" }]
+			x: 0.0d
+			y: 8.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "200000000000000C"
+			icon: { id: "minecraft:sand" }
+			tasks: [{ biome: "zinecraft:sargon_rocky_desert", id: "210000000000000C", type: "biome" }]
+			x: 3.0d
+			y: 8.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "200000000000000D"
+			icon: { id: "minecraft:snow_block" }
+			tasks: [{ biome: "zinecraft:sami_frozen_forest", id: "210000000000000D", type: "biome" }]
+			x: 6.0d
+			y: 8.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "200000000000000E"
+			icon: { id: "minecraft:mud" }
+			tasks: [{ biome: "zinecraft:victoria_misty_highlands", id: "210000000000000E", type: "biome" }]
+			x: 9.0d
+			y: 8.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "200000000000000F"
+			icon: { id: "minecraft:packed_ice" }
+			tasks: [{ biome: "zinecraft:ursus_frozen_steppe", id: "210000000000000F", type: "biome" }]
+			x: -6.0d
+			y: 10.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000010"
+			icon: { id: "minecraft:blue_ice" }
+			tasks: [{ biome: "zinecraft:kjerag_snowy_peaks", id: "2100000000000010", type: "biome" }]
+			x: -3.0d
+			y: 10.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000011"
+			icon: { id: "minecraft:mossy_cobblestone" }
+			tasks: [{ biome: "zinecraft:siracusa_rainy_woodland", id: "2100000000000011", type: "biome" }]
+			x: 0.0d
+			y: 10.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000012"
+			icon: { id: "minecraft:tuff" }
+			tasks: [{ biome: "zinecraft:yan_mountain_grove", id: "2100000000000012", type: "biome" }]
+			x: 3.0d
+			y: 10.0d
+		}
+		{
+			dependencies: ["1000000000000003"]
+			id: "2000000000000013"
+			icon: { id: "minecraft:gravel" }
+			tasks: [{ biome: "zinecraft:iberia_salt_delta", id: "2100000000000013", type: "biome" }]
+			x: 6.0d
+			y: 10.0d
+		}
+		{
+			dependencies: [
+				"2000000000000001"
+				"2000000000000002"
+				"2000000000000003"
+				"2000000000000004"
+				"2000000000000005"
+				"2000000000000006"
+				"2000000000000007"
+				"2000000000000008"
+				"2000000000000009"
+				"200000000000000A"
+				"200000000000000B"
+				"200000000000000C"
+				"200000000000000D"
+				"200000000000000E"
+				"200000000000000F"
+				"2000000000000010"
+				"2000000000000011"
+				"2000000000000012"
+				"2000000000000013"
+			]
+			id: "2000000000000020"
+			icon: { id: "minecraft:filled_map" }
+			shape: "diamond"
+			size: 2.0d
+			rewards: [{ id: "2200000000000020", type: "xp_levels", xp_levels: 5 }]
+			tasks: [{ id: "2100000000000020", type: "checkmark" }]
+			x: 0.0d
+			y: 12.0d
+		}
+		{
+			dependencies: ["1000000000000001"]
+			id: "3000000000000001"
+			icon: { id: "zinecraft:test_rifle" }
+			shape: "gear"
+			size: 2.0d
+			rewards: [
+				{ id: "3200000000000001", item: { count: 1, id: "zinecraft:test_sword" }, type: "item" }
+				{ id: "3200000000000002", item: { count: 1, id: "zinecraft:test_rifle" }, type: "item" }
+				{ count: 24, id: "3200000000000003", item: { count: 1, id: "zinecraft:test_cartridge" }, type: "item" }
+				{ id: "3200000000000004", item: { count: 1, id: "zinecraft:test_staff" }, type: "item" }
+			]
+			tasks: [{ id: "3100000000000001", type: "checkmark" }]
+			x: 13.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3000000000000001"]
+			id: "3000000000000002"
+			icon: { id: "zinecraft:test_sword" }
+			tasks: [
+				{ id: "3100000000000002", item: { count: 1, id: "zinecraft:test_sword" }, type: "item" }
+				{ id: "3100000000000003", type: "checkmark" }
+			]
+			x: 10.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["3000000000000001"]
+			id: "3000000000000003"
+			icon: { id: "zinecraft:test_rifle" }
+			tasks: [
+				{ id: "3100000000000004", item: { count: 1, id: "zinecraft:test_rifle" }, type: "item" }
+				{ id: "3100000000000005", type: "checkmark" }
+			]
+			x: 13.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["3000000000000001"]
+			id: "3000000000000004"
+			icon: { id: "zinecraft:test_staff" }
+			tasks: [
+				{ id: "3100000000000006", item: { count: 1, id: "zinecraft:test_staff" }, type: "item" }
+				{ id: "3100000000000007", type: "checkmark" }
+			]
+			x: 16.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["3000000000000001"]
+			id: "3000000000000005"
+			icon: { id: "zinecraft:test_rifle" }
+			optional: true
+			tasks: [
+				{ id: "3100000000000008", item: { count: 1, id: "zinecraft:tacz_gun" }, type: "item" }
+				{ id: "3100000000000009", type: "checkmark" }
+			]
+			x: 19.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["3000000000000002", "3000000000000003", "3000000000000004"]
+			id: "3000000000000006"
+			icon: { id: "minecraft:target" }
+			shape: "diamond"
+			size: 2.0d
+			rewards: [{ id: "3200000000000005", type: "xp_levels", xp_levels: 3 }]
+			tasks: [{ id: "310000000000000A", type: "checkmark" }]
+			x: 13.0d
+			y: 6.0d
+		}
+	]
+}

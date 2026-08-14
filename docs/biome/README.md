@@ -18,7 +18,7 @@ val EXAMPLE_BIOME = Zinecraft.BIOMES.register("example_biome") {
 }
 ```
 
-返回值是 `ResourceKey<Biome>`，可以用于地表规则、结构群系条件或 TerraBlender 区域映射。
+返回值是 `ResourceKey<Biome>`，可以用于地表规则、结构群系条件或维度多噪声群系源。
 
 ## 可配置属性
 
@@ -32,23 +32,20 @@ val EXAMPLE_BIOME = Zinecraft.BIOMES.register("example_biome") {
 - `generation`：`BiomeGenerationSettings.Builder`。
 - `defaultOverworldGeneration()`：加入主世界洞穴、湖泊、地下结构、泉水和冻结等基础特征。
 
-## 加入主世界
+## 加入泰拉维度
 
-注册群系数据不等于群系会自然出现。当前项目通过 `NationBiomePlacement` 把资源键与 TerraBlender 气候参数分离：
+注册群系数据不等于群系会自然出现。当前项目通过 `DimensionBiome` 把资源键与原版多噪声气候参数分离：
 
 ```kotlin
-NationBiomePlacement(
+DimensionBiome(
   biome = NationBiomes.KAZIMIERZ_KNIGHTLAND,
-  temperature = Temperature.NEUTRAL,
-  humidity = Humidity.DRY,
-  continentalness = Continentalness.MID_INLAND,
-  erosion = Erosion.EROSION_5,
-  weirdness = Weirdness.MID_SLICE_NORMAL_DESCENDING
+  parameters = Climate.parameters(0.0f, -0.35f, 0.35f, 0.55f, 0.0f, -0.2f, 0.0f)
 )
 ```
 
-`TerraNationRegion` 会遍历配置并加入主世界。新增群系时，应同时添加一个不与现有配置完全重复的气候点。自定义地表必须用
-`SurfaceRules.isBiome(...)` 限定作用范围，不能添加影响全部原版群系的兜底规则。
+`ModDimensions.TERRA` 会遍历配置并建立泰拉专属群系源。新增国家群系时，应同时添加一个不与现有配置完全重复的气候点，并同步
+`data/zinecraft/dimension/terra.json`。主世界不注册国家 Region。自定义地表必须用 `SurfaceRules.isBiome(...)` 限定作用范围，
+不能添加影响全部原版群系的兜底规则。
 
 ## 数据生成
 
