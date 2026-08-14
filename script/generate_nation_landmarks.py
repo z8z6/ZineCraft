@@ -12,6 +12,28 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "src/main/resources/data/zinecraft/structure/nation_landmarks"
 DATA_VERSION = 3955
 
+NATION_MATERIALS = {
+    "aegir_": ("zinecraft:aegir_abyssal_slate", "zinecraft:aegir_pressure_tile"),
+    "bolivar_": ("zinecraft:bolivar_war_scoured_soil", "zinecraft:bolivar_dossoles_stucco"),
+    "higashi_": ("zinecraft:higashi_shadow_loam", "zinecraft:higashi_machiya_plaster"),
+    "durin_": ("zinecraft:durin_garden_moss", "zinecraft:durin_ideal_city_panel"),
+    "columbia_": ("zinecraft:columbia_canyon_soil", "zinecraft:columbia_frontier_panel"),
+    "kazimierz_": ("zinecraft:kazimierz_steppe_turf", "zinecraft:kazimierz_arena_masonry"),
+    "kazdel_": ("zinecraft:kazdel_scarred_ash", "zinecraft:kazdel_fortress_plate"),
+    "laterano_": ("zinecraft:laterano_alluvial_chalk", "zinecraft:laterano_basilica_marble"),
+    "leithanien_": ("zinecraft:leithanien_twilight_humus", "zinecraft:leithanien_resonant_brick"),
+    "rim_billiton_": ("zinecraft:rim_billiton_mine_tailings", "zinecraft:rim_billiton_corrugated_steel"),
+    "minos_": ("zinecraft:minos_sunbaked_earth", "zinecraft:minos_heroic_masonry"),
+    "sargon_": ("zinecraft:sargon_desert_crust", "zinecraft:sargon_oasis_adobe"),
+    "sami_": ("zinecraft:sami_frost_moss", "zinecraft:sami_ritual_stone"),
+    "victoria_": ("zinecraft:victoria_moorland_soil", "zinecraft:victoria_industrial_brick"),
+    "ursus_": ("zinecraft:ursus_permafrost", "zinecraft:ursus_imperial_masonry"),
+    "kjerag_": ("zinecraft:kjerag_sacred_snowstone", "zinecraft:kjerag_monastery_stone"),
+    "siracusa_": ("zinecraft:siracusa_rain_darkened_soil", "zinecraft:siracusa_family_masonry"),
+    "yan_": ("zinecraft:yan_mountain_soil", "zinecraft:yan_courtyard_brick"),
+    "iberia_": ("zinecraft:iberia_salt_crusted_gravel", "zinecraft:iberia_coastal_masonry"),
+}
+
 
 def utf(value: str) -> bytes:
     encoded = value.encode("utf-8")
@@ -57,6 +79,13 @@ class Landmark:
     size: tuple[int, int, int]
     palette: list[str]
     blocks: dict[tuple[int, int, int], int] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        for prefix, materials in NATION_MATERIALS.items():
+            if self.path.startswith(prefix):
+                self.palette[:2] = materials
+                return
+        raise ValueError(f"{self.path}: 无法匹配国家专属材质")
 
     def block(self, x: int, y: int, z: int, material: int) -> None:
         sx, sy, sz = self.size

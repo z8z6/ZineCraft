@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "zinecraft:bolivar_war_scoured_soil",
+    "zinecraft:higashi_shadow_loam",
+    "zinecraft:durin_garden_moss",
+    "zinecraft:columbia_canyon_soil",
+    "zinecraft:kazimierz_steppe_turf",
+    "zinecraft:kazdel_scarred_ash",
+    "zinecraft:leithanien_twilight_humus",
+    "zinecraft:rim_billiton_mine_tailings",
+    "zinecraft:minos_sunbaked_earth",
+    "zinecraft:sargon_desert_crust",
+    "zinecraft:sami_frost_moss",
+    "zinecraft:victoria_moorland_soil",
+    "zinecraft:siracusa_rain_darkened_soil",
+    "zinecraft:iberia_salt_crusted_gravel"
+  ]
+}

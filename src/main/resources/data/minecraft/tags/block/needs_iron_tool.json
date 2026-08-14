@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "zinecraft:originite_ore",
+    "zinecraft:oriron_ore",
+    "zinecraft:manganese_ore_block",
+    "zinecraft:grindstone_ore",
+    "zinecraft:rma70_ore",
+    "zinecraft:crystal_element_ore",
+    "zinecraft:loxic_kohl_ore"
+  ]
+}

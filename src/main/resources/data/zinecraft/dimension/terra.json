@@ -4,7 +4,9 @@
     "type": "minecraft:noise",
     "settings": "minecraft:overworld",
     "biome_source": {
-      "type": "minecraft:multi_noise",
+      "type": "zinecraft:terra",
+      "center_biome": "zinecraft:laterano_holy_fields",
+      "center_radius": 1024,
       "biomes": [
         {
           "biome": "zinecraft:aegir_abyssal_sea",
@@ -87,18 +89,6 @@
             "erosion": -0.8,
             "depth": 0.0,
             "weirdness": -0.55,
-            "offset": 0.0
-          }
-        },
-        {
-          "biome": "zinecraft:laterano_holy_fields",
-          "parameters": {
-            "temperature": 0.45,
-            "humidity": 0.0,
-            "continentalness": 0.1,
-            "erosion": 0.35,
-            "depth": 0.0,
-            "weirdness": 0.3,
             "offset": 0.0
           }
         },

@@ -13,6 +13,11 @@ OUTPUT = ROOT / "src/main/resources/data/zinecraft/structure/nation_settlements"
 DATA_VERSION = 3955
 
 
+def block_id(material: str) -> str:
+    """Keep explicit namespaces while defaulting legacy accents to Minecraft."""
+    return material if ":" in material else f"minecraft:{material}"
+
+
 def utf(value: str) -> bytes:
     encoded = value.encode("utf-8")
     return struct.pack(">H", len(encoded)) + encoded
@@ -94,25 +99,25 @@ class NationStyle:
 
 
 STYLES = (
-    NationStyle("aegir_subsea_enclave", ("pressure_residence", "hydroponics_lab", "bathysphere_dock", "current_archive"), "dark_prismarine", "prismarine_bricks", "cyan_stained_glass", "sea_lantern", "prismarine"),
-    NationStyle("bolivar_dossoles_district", ("canal_house", "beach_market", "race_workshop", "festival_hall"), "smooth_sandstone", "orange_terracotta", "white_concrete", "yellow_concrete", "cut_sandstone"),
-    NationStyle("higashi_sokogawa_town", ("machiya", "swordsmith", "tea_house", "magistrate_house"), "stone_bricks", "dark_oak_planks", "red_nether_bricks", "lantern", "cobblestone"),
-    NationStyle("durin_ideal_city_block", ("dome_apartment", "machine_shop", "arcade", "transit_station"), "cut_copper", "cyan_concrete", "light_blue_stained_glass", "sea_lantern", "smooth_stone"),
-    NationStyle("columbia_frontier_town", ("prefab_house", "pioneer_lab", "logistics_depot", "sheriff_office"), "smooth_stone", "white_concrete", "cut_copper", "redstone_lamp", "gravel"),
-    NationStyle("kazimierz_knight_borough", ("tenement", "armor_workshop", "sponsor_shop", "tournament_inn"), "polished_andesite", "smooth_quartz", "red_concrete", "gold_block", "stone_bricks"),
-    NationStyle("kazdel_sarkaz_settlement", ("canvas_house", "forge", "mercenary_lodge", "provision_store"), "blackstone", "dark_oak_planks", "black_wool", "soul_lantern", "polished_blackstone"),
-    NationStyle("laterano_monastery_town", ("white_residence", "confectionery", "notary_office", "bell_chapel"), "calcite", "smooth_quartz", "yellow_stained_glass", "gold_block", "quartz_bricks"),
-    NationStyle("leithanien_music_town", ("twilight_house", "instrument_workshop", "rehearsal_hall", "arts_academy"), "polished_deepslate", "dark_oak_planks", "black_concrete", "amethyst_block", "deepslate_tiles"),
-    NationStyle("rim_billiton_mining_camp", ("miner_bunkhouse", "ore_workshop", "freight_depot", "canteen"), "deepslate_bricks", "spruce_planks", "cut_copper", "redstone_lamp", "cobbled_deepslate"),
-    NationStyle("minos_heroic_polis", ("courtyard_house", "olive_market", "training_hall", "council_house"), "sandstone", "smooth_sandstone", "red_terracotta", "gold_block", "cut_sandstone"),
-    NationStyle("sargon_oasis_town", ("adobe_house", "spice_market", "caravanserai", "well_house"), "sandstone", "orange_terracotta", "yellow_terracotta", "emerald_block", "smooth_sandstone"),
-    NationStyle("sami_snowpriest_village", ("snow_lodge", "hunter_camp", "ritual_house", "supply_shed"), "packed_ice", "spruce_planks", "snow_block", "soul_lantern", "blue_ice"),
-    NationStyle("victoria_industrial_borough", ("brick_tenement", "steam_workshop", "rail_warehouse", "council_hall"), "stone_bricks", "bricks", "copper_block", "iron_block", "polished_andesite"),
-    NationStyle("ursus_northern_town", ("heated_house", "military_storehouse", "mine_office", "communal_hall"), "polished_diorite", "spruce_planks", "packed_ice", "redstone_lamp", "stone_bricks"),
-    NationStyle("kjerag_mountain_village", ("stone_chalet", "tea_workshop", "caravan_post", "shrine_house"), "stone_bricks", "spruce_planks", "snow_block", "blue_ice", "cobblestone"),
-    NationStyle("siracusa_family_town", ("family_house", "trattoria", "tailor_shop", "meeting_hall"), "mossy_stone_bricks", "bricks", "dark_oak_planks", "red_wool", "stone_bricks"),
-    NationStyle("yan_shangshu_town", ("courtyard_residence", "tea_house", "artisan_workshop", "relay_office"), "tuff_bricks", "dark_oak_planks", "red_terracotta", "lantern", "polished_tuff"),
-    NationStyle("iberia_coastal_town", ("saltstone_house", "shipwright", "fish_market", "inquisitor_office"), "stone_bricks", "calcite", "oxidized_copper", "sea_lantern", "gravel"),
+    NationStyle("aegir_subsea_enclave", ("pressure_residence", "hydroponics_lab", "bathysphere_dock", "current_archive"), "zinecraft:aegir_abyssal_slate", "zinecraft:aegir_pressure_tile", "cyan_stained_glass", "sea_lantern", "prismarine"),
+    NationStyle("bolivar_dossoles_district", ("canal_house", "beach_market", "race_workshop", "festival_hall"), "zinecraft:bolivar_war_scoured_soil", "zinecraft:bolivar_dossoles_stucco", "white_concrete", "yellow_concrete", "cut_sandstone"),
+    NationStyle("higashi_sokogawa_town", ("machiya", "swordsmith", "tea_house", "magistrate_house"), "zinecraft:higashi_shadow_loam", "zinecraft:higashi_machiya_plaster", "red_nether_bricks", "lantern", "cobblestone"),
+    NationStyle("durin_ideal_city_block", ("dome_apartment", "machine_shop", "arcade", "transit_station"), "zinecraft:durin_garden_moss", "zinecraft:durin_ideal_city_panel", "light_blue_stained_glass", "sea_lantern", "smooth_stone"),
+    NationStyle("columbia_frontier_town", ("prefab_house", "pioneer_lab", "logistics_depot", "sheriff_office"), "zinecraft:columbia_canyon_soil", "zinecraft:columbia_frontier_panel", "cut_copper", "redstone_lamp", "gravel"),
+    NationStyle("kazimierz_knight_borough", ("tenement", "armor_workshop", "sponsor_shop", "tournament_inn"), "zinecraft:kazimierz_steppe_turf", "zinecraft:kazimierz_arena_masonry", "red_concrete", "gold_block", "stone_bricks"),
+    NationStyle("kazdel_sarkaz_settlement", ("canvas_house", "forge", "mercenary_lodge", "provision_store"), "zinecraft:kazdel_scarred_ash", "zinecraft:kazdel_fortress_plate", "black_wool", "soul_lantern", "polished_blackstone"),
+    NationStyle("laterano_monastery_town", ("white_residence", "confectionery", "notary_office", "bell_chapel"), "zinecraft:laterano_alluvial_chalk", "zinecraft:laterano_basilica_marble", "yellow_stained_glass", "gold_block", "quartz_bricks"),
+    NationStyle("leithanien_music_town", ("twilight_house", "instrument_workshop", "rehearsal_hall", "arts_academy"), "zinecraft:leithanien_twilight_humus", "zinecraft:leithanien_resonant_brick", "black_concrete", "amethyst_block", "deepslate_tiles"),
+    NationStyle("rim_billiton_mining_camp", ("miner_bunkhouse", "ore_workshop", "freight_depot", "canteen"), "zinecraft:rim_billiton_mine_tailings", "zinecraft:rim_billiton_corrugated_steel", "cut_copper", "redstone_lamp", "cobbled_deepslate"),
+    NationStyle("minos_heroic_polis", ("courtyard_house", "olive_market", "training_hall", "council_house"), "zinecraft:minos_sunbaked_earth", "zinecraft:minos_heroic_masonry", "red_terracotta", "gold_block", "cut_sandstone"),
+    NationStyle("sargon_oasis_town", ("adobe_house", "spice_market", "caravanserai", "well_house"), "zinecraft:sargon_desert_crust", "zinecraft:sargon_oasis_adobe", "yellow_terracotta", "emerald_block", "smooth_sandstone"),
+    NationStyle("sami_snowpriest_village", ("snow_lodge", "hunter_camp", "ritual_house", "supply_shed"), "zinecraft:sami_frost_moss", "zinecraft:sami_ritual_stone", "snow_block", "soul_lantern", "blue_ice"),
+    NationStyle("victoria_industrial_borough", ("brick_tenement", "steam_workshop", "rail_warehouse", "council_hall"), "zinecraft:victoria_moorland_soil", "zinecraft:victoria_industrial_brick", "copper_block", "iron_block", "polished_andesite"),
+    NationStyle("ursus_northern_town", ("heated_house", "military_storehouse", "mine_office", "communal_hall"), "zinecraft:ursus_permafrost", "zinecraft:ursus_imperial_masonry", "packed_ice", "redstone_lamp", "stone_bricks"),
+    NationStyle("kjerag_mountain_village", ("stone_chalet", "tea_workshop", "caravan_post", "shrine_house"), "zinecraft:kjerag_sacred_snowstone", "zinecraft:kjerag_monastery_stone", "snow_block", "blue_ice", "cobblestone"),
+    NationStyle("siracusa_family_town", ("family_house", "trattoria", "tailor_shop", "meeting_hall"), "zinecraft:siracusa_rain_darkened_soil", "zinecraft:siracusa_family_masonry", "dark_oak_planks", "red_wool", "stone_bricks"),
+    NationStyle("yan_shangshu_town", ("courtyard_residence", "tea_house", "artisan_workshop", "relay_office"), "zinecraft:yan_mountain_soil", "zinecraft:yan_courtyard_brick", "red_terracotta", "lantern", "polished_tuff"),
+    NationStyle("iberia_coastal_town", ("saltstone_house", "shipwright", "fish_market", "inquisitor_office"), "zinecraft:iberia_salt_crusted_gravel", "zinecraft:iberia_coastal_masonry", "oxidized_copper", "sea_lantern", "gravel"),
 )
 
 
@@ -122,7 +127,7 @@ class Template:
         self.name = name
         self.size = size
         materials = (style.foundation, style.wall, style.roof, style.accent, style.road)
-        self.palette = [f"minecraft:{material}" for material in materials] + ["minecraft:air"] + [
+        self.palette = [block_id(material) for material in materials] + ["minecraft:air"] + [
             "minecraft:jigsaw" for _ in range(4)
         ]
         self.blocks: dict[tuple[int, int, int], tuple[int, dict[str, str | int] | None]] = {}
@@ -141,7 +146,7 @@ class Template:
 
     def connector(self, x: int, y: int, z: int, direction: str, name: str, target: str, pool: str) -> None:
         state = 6 + ("north", "south", "east", "west").index(direction)
-        final_state = f"minecraft:{self.style.road}"
+        final_state = block_id(self.style.road)
         self.blocks[(x, y, z)] = (state, jigsaw_nbt(name, target, pool, final_state))
 
     def write(self) -> None:

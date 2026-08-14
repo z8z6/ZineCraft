@@ -35,6 +35,10 @@ class StructureCatalog(private val registrar: ModRegistrar) {
   private val structureGenerators = mutableListOf<(BootstrapContext<Structure>) -> Unit>()
   private val structureSetGenerators = mutableListOf<(BootstrapContext<StructureSet>) -> Unit>()
 
+  init {
+    FixedOriginStructurePlacement.register(registrar)
+  }
+
   fun simpleBuilding(
     path: String,
     template: String = path,
@@ -81,6 +85,34 @@ class StructureCatalog(private val registrar: ModRegistrar) {
     ) {
       pool("start") { template(template) }
     }
+  }
+
+  /**
+   * 注册一座几何中心严格位于世界方块坐标 `(0, 0)` 的地下唯一地标。
+   *
+   * 模板宽和长应当为 33 格，使从区块 `(-1, -1)` 起始的模板关于原点对称。
+   */
+  fun fixedOriginUndergroundLandmark(
+    path: String,
+    template: String = path,
+    biome: ResourceKey<Biome>,
+    startHeight: Int,
+    maxDistanceFromCenter: Int = 48
+  ): JigsawBuildingEntry = jigsawBuilding(
+    path = path,
+    spacing = 2,
+    separation = 1,
+    salt = path.hashCode(),
+    size = 1,
+    maxDistanceFromCenter = maxDistanceFromCenter,
+    biome = biome,
+    fixedOrigin = true,
+    heightmap = null,
+    startHeight = startHeight,
+    generationStep = GenerationStep.Decoration.UNDERGROUND_STRUCTURES,
+    terrainAdjustment = TerrainAdjustment.ENCAPSULATE
+  ) {
+    pool("start") { template(template) }
   }
 
   /**
@@ -149,6 +181,9 @@ class StructureCatalog(private val registrar: ModRegistrar) {
     heightmap: Heightmap.Types? = Heightmap.Types.WORLD_SURFACE_WG,
     startHeight: Int = 0,
     useExpansionHack: Boolean = false,
+    fixedOrigin: Boolean = false,
+    generationStep: GenerationStep.Decoration = GenerationStep.Decoration.SURFACE_STRUCTURES,
+    terrainAdjustment: TerrainAdjustment = TerrainAdjustment.BEARD_THIN,
     build: JigsawBuildingBuilder.() -> Unit
   ): JigsawBuildingEntry {
     require(spacing > separation) { "spacing 必须大于 separation" }
@@ -177,7 +212,10 @@ class StructureCatalog(private val registrar: ModRegistrar) {
       ringDistance,
       heightmap,
       startHeight,
-      useExpansionHack
+      useExpansionHack,
+      fixedOrigin,
+      generationStep,
+      terrainAdjustment
     ).also(buildings::add)
   }
 
@@ -246,8 +284,8 @@ class StructureCatalog(private val registrar: ModRegistrar) {
           Structure.StructureSettings(
             validBiomes,
             emptyMap<MobCategory, StructureSpawnOverride>(),
-            GenerationStep.Decoration.SURFACE_STRUCTURES,
-            TerrainAdjustment.BEARD_THIN
+            building.generationStep,
+            building.terrainAdjustment
           ),
           pools.getOrThrow(building.poolKeys.getValue(building.startPool)),
           Optional.empty(),
@@ -269,7 +307,9 @@ class StructureCatalog(private val registrar: ModRegistrar) {
     val structures = context.lookup(Registries.STRUCTURE)
     val biomes = context.lookup(Registries.BIOME)
     buildings.forEach { building ->
-      val placement = if (building.unique) {
+      val placement = if (building.fixedOrigin) {
+        FixedOriginStructurePlacement.create()
+      } else if (building.unique) {
         val biome = requireNotNull(building.biome) { "唯一地标必须绑定群系: ${building.structureKey.location()}" }
         ConcentricRingsStructurePlacement(
           building.ringDistance,
@@ -316,7 +356,10 @@ class JigsawBuildingEntry internal constructor(
   internal val ringDistance: Int,
   internal val heightmap: Heightmap.Types?,
   internal val startHeight: Int,
-  internal val useExpansionHack: Boolean
+  internal val useExpansionHack: Boolean,
+  internal val fixedOrigin: Boolean,
+  internal val generationStep: GenerationStep.Decoration,
+  internal val terrainAdjustment: TerrainAdjustment
 )
 
 class JigsawBuildingBuilder internal constructor(private val path: String) {

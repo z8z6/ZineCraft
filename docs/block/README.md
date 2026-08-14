@@ -32,6 +32,14 @@ val ORIROCK_BLOCK = Zinecraft.BLOCKS.register(
 src/main/resources/assets/zinecraft/textures/block/orirock_block.png
 ```
 
+## 国家地貌与建筑主材
+
+`NationBlocks` 为泰拉十九国各注册一种地貌方块和一种主体外墙方块，共 38 种。它们会直接用于国家群系表层、聚落地基与外墙、唯一地标主体结构以及
+FTB Quests 国家节点图标，不再以原版方块充当国家视觉占位符。
+
+完整 ID、设计依据和美术说明见 [NATION_MATERIALS.md](NATION_MATERIALS.md)。贴图由
+`script/generate_nation_block_textures.ps1` 确定性生成；修改调色板或纹理节奏后，应重新执行脚本并检查所有 PNG 仍为 16×16。
+
 ## 关闭默认生成
 
 复杂方块可以逐项关闭默认行为：

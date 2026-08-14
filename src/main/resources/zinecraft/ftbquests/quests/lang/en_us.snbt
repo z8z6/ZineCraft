@@ -4,48 +4,48 @@
 	quest.1000000000000001.quest_subtitle: "Dimensions, national biomes, and weapons"
 	quest.1000000000000001.quest_desc: ["This chapter guides you to an Overworld stargate, through the Terra dimension and its nineteen national biomes, and into Zinecraft sword, firearm, and staff training.\n\nCheck the task below to begin."]
 	quest.1000000000000002.title: "Find a Snowy-Plains Stargate"
-	quest.1000000000000002.quest_desc: ["Stargate ruins generate naturally only in Overworld snowy plains. Reach minecraft:snowy_plains, then search the snow for the cyan event horizon."]
-	quest.1000000000000003.title: "Cross the Stargate"
-	quest.1000000000000003.quest_desc: ["Enter the stargate to reach zinecraft:terra. Terra has Overworld-like terrain and daylight rules, but its biome source contains only the nineteen Terra national biomes. Use the Terra-side gate to return."]
+	quest.1000000000000002.quest_desc: ["Stargate ruins generate only in Overworld snowy plains. Find minecraft:snowy_plains, then look for a monumental dark arch with massive buttresses. An inactive arch has no event horizon."]
+	quest.1000000000000003.title: "Protocol Activation and Transit"
+	quest.1000000000000003.quest_desc: ["Craft Protocol Originium from Originite, a Crystalline Circuit, and an Integrated Device. Hold it and right-click the Stargate Protocol Controller directly beneath the monumental arch. The cyan event horizon forms only after authorization; the Protocol Originium acts as a reusable key and is not consumed. Enter it to reach zinecraft:terra. A powered return gate is created automatically on the Terra side so you cannot become stranded."]
 
 	quest.2000000000000001.title: "Aegir Abyssal Sea"
-	quest.2000000000000001.quest_desc: ["Dark-prismarine seabeds and deep-sea enclaves inhabited by dolphins, with Aegir-themed settlements and landmarks."]
+	quest.2000000000000001.quest_desc: ["Abyssal-slate seabeds and pressure-tile enclaves inhabited by dolphins, with Aegir-themed settlements and landmarks."]
 	quest.2000000000000002.title: "Bolivar Plain"
-	quest.2000000000000002.quest_desc: ["War-scarred coarse plains with parrots, Dossoles-inspired districts, and regional landmarks."]
+	quest.2000000000000002.quest_desc: ["War-scoured soil plains with parrots, Dossoles-stucco districts, and regional landmarks."]
 	quest.2000000000000003.title: "Higashi Shadow Rift"
-	quest.2000000000000003.quest_desc: ["A dim podzol mountain forest inhabited by foxes, with Sokogawa-style towns and a rift shrine."]
+	quest.2000000000000003.quest_desc: ["A dim shadow-loam mountain forest inhabited by foxes, with plastered machiya towns and a rift shrine."]
 	quest.2000000000000004.title: "Durin Underground Garden"
-	quest.2000000000000004.quest_desc: ["Moss and glow squid illuminate an underground garden where Ideal City districts hide among the caves."]
+	quest.2000000000000004.quest_desc: ["Garden moss and glow squid illuminate an underground garden where colorful Ideal City panels hide among the caves."]
 	quest.2000000000000005.title: "Columbia Sandstone Wilds"
-	quest.2000000000000005.quest_desc: ["Red-sand canyons, armadillos, frontier towns, and research facilities define the Columbian frontier."]
+	quest.2000000000000005.quest_desc: ["Canyon soil, armadillos, panel-built frontier towns, and research facilities define the Columbian frontier."]
 	quest.2000000000000006.title: "Kazimierz Knightland"
-	quest.2000000000000006.quest_desc: ["Wide grasslands support horses and knightly boroughs, crowned by competition-inspired architecture."]
+	quest.2000000000000006.quest_desc: ["Dry steppe turf supports horses and knightly boroughs crowned by arena masonry."]
 	quest.2000000000000007.title: "Kazdel Scarred Wastes"
-	quest.2000000000000007.quest_desc: ["Blackstone wastes hold the scars of war, cave spiders, Sarkaz settlements, and Babel-themed ruins."]
+	quest.2000000000000007.quest_desc: ["Scarred ash wastes hold cave spiders, armored Sarkaz settlements, and Babel-themed ruins."]
 	quest.2000000000000008.title: "Laterano Holy Fields"
-	quest.2000000000000008.quest_desc: ["Bright calcite fields surround bees, monastery towns, and Laterano citizens who carry firearms by default."]
+	quest.2000000000000008.quest_desc: ["Bright alluvial-chalk fields surround bees, marble monastery towns, and Laterano citizens who carry firearms by default."]
 	quest.2000000000000009.title: "Leithanien Twilight Forest"
-	quest.2000000000000009.quest_desc: ["Rooted forests rest in twilight, populated by wolves, musical towns, and twin-tower landmarks."]
+	quest.2000000000000009.quest_desc: ["Twilight humus forests hold wolves, resonant-brick musical towns, and twin-tower landmarks."]
 	quest.200000000000000A.title: "Rim Billiton Mining Badlands"
-	quest.200000000000000A.quest_desc: ["Terracotta mines contain husks, mining camps, rail facilities, and industrial drilling landmarks."]
+	quest.200000000000000A.quest_desc: ["Mine-tailings fields contain husks, corrugated-steel camps, rail facilities, and industrial drilling landmarks."]
 	quest.200000000000000B.title: "Minos Sunlit Hills"
-	quest.200000000000000B.quest_desc: ["Sunlit packed-mud hills host goats, heroic city-states, and monuments inspired by the Twelve Heroes."]
+	quest.200000000000000B.quest_desc: ["Sunbaked-earth hills host goats, heroic-masonry city-states, and monuments inspired by the Twelve Heroes."]
 	quest.200000000000000C.title: "Sargon Rocky Desert"
-	quest.200000000000000C.quest_desc: ["Camels, oasis towns, and caravan routes cross the hot sand sea, concealing Golden City-inspired landmarks."]
+	quest.200000000000000C.quest_desc: ["Camels, adobe oasis towns, and caravan routes cross the desert crust, concealing Golden City-inspired landmarks."]
 	quest.200000000000000D.title: "Sami Frozen Forest"
-	quest.200000000000000D.quest_desc: ["Polar bears and snow-priest villages inhabit the snowy taiga, where ancient altars lend the wilds an air of mystery."]
+	quest.200000000000000D.quest_desc: ["Polar bears and ritual-stone snow-priest villages inhabit frost-moss taiga around mysterious ancient altars."]
 	quest.200000000000000E.title: "Victoria Misty Highlands"
-	quest.200000000000000E.quest_desc: ["Muddy highlands remain shrouded in mist, combining sheep, industrial boroughs, steam works, and defensive structures."]
+	quest.200000000000000E.quest_desc: ["Moorland-soil highlands remain shrouded in mist around sheep, industrial-brick boroughs, steam works, and defenses."]
 	quest.200000000000000F.title: "Ursus Frozen Steppe"
-	quest.200000000000000F.quest_desc: ["Packed ice covers the northern plateau, where strays roam among towns, mines, and Sarcophagus-themed facilities."]
+	quest.200000000000000F.quest_desc: ["Permafrost covers the northern plateau, where strays roam among imperial-masonry towns, mines, and Sarcophagus facilities."]
 	quest.2000000000000010.title: "Kjerag Snowy Peaks"
-	quest.2000000000000010.quest_desc: ["Rabbits inhabit blue-ice ridges dotted with mountain villages, trade routes, and Karlan religious architecture."]
+	quest.2000000000000010.quest_desc: ["Rabbits inhabit sacred-snowstone ridges dotted with monastery-stone villages, trade routes, and Karlan architecture."]
 	quest.2000000000000011.title: "Siracusa Rainy Woodland"
-	quest.2000000000000011.quest_desc: ["Rain-soaked mossy woods contain spiders, family towns, theatres, and courts reflecting local order."]
+	quest.2000000000000011.quest_desc: ["Rain-darkened woods contain spiders, family-masonry towns, theatres, and courts reflecting local order."]
 	quest.2000000000000012.title: "Yan Mountain Grove"
-	quest.2000000000000012.quest_desc: ["Pandas roam tuff peaks around Shangshu towns, pavilions, tea houses, and Yumen beacon architecture."]
+	quest.2000000000000012.quest_desc: ["Pandas roam mountain soil around blue-brick Shangshu towns, pavilions, tea houses, and Yumen beacons."]
 	quest.2000000000000013.title: "Iberia Salt Delta"
-	quest.2000000000000013.quest_desc: ["Salt winds scour gravel shores while drowned haunt coastal towns watched over by lighthouse landmarks."]
+	quest.2000000000000013.quest_desc: ["Salt winds scour salt-crusted gravel while drowned haunt coastal-masonry towns watched over by lighthouses."]
 	quest.2000000000000020.title: "Terra Geographer"
 	quest.2000000000000020.quest_desc: ["You have visited all nineteen national biomes. Confirm the completed survey and claim your expedition experience."]
 

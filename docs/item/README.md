@@ -110,3 +110,8 @@ val TAB = Zinecraft.CREATIVE_TABS.register(
 ```
 
 应在所有需要加入标签页的物品声明完成后创建标签页。
+
+## 国家特色食物
+
+十九国特色食物、资料关系、饱食参数与材质设计见 [NATION_FOODS.md](./NATION_FOODS.md)。食品统一通过
+`NationFoods` 声明，并由 `ModRecipeProvider` 生成无序合成配方。

@@ -1,6 +1,5 @@
 package com.cxxcxx.zinecraft.core.dimension
 
-import com.mojang.serialization.Codec
 import net.minecraft.core.Direction
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.levelgen.Heightmap
@@ -17,7 +16,7 @@ class StarGateFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfigurati
     val base = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, context.origin())
     val axis = if (context.random().nextBoolean()) Direction.Axis.X else Direction.Axis.Z
     if (!StarGateStructure.canPlace(level, base, axis)) return false
-    StarGateStructure.place(level, base, axis)
+    StarGateStructure.place(level, base, axis, active = false)
     return true
   }
 }

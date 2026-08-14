@@ -60,6 +60,23 @@ val UNIQUE_TOWER = Zinecraft.STRUCTURES.uniqueLandmark(
 地表、海床建筑可分别传入 `WORLD_SURFACE_WG`、`OCEAN_FLOOR_WG`；地下建筑应传入 `heightmap = null` 与明确的
 `startHeight`，避免被高度图投影到地面。
 
+### 固定原点地下地标
+
+必须与世界坐标对齐、不能受种子和同心环选址影响的核心设施使用：
+
+```kotlin
+val HOST = Zinecraft.STRUCTURES.fixedOriginUndergroundLandmark(
+  path = "laterano_host",
+  template = "laterano_host/core",
+  biome = NationBiomes.LATERANO_HOLY_FIELDS,
+  startHeight = -32
+)
+```
+
+`zinecraft:fixed_origin` 放置器只接受区块 `(-1, -1)`。33×33 模板会覆盖 `x/z = -16..16`，所以结构几何中心严格位于
+`(0, 0)`，并使用 `underground_structures` 阶段和 `encapsulate` 地形适配。拉特兰主机模板由
+`script/generate_laterano_host.py` 确定性生成。
+
 结构分为两类：
 
 - 简易 Jigsaw 建筑：使用 `StructureCatalog.jigsawBuilding`，自动生成模板池、结构和结构集。

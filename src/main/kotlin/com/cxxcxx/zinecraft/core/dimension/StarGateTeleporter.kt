@@ -57,6 +57,7 @@ object StarGateTeleporter {
 
   private fun createTerraGate(level: ServerLevel, around: BlockPos): BlockPos {
     val base = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, around)
-    return StarGateStructure.place(level, base, Direction.Axis.X)
+    // 泰拉侧出口必须预先点亮，避免首次穿越后玩家因缺少第二把协议密钥而滞留。
+    return StarGateStructure.place(level, base, Direction.Axis.X, active = true)
   }
 }

@@ -2,6 +2,7 @@ package com.cxxcxx.zinecraft.api.world.dimension
 
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar
 import com.mojang.datafixers.util.Pair
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
@@ -56,13 +57,19 @@ class DimensionCatalog(private val registrar: ModRegistrar) {
     val biomes = context.lookup(Registries.BIOME)
 
     entries.forEach { entry ->
+      val parameters: Climate.ParameterList<net.minecraft.core.Holder<Biome>> = Climate.ParameterList(
+        entry.biomes.map { biome ->
+          Pair.of<Climate.ParameterPoint, net.minecraft.core.Holder<Biome>>(
+            biome.parameters,
+            biomes.getOrThrow(biome.biome)
+          )
+        }
+      )
       val bootstrap = DimensionBootstrapContext(
         entry,
-        MultiNoiseBiomeSource.createFromList(
-          Climate.ParameterList(
-            entry.biomes.map { biome -> Pair.of(biome.parameters, biomes.getOrThrow(biome.biome)) }
-          )
-        ),
+        MultiNoiseBiomeSource.createFromList(parameters),
+        parameters,
+        biomes,
         noiseSettings.getOrThrow(entry.noiseSettingsKey)
       )
       val generator = entry.createGenerator?.invoke(bootstrap)
@@ -90,5 +97,7 @@ class DimensionEntry internal constructor(
 class DimensionBootstrapContext internal constructor(
   val entry: DimensionEntry,
   val biomeSource: MultiNoiseBiomeSource,
+  val biomeParameters: Climate.ParameterList<net.minecraft.core.Holder<Biome>>,
+  val biomes: HolderGetter<Biome>,
   val noiseSettings: net.minecraft.core.Holder<NoiseGeneratorSettings>
 )

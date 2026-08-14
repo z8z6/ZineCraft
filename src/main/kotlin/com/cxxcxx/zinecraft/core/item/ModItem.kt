@@ -34,6 +34,7 @@ object ModItem {
   val ORIROCK_CLUSTER: ItemWrap<Item> = ItemWrap("orirock_cluster", "固源岩组")
   val ORIROCK_CONCENTRATION: ItemWrap<Item> = ItemWrap("orirock_concentration", "提纯源岩")
   val ORIGINITE: ItemWrap<Item> = ItemWrap("originite", "源石")
+  val PROTOCOL_ORIGINIUM: ItemWrap<Item> = ItemWrap("protocol_originium", "协议源石")
   val ORIGINIUM_POWDER: ItemWrap<Item> = ItemWrap("originium_powder", "源石碎片")
   val GRINDSTONE: ItemWrap<Item> = ItemWrap("grindstone", "研磨石")
   val GRINDSTONE_PENTAHYDRATE: ItemWrap<Item> = ItemWrap("grindstone_pentahydrate", "五水研磨石")

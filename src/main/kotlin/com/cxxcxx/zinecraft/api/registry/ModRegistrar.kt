@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.biome.BiomeSource
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -22,6 +23,8 @@ import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.levelgen.structure.StructureType
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType.StructureTemplateType
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType
 
@@ -135,6 +138,18 @@ class ModRegistrar(val namespace: String) {
 
   fun <S : Structure> structureType(path: String, codec: MapCodec<S>): StructureType<S> =
     register(BuiltInRegistries.STRUCTURE_TYPE, path, StructureType { codec })
+
+  fun <S : BiomeSource> biomeSource(path: String, codec: MapCodec<S>): MapCodec<S> =
+    register(BuiltInRegistries.BIOME_SOURCE, path, codec)
+
+  fun <S : StructurePlacement> structurePlacement(
+    path: String,
+    codec: MapCodec<S>
+  ): StructurePlacementType<S> = register(
+    BuiltInRegistries.STRUCTURE_PLACEMENT,
+    path,
+    StructurePlacementType { codec }
+  )
 
   fun structurePiece(path: String, type: StructureTemplateType): StructurePieceType =
     register(BuiltInRegistries.STRUCTURE_PIECE, path, type)

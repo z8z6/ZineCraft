@@ -13,5 +13,7 @@ class CatalogLootTableProvider(
 ) : FabricBlockLootTableProvider(output, registries) {
   override fun generate() {
     blocks.entries.filter { it.dropSelf }.forEach { dropSelf(it.block) }
+    blocks.entries.mapNotNull { entry -> entry.dropItem?.let { entry.block to it } }
+      .forEach { (block, item) -> dropOther(block, item) }
   }
 }

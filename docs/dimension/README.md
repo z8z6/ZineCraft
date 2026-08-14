@@ -5,6 +5,10 @@
 `DimensionCatalog` 统一创建维度、维度类型、噪声设置和世界资源键。`ModDimensions.TERRA` 注册
 `zinecraft:terra`，使用与主世界相同的地形高度和昼夜规则，但群系源仅包含 `NationBiomes` 的 19 个国家群系。
 
+泰拉使用自定义 `zinecraft:terra` 群系源：世界方块坐标 `(0, 0)` 是固定的拉特兰中心，以该点为圆心、半径 1024 格的
+全部高度都返回 `laterano_holy_fields`。其余十八国继续由多噪声最近点分区；拉特兰不会再由随机气候点重复生成，因此不同世界种子
+都保持同一个国家中心。
+
 Minecraft 1.21.1 在世界创建阶段从数据包加载 `dimension` 注册表，因此
 `src/main/resources/data/zinecraft/dimension/terra.json` 是必须随 Jar 发布的稳定资源。`dimension_type`
 、群系以及配置/放置地物由数据生成器导出。
@@ -40,3 +44,13 @@ Minecraft 1.21.1 在世界创建阶段从数据包加载 `dimension` 注册表�
 `/execute in zinecraft:terra run tp @s 0 120 0` 验证维度加载。自然生成测试应在雪原使用
 `/locate biome minecraft:snowy_plains`，
 确认其他主世界群系与泰拉维度均不会自然生成星门。
+
+拉特兰中心与地下主机可用以下命令验证：
+
+```text
+/execute in zinecraft:terra run locate biome zinecraft:laterano_holy_fields
+/execute in zinecraft:terra run locate structure zinecraft:laterano_host
+/execute in zinecraft:terra run tp @s 0 -20 0
+```
+
+`laterano_host` 的结构候选区块固定为 `(-1, -1)`，33×33 模板从 `(-16, -16)` 展开，几何中心正好位于 `(0, 0)`。
