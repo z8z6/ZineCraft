@@ -116,6 +116,7 @@ dependencies {
 
     testImplementation platform("org.junit:junit-bom:5.11.4")
     testImplementation "org.junit.jupiter:junit-jupiter"
+    testRuntimeOnly "com.google.code.gson:gson:2.11.0"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
 }
@@ -150,11 +151,15 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
+def archiveProjectName = project.name
+
 jar {
     from('LICENSE') {
-        rename { "${it}_${project.name}" }
+        rename { "${it}_${archiveProjectName}" }
     }
 }
+
+def releaseJarFile = tasks.named('jar', Jar).flatMap { it.archiveFile }
 
 tasks.register('verifyCollectibleJarResources') {
     group = 'verification'
@@ -162,7 +167,7 @@ tasks.register('verifyCollectibleJarResources') {
     dependsOn tasks.named('jar')
 
     doLast {
-        def archive = tasks.named('jar').get().archiveFile.get().asFile
+        def archive = releaseJarFile.get().asFile
         new ZipFile(archive).withCloseable { zip ->
             def readJson = { String path ->
                 def entry = zip.getEntry(path)

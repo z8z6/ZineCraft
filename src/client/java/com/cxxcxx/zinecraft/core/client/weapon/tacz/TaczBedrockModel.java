@@ -123,9 +123,9 @@ final class TaczBedrockParser {
     animations.entrySet().forEach(entry -> {
       JsonObject clip = entry.getValue().getAsJsonObject();
       JsonElement loopValue = clip.get("loop");
+      // Bedrock's "hold_on_last_frame" is a one-shot clip that clamps at its end, not a loop.
       boolean loop = loopValue != null && loopValue.isJsonPrimitive()
-          && (loopValue.getAsJsonPrimitive().isBoolean() && loopValue.getAsBoolean()
-          || "hold_on_last_frame".equals(loopValue.getAsString()));
+          && loopValue.getAsJsonPrimitive().isBoolean() && loopValue.getAsBoolean();
       Map<String, TaczAnimatedBone> animatedBones = new LinkedHashMap<>();
       JsonObject bones = clip.getAsJsonObject("bones");
       if (bones != null) bones.entrySet().forEach(boneEntry -> {

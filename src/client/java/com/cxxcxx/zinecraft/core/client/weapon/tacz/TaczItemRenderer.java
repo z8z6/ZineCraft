@@ -160,6 +160,7 @@ public final class TaczItemRenderer extends BlockEntityWithoutLevelRenderer {
 
   private static void clearCaches() {
     MODELS.clear();
+    TaczWeaponAnimationService.clearCaches();
     var manager = Minecraft.getInstance().getTextureManager();
     TEXTURES.values().forEach(manager::release);
     TEXTURES.clear();
@@ -224,7 +225,12 @@ public final class TaczItemRenderer extends BlockEntityWithoutLevelRenderer {
     if (model == null || texture == null) return;
     poses.pushPose();
     applyContextTransform(context, poses);
-    renderModel(model, Map.of(), texture, poses, buffers, light, overlay);
+    Map<String, TaczBoneTransform> transforms = switch (context) {
+      case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND, THIRD_PERSON_LEFT_HAND, THIRD_PERSON_RIGHT_HAND ->
+          TaczWeaponAnimationService.INSTANCE.sample(stack);
+      default -> Map.of();
+    };
+    renderModel(model, transforms, texture, poses, buffers, light, overlay);
     poses.popPose();
   }
 

@@ -5,9 +5,11 @@ import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionCancelledPayload;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionStartedPayload;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
 import com.cxxcxx.zinecraft.core.Zinecraft;
+import com.cxxcxx.zinecraft.core.client.weapon.tacz.TaczWeaponAnimationService;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,6 +25,8 @@ public final class WeaponPresentationController {
   private static final Map<Key, ActivePresentation> ACTIVE = new HashMap<>();
   private static final WeaponVfxService VFX = VanillaWeaponVfxService.INSTANCE;
   private static final WeaponSoundService SOUNDS = VanillaWeaponSoundService.INSTANCE;
+  private static final WeaponAnimationService WEAPON_ANIMATIONS = TaczWeaponAnimationService.INSTANCE;
+  private static final PlayerAnimationService PLAYER_ANIMATIONS = VanillaPlayerAnimationService.INSTANCE;
 
   private WeaponPresentationController() {
   }
@@ -61,6 +65,15 @@ public final class WeaponPresentationController {
         continue;
       }
       if (entity == null || elapsed < 0) continue;
+      if (!running.started) {
+        ItemStack stack = entity.getMainHandItem();
+        if (running.timeline.getWeaponAnimation() != null)
+          WEAPON_ANIMATIONS.play(entity, stack, running.timeline.getWeaponAnimation());
+        if (running.timeline.getPlayerAnimation() != null)
+          PLAYER_ANIMATIONS.play(entity, running.timeline.getPlayerAnimation());
+        running.stack = stack;
+        running.started = true;
+      }
       for (int i = 0; i < running.timeline.getVfx().size(); i++) {
         var cue = running.timeline.getVfx().get(i);
         if (!running.playedVfx[i] && elapsed >= cue.getTick()) {
@@ -81,6 +94,7 @@ public final class WeaponPresentationController {
   @SubscribeEvent
   public static void logout(ClientPlayerNetworkEvent.LoggingOut event) {
     ACTIVE.clear();
+    TaczWeaponAnimationService.INSTANCE.reset();
   }
 
   private static void stop(int entityId, ActivePresentation running) {
@@ -89,6 +103,12 @@ public final class WeaponPresentationController {
   }
 
   private static void stop(LivingEntity entity, ActivePresentation running) {
+    if (!running.started) return;
+    ItemStack stack = running.stack == null ? entity.getMainHandItem() : running.stack;
+    if (running.timeline.getWeaponAnimation() != null)
+      WEAPON_ANIMATIONS.stop(entity, stack, running.timeline.getWeaponAnimation());
+    if (running.timeline.getPlayerAnimation() != null)
+      PLAYER_ANIMATIONS.stop(entity, running.timeline.getPlayerAnimation());
   }
 
   private record Key(int entityId, ResourceLocation actionId) {
@@ -99,6 +119,8 @@ public final class WeaponPresentationController {
     private final WeaponPresentation timeline;
     private final boolean[] playedVfx;
     private final boolean[] playedSounds;
+    private boolean started;
+    private ItemStack stack;
 
     private ActivePresentation(long startGameTick, WeaponPresentation timeline) {
       this.startGameTick = startGameTick;
