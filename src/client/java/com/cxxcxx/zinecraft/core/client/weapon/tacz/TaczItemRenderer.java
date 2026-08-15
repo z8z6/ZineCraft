@@ -33,14 +33,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@EventBusSubscriber(modid = Zinecraft.MOD_ID, value = Dist.CLIENT)
 public final class TaczItemRenderer extends BlockEntityWithoutLevelRenderer {
-  public static final TaczItemRenderer INSTANCE = new TaczItemRenderer();
   private static final Map<String, TaczBedrockModel> MODELS = new ConcurrentHashMap<>();
   private static final Map<String, ResourceLocation> TEXTURES = new ConcurrentHashMap<>();
 
   private TaczItemRenderer() {
     super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+  }
+
+  private static TaczItemRenderer instance() {
+    return Holder.INSTANCE;
   }
 
   private static void applyContextTransform(ItemDisplayContext context, PoseStack poses) {
@@ -193,9 +195,6 @@ public final class TaczItemRenderer extends BlockEntityWithoutLevelRenderer {
     }
   }
 
-  public void initialize() {
-  }
-
   @Override
   public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack poses, MultiBufferSource buffers,
                            int light, int overlay) {
@@ -264,7 +263,7 @@ public final class TaczItemRenderer extends BlockEntityWithoutLevelRenderer {
       IClientItemExtensions extensions = new IClientItemExtensions() {
         @Override
         public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-          return INSTANCE;
+          return instance();
         }
       };
       event.registerItem(extensions, ModTaczWeapons.INSTANCE.getGUN_ITEM().getItem(), ModTaczWeapons.INSTANCE.getAMMO_ITEM().getItem());
@@ -277,6 +276,10 @@ public final class TaczItemRenderer extends BlockEntityWithoutLevelRenderer {
   }
 
   private record FaceData(Vector3f[] vertices, Vector3f normal) {
+  }
+
+  private static final class Holder {
+    private static final TaczItemRenderer INSTANCE = new TaczItemRenderer();
   }
 
 }

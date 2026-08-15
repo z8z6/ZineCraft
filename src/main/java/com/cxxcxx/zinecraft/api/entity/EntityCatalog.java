@@ -2,18 +2,14 @@ package com.cxxcxx.zinecraft.api.entity;
 
 import com.cxxcxx.zinecraft.api.item.ItemCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import com.cxxcxx.zinecraft.api.localization.TranslationCatalogKt;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.model.ModelTemplate;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -24,8 +20,10 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public final class EntityCatalog {
   public static final Companion Companion = new Companion();
@@ -43,7 +41,7 @@ public final class EntityCatalog {
   public <T extends Entity> EntityEntry<T> register(String path, String zhCn, String enUs,
                                                     EntityType.EntityFactory<T> factory, MobCategory category, Function1<? super EntityType.Builder<T>, Unit> configure) {
     var type = registrar.entity(path, factory, category, configure);
-    translations.add(type.getDescriptionId(), zhCn, enUs);
+    translations.add("entity." + registrar.getNamespace() + "." + path, zhCn, enUs);
     return new EntityEntry<>(path, type);
   }
 
@@ -55,7 +53,7 @@ public final class EntityCatalog {
         restriction == null ? null : restriction.getPlacement(),
         restriction == null ? null : restriction.getHeightmap(),
         restriction == null ? null : restriction.getPredicate(), configure);
-    translations.add(type.getDescriptionId(), zhCn, enUs);
+    translations.add("entity." + registrar.getNamespace() + "." + path, zhCn, enUs);
     return new MobEntry<>(path, type, category, items, this::addNaturalSpawn);
   }
 
@@ -66,13 +64,18 @@ public final class EntityCatalog {
   public void bootstrapBiomeModifiers(BootstrapContext<BiomeModifier> context) {
     var biomes = context.lookup(Registries.BIOME);
     for (var spawn : naturalSpawns) {
-      context.register(registrar.key(NeoForgeRegistries.Keys.BIOME_MODIFIERS, spawn.path() + "_spawn"),
-          BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(spawn.biomes().resolve(biomes),
-              new MobSpawnSettings.SpawnerData(spawn.type(), spawn.weight(), spawn.min(), spawn.max())));
+      var parts = spawn.biomes().resolveParts(biomes);
+      for (int i = 0; i < parts.size(); i++) {
+        String path = spawn.path() + "_spawn" + (parts.size() == 1 ? "" : "_" + i);
+        context.register(registrar.key(NeoForgeRegistries.Keys.BIOME_MODIFIERS, path),
+            BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(parts.get(i),
+                new MobSpawnSettings.SpawnerData(spawn.type().get(), spawn.weight(), spawn.min(), spawn.max())));
+      }
     }
   }
 
-  record NaturalSpawn(String path, EntityType<?> type, int weight, int min, int max, BiomeSelection biomes) {
+  record NaturalSpawn(String path, java.util.function.Supplier<? extends EntityType<?>> type, int weight, int min,
+                      int max, BiomeSelection biomes) {
   }
 
   public static final class Companion {

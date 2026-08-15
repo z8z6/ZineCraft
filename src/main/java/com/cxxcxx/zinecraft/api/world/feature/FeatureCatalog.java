@@ -2,10 +2,6 @@ package com.cxxcxx.zinecraft.api.world.feature;
 
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -18,16 +14,15 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.heightproviders.BiasedToBottomHeight;
-import net.minecraft.world.level.levelgen.placement.BiomeFilter;
-import net.minecraft.world.level.levelgen.placement.CountPlacement;
-import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 public final class FeatureCatalog {
   private final ModRegistrar registrar;
@@ -38,14 +33,14 @@ public final class FeatureCatalog {
     this.registrar = registrar;
   }
 
-  public static OreEntry ore$default(FeatureCatalog self, String path, Block block, int veinSize,
+  public static OreEntry ore$default(FeatureCatalog self, String path, Supplier<? extends Block> block, int veinSize,
                                      int veinsPerChunk, int maxY, float discard, BiomeSelection biomes, int mask, Object marker) {
     return self.ore(path, block, veinSize, veinsPerChunk,
         (mask & 16) != 0 ? 0 : maxY, (mask & 32) != 0 ? 0 : discard,
         (mask & 64) != 0 ? BiomeSelection.overworld() : biomes);
   }
 
-  public OreEntry ore(String path, Block block, int veinSize, int veinsPerChunk, int maxY,
+  public OreEntry ore(String path, Supplier<? extends Block> block, int veinSize, int veinsPerChunk, int maxY,
                       float discardChanceOnAirExposure, BiomeSelection biomes) {
     if (veinSize <= 0 || veinsPerChunk <= 0) throw new IllegalArgumentException("矿脉参数必须大于 0");
     if (discardChanceOnAirExposure < 0 || discardChanceOnAirExposure > 1)
@@ -73,8 +68,8 @@ public final class FeatureCatalog {
   public void bootstrapConfigured$zinecraft(BootstrapContext<ConfiguredFeature<?, ?>> context) {
     for (var ore : ores) {
       var targets = List.of(
-          OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), ore.block().defaultBlockState()),
-          OreConfiguration.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), ore.block().defaultBlockState())
+          OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), ore.getBlock().defaultBlockState()),
+          OreConfiguration.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), ore.getBlock().defaultBlockState())
       );
       context.register(ore.configuredKey(), new ConfiguredFeature<>(Feature.ORE,
           new OreConfiguration(targets, ore.veinSize(), ore.discardChanceOnAirExposure())));
@@ -102,14 +97,22 @@ public final class FeatureCatalog {
     var biomes = context.lookup(Registries.BIOME);
     var placed = context.lookup(Registries.PLACED_FEATURE);
     for (var ore : ores) {
-      context.register(registrar.key(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ore.placedKey().location().getPath()),
-          new BiomeModifiers.AddFeaturesBiomeModifier(ore.biomes().resolve(biomes),
-              HolderSet.direct(placed.getOrThrow(ore.placedKey())), GenerationStep.Decoration.UNDERGROUND_ORES));
+      var parts = ore.biomes().resolveParts(biomes);
+      for (int i = 0; i < parts.size(); i++) {
+        String path = ore.placedKey().location().getPath() + (parts.size() == 1 ? "" : "_" + i);
+        context.register(registrar.key(NeoForgeRegistries.Keys.BIOME_MODIFIERS, path),
+            new BiomeModifiers.AddFeaturesBiomeModifier(parts.get(i),
+                HolderSet.direct(placed.getOrThrow(ore.placedKey())), GenerationStep.Decoration.UNDERGROUND_ORES));
+      }
     }
     for (var entry : simpleFeatures) {
-      context.register(registrar.key(NeoForgeRegistries.Keys.BIOME_MODIFIERS, entry.path()),
-          new BiomeModifiers.AddFeaturesBiomeModifier(entry.biomes().resolve(biomes),
-              HolderSet.direct(placed.getOrThrow(entry.placedKey())), entry.generationStep()));
+      var parts = entry.biomes().resolveParts(biomes);
+      for (int i = 0; i < parts.size(); i++) {
+        String path = entry.path() + (parts.size() == 1 ? "" : "_" + i);
+        context.register(registrar.key(NeoForgeRegistries.Keys.BIOME_MODIFIERS, path),
+            new BiomeModifiers.AddFeaturesBiomeModifier(parts.get(i),
+                HolderSet.direct(placed.getOrThrow(entry.placedKey())), entry.generationStep()));
+      }
     }
   }
 }

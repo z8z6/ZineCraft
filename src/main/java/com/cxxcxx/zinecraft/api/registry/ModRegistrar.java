@@ -53,11 +53,11 @@ public final class ModRegistrar {
     this.namespace = namespace;
   }
 
-  public static Block block$default(ModRegistrar self, String path, Block block, boolean registerItem, Item.Properties properties, int mask, Object marker) {
-    return self.block(path, block, (mask & 4) != 0 || registerItem, (mask & 8) != 0 ? new Item.Properties() : properties);
+  public static Supplier<? extends Block> block$default(ModRegistrar self, String path, Supplier<? extends Block> factory, boolean registerItem, Item.Properties properties, int mask, Object marker) {
+    return self.block(path, factory, (mask & 4) != 0 || registerItem, (mask & 8) != 0 ? new Item.Properties() : properties);
   }
 
-  public static EntityType<?> entity$default(
+  public static Supplier<? extends EntityType<?>> entity$default(
       ModRegistrar self,
       String path,
       EntityType.EntityFactory<?> factory,
@@ -78,7 +78,7 @@ public final class ModRegistrar {
     return self.entity(path, typedFactory, category, typedConfigure);
   }
 
-  public static EntityType<?> mob$default(
+  public static Supplier<? extends EntityType<?>> mob$default(
       ModRegistrar self,
       String path,
       EntityType.EntityFactory<?> factory,
@@ -157,36 +157,53 @@ public final class ModRegistrar {
     return items.register(path, factory);
   }
 
-  public <T extends Block> T block(String path, T block, boolean registerItem, Item.Properties itemProperties) {
-    register(BuiltInRegistries.BLOCK, path, block);
+  @SuppressWarnings("unchecked")
+  public <T extends Block> Supplier<T> block(String path, Supplier<? extends T> factory, boolean registerItem, Item.Properties itemProperties) {
+    var blocks = (DeferredRegister.Blocks) deferredRegisters.computeIfAbsent(
+        BuiltInRegistries.BLOCK.key(), ignored -> DeferredRegister.createBlocks(namespace)
+    );
+    Supplier<T> block = blocks.register(path, factory);
     if (registerItem) {
-      item(path, () -> new BlockItem(block, itemProperties));
+      item(path, () -> new BlockItem(block.get(), itemProperties));
     }
     return block;
   }
 
   @SuppressWarnings({"unchecked", "rawtypes"})
-  public <T extends BlockEntity> BlockEntityType<T> blockEntity(
+  public <T extends BlockEntity> Supplier<BlockEntityType<T>> blockEntity(
       String path,
       BlockEntityType.BlockEntitySupplier<? extends T> factory,
-      Block... blocks
+      Supplier<? extends Block>... blocks
   ) {
-    var type = (BlockEntityType<T>) BlockEntityType.Builder.of((BlockEntityType.BlockEntitySupplier) factory, blocks).build(null);
-    return register(BuiltInRegistries.BLOCK_ENTITY_TYPE, path, type);
+    var deferred = (DeferredRegister<BlockEntityType<?>>) deferredRegisters.computeIfAbsent(
+        BuiltInRegistries.BLOCK_ENTITY_TYPE.key(),
+        ignored -> DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE.key(), namespace)
+    );
+    return (Supplier) deferred.register(path, () -> {
+      Block[] boundBlocks = java.util.Arrays.stream(blocks).map(Supplier::get).toArray(Block[]::new);
+      return BlockEntityType.Builder.of((BlockEntityType.BlockEntitySupplier) factory, boundBlocks).build(null);
+    });
   }
 
-  public <T extends Entity> EntityType<T> entity(
+  @SuppressWarnings("unchecked")
+  public <T extends Entity> Supplier<EntityType<T>> entity(
       String path,
       EntityType.EntityFactory<T> factory,
       MobCategory category,
       Function1<? super EntityType.Builder<T>, Unit> configure
   ) {
-    var builder = EntityType.Builder.of(factory, category);
-    configure.invoke(builder);
-    return register(BuiltInRegistries.ENTITY_TYPE, path, builder.build(path));
+    var deferred = (DeferredRegister<EntityType<?>>) deferredRegisters.computeIfAbsent(
+        BuiltInRegistries.ENTITY_TYPE.key(),
+        ignored -> DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE.key(), namespace)
+    );
+    return (Supplier) deferred.register(path, () -> {
+      var builder = EntityType.Builder.of(factory, category);
+      configure.invoke(builder);
+      return builder.build(path);
+    });
   }
 
-  public <T extends Mob> EntityType<T> mob(
+  public <T extends Mob> Supplier<EntityType<T>> mob(
       String path,
       EntityType.EntityFactory<T> factory,
       MobCategory category,
@@ -240,7 +257,7 @@ public final class ModRegistrar {
   }
 
   private void createAttributes(EntityAttributeCreationEvent event) {
-    mobs.forEach(mob -> event.put(mob.type(), mob.attributes().invoke().build()));
+    mobs.forEach(mob -> event.put(mob.type().get(), mob.attributes().invoke().build()));
   }
 
   private void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
@@ -248,7 +265,7 @@ public final class ModRegistrar {
   }
 
   private record MobRegistration<T extends Mob>(
-      EntityType<T> type,
+      Supplier<EntityType<T>> type,
       Function0<? extends AttributeSupplier.Builder> attributes,
       SpawnPlacementType placement,
       Heightmap.Types heightmap,
@@ -256,7 +273,7 @@ public final class ModRegistrar {
   ) {
     void registerPlacement(RegisterSpawnPlacementsEvent event) {
       if (predicate != null) {
-        event.register(type, placement, heightmap, predicate, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(type.get(), placement, heightmap, predicate, RegisterSpawnPlacementsEvent.Operation.REPLACE);
       }
     }
   }

@@ -10,6 +10,7 @@ import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.dimension.StarGateFeature;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class ModWorldFeatures {
   public static final ModWorldFeatures INSTANCE = new ModWorldFeatures();
@@ -48,20 +50,20 @@ public final class ModWorldFeatures {
       GenerationStep.Decoration.SURFACE_STRUCTURES, BiomeSelection.of(Biomes.SNOWY_PLAINS)
   );
   private static final OreEntry EXAMPLE_BLOCK_ORE = Zinecraft.INSTANCE.getFEATURES().ore(
-      "example_block_ore_placed", ModBlock.INSTANCE.getEXAMPLE_ENTITY_BLOCK(), 30, 6, 0, 0, BiomeSelection.overworld());
-  private static final OreEntry ORIGINITE_ORE = ore("originite_ore", MaterialOres.INSTANCE.getORIGINITE_ORE().getBlock(), 3, 2, -32, .25f);
-  private static final OreEntry ORIROCK_ORE = ore("orirock_ore", MaterialOres.INSTANCE.getORIROCK_ORE().getBlock(), 10, 12, 64, 0);
-  private static final OreEntry ORIRON_ORE = ore("oriron_ore", MaterialOres.INSTANCE.getORIRON_ORE().getBlock(), 7, 8, 32, 0);
-  private static final OreEntry MANGANESE_ORE = ore("manganese_ore", MaterialOres.INSTANCE.getMANGANESE_ORE().getBlock(), 5, 6, 16, .1f);
-  private static final OreEntry GRINDSTONE_ORE = ore("grindstone_ore", MaterialOres.INSTANCE.getGRINDSTONE_ORE().getBlock(), 6, 5, 0, .15f);
-  private static final OreEntry RMA70_ORE = ore("rma70_ore", MaterialOres.INSTANCE.getRMA70_ORE().getBlock(), 4, 3, -32, .25f);
-  private static final OreEntry CRYSTAL_ELEMENT_ORE = ore("crystal_element_ore", MaterialOres.INSTANCE.getCRYSTAL_ELEMENT_ORE().getBlock(), 5, 4, 16, .15f);
-  private static final OreEntry LOXIC_KOHL_ORE = ore("loxic_kohl_ore", MaterialOres.INSTANCE.getLOXIC_KOHL_ORE().getBlock(), 4, 3, -16, .2f);
+      "example_block_ore_placed", ModBlock.INSTANCE::getEXAMPLE_ENTITY_BLOCK, 30, 6, 0, 0, BiomeSelection.overworld());
+  private static final OreEntry ORIGINITE_ORE = ore("originite_ore", MaterialOres.INSTANCE.getORIGINITE_ORE()::getBlock, 3, 2, -32, .25f);
+  private static final OreEntry ORIROCK_ORE = ore("orirock_ore", MaterialOres.INSTANCE.getORIROCK_ORE()::getBlock, 10, 12, 64, 0);
+  private static final OreEntry ORIRON_ORE = ore("oriron_ore", MaterialOres.INSTANCE.getORIRON_ORE()::getBlock, 7, 8, 32, 0);
+  private static final OreEntry MANGANESE_ORE = ore("manganese_ore", MaterialOres.INSTANCE.getMANGANESE_ORE()::getBlock, 5, 6, 16, .1f);
+  private static final OreEntry GRINDSTONE_ORE = ore("grindstone_ore", MaterialOres.INSTANCE.getGRINDSTONE_ORE()::getBlock, 6, 5, 0, .15f);
+  private static final OreEntry RMA70_ORE = ore("rma70_ore", MaterialOres.INSTANCE.getRMA70_ORE()::getBlock, 4, 3, -32, .25f);
+  private static final OreEntry CRYSTAL_ELEMENT_ORE = ore("crystal_element_ore", MaterialOres.INSTANCE.getCRYSTAL_ELEMENT_ORE()::getBlock, 5, 4, 16, .15f);
+  private static final OreEntry LOXIC_KOHL_ORE = ore("loxic_kohl_ore", MaterialOres.INSTANCE.getLOXIC_KOHL_ORE()::getBlock, 4, 3, -16, .2f);
 
   private ModWorldFeatures() {
   }
 
-  private static OreEntry ore(String path, net.minecraft.world.level.block.Block block, int size, int count, int maxY, float discard) {
+  private static OreEntry ore(String path, Supplier<? extends Block> block, int size, int count, int maxY, float discard) {
     return Zinecraft.INSTANCE.getFEATURES().ore(path, block, size, count, maxY, discard, MATERIAL_DIMENSIONS);
   }
 

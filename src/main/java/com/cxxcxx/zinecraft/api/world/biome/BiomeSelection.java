@@ -1,14 +1,14 @@
 package com.cxxcxx.zinecraft.api.world.biome;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.Tags;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A data-pack-compatible biome selection used by NeoForge biome modifiers.
@@ -27,28 +27,32 @@ public sealed interface BiomeSelection permits BiomeSelection.TagSelection, Biom
     return new UnionSelection(List.copyOf(Arrays.asList(selections)));
   }
 
-  HolderSet<Biome> resolve(HolderGetter<Biome> biomes);
+  List<HolderSet<Biome>> resolveParts(HolderGetter<Biome> biomes);
+
+  default HolderSet<Biome> resolve(HolderGetter<Biome> biomes) {
+    var parts = resolveParts(biomes);
+    if (parts.size() != 1) throw new IllegalStateException("联合群系选择必须拆分为多个 biome modifier");
+    return parts.getFirst();
+  }
 
   record TagSelection(TagKey<Biome> tag) implements BiomeSelection {
     @Override
-    public HolderSet<Biome> resolve(HolderGetter<Biome> biomes) {
-      return biomes.getOrThrow(tag);
+    public List<HolderSet<Biome>> resolveParts(HolderGetter<Biome> biomes) {
+      return List.of(biomes.getOrThrow(tag));
     }
   }
 
   record KeySelection(List<ResourceKey<Biome>> keys) implements BiomeSelection {
     @Override
-    public HolderSet<Biome> resolve(HolderGetter<Biome> biomes) {
-      return HolderSet.direct(keys.stream().map(biomes::getOrThrow).toList());
+    public List<HolderSet<Biome>> resolveParts(HolderGetter<Biome> biomes) {
+      return List.of(HolderSet.direct(keys.stream().map(biomes::getOrThrow).toList()));
     }
   }
 
   record UnionSelection(List<BiomeSelection> selections) implements BiomeSelection {
     @Override
-    public HolderSet<Biome> resolve(HolderGetter<Biome> biomes) {
-      return HolderSet.direct(selections.stream()
-          .flatMap(selection -> selection.resolve(biomes).stream())
-          .distinct().toList());
+    public List<HolderSet<Biome>> resolveParts(HolderGetter<Biome> biomes) {
+      return selections.stream().flatMap(selection -> selection.resolveParts(biomes).stream()).toList();
     }
   }
 }

@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.core.block;
 
 import com.cxxcxx.zinecraft.api.block.BlockCatalog;
+import com.cxxcxx.zinecraft.api.block.BlockEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.dimension.StarGateControllerBlock;
 import com.cxxcxx.zinecraft.core.dimension.StarGatePortalBlock;
@@ -16,12 +17,11 @@ public final class ModBlock {
   @NotNull
   public static final ModBlock INSTANCE = new ModBlock();
   @NotNull
-  private static final Block STARGATE_ARCH = BlockCatalog.register$default(
+  private static final BlockEntry<Block> STARGATE_ARCH = BlockCatalog.register$default(
           Zinecraft.INSTANCE.getBLOCKS(), "stargate_arch", "星门拱石", "Stargate Archstone", false, null, false, false, ModBlock::STARGATE_ARCH$lambda$0, 120, null
-      )
-      .getBlock();
+  );
   @NotNull
-  private static final StarGateControllerBlock STARGATE_CONTROLLER = (StarGateControllerBlock) BlockCatalog.register$default(
+  private static final BlockEntry<StarGateControllerBlock> STARGATE_CONTROLLER = BlockCatalog.register$default(
           Zinecraft.INSTANCE.getBLOCKS(),
           "stargate_controller",
           "星门协议控制器",
@@ -33,10 +33,9 @@ public final class ModBlock {
           ModBlock::STARGATE_CONTROLLER$lambda$0,
           120,
           null
-      )
-      .getBlock();
+  );
   @NotNull
-  private static final StarGatePortalBlock STARGATE_PORTAL = (StarGatePortalBlock) BlockCatalog.register$default(
+  private static final BlockEntry<StarGatePortalBlock> STARGATE_PORTAL = BlockCatalog.register$default(
           Zinecraft.INSTANCE.getBLOCKS(),
           "stargate_portal",
           "星门事件视界",
@@ -48,10 +47,9 @@ public final class ModBlock {
           ModBlock::STARGATE_PORTAL$lambda$0,
           16,
           null
-      )
-      .getBlock();
+  );
   @NotNull
-  private static final ExampleEntityBlock EXAMPLE_ENTITY_BLOCK = (ExampleEntityBlock) BlockCatalog.register$default(
+  private static final BlockEntry<ExampleEntityBlock> EXAMPLE_ENTITY_BLOCK = BlockCatalog.register$default(
           Zinecraft.INSTANCE.getBLOCKS(),
           "example_entity_block",
           "示例实体方块",
@@ -63,8 +61,7 @@ public final class ModBlock {
           ModBlock::EXAMPLE_ENTITY_BLOCK$lambda$0,
           120,
           null
-      )
-      .getBlock();
+  );
 
   static {
     Zinecraft.INSTANCE
@@ -122,21 +119,21 @@ public final class ModBlock {
 
   @NotNull
   public final Block getSTARGATE_ARCH() {
-    return STARGATE_ARCH;
+    return STARGATE_ARCH.getBlock();
   }
 
   @NotNull
   public final StarGateControllerBlock getSTARGATE_CONTROLLER() {
-    return STARGATE_CONTROLLER;
+    return STARGATE_CONTROLLER.getBlock();
   }
 
   @NotNull
   public final StarGatePortalBlock getSTARGATE_PORTAL() {
-    return STARGATE_PORTAL;
+    return STARGATE_PORTAL.getBlock();
   }
 
   @NotNull
   public final ExampleEntityBlock getEXAMPLE_ENTITY_BLOCK() {
-    return EXAMPLE_ENTITY_BLOCK;
+    return EXAMPLE_ENTITY_BLOCK.getBlock();
   }
 }

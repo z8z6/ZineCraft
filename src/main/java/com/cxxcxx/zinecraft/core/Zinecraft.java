@@ -47,6 +47,7 @@ import com.cxxcxx.zinecraft.core.weapon.ModWeapons;
 import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +55,8 @@ import org.slf4j.LoggerFactory;
 @Mod(Zinecraft.MOD_ID)
 public final class Zinecraft {
   public static final String MOD_ID = "zinecraft";
-  public static final Zinecraft INSTANCE = new Zinecraft(true);
-
+  private static final TranslationCatalog TRANSLATIONS = new TranslationCatalog();
+  public static Zinecraft INSTANCE;
   private static final ModRegistrar REGISTRAR = new ModRegistrar(MOD_ID);
   private static final ItemCatalog ITEMS = new ItemCatalog(REGISTRAR, TRANSLATIONS);
   private static final CollectibleCatalog COLLECTIBLES = new CollectibleCatalog(ITEMS, TRANSLATIONS, MOD_ID);
@@ -68,25 +69,29 @@ public final class Zinecraft {
   private static final SongCatalog SONGS = new SongCatalog(REGISTRAR, SOUNDS, ITEMS, TRANSLATIONS);
   private static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(REGISTRAR, TRANSLATIONS);
   private static final WorldgenManager WORLDGEN = new WorldgenManager(REGISTRAR);
-  private static final TranslationCatalog TRANSLATIONS = new TranslationCatalog();
   private static final RecipeCatalog RECIPES = new RecipeCatalog();
   private static final SkillService SKILL_SERVICE = new SkillService();
   private static final WeaponRegistry WEAPONS = new WeaponRegistry();
   private static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
   public Zinecraft(IEventBus modBus) {
+    INSTANCE = this;
     bootstrapContent();
     CREATIVE_TABS.addContributor(ModTaczWeapons::addCreativeItems);
     REGISTRAR.register(modBus);
     modBus.addListener(WeaponPayloadTypes::register);
+    modBus.addListener(this::commonSetup);
     modBus.addListener(ZinecraftDataGenerator::gatherData);
     NeoForge.EVENT_BUS.addListener(WeaponServerController.INSTANCE::onServerTick);
     NeoForge.EVENT_BUS.addListener(WeaponServerController.INSTANCE::onPlayerLogout);
     FtbQuestGuideInstaller.INSTANCE.install();
-    ModTerraBlender.initialize();
   }
 
-  private Zinecraft(boolean bootstrapReference) {
+  private void commonSetup(FMLCommonSetupEvent event) {
+    event.enqueueWork(() -> {
+      ModWeapons.INSTANCE.bindRegisteredItems();
+      ModTerraBlender.initialize();
+    });
   }
 
   /**

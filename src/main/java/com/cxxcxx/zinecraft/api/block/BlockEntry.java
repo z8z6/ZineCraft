@@ -5,21 +5,23 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
+
 public final class BlockEntry<T extends Block> {
   @NotNull
   private final String path;
   @NotNull
-  private final T block;
+  private final Supplier<? extends T> block;
   private final boolean dropSelf;
   @Nullable
   private final ItemLike dropItem;
   private final boolean cubeModel;
   private final boolean registerItem;
 
-  public BlockEntry(@NotNull String path, @NotNull T block, boolean dropSelf, @Nullable ItemLike dropItem, boolean cubeModel, boolean registerItem) {
+  public BlockEntry(@NotNull String path, @NotNull Supplier<? extends T> block, boolean dropSelf, @Nullable ItemLike dropItem, boolean cubeModel, boolean registerItem) {
     super();
     this.path = path;
-    this.block = (T) block;
+    this.block = block;
     this.dropSelf = dropSelf;
     this.dropItem = dropItem;
     this.cubeModel = cubeModel;
@@ -33,7 +35,7 @@ public final class BlockEntry<T extends Block> {
 
   @NotNull
   public final T getBlock() {
-    return this.block;
+    return this.block.get();
   }
 
   public final boolean getDropSelf$zinecraft() {
@@ -53,4 +55,3 @@ public final class BlockEntry<T extends Block> {
     return this.registerItem;
   }
 }
-

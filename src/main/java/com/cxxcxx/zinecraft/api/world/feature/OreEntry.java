@@ -6,10 +6,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
+import java.util.function.Supplier;
+
 public record OreEntry(
     ResourceKey<ConfiguredFeature<?, ?>> configuredKey,
     ResourceKey<PlacedFeature> placedKey,
-    Block block,
+    Supplier<? extends Block> block,
     int veinSize,
     int veinsPerChunk,
     int maxY,
@@ -25,7 +27,7 @@ public record OreEntry(
   }
 
   public Block getBlock() {
-    return block;
+    return block.get();
   }
 
   public int getVeinSize() {

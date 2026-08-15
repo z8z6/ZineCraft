@@ -3,15 +3,14 @@ package com.cxxcxx.zinecraft.api.block;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalogKt;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import kotlin.jvm.functions.Function0;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class BlockCatalog {
   @NotNull
@@ -76,14 +75,13 @@ public final class BlockCatalog {
       String string = "方块不能同时掉落自身和指定物品: " + path;
       throw new IllegalArgumentException(string.toString());
     } else {
-      Block block = ModRegistrar.block$default(this.registrar, path, (Block) factory.invoke(), registerItem, null, 8, null);
+      var block = ModRegistrar.block$default(this.registrar, path, factory::invoke, registerItem, null, 8, null);
       BlockEntry blockEntry = new BlockEntry<>(path, block, dropSelf, dropItem, cubeModel, registerItem);
       this.entries.add(blockEntry);
       TranslationCatalog translationCatalog = this.translations;
-      String string1 = block.getDescriptionId();
+      String string1 = "block." + this.registrar.getNamespace() + "." + path;
       translationCatalog.add(string1, zhCn, enUs);
       return blockEntry;
     }
   }
 }
-

@@ -8,8 +8,8 @@ import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import kotlin.ranges.IntRange;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 
 public final class FirearmReloadAction implements WeaponAction {
@@ -19,9 +19,9 @@ public final class FirearmReloadAction implements WeaponAction {
   private final int durationTicks;
   private final int capacity;
   @NotNull
-  private final Item ammunition;
+  private final ItemLike ammunition;
 
-  public FirearmReloadAction(@NotNull ResourceLocation id, int reloadTick, int durationTicks, int capacity, @NotNull Item ammunition) {
+  public FirearmReloadAction(@NotNull ResourceLocation id, int reloadTick, int durationTicks, int capacity, @NotNull ItemLike ammunition) {
     super();
     this.id = id;
     this.reloadTick = reloadTick;
@@ -86,7 +86,7 @@ public final class FirearmReloadAction implements WeaponAction {
 
     for (int k = inventory.getContainerSize(); j < k; j++) {
       ItemStack itemStack = inventory.getItem(j);
-      if (itemStack.is(this.ammunition)) {
+      if (itemStack.is(this.ammunition.asItem())) {
         i += itemStack.getCount();
       }
     }
@@ -101,7 +101,7 @@ public final class FirearmReloadAction implements WeaponAction {
 
     for (int k = inventory.getContainerSize(); j < k; j++) {
       ItemStack itemStack = inventory.getItem(j);
-      if (itemStack.is(this.ammunition)) {
+      if (itemStack.is(this.ammunition.asItem())) {
         int l = Math.min(i, itemStack.getCount());
         itemStack.shrink(l);
         i -= l;
@@ -114,4 +114,3 @@ public final class FirearmReloadAction implements WeaponAction {
     return requested - i;
   }
 }
-

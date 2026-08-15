@@ -1,11 +1,6 @@
 package com.cxxcxx.zinecraft.api.datagen;
 
 import com.cxxcxx.zinecraft.api.block.BlockCatalog;
-
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -14,6 +9,10 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Generates block loot tables declared by {@link BlockCatalog}.
@@ -42,6 +41,7 @@ public final class CatalogLootTableProvider extends LootTableProvider {
       for (var entry : blocks.getEntries$zinecraft()) {
         if (entry.getDropSelf$zinecraft()) dropSelf(entry.getBlock());
         else if (entry.getDropItem$zinecraft() != null) dropOther(entry.getBlock(), entry.getDropItem$zinecraft());
+        else add(entry.getBlock(), noDrop());
       }
     }
 

@@ -3,12 +3,7 @@ package com.cxxcxx.zinecraft.api.datagen;
 import com.cxxcxx.zinecraft.api.block.BlockCatalog;
 import com.cxxcxx.zinecraft.api.item.ItemCatalog;
 import com.google.gson.JsonElement;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
-
+import com.google.gson.JsonObject;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -19,6 +14,11 @@ import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 /**
  * Generates only the item models and trivial cube blockstates declared by the catalogs.
@@ -48,6 +48,11 @@ public class CatalogModelProvider implements DataProvider {
           entry.getBlock(), Variant.variant().with(VariantProperties.MODEL, model)
       );
       states.put(entry.getBlock().builtInRegistryHolder().key().location(), state::get);
+      if (entry.getRegisterItem$zinecraft()) {
+        var itemModel = new JsonObject();
+        itemModel.addProperty("parent", model.toString());
+        models.put(ModelLocationUtils.getModelLocation(entry.getBlock().asItem()), () -> itemModel);
+      }
     }
     for (var entry : items.getEntries$zinecraft()) {
       entry.getModel$zinecraft().create(

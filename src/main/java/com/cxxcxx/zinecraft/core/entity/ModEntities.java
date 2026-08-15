@@ -11,7 +11,6 @@ import com.cxxcxx.zinecraft.core.biome.NationBiomes;
 import kotlin.Pair;
 import kotlin.TuplesKt;
 import kotlin.Unit;
-import kotlin.collections.CollectionsKt;
 import kotlin.collections.MapsKt;
 import kotlin.jvm.functions.Function0;
 import net.minecraft.resources.ResourceKey;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.Map.Entry;
 
 public final class ModEntities {
   @NotNull
@@ -73,10 +71,6 @@ public final class ModEntities {
   private static final MobEntry<NationResident> IBERIA_RESIDENT;
   @NotNull
   private static final LinkedHashMap<TerraNation, MobEntry<NationResident>> GENERIC_RESIDENTS_BY_NATION;
-  @NotNull
-  private static final List<EntityType<NationResident>> GENERIC_RESIDENT_TYPES;
-  @NotNull
-  private static final Map<TerraNation, EntityType<? extends Mob>> RESIDENT_TYPES_BY_NATION;
 
   static {
     EntityCatalog entityCatalog = Zinecraft.INSTANCE.getENTITIES();
@@ -208,46 +202,11 @@ public final class ModEntities {
         TuplesKt.to(TerraNation.IBERIA, IBERIA_RESIDENT)
     };
     GENERIC_RESIDENTS_BY_NATION = MapsKt.linkedMapOf($this$map$iv);
-    Collection collection2 = GENERIC_RESIDENTS_BY_NATION.values();
-    Iterable iterable1 = collection2;
-    int k = 0;
-    Iterable iterable = iterable1;
-    var collection = new ArrayList(CollectionsKt.collectionSizeOrDefault(iterable1, 10));
-    int i = 0;
-
-    for (Object object : iterable) {
-      MobEntry p0 = (MobEntry) object;
-      Collection collection1 = collection;
-      int j = 0;
-      collection1.add(p0.getType());
+    var registeredNations = new HashSet<>(GENERIC_RESIDENTS_BY_NATION.keySet());
+    registeredNations.add(TerraNation.LATERANO);
+    if (!registeredNations.equals(new HashSet<>(TerraNation.getEntries()))) {
+      throw new IllegalArgumentException("必须为全部十九国注册居民");
     }
-
-    GENERIC_RESIDENT_TYPES = (List<EntityType<NationResident>>) collection;
-    Map map = MapsKt.createMapBuilder();
-    Map map2 = map;
-    int l = 0;
-    Map map4 = GENERIC_RESIDENTS_BY_NATION;
-    i = 0;
-
-    for (Object rawEntry : map4.entrySet()) {
-      Entry entry1 = (Entry) rawEntry;
-      int o = 0;
-      TerraNation terraNation = (TerraNation) entry1.getKey();
-      MobEntry mobEntry1 = (MobEntry) entry1.getValue();
-      map2.put(terraNation, mobEntry1.getType());
-    }
-
-    map2.put(TerraNation.LATERANO, LATERANO_CITIZEN.getType());
-    Map map1 = MapsKt.build(map);
-    Map map3 = map1;
-    int m = 0;
-    if (!java.util.Objects.equals(map3.keySet(), CollectionsKt.toSet((Iterable) TerraNation.getEntries()))) {
-      int n = 0;
-      String string = "必须为全部十九国注册居民";
-      throw new IllegalArgumentException(string.toString());
-    }
-
-    RESIDENT_TYPES_BY_NATION = map1;
   }
 
   private ModEntities() {
@@ -387,12 +346,15 @@ public final class ModEntities {
 
   @NotNull
   public final List<EntityType<NationResident>> getGENERIC_RESIDENT_TYPES() {
-    return GENERIC_RESIDENT_TYPES;
+    return GENERIC_RESIDENTS_BY_NATION.values().stream().map(MobEntry::getType).toList();
   }
 
   @NotNull
   public final Map<TerraNation, EntityType<? extends Mob>> getRESIDENT_TYPES_BY_NATION() {
-    return RESIDENT_TYPES_BY_NATION;
+    Map<TerraNation, EntityType<? extends Mob>> result = new EnumMap<>(TerraNation.class);
+    GENERIC_RESIDENTS_BY_NATION.forEach((nation, entry) -> result.put(nation, entry.getType()));
+    result.put(TerraNation.LATERANO, LATERANO_CITIZEN.getType());
+    return Map.copyOf(result);
   }
 
   private final MobEntry<NationResident> resident(TerraNation nation, ResourceKey<Biome> biome, Item heldItem, SpawnPlacementType placement, boolean aquatic) {
@@ -412,4 +374,3 @@ public final class ModEntities {
     return mobEntry.naturalSpawn(8, 1, 3, BiomeSelection.of(biome));
   }
 }
-

@@ -6,27 +6,30 @@
 name: build
 on: [pull_request, push]
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
       - name: checkout repository
         uses: actions/checkout@v6
-      - name: validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v6
       - name: setup jdk
         uses: actions/setup-java@v5
         with:
-          java-version: '25'
-          distribution: 'microsoft'
+          java-version: '21'
+          distribution: 'temurin'
+      - name: setup gradle
+        uses: gradle/actions/setup-gradle@v6
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
       # Generated language/model data is intentionally ignored by Git. Keep these
       # as separate invocations so a clean checkout exercises the real release order.
       - name: generate data
-        run: ./gradlew runDatagen
+        run: ./gradlew runData --no-configuration-cache --console=plain
       - name: build and verify packaged collectible resources
-        run: ./gradlew build
+        run: ./gradlew build --no-configuration-cache --console=plain
       - name: capture build artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -34,10 +37,10 @@ jobs:
           path: build/libs/
 
       - name: Generate Java Doc
-        run: ./gradlew javadoc
+        run: ./gradlew javadoc --no-configuration-cache --console=plain
 
       - name: Upload Documentation
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: build/docs/javadoc
           name: github-pages-${{ github.run_id }}
@@ -47,10 +50,15 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
+      contents: read
       pages: write
       id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages-${{ github.run_id }}

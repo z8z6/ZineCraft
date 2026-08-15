@@ -28,10 +28,11 @@ bin/
 
 *.DS_Store
 
-# fabric
+# runtime and generated-data cache
 
 run/
 src/main/generated/
+src/generated/resources/.cache/
 
 # java
 

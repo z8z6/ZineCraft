@@ -40,9 +40,16 @@ side = "BOTH"
 [[dependencies.${ mod_id }]]
 modId = "ponder"
 type = "required"
-versionRange = "[1.0.69,)"
+versionRange = "[1.0.82,)"
 ordering = "AFTER"
 side = "CLIENT"
+
+[[dependencies.${ mod_id }]]
+modId = "create"
+type = "required"
+versionRange = "[6.0.10,6.1.0)"
+ordering = "AFTER"
+side = "BOTH"
 
 [[dependencies.${ mod_id }]]
 modId = "ftbquests"

@@ -84,7 +84,7 @@ public final class ModWeapons {
       Zinecraft.INSTANCE.getITEMS(), "test_cartridge", "测试弹药", "Test Cartridge", INSTANCE.vanillaModel("iron_nugget"), null, false, 48, null
   );
   @NotNull
-  private static final FirearmReloadAction RELOAD = new FirearmReloadAction(RELOAD_ID, 24, 32, 12, TEST_CARTRIDGE.getItem());
+  private static final FirearmReloadAction RELOAD = new FirearmReloadAction(RELOAD_ID, 24, 32, 12, TEST_CARTRIDGE);
   @NotNull
   private static final ItemEntry<FirearmItem> TEST_RIFLE_ITEM = ItemCatalog.register$default(
       Zinecraft.INSTANCE.getITEMS(),
@@ -149,7 +149,7 @@ public final class ModWeapons {
             )
         )
     );
-    String string = ((SwordItem) TEST_SWORD_ITEM.getItem()).getDescriptionId();
+    String string = "item.zinecraft.test_sword";
     TEST_SWORD = new WeaponDefinition(resourceLocation, map3, map, new WeaponMetadata(string));
     resourceLocation = Zinecraft.INSTANCE.getREGISTRAR().id("test_rifle");
     Pair[] pairs = new Pair[]{
@@ -183,7 +183,7 @@ public final class ModWeapons {
         TOGGLE_AIM_ID, new WeaponPresentation(Zinecraft.INSTANCE.getREGISTRAR().id("animation/player/rifle_aim"), null, null, null, 6, 14, null)
     );
     Map map1 = MapsKt.mapOf(pairs1);
-    String string1 = TEST_RIFLE_ITEM.getItem().getDescriptionId();
+    String string1 = "item.zinecraft.test_rifle";
     TEST_RIFLE = new WeaponDefinition(resourceLocation, map3, map1, new WeaponMetadata(string1));
     resourceLocation = Zinecraft.INSTANCE.getREGISTRAR().id("test_staff");
     Pair[] pairs2 = new Pair[]{TuplesKt.to(WeaponInput.PRIMARY, ARCANE_CAST_ID), TuplesKt.to(WeaponInput.SECONDARY, HEAL_CAST_ID)};
@@ -212,7 +212,7 @@ public final class ModWeapons {
         )
     );
     Map map2 = MapsKt.mapOf(pairs3);
-    String string2 = TEST_STAFF_ITEM.getItem().getDescriptionId();
+    String string2 = "item.zinecraft.test_staff";
     TEST_STAFF = new WeaponDefinition(resourceLocation, map3, map2, new WeaponMetadata(string2));
     WeaponAction[] weaponActions = new WeaponAction[]{LIGHT_ATTACK, FIRE, RELOAD, TOGGLE_AIM, ARCANE_CAST, HEAL_CAST};
     Iterable iterable = CollectionsKt.listOf(weaponActions);
@@ -225,9 +225,6 @@ public final class ModWeapons {
       weaponRegistry.registerAction(weaponAction);
     }
 
-    Zinecraft.INSTANCE.getWEAPONS().register(TEST_SWORD_ITEM.getItem(), TEST_SWORD);
-    Zinecraft.INSTANCE.getWEAPONS().register(TEST_RIFLE_ITEM.getItem(), TEST_RIFLE);
-    Zinecraft.INSTANCE.getWEAPONS().register(TEST_STAFF_ITEM.getItem(), TEST_STAFF);
     Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.firearm.ammo", "弹药：%s / %s", "Ammo: %s / %s");
     Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.firearm.aiming", "瞄准模式", "Aiming");
     Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.firearm.hip_fire", "腰射模式", "Hip Fire");
@@ -236,6 +233,12 @@ public final class ModWeapons {
   }
 
   private ModWeapons() {
+  }
+
+  public void bindRegisteredItems() {
+    Zinecraft.INSTANCE.getWEAPONS().register(TEST_SWORD_ITEM.getItem(), TEST_SWORD);
+    Zinecraft.INSTANCE.getWEAPONS().register(TEST_RIFLE_ITEM.getItem(), TEST_RIFLE);
+    Zinecraft.INSTANCE.getWEAPONS().register(TEST_STAFF_ITEM.getItem(), TEST_STAFF);
   }
 
   private static final SwordItem TEST_SWORD_ITEM$lambda$0() {

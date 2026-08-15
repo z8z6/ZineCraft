@@ -10,13 +10,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class MobEntry<T extends Mob> extends EntityEntry<T> {
   private final MobCategory category;
   private final ItemCatalog items;
   private final Consumer<EntityCatalog.NaturalSpawn> spawnSink;
 
-  MobEntry(String path, EntityType<T> type, MobCategory category, ItemCatalog items,
+  MobEntry(String path, Supplier<EntityType<T>> type, MobCategory category, ItemCatalog items,
            Consumer<EntityCatalog.NaturalSpawn> spawnSink) {
     super(path, type);
     this.category = category;
@@ -44,7 +45,7 @@ public final class MobEntry<T extends Mob> extends EntityEntry<T> {
 
   public MobEntry<T> naturalSpawn(int weight, int min, int max, BiomeSelection biomes) {
     if (weight <= 0 || min <= 0 || max < min) throw new IllegalArgumentException("自然生成参数无效: " + getPath());
-    spawnSink.accept(new EntityCatalog.NaturalSpawn(getPath(), getType(), weight, min, max, biomes));
+    spawnSink.accept(new EntityCatalog.NaturalSpawn(getPath(), this::getType, weight, min, max, biomes));
     return this;
   }
 }
