@@ -1,0 +1,64 @@
+{
+  "values": {
+    "zinecraft:magic_dust": {
+      "chance": 0.3
+    },
+    "zinecraft:aegir_fresh_shellcrab_sashimi": {
+      "chance": 0.65
+    },
+    "zinecraft:bolivar_smoked_capsule": {
+      "chance": 0.65
+    },
+    "zinecraft:higashi_nano_kappo": {
+      "chance": 0.65
+    },
+    "zinecraft:durin_honey_slugpudding": {
+      "chance": 0.65
+    },
+    "zinecraft:columbia_originium_roasted_fowl": {
+      "chance": 0.65
+    },
+    "zinecraft:kazimierz_knight_supplement": {
+      "chance": 0.65
+    },
+    "zinecraft:kazdel_cartilage_tack": {
+      "chance": 0.65
+    },
+    "zinecraft:laterano_sacred_tone_soup": {
+      "chance": 0.65
+    },
+    "zinecraft:leithanien_musical_roast_extract": {
+      "chance": 0.65
+    },
+    "zinecraft:rim_billiton_mining_ration": {
+      "chance": 0.65
+    },
+    "zinecraft:minos_poetry_gel": {
+      "chance": 0.65
+    },
+    "zinecraft:sargon_grass_cheese_gel": {
+      "chance": 0.65
+    },
+    "zinecraft:sami_instant_bone_soup": {
+      "chance": 0.65
+    },
+    "zinecraft:victoria_central_valley_roast": {
+      "chance": 0.65
+    },
+    "zinecraft:ursus_ham_supplement": {
+      "chance": 0.65
+    },
+    "zinecraft:kjerag_valley_pie": {
+      "chance": 0.65
+    },
+    "zinecraft:siracusa_stew_gathering": {
+      "chance": 0.65
+    },
+    "zinecraft:yan_wasteland_meat_stir_fry": {
+      "chance": 0.65
+    },
+    "zinecraft:iberia_chitin_cluster": {
+      "chance": 0.65
+    }
+  }
+}

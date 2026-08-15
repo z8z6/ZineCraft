@@ -1,0 +1,3 @@
+package com.cxxcxx.zinecraft.api.skill;
+
+public enum SkillDemoTheme {COST_RECOVERY, AREA_SLASH, RAPID_FIRE, VOLCANIC_BURST, HEAL_AND_SLOW, SANCTUARY, SLOWING_FIELD, DEPLOYMENT_STUN}

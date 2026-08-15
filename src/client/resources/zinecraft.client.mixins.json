@@ -3,7 +3,6 @@
   "package": "com.cxxcxx.zinecraft.core.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "TaczHumanoidAnimationMixin",
     "WeaponAttackMixin"
   ],
   "injectors": {

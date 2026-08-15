@@ -1,0 +1,63 @@
+package com.cxxcxx.zinecraft.api.weapon.tacz;
+
+import com.cxxcxx.zinecraft.api.weapon.action.TimedWeaponActionRuntime;
+import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
+import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
+import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
+import com.cxxcxx.zinecraft.api.weapon.combat.HitscanService;
+import kotlin.ranges.IntRange;
+import kotlin.ranges.RangesKt;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
+
+public final class TaczMeleeAction implements WeaponAction {
+  @NotNull
+  private final ResourceLocation id;
+
+  public TaczMeleeAction(@NotNull ResourceLocation id) {
+    super();
+    this.id = id;
+  }
+
+  @NotNull
+  @Override
+  public ResourceLocation getId() {
+    return this.id;
+  }
+
+  @Override
+  public boolean canStart(@NotNull WeaponContext context) {
+    return TaczWeaponActionsKt.access$gun(context) != null && context.getPlayer().isAlive();
+  }
+
+  @NotNull
+  @Override
+  public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
+    TaczGunSpec taczGunSpec1 = TaczWeaponActionsKt.access$gun(context);
+    if (taczGunSpec1 == null) {
+      String string = "Required value was null.";
+      throw new IllegalArgumentException(string.toString());
+    } else {
+      final TaczGunSpec taczGunSpec = taczGunSpec1;
+      IntRange intRange = new IntRange(2, 2);
+      int i = RangesKt.coerceAtLeast(taczGunSpec.getMeleeCooldownTicks(), 3);
+      return new TimedWeaponActionRuntime(intRange, i) {
+        @Override
+        protected void onTick(int tick) {
+          if (tick == 2) {
+            HitscanService.Hit hit = HitscanService.INSTANCE.trace(context.getPlayer(), taczGunSpec.getMeleeDistance(), 0.6);
+            if (hit != null) {
+              LivingEntity livingEntity = hit.getTarget();
+              if (livingEntity != null) {
+                livingEntity.hurt(context.getPlayer().damageSources().playerAttack((Player) context.getPlayer()), taczGunSpec.getMeleeDamage());
+              }
+            }
+          }
+        }
+      };
+    }
+  }
+}
+

@@ -1,0 +1,75 @@
+package com.cxxcxx.zinecraft.api.datagen;
+
+import com.cxxcxx.zinecraft.api.block.BlockCatalog;
+import com.cxxcxx.zinecraft.api.item.ItemCatalog;
+import com.google.gson.JsonElement;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
+
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.data.models.blockstates.Variant;
+import net.minecraft.data.models.blockstates.VariantProperties;
+import net.minecraft.data.models.model.ModelLocationUtils;
+import net.minecraft.data.models.model.ModelTemplates;
+import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.resources.ResourceLocation;
+
+/**
+ * Generates only the item models and trivial cube blockstates declared by the catalogs.
+ */
+public class CatalogModelProvider implements DataProvider {
+  private final PackOutput.PathProvider modelPaths;
+  private final PackOutput.PathProvider blockStatePaths;
+  private final ItemCatalog items;
+  private final BlockCatalog blocks;
+
+  public CatalogModelProvider(PackOutput output, ItemCatalog items, BlockCatalog blocks) {
+    this.modelPaths = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "models");
+    this.blockStatePaths = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "blockstates");
+    this.items = items;
+    this.blocks = blocks;
+  }
+
+  @Override
+  public CompletableFuture<?> run(CachedOutput cache) {
+    Map<ResourceLocation, Supplier<JsonElement>> models = new LinkedHashMap<>();
+    Map<ResourceLocation, Supplier<JsonElement>> states = new LinkedHashMap<>();
+
+    for (var entry : blocks.getEntries$zinecraft()) {
+      if (!entry.getCubeModel$zinecraft()) continue;
+      var model = ModelTemplates.CUBE_ALL.create(entry.getBlock(), TextureMapping.cube(entry.getBlock()), models::put);
+      var state = MultiVariantGenerator.multiVariant(
+          entry.getBlock(), Variant.variant().with(VariantProperties.MODEL, model)
+      );
+      states.put(entry.getBlock().builtInRegistryHolder().key().location(), state::get);
+    }
+    for (var entry : items.getEntries$zinecraft()) {
+      entry.getModel$zinecraft().create(
+          ModelLocationUtils.getModelLocation(entry.getItem()),
+          TextureMapping.layer0(entry.getItem()),
+          models::put
+      );
+    }
+
+    var modelWrites = models.entrySet().stream()
+        .map(entry -> DataProvider.saveStable(cache, entry.getValue().get(), modelPaths.json(entry.getKey())))
+        .toArray(CompletableFuture[]::new);
+    var stateWrites = states.entrySet().stream()
+        .map(entry -> DataProvider.saveStable(cache, entry.getValue().get(), blockStatePaths.json(entry.getKey())))
+        .toArray(CompletableFuture[]::new);
+    return CompletableFuture.allOf(
+        CompletableFuture.allOf(modelWrites), CompletableFuture.allOf(stateWrites)
+    );
+  }
+
+  @Override
+  public String getName() {
+    return "Zinecraft catalog models";
+  }
+}
