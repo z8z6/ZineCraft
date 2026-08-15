@@ -1,117 +1,58 @@
 # 添加物品
 
-物品通过 `Zinecraft.ITEMS` 声明。声明时会立即注册物品，并记录语言和模型元数据；数据生成器随后自动生成 `zh_cn`、`en_us`
-和普通物品模型。
+物品通过 `Zinecraft.INSTANCE.getITEMS()` 声明。目录负责注册、双语翻译、模型元数据、创造模式收集、燃料和堆肥信息。
 
-## 普通物品
+## Java 示例
 
-在 `ModItem` 中添加：
-
-```kotlin
-val ORIROCK = Zinecraft.ITEMS.register(
-  path = "orirock",
-  zhCn = "源岩",
-  enUs = "Orirock"
-)
+```java
+private static final ItemEntry<Item> ORIROCK = Zinecraft.INSTANCE.getITEMS().register(
+    "orirock",
+    "源岩",
+    "Orirock",
+    ModelTemplates.FLAT_ITEM,
+    new Item.Properties(),
+    true
+);
 ```
 
-也可以在 `ModItem` 内定义一个局部辅助函数，让声明更短：
+自定义物品通过 factory 保留具体类型：
 
-```kotlin
-private fun item(path: String, zhCn: String, enUs: String) =
-  Zinecraft.ITEMS.register(path, zhCn, enUs)
-
-val ORIROCK = item("orirock", "源岩", "Orirock")
+```java
+private static final ItemEntry<ScannerItem> SCANNER = Zinecraft.INSTANCE.getITEMS().register(
+    "scanner", "扫描器", "Scanner",
+    ModelTemplates.FLAT_ITEM, true,
+    () -> new ScannerItem(new Item.Properties().stacksTo(1))
+);
 ```
 
-返回值是 `ItemEntry<Item>`，实际 Minecraft 物品通过 `.item` 取得：
+返回值是 `ItemEntry<T>`；通过 `getItem()` 取得物品。`ItemEntry` 实现 `ItemLike`，原版接受 `ItemLike` 的 API 可直接使用条目。
 
-```kotlin
-ItemStack(ModItem.ORIROCK.item)
+```java
+ItemStack stack = new ItemStack(SCANNER.getItem());
 ```
 
-`ItemEntry` 也实现了 `ItemLike`，接受 `ItemLike` 的 API 可直接传入条目。
+可组合元数据：
 
-## 自定义属性物品
-
-通过 factory 创建具体物品：
-
-```kotlin
-val MAGIC_DUST = Zinecraft.ITEMS.register(
-  path = "magic_dust",
-  zhCn = "魔法粉尘",
-  enUs = "Magic Dust"
-) {
-  Item(
-    Item.Properties().food(
-      FoodProperties.Builder()
-        .nutrition(6)
-        .saturationModifier(0.8f)
-        .alwaysEdible()
-        .fast()
-        .build()
-    )
-  )
-}.fuel(600).compost(0.3f)
-```
-
-- `fuel(ticks)`：注册燃烧时间，20 tick 为 1 秒。
-- `compost(chance)`：注册堆肥成功概率，范围为 0～1。
-
-## 自定义物品类
-
-```kotlin
-class ScannerItem(properties: Properties) : Item(properties)
-
-val SCANNER = Zinecraft.ITEMS.register(
-  "scanner",
-  "扫描器",
-  "Scanner"
-) {
-  ScannerItem(Item.Properties().stacksTo(1))
-}
-```
-
-返回值会保留具体泛型类型 `ItemEntry<ScannerItem>`。
+- `fuel(ticks)`：燃烧时间，20 tick 为 1 秒。
+- `compost(chance)`：堆肥成功概率，必须位于 0—1。
+- `includeInCreative=false`：不进入目录自动收集的创造模式页。
 
 ## 模型与贴图
 
-默认模型为 `ModelTemplates.FLAT_ITEM`。贴图放在：
+普通物品默认使用 `ModelTemplates.FLAT_ITEM`；唱片使用 `ModelTemplates.MUSIC_DISC`。贴图路径为：
 
 ```text
 src/main/resources/assets/zinecraft/textures/item/<path>.png
 ```
 
-唱片等特殊模板可传入 `model`：
+复杂手持、动态或多层模型不能由目录推断，应在资源目录提供 JSON，或扩展 `CatalogModelProvider`。运行 `runData` 后检查生成模型和双语语言文件。
 
-```kotlin
-Zinecraft.ITEMS.register(
-  "example_disc",
-  "示例唱片",
-  "Example Disc",
-  model = ModelTemplates.MUSIC_DISC
-)
-```
+## 创造模式页
 
-运行 `./gradlew runDatagen` 后会生成模型 JSON。复杂的手持模型、动态模型或多层模型不能由普通声明推断，应自行提供模型
-JSON，或扩展 `CatalogModelProvider`。
+创造模式页通过 `Zinecraft.INSTANCE.getCREATIVE_TABS()` 注册。应在需要收集的物品声明完成后创建页面；藏品、技能和 TaCZ
+动态物品分别使用独立页面。
 
-## 创造模式标签页
+## 国家食物与藏品
 
-目录中的物品可自动加入标签页：
-
-```kotlin
-val TAB = Zinecraft.CREATIVE_TABS.register(
-  path = "item",
-  zhCn = "Zinecraft",
-  enUs = "Zinecraft",
-  icon = { ItemStack(ORIROCK.item) }
-)
-```
-
-应在所有需要加入标签页的物品声明完成后创建标签页。
-
-## 国家特色食物
-
-十九国特色食物、资料关系、饱食参数与材质设计见 [NATION_FOODS.md](./NATION_FOODS.md)。食品统一通过
-`NationFoods` 声明，并由 `ModRecipeProvider` 生成无序合成配方。
+- 十九国食物的资料、参数和配方见 [NATION_FOODS.md](NATION_FOODS.md)。
+- PRTS 藏品导入、效果与权利记录见 [PRTS_COLLECTIBLES.md](PRTS_COLLECTIBLES.md)。

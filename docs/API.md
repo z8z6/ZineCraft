@@ -1,102 +1,66 @@
 # Zinecraft 声明式 API
 
-项目使用按领域拆分的目录，不再由 `ContentCatalog` 或 `WorldgenCatalog` 集中承担全部职责。每个目录只保存自身注册所需的数据，
-`WorldgenManager` 仅负责运行时初始化和数据生成 bootstrap 汇总。
+项目用按领域拆分的 Java 目录统一注册、翻译与数据生成元数据。具体内容优先调用目录，只有目录无法表达的特殊注册表才直接使用
+`ModRegistrar`。
 
-## 目录划分
+## 目录入口
 
-| 入口               | 类型                   | 自动处理                               |
-|------------------|----------------------|------------------------------------|
-| `ITEMS`          | `ItemCatalog`        | 物品注册、翻译、模型元数据、燃料和堆肥                |
-| `BLOCKS`         | `BlockCatalog`       | 方块与方块物品注册、翻译、简单模型和默认掉落             |
-| `BLOCK_ENTITIES` | `BlockEntityCatalog` | 方块实体类型注册与有效方块绑定                    |
-| `SOUNDS`         | `SoundCatalog`       | 声音事件注册                             |
-| `SONGS`          | `SongCatalog`        | 声音事件、唱片物品、Jukebox Song 和翻译         |
-| `CREATIVE_TABS`  | `CreativeTabCatalog` | 标签页注册、翻译和目录内容收集                    |
-| `ENTITIES`       | `EntityCatalog`      | 普通实体、Mob、默认属性、生成限制、自然生成和生成蛋        |
-| `ENCHANTMENTS`   | `EnchantmentCatalog` | 1.21.1 动态附魔、翻译、等级成本、装备槽和效果 builder |
-| `SKILLS`         | `SkillCatalog`       | 技能物品、资料校验、双语名称与多行说明                |
-| `BIOMES`         | `BiomeCatalog`       | 群系资源键及 bootstrap                   |
-| `DIMENSIONS`     | `DimensionCatalog`   | 维度、维度类型、多噪声群系源及稳定资源键               |
-| `FEATURES`       | `FeatureCatalog`     | 配置地物、放置地物和运行时群系注入                  |
-| `STRUCTURES`     | `StructureCatalog`   | 简易建筑、大型 Jigsaw 聚落、唯一地标及其数据生成       |
-| `RECIPES`        | `RecipeCatalog`      | 可组合的配方生成回调                         |
+| `Zinecraft` 入口               | 类型                             | 职责                      |
+|------------------------------|--------------------------------|-------------------------|
+| `getITEMS()`                 | `ItemCatalog`                  | 物品、翻译、模型元数据、燃料与堆肥       |
+| `getBLOCKS()`                | `BlockCatalog`                 | 方块、方块物品、翻译、简单模型与默认掉落    |
+| `getBLOCK_ENTITIES()`        | `BlockEntityCatalog`           | 方块实体类型与有效方块绑定           |
+| `getSOUNDS()` / `getSONGS()` | `SoundCatalog` / `SongCatalog` | 声音、唱片物品与 Jukebox Song   |
+| `getCREATIVE_TABS()`         | `CreativeTabCatalog`           | 创造模式页及条目收集              |
+| `getENTITIES()`              | `EntityCatalog`                | 实体、Mob、属性、生成限制、生成蛋与自然生成 |
+| `getENCHANTMENTS()`          | `EnchantmentCatalog`           | 1.21.1 动态附魔及数据生成        |
+| `getSKILLS()`                | `SkillCatalog`                 | 技能物品、双语资料与 Ponder 元数据   |
+| `getWEAPONS()`               | `WeaponRegistry`               | 服务端动作、武器定义与物品解析器        |
+| `getBIOMES()`                | `BiomeCatalog`                 | 群系资源键与 bootstrap        |
+| `getDIMENSIONS()`            | `DimensionCatalog`             | 维度、维度类型与群系源             |
+| `getFEATURES()`              | `FeatureCatalog`               | 配置/放置地物与矿物参数            |
+| `getSTRUCTURES()`            | `StructureCatalog`             | 简易建筑、Jigsaw 聚落、唯一地标与结构集 |
+| `getRECIPES()`               | `RecipeCatalog`                | 配方数据生成回调                |
 
-`REGISTRAR` 是底层命名空间注册器。具体内容优先使用上述领域目录；只有目录尚未覆盖的特殊注册表才直接使用它。
+## Java 声明示例
 
-## 初始化
+```java
+ItemEntry<Item> dust = Zinecraft.INSTANCE.getITEMS().register(
+    "magic_dust", "魔法粉尘", "Magic Dust"
+).fuel(600).compost(0.3F);
 
-项目在 `Zinecraft` 中只创建一次目录：
+BlockEntry<Block> machine = Zinecraft.INSTANCE.getBLOCKS().register(
+    "machine", "机器", "Machine",
+    true, null, true, true,
+    () -> new Block(BlockBehaviour.Properties.of().strength(4.0F))
+);
 
-```kotlin
-val REGISTRAR = ModRegistrar(MOD_ID)
-val TRANSLATIONS = TranslationCatalog()
-val ITEMS = ItemCatalog(REGISTRAR, TRANSLATIONS)
-val BLOCKS = BlockCatalog(REGISTRAR, TRANSLATIONS)
-val BLOCK_ENTITIES = BlockEntityCatalog(REGISTRAR)
-val SOUNDS = SoundCatalog(REGISTRAR)
-val ENTITIES = EntityCatalog(REGISTRAR, ITEMS, TRANSLATIONS)
-val ENCHANTMENTS = EnchantmentCatalog(REGISTRAR, TRANSLATIONS)
-
-val WORLDGEN = WorldgenManager(REGISTRAR)
-val BIOMES = WORLDGEN.biomes
-val DIMENSIONS = WORLDGEN.dimensions
-val FEATURES = WORLDGEN.features
-val STRUCTURES = WORLDGEN.structures
+OreEntry ore = Zinecraft.INSTANCE.getFEATURES().ore(
+    "machine_ore", machine::getBlock,
+    8, 4, 32, 0.0F
+);
 ```
 
-内容对象应在 `onInitialize` 和数据生成入口中被访问，确保 Kotlin `object` 的声明完成初始化。运行时只需调用一次：
+目录构造时注入其真实依赖；内容类通过显式静态字段和初始化入口声明内容，不依赖语言级对象初始化。`Zinecraft` 的 NeoForge
+构造入口创建目录并将延迟注册器接到模组事件总线，`commonSetup` 只处理必须在注册后执行的绑定与可选兼容层。
 
-```kotlin
-WORLDGEN.initialize()
+## 动态注册表与数据生成
+
+`WorldgenManager` 汇总群系、维度、地物与结构 bootstrap。数据生成入口把 bootstrap 添加到 `RegistrySetBuilder`，然后由
+provider 导出 JSON。新增普通目录条目时通常不必改入口；新增一种动态注册表类型时才需要扩展汇总逻辑。
+
+运行：
+
+```powershell
+.\gradlew.bat runData
+.\gradlew.bat build
 ```
-
-数据生成入口调用：
-
-```kotlin
-registryBuilder.add(Registries.ENCHANTMENT, ENCHANTMENTS::bootstrap)
-WORLDGEN.addDataGeneration(registryBuilder)
-```
-
-## 示例
-
-```kotlin
-val MAGIC_DUST = Zinecraft.ITEMS.register(
-  "magic_dust",
-  "魔法粉尘",
-  "Magic Dust"
-).fuel(600).compost(0.3f)
-
-val MACHINE = Zinecraft.BLOCKS.register(
-  "machine",
-  "机器",
-  "Machine"
-) {
-  Block(BlockBehaviour.Properties.of().strength(4.0f))
-}
-
-val ORE = Zinecraft.FEATURES.ore(
-  path = "machine_ore",
-  block = MACHINE.block,
-  veinSize = 8,
-  veinsPerChunk = 4,
-  maxY = 32
-)
-```
-
-完整指南：
-
-- [物品](item/README.md)
-- [方块与方块实体](block/README.md)
-- [实体与 Mob](entity/README.md)
-- [附魔](enchantment/README.md)
-- [结构](structure/README.md)
-- [群系](biome/README.md)
 
 ## 设计约束
 
-- 目录构造函数注入其真实依赖，不依赖全局单例。
-- 静态注册发生在内容声明时；动态注册表通过 `BootstrapContext` 生成数据。
-- 所有概率、数量和区间参数在进入注册表前校验。
-- 服务端 API 不引用客户端渲染类型；实体 renderer 只放在 `src/client`。
-- 自动生成只覆盖可可靠推导的数据。特殊模型、特殊掉落、实体渲染和具体附魔效果仍显式声明。
+- ID 使用 `zinecraft` 命名空间与稳定的 `snake_case` 路径。
+- Java API 使用 `Supplier`、`Consumer`、`Function`、不可变集合或明确的领域类型，不新增默认参数掩码、`componentN`、`Companion`
+  等迁移桥接。
+- 公开目录在进入注册表前校验数量、概率、区间和重复 ID。
+- 服务端玩法不引用客户端渲染类型；客户端表现不能直接结算伤害、弹药或技能效果。
+- 自动生成只覆盖可可靠推导的数据；特殊模型、掉落、渲染和效果显式实现。

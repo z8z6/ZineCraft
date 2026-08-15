@@ -41,8 +41,9 @@
 3. 在 `quests/chapters/<name>.snbt` 创建独立章节。优先使用 FTB 原生维度、群系和物品 Task。
 4. 同步向 `quests/lang/en_us.snbt` 与 `quests/lang/zh_cn.snbt` 添加相同键集合。2101.1.x 不扫描按章节嵌套的语言目录。
 5. 将新章节和语言片段加入 `FtbQuestGuideInstaller`：章节只在缺失时创建，语言表只合并缺失键。
-6. 运行 `powershell -File .agents/skills/zinecraft-content/scripts/validate_ftbquests.ps1`，检查 ID、依赖与双语键。
-7. 依次运行 `runDatagen` 和 `build`，再启动开发世界验证任务进度与奖励。
+6. 若仓库提供 `.agents/skills/zinecraft-content/scripts/validate_ftbquests.ps1`，运行它检查
+   ID、依赖与双语键；若脚本不存在，使用仓库现有验证脚本或显式检查 SNBT。
+7. 依次运行 `runData` 和 `build`，再启动开发世界验证任务进度与奖励。
 
 ## 设计规则
 

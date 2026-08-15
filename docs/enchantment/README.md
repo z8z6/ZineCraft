@@ -1,73 +1,36 @@
 # 添加附魔
 
-Minecraft 1.21.1 的附魔属于动态注册表内容。项目使用 `Zinecraft.ENCHANTMENTS` 声明附魔，并由数据生成器导出
+Minecraft 1.21.1 的附魔属于动态注册表内容。`EnchantmentCatalog` 保存定义和双语名称，`runData` 导出
 `data/zinecraft/enchantment/<path>.json`。
 
-## 基础附魔
-
-```kotlin
-val ORIGINITE_EDGE = Zinecraft.ENCHANTMENTS.register(
-  path = "originite_edge",
-  zhCn = "源石锋芒",
-  enUs = "Originite Edge",
-  supportedItems = ItemTags.WEAPON_ENCHANTABLE,
-  weight = 5,
-  maxLevel = 3,
-  minCost = Enchantment.dynamicCost(5, 8),
-  maxCost = Enchantment.dynamicCost(25, 8),
-  anvilCost = 4,
-  slots = arrayOf(EquipmentSlotGroup.MAINHAND)
-)
+```java
+EnchantmentEntry edge = Zinecraft.INSTANCE.getENCHANTMENTS().register(
+    "originite_edge",
+    "源石锋芒",
+    "Originite Edge",
+    ItemTags.WEAPON_ENCHANTABLE,
+    null,
+    null,
+    5,
+    3,
+    Enchantment.dynamicCost(5, 8),
+    Enchantment.dynamicCost(25, 8),
+    4,
+    new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND},
+    builder -> builder.withEffect(
+        EnchantmentEffectComponents.DAMAGE,
+        new AddValue(LevelBasedValue.perLevel(1.0F)))
+);
 ```
 
-返回 `EnchantmentEntry`，其 `.key` 是 `ResourceKey<Enchantment>`。中英文名称会自动进入语言数据生成。
+返回值的 `getKey()` 是 `ResourceKey<Enchantment>`。`supportedItems` 决定允许附魔的物品；`primaryItems` 和 `exclusiveWith`
+可为空。物品标签与附魔互斥标签仍由 tag provider 或资源 JSON 提供。
 
-## 主物品与互斥标签
-
-```kotlin
-val PRECISE_EDGE = Zinecraft.ENCHANTMENTS.register(
-  path = "precise_edge",
-  zhCn = "精密锋刃",
-  supportedItems = ItemTags.WEAPON_ENCHANTABLE,
-  primaryItems = ItemTags.SWORD_ENCHANTABLE,
-  exclusiveWith = ModEnchantmentTags.EXCLUSIVE_EDGE,
-  maxLevel = 2,
-  slots = arrayOf(EquipmentSlotGroup.MAINHAND)
-)
-```
-
-- `supportedItems` 决定附魔可存在于哪些物品上。
-- `primaryItems` 可选，用于附魔台主要选择范围。
-- `exclusiveWith` 可选，引用一个附魔标签来声明互斥关系。
-- 物品与附魔标签仍应由 tag provider 或资源 JSON 提供。
-
-## 添加效果
-
-`register` 最后的 DSL 接收原版 `Enchantment.Builder`，可组合 1.21.1 的数据组件效果：
-
-```kotlin
-val EXAMPLE = Zinecraft.ENCHANTMENTS.register(/* 定义参数 */) {
-  withEffect(
-    EnchantmentEffectComponents.DAMAGE,
-    AddValue(LevelBasedValue.perLevel(1.0f))
-  )
-}
-```
-
-具体效果类型、上下文条件和数值表达式应按玩法需求显式声明；目录只负责统一构建、注册、翻译和数据导出，不会猜测效果。
-
-## 数据生成接入
-
-项目入口已经包含：
-
-```kotlin
-registryBuilder.add(Registries.ENCHANTMENT, Zinecraft.ENCHANTMENTS::bootstrap)
-```
-
-`ModDynamicRegistryProvider` 也会导出 `Registries.ENCHANTMENT`，新增附魔时不需要修改数据生成入口。运行：
+目录不会猜测具体效果、上下文条件或数值表达式。使用原版 `Enchantment.Builder` 和 1.21.1 数据组件效果显式声明。
 
 ```powershell
-.\gradlew.bat runDatagen
+.\gradlew.bat runData
+.\gradlew.bat build
 ```
 
-然后检查生成的附魔 JSON 和语言文件。
+新增普通附魔无需修改数据生成入口；只有增加新的动态注册表种类时才扩展 registry builder。

@@ -1,0 +1,28 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "hexagon"
+	filename: "development_mods"
+	group: "444556454C4F5047"
+	icon: { id: "minecraft:command_block" }
+	id: "4445564D4F445343"
+	order_index: 0
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "6000000000000000"
+			icon: { id: "minecraft:command_block" }
+			shape: "gear"
+			size: 2.0d
+			tasks: [{ id: "6100000000000000", type: "checkmark" }]
+			x: 0.0d
+			y: -3.0d
+		}
+		{ id: "6000000000000001", icon: { id: "minecraft:grass_block" }, optional: true, tasks: [{ id: "6100000000000001", type: "checkmark" }], x: -6.0d, y: 0.0d }
+		{ id: "6000000000000002", icon: { id: "create:cogwheel" }, optional: true, tasks: [{ id: "6100000000000002", type: "checkmark" }], x: -3.0d, y: 0.0d }
+		{ id: "6000000000000003", icon: { id: "minecraft:book" }, optional: true, tasks: [{ id: "6100000000000003", type: "checkmark" }], x: 0.0d, y: 0.0d }
+		{ id: "6000000000000004", icon: { id: "zinecraft:collectible_is2_001" }, optional: true, tasks: [{ id: "6100000000000004", type: "checkmark" }], x: 3.0d, y: 0.0d }
+		{ id: "6000000000000005", icon: { id: "minecraft:comparator" }, optional: true, tasks: [{ id: "6100000000000005", type: "checkmark" }], x: 6.0d, y: 0.0d }
+		{ id: "6000000000000006", icon: { id: "minecraft:compass" }, optional: true, tasks: [{ id: "6100000000000006", type: "checkmark" }], x: 0.0d, y: 3.0d }
+	]
+}

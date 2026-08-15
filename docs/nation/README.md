@@ -55,10 +55,11 @@
 
 ## 使用
 
-```kotlin
-val ursus = TerraNationRelations.NETWORK.state(TerraNation.URSUS)
-val border = TerraNationRelations.NETWORK.relation(TerraNation.URSUS, TerraNation.KAZIMIERZ)
-val allUrsusRelations = TerraNationRelations.NETWORK.relationsFrom(TerraNation.URSUS)
+```java
+NationRelationshipNetwork network = TerraNationRelations.INSTANCE.getNETWORK();
+NationState ursus = network.state(TerraNation.URSUS);
+NationRelation border = network.relation(TerraNation.URSUS, TerraNation.KAZIMIERZ);
+List<NationRelation> allUrsusRelations = network.relationsFrom(TerraNation.URSUS);
 ```
 
 当前网络是经过校验的初始描述数据，不负责世界存档持久化。后续战争、贸易和玩家声望玩法应复制或包装这些初始值，并由服务端

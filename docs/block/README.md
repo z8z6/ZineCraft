@@ -1,86 +1,43 @@
-# 添加方块
+# 添加方块与方块实体
 
-`BlockCatalog.register` 将方块注册、`BlockItem`、双语名称、简单模型和默认掉落合并为一次声明。
+`BlockCatalog` 将方块、可选 `BlockItem`、双语翻译、简单模型和默认掉落合并为一个 Java 声明。
 
-## 普通立方体方块
-
-```kotlin
-val ORIROCK_BLOCK = Zinecraft.BLOCKS.register(
-  path = "orirock_block",
-  zhCn = "源岩块",
-  enUs = "Orirock Block"
-) {
-  Block(
-    BlockBehaviour.Properties.of()
-      .strength(3.0f, 6.0f)
-      .sound(SoundType.STONE)
-  )
-}.block
+```java
+private static final BlockEntry<Block> ORIROCK_BLOCK = Zinecraft.INSTANCE.getBLOCKS().register(
+    "orirock_block", "源岩块", "Orirock Block",
+    true, null, true, true,
+    () -> new Block(BlockBehaviour.Properties.of()
+        .strength(3.0F, 6.0F)
+        .sound(SoundType.STONE))
+);
 ```
 
-默认行为包括：
+参数含义依次为 `dropSelf`、`dropItem`、`cubeModel`、`registerItem` 和 factory。`dropSelf` 与 `dropItem`
+不能同时启用。关闭默认模型或掉落后，必须自行提供对应资源。
 
-- 注册方块及同 ID 的 `BlockItem`。
-- 生成中英文名称。
-- 生成简单立方体模型、方块状态和物品模型。
-- 生成“掉落自身”的战利品表。
-- 创建创造标签页时自动加入标签页。
-
-方块贴图放在：
+方块贴图路径：
 
 ```text
-src/main/resources/assets/zinecraft/textures/block/orirock_block.png
+src/main/resources/assets/zinecraft/textures/block/<path>.png
 ```
-
-## 国家地貌与建筑主材
-
-`NationBlocks` 为泰拉十九国各注册一种地貌方块和一种主体外墙方块，共 38 种。它们会直接用于国家群系表层、聚落地基与外墙、唯一地标主体结构以及
-FTB Quests 国家节点图标，不再以原版方块充当国家视觉占位符。
-
-完整 ID、设计依据和美术说明见 [NATION_MATERIALS.md](NATION_MATERIALS.md)。贴图由
-`script/generate_nation_block_textures.ps1` 确定性生成；修改调色板或纹理节奏后，应重新执行脚本并检查所有 PNG 仍为 16×16。
-
-## 关闭默认生成
-
-复杂方块可以逐项关闭默认行为：
-
-```kotlin
-val MACHINE = Zinecraft.BLOCKS.register(
-  path = "machine",
-  zhCn = "机器",
-  enUs = "Machine",
-  dropSelf = false,
-  cubeModel = false,
-  registerItem = true
-) {
-  MachineBlock(BlockBehaviour.Properties.of().strength(4.0f))
-}.block
-```
-
-关闭后需要自行提供对应的战利品表、模型或方块状态数据。
 
 ## 方块实体
 
-先声明方块，再通过 `BLOCK_ENTITIES` 注册方块实体类型：
+先注册方块，再用 `BLOCK_ENTITIES` 将 factory 与一个或多个有效方块绑定。方块类继承 `BaseEntityBlock` 并实现
+`newBlockEntity`。保存状态时覆盖 `saveAdditional`/`loadAdditional`，修改持久化数据后调用 `setChanged()`。
 
-```kotlin
-class MachineBlockEntity(pos: BlockPos, state: BlockState) :
-  BlockEntity(ModBlockEntities.MACHINE, pos, state)
-
-object ModBlockEntities {
-  val MACHINE = Zinecraft.BLOCK_ENTITIES.register(
-    "machine",
-    ::MachineBlockEntity,
-    ModBlocks.MACHINE
-  )
+```java
+public final class MachineBlockEntity extends BlockEntity {
+  public MachineBlockEntity(BlockPos pos, BlockState state) {
+    super(ModBlockEntities.MACHINE.get(), pos, state);
+  }
 }
 ```
 
-方块需要继承 `BaseEntityBlock` 并实现：
+方块实体渲染器只放在 `src/client/java`；通用端不能引用客户端类。
 
-```kotlin
-override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity =
-  MachineBlockEntity(pos, state)
-```
+## 国家材料
 
-保存状态时覆盖 `saveAdditional` / `loadAdditional`，修改数据后调用 `setChanged()`。仅客户端渲染器必须放在 `src/client`。
+`NationBlocks`
+为十九国分别声明地貌与建筑墙体材料。ID、群系表层用途、结构调色板与纹理规则见 [NATION_MATERIALS.md](NATION_MATERIALS.md)
+。修改纹理生成规则后运行对应脚本，并确认输出仍为 16×16 PNG。

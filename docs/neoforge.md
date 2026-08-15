@@ -1,4 +1,7 @@
-# 任务：将 Minecraft 1.21.1 Fabric + Kotlin 模组迁移到 NeoForge + Java
+# 历史迁移规范：Fabric/Kotlin → NeoForge/Java
+
+> 状态：已完成。当前项目固定使用 Minecraft 1.21.1、NeoForge 21.1.244、Java 21 和 `runData`
+> 。本文保留为迁移决策与验收依据，不是当前待办清单；实际状态见 [项目文档](README.md) 与 [迁移说明](../MIGRATION_NOTES.md)。
 
 你正在维护一个 Minecraft 1.21.1 模组。
 

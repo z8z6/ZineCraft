@@ -1,65 +1,68 @@
 ---
 name: zinecraft-content
-description: Implement and extend Zinecraft through its declarative Kotlin catalogs and server-authoritative Weapon Runtime. Use when adding or modifying items, blocks, block entities, mobs, national residents, nation relationships, entities, weapons such as swords, firearms or staffs, WeaponAction timelines, ItemStack weapon state, sounds, music discs, enchantments, character skills, Ponder scenes, biomes, dimensions, FTB Quests guides, Jigsaw buildings, settlements, unique landmarks, translations, models, loot tables, or generated data in this Minecraft 1.21.1 Fabric project.
+description: Implement and extend Zinecraft through its declarative Java catalogs and server-authoritative Weapon Runtime. Use when adding or modifying items, blocks, block entities, mobs, national residents, nation relationships, entities, weapons, sounds, enchantments, skills, Ponder scenes, biomes, dimensions, FTB Quests guides, Jigsaw buildings, settlements, landmarks, translations, models, loot tables, or generated data in this Minecraft 1.21.1 NeoForge project.
 ---
 
 # Zinecraft 内容开发
 
-使用项目已有的目录封装完成内容注册、资源接入、数据生成和验证。除非现有封装确实无法表达需求，不要绕过目录直接调用原版
-`Registry`。
+使用项目已有的 Java 目录完成内容注册、资源接入、数据生成和验证。除非现有目录确实无法表达需求，不要绕过目录直接调用底层注册表。
 
 ## 建立上下文
 
-1. 阅读仓库根目录的 `AGENTS.md`，检查 `git status --short`，保留用户已有修改。
-2. 确认当前项目约定：模组 ID 是 `zinecraft`，Minecraft 版本是 1.21.1，源码使用 Kotlin，通用端与客户端源码分离。
-3. 搜索同类内容及其初始化入口，再修改最小必要文件。优先查看 `core` 中的真实示例，目录实现位于 `api` 包，但二者属于同一个模块。
-4. 按任务读取对应参考文件，不要一次加载全部：
+1. 阅读仓库根目录 `AGENTS.md`，执行 `git status --short`，保留用户已有修改。
+2. 确认基线：模组 ID `zinecraft`、Minecraft 1.21.1、NeoForge 21.1.244、Java 21、单模块；通用端位于 `src/main/java`，客户端位于
+   `src/client/java`。
+3. 搜索同类内容及初始化入口。内容声明优先位于 `core/<domain>`，目录能力位于 `api/<domain>`，可选模组适配位于
+   `compat/<modid>`。
+4. 按任务读取必要参考，不一次加载全部：
     - 物品、方块、方块实体：`references/items-blocks.md`
     - 实体与 Mob：`references/entities.md`
-   - 十九国居民、国家状态与双边关系：`references/nations.md`
-    - 群系、地表、Jigsaw 建筑、聚落、唯一地标：`references/worldgen.md`
-    - 角色技能物品与 Ponder：`references/skills.md`
-   - 剑、枪械、法杖与 Weapon Runtime：`references/weapons.md`
-   - TaCZ 外置枪包加载、动态物品与客户端资源桥接：`references/tacz.md`
-   - FTB Quests 维度、群系、物品与教学任务：`references/ftbquests.md`
-       - 创建或修改任务后运行 `scripts/validate_ftbquests.ps1`，再执行数据生成与构建。
-    - 音效、唱片、附魔、配方、创造模式页、矿物特征：`references/sound-enchantment.md`
+    - 国家状态和关系：`references/nations.md`
+    - 群系、地表、Jigsaw、聚落和地标：`references/worldgen.md`
+    - 技能与 Ponder：`references/skills.md`
+    - Weapon Runtime：`references/weapons.md`
+    - TaCZ 外置枪包：`references/tacz.md`
+    - FTB Quests：`references/ftbquests.md`
+    - 声音、唱片、附魔、配方与矿物：`references/sound-enchantment.md`
 
 ## 实施流程
 
-1. 为内容选择稳定的 `snake_case` ID；确认翻译、纹理、模板和声音资源采用同一个 ID。
-2. 通过 `Zinecraft.ITEMS`、`BLOCKS`、`BLOCK_ENTITIES`、`ENTITIES`、`SOUNDS`、`SONGS`、`ENCHANTMENTS`、`SKILLS`、`WEAPONS`、
-   `BIOMES`、
-   `FEATURES`、`STRUCTURES`、`DIMENSIONS` 或 `RECIPES` 声明内容。
-3. 将面向游戏内容的声明放入对应 `core/<domain>` 对象。只有新增目录能力时才修改 `api/<domain>`；通用端不得引用渲染器、Ponder
-   场景等客户端类。
-4. 新增顶层内容对象时，在 `Zinecraft.onInitialize()` 和 `ZinecraftDataGenerator.onInitializeDataGenerator()`
-   中显式访问，保证正常启动与数据生成都会触发 Kotlin 对象初始化。动态注册表还要接入 `buildRegistry()` 或
-   `WorldgenManager`。
-5. 补齐不能自动生成的资源：PNG、OGG、结构 NBT、Ponder NBT、`sounds.json` 以及自定义模型。目录已自动收集翻译、常规模型和方块掉落时，不要手写重复
-   JSON。
-6. 如资料或美术来自明日方舟官网、PRTS 等外部来源，先联网核对当前页面；记录逐文件来源和权利说明。不要把第三方素材误写成项目许可证覆盖的原创资产。
-7. 先运行 `./gradlew.bat runDatagen`，再单独运行 `./gradlew.bat build`。不要把两项合并为一次 Gradle 调用；当前任务图会触发隐式依赖校验。
-8. 检查生成 JSON、资源路径、客户端注册和构建产物。必要时在开发世界用 `/place structure`、`/locate structure` 或实体生成蛋进行运行时验证。
+1. 使用稳定的 `snake_case` ID；注册名、翻译、纹理、模型、声音、NBT 和数据键保持一致。
+2. 通过 `Zinecraft.INSTANCE` 的领域目录声明内容，包括物品、方块、实体、声音、附魔、技能、武器、群系、地物、结构、维度与配方。
+3. 静态内容接入 NeoForge 延迟注册；动态注册表接入对应 bootstrap、`RegistrySetBuilder` 与 provider。不要恢复旧 Loader
+   生命周期或兼容抽象。
+4. 新增顶层内容类时，在 `Zinecraft` 运行时初始化和数据生成入口显式触发；不要依赖类加载顺序或语言级对象初始化副作用。
+5. 客户端 renderer、按键、Ponder、粒子、声音后端和资源桥接只放在 `src/client/java`。服务端玩法不得 import
+   `net.minecraft.client`。
+6. 补齐无法自动生成的 PNG、OGG、结构/Ponder NBT、`sounds.json` 和特殊模型。不要手写目录已经可靠生成的重复 JSON。
+7. 引用明日方舟官网或 PRTS 资料前联网核对；保留原文、链接和逐文件权利记录，不自行推断缺失设定。
+8. 依次运行 `./gradlew.bat test`、`./gradlew.bat runData`、`./gradlew.bat build`。运行时改动再验证 `runClient` 或
+   `runServer`；不要把 `runData` 与 `build` 合并为一次调用。
 
-## 数据与版本控制约定
+## Java API 约定
 
-- `src/main/generated/` 是可重建输出，已被 Git 忽略，不得重新加入提交。
-- 发布所需且不能在运行时重建的 PNG、OGG、NBT 和手写 JSON 必须放入 `src/main/resources/`。
-- 数据生成结果只用于校验和复制稳定数据；提交前用 `git status --short` 确认没有意外产物。
-- 不修改无关文件，不覆盖用户正在进行的改动，不顺手重构任务范围外的旧代码。
+- 使用 `Supplier`、`Consumer`、`Function`、record 或明确的领域类表达 Java 语义。
+- 不新增默认参数位掩码、marker 参数、`componentN`、`copy$default`、`Companion`、`*Kt` 或带 `$lambda` 的迁移命名。
+- 公开封装校验重复 ID、非法数量、概率和区间，并返回可继续组合的 entry/resource key。
+- 目录构造函数注入真实依赖；避免为了方便重新制造全局状态或 Loader 无关抽象。
+
+## 数据与版本控制
+
+- `src/generated/resources/` 是 `runData` 的可重建输出，不作为手写资源维护。
+- 发布所需 PNG、OGG、NBT、任务模板和稳定手写 JSON 位于 `src/main/resources/`。
+- `run/`、外置 TaCZ 枪包和客户端桥接包保持忽略。
+- 不覆盖用户已有修改，不顺手重构任务范围外文件。
 
 ## 质量门槛
 
-- 新增公开封装要校验非法参数，并返回后续可组合使用的 entry 或资源键。
-- 与玩法、世界观和特殊生成规则有关的代码使用中文 KDoc 或中文注释说明“为什么”。
-- 群系必须同时考虑生成参数、主世界气候映射、独特地表、特色生物和建筑；地表规则必须用目标群系条件限定。
-- 普通城市、村落和营地使用可重复生成的 `settlement`；每世界一次的特殊建筑使用 `uniqueLandmark`；小型单模板建筑使用
+- 群系同时考虑气候点、表层、特色地物/生物与结构；泰拉群系源不得混入原版群系。
+- 普通城市/村落/营地使用 `settlement`，每世界一次建筑使用 `uniqueLandmark`，固定中心设施使用 fixed-origin 变体，小型单模板建筑使用
   `simpleBuilding`。
-- Mob 的服务端属性/生成规则与客户端渲染分开；技能数据与 Ponder 场景分开；声音事件注册与声音文件声明分开。
-- 武器的命中、伤害、弹药与技能效果由服务端 Action Runtime 决定；客户端输入和动画关键帧不得直接产生 gameplay state。
-- 完成前至少通过数据生成和完整构建。若失败，区分代码错误、资源错误和环境/依赖下载错误，并报告实际验证范围。
+- Mob 属性/生成/AI 与客户端 renderer 分开；技能数据与 Ponder 场景分开；声音注册与声音资源声明分开。
+- 武器命中、伤害、弹药和技能效果由服务端 Action Runtime 决定；客户端输入和动画关键帧只表达意图与表现。
+- FTB Quests 修改后运行 `scripts/validate_ftbquests.ps1`（若仓库提供），再执行常规验证。
+- 完成前报告实际通过的测试、数据生成、构建和运行验证，以及未验证风险。
 
 ## 完成报告
 
-说明新增了哪些声明与资源、哪些数据由目录自动生成、执行了哪些验证，以及仍需用户提供的美术或外部授权事项。引用关键文件的绝对路径和行号。
+说明新增/修改的声明与资源、目录自动生成的数据、执行的验证，以及仍需提供的原创美术或外部授权。引用关键文件绝对路径和行号。

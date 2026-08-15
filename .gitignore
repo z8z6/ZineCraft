@@ -32,7 +32,7 @@ bin/
 
 run/
 src/main/generated/
-src/generated/resources/.cache/
+src/generated/
 
 # java
 
