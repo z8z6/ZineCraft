@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.core.recipe;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
+import com.cxxcxx.zinecraft.core.block.MaterialOres;
 import com.cxxcxx.zinecraft.core.item.ModItem;
 import com.cxxcxx.zinecraft.core.item.NationFoods;
 import kotlin.Pair;
@@ -25,6 +26,7 @@ public final class ModRecipeProvider extends RecipeProvider {
   }
 
   public void buildRecipes(@NotNull RecipeOutput exporter) {
+    this.addMaterialOreCookingRecipes(exporter);
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, (ItemLike) Items.DIRT)
         .requires((ItemLike) Items.COARSE_DIRT)
         .unlockedBy(RecipeHelpers.getHasName((ItemLike) Items.COARSE_DIRT), RecipeHelpers.has((ItemLike) Items.COARSE_DIRT))
@@ -255,6 +257,32 @@ public final class ModRecipeProvider extends RecipeProvider {
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
     Zinecraft.INSTANCE.getRECIPES().generate(exporter);
+  }
+
+  /**
+   * 矿石方块可通过普通熔炉或高炉还原为其直接掉落的基础材料。
+   */
+  private void addMaterialOreCookingRecipes(RecipeOutput exporter) {
+    this.oreCooking(exporter, MaterialOres.INSTANCE.getORIGINITE_ORE().getBlock(), ModItem.INSTANCE.getORIGINITE().getItem(), "originite");
+    this.oreCooking(exporter, MaterialOres.INSTANCE.getORIROCK_ORE().getBlock(), ModItem.INSTANCE.getORIROCK().getItem(), "orirock");
+    this.oreCooking(exporter, MaterialOres.INSTANCE.getORIRON_ORE().getBlock(), ModItem.INSTANCE.getORIRON_SHARD().getItem(), "oriron_shard");
+    this.oreCooking(exporter, MaterialOres.INSTANCE.getMANGANESE_ORE().getBlock(), ModItem.INSTANCE.getMANGANESE_ORE().getItem(), "manganese_ore");
+    this.oreCooking(exporter, MaterialOres.INSTANCE.getGRINDSTONE_ORE().getBlock(), ModItem.INSTANCE.getGRINDSTONE().getItem(), "grindstone");
+    this.oreCooking(exporter, MaterialOres.INSTANCE.getRMA70_ORE().getBlock(), ModItem.INSTANCE.getRMA70_12().getItem(), "rma70_12");
+    this.oreCooking(exporter, MaterialOres.INSTANCE.getCRYSTAL_ELEMENT_ORE().getBlock(), ModItem.INSTANCE.getCRYSTAL_ELEMENT().getItem(), "crystal_element");
+    this.oreCooking(exporter, MaterialOres.INSTANCE.getLOXIC_KOHL_ORE().getBlock(), ModItem.INSTANCE.getLOXIC_KOHL().getItem(), "loxic_kohl");
+  }
+
+  private void oreCooking(RecipeOutput exporter, ItemLike ore, ItemLike result, String group) {
+    var ingredient = Ingredient.of(ore);
+    SimpleCookingRecipeBuilder.smelting(ingredient, RecipeCategory.MISC, result, 0.7F, 200)
+        .group(group)
+        .unlockedBy(RecipeHelpers.getHasName(ore), RecipeHelpers.has(ore))
+        .save(exporter, Zinecraft.INSTANCE.getREGISTRAR().id(group + "_from_smelting"));
+    SimpleCookingRecipeBuilder.blasting(ingredient, RecipeCategory.MISC, result, 0.7F, 100)
+        .group(group)
+        .unlockedBy(RecipeHelpers.getHasName(ore), RecipeHelpers.has(ore))
+        .save(exporter, Zinecraft.INSTANCE.getREGISTRAR().id(group + "_from_blasting"));
   }
 
   private final void nationFoodRecipe(RecipeOutput exporter, ItemLike result, ItemLike... ingredients) {
@@ -534,6 +562,6 @@ public final class ModRecipeProvider extends RecipeProvider {
     private static void oreSmelting(RecipeOutput output, java.util.List<ItemLike> inputs, RecipeCategory category, ItemLike result, float experience, int time, String group) {
       ModRecipeProvider.oreSmelting(output, inputs, category, result, experience, time, group);
     }
+
   }
 }
-

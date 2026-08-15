@@ -2,7 +2,13 @@
 
 ## 内容范围
 
-项目内置 `Zinecraft：泰拉远征` 与 `泰拉国家关系网` 两个章节。远征章节包含三条相互衔接的内容：
+项目内置四个章节，并新增两个章节组：
+
+- `泰拉国家档案`：包含“十九国与特色建筑”，按 PRTS 国家资料逐国列出 Zinecraft 对应群系、可重复聚落与两座唯一地标。
+- `开发与模组`：包含“开发环境模组说明”，区分发布必需依赖、传递依赖与仅供 `runClient` 使用的辅助模组。
+- 未分组的既有章节：`Zinecraft：泰拉远征` 与 `泰拉国家关系网`，保留原有世界探索、武器教学和关系网络。
+
+远征章节包含三条相互衔接的内容：
 
 1. 在主世界雪原寻找星门，并通过 `zinecraft:terra` 维度访问任务验证传送成功。
 2. 分别访问泰拉维度中的 19 个国家群系；所有群系任务完成后可提交地理考察。
@@ -20,6 +26,9 @@ FTB Quests 将任务书保存在运行目录的 `config/ftbquests/quests/`，而
 
 ```text
 config/ftbquests/quests/
+├─ chapter_groups.snbt
+├─ chapters/development_mods.snbt
+├─ chapters/terra_nations.snbt
 ├─ chapters/zinecraft_guide.snbt
 ├─ chapters/terra_relations.snbt
 └─ lang/
@@ -27,14 +36,15 @@ config/ftbquests/quests/
    └─ zh_cn.snbt
 ```
 
-章节文件已存在时不会被覆盖；集中语言表已存在时只补入缺失的 Zinecraft
+章节文件已存在时不会被覆盖；章节组文件只追加缺失的 Zinecraft 章节组；集中语言表已存在时只补入缺失的 Zinecraft
 键，现有键值不会被替换。因此整合包作者可以在游戏编辑模式中调整内容而不被下次启动还原。若要恢复项目最新版章节，先备份并删除对应章节文件；若要恢复某条内置译文，删除对应语言表中的
 Zinecraft 键后再启动游戏。
 
 ## 开发验证
 
-1. 启动开发客户端并创建新世界，确认 `run/config/ftbquests/quests/chapters/` 下两个内置章节均已生成。
-2. 使用任务书界面打开 `Zinecraft：泰拉远征`，检查中文或英文文本、依赖线和奖励物品；再打开 `泰拉国家关系网`，检查 19 个国家标志、15
+1. 启动开发客户端并创建新世界，确认 `run/config/ftbquests/quests/chapters/` 下四个内置章节及两个章节组均已生成。
+2. 使用任务书界面打开 `Zinecraft：泰拉远征`，检查中文或英文文本、依赖线和奖励物品；再检查国家档案中的 19
+   个国家建筑节点、开发章节中的依赖分类，以及 `泰拉国家关系网` 的 19 个国家标志、15
    条重要关系线和节点详情。
 3. 在主世界执行 `/locate biome minecraft:snowy_plains` 验证雪原任务，然后通过星门验证 `zinecraft:terra` 维度任务。
 4. 使用 `/locate biome zinecraft:<国家群系>` 或自然探索验证各群系访问任务。

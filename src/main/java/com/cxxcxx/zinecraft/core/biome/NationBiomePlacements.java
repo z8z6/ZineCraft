@@ -36,7 +36,8 @@ public final class NationBiomePlacements {
         INSTANCE.placement(NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(), -0.95F, 0.35F, 0.95F, -0.85F, 0.0F, 0.95F),
         INSTANCE.placement(NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(), 0.05F, 0.75F, 0.15F, 0.35F, 0.0F, -0.65F),
         INSTANCE.placement(NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(), 0.05F, 0.4F, 0.45F, -0.2F, 0.0F, 0.8F),
-        INSTANCE.placement(NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 0.5F, 0.65F, -0.2F, 0.8F, 0.0F, -0.75F)
+        INSTANCE.placement(NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 0.5F, 0.65F, -0.2F, 0.8F, 0.0F, -0.75F),
+        INSTANCE.placement(NationBiomes.INSTANCE.getTERRA_CATASTROPHE_ZONE(), 0.8F, -0.8F, 0.5F, -0.5F, 0.0F, 0.2F)
     };
     ALL = CollectionsKt.listOf(dimensionBiomes);
   }

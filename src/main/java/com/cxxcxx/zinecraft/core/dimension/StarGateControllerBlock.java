@@ -127,11 +127,19 @@ public final class StarGateControllerBlock extends Block {
         boolean bl = starGateStructure.activate(levelAccessor, pos, (Axis) comparable);
         if (bl) {
           player.displayClientMessage((Component) Component.translatable("message.zinecraft.stargate.activated"), true);
-          level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.4F, 0.75F);
-          ServerLevel serverLevel = level instanceof ServerLevel ? (ServerLevel) level : null;
-          if ((level instanceof ServerLevel ? (ServerLevel) level : null) != null) {
+          BlockPos portalCenter = starGateStructure.portalCenter(pos, (Axis) comparable);
+          level.playSound(null, portalCenter, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.8F, 0.75F);
+          level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.4F, 0.65F);
+          if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(
-                (ParticleOptions) ParticleTypes.ELECTRIC_SPARK, pos.getX() + 0.5, pos.getY() + 1.25, pos.getZ() + 0.5, 80, 3.5, 5.0, 3.5, 0.08
+                (ParticleOptions) ParticleTypes.ELECTRIC_SPARK,
+                portalCenter.getX() + 0.5, portalCenter.getY() + 0.5, portalCenter.getZ() + 0.5,
+                360, 11.0, 10.0, 2.5, 0.16
+            );
+            serverLevel.sendParticles(
+                (ParticleOptions) ParticleTypes.END_ROD,
+                portalCenter.getX() + 0.5, portalCenter.getY() + 0.5, portalCenter.getZ() + 0.5,
+                180, 10.0, 9.0, 2.0, 0.08
             );
           }
         } else {
@@ -169,4 +177,3 @@ public final class StarGateControllerBlock extends Block {
     }
   }
 }
-

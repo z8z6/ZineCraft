@@ -78,6 +78,14 @@ public final class StarGatePortalBlock extends Block implements Portal {
     return entity instanceof Player ? 20 : 0;
   }
 
+  /**
+   * 复用下界传送门的原版视场旋转、屏幕叠加和触发音效。
+   */
+  @NotNull
+  public Portal.Transition getLocalTransition() {
+    return Portal.Transition.CONFUSION;
+  }
+
   @Nullable
   public DimensionTransition getPortalDestination(@NotNull ServerLevel level, @NotNull Entity entity, @NotNull BlockPos pos) {
     return StarGateTeleporter.INSTANCE.destination(level, entity, pos);
@@ -98,4 +106,3 @@ public final class StarGatePortalBlock extends Block implements Portal {
     }
   }
 }
-

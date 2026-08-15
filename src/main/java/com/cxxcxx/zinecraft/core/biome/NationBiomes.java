@@ -86,6 +86,33 @@ public final class NationBiomes {
   private static final ResourceKey<Biome> IBERIA_SALT_DELTA = Zinecraft.INSTANCE
       .getBIOMES()
       .register("iberia_salt_delta", NationBiomes::IBERIA_SALT_DELTA$lambda$0);
+  @NotNull
+  private static final ResourceKey<Biome> TERRA_CATASTROPHE_ZONE = Zinecraft.INSTANCE
+      .getBIOMES()
+      .register("terra_catastrophe_zone", NationBiomes::TERRA_CATASTROPHE_ZONE$lambda$0);
+
+  static {
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.aegir_abyssal_sea", "阿戈尔深海", "Aegir Abyssal Sea");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.bolivar_plain", "玻利瓦尔平原", "Bolivar Plain");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.higashi_shadow_rift", "东国常暗裂谷", "Higashi Shadow Rift");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.durin_underground_garden", "杜林地下花园", "Durin Underground Garden");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.columbia_sandstone_wilds", "哥伦比亚砂岩荒野", "Columbia Sandstone Wilds");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.kazimierz_knightland", "卡西米尔骑士领", "Kazimierz Knightland");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.kazdel_scarred_wastes", "卡兹戴尔伤痕荒地", "Kazdel Scarred Wastes");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.laterano_holy_fields", "拉特兰圣田", "Laterano Holy Fields");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.leithanien_twilight_forest", "莱塔尼亚暮色林", "Leithanien Twilight Forest");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.rim_billiton_mining_badlands", "雷姆必拓矿业荒地", "Rim Billiton Mining Badlands");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.minos_sunlit_hills", "米诺斯日照丘陵", "Minos Sunlit Hills");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.sargon_rocky_desert", "萨尔贡岩漠", "Sargon Rocky Desert");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.sami_frozen_forest", "萨米冻林", "Sami Frozen Forest");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.victoria_misty_highlands", "维多利亚雾岭", "Victoria Misty Highlands");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.ursus_frozen_steppe", "乌萨斯冻原", "Ursus Frozen Steppe");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.kjerag_snowy_peaks", "谢拉格雪峰", "Kjerag Snowy Peaks");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.siracusa_rainy_woodland", "叙拉古雨林", "Siracusa Rainy Woodland");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.yan_mountain_grove", "炎国山林", "Yan Mountain Grove");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.iberia_salt_delta", "伊比利亚盐风三角洲", "Iberia Salt Delta");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.terra_catastrophe_zone", "泰拉天灾区", "Terra Catastrophe Zone");
+  }
 
   private NationBiomes() {
   }
@@ -357,6 +384,20 @@ public final class NationBiomes {
     return Unit.INSTANCE;
   }
 
+  /**
+   * 天灾区：干燥、低植被的源石污染地带，地表晶簇由泰拉限定地物密集覆盖。
+   */
+  private static final Unit TERRA_CATASTROPHE_ZONE$lambda$0(SimpleBiomeBuilder $this$register) {
+    $this$register.setPrecipitation(false);
+    $this$register.setTemperature(1.2F);
+    $this$register.setDownfall(0.0F);
+    $this$register.setFogColor(0x51405F);
+    $this$register.setGrassColor(0x5B514B);
+    $this$register.setFoliageColor(0x51453F);
+    NationBiomePresets.INSTANCE.badlands($this$register);
+    return Unit.INSTANCE;
+  }
+
   @NotNull
   public final ResourceKey<Biome> getAEGIR_ABYSSAL_SEA() {
     return AEGIR_ABYSSAL_SEA;
@@ -451,5 +492,9 @@ public final class NationBiomes {
   public final ResourceKey<Biome> getIBERIA_SALT_DELTA() {
     return IBERIA_SALT_DELTA;
   }
-}
 
+  @NotNull
+  public final ResourceKey<Biome> getTERRA_CATASTROPHE_ZONE() {
+    return TERRA_CATASTROPHE_ZONE;
+  }
+}

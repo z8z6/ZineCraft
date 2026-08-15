@@ -489,6 +489,10 @@ public final class NationSettlements {
     StructureCatalog structureCatalog = Zinecraft.INSTANCE.getSTRUCTURES();
     String string = "nation_settlements/" + path;
     Pair[] pairs = new Pair[]{TuplesKt.to(first, 4), TuplesKt.to(second, 3), TuplesKt.to(third, 2), TuplesKt.to(fourth, 2)};
-    return structureCatalog.settlement(path, string, biome, salt, MapsKt.linkedMapOf(pairs), spacing, 24, 7, 112, heightmap, startHeight, removeVinesChance);
+    var templates = MapsKt.<String, Integer>linkedMapOf(pairs);
+    if ("laterano_monastery_town".equals(path)) {
+      return structureCatalog.fixedOriginSettlement(path, string, biome, salt, templates, 7, 112, heightmap, startHeight, removeVinesChance);
+    }
+    return structureCatalog.settlement(path, string, biome, salt, templates, spacing, 24, 7, 112, heightmap, startHeight, removeVinesChance);
   }
 }

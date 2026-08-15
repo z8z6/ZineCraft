@@ -73,6 +73,27 @@ public final class ModSkills {
           SkillDemoTheme.RAPID_FIRE
       );
   @NotNull
+  private static final SkillEntry EXPLOSIVE_DAWN = Zinecraft.INSTANCE
+      .getSKILLS()
+      .register(
+          "skill_explosive_dawn",
+          "爆裂黎明",
+          "Explosive Dawn",
+          "维什戴尔",
+          "Wiš'adel",
+          SkillProfession.SNIPER,
+          "自动回复",
+          "Auto Recovery",
+          "手动触发",
+          "Manual Toggled",
+          40,
+          50,
+          null,
+          "立刻在攻击范围内召唤2个魂灵之影（最多存在3个，技能结束后保留），攻击力+180%，攻击间隔大幅增大，攻击时攻击力提升至220%，溅射范围大幅扩大且第一天赋的发动概率提高至100%。攻击装有6发弹药，打完后结束（可随时停止技能）。",
+          "Immediately summons 2 Revenant's Shadows in attack range (up to 3 at a time; they remain after the skill expires). ATK +180%, Attack Interval is greatly increased, attacks deal 220% ATK, splash area is greatly increased, and Talent 1 trigger chance is increased to 100%. Skill activation grants 6 ammo and the skill ends when all ammo are used (can be manually deactivated).",
+          SkillDemoTheme.EXPLOSIVE_DAWN
+      );
+  @NotNull
   private static final SkillEntry VOLCANO = Zinecraft.INSTANCE
       .getSKILLS()
       .register(
@@ -194,6 +215,11 @@ public final class ModSkills {
   @NotNull
   public final SkillEntry getOVERLOADING_MODE() {
     return OVERLOADING_MODE;
+  }
+
+  @NotNull
+  public final SkillEntry getEXPLOSIVE_DAWN() {
+    return EXPLOSIVE_DAWN;
   }
 
   @NotNull

@@ -4,25 +4,28 @@ import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
 import com.cxxcxx.zinecraft.api.world.feature.OreEntry;
 import com.cxxcxx.zinecraft.api.world.feature.SimpleFeatureEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
+import com.cxxcxx.zinecraft.core.biome.NationBiomePlacements;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
 import com.cxxcxx.zinecraft.core.block.MaterialOres;
 import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.dimension.StarGateFeature;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.placement.BiomeFilter;
-import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
-import net.minecraft.world.level.levelgen.placement.RarityFilter;
+import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
 import java.util.function.Supplier;
 
 public final class ModWorldFeatures {
   public static final ModWorldFeatures INSTANCE = new ModWorldFeatures();
+
+  private static final BiomeSelection TERRA_BIOMES = BiomeSelection.of(
+      NationBiomePlacements.INSTANCE.getALL().stream().map(placement -> placement.getBiome()).toArray(ResourceKey[]::new)
+  );
 
   private static final BiomeSelection MATERIAL_DIMENSIONS = BiomeSelection.union(
       BiomeSelection.overworld(),
@@ -36,18 +39,54 @@ public final class ModWorldFeatures {
           NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST(), NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(),
           NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE(), NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(),
           NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(), NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(),
-          NationBiomes.INSTANCE.getIBERIA_SALT_DELTA()
+          NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), NationBiomes.INSTANCE.getTERRA_CATASTROPHE_ZONE()
       )
   );
 
   private static final StarGateFeature STARGATE_FEATURE = Zinecraft.INSTANCE.getREGISTRAR().register(
       BuiltInRegistries.FEATURE, "stargate", new StarGateFeature()
   );
+  private static final LateranoDryLandFeature LATERANO_DRY_LAND_FEATURE = Zinecraft.INSTANCE.getREGISTRAR().register(
+      BuiltInRegistries.FEATURE, "laterano_dry_land", new LateranoDryLandFeature()
+  );
+  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_SMALL_FEATURE = Zinecraft.INSTANCE.getREGISTRAR().register(
+      BuiltInRegistries.FEATURE, "originium_spire_small", new OriginiumSpireFeature(2, 4, 4, 8, 1, 4)
+  );
+  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_MEDIUM_FEATURE = Zinecraft.INSTANCE.getREGISTRAR().register(
+      BuiltInRegistries.FEATURE, "originium_spire_medium", new OriginiumSpireFeature(4, 7, 8, 15, 2, 7)
+  );
+  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_LARGE_FEATURE = Zinecraft.INSTANCE.getREGISTRAR().register(
+      BuiltInRegistries.FEATURE, "originium_spire_large", new OriginiumSpireFeature(7, 11, 14, 28, 3, 12)
+  );
   private static final SimpleFeatureEntry STARGATE = Zinecraft.INSTANCE.getFEATURES().simple(
       "stargate", STARGATE_FEATURE,
       List.of(RarityFilter.onAverageOnceEvery(64), InSquarePlacement.spread(),
           HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), BiomeFilter.biome()),
       GenerationStep.Decoration.SURFACE_STRUCTURES, BiomeSelection.of(Biomes.SNOWY_PLAINS)
+  );
+  private static final SimpleFeatureEntry LATERANO_DRY_LAND = Zinecraft.INSTANCE.getFEATURES().simple(
+      "laterano_dry_land", LATERANO_DRY_LAND_FEATURE,
+      List.of(CountPlacement.of(1), InSquarePlacement.spread(), BiomeFilter.biome()),
+      GenerationStep.Decoration.TOP_LAYER_MODIFICATION, BiomeSelection.of(NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS())
+  );
+  private static final SimpleFeatureEntry ORIGINIUM_SPIRE_SMALL = originiumSpire(
+      "originium_spire_small", ORIGINIUM_SPIRE_SMALL_FEATURE, 28, TERRA_BIOMES
+  );
+  private static final SimpleFeatureEntry ORIGINIUM_SPIRE_MEDIUM = originiumSpire(
+      "originium_spire_medium", ORIGINIUM_SPIRE_MEDIUM_FEATURE, 84, TERRA_BIOMES
+  );
+  private static final SimpleFeatureEntry ORIGINIUM_SPIRE_LARGE = originiumSpire(
+      "originium_spire_large", ORIGINIUM_SPIRE_LARGE_FEATURE, 220, TERRA_BIOMES
+  );
+  private static final SimpleFeatureEntry CATASTROPHE_ORIGINIUM_SPIRE_SMALL = denseOriginiumSpire(
+      "catastrophe_originium_spire_small", ORIGINIUM_SPIRE_SMALL_FEATURE, 5
+  );
+  private static final SimpleFeatureEntry CATASTROPHE_ORIGINIUM_SPIRE_MEDIUM = denseOriginiumSpire(
+      "catastrophe_originium_spire_medium", ORIGINIUM_SPIRE_MEDIUM_FEATURE, 2
+  );
+  private static final SimpleFeatureEntry CATASTROPHE_ORIGINIUM_SPIRE_LARGE = originiumSpire(
+      "catastrophe_originium_spire_large", ORIGINIUM_SPIRE_LARGE_FEATURE, 6,
+      BiomeSelection.of(NationBiomes.INSTANCE.getTERRA_CATASTROPHE_ZONE())
   );
   private static final OreEntry EXAMPLE_BLOCK_ORE = Zinecraft.INSTANCE.getFEATURES().ore(
       "example_block_ore_placed", ModBlock.INSTANCE::getEXAMPLE_ENTITY_BLOCK, 30, 6, 0, 0, BiomeSelection.overworld());
@@ -65,6 +104,24 @@ public final class ModWorldFeatures {
 
   private static OreEntry ore(String path, Supplier<? extends Block> block, int size, int count, int maxY, float discard) {
     return Zinecraft.INSTANCE.getFEATURES().ore(path, block, size, count, maxY, discard, MATERIAL_DIMENSIONS);
+  }
+
+  private static SimpleFeatureEntry originiumSpire(
+      String path, OriginiumSpireFeature feature, int rarity, BiomeSelection biomes
+  ) {
+    return Zinecraft.INSTANCE.getFEATURES().simple(
+        path, feature,
+        List.of(RarityFilter.onAverageOnceEvery(rarity), InSquarePlacement.spread(), BiomeFilter.biome()),
+        GenerationStep.Decoration.LOCAL_MODIFICATIONS, biomes
+    );
+  }
+
+  private static SimpleFeatureEntry denseOriginiumSpire(String path, OriginiumSpireFeature feature, int count) {
+    return Zinecraft.INSTANCE.getFEATURES().simple(
+        path, feature,
+        List.of(CountPlacement.of(count), InSquarePlacement.spread(), BiomeFilter.biome()),
+        GenerationStep.Decoration.LOCAL_MODIFICATIONS, BiomeSelection.of(NationBiomes.INSTANCE.getTERRA_CATASTROPHE_ZONE())
+    );
   }
 
   public SimpleFeatureEntry getSTARGATE() {

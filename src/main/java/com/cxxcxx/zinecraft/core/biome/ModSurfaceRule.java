@@ -26,7 +26,7 @@ public final class ModSurfaceRule {
 
   @NotNull
   public final RuleSource rules() {
-    RuleSource[] ruleSources = new RuleSource[19];
+    RuleSource[] ruleSources = new RuleSource[20];
     RuleSource ruleSource1 = this.singleBlock(NationBlocks.INSTANCE.getAEGIR_ABYSSAL_SLATE());
     ResourceKey[] resourceKeys = new ResourceKey[]{NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA()};
     ruleSources[0] = this.onFloorIn(ruleSource1, resourceKeys);
@@ -84,6 +84,9 @@ public final class ModSurfaceRule {
     ruleSource1 = this.singleBlock(NationBlocks.INSTANCE.getIBERIA_SALT_CRUSTED_GRAVEL());
     resourceKeys = new ResourceKey[]{NationBiomes.INSTANCE.getIBERIA_SALT_DELTA()};
     ruleSources[18] = this.onFloorIn(ruleSource1, resourceKeys);
+    ruleSource1 = this.singleBlock(NationBlocks.INSTANCE.getKAZDEL_SCARRED_ASH());
+    resourceKeys = new ResourceKey[]{NationBiomes.INSTANCE.getTERRA_CATASTROPHE_ZONE()};
+    ruleSources[19] = this.onFloorIn(ruleSource1, resourceKeys);
     RuleSource ruleSource = SurfaceRules.sequence(ruleSources);
     return ruleSource;
   }

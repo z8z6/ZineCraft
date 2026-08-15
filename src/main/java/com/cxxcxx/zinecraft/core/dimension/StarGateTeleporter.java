@@ -70,12 +70,12 @@ public final class StarGateTeleporter {
   }
 
   private final BlockPos findGate(ServerLevel level, BlockPos around) {
-    int i = around.getX() - 12;
-    int j = around.getX() + 12;
+    int i = around.getX() - 20;
+    int j = around.getX() + 20;
     if (i <= j) {
       while (true) {
-        int k = around.getZ() - 12;
-        int l = around.getZ() + 12;
+        int k = around.getZ() - 20;
+        int l = around.getZ() + 20;
         if (k <= l) {
           while (true) {
             int m = level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, i, k);
@@ -122,4 +122,3 @@ public final class StarGateTeleporter {
     return starGateStructure.place(levelAccessor, blockPos, Axis.X, true);
   }
 }
-

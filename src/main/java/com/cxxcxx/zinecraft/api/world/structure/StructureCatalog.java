@@ -456,13 +456,55 @@ public final class StructureCatalog {
       int startHeight,
       float removeVinesChance
   ) {
+    return this.settlement(
+        path, templateRoot, biome, salt, buildingTemplates, spacing, separation, size,
+        maxDistanceFromCenter, heightmap, startHeight, removeVinesChance, false
+    );
+  }
+
+  /**
+   * 注册固定在世界原点地表的完整聚落，用于泰拉中心城市。
+   */
+  @NotNull
+  public final JigsawBuildingEntry fixedOriginSettlement(
+      @NotNull String path,
+      @NotNull String templateRoot,
+      @NotNull ResourceKey<Biome> biome,
+      int salt,
+      @NotNull Map<String, Integer> buildingTemplates,
+      int size,
+      int maxDistanceFromCenter,
+      @Nullable Types heightmap,
+      int startHeight,
+      float removeVinesChance
+  ) {
+    return this.settlement(
+        path, templateRoot, biome, salt, buildingTemplates, 2, 1, size,
+        maxDistanceFromCenter, heightmap, startHeight, removeVinesChance, true
+    );
+  }
+
+  private JigsawBuildingEntry settlement(
+      String path,
+      String templateRoot,
+      ResourceKey<Biome> biome,
+      int salt,
+      Map<String, Integer> buildingTemplates,
+      int spacing,
+      int separation,
+      int size,
+      int maxDistanceFromCenter,
+      Types heightmap,
+      int startHeight,
+      float removeVinesChance,
+      boolean fixedOrigin
+  ) {
     if (buildingTemplates.size() < 4) {
       int i = 0;
       String string = "大型聚落至少需要四种功能建筑模板";
       throw new IllegalArgumentException(string.toString());
     } else {
-      return jigsawBuilding$default(
-          this,
+      return this.jigsawBuilding(
           path,
           spacing,
           separation,
@@ -476,12 +518,10 @@ public final class StructureCatalog {
           heightmap,
           startHeight,
           true,
-          false,
-          null,
-          null,
-          (Function1<JigsawBuildingBuilder, Unit>) (builder -> settlement$lambda$1(templateRoot, buildingTemplates, builder)),
-          58112,
-          null
+          fixedOrigin,
+          Decoration.SURFACE_STRUCTURES,
+          TerrainAdjustment.BEARD_THIN,
+          (Function1<JigsawBuildingBuilder, Unit>) (builder -> settlement$lambda$1(templateRoot, buildingTemplates, builder))
       );
     }
   }
@@ -787,4 +827,3 @@ public final class StructureCatalog {
     }
   }
 }
-

@@ -43,6 +43,7 @@ val VOLCANO = Zinecraft.SKILLS.register(
 | 先锋 | 桃金娘  | 支援号令·β型 | 部署费用逐步回复      |
 | 近卫 | 银灰   | 真银斩     | 扩大范围并同时攻击多个目标 |
 | 狙击 | 能天使  | 过载模式    | 五连射与攻击加速      |
+| 狙击 | 维什戴尔 | 爆裂黎明    | 魂灵之影与六发爆炸弹药   |
 | 术师 | 艾雅法拉 | 火山      | 大范围熔岩爆发       |
 | 重装 | 塞雷娅  | 钙质化     | 范围治疗、减速和增伤    |
 | 医疗 | 夜莺   | 圣域      | 范围治疗与法术防护     |
@@ -53,16 +54,16 @@ val VOLCANO = Zinecraft.SKILLS.register(
 
 技能机制、名称和专精三数值参考对应的 PRTS 干员页面：
 
-- [桃金娘](https://prts.wiki/w/桃金娘)、[银灰](https://prts.wiki/w/银灰)、[能天使](https://prts.wiki/w/能天使)、[艾雅法拉](https://prts.wiki/w/艾雅法拉)
+- [桃金娘](https://prts.wiki/w/桃金娘)、[银灰](https://prts.wiki/w/银灰)、[能天使](https://prts.wiki/w/能天使)、[维什戴尔](https://prts.wiki/w/异W)、[艾雅法拉](https://prts.wiki/w/艾雅法拉)
 - [塞雷娅](https://prts.wiki/w/塞雷娅)、[夜莺](https://prts.wiki/w/夜莺)、[铃兰](https://prts.wiki/w/铃兰)、[红](https://prts.wiki/w/红)
 
-八张 128×128 技能图标取自 PRTS 对应的“文件:技能 … .png”页面，仓库中保留原始分辨率。PRTS 是玩家维护的二级资料来源；
+九张 128×128 技能图标取自 PRTS 对应的“文件:技能 … .png”页面，仓库中保留原始分辨率。PRTS 是玩家维护的二级资料来源；
 技能图标及明日方舟相关素材的权利属于其原权利方，不因本项目许可证而转为 CC0。发布或再分发前应再次核对权利方政策。
 逐文件来源见 [PRTS 技能图标来源](PRTS_ASSETS.md)。
 
 ## Ponder 资源
 
-八个技能共用 `assets/zinecraft/ponder/skill_demo/training_ground.nbt` 训练台，但根据 `SkillDemoTheme` 播放不同动画。
+九个技能共用 `assets/zinecraft/ponder/skill_demo/training_ground.nbt` 训练台，但根据 `SkillDemoTheme` 播放不同动画。
 可运行以下脚本确定性重建训练台：
 
 ```powershell

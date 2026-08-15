@@ -97,7 +97,7 @@ public final class NationBiomePresets {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
     BiomeDefaultFeatures.desertSpawns(simpleBiomeBuilder.getSpawns());
-    INSTANCE.generationBase(simpleBiomeBuilder);
+    INSTANCE.generationBase(simpleBiomeBuilder, false);
     BiomeDefaultFeatures.addDesertVegetation(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addDesertExtraVegetation(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addDesertExtraDecoration(simpleBiomeBuilder.getGeneration());
@@ -108,7 +108,7 @@ public final class NationBiomePresets {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
     BiomeDefaultFeatures.desertSpawns(simpleBiomeBuilder.getSpawns());
-    INSTANCE.generationBase(simpleBiomeBuilder);
+    INSTANCE.generationBase(simpleBiomeBuilder, false);
     BiomeDefaultFeatures.addBadlandsTrees(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addBadlandGrass(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addBadlandExtraVegetation(simpleBiomeBuilder.getGeneration());
@@ -130,8 +130,7 @@ public final class NationBiomePresets {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
     BiomeDefaultFeatures.commonSpawns(simpleBiomeBuilder.getSpawns());
-    INSTANCE.generationBase(simpleBiomeBuilder);
-    BiomeDefaultFeatures.addSwampClayDisk(simpleBiomeBuilder.getGeneration());
+    INSTANCE.generationBase(simpleBiomeBuilder, false);
     BiomeDefaultFeatures.addSwampVegetation(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addSwampExtraVegetation(simpleBiomeBuilder.getGeneration());
   }
@@ -161,11 +160,16 @@ public final class NationBiomePresets {
   }
 
   private final void generationBase(SimpleBiomeBuilder $this$generationBase) {
+    this.generationBase($this$generationBase, true);
+  }
+
+  private final void generationBase(SimpleBiomeBuilder $this$generationBase, boolean addDefaultExtraVegetation) {
     $this$generationBase.defaultOverworldGeneration();
     BiomeDefaultFeatures.addDefaultOres($this$generationBase.getGeneration());
     BiomeDefaultFeatures.addDefaultSoftDisks($this$generationBase.getGeneration());
     BiomeDefaultFeatures.addDefaultMushrooms($this$generationBase.getGeneration());
-    BiomeDefaultFeatures.addDefaultExtraVegetation($this$generationBase.getGeneration());
+    if (addDefaultExtraVegetation) {
+      BiomeDefaultFeatures.addDefaultExtraVegetation($this$generationBase.getGeneration());
+    }
   }
 }
-

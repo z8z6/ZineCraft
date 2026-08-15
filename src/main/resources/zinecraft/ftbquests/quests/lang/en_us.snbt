@@ -6,7 +6,7 @@
 	quest.1000000000000002.title: "Find a Snowy-Plains Stargate"
 	quest.1000000000000002.quest_desc: ["Stargate ruins generate only in Overworld snowy plains. Find minecraft:snowy_plains, then look for a monumental dark arch with massive buttresses. An inactive arch has no event horizon."]
 	quest.1000000000000003.title: "Protocol Activation and Transit"
-	quest.1000000000000003.quest_desc: ["Craft Protocol Originium from Originite, a Crystalline Circuit, and an Integrated Device. Hold it and right-click the Stargate Protocol Controller directly beneath the monumental arch. The cyan event horizon forms only after authorization; the Protocol Originium acts as a reusable key and is not consumed. Enter it to reach zinecraft:terra. A powered return gate is created automatically on the Terra side so you cannot become stranded."]
+	quest.1000000000000003.quest_desc: ["Craft Protocol Originium from Originite, a Crystalline Circuit, and an Integrated Device. Hold it and right-click the Stargate Protocol Controller on the pedestal outside the monumental arch. The cyan event horizon forms only after authorization; the Protocol Originium acts as a reusable key and is not consumed. Enter it to reach zinecraft:terra. A powered return gate is created automatically on the Terra side so you cannot become stranded."]
 
 	quest.2000000000000001.title: "Aegir Abyssal Sea"
 	quest.2000000000000001.quest_desc: ["Abyssal-slate seabeds and pressure-tile enclaves inhabited by dolphins, with Aegir-themed settlements and landmarks."]
@@ -136,4 +136,87 @@
 	quest.4000000000000013.title: "Iberia"
 	quest.4000000000000013.quest_subtitle: "Prosperity 32 / Stability 52 / Military 65 / Openness 15 / Aggression 25"
 	quest.4000000000000013.quest_desc: ["State: prosperity and openness fell sharply after the Profound Silence, while some military strength remains.\n\nKey relations:\n• Aegir: -48 / 24 / 12 / 68 / -62 (technology transfer and diplomatic exclusion)\n• Laterano: 20 / 4 / 42 / 22 / 18 (religious ties and mediation)"]
+
+	chapter_group.4E4154494F4E5347.title: "Terra Nation Archive"
+	chapter.4E4154494F4E5343.title: "Nineteen Nations and Landmarks"
+	quest.5000000000000000.title: "Reading Guide"
+	quest.5000000000000000.quest_subtitle: "PRTS source material and Zinecraft gameplay implementations are kept distinct"
+	quest.5000000000000000.quest_desc: ["This chapter follows the nineteen nations currently listed by the PRTS Terra Compendium. Each node identifies its source entry, then lists the biome, repeatable settlement, and two world-unique landmarks implemented by Zinecraft.\n\nThese buildings and landscapes are Minecraft gameplay adaptations, not official Arknights scene reproductions."]
+	task.5100000000000000.title: "I understand the source and adaptation boundary"
+	quest.5000000000000001.title: "Aegir"
+	quest.5000000000000001.quest_subtitle: "Nation source and pressure-resistant architecture"
+	quest.5000000000000001.quest_desc: ["PRTS entry: Terra Compendium geography/Aegir.\n\nZinecraft: aegir_abyssal_sea; aegir_subsea_enclave; aegir_volcanic_beacon and aegir_abyssal_observatory."]
+	quest.5000000000000002.title: "Bolivar"
+	quest.5000000000000002.quest_subtitle: "Northwestern plains, Dossoles, and prolonged conflict"
+	quest.5000000000000002.quest_desc: ["PRTS records Bolivar as a northwestern Terra nation bordering Columbia, with conflict arising from overlapping Originium mining areas in the Crystalline Era.\n\nZinecraft: bolivar_plain; bolivar_dossoles_district; bolivar_dossoles_yacht and bolivar_race_checkpoint."]
+	quest.5000000000000003.title: "Higashi"
+	quest.5000000000000003.quest_subtitle: "Nation source and rift-town architecture"
+	quest.5000000000000003.quest_desc: ["PRTS entry: Terra Compendium geography/Higashi.\n\nZinecraft: higashi_shadow_rift; higashi_sokogawa_town; higashi_rift_shrine and higashi_sokogawa_watchtower."]
+	quest.5000000000000004.title: "Durin"
+	quest.5000000000000004.quest_subtitle: "Underground nation source and Ideal City architecture"
+	quest.5000000000000004.quest_desc: ["PRTS entry: Terra Compendium geography/Durin.\n\nZinecraft: durin_underground_garden; durin_ideal_city_block; durin_dome_station and durin_water_park."]
+	quest.5000000000000005.title: "Columbia"
+	quest.5000000000000005.quest_subtitle: "Nation source and frontier architecture"
+	quest.5000000000000005.quest_desc: ["PRTS entry: Terra Compendium geography/Columbia.\n\nZinecraft: columbia_sandstone_wilds; columbia_frontier_town; columbia_frontier_lab and columbia_prison_outpost."]
+	quest.5000000000000006.title: "Kazimierz"
+	quest.5000000000000006.quest_subtitle: "Knight nation source and arena architecture"
+	quest.5000000000000006.quest_desc: ["PRTS entry: Terra Compendium geography/Kazimierz.\n\nZinecraft: kazimierz_knightland; kazimierz_knight_borough; kazimierz_arena_gate and kazimierz_knight_monument."]
+	quest.5000000000000007.title: "Kazdel"
+	quest.5000000000000007.quest_subtitle: "Sarkaz nation source and scarred architecture"
+	quest.5000000000000007.quest_desc: ["PRTS entry: Terra Compendium geography/Kazdel.\n\nZinecraft: kazdel_scarred_wastes; kazdel_sarkaz_settlement; kazdel_babel_ruins and kazdel_sarkaz_camp."]
+	quest.5000000000000008.title: "Laterano"
+	quest.5000000000000008.quest_subtitle: "Nation source and holy-city architecture"
+	quest.5000000000000008.quest_desc: ["PRTS entry: Laterano.\n\nZinecraft: laterano_holy_fields; laterano_monastery_town; laterano_revelation_tower and laterano_ambrosius_chapel, plus the underground Laterano Host."]
+	quest.5000000000000009.title: "Leithanien"
+	quest.5000000000000009.quest_subtitle: "Nation source and musical architecture"
+	quest.5000000000000009.quest_desc: ["PRTS entry: Terra Compendium geography/Leithanien.\n\nZinecraft: leithanien_twilight_forest; leithanien_music_town; leithanien_twin_spires and leithanien_concert_hall."]
+	quest.500000000000000A.title: "Rim Billiton"
+	quest.500000000000000A.quest_subtitle: "Mining nation source and industrial architecture"
+	quest.500000000000000A.quest_desc: ["PRTS entry: Terra Compendium geography/Rim Billiton.\n\nZinecraft: rim_billiton_mining_badlands; rim_billiton_mining_camp; rim_billiton_mining_derrick and rim_billiton_rail_depot."]
+	quest.500000000000000B.title: "Minos"
+	quest.500000000000000B.quest_subtitle: "Nation source and heroic architecture"
+	quest.500000000000000B.quest_desc: ["PRTS entry: Terra Compendium geography/Minos.\n\nZinecraft: minos_sunlit_hills; minos_heroic_polis; minos_heroes_temple and minos_heroes_plaza."]
+	quest.500000000000000C.title: "Sargon"
+	quest.500000000000000C.quest_subtitle: "Nation source and oasis architecture"
+	quest.500000000000000C.quest_desc: ["PRTS entry: Terra Compendium geography/Sargon.\n\nZinecraft: sargon_rocky_desert; sargon_oasis_town; sargon_golden_bazaar and sargon_long_spring_well."]
+	quest.500000000000000D.title: "Sami"
+	quest.500000000000000D.quest_subtitle: "Nation source and snow-priest architecture"
+	quest.500000000000000D.quest_desc: ["PRTS entry: Terra Compendium geography/Sami.\n\nZinecraft: sami_frozen_forest; sami_snowpriest_village; sami_cyclops_altar and sami_snowpriest_lodge."]
+	quest.500000000000000E.title: "Victoria"
+	quest.500000000000000E.quest_subtitle: "Nation source and industrial architecture"
+	quest.500000000000000E.quest_desc: ["PRTS entry: Terra Compendium geography/Victoria.\n\nZinecraft: victoria_misty_highlands; victoria_industrial_borough; victoria_defence_cannon and victoria_steam_station."]
+	quest.500000000000000F.title: "Ursus"
+	quest.500000000000000F.quest_subtitle: "Nation source and northern architecture"
+	quest.500000000000000F.quest_desc: ["PRTS entry: Terra Compendium geography/Ursus.\n\nZinecraft: ursus_frozen_steppe; ursus_northern_town; ursus_sarcophagus_station and ursus_northern_mine_tower."]
+	quest.5000000000000010.title: "Kjerag"
+	quest.5000000000000010.quest_subtitle: "Snow-realm source and Karlan architecture"
+	quest.5000000000000010.quest_desc: ["PRTS entry: Terra Compendium geography/Kjerag.\n\nZinecraft: kjerag_snowy_peaks; kjerag_mountain_village; kjerag_karlan_monastery and kjerag_sacred_plaza."]
+	quest.5000000000000011.title: "Siracusa"
+	quest.5000000000000011.quest_subtitle: "Nation source and family architecture"
+	quest.5000000000000011.quest_desc: ["PRTS entry: Siracusa.\n\nZinecraft: siracusa_rainy_woodland; siracusa_family_town; siracusa_family_court and siracusa_family_theatre."]
+	quest.5000000000000012.title: "Yan"
+	quest.5000000000000012.quest_subtitle: "Nation source and Shangshu/Yumen architecture"
+	quest.5000000000000012.quest_desc: ["PRTS entry: Terra Compendium geography/Yan.\n\nZinecraft: yan_mountain_grove; yan_shangshu_town; yan_yumen_beacon and yan_shangshu_pavilion."]
+	quest.5000000000000013.title: "Iberia"
+	quest.5000000000000013.quest_subtitle: "Nation source and coastal architecture"
+	quest.5000000000000013.quest_desc: ["PRTS entry: Terra Compendium geography/Iberia.\n\nZinecraft: iberia_salt_delta; iberia_coastal_town; iberia_eye_lighthouse and iberia_saltwind_chapel."]
+
+	chapter_group.444556454C4F5047.title: "Development and Mods"
+	chapter.4445564D4F445343.title: "Development Mod Guide"
+	quest.6000000000000000.title: "Zinecraft Development Environment"
+	quest.6000000000000000.quest_subtitle: "Required, transitive, and development-only mods"
+	quest.6000000000000000.quest_desc: ["This chapter lists the primary mods loaded by the current Gradle development runtime. Required dependencies provide gameplay and data; transitive dependencies arrive through those mods; development helpers are present in runClient but are not bundled into the Zinecraft JAR."]
+	task.6100000000000000.title: "I understand the dependency categories"
+	quest.6000000000000001.title: "Platform and World Generation"
+	quest.6000000000000001.quest_desc: ["Minecraft 1.21.1; NeoForge 21.1.244; TerraBlender 4.1.0.8. NeoForge supplies the mod platform, while TerraBlender supports biome and world-generation integration."]
+	quest.6000000000000002.title: "Create Ecosystem"
+	quest.6000000000000002.quest_desc: ["Create 6.0.10, Ponder 1.0.82, Flywheel 1.0.6, and Registrate 1.3.0+67. Create supplies kinetic content; Ponder handles tutorial scenes; Flywheel and Registrate support rendering and registration."]
+	quest.6000000000000003.title: "Quest System"
+	quest.6000000000000003.quest_desc: ["FTB Quests 2101.1.27, with FTB Library and FTB Teams supplying UI, data, and team progression. Zinecraft installs bundled quest templates under config/ftbquests/quests."]
+	quest.6000000000000004.title: "Accessories and Collectibles"
+	quest.6000000000000004.quest_desc: ["Curios 9.5.1+1.21.1 supplies accessory capability. Zinecraft Integrated Strategies collectibles use the relic slot, currently configured with twenty player slots."]
+	quest.6000000000000005.title: "Configuration and Libraries"
+	quest.6000000000000005.quest_desc: ["Cloth Config 15.0.140 supplies configuration UI support. Architectury and Common Networking are loaded transitively. Kotlin standard library is a code runtime library rather than a standalone Minecraft mod."]
+	quest.6000000000000006.title: "Development-only Helpers"
+	quest.6000000000000006.quest_desc: ["JEI 19.27.0.340, Just Enough Resources 1.6.0.17, AppleSkin 3.0.9, Jade 15.10.5, Just Enough Characters 4.5.22, JourneyMap 6.0.1, Nature's Compass 3.4.0, and Explorer's Compass 3.4.0. They support item/resource lookup, food information, block inspection, Pinyin search, map-based testing, and biome/structure location."]
 }

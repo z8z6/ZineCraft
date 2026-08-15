@@ -36,7 +36,7 @@ public final class TaczGunItem extends ActionWeaponItem {
         MutableComponent mutableComponent = Component.translatable("item.zinecraft.firearm.ammo", objects).withStyle(ChatFormatting.YELLOW);
         fireMode.add(mutableComponent);
         fireMode = tooltipComponents;
-        objects = new Object[]{taczGunSpec.getAmmoId()};
+        objects = new Object[]{taczGunSpec.getAmmoId().toString()};
         MutableComponent mutableComponent1 = Component.translatable("item.zinecraft.tacz_gun.caliber", objects).withStyle(ChatFormatting.GRAY);
         fireMode.add(mutableComponent1);
         fireMode = tooltipComponents;
@@ -106,4 +106,3 @@ public final class TaczGunItem extends ActionWeaponItem {
     return component;
   }
 }
-

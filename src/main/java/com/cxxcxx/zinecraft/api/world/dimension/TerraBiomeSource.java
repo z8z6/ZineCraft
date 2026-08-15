@@ -28,9 +28,21 @@ public final class TerraBiomeSource extends BiomeSource {
     if (centerRadius < MIN_CENTER_RADIUS) {
       throw new IllegalArgumentException("泰拉中心群系半径不能小于 " + MIN_CENTER_RADIUS + " 格");
     }
+    requireTerraBiome(centerBiome);
+    parameters.values().forEach(entry -> requireTerraBiome(entry.getSecond()));
     this.parameters = parameters;
     this.centerBiome = centerBiome;
     this.centerRadius = centerRadius;
+  }
+
+  /**
+   * 泰拉群系源拒绝数据包误填的原版或其他模组群系，避免维度边界出现主世界群系。
+   */
+  private static void requireTerraBiome(Holder<Biome> biome) {
+    var key = biome.unwrapKey().orElseThrow(() -> new IllegalArgumentException("泰拉群系必须是已注册群系"));
+    if (!"zinecraft".equals(key.location().getNamespace())) {
+      throw new IllegalArgumentException("泰拉维度不允许非 Zinecraft 群系: " + key.location());
+    }
   }
 
   @Override

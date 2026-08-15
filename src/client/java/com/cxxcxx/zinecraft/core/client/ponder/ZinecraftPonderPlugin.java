@@ -137,6 +137,26 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
 
         scene.idle(25);
         break;
+      case EXPLOSIVE_DAWN: {
+        // 两个魂灵之影与六次大范围爆炸对应专精三的召唤和弹药机制。
+        scene.world().setBlock(util.grid().at(2, 2, 3), Blocks.SOUL_LANTERN.defaultBlockState(), true);
+        scene.world().setBlock(util.grid().at(4, 2, 3), Blocks.SOUL_LANTERN.defaultBlockState(), true);
+        scene.overlay().showOutline(PonderPalette.BLUE, new Object(), util.select().fromTo(2, 2, 3, 4, 2, 3), 70);
+        scene.overlay().showOutline(PonderPalette.RED, new Object(), enemies, 70);
+        ParticleEmitter soulEmitter = scene.effects().simpleParticleEmitter((ParticleOptions) ParticleTypes.SOUL, new Vec3(0.0, 0.06, 0.0));
+        scene.effects().emitParticles(util.vector().centerOf(2, 2, 3), soulEmitter, 1.0F, 12);
+        scene.effects().emitParticles(util.vector().centerOf(4, 2, 3), soulEmitter, 1.0F, 12);
+
+        for (int shot = 0; shot < 6; shot++) {
+          scene.world().createItemEntity(center.add(0.0, 0.3, 0.0), new Vec3(0.14 * ((shot % 3) - 1), 0.08, -0.2), new ItemStack((ItemLike) Items.FIREWORK_ROCKET));
+          ParticleEmitter explosionEmitter = scene.effects().simpleParticleEmitter((ParticleOptions) ParticleTypes.EXPLOSION, Vec3.ZERO);
+          scene.effects().emitParticles(util.vector().centerOf(1 + shot % 5, 2, 2 + shot % 3), explosionEmitter, 1.5F, 2);
+          scene.effects().createRedstoneParticles(util.grid().at(1 + shot % 5, 1, 2 + shot % 3), 0xE32636, 12);
+          scene.idle(8);
+        }
+        scene.idle(25);
+        break;
+      }
       case VOLCANIC_BURST: {
         ParticleEmitter emitter = scene.effects().simpleParticleEmitter((ParticleOptions) ParticleTypes.LAVA, new Vec3(0.0, 0.12, 0.0));
         scene.effects().emitParticles(center, emitter, 3.0F, 25);

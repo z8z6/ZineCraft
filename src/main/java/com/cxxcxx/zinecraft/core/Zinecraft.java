@@ -17,11 +17,13 @@ import com.cxxcxx.zinecraft.api.sound.SoundCatalog;
 import com.cxxcxx.zinecraft.api.weapon.WeaponRegistry;
 import com.cxxcxx.zinecraft.api.weapon.WeaponServerController;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
+import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import com.cxxcxx.zinecraft.api.world.WorldgenManager;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeCatalog;
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionCatalog;
 import com.cxxcxx.zinecraft.api.world.feature.FeatureCatalog;
 import com.cxxcxx.zinecraft.api.world.structure.StructureCatalog;
+import com.cxxcxx.zinecraft.compat.jer.ZinecraftJerPlugin;
 import com.cxxcxx.zinecraft.core.biome.ModTerraBlender;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
 import com.cxxcxx.zinecraft.core.block.MaterialOres;
@@ -38,14 +40,13 @@ import com.cxxcxx.zinecraft.core.nation.TerraNationRelations;
 import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
 import com.cxxcxx.zinecraft.core.skill.ModSkills;
 import com.cxxcxx.zinecraft.core.sound.ModSound;
-import com.cxxcxx.zinecraft.core.structure.LateranoHostStructure;
-import com.cxxcxx.zinecraft.core.structure.ModStructure;
-import com.cxxcxx.zinecraft.core.structure.NationLandmarks;
-import com.cxxcxx.zinecraft.core.structure.NationSettlements;
+import com.cxxcxx.zinecraft.core.structure.*;
 import com.cxxcxx.zinecraft.core.weapon.ModTaczWeapons;
 import com.cxxcxx.zinecraft.core.weapon.ModWeapons;
 import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -77,7 +78,7 @@ public final class Zinecraft {
   public Zinecraft(IEventBus modBus) {
     INSTANCE = this;
     bootstrapContent();
-    CREATIVE_TABS.addContributor(ModTaczWeapons::addCreativeItems);
+    registerSpecialCreativeTabs();
     REGISTRAR.register(modBus);
     modBus.addListener(WeaponPayloadTypes::register);
     modBus.addListener(this::commonSetup);
@@ -87,26 +88,61 @@ public final class Zinecraft {
     FtbQuestGuideInstaller.INSTANCE.install();
   }
 
-  private void commonSetup(FMLCommonSetupEvent event) {
-    event.enqueueWork(() -> {
-      ModWeapons.INSTANCE.bindRegisteredItems();
-      ModTerraBlender.initialize();
-    });
-  }
-
   /**
    * Forces catalog declarations to run before their DeferredRegisters are attached.
    */
   public static void bootstrapContent() {
     Object[] content = {
+        WeaponStateComponents.INSTANCE,
         ModSound.INSTANCE, ModItem.INSTANCE, ModCollectibles.INSTANCE, NationFoods.INSTANCE,
         ModBlock.INSTANCE, MaterialOres.INSTANCE, NationBlocks.INSTANCE, ModBlockEntity.INSTANCE,
         ModSkills.INSTANCE, ModWeapons.INSTANCE, ModTaczWeapons.INSTANCE, ModEntities.INSTANCE,
         TerraNationRelations.INSTANCE, NationBiomes.INSTANCE, ModDimensions.INSTANCE,
         LateranoHostStructure.INSTANCE, NationLandmarks.INSTANCE, NationSettlements.INSTANCE,
-        ModWorldFeatures.INSTANCE, ModStructure.INSTANCE
+        ModWorldFeatures.INSTANCE, ModStructure.INSTANCE, StructureTranslations.INSTANCE
     };
     if (content.length == 0) throw new IllegalStateException("Content bootstrap failed");
+  }
+
+  /**
+   * 藏品与技能数量较多且语义独立，因此不混入普通物品页。
+   */
+  private void registerSpecialCreativeTabs() {
+    var collectibles = ModCollectibles.INSTANCE.getALL();
+    if (collectibles.isEmpty()) throw new IllegalStateException("藏品创造模式页不能为空");
+    CREATIVE_TABS.register(
+        "collectibles",
+        "Zinecraft 藏品",
+        "Zinecraft Collectibles",
+        () -> new ItemStack(collectibles.getFirst().getItem()),
+        output -> collectibles.forEach(entry -> output.accept(entry.getItem()))
+    );
+
+    var skills = SKILLS.getEntries();
+    if (skills.isEmpty()) throw new IllegalStateException("技能创造模式页不能为空");
+    CREATIVE_TABS.register(
+        "skills",
+        "Zinecraft 技能",
+        "Zinecraft Skills",
+        () -> new ItemStack(skills.getFirst()),
+        output -> skills.forEach(output::accept)
+    );
+
+    CREATIVE_TABS.register(
+        "tacz",
+        "Zinecraft TaCZ",
+        "Zinecraft TaCZ",
+        () -> new ItemStack(ModTaczWeapons.INSTANCE.getGUN_ITEM().getItem()),
+        ModTaczWeapons::addCreativeItems
+    );
+  }
+
+  private void commonSetup(FMLCommonSetupEvent event) {
+    event.enqueueWork(() -> {
+      ModWeapons.INSTANCE.bindRegisteredItems();
+      ModTerraBlender.initialize();
+      if (ModList.get().isLoaded("jeresources")) ZinecraftJerPlugin.install();
+    });
   }
 
   public ModRegistrar getREGISTRAR() {

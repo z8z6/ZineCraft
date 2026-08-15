@@ -169,7 +169,9 @@ public final class ModTaczWeapons {
     ammunition.sort(Comparator.comparingInt(TaczAmmoSpec::getSort)
         .thenComparing(ammo -> ammo.getId().toString()));
     ammunition.forEach(ammo -> {
-      var stack = new ItemStack(AMMO_ITEM.getItem(), ammo.getStackSize());
+      // NeoForge requires every creative-tab display stack to have a count of exactly one.
+      // The item's max stack size still controls how the ammunition behaves after pickup.
+      var stack = new ItemStack(AMMO_ITEM.getItem());
       stack.set(WeaponStateComponents.INSTANCE.getTACZ_AMMO_ID(), ammo.getId());
       entries.accept(stack);
     });
@@ -516,4 +518,3 @@ public final class ModTaczWeapons {
     return new WeaponDefinition(resourceLocation6, map2, map1, weaponMetadata);
   }
 }
-

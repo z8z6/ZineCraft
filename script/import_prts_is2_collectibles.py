@@ -3,7 +3,7 @@
 
 The textual fields come from the extracted Arknights game-data table. Images are
 downloaded unchanged from PRTS's asset host. The generated catalog is consumed by
-ModCollectibles at runtime and also drives the Trinkets tag and the source ledger.
+ModCollectibles at runtime and also drives the Curios relic tag and the source ledger.
 """
 
 from __future__ import annotations
@@ -42,8 +42,8 @@ CATALOG_PATH = REPOSITORY_ROOT / (
     "src/main/resources/zinecraft/collectibles/phantom_crimson_solitaire.json"
 )
 TEXTURE_DIRECTORY = REPOSITORY_ROOT / "src/main/resources/assets/zinecraft/textures/item"
-TRINKETS_TAG_PATH = REPOSITORY_ROOT / (
-    "src/main/resources/data/trinkets/tags/item/chest/relic.json"
+CURIOS_TAG_PATH = REPOSITORY_ROOT / (
+    "src/main/resources/data/curios/tags/item/relic.json"
 )
 SOURCE_LEDGER_PATH = REPOSITORY_ROOT / "docs/item/PRTS_COLLECTIBLES.md"
 IMAGE_DIGEST_MANIFEST_PATH = REPOSITORY_ROOT / "script/data/prts_is2_image_sha256.json"
@@ -479,10 +479,10 @@ def main() -> int:
         json.loads(staged_catalog.read_text(encoding="utf-8"))
         outputs.append((staged_catalog, CATALOG_PATH))
 
-        staged_tag = staged_path(staging_root, TRINKETS_TAG_PATH)
+        staged_tag = staged_path(staging_root, CURIOS_TAG_PATH)
         write_json(staged_tag, {"replace": False, "values": [f"zinecraft:{r.path}" for r in records]})
         json.loads(staged_tag.read_text(encoding="utf-8"))
-        outputs.append((staged_tag, TRINKETS_TAG_PATH))
+        outputs.append((staged_tag, CURIOS_TAG_PATH))
 
         staged_ledger = staged_path(staging_root, SOURCE_LEDGER_PATH)
         write_source_ledger(records, staged_ledger, game_data_digest)

@@ -109,8 +109,14 @@ dependencies {
     // Optional development conveniences; they are available in runClient but are not production requirements.
     compileOnly "mezz.jei:jei-${project.minecraft_version}-neoforge-api:${project.jei_version}"
     runtimeOnly "mezz.jei:jei-${project.minecraft_version}-neoforge:${project.jei_version}"
+    compileOnly "maven.modrinth:uEfK2CXF:${project.jer_modrinth_version}"
     runtimeOnly "maven.modrinth:EsAfCjCV:${project.appleskin_modrinth_version}"
     runtimeOnly "maven.modrinth:uEfK2CXF:${project.jer_modrinth_version}"
+    runtimeOnly "maven.modrinth:jade:${project.jade_version}+neoforge"
+    runtimeOnly "maven.modrinth:justenoughcharacters:${project.just_enough_characters_version}"
+    runtimeOnly "maven.modrinth:journeymap:${project.journeymap_version}"
+    runtimeOnly "maven.modrinth:fPetb5Kh:${project.natures_compass_modrinth_version}"
+    runtimeOnly "maven.modrinth:RV1qfVQ8:${project.explorers_compass_modrinth_version}"
 
 }
 

@@ -16,7 +16,14 @@ if ($chapterFiles.Count -eq 0) {
 }
 
 $chapterText = ($chapterFiles | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw }) -join "`n"
-$ids = @([regex]::Matches($chapterText, '(?m)\bid:\s*"([0-9A-F]{16})"') | ForEach-Object { $_.Groups[1].Value })
+$chapterGroupFile = Join-Path $QuestRoot 'chapter_groups.snbt'
+if (-not (Test-Path -LiteralPath $chapterGroupFile -PathType Leaf)) {
+  throw "缺少章节组文件：$chapterGroupFile"
+}
+$chapterGroupText = Get-Content -LiteralPath $chapterGroupFile -Raw
+$chapterGroupIds = @([regex]::Matches($chapterGroupText, '(?m)\bid:\s*"([0-9A-F]{16})"') | ForEach-Object { $_.Groups[1].Value })
+$chapterIds = @([regex]::Matches($chapterText, '(?m)\bid:\s*"([0-9A-F]{16})"') | ForEach-Object { $_.Groups[1].Value })
+$ids = @($chapterGroupIds + $chapterIds)
 $duplicateIds = @($ids | Group-Object | Where-Object Count -gt 1)
 if ($duplicateIds.Count -gt 0) {
   throw "发现重复对象 ID：$($duplicateIds.Name -join ', ')"
@@ -30,6 +37,12 @@ if ($missingDependencies.Count -gt 0) {
   throw "发现不存在的任务依赖：$($missingDependencies -join ', ')"
 }
 
+$chapterGroupReferences = @([regex]::Matches($chapterText, '(?m)^\s*group:\s*"([0-9A-F]{16})"') | ForEach-Object { $_.Groups[1].Value })
+$missingChapterGroups = @($chapterGroupReferences | Where-Object { $_ -notin $chapterGroupIds } | Sort-Object -Unique)
+if ($missingChapterGroups.Count -gt 0) {
+  throw "章节引用了不存在的章节组：$($missingChapterGroups -join ', ')"
+}
+
 $localeKeys = @{}
 foreach ($locale in @('en_us', 'zh_cn')) {
   $localeFile = Join-Path $QuestRoot "lang\$locale.snbt"
@@ -37,7 +50,7 @@ foreach ($locale in @('en_us', 'zh_cn')) {
     throw "缺少根级语言表：$localeFile"
   }
   $localeText = Get-Content -LiteralPath $localeFile -Raw
-  $localeKeys[$locale] = @([regex]::Matches($localeText, '(?m)^\s*((?:chapter|quest|task|reward)\.[^:]+):') |
+  $localeKeys[$locale] = @([regex]::Matches($localeText, '(?m)^\s*((?:chapter_group|chapter|quest|task|reward)\.[^:]+):') |
     ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique)
 }
 
@@ -52,4 +65,4 @@ if ($nestedLanguageFiles.Count -gt 0) {
   throw "FTB Quests 2101.1.x 不读取嵌套语言表：$($nestedLanguageFiles.FullName -join ', ')"
 }
 
-Write-Output "FTB Quests 校验通过：章节=$($chapterFiles.Count)，对象ID=$($ids.Count)，依赖=$($dependencies.Count)，双语键=$($localeKeys['zh_cn'].Count)"
+Write-Output "FTB Quests 校验通过：章节组=$($chapterGroupIds.Count)，章节=$($chapterFiles.Count)，对象ID=$($ids.Count)，依赖=$($dependencies.Count)，双语键=$($localeKeys['zh_cn'].Count)"
