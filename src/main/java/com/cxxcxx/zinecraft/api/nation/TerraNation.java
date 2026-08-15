@@ -15,7 +15,7 @@ public enum TerraNation {
   SIRACUSA("siracusa", "叙拉古", "Siracusa"), YAN("yan", "炎", "Yan"),
   IBERIA("iberia", "伊比利亚", "Iberia");
 
-  public static final Companion Companion = new Companion();
+  public static final Access ACCESS = new Access();
   private final String id;
   private final String zhCn;
   private final String enUs;
@@ -42,7 +42,7 @@ public enum TerraNation {
     return enUs;
   }
 
-  public static final class Companion {
+  public static final class Access {
     public TerraNation byId(String id) {
       return Arrays.stream(values()).filter(nation -> nation.id.equals(id)).findFirst().orElse(null);
     }

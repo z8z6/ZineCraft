@@ -15,19 +15,6 @@ public final class TimedWeaponVfx {
     this.tick = tick;
   }
 
-  // $VF: synthetic method
-  public static TimedWeaponVfx copy$default(TimedWeaponVfx var0, ResourceLocation var1, int var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.id;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.tick;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   @NotNull
   public final ResourceLocation getId() {
     return this.id;
@@ -35,20 +22,6 @@ public final class TimedWeaponVfx {
 
   public final int getTick() {
     return this.tick;
-  }
-
-  @NotNull
-  public final ResourceLocation component1() {
-    return this.id;
-  }
-
-  public final int component2() {
-    return this.tick;
-  }
-
-  @NotNull
-  public final TimedWeaponVfx copy(@NotNull ResourceLocation id, int tick) {
-    return new TimedWeaponVfx(id, tick);
   }
 
   @Override

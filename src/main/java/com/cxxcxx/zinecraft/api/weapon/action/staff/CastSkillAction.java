@@ -2,11 +2,7 @@ package com.cxxcxx.zinecraft.api.weapon.action.staff;
 
 import com.cxxcxx.zinecraft.api.skill.SkillCastContext;
 import com.cxxcxx.zinecraft.api.skill.SkillService;
-import com.cxxcxx.zinecraft.api.weapon.action.TimedWeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
-import kotlin.ranges.IntRange;
+import com.cxxcxx.zinecraft.api.weapon.action.*;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,7 +46,7 @@ public final class CastSkillAction implements WeaponAction {
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    IntRange intRange = new IntRange(this.castTick, this.castTick);
+    TickRange intRange = new TickRange(this.castTick, this.castTick);
     int i = this.durationTicks;
     return new TimedWeaponActionRuntime(intRange, i) {
       @Override
@@ -62,8 +58,8 @@ public final class CastSkillAction implements WeaponAction {
     };
   }
 
-  private final SkillCastContext toSkillContext(WeaponContext $this$toSkillContext) {
-    return new SkillCastContext($this$toSkillContext.getPlayer(), $this$toSkillContext.getStack(), $this$toSkillContext.getHand());
+  private final SkillCastContext toSkillContext(WeaponContext _this_toSkillContext) {
+    return new SkillCastContext(_this_toSkillContext.getPlayer(), _this_toSkillContext.getStack(), _this_toSkillContext.getHand());
   }
 }
 

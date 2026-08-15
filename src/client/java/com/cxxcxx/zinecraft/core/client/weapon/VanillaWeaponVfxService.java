@@ -25,8 +25,7 @@ public final class VanillaWeaponVfxService implements WeaponVfxService {
   private VanillaWeaponVfxService() {
   }
 
-  // $VF: synthetic method
-  static void muzzle$default(VanillaWeaponVfxService var0, LivingEntity var1, SimpleParticleType var2, int var3, Object var4) {
+  static void muzzleWithDefaults(VanillaWeaponVfxService var0, LivingEntity var1, SimpleParticleType var2, int var3, Object var4) {
     if ((var3 & 2) != 0) {
       SimpleParticleType var10000 = ParticleTypes.FLAME;
       var2 = var10000;
@@ -43,7 +42,7 @@ public final class VanillaWeaponVfxService implements WeaponVfxService {
     } else if (java.util.Objects.equals(var3, impactId)) {
       this.impact(entity);
     } else if (java.util.Objects.equals(var3, muzzleId)) {
-      muzzle$default(this, entity, null, 2, null);
+      muzzleWithDefaults(this, entity, null, 2, null);
     } else if (java.util.Objects.equals(var3, rifleImpactId)) {
       SimpleParticleType var10002 = ParticleTypes.CRIT;
       this.rangedImpact(entity, var10002);
@@ -82,7 +81,7 @@ public final class VanillaWeaponVfxService implements WeaponVfxService {
     byte ejection = 5;
 
     for (int it = 0; it < ejection; it++) {
-      int var9/* $VF was: $i$a$-repeat-VanillaWeaponVfxService$muzzle$1 */ = 0;
+      int var9 = 0;
       entity.level().addParticle((ParticleOptions) particle, point.x, point.y, point.z, 0.0, 0.01, 0.0);
     }
 
@@ -100,7 +99,7 @@ public final class VanillaWeaponVfxService implements WeaponVfxService {
     byte var4 = 4;
 
     for (int it = 0; it < var4; it++) {
-      int var7/* $VF was: $i$a$-repeat-VanillaWeaponVfxService$rangedImpact$1 */ = 0;
+      int var7 = 0;
       entity.level().addParticle((ParticleOptions) particle, point.x, point.y, point.z, 0.0, 0.02, 0.0);
     }
   }
@@ -110,7 +109,7 @@ public final class VanillaWeaponVfxService implements WeaponVfxService {
 
     for (int var3 = 0; var3 < var2; var3++) {
       int index = var3;
-      int var5/* $VF was: $i$a$-repeat-VanillaWeaponVfxService$heal$1 */ = 0;
+      int var5 = 0;
       double angle = index * Math.PI / 4.0;
       entity.level()
           .addParticle(

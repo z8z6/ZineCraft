@@ -1,7 +1,6 @@
 package com.cxxcxx.zinecraft.core.biome;
 
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionBiome;
-import kotlin.collections.CollectionsKt;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate;
@@ -39,7 +38,7 @@ public final class NationBiomePlacements {
         INSTANCE.placement(NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 0.5F, 0.65F, -0.2F, 0.8F, 0.0F, -0.75F),
         INSTANCE.placement(NationBiomes.INSTANCE.getTERRA_CATASTROPHE_ZONE(), 0.8F, -0.8F, 0.5F, -0.5F, 0.0F, 0.2F)
     };
-    ALL = CollectionsKt.listOf(dimensionBiomes);
+    ALL = java.util.List.of(dimensionBiomes);
   }
 
   private NationBiomePlacements() {

@@ -37,7 +37,7 @@ public final class VanillaWeaponSoundService implements WeaponSoundService {
       ResourceLocation var7 = var10000;
       TaczGunPacks var8 = TaczGunPacks.INSTANCE;
       ResourceLocation p0 = var7;
-      int var10/* $VF was: $i$a$-let-VanillaWeaponSoundService$play$resolved$gun$1 */ = 0;
+      int var10 = 0;
       TaczGunSpec var14 = var8.gun(p0);
       if (var14 == null) {
         return;

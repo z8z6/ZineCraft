@@ -2,7 +2,6 @@ package com.cxxcxx.zinecraft.core.entity;
 
 import com.cxxcxx.zinecraft.api.nation.NationAffiliated;
 import com.cxxcxx.zinecraft.api.nation.TerraNation;
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -19,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class LateranoCitizen extends PathfinderMob implements NationAffiliated {
   @NotNull
-  public static final LateranoCitizen.Companion Companion = new LateranoCitizen.Companion(null);
+  public static final LateranoCitizen.Access ACCESS = new LateranoCitizen.Access();
   @NotNull
   private final TerraNation nation;
 
@@ -53,13 +52,8 @@ public final class LateranoCitizen extends PathfinderMob implements NationAffili
     return spawnGroupData;
   }
 
-  public static final class Companion {
-    private Companion() {
-    }
-
-    // $VF: synthetic method
-    public Companion(DefaultConstructorMarker $constructor_marker) {
-      this();
+  public static final class Access {
+    private Access() {
     }
 
     @NotNull
@@ -79,4 +73,3 @@ public final class LateranoCitizen extends PathfinderMob implements NationAffili
     }
   }
 }
-

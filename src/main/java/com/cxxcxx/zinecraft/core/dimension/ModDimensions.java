@@ -23,21 +23,21 @@ public final class ModDimensions {
   @NotNull
   private static final MapCodec<TerraBiomeSource> TERRA_BIOME_SOURCE = Zinecraft.INSTANCE
       .getREGISTRAR()
-      .biomeSource("terra", TerraBiomeSource.Companion.getCODEC());
+      .biomeSource("terra", TerraBiomeSource.ACCESS.getCODEC());
   @NotNull
   private static final DimensionEntry TERRA;
 
   static {
     DimensionCatalog dimensionCatalog1 = Zinecraft.INSTANCE.getDIMENSIONS();
-    Iterable $this$filterNot$iv = NationBiomePlacements.INSTANCE.getALL();
+    Iterable _this_filterNot_iv = NationBiomePlacements.INSTANCE.getALL();
     String string = "terra";
     DimensionCatalog dimensionCatalog = dimensionCatalog1;
     int i = 0;
-    Iterable $this$filterNotTo$iv$iv = $this$filterNot$iv;
+    Iterable _this_filterNotTo_iv_iv = _this_filterNot_iv;
     var collection = new ArrayList();
     int j = 0;
 
-    for (Object object : $this$filterNotTo$iv$iv) {
+    for (Object object : _this_filterNotTo_iv_iv) {
       DimensionBiome dimensionBiome = (DimensionBiome) object;
       int k = 0;
       if (!java.util.Objects.equals(dimensionBiome.getBiome(), NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS())) {
@@ -46,14 +46,14 @@ public final class ModDimensions {
     }
 
     List list = (List) collection;
-    TERRA = dimensionCatalog.register(string, list, ModDimensions::TERRA$lambda$1);
+    TERRA = dimensionCatalog.register(string, list, ModDimensions::TERRAHelper1);
     Zinecraft.INSTANCE.getTRANSLATIONS().add("dimension.zinecraft.terra", "泰拉", "Terra");
   }
 
   private ModDimensions() {
   }
 
-  private static final ChunkGenerator TERRA$lambda$1(DimensionBootstrapContext context) {
+  private static final ChunkGenerator TERRAHelper1(DimensionBootstrapContext context) {
     Reference reference = context.getBiomes().getOrThrow(NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS());
     ParameterList parameterList = context.getBiomeParameters();
     return (ChunkGenerator) (new NoiseBasedChunkGenerator(new TerraBiomeSource(parameterList, (Holder<Biome>) reference, 1024), context.getNoiseSettings()));

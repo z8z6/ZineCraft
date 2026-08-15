@@ -1,10 +1,9 @@
 package com.cxxcxx.zinecraft.core.nation;
 
 import com.cxxcxx.zinecraft.api.nation.*;
-import kotlin.collections.ArraysKt;
-import kotlin.collections.CollectionsKt;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,11 +43,11 @@ public final class TerraNationRelations {
         this.state(TerraNation.YAN, 88, 88, 90, 60, 20),
         this.state(TerraNation.IBERIA, 32, 52, 65, 15, 25)
     };
-    return CollectionsKt.listOf(nationStates);
+    return java.util.List.of(nationStates);
   }
 
   private final List<NationRelation> relations() {
-    List list = CollectionsKt.createListBuilder();
+    List list = new ArrayList();
     List list1 = list;
     int i = 0;
     NationRelationEvidence nationRelationEvidence = INSTANCE.evidence("https://prts.wiki/w/泰拉大典:地理/玻利瓦尔", "玻利瓦尔处于哥伦比亚与莱塔尼亚支持的政权长期割据之中。");
@@ -139,7 +138,7 @@ public final class TerraNationRelations {
     terraNation1 = TerraNation.VICTORIA;
     NationRelationTag[] nationRelationTags7 = new NationRelationTag[]{NationRelationTag.TRADE, NationRelationTag.BORDER_TENSION};
     list1.addAll(terraNationRelations.mutual(terraNation, terraNation1, -28, 28, 62, 58, -30, nationRelationEvidence7, nationRelationTags7));
-    return CollectionsKt.build(list);
+    return List.copyOf(list);
   }
 
   private final NationState state(TerraNation nation, int prosperity, int stability, int military, int openness, int aggression) {
@@ -165,12 +164,12 @@ public final class TerraNationRelations {
         this.relation(first, second, favor, warDesire, trade, tension, trust, evidence, Arrays.copyOf(tags, tags.length)),
         this.relation(second, first, favor, warDesire, trade, tension, trust, evidence, Arrays.copyOf(tags, tags.length))
     };
-    return CollectionsKt.listOf(nationRelations);
+    return java.util.List.of(nationRelations);
   }
 
   private final NationRelation relation(
       TerraNation from, TerraNation to, int favor, int warDesire, int trade, int tension, int trust, NationRelationEvidence evidence, NationRelationTag... tags
   ) {
-    return new NationRelation(from, to, favor, warDesire, trade, tension, trust, ArraysKt.toSet(tags), evidence.getFactSummary(), evidence);
+    return new NationRelation(from, to, favor, warDesire, trade, tension, trust, java.util.Set.of(tags), evidence.getFactSummary(), evidence);
   }
 }

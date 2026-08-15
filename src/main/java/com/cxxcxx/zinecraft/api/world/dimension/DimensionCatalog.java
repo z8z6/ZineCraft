@@ -2,24 +2,15 @@ package com.cxxcxx.zinecraft.api.world.dimension;
 
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import com.mojang.datafixers.util.Pair;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
-import kotlin.collections.CollectionsKt;
-import kotlin.jvm.functions.Function1;
-import kotlin.text.StringsKt;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.BiomeSource;
-import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.biome.Climate.ParameterList;
+import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
@@ -27,6 +18,12 @@ import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Function;
 
 public final class DimensionCatalog {
   @NotNull
@@ -40,8 +37,7 @@ public final class DimensionCatalog {
     this.entries = new ArrayList<>();
   }
 
-  // $VF: synthetic method
-  public static DimensionEntry register$default(DimensionCatalog var0, String var1, List var2, Function1 var3, int var4, Object var5) {
+  public static DimensionEntry registerWithDefaults(DimensionCatalog var0, String var1, List var2, Function var3, int var4, Object var5) {
     if ((var4 & 4) != 0) {
       var3 = null;
     }
@@ -53,9 +49,9 @@ public final class DimensionCatalog {
   public final DimensionEntry register(
       @NotNull String path,
       @NotNull List<DimensionBiome> biomes,
-      @Nullable Function1<? super DimensionBootstrapContext, ? extends ChunkGenerator> createGenerator
+      @Nullable Function<? super DimensionBootstrapContext, ? extends ChunkGenerator> createGenerator
   ) {
-    if (StringsKt.isBlank(path)) {
+    if (path.isBlank()) {
       int l = 0;
       String string4 = "维度 ID 不能为空";
       throw new IllegalArgumentException(string4.toString());
@@ -99,7 +95,7 @@ public final class DimensionCatalog {
 
     i = 0;
     Iterable iterable1 = biomes;
-    var collection1 = new ArrayList(CollectionsKt.collectionSizeOrDefault(biomes, 10));
+    var collection1 = new ArrayList(com.cxxcxx.zinecraft.api.util.CollectionSupport.sizeHint(biomes, 10));
     int n = 0;
 
     for (Object object1 : iterable1) {
@@ -109,7 +105,7 @@ public final class DimensionCatalog {
       collection.add(it.getBiome());
     }
 
-    if (CollectionsKt.distinct((Iterable & List) collection1).size() != biomes.size()) {
+    if (com.cxxcxx.zinecraft.api.util.CollectionSupport.distinct((Iterable & List) collection1).size() != biomes.size()) {
       i = 0;
       String string1 = "维度群系资源键重复: " + path;
       throw new IllegalArgumentException(string1.toString());
@@ -117,7 +113,7 @@ public final class DimensionCatalog {
 
     i = 0;
     iterable1 = biomes;
-    collection1 = new ArrayList(CollectionsKt.collectionSizeOrDefault(biomes, 10));
+    collection1 = new ArrayList(com.cxxcxx.zinecraft.api.util.CollectionSupport.sizeHint(biomes, 10));
     n = 0;
 
     for (Object object2 : iterable1) {
@@ -127,7 +123,7 @@ public final class DimensionCatalog {
       collection2.add(dimensionBiome1.getParameters());
     }
 
-    if (CollectionsKt.distinct((Iterable & List) collection1).size() != biomes.size()) {
+    if (com.cxxcxx.zinecraft.api.util.CollectionSupport.distinct((Iterable & List) collection1).size() != biomes.size()) {
       i = 0;
       String string = "维度气候点重复: " + path;
       throw new IllegalArgumentException(string.toString());
@@ -141,7 +137,7 @@ public final class DimensionCatalog {
       resourceKey2 = modRegistrar.key(resourceKey3, path);
       resourceKey3 = NoiseGeneratorSettings.OVERWORLD;
       DimensionEntry dimensionEntry1 = new DimensionEntry(
-          path, resourceKey1, resourceKey, resourceKey2, resourceKey3, CollectionsKt.toList(biomes), createGenerator
+          path, resourceKey1, resourceKey, resourceKey2, resourceKey3, com.cxxcxx.zinecraft.api.util.CollectionSupport.toList(biomes), createGenerator
       );
       List list = this.entries;
       DimensionEntry dimensionEntry2 = dimensionEntry1;
@@ -151,7 +147,7 @@ public final class DimensionCatalog {
     }
   }
 
-  public final void bootstrapDimensionTypes$zinecraft(@NotNull BootstrapContext<DimensionType> context) {
+  public final void bootstrapDimensionTypes(@NotNull BootstrapContext<DimensionType> context) {
     Iterable iterable = this.entries;
     int i = 0;
 
@@ -162,7 +158,7 @@ public final class DimensionCatalog {
     }
   }
 
-  public final void bootstrapLevelStems$zinecraft(@NotNull BootstrapContext<LevelStem> context) {
+  public final void bootstrapLevelStems(@NotNull BootstrapContext<LevelStem> context) {
     HolderGetter holderGetter = context.lookup(Registries.DIMENSION_TYPE);
     HolderGetter holderGetter1 = context.lookup(Registries.NOISE_SETTINGS);
     HolderGetter holderGetter2 = context.lookup(Registries.BIOME);
@@ -172,13 +168,13 @@ public final class DimensionCatalog {
     for (Object object : iterable) {
       DimensionEntry dimensionEntry = (DimensionEntry) object;
       int j = 0;
-      Iterable iterable1 = dimensionEntry.getBiomes$zinecraft();
+      Iterable iterable1 = dimensionEntry.getBiomes();
       int k = 0;
-      Iterable $this$mapTo$iv$iv = iterable1;
-      var collection = new ArrayList(CollectionsKt.collectionSizeOrDefault(iterable1, 10));
+      Iterable _this_mapTo_iv_iv = iterable1;
+      var collection = new ArrayList(com.cxxcxx.zinecraft.api.util.CollectionSupport.sizeHint(iterable1, 10));
       int l = 0;
 
-      for (Object object1 : $this$mapTo$iv$iv) {
+      for (Object object1 : _this_mapTo_iv_iv) {
         DimensionBiome biome = (DimensionBiome) object1;
         Collection collection1 = collection;
         int m = 0;
@@ -195,9 +191,9 @@ public final class DimensionCatalog {
         DimensionBootstrapContext dimensionBootstrapContext = new DimensionBootstrapContext(
             dimensionEntry, multiNoiseBiomeSource, parameterList, holderGetter2, (Holder<NoiseGeneratorSettings>) reference
         );
-        Function1 function1 = dimensionEntry.getCreateGenerator$zinecraft();
+        Function function1 = dimensionEntry.getCreateGenerator();
         if (function1 != null) {
-          chunkGenerator1 = (ChunkGenerator) function1.invoke(dimensionBootstrapContext);
+          chunkGenerator1 = (ChunkGenerator) function1.apply(dimensionBootstrapContext);
           if (chunkGenerator1 != null) {
             break label25;
           }

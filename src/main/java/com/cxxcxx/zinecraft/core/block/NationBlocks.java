@@ -219,8 +219,8 @@ public final class NationBlocks {
   private NationBlocks() {
   }
 
-  private static final Block material$lambda$0(Block $physicalTemplate) {
-    return new Block(Properties.ofFullCopy((BlockBehaviour) $physicalTemplate));
+  private static final Block materialHelper0(Block _physicalTemplate) {
+    return new Block(Properties.ofFullCopy((BlockBehaviour) _physicalTemplate));
   }
 
   @NotNull
@@ -424,8 +424,8 @@ public final class NationBlocks {
   }
 
   private final BlockEntry<Block> material(String path, String zhCn, String enUs, Block physicalTemplate) {
-    return BlockCatalog.register$default(
-            Zinecraft.INSTANCE.getBLOCKS(), path, zhCn, enUs, false, null, false, false, () -> material$lambda$0(physicalTemplate), 120, null
+    return BlockCatalog.registerWithDefaults(
+        Zinecraft.INSTANCE.getBLOCKS(), path, zhCn, enUs, false, null, false, false, () -> materialHelper0(physicalTemplate), 120, null
     );
   }
 }

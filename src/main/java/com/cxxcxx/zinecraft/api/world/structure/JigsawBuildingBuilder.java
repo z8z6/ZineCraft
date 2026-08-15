@@ -1,9 +1,6 @@
 package com.cxxcxx.zinecraft.api.world.structure;
 
-import kotlin.Unit;
-import kotlin.collections.CollectionsKt;
-import kotlin.jvm.functions.Function1;
-import kotlin.text.StringsKt;
+
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 public final class JigsawBuildingBuilder {
   @NotNull
@@ -27,8 +25,7 @@ public final class JigsawBuildingBuilder {
     this.pools = new ArrayList<>();
   }
 
-  // $VF: synthetic method
-  public static void pool$default(JigsawBuildingBuilder var0, String var1, Projection var2, Function1 var3, int var4, Object var5) {
+  public static void poolWithDefaults(JigsawBuildingBuilder var0, String var1, Projection var2, Consumer var3, int var4, Object var5) {
     if ((var4 & 2) != 0) {
       var2 = Projection.RIGID;
     }
@@ -42,11 +39,11 @@ public final class JigsawBuildingBuilder {
   }
 
   public final void setStartPool(@NotNull String var1) {
-    this.startPool = var1/* $VF was: <set-?> */;
+    this.startPool = var1;
   }
 
-  public final void pool(@NotNull String name, @NotNull Projection projection, @NotNull Function1<? super JigsawPoolBuilder, Unit> build) {
-    if (StringsKt.isBlank(name)) {
+  public final void pool(@NotNull String name, @NotNull Projection projection, @NotNull Consumer<? super JigsawPoolBuilder> build) {
+    if (name.isBlank()) {
       int k = 0;
       String string1 = "Jigsaw pool 名称不能为空";
       throw new IllegalArgumentException(string1.toString());
@@ -84,12 +81,12 @@ public final class JigsawBuildingBuilder {
 
     iterable = this.pools;
     JigsawPoolBuilder jigsawPoolBuilder = new JigsawPoolBuilder(name, projection);
-    build.invoke(jigsawPoolBuilder);
-    iterable.add(jigsawPoolBuilder.build$zinecraft());
+    build.accept(jigsawPoolBuilder);
+    iterable.add(jigsawPoolBuilder.build());
   }
 
   @NotNull
-  public final JigsawBuildingDefinition build$zinecraft() {
+  public final JigsawBuildingDefinition build() {
     if (this.pools.isEmpty()) {
       int k = 0;
       String string1 = "Jigsaw 建筑至少需要一个模板池: " + this.path;
@@ -125,7 +122,7 @@ public final class JigsawBuildingBuilder {
       String string = "找不到起始模板池: " + this.path + "/" + this.startPool;
       throw new IllegalArgumentException(string.toString());
     } else {
-      return new JigsawBuildingDefinition(this.startPool, CollectionsKt.toList(this.pools));
+      return new JigsawBuildingDefinition(this.startPool, com.cxxcxx.zinecraft.api.util.CollectionSupport.toList(this.pools));
     }
   }
 }

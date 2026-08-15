@@ -2,7 +2,6 @@ package com.cxxcxx.zinecraft.api.weapon.tacz;
 
 import com.cxxcxx.zinecraft.api.weapon.item.ActionWeaponItem;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
-import kotlin.ranges.RangesKt;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -30,7 +29,7 @@ public final class TaczGunItem extends ActionWeaponItem {
       if (taczGunSpec1 != null) {
         TaczGunSpec taczGunSpec = taczGunSpec1;
         Object object = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), taczGunSpec.getCapacity());
-        int i = RangesKt.coerceAtMost(((Number) object).intValue(), taczGunSpec.getCapacity());
+        int i = Math.min(((Number) object).intValue(), taczGunSpec.getCapacity());
         Collection fireMode = tooltipComponents;
         Object[] objects = new Object[]{i, taczGunSpec.getCapacity()};
         MutableComponent mutableComponent = Component.translatable("item.zinecraft.firearm.ammo", objects).withStyle(ChatFormatting.YELLOW);

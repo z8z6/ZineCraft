@@ -18,7 +18,7 @@ public final class TerraBiomeSource extends BiomeSource {
       Biome.CODEC.fieldOf("center_biome").forGetter(source -> source.centerBiome),
       Codec.intRange(MIN_CENTER_RADIUS, 8192).fieldOf("center_radius").forGetter(source -> source.centerRadius)
   ).apply(instance, TerraBiomeSource::new));
-  public static final Companion Companion = new Companion();
+  public static final Access ACCESS = new Access();
 
   private final Climate.ParameterList<Holder<Biome>> parameters;
   private final Holder<Biome> centerBiome;
@@ -62,8 +62,8 @@ public final class TerraBiomeSource extends BiomeSource {
     return distanceSquared <= radius * radius ? centerBiome : parameters.findValue(sampler.sample(quartX, quartY, quartZ));
   }
 
-  public static final class Companion {
-    private Companion() {
+  public static final class Access {
+    private Access() {
     }
 
     public MapCodec<TerraBiomeSource> getCODEC() {

@@ -40,7 +40,7 @@ public final class ModSound {
   }
 
   private final SongEntry song(String path, float length, String description) {
-    return SongCatalog.register$default(Zinecraft.INSTANCE.getSONGS(), path, length, description, null, null, 0, 56, null);
+    return SongCatalog.registerWithDefaults(Zinecraft.INSTANCE.getSONGS(), path, length, description, null, null, 0, 56, null);
   }
 }
 

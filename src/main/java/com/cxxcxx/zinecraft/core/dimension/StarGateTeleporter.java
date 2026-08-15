@@ -1,7 +1,6 @@
 package com.cxxcxx.zinecraft.core.dimension;
 
 import com.cxxcxx.zinecraft.core.block.ModBlock;
-import kotlin.ranges.RangesKt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Vec3i;
@@ -79,8 +78,8 @@ public final class StarGateTeleporter {
         if (k <= l) {
           while (true) {
             int m = level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, i, k);
-            int n = RangesKt.coerceAtLeast(m - 10, level.getMinBuildHeight());
-            int o = RangesKt.coerceAtMost(m + 10, level.getMaxBuildHeight() - 1);
+            int n = Math.max(m - 10, level.getMinBuildHeight());
+            int o = Math.min(m + 10, level.getMaxBuildHeight() - 1);
             if (n <= o) {
               while (true) {
                 BlockPos blockPos = new BlockPos(i, n, k);

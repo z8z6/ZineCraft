@@ -35,11 +35,11 @@ public final class ItemEntry<T extends Item> implements ItemLike {
   }
 
   @NotNull
-  public final ModelTemplate getModel$zinecraft() {
+  public final ModelTemplate getModel() {
     return this.model;
   }
 
-  public final boolean getIncludeInCreative$zinecraft() {
+  public final boolean getIncludeInCreative() {
     return this.includeInCreative;
   }
 

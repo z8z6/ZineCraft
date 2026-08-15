@@ -1,7 +1,5 @@
 package com.cxxcxx.zinecraft.core.item;
 
-import kotlin.jvm.JvmField;
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
@@ -12,19 +10,13 @@ import org.jetbrains.annotations.Nullable;
 
 public final class MaterialRegistry implements Tier {
   @NotNull
-  public static final MaterialRegistry.MaterialCreate MaterialCreate = new MaterialRegistry.MaterialCreate(null);
-  @JvmField
+  public static final MaterialRegistry.MaterialCreate MaterialCreate = new MaterialRegistry.MaterialCreate();
   public int uses = 1;
-  @JvmField
   public float speed = 1.0F;
-  @JvmField
   public float attackDamageBonus = 1.0F;
-  @JvmField
   @NotNull
   public TagKey<Block> incorrectBlocksForDrops;
-  @JvmField
   public int enchantmentValue;
-  @JvmField
   @Nullable
   public Ingredient repairIngredient;
 
@@ -101,14 +93,8 @@ public final class MaterialRegistry implements Tier {
     private MaterialCreate() {
     }
 
-    // $VF: synthetic method
-    public MaterialCreate(DefaultConstructorMarker $constructor_marker) {
-      this();
-    }
-
     public final void init() {
       MaterialRegistry.MaterialCreate materialCreate = MaterialRegistry.MaterialCreate;
     }
   }
 }
-

@@ -1,18 +1,16 @@
 package com.cxxcxx.zinecraft.api.world.biome;
 
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public final class BiomeCatalog {
   @NotNull
@@ -27,7 +25,7 @@ public final class BiomeCatalog {
   }
 
   @NotNull
-  public final ResourceKey<Biome> register(@NotNull String path, @NotNull Function1<? super SimpleBiomeBuilder, Unit> build) {
+  public final ResourceKey<Biome> register(@NotNull String path, @NotNull Consumer<? super SimpleBiomeBuilder> build) {
     ModRegistrar modRegistrar = this.registrar;
     ResourceKey resourceKey1 = Registries.BIOME;
     ResourceKey resourceKey = modRegistrar.key(resourceKey1, path);
@@ -35,7 +33,7 @@ public final class BiomeCatalog {
     return resourceKey;
   }
 
-  public final void bootstrap$zinecraft(@NotNull BootstrapContext<Biome> context) {
+  public final void bootstrap(@NotNull BootstrapContext<Biome> context) {
     HolderGetter holderGetter2 = context.lookup(Registries.PLACED_FEATURE);
     HolderGetter holderGetter = holderGetter2;
     holderGetter2 = context.lookup(Registries.CONFIGURED_CARVER);
@@ -49,7 +47,7 @@ public final class BiomeCatalog {
       ModRegistrar modRegistrar = this.registrar;
       ResourceKey resourceKey = biomeEntry.getKey();
       SimpleBiomeBuilder simpleBiomeBuilder = new SimpleBiomeBuilder(holderGetter, holderGetter1);
-      biomeEntry.getBuild().invoke(simpleBiomeBuilder);
+      biomeEntry.getBuild().accept(simpleBiomeBuilder);
       modRegistrar.dynamic(context, resourceKey, simpleBiomeBuilder.build());
     }
   }

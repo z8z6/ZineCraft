@@ -1,11 +1,7 @@
 package com.cxxcxx.zinecraft.api.weapon.tacz;
 
-import com.cxxcxx.zinecraft.api.weapon.action.TimedWeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
+import com.cxxcxx.zinecraft.api.weapon.action.*;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
-import kotlin.ranges.IntRange;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,15 +22,15 @@ public final class TaczAimAction implements WeaponAction {
 
   @Override
   public boolean canStart(@NotNull WeaponContext context) {
-    return TaczWeaponActionsKt.access$gun(context) != null && context.getPlayer().isAlive();
+    return TaczWeaponActions.gun(context) != null && context.getPlayer().isAlive();
   }
 
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    TaczGunSpec taczGunSpec = TaczWeaponActionsKt.access$gun(context);
+    TaczGunSpec taczGunSpec = TaczWeaponActions.gun(context);
     int i = taczGunSpec != null ? taczGunSpec.getAimTicks() : 1;
-    IntRange intRange = new IntRange(0, 0);
+    TickRange intRange = new TickRange(0, 0);
     return new TimedWeaponActionRuntime(intRange, i) {
       @Override
       protected void onTick(int tick) {

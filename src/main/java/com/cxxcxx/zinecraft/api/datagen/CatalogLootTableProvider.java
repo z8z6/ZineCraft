@@ -38,16 +38,16 @@ public final class CatalogLootTableProvider extends LootTableProvider {
 
     @Override
     protected void generate() {
-      for (var entry : blocks.getEntries$zinecraft()) {
-        if (entry.getDropSelf$zinecraft()) dropSelf(entry.getBlock());
-        else if (entry.getDropItem$zinecraft() != null) dropOther(entry.getBlock(), entry.getDropItem$zinecraft());
+      for (var entry : blocks.getEntries()) {
+        if (entry.getDropSelf()) dropSelf(entry.getBlock());
+        else if (entry.getDropItem() != null) dropOther(entry.getBlock(), entry.getDropItem());
         else add(entry.getBlock(), noDrop());
       }
     }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-      return blocks.getEntries$zinecraft().stream().map(entry -> (Block) entry.getBlock()).toList();
+      return blocks.getEntries().stream().map(entry -> (Block) entry.getBlock()).toList();
     }
   }
 }

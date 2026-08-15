@@ -4,7 +4,6 @@ import com.cxxcxx.zinecraft.api.block.BlockCatalog;
 import com.cxxcxx.zinecraft.api.block.BlockEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.item.ModItem;
-import kotlin.collections.CollectionsKt;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -43,13 +42,13 @@ public final class MaterialOres {
     BlockEntry[] blockEntrys = new BlockEntry[]{
         ORIGINITE_ORE, ORIROCK_ORE, ORIRON_ORE, MANGANESE_ORE, GRINDSTONE_ORE, RMA70_ORE, CRYSTAL_ELEMENT_ORE, LOXIC_KOHL_ORE
     };
-    ALL = CollectionsKt.listOf(blockEntrys);
+    ALL = java.util.List.of(blockEntrys);
   }
 
   private MaterialOres() {
   }
 
-  private static final Block ore$lambda$0() {
+  private static final Block oreHelper0() {
     return new Block(Properties.ofFullCopy((BlockBehaviour) Blocks.DEEPSLATE).requiresCorrectToolForDrops().strength(4.0F, 6.0F).sound(SoundType.DEEPSLATE));
   }
 
@@ -99,6 +98,6 @@ public final class MaterialOres {
   }
 
   private final BlockEntry<Block> ore(String path, String zhCn, String enUs, ItemLike drop) {
-    return BlockCatalog.register$default(Zinecraft.INSTANCE.getBLOCKS(), path, zhCn, enUs, false, drop, false, false, MaterialOres::ore$lambda$0, 96, null);
+    return BlockCatalog.registerWithDefaults(Zinecraft.INSTANCE.getBLOCKS(), path, zhCn, enUs, false, drop, false, false, MaterialOres::oreHelper0, 96, null);
   }
 }

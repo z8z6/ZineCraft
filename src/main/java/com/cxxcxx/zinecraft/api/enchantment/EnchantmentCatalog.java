@@ -1,18 +1,8 @@
 package com.cxxcxx.zinecraft.api.enchantment;
 
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import com.cxxcxx.zinecraft.api.localization.TranslationCatalogKt;
+import com.cxxcxx.zinecraft.api.localization.TranslationNames;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import kotlin.Unit;
-import kotlin.collections.ArraysKt;
-import kotlin.jvm.functions.Function1;
-import kotlin.text.StringsKt;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -27,6 +17,11 @@ import net.minecraft.world.item.enchantment.Enchantment.Cost;
 import net.minecraft.world.item.enchantment.Enchantment.EnchantmentDefinition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
 
 public final class EnchantmentCatalog {
   @NotNull
@@ -43,8 +38,7 @@ public final class EnchantmentCatalog {
     this.entries = new ArrayList<>();
   }
 
-  // $VF: synthetic method
-  public static EnchantmentEntry register$default(
+  public static EnchantmentEntry registerWithDefaults(
       EnchantmentCatalog var0,
       String var1,
       String var2,
@@ -58,12 +52,12 @@ public final class EnchantmentCatalog {
       Cost var10,
       int var11,
       EquipmentSlotGroup[] var12,
-      Function1 var13,
+      Consumer var13,
       int var14,
       Object var15
   ) {
     if ((var14 & 4) != 0) {
-      var3 = TranslationCatalogKt.toDisplayName(var1);
+      var3 = TranslationNames.toDisplayName(var1);
     }
 
     if ((var14 & 16) != 0) {
@@ -102,14 +96,15 @@ public final class EnchantmentCatalog {
     }
 
     if ((var14 & 4096) != 0) {
-      var13 = (Function1<Builder, Unit>) (builder -> Unit.INSTANCE);
+      var13 = (Consumer<Builder>) (builder -> {
+      });
     }
 
     return var0.register(var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13);
   }
 
-  private static final Unit register$lambda$0(Builder var0) {
-    return Unit.INSTANCE;
+  private static void registerHelper0(Builder var0) {
+    return;
   }
 
   @NotNull
@@ -126,9 +121,9 @@ public final class EnchantmentCatalog {
       @NotNull Cost maxCost,
       int anvilCost,
       @NotNull EquipmentSlotGroup[] slots,
-      @NotNull Function1<? super Builder, Unit> configure
+      @NotNull Consumer<? super Builder> configure
   ) {
-    if (StringsKt.isBlank(path)) {
+    if (path.isBlank()) {
       int m = 0;
       String string4 = "附魔 ID 不能为空";
       throw new IllegalArgumentException(string4.toString());
@@ -161,7 +156,7 @@ public final class EnchantmentCatalog {
           minCost,
           maxCost,
           anvilCost,
-          ArraysKt.toList(slots),
+          java.util.List.of(slots),
           configure
       );
       this.entries.add(enchantmentEntry);
@@ -180,24 +175,24 @@ public final class EnchantmentCatalog {
       EnchantmentEntry enchantmentEntry = (EnchantmentEntry) object;
       int j = 0;
       EnchantmentDefinition enchantmentDefinition1;
-      if (enchantmentEntry.getPrimaryItems$zinecraft() == null) {
-        HolderSet holderSet2 = (HolderSet) holderGetter.getOrThrow(enchantmentEntry.getSupportedItems$zinecraft());
-        int p = enchantmentEntry.getWeight$zinecraft();
-        int q = enchantmentEntry.getMaxLevel$zinecraft();
-        Cost cost2 = enchantmentEntry.getMinCost$zinecraft();
-        Cost cost3 = enchantmentEntry.getMaxCost$zinecraft();
-        int r = enchantmentEntry.getAnvilCost$zinecraft();
-        EquipmentSlotGroup[] builder = enchantmentEntry.getSlots$zinecraft().toArray(new EquipmentSlotGroup[0]);
+      if (enchantmentEntry.getPrimaryItems() == null) {
+        HolderSet holderSet2 = (HolderSet) holderGetter.getOrThrow(enchantmentEntry.getSupportedItems());
+        int p = enchantmentEntry.getWeight();
+        int q = enchantmentEntry.getMaxLevel();
+        Cost cost2 = enchantmentEntry.getMinCost();
+        Cost cost3 = enchantmentEntry.getMaxCost();
+        int r = enchantmentEntry.getAnvilCost();
+        EquipmentSlotGroup[] builder = enchantmentEntry.getSlots().toArray(new EquipmentSlotGroup[0]);
         enchantmentDefinition1 = Enchantment.definition(holderSet2, p, q, cost2, cost3, r, Arrays.copyOf(builder, builder.length));
       } else {
-        HolderSet holderSet = (HolderSet) holderGetter.getOrThrow(enchantmentEntry.getSupportedItems$zinecraft());
-        HolderSet holderSet1 = (HolderSet) holderGetter.getOrThrow(enchantmentEntry.getPrimaryItems$zinecraft());
-        int n = enchantmentEntry.getWeight$zinecraft();
-        int o = enchantmentEntry.getMaxLevel$zinecraft();
-        Cost cost = enchantmentEntry.getMinCost$zinecraft();
-        Cost cost1 = enchantmentEntry.getMaxCost$zinecraft();
-        int s = enchantmentEntry.getAnvilCost$zinecraft();
-        EquipmentSlotGroup[] equipmentSlotGroups1 = enchantmentEntry.getSlots$zinecraft().toArray(new EquipmentSlotGroup[0]);
+        HolderSet holderSet = (HolderSet) holderGetter.getOrThrow(enchantmentEntry.getSupportedItems());
+        HolderSet holderSet1 = (HolderSet) holderGetter.getOrThrow(enchantmentEntry.getPrimaryItems());
+        int n = enchantmentEntry.getWeight();
+        int o = enchantmentEntry.getMaxLevel();
+        Cost cost = enchantmentEntry.getMinCost();
+        Cost cost1 = enchantmentEntry.getMaxCost();
+        int s = enchantmentEntry.getAnvilCost();
+        EquipmentSlotGroup[] equipmentSlotGroups1 = enchantmentEntry.getSlots().toArray(new EquipmentSlotGroup[0]);
         enchantmentDefinition1 = Enchantment.definition(
             holderSet, holderSet1, n, o, cost, cost1, s, Arrays.copyOf(equipmentSlotGroups1, equipmentSlotGroups1.length)
         );
@@ -205,7 +200,7 @@ public final class EnchantmentCatalog {
 
       EnchantmentDefinition enchantmentDefinition = enchantmentDefinition1;
       Builder builder1 = Enchantment.enchantment(enchantmentDefinition);
-      TagKey tagKey1 = enchantmentEntry.getExclusiveWith$zinecraft();
+      TagKey tagKey1 = enchantmentEntry.getExclusiveWith();
       if (tagKey1 != null) {
         TagKey tagKey = tagKey1;
         int l = 0;
@@ -213,7 +208,7 @@ public final class EnchantmentCatalog {
       }
 
       Builder builder1x = builder1;
-      enchantmentEntry.getConfigure$zinecraft().invoke(builder1x);
+      enchantmentEntry.getConfigure().accept(builder1x);
       ModRegistrar modRegistrar = this.registrar;
       ResourceKey resourceKey = enchantmentEntry.getKey();
       Enchantment enchantment = builder1.build(enchantmentEntry.getKey().location());

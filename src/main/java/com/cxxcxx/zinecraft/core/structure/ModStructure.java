@@ -5,18 +5,18 @@ import com.cxxcxx.zinecraft.api.world.structure.JigsawBuildingEntry;
 import com.cxxcxx.zinecraft.api.world.structure.JigsawPoolBuilder;
 import com.cxxcxx.zinecraft.api.world.structure.StructureCatalog;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import kotlin.Unit;
+
 import org.jetbrains.annotations.NotNull;
 
 public final class ModStructure {
   @NotNull
   public static final ModStructure INSTANCE = new ModStructure();
   @NotNull
-  private static final JigsawBuildingEntry PORTAL_RUINS_COMMON = StructureCatalog.simpleBuilding$default(
+  private static final JigsawBuildingEntry PORTAL_RUINS_COMMON = StructureCatalog.simpleBuildingWithDefaults(
       Zinecraft.INSTANCE.getSTRUCTURES(), "portal_ruins_common", "portal_ruins/common", 36, 30, 958853901, 0, 0.6F, 32, null
   );
   @NotNull
-  private static final JigsawBuildingEntry THREE_PIECE_JIGSAW = StructureCatalog.jigsawBuilding$default(
+  private static final JigsawBuildingEntry THREE_PIECE_JIGSAW = StructureCatalog.jigsawBuildingWithDefaults(
       Zinecraft.INSTANCE.getSTRUCTURES(),
       "jigsaw_example",
       40,
@@ -34,7 +34,7 @@ public final class ModStructure {
       false,
       null,
       null,
-      (kotlin.jvm.functions.Function1<JigsawBuildingBuilder, Unit>) (builder -> THREE_PIECE_JIGSAW$lambda$0(builder)),
+      (java.util.function.Consumer<JigsawBuildingBuilder>) (builder -> THREE_PIECE_JIGSAWHelper0(builder)),
       65504,
       null
   );
@@ -42,29 +42,29 @@ public final class ModStructure {
   private ModStructure() {
   }
 
-  private static final Unit THREE_PIECE_JIGSAW$lambda$0$0(JigsawPoolBuilder $this$pool) {
-    JigsawPoolBuilder.template$default($this$pool, "jigsaw_example/start", 0, 2, null);
-    return Unit.INSTANCE;
+  private static void THREE_PIECE_JIGSAWHelper0$0(JigsawPoolBuilder _this_pool) {
+    JigsawPoolBuilder.templateWithDefaults(_this_pool, "jigsaw_example/start", 0, 2, null);
+    return;
   }
 
-  private static final Unit THREE_PIECE_JIGSAW$lambda$0$1(JigsawPoolBuilder $this$pool) {
-    JigsawPoolBuilder.template$default($this$pool, "jigsaw_example/middle", 0, 2, null);
-    return Unit.INSTANCE;
+  private static void THREE_PIECE_JIGSAWHelper0$1(JigsawPoolBuilder _this_pool) {
+    JigsawPoolBuilder.templateWithDefaults(_this_pool, "jigsaw_example/middle", 0, 2, null);
+    return;
   }
 
-  private static final Unit THREE_PIECE_JIGSAW$lambda$0$2(JigsawPoolBuilder $this$pool) {
-    JigsawPoolBuilder.template$default($this$pool, "jigsaw_example/end", 0, 2, null);
-    return Unit.INSTANCE;
+  private static void THREE_PIECE_JIGSAWHelper0$2(JigsawPoolBuilder _this_pool) {
+    JigsawPoolBuilder.templateWithDefaults(_this_pool, "jigsaw_example/end", 0, 2, null);
+    return;
   }
 
-  private static final Unit THREE_PIECE_JIGSAW$lambda$0(JigsawBuildingBuilder $this$jigsawBuilding) {
-    JigsawBuildingBuilder.pool$default($this$jigsawBuilding, "start", null,
-        (kotlin.jvm.functions.Function1<JigsawPoolBuilder, Unit>) (pool -> THREE_PIECE_JIGSAW$lambda$0$0(pool)), 2, null);
-    JigsawBuildingBuilder.pool$default($this$jigsawBuilding, "middle", null,
-        (kotlin.jvm.functions.Function1<JigsawPoolBuilder, Unit>) (pool -> THREE_PIECE_JIGSAW$lambda$0$1(pool)), 2, null);
-    JigsawBuildingBuilder.pool$default($this$jigsawBuilding, "end", null,
-        (kotlin.jvm.functions.Function1<JigsawPoolBuilder, Unit>) (pool -> THREE_PIECE_JIGSAW$lambda$0$2(pool)), 2, null);
-    return Unit.INSTANCE;
+  private static void THREE_PIECE_JIGSAWHelper0(JigsawBuildingBuilder _this_jigsawBuilding) {
+    JigsawBuildingBuilder.poolWithDefaults(_this_jigsawBuilding, "start", null,
+        (java.util.function.Consumer<JigsawPoolBuilder>) (pool -> THREE_PIECE_JIGSAWHelper0$0(pool)), 2, null);
+    JigsawBuildingBuilder.poolWithDefaults(_this_jigsawBuilding, "middle", null,
+        (java.util.function.Consumer<JigsawPoolBuilder>) (pool -> THREE_PIECE_JIGSAWHelper0$1(pool)), 2, null);
+    JigsawBuildingBuilder.poolWithDefaults(_this_jigsawBuilding, "end", null,
+        (java.util.function.Consumer<JigsawPoolBuilder>) (pool -> THREE_PIECE_JIGSAWHelper0$2(pool)), 2, null);
+    return;
   }
 
   @NotNull

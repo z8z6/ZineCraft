@@ -6,7 +6,6 @@ import com.cxxcxx.zinecraft.api.item.ItemCatalog;
 import com.cxxcxx.zinecraft.api.item.ItemEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.sound.ModSound;
-import kotlin.text.CharsKt;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.resources.ResourceKey;
@@ -26,9 +25,9 @@ public final class ModItem {
   @NotNull
   public static final ModItem INSTANCE = new ModItem();
   @NotNull
-  private static final ItemEntry<Item> EXAMPLE_ITEM = item$default(INSTANCE, "example_item", "示例物品", null, 4, null);
+  private static final ItemEntry<Item> EXAMPLE_ITEM = itemWithDefaults(INSTANCE, "example_item", "示例物品", null, 4, null);
   @NotNull
-  private static final ItemEntry<Item> ORIROCK = item$default(INSTANCE, "orirock", "源岩", null, 4, null);
+  private static final ItemEntry<Item> ORIROCK = itemWithDefaults(INSTANCE, "orirock", "源岩", null, 4, null);
   @NotNull
   private static final ItemEntry<Item> ORIROCK_CUBE = INSTANCE.ItemWrap("orirock_cube", "固源岩");
   @NotNull
@@ -96,8 +95,8 @@ public final class ModItem {
   @NotNull
   private static final ItemEntry<Item> D32_STEEL = INSTANCE.ItemWrap("d32_steel", "D32钢");
   @NotNull
-  private static final CreativeTabEntry ITEM_GROUP = CreativeTabCatalog.register$default(
-      Zinecraft.INSTANCE.getCREATIVE_TABS(), "item", "Zinecraft", "Zinecraft", ModItem::ITEM_GROUP$lambda$0, false, 16, null
+  private static final CreativeTabEntry ITEM_GROUP = CreativeTabCatalog.registerWithDefaults(
+      Zinecraft.INSTANCE.getCREATIVE_TABS(), "item", "Zinecraft", "Zinecraft", ModItem::ITEM_GROUPHelper0, false, 16, null
   );
   @NotNull
   private static final ResourceKey<CreativeModeTab> ZINECRAFT_CORE_ITEM_GROUP_KEY = ITEM_GROUP.getKey();
@@ -176,7 +175,7 @@ public final class ModItem {
   @NotNull
   private static final ItemEntry<Item> CHIP_MEDIC_GROUP = INSTANCE.ItemWrap("chip_medic_group", "医疗芯片组");
   @NotNull
-  private static final ItemEntry<Item> MAGIC_DUST = ItemWrap$default(
+  private static final ItemEntry<Item> MAGIC_DUST = ItemWrapWithDefaults(
       INSTANCE,
       "magic_dust",
       "魔法粉尘",
@@ -209,8 +208,7 @@ public final class ModItem {
   private ModItem() {
   }
 
-  // $VF: synthetic method
-  static ItemEntry item$default(ModItem var0, String var1, String var2, String var3, int var4, Object var5) {
+  static ItemEntry itemWithDefaults(ModItem var0, String var1, String var2, String var3, int var4, Object var5) {
     if ((var4 & 4) != 0) {
       var3 = var0.toDisplayName(var1);
     }
@@ -218,8 +216,7 @@ public final class ModItem {
     return var0.item(var1, var2, var3);
   }
 
-  // $VF: synthetic method
-  static ItemEntry ItemWrap$default(ModItem var0, String var1, String var2, Supplier<? extends Item> var3, ModelTemplate var4, String var5, int var6, Object var7) {
+  static ItemEntry ItemWrapWithDefaults(ModItem var0, String var1, String var2, Supplier<? extends Item> var3, ModelTemplate var4, String var5, int var6, Object var7) {
     if ((var6 & 8) != 0) {
       ModelTemplate modelTemplate = ModelTemplates.FLAT_ITEM;
       var4 = modelTemplate;
@@ -232,15 +229,15 @@ public final class ModItem {
     return var0.ItemWrap(var1, var2, var3, var4, var5);
   }
 
-  private static final Item ItemWrap$lambda$0(Item $item) {
-    return $item;
+  private static final Item ItemWrapHelper0(Item _item) {
+    return _item;
   }
 
-  private static final ItemStack ITEM_GROUP$lambda$0() {
+  private static final ItemStack ITEM_GROUPHelper0() {
     return new ItemStack((ItemLike) D32_STEEL.getItem());
   }
 
-  private static final CharSequence toDisplayName$lambda$0(String word) {
+  private static final CharSequence toDisplayNameHelper0(String word) {
     String string = word;
     String string2;
     if (string.length() > 0) {
@@ -248,7 +245,7 @@ public final class ModItem {
       char it = string.charAt(0);
       StringBuilder stringBuilder = stringBuilder2;
       int i = 0;
-      StringBuilder stringBuilder1 = stringBuilder.append((Object) (Character.isLowerCase(it) ? CharsKt.titlecase(it) : String.valueOf(it)));
+      StringBuilder stringBuilder1 = stringBuilder.append(Character.isLowerCase(it) ? Character.toTitleCase(it) : it);
       String string1 = string;
       byte b = 1;
       String string3 = string1.substring(b);
@@ -261,11 +258,11 @@ public final class ModItem {
   }
 
   private final ItemEntry<Item> item(String path, String zhCn, String enUs) {
-    return ItemCatalog.register$default(Zinecraft.INSTANCE.getITEMS(), path, zhCn, enUs, null, null, false, 56, null);
+    return ItemCatalog.registerWithDefaults(Zinecraft.INSTANCE.getITEMS(), path, zhCn, enUs, null, null, false, 56, null);
   }
 
   private final ItemEntry<Item> ItemWrap(String path, String zhCn) {
-    return item$default(this, path, zhCn, null, 4, null);
+    return itemWithDefaults(this, path, zhCn, null, 4, null);
   }
 
   private final <T extends Item> ItemEntry<T> ItemWrap(String path, String zhCn, Supplier<T> item, ModelTemplate model, String enUs) {
@@ -657,8 +654,7 @@ public final class ModItem {
     return ZINECRAFT_CORE_ITEM_GROUP;
   }
 
-  private final String toDisplayName(String $this$toDisplayName) {
-    return com.cxxcxx.zinecraft.api.localization.TranslationCatalogKt.toDisplayName($this$toDisplayName);
+  private final String toDisplayName(String _this_toDisplayName) {
+    return com.cxxcxx.zinecraft.api.localization.TranslationNames.toDisplayName(_this_toDisplayName);
   }
 }
-

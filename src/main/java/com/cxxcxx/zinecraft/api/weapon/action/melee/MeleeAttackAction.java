@@ -126,7 +126,7 @@ public final class MeleeAttackAction implements WeaponAction {
       ServerPlayer serverPlayer = this.context.getPlayer();
       List<LivingEntity> list = MeleeHitboxService.INSTANCE.findTargets(serverPlayer, MeleeAttackAction.this.range, MeleeAttackAction.this.arcDegrees);
       AttributeInstance attributeInstance = serverPlayer.getAttribute(Attributes.ATTACK_DAMAGE);
-      float f = MeleeAttackActionKt.resolveActionMeleeDamage(MeleeAttackAction.this.damage, attributeInstance != null ? attributeInstance.getValue() : null);
+      float f = MeleeDamage.resolveActionMeleeDamage(MeleeAttackAction.this.damage, attributeInstance != null ? attributeInstance.getValue() : null);
       boolean bl = false;
 
       for (LivingEntity livingEntity : list) {

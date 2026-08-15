@@ -21,23 +21,6 @@ public final class JigsawPoolDefinition {
     this.projection = projection;
   }
 
-  // $VF: synthetic method
-  public static JigsawPoolDefinition copy$default(JigsawPoolDefinition var0, String var1, List var2, Projection var3, int var4, Object var5) {
-    if ((var4 & 1) != 0) {
-      var1 = var0.name;
-    }
-
-    if ((var4 & 2) != 0) {
-      var2 = var0.templates;
-    }
-
-    if ((var4 & 4) != 0) {
-      var3 = var0.projection;
-    }
-
-    return var0.copy(var1, var2, var3);
-  }
-
   @NotNull
   public final String getName() {
     return this.name;
@@ -51,26 +34,6 @@ public final class JigsawPoolDefinition {
   @NotNull
   public final Projection getProjection() {
     return this.projection;
-  }
-
-  @NotNull
-  public final String component1() {
-    return this.name;
-  }
-
-  @NotNull
-  public final List<JigsawTemplateElement> component2() {
-    return this.templates;
-  }
-
-  @NotNull
-  public final Projection component3() {
-    return this.projection;
-  }
-
-  @NotNull
-  public final JigsawPoolDefinition copy(@NotNull String name, @NotNull List<JigsawTemplateElement> templates, @NotNull Projection projection) {
-    return new JigsawPoolDefinition(name, templates, projection);
   }
 
   @Override

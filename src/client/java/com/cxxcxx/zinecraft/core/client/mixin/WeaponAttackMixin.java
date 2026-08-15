@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Minecraft.class)
 public class WeaponAttackMixin {
   @Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
-  private void zinecraft$requestWeaponAction(CallbackInfoReturnable<Boolean> cir) {
+  private void zinecraft_requestWeaponAction(CallbackInfoReturnable<Boolean> cir) {
     if (WeaponClientInput.requestPrimary()) {
       cir.setReturnValue(true);
     }

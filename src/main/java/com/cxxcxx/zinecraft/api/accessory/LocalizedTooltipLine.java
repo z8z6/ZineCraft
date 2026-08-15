@@ -15,19 +15,6 @@ public final class LocalizedTooltipLine {
     this.enUs = enUs;
   }
 
-  // $VF: synthetic method
-  public static LocalizedTooltipLine copy$default(LocalizedTooltipLine var0, String var1, String var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.zhCn;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.enUs;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   @NotNull
   public final String getZhCn() {
     return this.zhCn;
@@ -36,21 +23,6 @@ public final class LocalizedTooltipLine {
   @NotNull
   public final String getEnUs() {
     return this.enUs;
-  }
-
-  @NotNull
-  public final String component1() {
-    return this.zhCn;
-  }
-
-  @NotNull
-  public final String component2() {
-    return this.enUs;
-  }
-
-  @NotNull
-  public final LocalizedTooltipLine copy(@NotNull String zhCn, @NotNull String enUs) {
-    return new LocalizedTooltipLine(zhCn, enUs);
   }
 
   @Override

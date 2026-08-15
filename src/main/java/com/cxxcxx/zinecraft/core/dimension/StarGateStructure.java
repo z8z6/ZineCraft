@@ -1,9 +1,6 @@
 package com.cxxcxx.zinecraft.core.dimension;
 
 import com.cxxcxx.zinecraft.core.block.ModBlock;
-import kotlin.collections.CollectionsKt;
-import kotlin.collections.IntIterator;
-import kotlin.ranges.IntRange;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.LevelAccessor;
@@ -12,11 +9,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 public final class StarGateStructure {
   @NotNull
@@ -40,100 +32,29 @@ public final class StarGateStructure {
   }
 
   public final boolean canPlace(@NotNull LevelAccessor level, @NotNull BlockPos base, @NotNull Axis axis) {
-    Integer[] $this$all$iv = new Integer[]{-FOUNDATION_HALF_WIDTH, 0, FOUNDATION_HALF_WIDTH};
-    Iterable iterable2 = CollectionsKt.listOf($this$all$iv);
-    int i = 0;
-    Iterable $this$mapTo$iv$iv = iterable2;
-    var collection = new ArrayList(CollectionsKt.collectionSizeOrDefault(iterable2, 10));
-    int j = 0;
-
-    for (Object object : $this$mapTo$iv$iv) {
-      int $i$f$all = ((Number) object).intValue();
-      Collection collection1 = collection;
-      int l = 0;
-      BlockPos blockPos = INSTANCE.local(base, axis, $i$f$all, 0, 0);
-      collection1.add(level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, blockPos.getX(), blockPos.getZ()));
+    int minHeight = Integer.MAX_VALUE;
+    int maxHeight = Integer.MIN_VALUE;
+    for (int horizontal : new int[]{-FOUNDATION_HALF_WIDTH, 0, FOUNDATION_HALF_WIDTH}) {
+      BlockPos sample = local(base, axis, horizontal, 0, 0);
+      int height = level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, sample.getX(), sample.getZ());
+      minHeight = Math.min(minHeight, height);
+      maxHeight = Math.max(maxHeight, height);
     }
-
-    List list = (List) collection;
-    int maxHeight = list.stream().mapToInt(value -> ((Number) value).intValue()).max().orElseThrow();
-    int minHeight = list.stream().mapToInt(value -> ((Number) value).intValue()).min().orElseThrow();
     if (maxHeight - minHeight > 2) {
       return false;
     }
 
-    Iterable iterable3 = (Iterable) (new IntRange(2, outerHalfWidths.length + 2));
-    i = 0;
-    boolean bl;
-    if (iterable3 instanceof Collection && ((Collection) iterable3).isEmpty()) {
-      bl = true;
-    } else {
-      Iterator iterator1 = iterable3.iterator();
-
-      while (true) {
-        if (!iterator1.hasNext()) {
-          bl = true;
-          break;
-        }
-
-        int s = ((IntIterator) iterator1).nextInt();
-        j = s;
-        int t = 0;
-        Iterable iterable4 = (Iterable) (new IntRange(-FOUNDATION_HALF_WIDTH, FOUNDATION_HALF_WIDTH));
-        int u = 0;
-        if (iterable4 instanceof Collection && ((Collection) iterable4).isEmpty()) {
-          bl = true;
-        } else {
-          Iterator iterator2 = iterable4.iterator();
-
-          while (true) {
-            if (!iterator2.hasNext()) {
-              bl = true;
-              break;
-            }
-
-            int v = ((IntIterator) iterator2).nextInt();
-            int m = v;
-            int n = 0;
-            Iterable iterable1 = (Iterable) (new IntRange(-FOUNDATION_HALF_DEPTH, 3));
-            int o = 0;
-            if (iterable1 instanceof Collection && ((Collection) iterable1).isEmpty()) {
-              bl = true;
-            } else {
-              Iterator iterator = iterable1.iterator();
-
-              while (true) {
-                if (!iterator.hasNext()) {
-                  bl = true;
-                  break;
-                }
-
-                int p = ((IntIterator) iterator).nextInt();
-                int q = p;
-                int r = 0;
-                BlockState blockState = level.getBlockState(INSTANCE.local(base, axis, m, j, q));
-                if (!blockState.canBeReplaced() && !blockState.is(Blocks.SNOW) && !blockState.is(Blocks.SNOW_BLOCK)) {
-                  bl = false;
-                  break;
-                }
-              }
-            }
-
-            if (!bl) {
-              bl = false;
-              break;
-            }
+    for (int y = 2; y <= outerHalfWidths.length + 2; y++) {
+      for (int horizontal = -FOUNDATION_HALF_WIDTH; horizontal <= FOUNDATION_HALF_WIDTH; horizontal++) {
+        for (int depth = -FOUNDATION_HALF_DEPTH; depth <= 3; depth++) {
+          BlockState state = level.getBlockState(local(base, axis, horizontal, y, depth));
+          if (!state.canBeReplaced() && !state.is(Blocks.SNOW) && !state.is(Blocks.SNOW_BLOCK)) {
+            return false;
           }
-        }
-
-        if (!bl) {
-          bl = false;
-          break;
         }
       }
     }
-
-    return bl;
+    return true;
   }
 
   @NotNull
@@ -208,8 +129,8 @@ public final class StarGateStructure {
         (BlockState) ((BlockState) ModBlock.INSTANCE
             .getSTARGATE_CONTROLLER()
             .defaultBlockState()
-            .setValue((Property) StarGateControllerBlock.Companion.getAXIS(), (Comparable) axis))
-            .setValue((Property) StarGateControllerBlock.Companion.getACTIVE(), active),
+            .setValue((Property) StarGateControllerBlock.ACCESS.getAXIS(), (Comparable) axis))
+            .setValue((Property) StarGateControllerBlock.ACCESS.getACTIVE(), active),
         3
     );
     return this.local(base, axis, 0, 1, 0);
@@ -224,7 +145,7 @@ public final class StarGateStructure {
     this.setPortalInterior(level, gateBase, axis, true);
     BlockState blockState = level.getBlockState(controllerPos);
     if (blockState.is(ModBlock.INSTANCE.getSTARGATE_CONTROLLER())) {
-      level.setBlock(controllerPos, (BlockState) blockState.setValue((Property) StarGateControllerBlock.Companion.getACTIVE(), true), 3);
+      level.setBlock(controllerPos, (BlockState) blockState.setValue((Property) StarGateControllerBlock.ACCESS.getACTIVE(), true), 3);
     }
 
     return true;
@@ -284,7 +205,7 @@ public final class StarGateStructure {
 
   private final boolean isFrameIntact(LevelAccessor level, BlockPos base, BlockPos controllerPos, Axis axis) {
     BlockState blockState = level.getBlockState(controllerPos);
-    if (blockState.is(ModBlock.INSTANCE.getSTARGATE_CONTROLLER()) && blockState.getValue((Property) StarGateControllerBlock.Companion.getAXIS()) == axis) {
+    if (blockState.is(ModBlock.INSTANCE.getSTARGATE_CONTROLLER()) && blockState.getValue((Property) StarGateControllerBlock.ACCESS.getAXIS()) == axis) {
       int i = 0;
 
       for (int j = outerHalfWidths.length; i < j; i++) {

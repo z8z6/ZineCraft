@@ -1,19 +1,19 @@
 package com.cxxcxx.zinecraft.api.weapon;
 
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
-import kotlin.jvm.functions.Function1;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.*;
+import java.util.function.Function;
 
 public final class WeaponRegistry {
   private final Map<ResourceLocation, WeaponAction> actions = new LinkedHashMap<>();
   private final Map<ResourceLocation, WeaponDefinition> definitions = new LinkedHashMap<>();
   private final Map<Item, WeaponDefinition> definitionsByItem = new LinkedHashMap<>();
   private final Map<ResourceLocation, Set<ResourceLocation>> dynamicDefinitionIds = new LinkedHashMap<>();
-  private final List<Function1<ItemStack, WeaponDefinition>> resolvers = new ArrayList<>();
+  private final List<Function<ItemStack, WeaponDefinition>> resolvers = new ArrayList<>();
 
   public WeaponAction registerAction(WeaponAction action) {
     if (actions.putIfAbsent(action.getId(), action) != null)
@@ -47,8 +47,8 @@ public final class WeaponRegistry {
     dynamicDefinitionIds.put(source, ids);
   }
 
-  public void registerResolver(Function1<? super ItemStack, WeaponDefinition> resolver) {
-    resolvers.add(stack -> resolver.invoke(stack));
+  public void registerResolver(Function<? super ItemStack, WeaponDefinition> resolver) {
+    resolvers.add(stack -> resolver.apply(stack));
   }
 
   public WeaponAction action(ResourceLocation id) {
@@ -63,7 +63,7 @@ public final class WeaponRegistry {
     var direct = definitionsByItem.get(stack.getItem());
     if (direct != null) return direct;
     for (var resolver : resolvers) {
-      var result = resolver.invoke(stack);
+      var result = resolver.apply(stack);
       if (result != null) return result;
     }
     return null;

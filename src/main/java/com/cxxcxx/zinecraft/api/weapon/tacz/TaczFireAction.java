@@ -1,13 +1,8 @@
 package com.cxxcxx.zinecraft.api.weapon.tacz;
 
-import com.cxxcxx.zinecraft.api.weapon.action.TimedWeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
+import com.cxxcxx.zinecraft.api.weapon.action.*;
 import com.cxxcxx.zinecraft.api.weapon.combat.HitscanService;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
-import kotlin.ranges.IntRange;
-import kotlin.ranges.RangesKt;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +24,7 @@ public final class TaczFireAction implements WeaponAction {
 
   @Override
   public boolean canStart(@NotNull WeaponContext context) {
-    TaczGunSpec taczGunSpec1 = TaczWeaponActionsKt.access$gun(context);
+    TaczGunSpec taczGunSpec1 = TaczWeaponActions.gun(context);
     if (taczGunSpec1 == null) {
       return false;
     }
@@ -44,19 +39,19 @@ public final class TaczFireAction implements WeaponAction {
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    TaczGunSpec taczGunSpec1 = TaczWeaponActionsKt.access$gun(context);
+    TaczGunSpec taczGunSpec1 = TaczWeaponActions.gun(context);
     if (taczGunSpec1 == null) {
       String string1 = "Required value was null.";
       throw new IllegalArgumentException(string1.toString());
     } else {
       final TaczGunSpec taczGunSpec = taczGunSpec1;
-      String string = TaczWeaponActionsKt.access$fireMode(context);
+      String string = TaczWeaponActions.fireMode(context);
       int i = java.util.Objects.equals(string, "burst") ? taczGunSpec.getBurstCount() : 1;
-      final int j = RangesKt.coerceAtLeast(
+      final int j = Math.max(
           (int) Math.ceil(1200.0 / (java.util.Objects.equals(string, "burst") ? taczGunSpec.getBurstRpm() : taczGunSpec.getRpm())), 1
       );
       final int k = (i - 1) * j;
-      IntRange intRange = new IntRange(0, k);
+      TickRange intRange = new TickRange(0, k);
       int l = k + j;
       return new TimedWeaponActionRuntime(intRange, l) {
         @Override

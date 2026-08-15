@@ -1,10 +1,8 @@
 package com.cxxcxx.zinecraft.api.item;
 
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import com.cxxcxx.zinecraft.api.localization.TranslationCatalogKt;
+import com.cxxcxx.zinecraft.api.localization.TranslationNames;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
-import kotlin.jvm.functions.Function0;
-import kotlin.text.StringsKt;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class ItemCatalog {
   @NotNull
@@ -32,12 +31,11 @@ public final class ItemCatalog {
     this.entries = new ArrayList<>();
   }
 
-  // $VF: synthetic method
-  public static ItemEntry register$default(
-      ItemCatalog var0, String var1, String var2, String var3, ModelTemplate var4, boolean var5, Function0 var6, int var7, Object var8
+  public static ItemEntry registerWithDefaults(
+      ItemCatalog var0, String var1, String var2, String var3, ModelTemplate var4, boolean var5, Supplier var6, int var7, Object var8
   ) {
     if ((var7 & 4) != 0) {
-      var3 = TranslationCatalogKt.toDisplayName(var1);
+      var3 = TranslationNames.toDisplayName(var1);
     }
 
     if ((var7 & 8) != 0) {
@@ -52,12 +50,11 @@ public final class ItemCatalog {
     return var0.register(var1, var2, var3, var4, var5, var6);
   }
 
-  // $VF: synthetic method
-  public static ItemEntry register$default(
+  public static ItemEntry registerWithDefaults(
       ItemCatalog var0, String var1, String var2, String var3, ModelTemplate var4, Properties var5, boolean var6, int var7, Object var8
   ) {
     if ((var7 & 4) != 0) {
-      var3 = TranslationCatalogKt.toDisplayName(var1);
+      var3 = TranslationNames.toDisplayName(var1);
     }
 
     if ((var7 & 8) != 0) {
@@ -76,12 +73,12 @@ public final class ItemCatalog {
     return var0.register(var1, var2, var3, var4, var5, var6);
   }
 
-  private static final Item register$lambda$5(Properties $properties) {
-    return new Item($properties);
+  private static final Item registerHelper5(Properties _properties) {
+    return new Item(_properties);
   }
 
   @NotNull
-  public final List<ItemEntry<?>> getEntries$zinecraft() {
+  public final List<ItemEntry<?>> getEntries() {
     return this.entries;
   }
 
@@ -92,7 +89,7 @@ public final class ItemCatalog {
       @NotNull String enUs,
       @NotNull ModelTemplate model,
       boolean includeInCreative,
-      @NotNull Function0<? extends T> factory
+      @NotNull Supplier<? extends T> factory
   ) {
     if (!ResourceLocation.isValidPath(path)) {
       int m = 0;
@@ -100,13 +97,13 @@ public final class ItemCatalog {
       throw new IllegalArgumentException(string3.toString());
     }
 
-    if (StringsKt.isBlank(zhCn)) {
+    if (zhCn.isBlank()) {
       int l = 0;
       String string2 = "物品中文名不能为空：" + path;
       throw new IllegalArgumentException(string2.toString());
     }
 
-    if (StringsKt.isBlank(enUs)) {
+    if (enUs.isBlank()) {
       int k = 0;
       String string1 = "物品英文名不能为空：" + path;
       throw new IllegalArgumentException(string1.toString());
@@ -141,7 +138,7 @@ public final class ItemCatalog {
       String string = "物品 ID 重复：" + path;
       throw new IllegalArgumentException(string.toString());
     } else {
-      ItemEntry itemEntry1 = new ItemEntry<>(path, this.registrar.item(path, factory::invoke), model, includeInCreative);
+      ItemEntry itemEntry1 = new ItemEntry<>(path, this.registrar.item(path, factory), model, includeInCreative);
       this.entries.add(itemEntry1);
       TranslationCatalog translationCatalog = this.translations;
       String string4 = "item." + this.registrar.getNamespace() + "." + path;
@@ -157,4 +154,3 @@ public final class ItemCatalog {
     return this.register(path, zhCn, enUs, model, includeInCreative, () -> new Item(properties));
   }
 }
-

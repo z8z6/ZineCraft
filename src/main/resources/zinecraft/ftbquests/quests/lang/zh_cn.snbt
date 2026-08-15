@@ -216,7 +216,7 @@
 	quest.6000000000000004.title: "饰品与藏品"
 	quest.6000000000000004.quest_desc: ["Curios 9.5.1+1.21.1 提供饰品能力。Zinecraft 的集成战略藏品属于 relic 槽物品，当前为玩家配置 20 个藏品栏位。"]
 	quest.6000000000000005.title: "配置与基础库"
-	quest.6000000000000005.quest_desc: ["Cloth Config 15.0.140 提供配置界面能力；Architectury 与 Common Networking 等由现有模组作为传递依赖加载。Kotlin 标准库属于代码运行库，不作为独立 Minecraft 模组展示。"]
+	quest.6000000000000005.quest_desc: ["Cloth Config 15.0.140 提供配置界面能力；Architectury 与 Common Networking 等由现有模组作为传递依赖加载。项目源码与运行时现已统一为 Java，不再携带额外的语言运行库。"]
 	quest.6000000000000006.title: "仅开发环境辅助模组"
 	quest.6000000000000006.quest_desc: ["JEI 19.27.0.340、Just Enough Resources 1.6.0.17、AppleSkin 3.0.9、Jade 15.10.5、Just Enough Characters 4.5.22、JourneyMap 6.0.1、Nature's Compass 3.4.0 与 Explorer's Compass 3.4.0。\n\n它们分别用于物品与资源查询、饱食信息、方块信息、拼音搜索、地图调试，以及定位群系和结构，只作为开发运行依赖。"]
 }

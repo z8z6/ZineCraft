@@ -1,7 +1,5 @@
 package com.cxxcxx.zinecraft.api.world.structure;
 
-import kotlin.collections.CollectionsKt;
-import kotlin.text.StringsKt;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,8 +21,7 @@ public final class JigsawPoolBuilder {
     this.templates = new ArrayList<>();
   }
 
-  // $VF: synthetic method
-  public static void template$default(JigsawPoolBuilder var0, String var1, int var2, int var3, Object var4) {
+  public static void templateWithDefaults(JigsawPoolBuilder var0, String var1, int var2, int var3, Object var4) {
     if ((var3 & 2) != 0) {
       var2 = 1;
     }
@@ -33,7 +30,7 @@ public final class JigsawPoolBuilder {
   }
 
   public final void template(@NotNull String path, int weight) {
-    if (StringsKt.isBlank(path)) {
+    if (path.isBlank()) {
       int j = 0;
       String string1 = "Jigsaw 模板路径不能为空";
       throw new IllegalArgumentException(string1.toString());
@@ -49,13 +46,13 @@ public final class JigsawPoolBuilder {
   }
 
   @NotNull
-  public final JigsawPoolDefinition build$zinecraft() {
+  public final JigsawPoolDefinition build() {
     if (this.templates.isEmpty()) {
       int i = 0;
       String string = "Jigsaw 模板池不能为空: " + this.name;
       throw new IllegalArgumentException(string.toString());
     } else {
-      return new JigsawPoolDefinition(this.name, CollectionsKt.toList(this.templates), this.projection);
+      return new JigsawPoolDefinition(this.name, com.cxxcxx.zinecraft.api.util.CollectionSupport.toList(this.templates), this.projection);
     }
   }
 }

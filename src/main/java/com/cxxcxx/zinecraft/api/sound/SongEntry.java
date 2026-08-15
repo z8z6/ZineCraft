@@ -81,7 +81,7 @@ public final class SongEntry {
   }
 
   @NotNull
-  public final JukeboxSong create$zinecraft() {
+  public final JukeboxSong create() {
     return new JukeboxSong((Holder) this.sound, (Component) Component.translatable(this.descriptionKey), this.lengthSeconds, this.signal);
   }
 }

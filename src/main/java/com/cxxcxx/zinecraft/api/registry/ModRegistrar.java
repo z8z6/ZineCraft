@@ -1,10 +1,7 @@
 package com.cxxcxx.zinecraft.api.registry;
 
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
-import kotlin.Pair;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
-import kotlin.jvm.functions.Function1;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -39,6 +36,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -53,51 +51,53 @@ public final class ModRegistrar {
     this.namespace = namespace;
   }
 
-  public static Supplier<? extends Block> block$default(ModRegistrar self, String path, Supplier<? extends Block> factory, boolean registerItem, Item.Properties properties, int mask, Object marker) {
+  public static Supplier<? extends Block> blockWithDefaults(ModRegistrar self, String path, Supplier<? extends Block> factory, boolean registerItem, Item.Properties properties, int mask, Object marker) {
     return self.block(path, factory, (mask & 4) != 0 || registerItem, (mask & 8) != 0 ? new Item.Properties() : properties);
   }
 
-  public static Supplier<? extends EntityType<?>> entity$default(
+  public static Supplier<? extends EntityType<?>> entityWithDefaults(
       ModRegistrar self,
       String path,
       EntityType.EntityFactory<?> factory,
       MobCategory category,
-      Function1<?, Unit> configure,
+      Consumer<?> configure,
       int mask,
       Object marker
   ) {
     @SuppressWarnings("unchecked")
     var typedFactory = (EntityType.EntityFactory<Entity>) factory;
     @SuppressWarnings("unchecked")
-    Function1<EntityType.Builder<Entity>, Unit> typedConfigure;
+    Consumer<EntityType.Builder<Entity>> typedConfigure;
     if ((mask & 8) != 0) {
-      typedConfigure = builder -> Unit.INSTANCE;
+      typedConfigure = builder -> {
+      };
     } else {
-      typedConfigure = (Function1<EntityType.Builder<Entity>, Unit>) configure;
+      typedConfigure = (Consumer<EntityType.Builder<Entity>>) configure;
     }
     return self.entity(path, typedFactory, category, typedConfigure);
   }
 
-  public static Supplier<? extends EntityType<?>> mob$default(
+  public static Supplier<? extends EntityType<?>> mobWithDefaults(
       ModRegistrar self,
       String path,
       EntityType.EntityFactory<?> factory,
       MobCategory category,
-      Function0<? extends AttributeSupplier.Builder> attributes,
+      Supplier<? extends AttributeSupplier.Builder> attributes,
       SpawnPlacementType placement,
       Heightmap.Types heightmap,
       SpawnPlacements.SpawnPredicate<?> predicate,
-      Function1<?, Unit> configure,
+      Consumer<?> configure,
       int mask,
       Object marker
   ) {
     @SuppressWarnings("unchecked") var typedFactory = (EntityType.EntityFactory<Mob>) factory;
     @SuppressWarnings("unchecked") var typedPredicate = (SpawnPlacements.SpawnPredicate<Mob>) predicate;
-    Function1<EntityType.Builder<Mob>, Unit> typedConfigure;
+    Consumer<EntityType.Builder<Mob>> typedConfigure;
     if ((mask & 128) != 0) {
-      typedConfigure = builder -> Unit.INSTANCE;
+      typedConfigure = builder -> {
+      };
     } else {
-      typedConfigure = (Function1<EntityType.Builder<Mob>, Unit>) configure;
+      typedConfigure = (Consumer<EntityType.Builder<Mob>>) configure;
     }
     return self.mob(path, typedFactory, category, attributes,
         (mask & 16) != 0 ? null : placement,
@@ -190,7 +190,7 @@ public final class ModRegistrar {
       String path,
       EntityType.EntityFactory<T> factory,
       MobCategory category,
-      Function1<? super EntityType.Builder<T>, Unit> configure
+      Consumer<? super EntityType.Builder<T>> configure
   ) {
     var deferred = (DeferredRegister<EntityType<?>>) deferredRegisters.computeIfAbsent(
         BuiltInRegistries.ENTITY_TYPE.key(),
@@ -198,7 +198,7 @@ public final class ModRegistrar {
     );
     return (Supplier) deferred.register(path, () -> {
       var builder = EntityType.Builder.of(factory, category);
-      configure.invoke(builder);
+      configure.accept(builder);
       return builder.build(path);
     });
   }
@@ -207,11 +207,11 @@ public final class ModRegistrar {
       String path,
       EntityType.EntityFactory<T> factory,
       MobCategory category,
-      Function0<? extends AttributeSupplier.Builder> attributes,
+      Supplier<? extends AttributeSupplier.Builder> attributes,
       SpawnPlacementType placement,
       Heightmap.Types heightmap,
       SpawnPlacements.SpawnPredicate<T> predicate,
-      Function1<? super EntityType.Builder<T>, Unit> configure
+      Consumer<? super EntityType.Builder<T>> configure
   ) {
     if (!((placement == null) == (heightmap == null) && (heightmap == null) == (predicate == null))) {
       throw new IllegalArgumentException("生成限制的 placement、heightmap 和 predicate 必须同时提供");
@@ -257,7 +257,7 @@ public final class ModRegistrar {
   }
 
   private void createAttributes(EntityAttributeCreationEvent event) {
-    mobs.forEach(mob -> event.put(mob.type().get(), mob.attributes().invoke().build()));
+    mobs.forEach(mob -> event.put(mob.type().get(), mob.attributes().get().build()));
   }
 
   private void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
@@ -266,7 +266,7 @@ public final class ModRegistrar {
 
   private record MobRegistration<T extends Mob>(
       Supplier<EntityType<T>> type,
-      Function0<? extends AttributeSupplier.Builder> attributes,
+      Supplier<? extends AttributeSupplier.Builder> attributes,
       SpawnPlacementType placement,
       Heightmap.Types heightmap,
       SpawnPlacements.SpawnPredicate<T> predicate

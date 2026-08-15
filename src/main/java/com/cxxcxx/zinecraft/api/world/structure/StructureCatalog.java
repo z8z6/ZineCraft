@@ -1,13 +1,7 @@
 package com.cxxcxx.zinecraft.api.world.structure;
 
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
-import kotlin.Pair;
-import kotlin.TuplesKt;
-import kotlin.Unit;
-import kotlin.collections.CollectionsKt;
-import kotlin.collections.MapsKt;
-import kotlin.jvm.functions.Function1;
-import kotlin.ranges.RangesKt;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.HolderGetter;
@@ -45,6 +39,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 public final class StructureCatalog {
   @NotNull
@@ -52,9 +47,9 @@ public final class StructureCatalog {
   @NotNull
   private final List<JigsawBuildingEntry> buildings;
   @NotNull
-  private final List<Function1<BootstrapContext<Structure>, Unit>> structureGenerators;
+  private final List<Consumer<BootstrapContext<Structure>>> structureGenerators;
   @NotNull
-  private final List<Function1<BootstrapContext<StructureSet>, Unit>> structureSetGenerators;
+  private final List<Consumer<BootstrapContext<StructureSet>>> structureSetGenerators;
 
   public StructureCatalog(@NotNull ModRegistrar registrar) {
     super();
@@ -62,11 +57,10 @@ public final class StructureCatalog {
     this.buildings = new ArrayList<>();
     this.structureGenerators = new ArrayList<>();
     this.structureSetGenerators = new ArrayList<>();
-    FixedOriginStructurePlacement.Companion.register$zinecraft(this.registrar);
+    FixedOriginStructurePlacement.ACCESS.register(this.registrar);
   }
 
-  // $VF: synthetic method
-  public static JigsawBuildingEntry simpleBuilding$default(
+  public static JigsawBuildingEntry simpleBuildingWithDefaults(
       StructureCatalog var0, String var1, String var2, int var3, int var4, int var5, int var6, float var7, int var8, Object var9
   ) {
     if ((var8 & 2) != 0) {
@@ -92,8 +86,7 @@ public final class StructureCatalog {
     return var0.simpleBuilding(var1, var2, var3, var4, var5, var6, var7);
   }
 
-  // $VF: synthetic method
-  public static JigsawBuildingEntry uniqueLandmark$default(
+  public static JigsawBuildingEntry uniqueLandmarkWithDefaults(
       StructureCatalog var0, String var1, String var2, ResourceKey var3, int var4, int var5, Types var6, int var7, float var8, int var9, Object var10
   ) {
     if ((var9 & 2) != 0) {
@@ -123,8 +116,7 @@ public final class StructureCatalog {
     return var0.uniqueLandmark(var1, var2, var3, var4, var5, var6, var7, var8);
   }
 
-  // $VF: synthetic method
-  public static JigsawBuildingEntry fixedOriginUndergroundLandmark$default(
+  public static JigsawBuildingEntry fixedOriginUndergroundLandmarkWithDefaults(
       StructureCatalog var0, String var1, String var2, ResourceKey var3, int var4, int var5, int var6, Object var7
   ) {
     if ((var6 & 2) != 0) {
@@ -138,8 +130,7 @@ public final class StructureCatalog {
     return var0.fixedOriginUndergroundLandmark(var1, var2, var3, var4, var5);
   }
 
-  // $VF: synthetic method
-  public static JigsawBuildingEntry settlement$default(
+  public static JigsawBuildingEntry settlementWithDefaults(
       StructureCatalog var0,
       String var1,
       String var2,
@@ -187,8 +178,7 @@ public final class StructureCatalog {
     return var0.settlement(var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12);
   }
 
-  // $VF: synthetic method
-  public static JigsawBuildingEntry jigsawBuilding$default(
+  public static JigsawBuildingEntry jigsawBuildingWithDefaults(
       StructureCatalog var0,
       String var1,
       int var2,
@@ -206,7 +196,7 @@ public final class StructureCatalog {
       boolean var14,
       Decoration var15,
       TerrainAdjustment var16,
-      Function1 var17,
+      Consumer var17,
       int var18,
       Object var19
   ) {
@@ -269,54 +259,54 @@ public final class StructureCatalog {
     return var0.jigsawBuilding(var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17);
   }
 
-  private static final Unit simpleBuilding$lambda$0$0(String $template, JigsawPoolBuilder $this$pool) {
-    JigsawPoolBuilder.template$default($this$pool, $template, 0, 2, null);
-    return Unit.INSTANCE;
+  private static void simpleBuildingHelper0$0(String _template, JigsawPoolBuilder _this_pool) {
+    JigsawPoolBuilder.templateWithDefaults(_this_pool, _template, 0, 2, null);
+    return;
   }
 
-  private static final Unit simpleBuilding$lambda$0(String $template, JigsawBuildingBuilder $this$jigsawBuilding) {
-    JigsawBuildingBuilder.pool$default($this$jigsawBuilding, "start", null,
-        (Function1<JigsawPoolBuilder, Unit>) (pool -> simpleBuilding$lambda$0$0($template, pool)), 2, null);
-    return Unit.INSTANCE;
+  private static void simpleBuildingHelper0(String _template, JigsawBuildingBuilder _this_jigsawBuilding) {
+    JigsawBuildingBuilder.poolWithDefaults(_this_jigsawBuilding, "start", null,
+        (Consumer<JigsawPoolBuilder>) (pool -> simpleBuildingHelper0$0(_template, pool)), 2, null);
+    return;
   }
 
-  private static final Unit uniqueLandmark$lambda$1$0(String $template, JigsawPoolBuilder $this$pool) {
-    JigsawPoolBuilder.template$default($this$pool, $template, 0, 2, null);
-    return Unit.INSTANCE;
+  private static void uniqueLandmarkHelper1$0(String _template, JigsawPoolBuilder _this_pool) {
+    JigsawPoolBuilder.templateWithDefaults(_this_pool, _template, 0, 2, null);
+    return;
   }
 
-  private static final Unit uniqueLandmark$lambda$1(String $template, JigsawBuildingBuilder $this$jigsawBuilding) {
-    JigsawBuildingBuilder.pool$default($this$jigsawBuilding, "start", null,
-        (Function1<JigsawPoolBuilder, Unit>) (pool -> uniqueLandmark$lambda$1$0($template, pool)), 2, null);
-    return Unit.INSTANCE;
+  private static void uniqueLandmarkHelper1(String _template, JigsawBuildingBuilder _this_jigsawBuilding) {
+    JigsawBuildingBuilder.poolWithDefaults(_this_jigsawBuilding, "start", null,
+        (Consumer<JigsawPoolBuilder>) (pool -> uniqueLandmarkHelper1$0(_template, pool)), 2, null);
+    return;
   }
 
-  private static final Unit fixedOriginUndergroundLandmark$lambda$0$0(String $template, JigsawPoolBuilder $this$pool) {
-    JigsawPoolBuilder.template$default($this$pool, $template, 0, 2, null);
-    return Unit.INSTANCE;
+  private static void fixedOriginUndergroundLandmarkHelper0$0(String _template, JigsawPoolBuilder _this_pool) {
+    JigsawPoolBuilder.templateWithDefaults(_this_pool, _template, 0, 2, null);
+    return;
   }
 
-  private static final Unit fixedOriginUndergroundLandmark$lambda$0(String $template, JigsawBuildingBuilder $this$jigsawBuilding) {
-    JigsawBuildingBuilder.pool$default($this$jigsawBuilding, "start", null,
-        (Function1<JigsawPoolBuilder, Unit>) (pool -> fixedOriginUndergroundLandmark$lambda$0$0($template, pool)), 2, null);
-    return Unit.INSTANCE;
+  private static void fixedOriginUndergroundLandmarkHelper0(String _template, JigsawBuildingBuilder _this_jigsawBuilding) {
+    JigsawBuildingBuilder.poolWithDefaults(_this_jigsawBuilding, "start", null,
+        (Consumer<JigsawPoolBuilder>) (pool -> fixedOriginUndergroundLandmarkHelper0$0(_template, pool)), 2, null);
+    return;
   }
 
-  private static final Unit settlement$lambda$1$0(String $templateRoot, JigsawPoolBuilder $this$pool) {
-    JigsawPoolBuilder.template$default($this$pool, $templateRoot + "/center", 0, 2, null);
-    return Unit.INSTANCE;
+  private static void settlementHelper1$0(String _templateRoot, JigsawPoolBuilder _this_pool) {
+    JigsawPoolBuilder.templateWithDefaults(_this_pool, _templateRoot + "/center", 0, 2, null);
+    return;
   }
 
-  private static final Unit settlement$lambda$1$1(String $templateRoot, JigsawPoolBuilder $this$pool) {
-    $this$pool.template($templateRoot + "/street_straight", 5);
-    $this$pool.template($templateRoot + "/street_corner", 3);
-    $this$pool.template($templateRoot + "/street_cross", 2);
-    $this$pool.template($templateRoot + "/street_end", 2);
-    return Unit.INSTANCE;
+  private static void settlementHelper1$1(String _templateRoot, JigsawPoolBuilder _this_pool) {
+    _this_pool.template(_templateRoot + "/street_straight", 5);
+    _this_pool.template(_templateRoot + "/street_corner", 3);
+    _this_pool.template(_templateRoot + "/street_cross", 2);
+    _this_pool.template(_templateRoot + "/street_end", 2);
+    return;
   }
 
-  private static final Unit settlement$lambda$1$2(Map $buildingTemplates, String $templateRoot, JigsawPoolBuilder $this$pool) {
-    Map<String, Integer> map = $buildingTemplates;
+  private static void settlementHelper1$2(Map _buildingTemplates, String _templateRoot, JigsawPoolBuilder _this_pool) {
+    Map<String, Integer> map = _buildingTemplates;
     int i = 0;
 
     for (Entry entry : map.entrySet()) {
@@ -324,28 +314,28 @@ public final class StructureCatalog {
       int j = 0;
       String string = (String) entry1.getKey();
       int k = ((Number) entry1.getValue()).intValue();
-      $this$pool.template($templateRoot + "/" + string, k);
+      _this_pool.template(_templateRoot + "/" + string, k);
     }
 
-    return Unit.INSTANCE;
+    return;
   }
 
-  private static final Unit settlement$lambda$1(String $templateRoot, Map $buildingTemplates, JigsawBuildingBuilder $this$jigsawBuilding) {
-    $this$jigsawBuilding.setStartPool("center");
-    JigsawBuildingBuilder.pool$default($this$jigsawBuilding, "center", null,
-        (Function1<JigsawPoolBuilder, Unit>) (pool -> settlement$lambda$1$0($templateRoot, pool)), 2, null);
-    $this$jigsawBuilding.pool("streets", Projection.TERRAIN_MATCHING,
-        (Function1<JigsawPoolBuilder, Unit>) (pool -> settlement$lambda$1$1($templateRoot, pool)));
-    JigsawBuildingBuilder.pool$default($this$jigsawBuilding, "buildings", null,
-        (Function1<JigsawPoolBuilder, Unit>) (pool -> settlement$lambda$1$2($buildingTemplates, $templateRoot, pool)), 2, null);
-    return Unit.INSTANCE;
+  private static void settlementHelper1(String _templateRoot, Map _buildingTemplates, JigsawBuildingBuilder _this_jigsawBuilding) {
+    _this_jigsawBuilding.setStartPool("center");
+    JigsawBuildingBuilder.poolWithDefaults(_this_jigsawBuilding, "center", null,
+        (Consumer<JigsawPoolBuilder>) (pool -> settlementHelper1$0(_templateRoot, pool)), 2, null);
+    _this_jigsawBuilding.pool("streets", Projection.TERRAIN_MATCHING,
+        (Consumer<JigsawPoolBuilder>) (pool -> settlementHelper1$1(_templateRoot, pool)));
+    JigsawBuildingBuilder.poolWithDefaults(_this_jigsawBuilding, "buildings", null,
+        (Consumer<JigsawPoolBuilder>) (pool -> settlementHelper1$2(_buildingTemplates, _templateRoot, pool)), 2, null);
+    return;
   }
 
   @NotNull
   public final JigsawBuildingEntry simpleBuilding(
       @NotNull String path, @NotNull String template, int spacing, int separation, int salt, int maxDistanceFromCenter, float removeVinesChance
   ) {
-    return jigsawBuilding$default(
+    return jigsawBuildingWithDefaults(
         this,
         path,
         spacing,
@@ -363,7 +353,7 @@ public final class StructureCatalog {
         false,
         null,
         null,
-        (Function1<JigsawBuildingBuilder, Unit>) (builder -> simpleBuilding$lambda$0(template, builder)),
+        (Consumer<JigsawBuildingBuilder>) (builder -> simpleBuildingHelper0(template, builder)),
         65408,
         null
     );
@@ -385,7 +375,7 @@ public final class StructureCatalog {
       String string = "唯一地标与世界原点的环距离必须大于 0";
       throw new IllegalArgumentException(string.toString());
     } else {
-      return jigsawBuilding$default(
+      return jigsawBuildingWithDefaults(
           this,
           path,
           ringDistance + 1,
@@ -403,7 +393,7 @@ public final class StructureCatalog {
           false,
           null,
           null,
-          (Function1<JigsawBuildingBuilder, Unit>) (builder -> uniqueLandmark$lambda$1(template, builder)),
+          (Consumer<JigsawBuildingBuilder>) (builder -> uniqueLandmarkHelper1(template, builder)),
           61440,
           null
       );
@@ -417,7 +407,7 @@ public final class StructureCatalog {
     int i = path.hashCode();
     Decoration decoration = Decoration.UNDERGROUND_STRUCTURES;
     TerrainAdjustment terrainAdjustment = TerrainAdjustment.ENCAPSULATE;
-    return jigsawBuilding$default(
+    return jigsawBuildingWithDefaults(
         this,
         path,
         2,
@@ -435,7 +425,7 @@ public final class StructureCatalog {
         true,
         decoration,
         terrainAdjustment,
-        (Function1<JigsawBuildingBuilder, Unit>) (builder -> fixedOriginUndergroundLandmark$lambda$0(template, builder)),
+        (Consumer<JigsawBuildingBuilder>) (builder -> fixedOriginUndergroundLandmarkHelper0(template, builder)),
         4928,
         null
     );
@@ -521,7 +511,7 @@ public final class StructureCatalog {
           fixedOrigin,
           Decoration.SURFACE_STRUCTURES,
           TerrainAdjustment.BEARD_THIN,
-          (Function1<JigsawBuildingBuilder, Unit>) (builder -> settlement$lambda$1(templateRoot, buildingTemplates, builder))
+          (Consumer<JigsawBuildingBuilder>) (builder -> settlementHelper1(templateRoot, buildingTemplates, builder))
       );
     }
   }
@@ -544,7 +534,7 @@ public final class StructureCatalog {
       boolean fixedOrigin,
       @NotNull Decoration generationStep,
       @NotNull TerrainAdjustment terrainAdjustment,
-      @NotNull Function1<? super JigsawBuildingBuilder, Unit> build
+      @NotNull Consumer<? super JigsawBuildingBuilder> build
   ) {
     if (spacing <= separation) {
       int p = 0;
@@ -571,11 +561,11 @@ public final class StructureCatalog {
     }
 
     JigsawBuildingBuilder poolKeys = new JigsawBuildingBuilder(path);
-    build.invoke(poolKeys);
-    JigsawBuildingDefinition jigsawBuildingDefinition = poolKeys.build$zinecraft();
+    build.accept(poolKeys);
+    JigsawBuildingDefinition jigsawBuildingDefinition = poolKeys.build();
     Iterable iterable = jigsawBuildingDefinition.getPools();
     int i = 0;
-    int j = RangesKt.coerceAtLeast(MapsKt.mapCapacity(CollectionsKt.collectionSizeOrDefault(iterable, 10)), 16);
+    int j = Math.max(com.cxxcxx.zinecraft.api.util.CollectionSupport.sizeHint(iterable, 16), 16);
     Iterable iterable1 = iterable;
     Map map = new LinkedHashMap(j);
     int k = 0;
@@ -587,7 +577,7 @@ public final class StructureCatalog {
       String string4 = jigsawPoolDefinition.getName();
       ModRegistrar modRegistrar2 = this.registrar;
       ResourceKey resourceKey2 = Registries.TEMPLATE_POOL;
-      Pair pair = TuplesKt.to(string4, modRegistrar2.key(resourceKey2, path + "/" + jigsawPoolDefinition.getName()));
+      Pair pair = Pair.of(string4, modRegistrar2.key(resourceKey2, path + "/" + jigsawPoolDefinition.getName()));
       map1.put(pair.getFirst(), pair.getSecond());
     }
 
@@ -631,39 +621,39 @@ public final class StructureCatalog {
     return jigsawBuildingEntry;
   }
 
-  public final void structures(@NotNull Function1<? super BootstrapContext<Structure>, Unit> generate) {
-    this.structureGenerators.add(context -> generate.invoke(context));
+  public final void structures(@NotNull Consumer<? super BootstrapContext<Structure>> generate) {
+    this.structureGenerators.add(context -> generate.accept(context));
   }
 
-  public final void structureSets(@NotNull Function1<? super BootstrapContext<StructureSet>, Unit> generate) {
-    this.structureSetGenerators.add(context -> generate.invoke(context));
+  public final void structureSets(@NotNull Consumer<? super BootstrapContext<StructureSet>> generate) {
+    this.structureSetGenerators.add(context -> generate.accept(context));
   }
 
-  public final void bootstrapProcessors$zinecraft(@NotNull BootstrapContext<StructureProcessorList> context) {
+  public final void bootstrapProcessors(@NotNull BootstrapContext<StructureProcessorList> context) {
     Iterable iterable = this.buildings;
     int i = 0;
 
     for (Object object : iterable) {
       JigsawBuildingEntry jigsawBuildingEntry = (JigsawBuildingEntry) object;
       int j = 0;
-      List list = jigsawBuildingEntry.getRemoveVinesChance$zinecraft() > 0.0F
-          ? CollectionsKt.listOf(
+      List list = jigsawBuildingEntry.getRemoveVinesChance() > 0.0F
+          ? java.util.List.of(
           new RuleProcessor(
-              CollectionsKt.listOf(
+              java.util.List.of(
                   new ProcessorRule(
-                      (RuleTest) (new RandomBlockMatchTest(Blocks.VINE, jigsawBuildingEntry.getRemoveVinesChance$zinecraft())),
+                      (RuleTest) (new RandomBlockMatchTest(Blocks.VINE, jigsawBuildingEntry.getRemoveVinesChance())),
                       (RuleTest) AlwaysTrueTest.INSTANCE,
                       Blocks.AIR.defaultBlockState()
                   )
               )
           )
       )
-          : CollectionsKt.emptyList();
+          : java.util.List.of();
       this.registrar.dynamic(context, jigsawBuildingEntry.getProcessorKey(), new StructureProcessorList(list));
     }
   }
 
-  public final void bootstrapPools$zinecraft(@NotNull BootstrapContext<StructureTemplatePool> context) {
+  public final void bootstrapPools(@NotNull BootstrapContext<StructureTemplatePool> context) {
     Reference reference = context.lookup(Registries.TEMPLATE_POOL).getOrThrow(Pools.EMPTY);
     HolderGetter holderGetter = context.lookup(Registries.PROCESSOR_LIST);
     Iterable iterable = this.buildings;
@@ -672,7 +662,7 @@ public final class StructureCatalog {
     for (Object object : iterable) {
       JigsawBuildingEntry jigsawBuildingEntry = (JigsawBuildingEntry) object;
       int j = 0;
-      Iterable iterable1 = jigsawBuildingEntry.getPools$zinecraft();
+      Iterable iterable1 = jigsawBuildingEntry.getPools();
       int k = 0;
 
       for (Object object1 : iterable1) {
@@ -680,11 +670,11 @@ public final class StructureCatalog {
         int l = 0;
         Iterable iterable2 = jigsawPoolDefinition.getTemplates();
         int m = 0;
-        Iterable $this$mapTo$iv$iv = iterable2;
-        var collection = new ArrayList(CollectionsKt.collectionSizeOrDefault(iterable2, 10));
+        Iterable _this_mapTo_iv_iv = iterable2;
+        var collection = new ArrayList(com.cxxcxx.zinecraft.api.util.CollectionSupport.sizeHint(iterable2, 10));
         int n = 0;
 
-        for (Object object2 : $this$mapTo$iv$iv) {
+        for (Object object2 : _this_mapTo_iv_iv) {
           JigsawTemplateElement template = (JigsawTemplateElement) object2;
           Collection collection1 = collection;
           int o = 0;
@@ -702,14 +692,14 @@ public final class StructureCatalog {
         this.registrar
             .dynamic(
                 context,
-                (ResourceKey<StructureTemplatePool>) MapsKt.getValue(jigsawBuildingEntry.getPoolKeys(), jigsawPoolDefinition.getName()),
+                (ResourceKey<StructureTemplatePool>) com.cxxcxx.zinecraft.api.util.CollectionSupport.getRequired(jigsawBuildingEntry.getPoolKeys(), jigsawPoolDefinition.getName()),
                 new StructureTemplatePool((Holder) reference, list, jigsawPoolDefinition.getProjection())
             );
       }
     }
   }
 
-  public final void bootstrapStructures$zinecraft(@NotNull BootstrapContext<Structure> context) {
+  public final void bootstrapStructures(@NotNull BootstrapContext<Structure> context) {
     HolderGetter holderGetter = context.lookup(Registries.BIOME);
     HolderGetter holderGetter1 = context.lookup(Registries.TEMPLATE_POOL);
     Iterable iterable = this.buildings;
@@ -722,7 +712,7 @@ public final class StructureCatalog {
       {
         jigsawBuildingEntry = (JigsawBuildingEntry) object;
         int j = 0;
-        ResourceKey resourceKey1 = jigsawBuildingEntry.getBiome$zinecraft();
+        ResourceKey resourceKey1 = jigsawBuildingEntry.getBiome();
         if (resourceKey1 != null) {
           ResourceKey resourceKey = resourceKey1;
           int k = 0;
@@ -745,18 +735,18 @@ public final class StructureCatalog {
               new JigsawStructure(
                   new StructureSettings(
                       (HolderSet) listBacked,
-                      MapsKt.emptyMap(),
-                      jigsawBuildingEntry.getGenerationStep$zinecraft(),
-                      jigsawBuildingEntry.getTerrainAdjustment$zinecraft()
+                      java.util.Map.of(),
+                      jigsawBuildingEntry.getGenerationStep(),
+                      jigsawBuildingEntry.getTerrainAdjustment()
                   ),
-                  (Holder) holderGetter1.getOrThrow((ResourceKey) MapsKt.getValue(jigsawBuildingEntry.getPoolKeys(), jigsawBuildingEntry.getStartPool())),
+                  (Holder) holderGetter1.getOrThrow((ResourceKey) com.cxxcxx.zinecraft.api.util.CollectionSupport.getRequired(jigsawBuildingEntry.getPoolKeys(), jigsawBuildingEntry.getStartPool())),
                   Optional.empty(),
-                  jigsawBuildingEntry.getSize$zinecraft(),
-                  (HeightProvider) ConstantHeight.of(VerticalAnchor.absolute(jigsawBuildingEntry.getStartHeight$zinecraft())),
-                  jigsawBuildingEntry.getUseExpansionHack$zinecraft(),
-                  Optional.ofNullable(jigsawBuildingEntry.getHeightmap$zinecraft()),
-                  jigsawBuildingEntry.getMaxDistanceFromCenter$zinecraft(),
-                  CollectionsKt.emptyList(),
+                  jigsawBuildingEntry.getSize(),
+                  (HeightProvider) ConstantHeight.of(VerticalAnchor.absolute(jigsawBuildingEntry.getStartHeight())),
+                  jigsawBuildingEntry.getUseExpansionHack(),
+                  Optional.ofNullable(jigsawBuildingEntry.getHeightmap()),
+                  jigsawBuildingEntry.getMaxDistanceFromCenter(),
+                  java.util.List.of(),
                   DimensionPadding.ZERO,
                   LiquidSettings.IGNORE_WATERLOGGING
               )
@@ -767,13 +757,13 @@ public final class StructureCatalog {
     i = 0;
 
     for (Object object1 : iterable) {
-      Function1 function1 = (Function1) object1;
+      Consumer function1 = (Consumer) object1;
       int l = 0;
-      function1.invoke(context);
+      function1.accept(context);
     }
   }
 
-  public final void bootstrapSets$zinecraft(@NotNull BootstrapContext<StructureSet> context) {
+  public final void bootstrapSets(@NotNull BootstrapContext<StructureSet> context) {
     HolderGetter holderGetter = context.lookup(Registries.STRUCTURE);
     HolderGetter holderGetter1 = context.lookup(Registries.BIOME);
     Iterable iterable = this.buildings;
@@ -783,10 +773,10 @@ public final class StructureCatalog {
       JigsawBuildingEntry jigsawBuildingEntry = (JigsawBuildingEntry) object;
       int j = 0;
       StructurePlacement structurePlacement1;
-      if (jigsawBuildingEntry.getFixedOrigin$zinecraft()) {
-        structurePlacement1 = FixedOriginStructurePlacement.Companion.create$zinecraft();
-      } else if (jigsawBuildingEntry.getUnique$zinecraft()) {
-        ResourceKey resourceKey1 = jigsawBuildingEntry.getBiome$zinecraft();
+      if (jigsawBuildingEntry.getFixedOrigin()) {
+        structurePlacement1 = FixedOriginStructurePlacement.ACCESS.create();
+      } else if (jigsawBuildingEntry.getUnique()) {
+        ResourceKey resourceKey1 = jigsawBuildingEntry.getBiome();
         if (resourceKey1 == null) {
           int k = 0;
           String string = "唯一地标必须绑定群系: " + jigsawBuildingEntry.getStructureKey().location();
@@ -794,16 +784,16 @@ public final class StructureCatalog {
         }
 
         ResourceKey resourceKey = resourceKey1;
-        int m = jigsawBuildingEntry.getRingDistance$zinecraft();
+        int m = jigsawBuildingEntry.getRingDistance();
         Holder[] holders = new Holder[]{holderGetter1.getOrThrow(resourceKey)};
         structurePlacement1 = (StructurePlacement) (new ConcentricRingsStructurePlacement(m, 1, 1, (HolderSet) HolderSet.direct(holders)));
       } else {
         structurePlacement1 = (StructurePlacement) (
             new RandomSpreadStructurePlacement(
-                jigsawBuildingEntry.getSpacing$zinecraft(),
-                jigsawBuildingEntry.getSeparation$zinecraft(),
+                jigsawBuildingEntry.getSpacing(),
+                jigsawBuildingEntry.getSeparation(),
                 RandomSpreadType.LINEAR,
-                jigsawBuildingEntry.getSalt$zinecraft()
+                jigsawBuildingEntry.getSalt()
             )
         );
       }
@@ -821,9 +811,9 @@ public final class StructureCatalog {
     i = 0;
 
     for (Object object1 : iterable) {
-      Function1 function1 = (Function1) object1;
+      Consumer function1 = (Consumer) object1;
       int l = 0;
-      function1.invoke(context);
+      function1.accept(context);
     }
   }
 }

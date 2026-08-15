@@ -6,12 +6,7 @@ import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import com.cxxcxx.zinecraft.api.weapon.tacz.*;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import kotlin.Pair;
-import kotlin.TuplesKt;
-import kotlin.collections.CollectionsKt;
-import kotlin.collections.MapsKt;
-import kotlin.jvm.internal.DefaultConstructorMarker;
-import kotlin.ranges.RangesKt;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.TextureSlot;
@@ -74,14 +69,14 @@ public final class ModTaczWeapons {
   @NotNull
   private static final ItemEntry<TaczGunItem> GUN_ITEM = Zinecraft.INSTANCE
       .getITEMS()
-      .register("tacz_gun", "TaCZ 枪械", "TaCZ Gun", BUILTIN_ENTITY_MODEL, false, ModTaczWeapons::GUN_ITEM$lambda$0);
+      .register("tacz_gun", "TaCZ 枪械", "TaCZ Gun", BUILTIN_ENTITY_MODEL, false, ModTaczWeapons::GUN_ITEMHelper0);
   @NotNull
   private static final ItemEntry<TaczAmmoItem> AMMO_ITEM = Zinecraft.INSTANCE
       .getITEMS()
-      .register("tacz_ammunition", "TaCZ 弹药", "TaCZ Ammunition", BUILTIN_ENTITY_MODEL, false, ModTaczWeapons::AMMO_ITEM$lambda$0);
+      .register("tacz_ammunition", "TaCZ 弹药", "TaCZ Ammunition", BUILTIN_ENTITY_MODEL, false, ModTaczWeapons::AMMO_ITEMHelper0);
 
   static {
-    WeaponAction[] $this$forEach$iv = new WeaponAction[]{
+    WeaponAction[] _this_forEach_iv = new WeaponAction[]{
         new TaczFireAction(FIRE_ID),
         new TaczReloadAction(RELOAD_ID),
         new TaczAimAction(AIM_ID),
@@ -90,7 +85,7 @@ public final class ModTaczWeapons {
         new TaczMeleeAction(MELEE_ID),
         new TaczBoltAction(BOLT_ID)
     };
-    Iterable iterable = CollectionsKt.listOf($this$forEach$iv);
+    Iterable iterable = java.util.List.of(_this_forEach_iv);
     WeaponRegistry weaponRegistry = Zinecraft.INSTANCE.getWEAPONS();
     int i = 0;
 
@@ -100,7 +95,7 @@ public final class ModTaczWeapons {
       weaponRegistry.registerAction(weaponAction);
     }
 
-    Zinecraft.INSTANCE.getWEAPONS().registerResolver(ModTaczWeapons::_init_$lambda$0);
+    Zinecraft.INSTANCE.getWEAPONS().registerResolver(ModTaczWeapons::_init_Helper0);
     INSTANCE.reloadDefinitions();
     Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.tacz_gun.caliber", "口径：%s", "Caliber: %s");
     Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.tacz_gun.stats", "伤害：%s  射速：%s RPM", "Damage: %s  Rate: %s RPM");
@@ -117,12 +112,12 @@ public final class ModTaczWeapons {
   private ModTaczWeapons() {
   }
 
-  private static final TaczGunItem GUN_ITEM$lambda$0() {
+  private static final TaczGunItem GUN_ITEMHelper0() {
     Properties properties = new Properties().stacksTo(1).component(WeaponStateComponents.INSTANCE.getAIMING(), false);
     return new TaczGunItem(properties);
   }
 
-  private static final TaczAmmoItem AMMO_ITEM$lambda$0() {
+  private static final TaczAmmoItem AMMO_ITEMHelper0() {
     Properties properties = new Properties().stacksTo(99);
     return new TaczAmmoItem(properties);
   }
@@ -135,7 +130,7 @@ public final class ModTaczWeapons {
     return it.getId().toString();
   }
 
-  private static final WeaponDefinition _init_$lambda$0(ItemStack stack) {
+  private static final WeaponDefinition _init_Helper0(ItemStack stack) {
     if (stack.getItem() != GUN_ITEM.getItem()) {
       return null;
     }
@@ -281,15 +276,15 @@ public final class ModTaczWeapons {
     TaczCatalogSnapshot taczCatalogSnapshot = TaczGunPacks.INSTANCE.reload();
     WeaponRegistry weaponRegistry1 = Zinecraft.INSTANCE.getWEAPONS();
     ResourceLocation resourceLocation1 = SOURCE;
-    Iterable $this$map$iv = taczCatalogSnapshot.getGuns().values();
+    Iterable _this_map_iv = taczCatalogSnapshot.getGuns().values();
     ResourceLocation resourceLocation = resourceLocation1;
     WeaponRegistry weaponRegistry = weaponRegistry1;
     int i = 0;
-    Iterable $this$mapTo$iv$iv = $this$map$iv;
-    var collection = new ArrayList(CollectionsKt.collectionSizeOrDefault($this$map$iv, 10));
+    Iterable _this_mapTo_iv_iv = _this_map_iv;
+    var collection = new ArrayList(com.cxxcxx.zinecraft.api.util.CollectionSupport.sizeHint(_this_map_iv, 10));
     int j = 0;
 
-    for (Object object : $this$mapTo$iv$iv) {
+    for (Object object : _this_mapTo_iv_iv) {
       TaczGunSpec p0 = (TaczGunSpec) object;
       Collection collection1 = collection;
       int k = 0;
@@ -315,7 +310,7 @@ public final class ModTaczWeapons {
       itemStack1.set(WeaponStateComponents.INSTANCE.getAMMO(), gun.getCapacity());
       itemStack1.set(WeaponStateComponents.INSTANCE.getAIMING(), false);
       dataComponentType = WeaponStateComponents.INSTANCE.getFIRE_MODE();
-      String string = (String) CollectionsKt.firstOrNull(gun.getFireModes());
+      String string = (String) com.cxxcxx.zinecraft.api.util.CollectionSupport.firstOrNull(gun.getFireModes());
       if (string != null) {
         switch (string.hashCode()) {
           case 3005871:
@@ -352,20 +347,20 @@ public final class ModTaczWeapons {
     List list7;
     label45:
     {
-      int i = RangesKt.coerceAtLeast((int) Math.ceil(1200.0 / gun.getRpm()), 1);
-      int j = RangesKt.coerceAtLeast((int) Math.ceil(1200.0 / gun.getBurstRpm()), 1) * gun.getBurstCount();
+      int i = Math.max((int) Math.ceil(1200.0 / gun.getRpm()), 1);
+      int j = Math.max((int) Math.ceil(1200.0 / gun.getBurstRpm()), 1) * gun.getBurstCount();
       k = gun.getFireModes().contains("burst") ? Math.max(i, j) : i;
       TaczSoundAsset taczSoundAsset5 = gun.getAssets().getSounds().get("shoot");
       if (taczSoundAsset5 != null) {
         TaczSoundAsset taczSoundAsset1 = taczSoundAsset5;
         int l = 0;
-        list7 = CollectionsKt.listOf(new TimedWeaponSound(taczSoundAsset1.getRuntimeId(), 0));
+        list7 = java.util.List.of(new TimedWeaponSound(taczSoundAsset1.getRuntimeId(), 0));
         if (list7 != null) {
           break label45;
         }
       }
 
-      list7 = CollectionsKt.emptyList();
+      list7 = java.util.List.of();
     }
 
     Pair[] pairs2;
@@ -381,26 +376,26 @@ public final class ModTaczWeapons {
     {
       List list = list7;
       List list1 = !gun.getAssets().getSounds().containsKey("reload_empty") && !gun.getAssets().getSounds().containsKey("reload_tactical")
-          ? CollectionsKt.emptyList()
-          : CollectionsKt.listOf(new TimedWeaponSound(RELOAD_SOUND_CUE_ID, 0));
+          ? java.util.List.of()
+          : java.util.List.of(new TimedWeaponSound(RELOAD_SOUND_CUE_ID, 0));
       resourceLocation11 = gun.getRuntimeId();
       Pair[] pairs = new Pair[]{
-          TuplesKt.to(WeaponInput.PRIMARY, FIRE_ID),
-          TuplesKt.to(WeaponInput.SECONDARY, AIM_ID),
-          TuplesKt.to(WeaponInput.RELOAD, RELOAD_ID),
-          TuplesKt.to(WeaponInput.FIRE_SELECT, FIRE_SELECT_ID),
-          TuplesKt.to(WeaponInput.INSPECT, INSPECT_ID),
-          TuplesKt.to(WeaponInput.MELEE, MELEE_ID),
-          TuplesKt.to(WeaponInput.BOLT, BOLT_ID)
+          Pair.of(WeaponInput.PRIMARY, FIRE_ID),
+          Pair.of(WeaponInput.SECONDARY, AIM_ID),
+          Pair.of(WeaponInput.RELOAD, RELOAD_ID),
+          Pair.of(WeaponInput.FIRE_SELECT, FIRE_SELECT_ID),
+          Pair.of(WeaponInput.INSPECT, INSPECT_ID),
+          Pair.of(WeaponInput.MELEE, MELEE_ID),
+          Pair.of(WeaponInput.BOLT, BOLT_ID)
       };
-      map5 = MapsKt.mapOf(pairs);
+      map5 = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(pairs);
       pairs2 = new Pair[]{
-          TuplesKt.to(
-              FIRE_ID, new WeaponPresentation(PLAYER_FIRE_ANIMATION_ID, FIRE_ANIMATION_ID, CollectionsKt.listOf(new TimedWeaponVfx(MUZZLE_ID, 0)), list, k)
+          Pair.of(
+              FIRE_ID, new WeaponPresentation(PLAYER_FIRE_ANIMATION_ID, FIRE_ANIMATION_ID, java.util.List.of(new TimedWeaponVfx(MUZZLE_ID, 0)), list, k)
           ),
-          TuplesKt.to(RELOAD_ID, new WeaponPresentation(PLAYER_RELOAD_ANIMATION_ID, RELOAD_ANIMATION_ID, null, list1, gun.getReloadDurationTicks(), 4, null)),
-          TuplesKt.to(AIM_ID, new WeaponPresentation(null, AIM_ANIMATION_ID, null, null, gun.getAimTicks(), 13, null)),
-          TuplesKt.to(FIRE_SELECT_ID, new WeaponPresentation(null, FIRE_SELECT_ANIMATION_ID, null, null, 4, 13, null)),
+          Pair.of(RELOAD_ID, new WeaponPresentation(PLAYER_RELOAD_ANIMATION_ID, RELOAD_ANIMATION_ID, java.util.List.of(), list1, gun.getReloadDurationTicks())),
+          Pair.of(AIM_ID, new WeaponPresentation(null, AIM_ANIMATION_ID, java.util.List.of(), java.util.List.of(), gun.getAimTicks())),
+          Pair.of(FIRE_SELECT_ID, new WeaponPresentation(null, FIRE_SELECT_ANIMATION_ID, java.util.List.of(), java.util.List.of(), 4)),
           null,
           null,
           null
@@ -423,7 +418,7 @@ public final class ModTaczWeapons {
         Map map = map5;
         ResourceLocation resourceLocation = resourceLocation11;
         int m = 0;
-        List list2 = CollectionsKt.listOf(new TimedWeaponSound(it.getRuntimeId(), 0));
+        List list2 = java.util.List.of(new TimedWeaponSound(it.getRuntimeId(), 0));
         resourceLocation11 = resourceLocation;
         map5 = map;
         pairs5 = pairs1;
@@ -438,7 +433,7 @@ public final class ModTaczWeapons {
         }
       }
 
-      list8 = CollectionsKt.emptyList();
+      list8 = java.util.List.of();
     }
 
     Object object2 = null;
@@ -448,9 +443,9 @@ public final class ModTaczWeapons {
     Object object3 = object10;
     ResourceLocation resourceLocation3 = resourceLocation16;
     Object object4 = object9;
-    pairs5[h] = TuplesKt.to(
+    pairs5[h] = Pair.of(
         resourceLocation15,
-        new WeaponPresentation((ResourceLocation) object4, resourceLocation3, (List) object3, list3, d, c, (DefaultConstructorMarker) object2)
+        new WeaponPresentation((ResourceLocation) object4, resourceLocation3, java.util.List.of(), list3, d)
     );
     Pair[] pairs4 = pairs2;
     byte g = 5;
@@ -477,7 +472,7 @@ public final class ModTaczWeapons {
         Map map3 = map5;
         ResourceLocation resourceLocation7 = resourceLocation11;
         int o = 0;
-        List list6 = CollectionsKt.listOf(new TimedWeaponSound(taczSoundAsset3.getRuntimeId(), 0));
+        List list6 = java.util.List.of(new TimedWeaponSound(taczSoundAsset3.getRuntimeId(), 0));
         resourceLocation11 = resourceLocation7;
         map5 = map3;
         pairs4 = pairs3;
@@ -493,10 +488,10 @@ public final class ModTaczWeapons {
         }
       }
 
-      list8 = CollectionsKt.emptyList();
+      list8 = java.util.List.of();
     }
 
-    int p = RangesKt.coerceAtLeast(gun.getMeleeCooldownTicks(), 3);
+    int p = Math.max(gun.getMeleeCooldownTicks(), 3);
     Object object5 = null;
     byte e = 4;
     int n = p;
@@ -504,13 +499,13 @@ public final class ModTaczWeapons {
     Object object6 = object8;
     ResourceLocation resourceLocation4 = resourceLocation14;
     ResourceLocation resourceLocation5 = resourceLocation13;
-    pairs4[g] = TuplesKt.to(
-        resourceLocation12, new WeaponPresentation(resourceLocation5, resourceLocation4, (List) object6, list4, n, e, (DefaultConstructorMarker) object5)
+    pairs4[g] = Pair.of(
+        resourceLocation12, new WeaponPresentation(resourceLocation5, resourceLocation4, java.util.List.of(), list4, n)
     );
-    pairs2[6] = TuplesKt.to(
-        BOLT_ID, new WeaponPresentation(null, BOLT_ANIMATION_ID, null, null, RangesKt.coerceAtLeast(gun.getBoltActionTicks(), 1), 13, null)
+    pairs2[6] = Pair.of(
+        BOLT_ID, new WeaponPresentation(null, BOLT_ANIMATION_ID, java.util.List.of(), java.util.List.of(), Math.max(gun.getBoltActionTicks(), 1))
     );
-    Map map4 = MapsKt.mapOf(pairs2);
+    Map map4 = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(pairs2);
     WeaponMetadata weaponMetadata = new WeaponMetadata(gun.getTranslationKey());
     Map map1 = map4;
     Map map2 = map5;

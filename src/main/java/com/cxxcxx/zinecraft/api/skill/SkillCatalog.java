@@ -26,8 +26,8 @@ public final class SkillCatalog {
     this.entries = new ArrayList<>();
   }
 
-  private static final SkillItem register$lambda$5(SkillDefinition $definition) {
-    return new SkillItem($definition, null, 2, null);
+  private static SkillItem createItem(SkillDefinition definition) {
+    return new SkillItem(definition);
   }
 
   @NotNull
@@ -121,7 +121,7 @@ public final class SkillCatalog {
       );
       ItemEntry itemEntry = this.items.register(path, zhCn, enUs,
           net.minecraft.data.models.model.ModelTemplates.FLAT_ITEM, false,
-          () -> register$lambda$5(skillDefinition));
+          () -> createItem(skillDefinition));
       this.registerTranslations(skillDefinition);
       SkillEntry skillEntry1 = new SkillEntry(skillDefinition, itemEntry);
       List list = this.entries;
@@ -199,4 +199,3 @@ public final class SkillCatalog {
     this.translations.add(string3 + ".text_5", "演示为 Minecraft 机制化表达，技能资料取自 PRTS。", "This is a Minecraft interpretation based on PRTS skill data.");
   }
 }
-

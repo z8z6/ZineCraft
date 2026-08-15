@@ -13,10 +13,7 @@ import com.cxxcxx.zinecraft.api.weapon.item.ActionWeaponItem;
 import com.cxxcxx.zinecraft.api.weapon.item.FirearmItem;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import kotlin.Pair;
-import kotlin.TuplesKt;
-import kotlin.collections.CollectionsKt;
-import kotlin.collections.MapsKt;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
@@ -76,36 +73,36 @@ public final class ModWeapons {
   @NotNull
   private static final ModelTemplate VANILLA_IRON_SWORD_MODEL = INSTANCE.vanillaModel("iron_sword");
   @NotNull
-  private static final ItemEntry<SwordItem> TEST_SWORD_ITEM = ItemCatalog.register$default(
-      Zinecraft.INSTANCE.getITEMS(), "test_sword", "测试剑", "Test Sword", VANILLA_IRON_SWORD_MODEL, false, ModWeapons::TEST_SWORD_ITEM$lambda$0, 16, null
+  private static final ItemEntry<SwordItem> TEST_SWORD_ITEM = ItemCatalog.registerWithDefaults(
+      Zinecraft.INSTANCE.getITEMS(), "test_sword", "测试剑", "Test Sword", VANILLA_IRON_SWORD_MODEL, false, ModWeapons::TEST_SWORD_ITEMHelper0, 16, null
   );
   @NotNull
-  private static final ItemEntry<Item> TEST_CARTRIDGE = ItemCatalog.register$default(
+  private static final ItemEntry<Item> TEST_CARTRIDGE = ItemCatalog.registerWithDefaults(
       Zinecraft.INSTANCE.getITEMS(), "test_cartridge", "测试弹药", "Test Cartridge", INSTANCE.vanillaModel("iron_nugget"), null, false, 48, null
   );
   @NotNull
   private static final FirearmReloadAction RELOAD = new FirearmReloadAction(RELOAD_ID, 24, 32, 12, TEST_CARTRIDGE);
   @NotNull
-  private static final ItemEntry<FirearmItem> TEST_RIFLE_ITEM = ItemCatalog.register$default(
+  private static final ItemEntry<FirearmItem> TEST_RIFLE_ITEM = ItemCatalog.registerWithDefaults(
       Zinecraft.INSTANCE.getITEMS(),
       "test_rifle",
       "测试步枪",
       "Test Rifle",
       INSTANCE.vanillaModel("crossbow"),
       false,
-      ModWeapons::TEST_RIFLE_ITEM$lambda$0,
+      ModWeapons::TEST_RIFLE_ITEMHelper0,
       16,
       null
   );
   @NotNull
-  private static final ItemEntry<ActionWeaponItem> TEST_STAFF_ITEM = ItemCatalog.register$default(
+  private static final ItemEntry<ActionWeaponItem> TEST_STAFF_ITEM = ItemCatalog.registerWithDefaults(
       Zinecraft.INSTANCE.getITEMS(),
       "test_staff",
       "测试法杖",
       "Test Staff",
       INSTANCE.vanillaModel("blaze_rod"),
       false,
-      ModWeapons::TEST_STAFF_ITEM$lambda$0,
+      ModWeapons::TEST_STAFF_ITEMHelper0,
       16,
       null
   );
@@ -114,7 +111,7 @@ public final class ModWeapons {
   @NotNull
   private static final FirearmFireAction FIRE = new FirearmFireAction(FIRE_ID, 2, 10, 6.0F, 48.0);
   @NotNull
-  private static final ToggleAimAction TOGGLE_AIM = new ToggleAimAction(TOGGLE_AIM_ID, 0, 2, null);
+  private static final ToggleAimAction TOGGLE_AIM = new ToggleAimAction(TOGGLE_AIM_ID, 6);
   @NotNull
   private static final CastSkillAction ARCANE_CAST = new CastSkillAction(
       ARCANE_CAST_ID, ModWeaponSkillEffects.INSTANCE.getARCANE_BOLT(), Zinecraft.INSTANCE.getSKILL_SERVICE(), 5, 18
@@ -132,19 +129,19 @@ public final class ModWeapons {
 
   static {
     ResourceLocation resourceLocation = Zinecraft.INSTANCE.getREGISTRAR().id("test_sword");
-    Map map3 = MapsKt.mapOf(TuplesKt.to(WeaponInput.PRIMARY, LIGHT_ATTACK_ID));
+    Map map3 = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(Pair.of(WeaponInput.PRIMARY, LIGHT_ATTACK_ID));
     ResourceLocation resourceLocation1 = LIGHT_ATTACK_ID;
     ResourceLocation resourceLocation3 = PLAYER_LIGHT_ATTACK;
     ResourceLocation resourceLocation4 = WEAPON_LIGHT_ATTACK;
-    TimedWeaponVfx[] $this$forEach$iv = new TimedWeaponVfx[]{new TimedWeaponVfx(TEST_SWORD_TRAIL, 4), new TimedWeaponVfx(TEST_SWORD_IMPACT, 8)};
-    Map map = MapsKt.mapOf(
-        TuplesKt.to(
+    TimedWeaponVfx[] _this_forEach_iv = new TimedWeaponVfx[]{new TimedWeaponVfx(TEST_SWORD_TRAIL, 4), new TimedWeaponVfx(TEST_SWORD_IMPACT, 8)};
+    Map map = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(
+        Pair.of(
             resourceLocation1,
             new WeaponPresentation(
                 resourceLocation3,
                 resourceLocation4,
-                CollectionsKt.listOf($this$forEach$iv),
-                CollectionsKt.listOf(new TimedWeaponSound(TEST_SWORD_SWING, 4)),
+                java.util.List.of(_this_forEach_iv),
+                java.util.List.of(new TimedWeaponSound(TEST_SWORD_SWING, 4)),
                 20
             )
         )
@@ -153,69 +150,65 @@ public final class ModWeapons {
     TEST_SWORD = new WeaponDefinition(resourceLocation, map3, map, new WeaponMetadata(string));
     resourceLocation = Zinecraft.INSTANCE.getREGISTRAR().id("test_rifle");
     Pair[] pairs = new Pair[]{
-        TuplesKt.to(WeaponInput.PRIMARY, FIRE_ID), TuplesKt.to(WeaponInput.SECONDARY, TOGGLE_AIM_ID), TuplesKt.to(WeaponInput.RELOAD, RELOAD_ID)
+        Pair.of(WeaponInput.PRIMARY, FIRE_ID), Pair.of(WeaponInput.SECONDARY, TOGGLE_AIM_ID), Pair.of(WeaponInput.RELOAD, RELOAD_ID)
     };
-    map3 = MapsKt.mapOf(pairs);
+    map3 = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(pairs);
     Pair[] pairs1 = new Pair[3];
     ResourceLocation resourceLocation2 = FIRE_ID;
     ResourceLocation resourceLocation5 = Zinecraft.INSTANCE.getREGISTRAR().id("animation/player/rifle_fire");
     ResourceLocation resourceLocation6 = Zinecraft.INSTANCE.getREGISTRAR().id("animation/weapon/test_rifle_fire");
     TimedWeaponVfx[] timedWeaponVfxs1 = new TimedWeaponVfx[]{new TimedWeaponVfx(RIFLE_MUZZLE, 2), new TimedWeaponVfx(RIFLE_IMPACT, 3)};
-    pairs1[0] = TuplesKt.to(
+    pairs1[0] = Pair.of(
         resourceLocation2,
         new WeaponPresentation(
-            resourceLocation5, resourceLocation6, CollectionsKt.listOf(timedWeaponVfxs1), CollectionsKt.listOf(new TimedWeaponSound(RIFLE_FIRE_SOUND, 2)), 10
+            resourceLocation5, resourceLocation6, java.util.List.of(timedWeaponVfxs1), java.util.List.of(new TimedWeaponSound(RIFLE_FIRE_SOUND, 2)), 10
         )
     );
-    pairs1[1] = TuplesKt.to(
+    pairs1[1] = Pair.of(
         RELOAD_ID,
         new WeaponPresentation(
             Zinecraft.INSTANCE.getREGISTRAR().id("animation/player/rifle_reload"),
             Zinecraft.INSTANCE.getREGISTRAR().id("animation/weapon/test_rifle_reload"),
-            null,
-            CollectionsKt.listOf(new TimedWeaponSound(RIFLE_RELOAD_SOUND, 24)),
-            32,
-            4,
-            null
+            java.util.List.of(),
+            java.util.List.of(new TimedWeaponSound(RIFLE_RELOAD_SOUND, 24)),
+            32
         )
     );
-    pairs1[2] = TuplesKt.to(
-        TOGGLE_AIM_ID, new WeaponPresentation(Zinecraft.INSTANCE.getREGISTRAR().id("animation/player/rifle_aim"), null, null, null, 6, 14, null)
+    pairs1[2] = Pair.of(
+        TOGGLE_AIM_ID, new WeaponPresentation(Zinecraft.INSTANCE.getREGISTRAR().id("animation/player/rifle_aim"), null, java.util.List.of(), java.util.List.of(), 6)
     );
-    Map map1 = MapsKt.mapOf(pairs1);
+    Map map1 = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(pairs1);
     String string1 = "item.zinecraft.test_rifle";
     TEST_RIFLE = new WeaponDefinition(resourceLocation, map3, map1, new WeaponMetadata(string1));
     resourceLocation = Zinecraft.INSTANCE.getREGISTRAR().id("test_staff");
-    Pair[] pairs2 = new Pair[]{TuplesKt.to(WeaponInput.PRIMARY, ARCANE_CAST_ID), TuplesKt.to(WeaponInput.SECONDARY, HEAL_CAST_ID)};
-    map3 = MapsKt.mapOf(pairs2);
+    Pair[] pairs2 = new Pair[]{Pair.of(WeaponInput.PRIMARY, ARCANE_CAST_ID), Pair.of(WeaponInput.SECONDARY, HEAL_CAST_ID)};
+    map3 = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(pairs2);
     Pair[] pairs3 = new Pair[2];
     resourceLocation2 = ARCANE_CAST_ID;
     resourceLocation5 = Zinecraft.INSTANCE.getREGISTRAR().id("animation/player/staff_cast");
     resourceLocation6 = Zinecraft.INSTANCE.getREGISTRAR().id("animation/weapon/test_staff_cast");
     timedWeaponVfxs1 = new TimedWeaponVfx[]{new TimedWeaponVfx(STAFF_ARCANE_CAST, 5), new TimedWeaponVfx(STAFF_ARCANE_IMPACT, 6)};
-    pairs3[0] = TuplesKt.to(
+    pairs3[0] = Pair.of(
         resourceLocation2,
         new WeaponPresentation(
-            resourceLocation5, resourceLocation6, CollectionsKt.listOf(timedWeaponVfxs1), CollectionsKt.listOf(new TimedWeaponSound(STAFF_CAST_SOUND, 5)), 18
+            resourceLocation5, resourceLocation6, java.util.List.of(timedWeaponVfxs1), java.util.List.of(new TimedWeaponSound(STAFF_CAST_SOUND, 5)), 18
         )
     );
-    pairs3[1] = TuplesKt.to(
+    pairs3[1] = Pair.of(
         HEAL_CAST_ID,
         new WeaponPresentation(
             Zinecraft.INSTANCE.getREGISTRAR().id("animation/player/staff_heal"),
             null,
-            CollectionsKt.listOf(new TimedWeaponVfx(STAFF_HEAL, 10)),
-            CollectionsKt.listOf(new TimedWeaponSound(STAFF_CAST_SOUND, 10)),
-            28,
-            2,
-            null
+            java.util.List.of(new TimedWeaponVfx(STAFF_HEAL, 10)),
+            java.util.List.of(new TimedWeaponSound(STAFF_CAST_SOUND, 10)),
+            28
         )
     );
-    Map map2 = MapsKt.mapOf(pairs3);
+    Map map2 = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(pairs3);
     String string2 = "item.zinecraft.test_staff";
     TEST_STAFF = new WeaponDefinition(resourceLocation, map3, map2, new WeaponMetadata(string2));
     WeaponAction[] weaponActions = new WeaponAction[]{LIGHT_ATTACK, FIRE, RELOAD, TOGGLE_AIM, ARCANE_CAST, HEAL_CAST};
-    Iterable iterable = CollectionsKt.listOf(weaponActions);
+    Iterable iterable = java.util.List.of(weaponActions);
     WeaponRegistry weaponRegistry = Zinecraft.INSTANCE.getWEAPONS();
     int i = 0;
 
@@ -241,11 +234,11 @@ public final class ModWeapons {
     Zinecraft.INSTANCE.getWEAPONS().register(TEST_STAFF_ITEM.getItem(), TEST_STAFF);
   }
 
-  private static final SwordItem TEST_SWORD_ITEM$lambda$0() {
+  private static final SwordItem TEST_SWORD_ITEMHelper0() {
     return new SwordItem((Tier) Tiers.IRON, new Properties().attributes(SwordItem.createAttributes((Tier) Tiers.IRON, 3, -2.4F)));
   }
 
-  private static final FirearmItem TEST_RIFLE_ITEM$lambda$0() {
+  private static final FirearmItem TEST_RIFLE_ITEMHelper0() {
     Properties properties = new Properties()
         .stacksTo(1)
         .component(WeaponStateComponents.INSTANCE.getAMMO(), 12)
@@ -253,7 +246,7 @@ public final class ModWeapons {
     return new FirearmItem(12, properties);
   }
 
-  private static final ActionWeaponItem TEST_STAFF_ITEM$lambda$0() {
+  private static final ActionWeaponItem TEST_STAFF_ITEMHelper0() {
     Properties properties = new Properties().stacksTo(1);
     return new ActionWeaponItem(properties);
   }

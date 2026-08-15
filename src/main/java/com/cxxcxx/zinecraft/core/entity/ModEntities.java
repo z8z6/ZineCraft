@@ -8,11 +8,7 @@ import com.cxxcxx.zinecraft.api.nation.TerraNation;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
-import kotlin.Pair;
-import kotlin.TuplesKt;
-import kotlin.Unit;
-import kotlin.collections.MapsKt;
-import kotlin.jvm.functions.Function0;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EntityType.EntityFactory;
@@ -25,6 +21,7 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public final class ModEntities {
   @NotNull
@@ -76,7 +73,7 @@ public final class ModEntities {
     EntityCatalog entityCatalog = Zinecraft.INSTANCE.getENTITIES();
     EntityFactory entityFactory = LateranoCitizen::new;
     MobCategory mobCategory = MobCategory.CREATURE;
-    Function0 function0 = LateranoCitizen.Companion::attributes;
+    Supplier function0 = LateranoCitizen.ACCESS::attributes;
     SpawnPlacementType spawnPlacementType1 = SpawnPlacementTypes.ON_GROUND;
     MobEntry mobEntry2 = entityCatalog.mob(
         "laterano_citizen",
@@ -85,11 +82,11 @@ public final class ModEntities {
         entityFactory,
         mobCategory,
         function0,
-        new MobSpawnRestriction(spawnPlacementType1, Types.MOTION_BLOCKING_NO_LEAVES, LateranoCitizen.Companion::canSpawn),
-        ModEntities::LATERANO_CITIZEN$lambda$0
+        new MobSpawnRestriction(spawnPlacementType1, Types.MOTION_BLOCKING_NO_LEAVES, LateranoCitizen.ACCESS::canSpawn),
+        ModEntities::LATERANO_CITIZENHelper0
     );
     LATERANO_CITIZEN = mobEntry2.naturalSpawn(10, 1, 2, BiomeSelection.of(NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS()));
-    LATERANO_CITIZEN_SPAWN_EGG = MobEntry.spawnEgg$default(LATERANO_CITIZEN, 15853776, 14267980, "拉特兰公民生成蛋", "Laterano Citizen Spawn Egg", null, 16, null);
+    LATERANO_CITIZEN_SPAWN_EGG = MobEntry.spawnEggWithDefaults(LATERANO_CITIZEN, 15853776, 14267980, "拉特兰公民生成蛋", "Laterano Citizen Spawn Egg", null, 16, null);
     ModEntities modEntities = INSTANCE;
     TerraNation terraNation1 = TerraNation.AEGIR;
     ResourceKey resourceKey = NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA();
@@ -100,108 +97,108 @@ public final class ModEntities {
     terraNation1 = TerraNation.BOLIVAR;
     resourceKey = NationBiomes.INSTANCE.getBOLIVAR_PLAIN();
     item = Items.COOKIE;
-    BOLIVAR_RESIDENT = resident$default(modEntities1, terraNation1, resourceKey, item, null, false, 24, null);
+    BOLIVAR_RESIDENT = residentWithDefaults(modEntities1, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities2 = INSTANCE;
     terraNation1 = TerraNation.HIGASHI;
     resourceKey = NationBiomes.INSTANCE.getHIGASHI_SHADOW_RIFT();
     item = Items.IRON_SWORD;
-    HIGASHI_RESIDENT = resident$default(modEntities2, terraNation1, resourceKey, item, null, false, 24, null);
+    HIGASHI_RESIDENT = residentWithDefaults(modEntities2, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities3 = INSTANCE;
     terraNation1 = TerraNation.DURIN;
     resourceKey = NationBiomes.INSTANCE.getDURIN_UNDERGROUND_GARDEN();
     item = Items.REDSTONE;
-    DURIN_RESIDENT = resident$default(modEntities3, terraNation1, resourceKey, item, null, false, 24, null);
+    DURIN_RESIDENT = residentWithDefaults(modEntities3, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities4 = INSTANCE;
     terraNation1 = TerraNation.COLUMBIA;
     resourceKey = NationBiomes.INSTANCE.getCOLUMBIA_SANDSTONE_WILDS();
     item = Items.COMPASS;
-    COLUMBIA_RESIDENT = resident$default(modEntities4, terraNation1, resourceKey, item, null, false, 24, null);
+    COLUMBIA_RESIDENT = residentWithDefaults(modEntities4, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities5 = INSTANCE;
     terraNation1 = TerraNation.KAZIMIERZ;
     resourceKey = NationBiomes.INSTANCE.getKAZIMIERZ_KNIGHTLAND();
     item = Items.IRON_SWORD;
-    KAZIMIERZ_RESIDENT = resident$default(modEntities5, terraNation1, resourceKey, item, null, false, 24, null);
+    KAZIMIERZ_RESIDENT = residentWithDefaults(modEntities5, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities6 = INSTANCE;
     terraNation1 = TerraNation.KAZDEL;
     resourceKey = NationBiomes.INSTANCE.getKAZDEL_SCARRED_WASTES();
     item = Items.IRON_AXE;
-    KAZDEL_RESIDENT = resident$default(modEntities6, terraNation1, resourceKey, item, null, false, 24, null);
+    KAZDEL_RESIDENT = residentWithDefaults(modEntities6, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities7 = INSTANCE;
     terraNation1 = TerraNation.LEITHANIEN;
     resourceKey = NationBiomes.INSTANCE.getLEITHANIEN_TWILIGHT_FOREST();
     item = Items.NOTE_BLOCK;
-    LEITHANIEN_RESIDENT = resident$default(modEntities7, terraNation1, resourceKey, item, null, false, 24, null);
+    LEITHANIEN_RESIDENT = residentWithDefaults(modEntities7, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities8 = INSTANCE;
     terraNation1 = TerraNation.RIM_BILLITON;
     resourceKey = NationBiomes.INSTANCE.getRIM_BILLITON_MINING_BADLANDS();
     item = Items.IRON_PICKAXE;
-    RIM_BILLITON_RESIDENT = resident$default(modEntities8, terraNation1, resourceKey, item, null, false, 24, null);
+    RIM_BILLITON_RESIDENT = residentWithDefaults(modEntities8, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities9 = INSTANCE;
     terraNation1 = TerraNation.MINOS;
     resourceKey = NationBiomes.INSTANCE.getMINOS_SUNLIT_HILLS();
     item = Items.SHIELD;
-    MINOS_RESIDENT = resident$default(modEntities9, terraNation1, resourceKey, item, null, false, 24, null);
+    MINOS_RESIDENT = residentWithDefaults(modEntities9, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities10 = INSTANCE;
     terraNation1 = TerraNation.SARGON;
     resourceKey = NationBiomes.INSTANCE.getSARGON_ROCKY_DESERT();
     item = Items.EMERALD;
-    SARGON_RESIDENT = resident$default(modEntities10, terraNation1, resourceKey, item, null, false, 24, null);
+    SARGON_RESIDENT = residentWithDefaults(modEntities10, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities11 = INSTANCE;
     terraNation1 = TerraNation.SAMI;
     resourceKey = NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST();
     item = Items.BONE;
-    SAMI_RESIDENT = resident$default(modEntities11, terraNation1, resourceKey, item, null, false, 24, null);
+    SAMI_RESIDENT = residentWithDefaults(modEntities11, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities12 = INSTANCE;
     terraNation1 = TerraNation.VICTORIA;
     resourceKey = NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS();
     item = Items.IRON_INGOT;
-    VICTORIA_RESIDENT = resident$default(modEntities12, terraNation1, resourceKey, item, null, false, 24, null);
+    VICTORIA_RESIDENT = residentWithDefaults(modEntities12, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities13 = INSTANCE;
     terraNation1 = TerraNation.URSUS;
     resourceKey = NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE();
     item = Items.IRON_AXE;
-    URSUS_RESIDENT = resident$default(modEntities13, terraNation1, resourceKey, item, null, false, 24, null);
+    URSUS_RESIDENT = residentWithDefaults(modEntities13, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities14 = INSTANCE;
     terraNation1 = TerraNation.KJERAG;
     resourceKey = NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS();
     item = Items.EMERALD;
-    KJERAG_RESIDENT = resident$default(modEntities14, terraNation1, resourceKey, item, null, false, 24, null);
+    KJERAG_RESIDENT = residentWithDefaults(modEntities14, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities15 = INSTANCE;
     terraNation1 = TerraNation.SIRACUSA;
     resourceKey = NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND();
     item = Items.SHEARS;
-    SIRACUSA_RESIDENT = resident$default(modEntities15, terraNation1, resourceKey, item, null, false, 24, null);
+    SIRACUSA_RESIDENT = residentWithDefaults(modEntities15, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities16 = INSTANCE;
     terraNation1 = TerraNation.YAN;
     resourceKey = NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE();
     item = Items.PAPER;
-    YAN_RESIDENT = resident$default(modEntities16, terraNation1, resourceKey, item, null, false, 24, null);
+    YAN_RESIDENT = residentWithDefaults(modEntities16, terraNation1, resourceKey, item, null, false, 24, null);
     ModEntities modEntities17 = INSTANCE;
     terraNation1 = TerraNation.IBERIA;
     resourceKey = NationBiomes.INSTANCE.getIBERIA_SALT_DELTA();
     item = Items.COD;
-    IBERIA_RESIDENT = resident$default(modEntities17, terraNation1, resourceKey, item, null, false, 24, null);
-    Pair[] $this$map$iv = new Pair[]{
-        TuplesKt.to(TerraNation.AEGIR, AEGIR_RESIDENT),
-        TuplesKt.to(TerraNation.BOLIVAR, BOLIVAR_RESIDENT),
-        TuplesKt.to(TerraNation.HIGASHI, HIGASHI_RESIDENT),
-        TuplesKt.to(TerraNation.DURIN, DURIN_RESIDENT),
-        TuplesKt.to(TerraNation.COLUMBIA, COLUMBIA_RESIDENT),
-        TuplesKt.to(TerraNation.KAZIMIERZ, KAZIMIERZ_RESIDENT),
-        TuplesKt.to(TerraNation.KAZDEL, KAZDEL_RESIDENT),
-        TuplesKt.to(TerraNation.LEITHANIEN, LEITHANIEN_RESIDENT),
-        TuplesKt.to(TerraNation.RIM_BILLITON, RIM_BILLITON_RESIDENT),
-        TuplesKt.to(TerraNation.MINOS, MINOS_RESIDENT),
-        TuplesKt.to(TerraNation.SARGON, SARGON_RESIDENT),
-        TuplesKt.to(TerraNation.SAMI, SAMI_RESIDENT),
-        TuplesKt.to(TerraNation.VICTORIA, VICTORIA_RESIDENT),
-        TuplesKt.to(TerraNation.URSUS, URSUS_RESIDENT),
-        TuplesKt.to(TerraNation.KJERAG, KJERAG_RESIDENT),
-        TuplesKt.to(TerraNation.SIRACUSA, SIRACUSA_RESIDENT),
-        TuplesKt.to(TerraNation.YAN, YAN_RESIDENT),
-        TuplesKt.to(TerraNation.IBERIA, IBERIA_RESIDENT)
+    IBERIA_RESIDENT = residentWithDefaults(modEntities17, terraNation1, resourceKey, item, null, false, 24, null);
+    Pair[] _this_map_iv = new Pair[]{
+        Pair.of(TerraNation.AEGIR, AEGIR_RESIDENT),
+        Pair.of(TerraNation.BOLIVAR, BOLIVAR_RESIDENT),
+        Pair.of(TerraNation.HIGASHI, HIGASHI_RESIDENT),
+        Pair.of(TerraNation.DURIN, DURIN_RESIDENT),
+        Pair.of(TerraNation.COLUMBIA, COLUMBIA_RESIDENT),
+        Pair.of(TerraNation.KAZIMIERZ, KAZIMIERZ_RESIDENT),
+        Pair.of(TerraNation.KAZDEL, KAZDEL_RESIDENT),
+        Pair.of(TerraNation.LEITHANIEN, LEITHANIEN_RESIDENT),
+        Pair.of(TerraNation.RIM_BILLITON, RIM_BILLITON_RESIDENT),
+        Pair.of(TerraNation.MINOS, MINOS_RESIDENT),
+        Pair.of(TerraNation.SARGON, SARGON_RESIDENT),
+        Pair.of(TerraNation.SAMI, SAMI_RESIDENT),
+        Pair.of(TerraNation.VICTORIA, VICTORIA_RESIDENT),
+        Pair.of(TerraNation.URSUS, URSUS_RESIDENT),
+        Pair.of(TerraNation.KJERAG, KJERAG_RESIDENT),
+        Pair.of(TerraNation.SIRACUSA, SIRACUSA_RESIDENT),
+        Pair.of(TerraNation.YAN, YAN_RESIDENT),
+        Pair.of(TerraNation.IBERIA, IBERIA_RESIDENT)
     };
-    GENERIC_RESIDENTS_BY_NATION = MapsKt.linkedMapOf($this$map$iv);
+    GENERIC_RESIDENTS_BY_NATION = com.cxxcxx.zinecraft.api.util.CollectionSupport.linkedMapOf(_this_map_iv);
     var registeredNations = new HashSet<>(GENERIC_RESIDENTS_BY_NATION.keySet());
     registeredNations.add(TerraNation.LATERANO);
     if (!registeredNations.equals(new HashSet<>(TerraNation.getEntries()))) {
@@ -212,8 +209,7 @@ public final class ModEntities {
   private ModEntities() {
   }
 
-  // $VF: synthetic method
-  static MobEntry resident$default(
+  static MobEntry residentWithDefaults(
       ModEntities var0, TerraNation var1, ResourceKey var2, Item var3, SpawnPlacementType var4, boolean var5, int var6, Object var7
   ) {
     if ((var6 & 8) != 0) {
@@ -228,20 +224,20 @@ public final class ModEntities {
     return var0.resident(var1, var2, var3, var4, var5);
   }
 
-  private static final Unit LATERANO_CITIZEN$lambda$0(net.minecraft.world.entity.EntityType.Builder $this$mob) {
-    $this$mob.sized(0.6F, 1.8F);
-    $this$mob.clientTrackingRange(8);
-    return Unit.INSTANCE;
+  private static void LATERANO_CITIZENHelper0(net.minecraft.world.entity.EntityType.Builder _this_mob) {
+    _this_mob.sized(0.6F, 1.8F);
+    _this_mob.clientTrackingRange(8);
+    return;
   }
 
-  private static final NationResident resident$lambda$0(NationResidentProfile $profile, EntityType type, Level level) {
-    return new NationResident(type, level, $profile);
+  private static final NationResident residentHelper0(NationResidentProfile _profile, EntityType type, Level level) {
+    return new NationResident(type, level, _profile);
   }
 
-  private static final Unit resident$lambda$1(net.minecraft.world.entity.EntityType.Builder $this$mob) {
-    $this$mob.sized(0.6F, 1.8F);
-    $this$mob.clientTrackingRange(8);
-    return Unit.INSTANCE;
+  private static void residentHelper1(net.minecraft.world.entity.EntityType.Builder _this_mob) {
+    _this_mob.sized(0.6F, 1.8F);
+    _this_mob.clientTrackingRange(8);
+    return;
   }
 
   @NotNull
@@ -365,11 +361,11 @@ public final class ModEntities {
             nation.getId() + "_resident",
             nation.getZhCn() + "居民",
             nation.getEnUs() + " Resident",
-            (type, level) -> resident$lambda$0(nationResidentProfile, type, level),
+            (type, level) -> residentHelper0(nationResidentProfile, type, level),
             MobCategory.CREATURE,
-            NationResident.Companion::attributes,
-            new MobSpawnRestriction(placement, Types.MOTION_BLOCKING_NO_LEAVES, NationResident.Companion::canSpawn),
-            ModEntities::resident$lambda$1
+            NationResident.ACCESS::attributes,
+            new MobSpawnRestriction(placement, Types.MOTION_BLOCKING_NO_LEAVES, NationResident.ACCESS::canSpawn),
+            ModEntities::residentHelper1
         );
     return mobEntry.naturalSpawn(8, 1, 3, BiomeSelection.of(biome));
   }

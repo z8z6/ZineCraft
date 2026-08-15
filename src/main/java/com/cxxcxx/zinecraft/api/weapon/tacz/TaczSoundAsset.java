@@ -16,19 +16,6 @@ public final class TaczSoundAsset {
     this.runtimeId = runtimeId;
   }
 
-  // $VF: synthetic method
-  public static TaczSoundAsset copy$default(TaczSoundAsset var0, String var1, ResourceLocation var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.sourcePath;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.runtimeId;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   @NotNull
   public final String getSourcePath() {
     return this.sourcePath;
@@ -37,21 +24,6 @@ public final class TaczSoundAsset {
   @NotNull
   public final ResourceLocation getRuntimeId() {
     return this.runtimeId;
-  }
-
-  @NotNull
-  public final String component1() {
-    return this.sourcePath;
-  }
-
-  @NotNull
-  public final ResourceLocation component2() {
-    return this.runtimeId;
-  }
-
-  @NotNull
-  public final TaczSoundAsset copy(@NotNull String sourcePath, @NotNull ResourceLocation runtimeId) {
-    return new TaczSoundAsset(sourcePath, runtimeId);
   }
 
   @Override

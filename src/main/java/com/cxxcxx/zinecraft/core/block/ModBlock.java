@@ -17,11 +17,11 @@ public final class ModBlock {
   @NotNull
   public static final ModBlock INSTANCE = new ModBlock();
   @NotNull
-  private static final BlockEntry<Block> STARGATE_ARCH = BlockCatalog.register$default(
-          Zinecraft.INSTANCE.getBLOCKS(), "stargate_arch", "星门拱石", "Stargate Archstone", false, null, false, false, ModBlock::STARGATE_ARCH$lambda$0, 120, null
+  private static final BlockEntry<Block> STARGATE_ARCH = BlockCatalog.registerWithDefaults(
+      Zinecraft.INSTANCE.getBLOCKS(), "stargate_arch", "星门拱石", "Stargate Archstone", false, null, false, false, ModBlock::STARGATE_ARCHHelper0, 120, null
   );
   @NotNull
-  private static final BlockEntry<StarGateControllerBlock> STARGATE_CONTROLLER = BlockCatalog.register$default(
+  private static final BlockEntry<StarGateControllerBlock> STARGATE_CONTROLLER = BlockCatalog.registerWithDefaults(
           Zinecraft.INSTANCE.getBLOCKS(),
           "stargate_controller",
           "星门协议控制器",
@@ -30,12 +30,12 @@ public final class ModBlock {
           null,
           false,
           false,
-          ModBlock::STARGATE_CONTROLLER$lambda$0,
+      ModBlock::STARGATE_CONTROLLERHelper0,
           120,
           null
   );
   @NotNull
-  private static final BlockEntry<StarGatePortalBlock> STARGATE_PORTAL = BlockCatalog.register$default(
+  private static final BlockEntry<StarGatePortalBlock> STARGATE_PORTAL = BlockCatalog.registerWithDefaults(
           Zinecraft.INSTANCE.getBLOCKS(),
           "stargate_portal",
           "星门事件视界",
@@ -44,12 +44,12 @@ public final class ModBlock {
           null,
           false,
           false,
-          ModBlock::STARGATE_PORTAL$lambda$0,
+      ModBlock::STARGATE_PORTALHelper0,
           16,
           null
   );
   @NotNull
-  private static final BlockEntry<ExampleEntityBlock> EXAMPLE_ENTITY_BLOCK = BlockCatalog.register$default(
+  private static final BlockEntry<ExampleEntityBlock> EXAMPLE_ENTITY_BLOCK = BlockCatalog.registerWithDefaults(
           Zinecraft.INSTANCE.getBLOCKS(),
           "example_entity_block",
           "示例实体方块",
@@ -58,7 +58,7 @@ public final class ModBlock {
           null,
           false,
           false,
-          ModBlock::EXAMPLE_ENTITY_BLOCK$lambda$0,
+      ModBlock::EXAMPLE_ENTITY_BLOCKHelper0,
           120,
           null
   );
@@ -79,40 +79,40 @@ public final class ModBlock {
   private ModBlock() {
   }
 
-  private static final Block STARGATE_ARCH$lambda$0() {
+  private static final Block STARGATE_ARCHHelper0() {
     return new Block(Properties.of().mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(18.0F, 1200.0F).sound(SoundType.DEEPSLATE));
   }
 
-  private static final int STARGATE_CONTROLLER$lambda$0$0(BlockState state) {
-    return state.getValue(StarGateControllerBlock.Companion.getACTIVE()) ? 12 : 3;
+  private static final int STARGATE_CONTROLLERHelper0$0(BlockState state) {
+    return state.getValue(StarGateControllerBlock.ACCESS.getACTIVE()) ? 12 : 3;
   }
 
-  private static final StarGateControllerBlock STARGATE_CONTROLLER$lambda$0() {
+  private static final StarGateControllerBlock STARGATE_CONTROLLERHelper0() {
     Properties properties = Properties.of()
         .mapColor(MapColor.COLOR_CYAN)
         .requiresCorrectToolForDrops()
         .strength(18.0F, 1200.0F)
-        .lightLevel(ModBlock::STARGATE_CONTROLLER$lambda$0$0)
+        .lightLevel(ModBlock::STARGATE_CONTROLLERHelper0$0)
         .sound(SoundType.METAL);
     return new StarGateControllerBlock(properties);
   }
 
-  private static final int STARGATE_PORTAL$lambda$0$0(BlockState it) {
+  private static final int STARGATE_PORTALHelper0$0(BlockState it) {
     return 12;
   }
 
-  private static final StarGatePortalBlock STARGATE_PORTAL$lambda$0() {
+  private static final StarGatePortalBlock STARGATE_PORTALHelper0() {
     Properties properties = Properties.of()
         .mapColor(MapColor.COLOR_CYAN)
         .noCollission()
         .noOcclusion()
         .strength(-1.0F, 3600000.0F)
-        .lightLevel(ModBlock::STARGATE_PORTAL$lambda$0$0)
+        .lightLevel(ModBlock::STARGATE_PORTALHelper0$0)
         .sound(SoundType.GLASS);
     return new StarGatePortalBlock(properties);
   }
 
-  private static final ExampleEntityBlock EXAMPLE_ENTITY_BLOCK$lambda$0() {
+  private static final ExampleEntityBlock EXAMPLE_ENTITY_BLOCKHelper0() {
     Properties properties = Properties.of().sound(SoundType.GRASS);
     return new ExampleEntityBlock(properties);
   }

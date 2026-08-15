@@ -1,35 +1,23 @@
 package com.cxxcxx.zinecraft.api.world.biome;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
+
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Consumer;
+
 final class BiomeEntry {
   @NotNull
   private final ResourceKey<Biome> key;
   @NotNull
-  private final Function1<SimpleBiomeBuilder, Unit> build;
+  private final Consumer<SimpleBiomeBuilder> build;
 
-  public BiomeEntry(@NotNull ResourceKey<Biome> key, @NotNull Function1<? super SimpleBiomeBuilder, Unit> build) {
+  public BiomeEntry(@NotNull ResourceKey<Biome> key, @NotNull Consumer<? super SimpleBiomeBuilder> build) {
     super();
     this.key = key;
-    this.build = builder -> build.invoke(builder);
-  }
-
-  // $VF: synthetic method
-  public static BiomeEntry copy$default(BiomeEntry var0, ResourceKey var1, Function1 var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.key;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.build;
-    }
-
-    return var0.copy(var1, var2);
+    this.build = builder -> build.accept(builder);
   }
 
   @NotNull
@@ -38,23 +26,8 @@ final class BiomeEntry {
   }
 
   @NotNull
-  public final Function1<SimpleBiomeBuilder, Unit> getBuild() {
+  public final Consumer<SimpleBiomeBuilder> getBuild() {
     return this.build;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> component1() {
-    return this.key;
-  }
-
-  @NotNull
-  public final Function1<SimpleBiomeBuilder, Unit> component2() {
-    return this.build;
-  }
-
-  @NotNull
-  public final BiomeEntry copy(@NotNull ResourceKey<Biome> key, @NotNull Function1<? super SimpleBiomeBuilder, Unit> build) {
-    return new BiomeEntry(key, build);
   }
 
   @Override

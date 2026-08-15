@@ -22,23 +22,6 @@ public final class MobSpawnRestriction<T extends Mob> {
     this.predicate = predicate;
   }
 
-  // $VF: synthetic method
-  public static MobSpawnRestriction copy$default(MobSpawnRestriction var0, SpawnPlacementType var1, Types var2, SpawnPredicate var3, int var4, Object var5) {
-    if ((var4 & 1) != 0) {
-      var1 = var0.placement;
-    }
-
-    if ((var4 & 2) != 0) {
-      var2 = var0.heightmap;
-    }
-
-    if ((var4 & 4) != 0) {
-      var3 = var0.predicate;
-    }
-
-    return var0.copy(var1, var2, var3);
-  }
-
   @NotNull
   public final SpawnPlacementType getPlacement() {
     return this.placement;
@@ -52,26 +35,6 @@ public final class MobSpawnRestriction<T extends Mob> {
   @NotNull
   public final SpawnPredicate<T> getPredicate() {
     return this.predicate;
-  }
-
-  @NotNull
-  public final SpawnPlacementType component1() {
-    return this.placement;
-  }
-
-  @NotNull
-  public final Types component2() {
-    return this.heightmap;
-  }
-
-  @NotNull
-  public final SpawnPredicate<T> component3() {
-    return this.predicate;
-  }
-
-  @NotNull
-  public final MobSpawnRestriction<T> copy(@NotNull SpawnPlacementType placement, @NotNull Types heightmap, @NotNull SpawnPredicate<T> predicate) {
-    return new MobSpawnRestriction<>(placement, heightmap, predicate);
   }
 
   @Override

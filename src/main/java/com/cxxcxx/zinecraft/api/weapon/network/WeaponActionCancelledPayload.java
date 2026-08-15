@@ -1,7 +1,6 @@
 package com.cxxcxx.zinecraft.api.weapon.network;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -11,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class WeaponActionCancelledPayload implements CustomPacketPayload {
   @NotNull
-  public static final WeaponActionCancelledPayload.Companion Companion = new WeaponActionCancelledPayload.Companion(null);
+  public static final WeaponActionCancelledPayload.Access ACCESS = new WeaponActionCancelledPayload.Access();
   @NotNull
   private static final Type<WeaponActionCancelledPayload> TYPE = new Type(Zinecraft.INSTANCE.getREGISTRAR().id("weapon_action_cancelled"));
   @NotNull
@@ -37,19 +36,6 @@ public final class WeaponActionCancelledPayload implements CustomPacketPayload {
     this.actionId = actionId;
   }
 
-  // $VF: synthetic method
-  public static WeaponActionCancelledPayload copy$default(WeaponActionCancelledPayload var0, int var1, ResourceLocation var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.entityId;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.actionId;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   public final int getEntityId() {
     return this.entityId;
   }
@@ -62,20 +48,6 @@ public final class WeaponActionCancelledPayload implements CustomPacketPayload {
   @NotNull
   public Type<? extends CustomPacketPayload> type() {
     return TYPE;
-  }
-
-  public final int component1() {
-    return this.entityId;
-  }
-
-  @NotNull
-  public final ResourceLocation component2() {
-    return this.actionId;
-  }
-
-  @NotNull
-  public final WeaponActionCancelledPayload copy(int entityId, @NotNull ResourceLocation actionId) {
-    return new WeaponActionCancelledPayload(entityId, actionId);
   }
 
   @Override
@@ -101,13 +73,8 @@ public final class WeaponActionCancelledPayload implements CustomPacketPayload {
     return "WeaponActionCancelledPayload(entityId=" + this.entityId + ", actionId=" + this.actionId + ")";
   }
 
-  public static final class Companion {
-    private Companion() {
-    }
-
-    // $VF: synthetic method
-    public Companion(DefaultConstructorMarker $constructor_marker) {
-      this();
+  public static final class Access {
+    private Access() {
     }
 
     @NotNull
@@ -121,4 +88,3 @@ public final class WeaponActionCancelledPayload implements CustomPacketPayload {
     }
   }
 }
-

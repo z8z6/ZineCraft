@@ -17,19 +17,6 @@ public final class JigsawBuildingDefinition {
     this.pools = pools;
   }
 
-  // $VF: synthetic method
-  public static JigsawBuildingDefinition copy$default(JigsawBuildingDefinition var0, String var1, List var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.startPool;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.pools;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   @NotNull
   public final String getStartPool() {
     return this.startPool;
@@ -38,21 +25,6 @@ public final class JigsawBuildingDefinition {
   @NotNull
   public final List<JigsawPoolDefinition> getPools() {
     return this.pools;
-  }
-
-  @NotNull
-  public final String component1() {
-    return this.startPool;
-  }
-
-  @NotNull
-  public final List<JigsawPoolDefinition> component2() {
-    return this.pools;
-  }
-
-  @NotNull
-  public final JigsawBuildingDefinition copy(@NotNull String startPool, @NotNull List<JigsawPoolDefinition> pools) {
-    return new JigsawBuildingDefinition(startPool, pools);
   }
 
   @Override

@@ -19,7 +19,7 @@ public final class CatalogLanguageProvider extends LanguageProvider {
 
   @Override
   protected void addTranslations() {
-    translations.getEntries$zinecraft().forEach((key, text) ->
+    translations.getEntries().forEach((key, text) ->
         add(key, locale.equals("zh_cn") ? text.getZhCn() : text.getEnUs())
     );
   }

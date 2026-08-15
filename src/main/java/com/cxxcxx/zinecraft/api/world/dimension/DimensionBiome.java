@@ -18,19 +18,6 @@ public final class DimensionBiome {
     this.parameters = parameters;
   }
 
-  // $VF: synthetic method
-  public static DimensionBiome copy$default(DimensionBiome var0, ResourceKey var1, ParameterPoint var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.biome;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.parameters;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   @NotNull
   public final ResourceKey<Biome> getBiome() {
     return this.biome;
@@ -39,21 +26,6 @@ public final class DimensionBiome {
   @NotNull
   public final ParameterPoint getParameters() {
     return this.parameters;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> component1() {
-    return this.biome;
-  }
-
-  @NotNull
-  public final ParameterPoint component2() {
-    return this.parameters;
-  }
-
-  @NotNull
-  public final DimensionBiome copy(@NotNull ResourceKey<Biome> biome, @NotNull ParameterPoint parameters) {
-    return new DimensionBiome(biome, parameters);
   }
 
   @Override

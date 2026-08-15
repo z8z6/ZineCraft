@@ -15,7 +15,7 @@ final class TaczLayeredResources {
   }
 
   InputStream open(String path) {
-    String normalized = TaczGunPackKt.normalize(path);
+    String normalized = TaczPackPaths.normalize(path);
     if (normalized == null) return null;
     List<TaczPackSource> reversed = new ArrayList<>(sources);
     Collections.reverse(reversed);

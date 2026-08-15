@@ -13,27 +13,27 @@ public final class NationLandmarks {
   @NotNull
   public static final NationLandmarks INSTANCE = new NationLandmarks();
   @NotNull
-  private static final JigsawBuildingEntry AEGIR_VOLCANIC_BEACON = landmark$default(
+  private static final JigsawBuildingEntry AEGIR_VOLCANIC_BEACON = landmarkWithDefaults(
       INSTANCE, "aegir_volcanic_beacon", NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA(), 40, Types.OCEAN_FLOOR_WG, 0, 16, null
   );
   @NotNull
-  private static final JigsawBuildingEntry AEGIR_ABYSSAL_OBSERVATORY = landmark$default(
+  private static final JigsawBuildingEntry AEGIR_ABYSSAL_OBSERVATORY = landmarkWithDefaults(
       INSTANCE, "aegir_abyssal_observatory", NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA(), 52, Types.OCEAN_FLOOR_WG, 0, 16, null
   );
   @NotNull
-  private static final JigsawBuildingEntry BOLIVAR_DOSSOLES_YACHT = landmark$default(
+  private static final JigsawBuildingEntry BOLIVAR_DOSSOLES_YACHT = landmarkWithDefaults(
       INSTANCE, "bolivar_dossoles_yacht", NationBiomes.INSTANCE.getBOLIVAR_PLAIN(), 30, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry BOLIVAR_RACE_CHECKPOINT = landmark$default(
+  private static final JigsawBuildingEntry BOLIVAR_RACE_CHECKPOINT = landmarkWithDefaults(
       INSTANCE, "bolivar_race_checkpoint", NationBiomes.INSTANCE.getBOLIVAR_PLAIN(), 46, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry HIGASHI_RIFT_SHRINE = landmark$default(
+  private static final JigsawBuildingEntry HIGASHI_RIFT_SHRINE = landmarkWithDefaults(
       INSTANCE, "higashi_rift_shrine", NationBiomes.INSTANCE.getHIGASHI_SHADOW_RIFT(), 34, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry HIGASHI_SOKOGAWA_WATCHTOWER = landmark$default(
+  private static final JigsawBuildingEntry HIGASHI_SOKOGAWA_WATCHTOWER = landmarkWithDefaults(
       INSTANCE, "higashi_sokogawa_watchtower", NationBiomes.INSTANCE.getHIGASHI_SHADOW_RIFT(), 50, null, 0, 24, null
   );
   @NotNull
@@ -45,131 +45,130 @@ public final class NationLandmarks {
       "durin_water_park", NationBiomes.INSTANCE.getDURIN_UNDERGROUND_GARDEN(), 40, null, 24
   );
   @NotNull
-  private static final JigsawBuildingEntry COLUMBIA_FRONTIER_LAB = landmark$default(
+  private static final JigsawBuildingEntry COLUMBIA_FRONTIER_LAB = landmarkWithDefaults(
       INSTANCE, "columbia_frontier_lab", NationBiomes.INSTANCE.getCOLUMBIA_SANDSTONE_WILDS(), 32, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry COLUMBIA_PRISON_OUTPOST = landmark$default(
+  private static final JigsawBuildingEntry COLUMBIA_PRISON_OUTPOST = landmarkWithDefaults(
       INSTANCE, "columbia_prison_outpost", NationBiomes.INSTANCE.getCOLUMBIA_SANDSTONE_WILDS(), 48, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry KAZIMIERZ_ARENA_GATE = landmark$default(
+  private static final JigsawBuildingEntry KAZIMIERZ_ARENA_GATE = landmarkWithDefaults(
       INSTANCE, "kazimierz_arena_gate", NationBiomes.INSTANCE.getKAZIMIERZ_KNIGHTLAND(), 30, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry KAZIMIERZ_KNIGHT_MONUMENT = landmark$default(
+  private static final JigsawBuildingEntry KAZIMIERZ_KNIGHT_MONUMENT = landmarkWithDefaults(
       INSTANCE, "kazimierz_knight_monument", NationBiomes.INSTANCE.getKAZIMIERZ_KNIGHTLAND(), 46, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry KAZDEL_BABEL_RUINS = landmark$default(
+  private static final JigsawBuildingEntry KAZDEL_BABEL_RUINS = landmarkWithDefaults(
       INSTANCE, "kazdel_babel_ruins", NationBiomes.INSTANCE.getKAZDEL_SCARRED_WASTES(), 36, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry KAZDEL_SARKAZ_CAMP = landmark$default(
+  private static final JigsawBuildingEntry KAZDEL_SARKAZ_CAMP = landmarkWithDefaults(
       INSTANCE, "kazdel_sarkaz_camp", NationBiomes.INSTANCE.getKAZDEL_SCARRED_WASTES(), 52, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry LATERANO_REVELATION_TOWER = landmark$default(
+  private static final JigsawBuildingEntry LATERANO_REVELATION_TOWER = landmarkWithDefaults(
       INSTANCE, "laterano_revelation_tower", NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(), 28, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry LATERANO_AMBROSIUS_CHAPEL = landmark$default(
+  private static final JigsawBuildingEntry LATERANO_AMBROSIUS_CHAPEL = landmarkWithDefaults(
       INSTANCE, "laterano_ambrosius_chapel", NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(), 44, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry LEITHANIEN_TWIN_SPIRES = landmark$default(
+  private static final JigsawBuildingEntry LEITHANIEN_TWIN_SPIRES = landmarkWithDefaults(
       INSTANCE, "leithanien_twin_spires", NationBiomes.INSTANCE.getLEITHANIEN_TWILIGHT_FOREST(), 34, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry LEITHANIEN_CONCERT_HALL = landmark$default(
+  private static final JigsawBuildingEntry LEITHANIEN_CONCERT_HALL = landmarkWithDefaults(
       INSTANCE, "leithanien_concert_hall", NationBiomes.INSTANCE.getLEITHANIEN_TWILIGHT_FOREST(), 50, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry RIM_BILLITON_MINING_DERRICK = landmark$default(
+  private static final JigsawBuildingEntry RIM_BILLITON_MINING_DERRICK = landmarkWithDefaults(
       INSTANCE, "rim_billiton_mining_derrick", NationBiomes.INSTANCE.getRIM_BILLITON_MINING_BADLANDS(), 32, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry RIM_BILLITON_RAIL_DEPOT = landmark$default(
+  private static final JigsawBuildingEntry RIM_BILLITON_RAIL_DEPOT = landmarkWithDefaults(
       INSTANCE, "rim_billiton_rail_depot", NationBiomes.INSTANCE.getRIM_BILLITON_MINING_BADLANDS(), 48, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry MINOS_HEROES_TEMPLE = landmark$default(
+  private static final JigsawBuildingEntry MINOS_HEROES_TEMPLE = landmarkWithDefaults(
       INSTANCE, "minos_heroes_temple", NationBiomes.INSTANCE.getMINOS_SUNLIT_HILLS(), 28, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry MINOS_HEROES_PLAZA = landmark$default(
+  private static final JigsawBuildingEntry MINOS_HEROES_PLAZA = landmarkWithDefaults(
       INSTANCE, "minos_heroes_plaza", NationBiomes.INSTANCE.getMINOS_SUNLIT_HILLS(), 44, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry SARGON_GOLDEN_BAZAAR = landmark$default(
+  private static final JigsawBuildingEntry SARGON_GOLDEN_BAZAAR = landmarkWithDefaults(
       INSTANCE, "sargon_golden_bazaar", NationBiomes.INSTANCE.getSARGON_ROCKY_DESERT(), 34, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry SARGON_LONG_SPRING_WELL = landmark$default(
+  private static final JigsawBuildingEntry SARGON_LONG_SPRING_WELL = landmarkWithDefaults(
       INSTANCE, "sargon_long_spring_well", NationBiomes.INSTANCE.getSARGON_ROCKY_DESERT(), 50, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry SAMI_CYCLOPS_ALTAR = landmark$default(
+  private static final JigsawBuildingEntry SAMI_CYCLOPS_ALTAR = landmarkWithDefaults(
       INSTANCE, "sami_cyclops_altar", NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST(), 38, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry SAMI_SNOWPRIEST_LODGE = landmark$default(
+  private static final JigsawBuildingEntry SAMI_SNOWPRIEST_LODGE = landmarkWithDefaults(
       INSTANCE, "sami_snowpriest_lodge", NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST(), 54, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry VICTORIA_DEFENCE_CANNON = landmark$default(
+  private static final JigsawBuildingEntry VICTORIA_DEFENCE_CANNON = landmarkWithDefaults(
       INSTANCE, "victoria_defence_cannon", NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(), 32, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry VICTORIA_STEAM_STATION = landmark$default(
+  private static final JigsawBuildingEntry VICTORIA_STEAM_STATION = landmarkWithDefaults(
       INSTANCE, "victoria_steam_station", NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(), 48, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry URSUS_SARCOPHAGUS_STATION = landmark$default(
+  private static final JigsawBuildingEntry URSUS_SARCOPHAGUS_STATION = landmarkWithDefaults(
       INSTANCE, "ursus_sarcophagus_station", NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE(), 34, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry URSUS_NORTHERN_MINE_TOWER = landmark$default(
+  private static final JigsawBuildingEntry URSUS_NORTHERN_MINE_TOWER = landmarkWithDefaults(
       INSTANCE, "ursus_northern_mine_tower", NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE(), 50, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry KJERAG_KARLAN_MONASTERY = landmark$default(
+  private static final JigsawBuildingEntry KJERAG_KARLAN_MONASTERY = landmarkWithDefaults(
       INSTANCE, "kjerag_karlan_monastery", NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(), 40, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry KJERAG_SACRED_PLAZA = landmark$default(
+  private static final JigsawBuildingEntry KJERAG_SACRED_PLAZA = landmarkWithDefaults(
       INSTANCE, "kjerag_sacred_plaza", NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(), 56, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry SIRACUSA_FAMILY_COURT = landmark$default(
+  private static final JigsawBuildingEntry SIRACUSA_FAMILY_COURT = landmarkWithDefaults(
       INSTANCE, "siracusa_family_court", NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(), 30, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry SIRACUSA_FAMILY_THEATRE = landmark$default(
+  private static final JigsawBuildingEntry SIRACUSA_FAMILY_THEATRE = landmarkWithDefaults(
       INSTANCE, "siracusa_family_theatre", NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(), 46, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry YAN_YUMEN_BEACON = landmark$default(
+  private static final JigsawBuildingEntry YAN_YUMEN_BEACON = landmarkWithDefaults(
       INSTANCE, "yan_yumen_beacon", NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(), 36, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry YAN_SHANGSHU_PAVILION = landmark$default(
+  private static final JigsawBuildingEntry YAN_SHANGSHU_PAVILION = landmarkWithDefaults(
       INSTANCE, "yan_shangshu_pavilion", NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(), 52, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry IBERIA_EYE_LIGHTHOUSE = landmark$default(
+  private static final JigsawBuildingEntry IBERIA_EYE_LIGHTHOUSE = landmarkWithDefaults(
       INSTANCE, "iberia_eye_lighthouse", NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 38, null, 0, 24, null
   );
   @NotNull
-  private static final JigsawBuildingEntry IBERIA_SALTVIND_CHAPEL = landmark$default(
+  private static final JigsawBuildingEntry IBERIA_SALTVIND_CHAPEL = landmarkWithDefaults(
       INSTANCE, "iberia_saltwind_chapel", NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 54, null, 0, 24, null
   );
 
   private NationLandmarks() {
   }
 
-  // $VF: synthetic method
-  static JigsawBuildingEntry landmark$default(NationLandmarks var0, String var1, ResourceKey var2, int var3, Types var4, int var5, int var6, Object var7) {
+  static JigsawBuildingEntry landmarkWithDefaults(NationLandmarks var0, String var1, ResourceKey var2, int var3, Types var4, int var5, int var6, Object var7) {
     if ((var6 & 8) != 0) {
       var4 = Types.WORLD_SURFACE_WG;
     }
@@ -372,7 +371,7 @@ public final class NationLandmarks {
   }
 
   private final JigsawBuildingEntry landmark(String path, ResourceKey<Biome> biome, int ringDistance, Types heightmap, int startHeight) {
-    return StructureCatalog.uniqueLandmark$default(
+    return StructureCatalog.uniqueLandmarkWithDefaults(
         Zinecraft.INSTANCE.getSTRUCTURES(), path, "nation_landmarks/" + path, biome, ringDistance, 96, heightmap, startHeight, 0.0F, 128, null
     );
   }

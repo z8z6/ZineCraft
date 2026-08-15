@@ -7,15 +7,15 @@ public final class TranslationCatalog {
   private static final Pattern KEY = Pattern.compile("[A-Za-z0-9_.:/-]+");
   private final LinkedHashMap<String, LocalizedText> entries = new LinkedHashMap<>();
 
-  public static void add$default(TranslationCatalog self, String key, String zhCn, String enUs, int mask, Object marker) {
+  public static void addWithDefaults(TranslationCatalog self, String key, String zhCn, String enUs, int mask, Object marker) {
     self.add(key, zhCn, (mask & 4) != 0 ? zhCn : enUs);
   }
 
-  public static void replace$default(TranslationCatalog self, String key, String zhCn, String enUs, int mask, Object marker) {
+  public static void replaceWithDefaults(TranslationCatalog self, String key, String zhCn, String enUs, int mask, Object marker) {
     self.replace(key, zhCn, (mask & 4) != 0 ? zhCn : enUs);
   }
 
-  public LinkedHashMap<String, LocalizedText> getEntries$zinecraft() {
+  public LinkedHashMap<String, LocalizedText> getEntries() {
     return entries;
   }
 

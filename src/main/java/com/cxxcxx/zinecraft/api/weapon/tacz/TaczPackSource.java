@@ -29,7 +29,7 @@ sealed interface TaczPackSource permits TaczPackSource.Directory, TaczPackSource
 
     @Override
     public InputStream open(String path) {
-      String normalized = TaczGunPackKt.normalize(path);
+      String normalized = TaczPackPaths.normalize(path);
       if (normalized == null) return null;
       Path normalizedRoot = root.normalize();
       Path target = normalizedRoot.resolve(normalized).normalize();
@@ -61,7 +61,7 @@ sealed interface TaczPackSource permits TaczPackSource.Directory, TaczPackSource
 
     @Override
     public InputStream open(String path) {
-      String normalized = TaczGunPackKt.normalize(path);
+      String normalized = TaczPackPaths.normalize(path);
       if (normalized == null) return null;
       try {
         ZipFile zip = new ZipFile(file.toFile());

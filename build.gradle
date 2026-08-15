@@ -89,10 +89,6 @@ neoForge {
 }
 
 dependencies {
-    // Temporary while the remaining decompiled common classes are normalized to Java APIs.
-    implementation jarJar("org.jetbrains.kotlin:kotlin-stdlib:2.3.21")
-    additionalRuntimeClasspath "org.jetbrains.kotlin:kotlin-stdlib:2.3.21"
-
     implementation "com.github.glitchfiend:TerraBlender-neoforge:${project.terra_blender_version}"
     implementation("com.simibubi.create:create-${project.minecraft_version}:${project.create_version}:slim") {
         transitive = false
@@ -117,6 +113,10 @@ dependencies {
     runtimeOnly "maven.modrinth:journeymap:${project.journeymap_version}"
     runtimeOnly "maven.modrinth:fPetb5Kh:${project.natures_compass_modrinth_version}"
     runtimeOnly "maven.modrinth:RV1qfVQ8:${project.explorers_compass_modrinth_version}"
+
+    testImplementation platform("org.junit:junit-bom:5.11.4")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
 }
 

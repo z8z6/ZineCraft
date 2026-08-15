@@ -48,15 +48,15 @@ public final class WorldgenManager {
   }
 
   public final void addDataGeneration(@NotNull RegistrySetBuilder builder) {
-    builder.add(Registries.CONFIGURED_FEATURE, this.features::bootstrapConfigured$zinecraft);
-    builder.add(Registries.PLACED_FEATURE, this.features::bootstrapPlaced$zinecraft);
-    builder.add(Registries.BIOME, this.biomes::bootstrap$zinecraft);
-    builder.add(Registries.DIMENSION_TYPE, this.dimensions::bootstrapDimensionTypes$zinecraft);
-    builder.add(Registries.LEVEL_STEM, this.dimensions::bootstrapLevelStems$zinecraft);
-    builder.add(Registries.PROCESSOR_LIST, this.structures::bootstrapProcessors$zinecraft);
-    builder.add(Registries.TEMPLATE_POOL, this.structures::bootstrapPools$zinecraft);
-    builder.add(Registries.STRUCTURE, this.structures::bootstrapStructures$zinecraft);
-    builder.add(Registries.STRUCTURE_SET, this.structures::bootstrapSets$zinecraft);
+    builder.add(Registries.CONFIGURED_FEATURE, this.features::bootstrapConfigured);
+    builder.add(Registries.PLACED_FEATURE, this.features::bootstrapPlaced);
+    builder.add(Registries.BIOME, this.biomes::bootstrap);
+    builder.add(Registries.DIMENSION_TYPE, this.dimensions::bootstrapDimensionTypes);
+    builder.add(Registries.LEVEL_STEM, this.dimensions::bootstrapLevelStems);
+    builder.add(Registries.PROCESSOR_LIST, this.structures::bootstrapProcessors);
+    builder.add(Registries.TEMPLATE_POOL, this.structures::bootstrapPools);
+    builder.add(Registries.STRUCTURE, this.structures::bootstrapStructures);
+    builder.add(Registries.STRUCTURE_SET, this.structures::bootstrapSets);
   }
 }
 

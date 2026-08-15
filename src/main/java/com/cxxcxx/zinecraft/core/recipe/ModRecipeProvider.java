@@ -4,10 +4,7 @@ import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.block.MaterialOres;
 import com.cxxcxx.zinecraft.core.item.ModItem;
 import com.cxxcxx.zinecraft.core.item.NationFoods;
-import kotlin.Pair;
-import kotlin.TuplesKt;
-import kotlin.collections.ArraysKt;
-import kotlin.collections.CollectionsKt;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -52,7 +49,7 @@ public final class ModRecipeProvider extends RecipeProvider {
         .unlockedBy(RecipeHelpers.getHasName((ItemLike) Items.OAK_BUTTON), RecipeHelpers.has((ItemLike) Items.OAK_BUTTON))
         .save(exporter);
     Item[] items = new Item[]{Items.BREAD, Items.COOKIE, Items.HAY_BLOCK};
-    RecipeHelpers.oreSmelting(exporter, CollectionsKt.listOf(items), RecipeCategory.FOOD, (ItemLike) Items.WHEAT, 0.1F, 300, "food_to_wheat");
+    RecipeHelpers.oreSmelting(exporter, java.util.List.of(items), RecipeCategory.FOOD, (ItemLike) Items.WHEAT, 0.1F, 300, "food_to_wheat");
     ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.INSTANCE.getMAGIC_DUST().getItem(), 4)
         .requires((ItemLike) ModItem.INSTANCE.getMAGIC_DUST().getItem(), 2)
         .unlockedBy(
@@ -62,7 +59,7 @@ public final class ModRecipeProvider extends RecipeProvider {
         .save(exporter);
     RecipeHelpers.oreSmelting(
         exporter,
-        CollectionsKt.listOf(ModItem.INSTANCE.getMAGIC_DUST().getItem()),
+        java.util.List.of(ModItem.INSTANCE.getMAGIC_DUST().getItem()),
         RecipeCategory.MISC,
         (ItemLike) ModItem.INSTANCE.getMAGIC_DUST().getItem(),
         0.1F,
@@ -299,170 +296,170 @@ public final class ModRecipeProvider extends RecipeProvider {
       shapelessRecipeBuilder1.requires(itemLike);
     }
 
-    ItemLike itemLike1 = (ItemLike) ArraysKt.first(ingredients);
+    ItemLike itemLike1 = (ItemLike) ingredients[0];
     shapelessRecipeBuilder.unlockedBy(RecipeHelpers.getHasName(itemLike1), RecipeHelpers.has(itemLike1)).save(exporter);
   }
 
   private final void addArknightsMaterialRecipes(RecipeOutput exporter) {
     ItemLike itemLike = (ItemLike) ModItem.INSTANCE.getORIROCK_CUBE().getItem();
-    Pair[] pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getORIROCK().getItem(), 3)};
+    Pair[] pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIROCK().getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getORIROCK_CLUSTER().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getORIROCK_CUBE().getItem(), 5)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIROCK_CUBE().getItem(), 5)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getORIROCK_CONCENTRATION().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 4)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getPOLYESTER().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getESTER_RAW().getItem(), 3)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getESTER_RAW().getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getPOLYESTER_GROUP().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getPOLYESTER().getItem(), 4)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getPOLYESTER().getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getPOLYESTER_BLOCK().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getPOLYKETON().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getPOLYKETON().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getSUGAR().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getSUGAR_SUBSTITUTE().getItem(), 3)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getSUGAR_SUBSTITUTE().getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getSUGAR_GROUP().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getSUGAR().getItem(), 4)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getSUGAR().getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getSUGAR_POLYMER().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getORIRON().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getORIRON_SHARD().getItem(), 3)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIRON_SHARD().getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getORIRON_GROUP().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getORIRON().getItem(), 4)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIRON().getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getORIRON_CLUSTER().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getAKETON().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getDIKETONE().getItem(), 3)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getDIKETONE().getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getPOLYKETON().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getAKETON().getItem(), 4)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getAKETON().getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getKETON_COLLOID().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getPOLYKETON().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getPOLYKETON().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getDEVICE_CORE().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getDAMAGED_DEVICE().getItem(), 3)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getDAMAGED_DEVICE().getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getDEVICE_GROUP().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getDEVICE_CORE().getItem(), 4)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getDEVICE_CORE().getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getOPTIMIZED_DEVICE().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getMANGANESE_TRIHYDRATE().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getGRINDSTONE_PENTAHYDRATE().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getRMA70_24().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getRMA70_12().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getPOLYKETON().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getRMA70_12().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getPOLYKETON().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getWHITE_HORSE_KOHL().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getRMA70_12().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getRMA70_12().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getCRYSTAL_GROUP().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getCRYSTAL_ELEMENT().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getGEL().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getCRYSTAL_ELEMENT().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getGEL().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getCUTTING_FLUID_SOLUTION().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getCOMBINED_CUTTING_FLUID().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getCRYSTAL_ELEMENT().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getRMA70_12().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getCOMBINED_CUTTING_FLUID().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getCRYSTAL_ELEMENT().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getRMA70_12().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getREFINED_SOLVENT().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getSEMI_SYNTHETIC_SOLVENT().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getCOMBINED_CUTTING_FLUID().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getGEL().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getSEMI_SYNTHETIC_SOLVENT().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getCOMBINED_CUTTING_FLUID().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getGEL().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getINCANDESCENT_ALLOY().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getCOAGULATING_GEL().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getGEL().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getGEL().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getCRYSTALLINE_CIRCUIT().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getCRYSTAL_GROUP().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getCOAGULATING_GEL().getItem(), 2),
-        TuplesKt.to(ModItem.INSTANCE.getINCANDESCENT_ALLOY().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getCRYSTAL_GROUP().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getCOAGULATING_GEL().getItem(), 2),
+        Pair.of(ModItem.INSTANCE.getINCANDESCENT_ALLOY().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getBIPOLAR_NANOSHEET().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getOPTIMIZED_DEVICE().getItem(), 1), TuplesKt.to(ModItem.INSTANCE.getWHITE_HORSE_KOHL().getItem(), 2)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getOPTIMIZED_DEVICE().getItem(), 1), Pair.of(ModItem.INSTANCE.getWHITE_HORSE_KOHL().getItem(), 2)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getD32_STEEL().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getMANGANESE_TRIHYDRATE().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getGRINDSTONE_PENTAHYDRATE().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getRMA70_24().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getMANGANESE_TRIHYDRATE().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getGRINDSTONE_PENTAHYDRATE().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getRMA70_24().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getPOLYMER_AGENT().getItem();
     pairs = new Pair[]{
-        TuplesKt.to(ModItem.INSTANCE.getORIROCK_CONCENTRATION().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getORIRON_CLUSTER().getItem(), 1),
-        TuplesKt.to(ModItem.INSTANCE.getKETON_COLLOID().getItem(), 1)
+        Pair.of(ModItem.INSTANCE.getORIROCK_CONCENTRATION().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getORIRON_CLUSTER().getItem(), 1),
+        Pair.of(ModItem.INSTANCE.getKETON_COLLOID().getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
     ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.INSTANCE.getORIGINIUM_POWDER().getItem())
@@ -485,10 +482,10 @@ public final class ModRecipeProvider extends RecipeProvider {
 
   private final void addSkillSummaryRecipes(RecipeOutput exporter) {
     ItemLike itemLike = (ItemLike) ModItem.INSTANCE.getSKILL_SUMMARY_2().getItem();
-    Pair[] pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getSKILL_SUMMARY_1().getItem(), 3)};
+    Pair[] pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getSKILL_SUMMARY_1().getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
     itemLike = (ItemLike) ModItem.INSTANCE.getSKILL_SUMMARY_3().getItem();
-    pairs = new Pair[]{TuplesKt.to(ModItem.INSTANCE.getSKILL_SUMMARY_2().getItem(), 3)};
+    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getSKILL_SUMMARY_2().getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
   }
 
@@ -527,12 +524,12 @@ public final class ModRecipeProvider extends RecipeProvider {
       Object object = objects[j];
       Pair object1 = (Pair) object;
       int l = 0;
-      ItemLike itemLike = (ItemLike) object1.component1();
-      int m = ((Number) object1.component2()).intValue();
+      ItemLike itemLike = (ItemLike) object1.getFirst();
+      int m = ((Number) object1.getSecond()).intValue();
       shapelessRecipeBuilder.requires(itemLike, m);
     }
 
-    ItemLike itemLike1 = (ItemLike) ((Pair) ArraysKt.first(ingredients)).getFirst();
+    ItemLike itemLike1 = (ItemLike) ((Pair) ingredients[0]).getFirst();
     shapelessRecipeBuilder.unlockedBy(RecipeHelpers.getHasName(itemLike1), RecipeHelpers.has(itemLike1)).save(exporter);
   }
 

@@ -4,7 +4,6 @@ import com.cxxcxx.zinecraft.api.skill.SkillDefinition;
 import com.cxxcxx.zinecraft.api.skill.SkillDemoTheme;
 import com.cxxcxx.zinecraft.api.skill.SkillEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import kotlin.NoWhenBranchMatchedException;
 import net.createmod.ponder.api.ParticleEmitter;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.registration.PonderPlugin;
@@ -30,9 +29,9 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
   private ZinecraftPonderPlugin() {
   }
 
-  private static final void registerScenes$lambda$0$0(SkillEntry $entry, SceneBuilder scene, SceneBuildingUtil util) {
+  private static final void registerScenesHelper0$0(SkillEntry _entry, SceneBuilder scene, SceneBuildingUtil util) {
     ZinecraftPonderPlugin var10000 = INSTANCE;
-    var10000.buildSkillScene(scene, util, $entry.getDefinition());
+    var10000.buildSkillScene(scene, util, _entry.getDefinition());
   }
 
   @NotNull
@@ -41,12 +40,12 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
   }
 
   public void registerScenes(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
-    Iterable $this$forEach$iv = Zinecraft.INSTANCE.getSKILLS().getEntries();
-    int $i$f$forEach = 0;
+    Iterable _this_forEach_iv = Zinecraft.INSTANCE.getSKILLS().getEntries();
+    int _i_f_forEach = 0;
 
-    for (Object element$iv : $this$forEach$iv) {
-      SkillEntry entry = (SkillEntry) element$iv;
-      int var7/* $VF was: $i$a$-forEach-ZinecraftPonderPlugin$registerScenes$1 */ = 0;
+    for (Object element_iv : _this_forEach_iv) {
+      SkillEntry entry = (SkillEntry) element_iv;
+      int var7 = 0;
       helper.addStoryBoard(
           Zinecraft.INSTANCE.getREGISTRAR().id(entry.getDefinition().getPath()),
           "skill_demo/training_ground",
@@ -87,7 +86,7 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
     String var5;
     if (var10000 != null) {
       int it = var10000.intValue();
-      int var4/* $VF was: $i$a$-let-ZinecraftPonderPlugin$statsText$duration$1 */ = 0;
+      int var4 = 0;
       var5 = " · Duration " + it + "s";
     } else {
       var5 = null;
@@ -110,7 +109,7 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
 
         for (int var20 = 0; var20 < var17; var20++) {
           int index = var20;
-          int var23/* $VF was: $i$a$-repeat-ZinecraftPonderPlugin$animateTheme$1 */ = 0;
+          int var23 = 0;
           scene.world().createItemEntity(util.vector().centerOf(1 + index, 2, 3), new Vec3(0.0, 0.08, 0.0), new ItemStack((ItemLike) Items.EMERALD));
           scene.effects().indicateSuccess(util.grid().at(3, 1, 3));
           scene.idle(6);
@@ -129,7 +128,7 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
 
         for (int var19 = 0; var19 < var15; var19++) {
           int index = var19;
-          int var9/* $VF was: $i$a$-repeat-ZinecraftPonderPlugin$animateTheme$2 */ = 0;
+          int var9 = 0;
           scene.world().createItemEntity(center.add(0.0, 0.2, 0.0), new Vec3(0.12 * (index - 2), 0.05, -0.18), new ItemStack((ItemLike) Items.ARROW));
           scene.effects().createRedstoneParticles(util.grid().at(3, 1, 3), 16769136, 8);
           scene.idle(4);
@@ -198,21 +197,19 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
         byte repeatCount = 3;
 
         for (int it = 0; it < repeatCount; it++) {
-          int var10/* $VF was: $i$a$-repeat-ZinecraftPonderPlugin$animateTheme$3 */ = 0;
+          int var10 = 0;
           scene.effects().indicateRedstone(util.grid().at(3, 2, 3));
           scene.idle(10);
         }
         break;
       }
       default:
-        throw new NoWhenBranchMatchedException();
+        throw new IllegalStateException("未知的技能演示主题：" + theme);
     }
   }
 
-  // $VF: synthetic class
   public static final class WhenMappings {
-    // $VF: synthetic field
-    public static final int[] $EnumSwitchMapping$0;
+    public static final int[] _EnumSwitchMapping$0;
 
     static {
       int[] var0 = new int[SkillDemoTheme.values().length];
@@ -257,7 +254,7 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
       } catch (NoSuchFieldError var2) {
       }
 
-      $EnumSwitchMapping$0 = var0;
+      _EnumSwitchMapping$0 = var0;
     }
   }
 }

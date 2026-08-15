@@ -1,9 +1,5 @@
 package com.cxxcxx.zinecraft.api.enchantment;
 
-import java.util.List;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -13,6 +9,9 @@ import net.minecraft.world.item.enchantment.Enchantment.Builder;
 import net.minecraft.world.item.enchantment.Enchantment.Cost;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 public final class EnchantmentEntry {
   @NotNull
@@ -33,7 +32,7 @@ public final class EnchantmentEntry {
   @NotNull
   private final List<EquipmentSlotGroup> slots;
   @NotNull
-  private final Function1<Builder, Unit> configure;
+  private final Consumer<Builder> configure;
 
   public EnchantmentEntry(
       @NotNull ResourceKey<Enchantment> key,
@@ -46,7 +45,7 @@ public final class EnchantmentEntry {
       @NotNull Cost maxCost,
       int anvilCost,
       @NotNull List<? extends EquipmentSlotGroup> slots,
-      @NotNull Function1<? super Builder, Unit> configure
+      @NotNull Consumer<? super Builder> configure
   ) {
     super();
     this.key = key;
@@ -59,7 +58,7 @@ public final class EnchantmentEntry {
     this.maxCost = maxCost;
     this.anvilCost = anvilCost;
     this.slots = new java.util.ArrayList<>(slots);
-    this.configure = builder -> configure.invoke(builder);
+    this.configure = builder -> configure.accept(builder);
   }
 
   @NotNull
@@ -68,49 +67,49 @@ public final class EnchantmentEntry {
   }
 
   @NotNull
-  public final TagKey<Item> getSupportedItems$zinecraft() {
+  public final TagKey<Item> getSupportedItems() {
     return this.supportedItems;
   }
 
   @Nullable
-  public final TagKey<Item> getPrimaryItems$zinecraft() {
+  public final TagKey<Item> getPrimaryItems() {
     return this.primaryItems;
   }
 
   @Nullable
-  public final TagKey<Enchantment> getExclusiveWith$zinecraft() {
+  public final TagKey<Enchantment> getExclusiveWith() {
     return this.exclusiveWith;
   }
 
-  public final int getWeight$zinecraft() {
+  public final int getWeight() {
     return this.weight;
   }
 
-  public final int getMaxLevel$zinecraft() {
+  public final int getMaxLevel() {
     return this.maxLevel;
   }
 
   @NotNull
-  public final Cost getMinCost$zinecraft() {
+  public final Cost getMinCost() {
     return this.minCost;
   }
 
   @NotNull
-  public final Cost getMaxCost$zinecraft() {
+  public final Cost getMaxCost() {
     return this.maxCost;
   }
 
-  public final int getAnvilCost$zinecraft() {
+  public final int getAnvilCost() {
     return this.anvilCost;
   }
 
   @NotNull
-  public final List<EquipmentSlotGroup> getSlots$zinecraft() {
+  public final List<EquipmentSlotGroup> getSlots() {
     return this.slots;
   }
 
   @NotNull
-  public final Function1<Builder, Unit> getConfigure$zinecraft() {
+  public final Consumer<Builder> getConfigure() {
     return this.configure;
   }
 }

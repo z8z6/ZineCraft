@@ -1,7 +1,6 @@
 package com.cxxcxx.zinecraft.core.dimension;
 
 import com.mojang.serialization.MapCodec;
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class StarGatePortalBlock extends Block implements Portal {
   @NotNull
-  public static final StarGatePortalBlock.Companion Companion = new StarGatePortalBlock.Companion(null);
+  public static final StarGatePortalBlock.Access ACCESS = new StarGatePortalBlock.Access();
   @NotNull
   private static final MapCodec<StarGatePortalBlock> CODEC;
 
@@ -91,13 +90,8 @@ public final class StarGatePortalBlock extends Block implements Portal {
     return StarGateTeleporter.INSTANCE.destination(level, entity, pos);
   }
 
-  public static final class Companion {
-    private Companion() {
-    }
-
-    // $VF: synthetic method
-    public Companion(DefaultConstructorMarker $constructor_marker) {
-      this();
+  public static final class Access {
+    private Access() {
     }
 
     @NotNull

@@ -2,7 +2,7 @@ package com.cxxcxx.zinecraft.core.biome;
 
 import com.cxxcxx.zinecraft.api.world.biome.SimpleBiomeBuilder;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import kotlin.Unit;
+
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -15,81 +15,81 @@ public final class NationBiomes {
   @NotNull
   private static final ResourceKey<Biome> AEGIR_ABYSSAL_SEA = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("aegir_abyssal_sea", NationBiomes::AEGIR_ABYSSAL_SEA$lambda$0);
+      .register("aegir_abyssal_sea", NationBiomes::AEGIR_ABYSSAL_SEAHelper0);
   @NotNull
-  private static final ResourceKey<Biome> BOLIVAR_PLAIN = Zinecraft.INSTANCE.getBIOMES().register("bolivar_plain", NationBiomes::BOLIVAR_PLAIN$lambda$0);
+  private static final ResourceKey<Biome> BOLIVAR_PLAIN = Zinecraft.INSTANCE.getBIOMES().register("bolivar_plain", NationBiomes::BOLIVAR_PLAINHelper0);
   @NotNull
   private static final ResourceKey<Biome> HIGASHI_SHADOW_RIFT = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("higashi_shadow_rift", NationBiomes::HIGASHI_SHADOW_RIFT$lambda$0);
+      .register("higashi_shadow_rift", NationBiomes::HIGASHI_SHADOW_RIFTHelper0);
   @NotNull
   private static final ResourceKey<Biome> DURIN_UNDERGROUND_GARDEN = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("durin_underground_garden", NationBiomes::DURIN_UNDERGROUND_GARDEN$lambda$0);
+      .register("durin_underground_garden", NationBiomes::DURIN_UNDERGROUND_GARDENHelper0);
   @NotNull
   private static final ResourceKey<Biome> COLUMBIA_SANDSTONE_WILDS = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("columbia_sandstone_wilds", NationBiomes::COLUMBIA_SANDSTONE_WILDS$lambda$0);
+      .register("columbia_sandstone_wilds", NationBiomes::COLUMBIA_SANDSTONE_WILDSHelper0);
   @NotNull
   private static final ResourceKey<Biome> KAZIMIERZ_KNIGHTLAND = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("kazimierz_knightland", NationBiomes::KAZIMIERZ_KNIGHTLAND$lambda$0);
+      .register("kazimierz_knightland", NationBiomes::KAZIMIERZ_KNIGHTLANDHelper0);
   @NotNull
   private static final ResourceKey<Biome> KAZDEL_SCARRED_WASTES = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("kazdel_scarred_wastes", NationBiomes::KAZDEL_SCARRED_WASTES$lambda$0);
+      .register("kazdel_scarred_wastes", NationBiomes::KAZDEL_SCARRED_WASTESHelper0);
   @NotNull
   private static final ResourceKey<Biome> LATERANO_HOLY_FIELDS = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("laterano_holy_fields", NationBiomes::LATERANO_HOLY_FIELDS$lambda$0);
+      .register("laterano_holy_fields", NationBiomes::LATERANO_HOLY_FIELDSHelper0);
   @NotNull
   private static final ResourceKey<Biome> LEITHANIEN_TWILIGHT_FOREST = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("leithanien_twilight_forest", NationBiomes::LEITHANIEN_TWILIGHT_FOREST$lambda$0);
+      .register("leithanien_twilight_forest", NationBiomes::LEITHANIEN_TWILIGHT_FORESTHelper0);
   @NotNull
   private static final ResourceKey<Biome> RIM_BILLITON_MINING_BADLANDS = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("rim_billiton_mining_badlands", NationBiomes::RIM_BILLITON_MINING_BADLANDS$lambda$0);
+      .register("rim_billiton_mining_badlands", NationBiomes::RIM_BILLITON_MINING_BADLANDSHelper0);
   @NotNull
   private static final ResourceKey<Biome> MINOS_SUNLIT_HILLS = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("minos_sunlit_hills", NationBiomes::MINOS_SUNLIT_HILLS$lambda$0);
+      .register("minos_sunlit_hills", NationBiomes::MINOS_SUNLIT_HILLSHelper0);
   @NotNull
   private static final ResourceKey<Biome> SARGON_ROCKY_DESERT = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("sargon_rocky_desert", NationBiomes::SARGON_ROCKY_DESERT$lambda$0);
+      .register("sargon_rocky_desert", NationBiomes::SARGON_ROCKY_DESERTHelper0);
   @NotNull
   private static final ResourceKey<Biome> SAMI_FROZEN_FOREST = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("sami_frozen_forest", NationBiomes::SAMI_FROZEN_FOREST$lambda$0);
+      .register("sami_frozen_forest", NationBiomes::SAMI_FROZEN_FORESTHelper0);
   @NotNull
   private static final ResourceKey<Biome> VICTORIA_MISTY_HIGHLANDS = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("victoria_misty_highlands", NationBiomes::VICTORIA_MISTY_HIGHLANDS$lambda$0);
+      .register("victoria_misty_highlands", NationBiomes::VICTORIA_MISTY_HIGHLANDSHelper0);
   @NotNull
   private static final ResourceKey<Biome> URSUS_FROZEN_STEPPE = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("ursus_frozen_steppe", NationBiomes::URSUS_FROZEN_STEPPE$lambda$0);
+      .register("ursus_frozen_steppe", NationBiomes::URSUS_FROZEN_STEPPEHelper0);
   @NotNull
   private static final ResourceKey<Biome> KJERAG_SNOWY_PEAKS = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("kjerag_snowy_peaks", NationBiomes::KJERAG_SNOWY_PEAKS$lambda$0);
+      .register("kjerag_snowy_peaks", NationBiomes::KJERAG_SNOWY_PEAKSHelper0);
   @NotNull
   private static final ResourceKey<Biome> SIRACUSA_RAINY_WOODLAND = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("siracusa_rainy_woodland", NationBiomes::SIRACUSA_RAINY_WOODLAND$lambda$0);
+      .register("siracusa_rainy_woodland", NationBiomes::SIRACUSA_RAINY_WOODLANDHelper0);
   @NotNull
   private static final ResourceKey<Biome> YAN_MOUNTAIN_GROVE = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("yan_mountain_grove", NationBiomes::YAN_MOUNTAIN_GROVE$lambda$0);
+      .register("yan_mountain_grove", NationBiomes::YAN_MOUNTAIN_GROVEHelper0);
   @NotNull
   private static final ResourceKey<Biome> IBERIA_SALT_DELTA = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("iberia_salt_delta", NationBiomes::IBERIA_SALT_DELTA$lambda$0);
+      .register("iberia_salt_delta", NationBiomes::IBERIA_SALT_DELTAHelper0);
   @NotNull
   private static final ResourceKey<Biome> TERRA_CATASTROPHE_ZONE = Zinecraft.INSTANCE
       .getBIOMES()
-      .register("terra_catastrophe_zone", NationBiomes::TERRA_CATASTROPHE_ZONE$lambda$0);
+      .register("terra_catastrophe_zone", NationBiomes::TERRA_CATASTROPHE_ZONEHelper0);
 
   static {
     Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.aegir_abyssal_sea", "阿戈尔深海", "Aegir Abyssal Sea");
@@ -117,285 +117,285 @@ public final class NationBiomes {
   private NationBiomes() {
   }
 
-  private static final Unit AEGIR_ABYSSAL_SEA$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setPrecipitation(false);
-    $this$register.setTemperature(0.4F);
-    $this$register.setDownfall(1.0F);
-    $this$register.setWaterColor(1523551);
-    $this$register.setWaterFogColor(465964);
-    $this$register.setFogColor(5401986);
-    NationBiomePresets.INSTANCE.ocean($this$register);
+  private static void AEGIR_ABYSSAL_SEAHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setPrecipitation(false);
+    _this_register.setTemperature(0.4F);
+    _this_register.setDownfall(1.0F);
+    _this_register.setWaterColor(1523551);
+    _this_register.setWaterFogColor(465964);
+    _this_register.setFogColor(5401986);
+    NationBiomePresets.INSTANCE.ocean(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.WATER_CREATURE;
     EntityType entityType = EntityType.DOLPHIN;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 8, 1, 2);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 8, 1, 2);
+    return;
   }
 
-  private static final Unit BOLIVAR_PLAIN$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(0.9F);
-    $this$register.setDownfall(0.35F);
-    $this$register.setGrassColor(10201685);
-    $this$register.setFoliageColor(8885319);
-    NationBiomePresets.INSTANCE.plains($this$register);
+  private static void BOLIVAR_PLAINHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(0.9F);
+    _this_register.setDownfall(0.35F);
+    _this_register.setGrassColor(10201685);
+    _this_register.setFoliageColor(8885319);
+    NationBiomePresets.INSTANCE.plains(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.PARROT;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 12, 1, 2);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 12, 1, 2);
+    return;
   }
 
-  private static final Unit HIGASHI_SHADOW_RIFT$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(0.6F);
-    $this$register.setDownfall(0.75F);
-    $this$register.setFogColor(6910074);
-    $this$register.setGrassColor(5338204);
-    $this$register.setFoliageColor(4088909);
-    NationBiomePresets.INSTANCE.mountain($this$register);
+  private static void HIGASHI_SHADOW_RIFTHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(0.6F);
+    _this_register.setDownfall(0.75F);
+    _this_register.setFogColor(6910074);
+    _this_register.setGrassColor(5338204);
+    _this_register.setFoliageColor(4088909);
+    NationBiomePresets.INSTANCE.mountain(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.FOX;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 10, 1, 2);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 10, 1, 2);
+    return;
   }
 
-  private static final Unit DURIN_UNDERGROUND_GARDEN$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setPrecipitation(false);
-    $this$register.setTemperature(1.0F);
-    $this$register.setDownfall(0.8F);
-    $this$register.setWaterColor(3516320);
-    $this$register.setFogColor(9072552);
-    $this$register.setGrassColor(5613672);
-    NationBiomePresets.INSTANCE.cavern($this$register);
+  private static void DURIN_UNDERGROUND_GARDENHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setPrecipitation(false);
+    _this_register.setTemperature(1.0F);
+    _this_register.setDownfall(0.8F);
+    _this_register.setWaterColor(3516320);
+    _this_register.setFogColor(9072552);
+    _this_register.setGrassColor(5613672);
+    NationBiomePresets.INSTANCE.cavern(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.UNDERGROUND_WATER_CREATURE;
     EntityType entityType = EntityType.GLOW_SQUID;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 16, 2, 4);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 16, 2, 4);
+    return;
   }
 
-  private static final Unit COLUMBIA_SANDSTONE_WILDS$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setPrecipitation(false);
-    $this$register.setTemperature(1.4F);
-    $this$register.setDownfall(0.1F);
-    $this$register.setGrassColor(10189641);
-    $this$register.setFoliageColor(8743742);
-    NationBiomePresets.INSTANCE.badlands($this$register);
+  private static void COLUMBIA_SANDSTONE_WILDSHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setPrecipitation(false);
+    _this_register.setTemperature(1.4F);
+    _this_register.setDownfall(0.1F);
+    _this_register.setGrassColor(10189641);
+    _this_register.setFoliageColor(8743742);
+    NationBiomePresets.INSTANCE.badlands(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.ARMADILLO;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 14, 1, 3);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 14, 1, 3);
+    return;
   }
 
-  private static final Unit KAZIMIERZ_KNIGHTLAND$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(0.75F);
-    $this$register.setDownfall(0.35F);
-    $this$register.setGrassColor(9416530);
-    $this$register.setFoliageColor(7312197);
-    NationBiomePresets.INSTANCE.plains($this$register);
+  private static void KAZIMIERZ_KNIGHTLANDHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(0.75F);
+    _this_register.setDownfall(0.35F);
+    _this_register.setGrassColor(9416530);
+    _this_register.setFoliageColor(7312197);
+    NationBiomePresets.INSTANCE.plains(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.HORSE;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 18, 2, 5);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 18, 2, 5);
+    return;
   }
 
-  private static final Unit KAZDEL_SCARRED_WASTES$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setPrecipitation(false);
-    $this$register.setTemperature(0.8F);
-    $this$register.setDownfall(0.05F);
-    $this$register.setFogColor(6445666);
-    $this$register.setGrassColor(6642512);
-    $this$register.setFoliageColor(5590341);
-    NationBiomePresets.INSTANCE.badlands($this$register);
+  private static void KAZDEL_SCARRED_WASTESHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setPrecipitation(false);
+    _this_register.setTemperature(0.8F);
+    _this_register.setDownfall(0.05F);
+    _this_register.setFogColor(6445666);
+    _this_register.setGrassColor(6642512);
+    _this_register.setFoliageColor(5590341);
+    NationBiomePresets.INSTANCE.badlands(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.MONSTER;
     EntityType entityType = EntityType.CAVE_SPIDER;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 30, 1, 2);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 30, 1, 2);
+    return;
   }
 
-  private static final Unit LATERANO_HOLY_FIELDS$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(0.9F);
-    $this$register.setDownfall(0.5F);
-    $this$register.setGrassColor(11058793);
-    $this$register.setFoliageColor(9546332);
-    $this$register.setFogColor(14276295);
-    NationBiomePresets.INSTANCE.plains($this$register);
+  private static void LATERANO_HOLY_FIELDSHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(0.9F);
+    _this_register.setDownfall(0.5F);
+    _this_register.setGrassColor(11058793);
+    _this_register.setFoliageColor(9546332);
+    _this_register.setFogColor(14276295);
+    NationBiomePresets.INSTANCE.plains(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.BEE;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 16, 2, 4);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 16, 2, 4);
+    return;
   }
 
-  private static final Unit LEITHANIEN_TWILIGHT_FOREST$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(0.55F);
-    $this$register.setDownfall(0.8F);
-    $this$register.setFogColor(9077147);
-    $this$register.setGrassColor(5796684);
-    $this$register.setFoliageColor(4218175);
-    NationBiomePresets.INSTANCE.forest($this$register);
+  private static void LEITHANIEN_TWILIGHT_FORESTHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(0.55F);
+    _this_register.setDownfall(0.8F);
+    _this_register.setFogColor(9077147);
+    _this_register.setGrassColor(5796684);
+    _this_register.setFoliageColor(4218175);
+    NationBiomePresets.INSTANCE.forest(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.WOLF;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 12, 2, 4);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 12, 2, 4);
+    return;
   }
 
-  private static final Unit RIM_BILLITON_MINING_BADLANDS$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setPrecipitation(false);
-    $this$register.setTemperature(1.5F);
-    $this$register.setDownfall(0.1F);
-    $this$register.setGrassColor(10122311);
-    $this$register.setFoliageColor(8741438);
-    NationBiomePresets.INSTANCE.badlands($this$register);
+  private static void RIM_BILLITON_MINING_BADLANDSHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setPrecipitation(false);
+    _this_register.setTemperature(1.5F);
+    _this_register.setDownfall(0.1F);
+    _this_register.setGrassColor(10122311);
+    _this_register.setFoliageColor(8741438);
+    NationBiomePresets.INSTANCE.badlands(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.MONSTER;
     EntityType entityType = EntityType.HUSK;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 35, 1, 3);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 35, 1, 3);
+    return;
   }
 
-  private static final Unit MINOS_SUNLIT_HILLS$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(1.1F);
-    $this$register.setDownfall(0.35F);
-    $this$register.setGrassColor(10926170);
-    $this$register.setFoliageColor(8559437);
-    NationBiomePresets.INSTANCE.mountain($this$register);
+  private static void MINOS_SUNLIT_HILLSHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(1.1F);
+    _this_register.setDownfall(0.35F);
+    _this_register.setGrassColor(10926170);
+    _this_register.setFoliageColor(8559437);
+    NationBiomePresets.INSTANCE.mountain(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.GOAT;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 14, 2, 4);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 14, 2, 4);
+    return;
   }
 
-  private static final Unit SARGON_ROCKY_DESERT$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setPrecipitation(false);
-    $this$register.setTemperature(2.0F);
-    $this$register.setDownfall(0.0F);
-    $this$register.setFogColor(14070909);
-    NationBiomePresets.INSTANCE.desert($this$register);
+  private static void SARGON_ROCKY_DESERTHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setPrecipitation(false);
+    _this_register.setTemperature(2.0F);
+    _this_register.setDownfall(0.0F);
+    _this_register.setFogColor(14070909);
+    NationBiomePresets.INSTANCE.desert(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.CAMEL;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 12, 1, 2);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 12, 1, 2);
+    return;
   }
 
-  private static final Unit SAMI_FROZEN_FOREST$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(-0.5F);
-    $this$register.setDownfall(0.8F);
-    $this$register.setFogColor(12176339);
-    $this$register.setGrassColor(7176824);
-    $this$register.setFoliageColor(5796198);
-    NationBiomePresets.INSTANCE.snowyForest($this$register);
+  private static void SAMI_FROZEN_FORESTHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(-0.5F);
+    _this_register.setDownfall(0.8F);
+    _this_register.setFogColor(12176339);
+    _this_register.setGrassColor(7176824);
+    _this_register.setFoliageColor(5796198);
+    NationBiomePresets.INSTANCE.snowyForest(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.POLAR_BEAR;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 10, 1, 2);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 10, 1, 2);
+    return;
   }
 
-  private static final Unit VICTORIA_MISTY_HIGHLANDS$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(0.65F);
-    $this$register.setDownfall(0.9F);
-    $this$register.setFogColor(11054512);
-    $this$register.setGrassColor(6718554);
-    $this$register.setFoliageColor(5600076);
-    NationBiomePresets.INSTANCE.mountain($this$register);
+  private static void VICTORIA_MISTY_HIGHLANDSHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(0.65F);
+    _this_register.setDownfall(0.9F);
+    _this_register.setFogColor(11054512);
+    _this_register.setGrassColor(6718554);
+    _this_register.setFoliageColor(5600076);
+    NationBiomePresets.INSTANCE.mountain(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.SHEEP;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 18, 2, 4);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 18, 2, 4);
+    return;
   }
 
-  private static final Unit URSUS_FROZEN_STEPPE$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(-0.2F);
-    $this$register.setDownfall(0.3F);
-    $this$register.setFogColor(12700624);
-    $this$register.setGrassColor(8687754);
-    $this$register.setFoliageColor(7438456);
-    NationBiomePresets.INSTANCE.snowyForest($this$register);
+  private static void URSUS_FROZEN_STEPPEHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(-0.2F);
+    _this_register.setDownfall(0.3F);
+    _this_register.setFogColor(12700624);
+    _this_register.setGrassColor(8687754);
+    _this_register.setFoliageColor(7438456);
+    NationBiomePresets.INSTANCE.snowyForest(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.MONSTER;
     EntityType entityType = EntityType.STRAY;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 40, 1, 3);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 40, 1, 3);
+    return;
   }
 
-  private static final Unit KJERAG_SNOWY_PEAKS$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(-0.7F);
-    $this$register.setDownfall(0.7F);
-    $this$register.setFogColor(14016999);
-    $this$register.setGrassColor(7901322);
-    $this$register.setFoliageColor(6454645);
-    NationBiomePresets.INSTANCE.snowyForest($this$register);
+  private static void KJERAG_SNOWY_PEAKSHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(-0.7F);
+    _this_register.setDownfall(0.7F);
+    _this_register.setFogColor(14016999);
+    _this_register.setGrassColor(7901322);
+    _this_register.setFoliageColor(6454645);
+    NationBiomePresets.INSTANCE.snowyForest(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.RABBIT;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 14, 2, 3);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 14, 2, 3);
+    return;
   }
 
-  private static final Unit SIRACUSA_RAINY_WOODLAND$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(0.8F);
-    $this$register.setDownfall(0.95F);
-    $this$register.setFogColor(9213584);
-    $this$register.setGrassColor(4683086);
-    $this$register.setFoliageColor(3761215);
-    NationBiomePresets.INSTANCE.rainyForest($this$register);
+  private static void SIRACUSA_RAINY_WOODLANDHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(0.8F);
+    _this_register.setDownfall(0.95F);
+    _this_register.setFogColor(9213584);
+    _this_register.setGrassColor(4683086);
+    _this_register.setFoliageColor(3761215);
+    NationBiomePresets.INSTANCE.rainyForest(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.MONSTER;
     EntityType entityType = EntityType.SPIDER;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 45, 1, 3);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 45, 1, 3);
+    return;
   }
 
-  private static final Unit YAN_MOUNTAIN_GROVE$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(0.7F);
-    $this$register.setDownfall(0.8F);
-    $this$register.setWaterColor(4159141);
-    $this$register.setGrassColor(6329947);
-    $this$register.setFoliageColor(4882764);
-    NationBiomePresets.INSTANCE.mountain($this$register);
+  private static void YAN_MOUNTAIN_GROVEHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(0.7F);
+    _this_register.setDownfall(0.8F);
+    _this_register.setWaterColor(4159141);
+    _this_register.setGrassColor(6329947);
+    _this_register.setFoliageColor(4882764);
+    NationBiomePresets.INSTANCE.mountain(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.CREATURE;
     EntityType entityType = EntityType.PANDA;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 12, 1, 2);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 12, 1, 2);
+    return;
   }
 
-  private static final Unit IBERIA_SALT_DELTA$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setTemperature(1.0F);
-    $this$register.setDownfall(0.8F);
-    $this$register.setWaterColor(3043719);
-    $this$register.setWaterFogColor(1457482);
-    $this$register.setFogColor(11450548);
-    $this$register.setGrassColor(7638130);
-    $this$register.setFoliageColor(6519653);
-    NationBiomePresets.INSTANCE.wetland($this$register);
+  private static void IBERIA_SALT_DELTAHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setTemperature(1.0F);
+    _this_register.setDownfall(0.8F);
+    _this_register.setWaterColor(3043719);
+    _this_register.setWaterFogColor(1457482);
+    _this_register.setFogColor(11450548);
+    _this_register.setGrassColor(7638130);
+    _this_register.setFoliageColor(6519653);
+    NationBiomePresets.INSTANCE.wetland(_this_register);
     NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
     MobCategory mobCategory = MobCategory.MONSTER;
     EntityType entityType = EntityType.DROWNED;
-    nationBiomePresets.featuredSpawn($this$register, mobCategory, entityType, 35, 1, 2);
-    return Unit.INSTANCE;
+    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 35, 1, 2);
+    return;
   }
 
   /**
    * 天灾区：干燥、低植被的源石污染地带，地表晶簇由泰拉限定地物密集覆盖。
    */
-  private static final Unit TERRA_CATASTROPHE_ZONE$lambda$0(SimpleBiomeBuilder $this$register) {
-    $this$register.setPrecipitation(false);
-    $this$register.setTemperature(1.2F);
-    $this$register.setDownfall(0.0F);
-    $this$register.setFogColor(0x51405F);
-    $this$register.setGrassColor(0x5B514B);
-    $this$register.setFoliageColor(0x51453F);
-    NationBiomePresets.INSTANCE.badlands($this$register);
-    return Unit.INSTANCE;
+  private static void TERRA_CATASTROPHE_ZONEHelper0(SimpleBiomeBuilder _this_register) {
+    _this_register.setPrecipitation(false);
+    _this_register.setTemperature(1.2F);
+    _this_register.setDownfall(0.0F);
+    _this_register.setFogColor(0x51405F);
+    _this_register.setGrassColor(0x5B514B);
+    _this_register.setFoliageColor(0x51453F);
+    NationBiomePresets.INSTANCE.badlands(_this_register);
+    return;
   }
 
   @NotNull

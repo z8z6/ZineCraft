@@ -40,8 +40,7 @@ public final class SongCatalog {
     this.entries = new ArrayList<>();
   }
 
-  // $VF: synthetic method
-  public static SongEntry register$default(SongCatalog var0, String var1, float var2, String var3, String var4, String var5, int var6, int var7, Object var8) {
+  public static SongEntry registerWithDefaults(SongCatalog var0, String var1, float var2, String var3, String var4, String var5, int var6, int var7, Object var8) {
     if ((var7 & 8) != 0) {
       var4 = "音乐唱片";
     }
@@ -57,12 +56,12 @@ public final class SongCatalog {
     return var0.register(var1, var2, var3, var4, var5, var6);
   }
 
-  private static final Item register$lambda$2(ResourceKey $key) {
-    return new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable($key));
+  private static final Item registerHelper2(ResourceKey _key) {
+    return new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(_key));
   }
 
   @NotNull
-  public final List<SongEntry> getEntries$zinecraft() {
+  public final List<SongEntry> getEntries() {
     return this.entries;
   }
 
@@ -87,7 +86,7 @@ public final class SongCatalog {
       ItemCatalog itemCatalog = this.items;
       ModelTemplate modelTemplate = ModelTemplates.MUSIC_DISC;
       ItemEntry itemEntry = itemCatalog.register(path, zhCn, enUs, modelTemplate, true,
-          () -> register$lambda$2(resourceKey));
+          () -> registerHelper2(resourceKey));
       SongEntry songEntry = new SongEntry(path, reference, resourceKey, string, lengthSeconds, signal, itemEntry);
       SongEntry songEntry1 = songEntry;
       int i = 0;
@@ -104,7 +103,7 @@ public final class SongCatalog {
     for (Object object : iterable) {
       SongEntry songEntry = (SongEntry) object;
       int j = 0;
-      this.registrar.dynamic(context, songEntry.getKey(), songEntry.create$zinecraft());
+      this.registrar.dynamic(context, songEntry.getKey(), songEntry.create());
     }
   }
 }

@@ -41,21 +41,21 @@ public class CatalogModelProvider implements DataProvider {
     Map<ResourceLocation, Supplier<JsonElement>> models = new LinkedHashMap<>();
     Map<ResourceLocation, Supplier<JsonElement>> states = new LinkedHashMap<>();
 
-    for (var entry : blocks.getEntries$zinecraft()) {
-      if (!entry.getCubeModel$zinecraft()) continue;
+    for (var entry : blocks.getEntries()) {
+      if (!entry.getCubeModel()) continue;
       var model = ModelTemplates.CUBE_ALL.create(entry.getBlock(), TextureMapping.cube(entry.getBlock()), models::put);
       var state = MultiVariantGenerator.multiVariant(
           entry.getBlock(), Variant.variant().with(VariantProperties.MODEL, model)
       );
       states.put(entry.getBlock().builtInRegistryHolder().key().location(), state::get);
-      if (entry.getRegisterItem$zinecraft()) {
+      if (entry.getRegisterItem()) {
         var itemModel = new JsonObject();
         itemModel.addProperty("parent", model.toString());
         models.put(ModelLocationUtils.getModelLocation(entry.getBlock().asItem()), () -> itemModel);
       }
     }
-    for (var entry : items.getEntries$zinecraft()) {
-      entry.getModel$zinecraft().create(
+    for (var entry : items.getEntries()) {
+      entry.getModel().create(
           ModelLocationUtils.getModelLocation(entry.getItem()),
           TextureMapping.layer0(entry.getItem()),
           models::put

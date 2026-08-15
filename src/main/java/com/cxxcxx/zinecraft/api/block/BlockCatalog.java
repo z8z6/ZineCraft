@@ -1,9 +1,8 @@
 package com.cxxcxx.zinecraft.api.block;
 
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import com.cxxcxx.zinecraft.api.localization.TranslationCatalogKt;
+import com.cxxcxx.zinecraft.api.localization.TranslationNames;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
-import kotlin.jvm.functions.Function0;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class BlockCatalog {
   @NotNull
@@ -27,12 +27,11 @@ public final class BlockCatalog {
     this.entries = new ArrayList<>();
   }
 
-  // $VF: synthetic method
-  public static BlockEntry register$default(
-      BlockCatalog var0, String var1, String var2, String var3, boolean var4, ItemLike var5, boolean var6, boolean var7, Function0 var8, int var9, Object var10
+  public static BlockEntry registerWithDefaults(
+      BlockCatalog var0, String var1, String var2, String var3, boolean var4, ItemLike var5, boolean var6, boolean var7, Supplier var8, int var9, Object var10
   ) {
     if ((var9 & 4) != 0) {
-      var3 = TranslationCatalogKt.toDisplayName(var1);
+      var3 = TranslationNames.toDisplayName(var1);
     }
 
     if ((var9 & 8) != 0) {
@@ -55,7 +54,7 @@ public final class BlockCatalog {
   }
 
   @NotNull
-  public final List<BlockEntry<?>> getEntries$zinecraft() {
+  public final List<BlockEntry<?>> getEntries() {
     return this.entries;
   }
 
@@ -68,14 +67,14 @@ public final class BlockCatalog {
       @Nullable ItemLike dropItem,
       boolean cubeModel,
       boolean registerItem,
-      @NotNull Function0<? extends T> factory
+      @NotNull Supplier<? extends T> factory
   ) {
     if (dropSelf && dropItem != null) {
       int i = 0;
       String string = "方块不能同时掉落自身和指定物品: " + path;
       throw new IllegalArgumentException(string.toString());
     } else {
-      var block = ModRegistrar.block$default(this.registrar, path, factory::invoke, registerItem, null, 8, null);
+      var block = this.registrar.block(path, factory, registerItem, new net.minecraft.world.item.Item.Properties());
       BlockEntry blockEntry = new BlockEntry<>(path, block, dropSelf, dropItem, cubeModel, registerItem);
       this.entries.add(blockEntry);
       TranslationCatalog translationCatalog = this.translations;

@@ -32,19 +32,19 @@ public record SimpleFeatureEntry(
     return placedKey;
   }
 
-  public Feature<NoneFeatureConfiguration> getFeature$zinecraft() {
+  public Feature<NoneFeatureConfiguration> getFeature() {
     return feature;
   }
 
-  public List<PlacementModifier> getPlacement$zinecraft() {
+  public List<PlacementModifier> getPlacement() {
     return placement;
   }
 
-  public GenerationStep.Decoration getGenerationStep$zinecraft() {
+  public GenerationStep.Decoration getGenerationStep() {
     return generationStep;
   }
 
-  public BiomeSelection getBiomes$zinecraft() {
+  public BiomeSelection getBiomes() {
     return biomes;
   }
 }

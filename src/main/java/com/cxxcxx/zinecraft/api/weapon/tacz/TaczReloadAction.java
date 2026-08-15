@@ -1,12 +1,7 @@
 package com.cxxcxx.zinecraft.api.weapon.tacz;
 
-import com.cxxcxx.zinecraft.api.weapon.action.TimedWeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
+import com.cxxcxx.zinecraft.api.weapon.action.*;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
-import kotlin.ranges.IntRange;
-import kotlin.ranges.RangesKt;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +24,7 @@ public final class TaczReloadAction implements WeaponAction {
 
   @Override
   public boolean canStart(@NotNull WeaponContext context) {
-    TaczGunSpec taczGunSpec1 = TaczWeaponActionsKt.access$gun(context);
+    TaczGunSpec taczGunSpec1 = TaczWeaponActions.gun(context);
     if (taczGunSpec1 == null) {
       return false;
     }
@@ -44,7 +39,7 @@ public final class TaczReloadAction implements WeaponAction {
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    TaczGunSpec taczGunSpec1 = TaczWeaponActionsKt.access$gun(context);
+    TaczGunSpec taczGunSpec1 = TaczWeaponActions.gun(context);
     if (taczGunSpec1 == null) {
       String string = "Required value was null.";
       throw new IllegalArgumentException(string.toString());
@@ -56,15 +51,15 @@ public final class TaczReloadAction implements WeaponAction {
     int m;
     if (bl) {
       int l = taczGunSpec.getCapacity();
-      m = RangesKt.coerceAtLeast(l - integer, 1);
+      m = Math.max(l - integer, 1);
     } else {
       m = 1;
     }
 
     int i = m;
     final int j = bl ? taczGunSpec.getReloadFeedTicks() * i : taczGunSpec.getReloadFeedTicks();
-    int k = RangesKt.coerceAtLeast(j + (taczGunSpec.getReloadDurationTicks() - taczGunSpec.getReloadFeedTicks()), 1);
-    IntRange intRange = new IntRange(taczGunSpec.getReloadFeedTicks(), j);
+    int k = Math.max(j + (taczGunSpec.getReloadDurationTicks() - taczGunSpec.getReloadFeedTicks()), 1);
+    TickRange intRange = new TickRange(taczGunSpec.getReloadFeedTicks(), j);
     return new TimedWeaponActionRuntime(intRange, k) {
       @Override
       protected void onTick(int tick) {

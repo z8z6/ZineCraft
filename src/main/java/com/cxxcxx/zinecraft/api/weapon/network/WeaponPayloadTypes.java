@@ -18,20 +18,20 @@ public final class WeaponPayloadTypes {
   public static void register(RegisterPayloadHandlersEvent event) {
     var registrar = event.registrar("1");
     registrar.playToServer(
-        WeaponActionRequestPayload.Companion.getTYPE(),
-        WeaponActionRequestPayload.Companion.getCODEC(),
+        WeaponActionRequestPayload.ACCESS.getTYPE(),
+        WeaponActionRequestPayload.ACCESS.getCODEC(),
         WeaponServerController.INSTANCE::handleRequest
     );
     registrar.playToClient(
-        WeaponActionStartedPayload.Companion.getTYPE(),
-        WeaponActionStartedPayload.Companion.getCODEC(),
+        WeaponActionStartedPayload.ACCESS.getTYPE(),
+        WeaponActionStartedPayload.ACCESS.getCODEC(),
         (payload, context) -> {
           if (startedHandler != null) startedHandler.accept(payload);
         }
     );
     registrar.playToClient(
-        WeaponActionCancelledPayload.Companion.getTYPE(),
-        WeaponActionCancelledPayload.Companion.getCODEC(),
+        WeaponActionCancelledPayload.ACCESS.getTYPE(),
+        WeaponActionCancelledPayload.ACCESS.getCODEC(),
         (payload, context) -> {
           if (cancelledHandler != null) cancelledHandler.accept(payload);
         }

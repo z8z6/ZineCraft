@@ -38,20 +38,20 @@ public final class BlockEntry<T extends Block> {
     return this.block.get();
   }
 
-  public final boolean getDropSelf$zinecraft() {
+  public final boolean getDropSelf() {
     return this.dropSelf;
   }
 
   @Nullable
-  public final ItemLike getDropItem$zinecraft() {
+  public final ItemLike getDropItem() {
     return this.dropItem;
   }
 
-  public final boolean getCubeModel$zinecraft() {
+  public final boolean getCubeModel() {
     return this.cubeModel;
   }
 
-  public final boolean getRegisterItem$zinecraft() {
+  public final boolean getRegisterItem() {
     return this.registerItem;
   }
 }

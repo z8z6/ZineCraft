@@ -4,9 +4,7 @@ import com.cxxcxx.zinecraft.api.world.structure.JigsawBuildingEntry;
 import com.cxxcxx.zinecraft.api.world.structure.StructureCatalog;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
-import kotlin.Pair;
-import kotlin.TuplesKt;
-import kotlin.collections.MapsKt;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
@@ -16,7 +14,7 @@ public final class NationSettlements {
   @NotNull
   public static final NationSettlements INSTANCE = new NationSettlements();
   @NotNull
-  private static final JigsawBuildingEntry AEGIR_SUBSEA_ENCLAVE = settlement$default(
+  private static final JigsawBuildingEntry AEGIR_SUBSEA_ENCLAVE = settlementWithDefaults(
       INSTANCE,
       "aegir_subsea_enclave",
       NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA(),
@@ -33,7 +31,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry BOLIVAR_DOSSOLES_DISTRICT = settlement$default(
+  private static final JigsawBuildingEntry BOLIVAR_DOSSOLES_DISTRICT = settlementWithDefaults(
       INSTANCE,
       "bolivar_dossoles_district",
       NationBiomes.INSTANCE.getBOLIVAR_PLAIN(),
@@ -50,7 +48,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry HIGASHI_SOKOGAWA_TOWN = settlement$default(
+  private static final JigsawBuildingEntry HIGASHI_SOKOGAWA_TOWN = settlementWithDefaults(
       INSTANCE,
       "higashi_sokogawa_town",
       NationBiomes.INSTANCE.getHIGASHI_SHADOW_RIFT(),
@@ -67,7 +65,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry DURIN_IDEAL_CITY_BLOCK = settlement$default(
+  private static final JigsawBuildingEntry DURIN_IDEAL_CITY_BLOCK = settlementWithDefaults(
       INSTANCE,
       "durin_ideal_city_block",
       NationBiomes.INSTANCE.getDURIN_UNDERGROUND_GARDEN(),
@@ -84,7 +82,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry COLUMBIA_FRONTIER_TOWN = settlement$default(
+  private static final JigsawBuildingEntry COLUMBIA_FRONTIER_TOWN = settlementWithDefaults(
       INSTANCE,
       "columbia_frontier_town",
       NationBiomes.INSTANCE.getCOLUMBIA_SANDSTONE_WILDS(),
@@ -101,7 +99,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry KAZIMIERZ_KNIGHT_BOROUGH = settlement$default(
+  private static final JigsawBuildingEntry KAZIMIERZ_KNIGHT_BOROUGH = settlementWithDefaults(
       INSTANCE,
       "kazimierz_knight_borough",
       NationBiomes.INSTANCE.getKAZIMIERZ_KNIGHTLAND(),
@@ -118,7 +116,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry KAZDEL_SARKAZ_SETTLEMENT = settlement$default(
+  private static final JigsawBuildingEntry KAZDEL_SARKAZ_SETTLEMENT = settlementWithDefaults(
       INSTANCE,
       "kazdel_sarkaz_settlement",
       NationBiomes.INSTANCE.getKAZDEL_SCARRED_WASTES(),
@@ -135,7 +133,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry LATERANO_MONASTERY_TOWN = settlement$default(
+  private static final JigsawBuildingEntry LATERANO_MONASTERY_TOWN = settlementWithDefaults(
       INSTANCE,
       "laterano_monastery_town",
       NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(),
@@ -152,7 +150,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry LEITHANIEN_MUSIC_TOWN = settlement$default(
+  private static final JigsawBuildingEntry LEITHANIEN_MUSIC_TOWN = settlementWithDefaults(
       INSTANCE,
       "leithanien_music_town",
       NationBiomes.INSTANCE.getLEITHANIEN_TWILIGHT_FOREST(),
@@ -169,7 +167,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry RIM_BILLITON_MINING_CAMP = settlement$default(
+  private static final JigsawBuildingEntry RIM_BILLITON_MINING_CAMP = settlementWithDefaults(
       INSTANCE,
       "rim_billiton_mining_camp",
       NationBiomes.INSTANCE.getRIM_BILLITON_MINING_BADLANDS(),
@@ -186,7 +184,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry MINOS_HEROIC_POLIS = settlement$default(
+  private static final JigsawBuildingEntry MINOS_HEROIC_POLIS = settlementWithDefaults(
       INSTANCE,
       "minos_heroic_polis",
       NationBiomes.INSTANCE.getMINOS_SUNLIT_HILLS(),
@@ -203,7 +201,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry SARGON_OASIS_TOWN = settlement$default(
+  private static final JigsawBuildingEntry SARGON_OASIS_TOWN = settlementWithDefaults(
       INSTANCE,
       "sargon_oasis_town",
       NationBiomes.INSTANCE.getSARGON_ROCKY_DESERT(),
@@ -220,7 +218,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry SAMI_SNOWPRIEST_VILLAGE = settlement$default(
+  private static final JigsawBuildingEntry SAMI_SNOWPRIEST_VILLAGE = settlementWithDefaults(
       INSTANCE,
       "sami_snowpriest_village",
       NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST(),
@@ -237,7 +235,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry VICTORIA_INDUSTRIAL_BOROUGH = settlement$default(
+  private static final JigsawBuildingEntry VICTORIA_INDUSTRIAL_BOROUGH = settlementWithDefaults(
       INSTANCE,
       "victoria_industrial_borough",
       NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(),
@@ -254,7 +252,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry URSUS_NORTHERN_TOWN = settlement$default(
+  private static final JigsawBuildingEntry URSUS_NORTHERN_TOWN = settlementWithDefaults(
       INSTANCE,
       "ursus_northern_town",
       NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE(),
@@ -271,7 +269,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry KJERAG_MOUNTAIN_VILLAGE = settlement$default(
+  private static final JigsawBuildingEntry KJERAG_MOUNTAIN_VILLAGE = settlementWithDefaults(
       INSTANCE,
       "kjerag_mountain_village",
       NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(),
@@ -288,7 +286,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry SIRACUSA_FAMILY_TOWN = settlement$default(
+  private static final JigsawBuildingEntry SIRACUSA_FAMILY_TOWN = settlementWithDefaults(
       INSTANCE,
       "siracusa_family_town",
       NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(),
@@ -305,7 +303,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry YAN_SHANGSHU_TOWN = settlement$default(
+  private static final JigsawBuildingEntry YAN_SHANGSHU_TOWN = settlementWithDefaults(
       INSTANCE,
       "yan_shangshu_town",
       NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(),
@@ -322,7 +320,7 @@ public final class NationSettlements {
       null
   );
   @NotNull
-  private static final JigsawBuildingEntry IBERIA_COASTAL_TOWN = settlement$default(
+  private static final JigsawBuildingEntry IBERIA_COASTAL_TOWN = settlementWithDefaults(
       INSTANCE,
       "iberia_coastal_town",
       NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(),
@@ -342,8 +340,7 @@ public final class NationSettlements {
   private NationSettlements() {
   }
 
-  // $VF: synthetic method
-  static JigsawBuildingEntry settlement$default(
+  static JigsawBuildingEntry settlementWithDefaults(
       NationSettlements var0,
       String var1,
       ResourceKey var2,
@@ -488,8 +485,8 @@ public final class NationSettlements {
   ) {
     StructureCatalog structureCatalog = Zinecraft.INSTANCE.getSTRUCTURES();
     String string = "nation_settlements/" + path;
-    Pair[] pairs = new Pair[]{TuplesKt.to(first, 4), TuplesKt.to(second, 3), TuplesKt.to(third, 2), TuplesKt.to(fourth, 2)};
-    var templates = MapsKt.<String, Integer>linkedMapOf(pairs);
+    Pair[] pairs = new Pair[]{Pair.of(first, 4), Pair.of(second, 3), Pair.of(third, 2), Pair.of(fourth, 2)};
+    var templates = com.cxxcxx.zinecraft.api.util.CollectionSupport.<String, Integer>linkedMapOf(pairs);
     if ("laterano_monastery_town".equals(path)) {
       return structureCatalog.fixedOriginSettlement(path, string, biome, salt, templates, 7, 112, heightmap, startHeight, removeVinesChance);
     }

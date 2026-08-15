@@ -2,7 +2,6 @@ package com.cxxcxx.zinecraft.core.dimension;
 
 import com.cxxcxx.zinecraft.core.item.ModItem;
 import com.mojang.serialization.MapCodec;
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.ParticleOptions;
@@ -30,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class StarGateControllerBlock extends Block {
   @NotNull
-  public static final StarGateControllerBlock.Companion Companion = new StarGateControllerBlock.Companion(null);
+  public static final StarGateControllerBlock.Access ACCESS = new StarGateControllerBlock.Access();
   @NotNull
   public static final String REQUIRES_KEY_MESSAGE = "message.zinecraft.stargate.requires_protocol_originium";
   @NotNull
@@ -152,13 +151,8 @@ public final class StarGateControllerBlock extends Block {
     }
   }
 
-  public static final class Companion {
-    private Companion() {
-    }
-
-    // $VF: synthetic method
-    public Companion(DefaultConstructorMarker $constructor_marker) {
-      this();
+  public static final class Access {
+    private Access() {
     }
 
     @NotNull

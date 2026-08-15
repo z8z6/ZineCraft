@@ -14,8 +14,7 @@ public final class NationBiomePresets {
   private NationBiomePresets() {
   }
 
-  // $VF: synthetic method
-  public static void featuredSpawn$default(
+  public static void featuredSpawnWithDefaults(
       NationBiomePresets var0, SimpleBiomeBuilder var1, MobCategory var2, EntityType var3, int var4, int var5, int var6, int var7, Object var8
   ) {
     if ((var7 & 16) != 0) {
@@ -154,22 +153,22 @@ public final class NationBiomePresets {
     BiomeDefaultFeatures.addLushCavesSpecialOres(simpleBiomeBuilder.getGeneration());
   }
 
-  private final void commonBase(SimpleBiomeBuilder $this$commonBase) {
-    BiomeDefaultFeatures.plainsSpawns($this$commonBase.getSpawns());
-    this.generationBase($this$commonBase);
+  private final void commonBase(SimpleBiomeBuilder _this_commonBase) {
+    BiomeDefaultFeatures.plainsSpawns(_this_commonBase.getSpawns());
+    this.generationBase(_this_commonBase);
   }
 
-  private final void generationBase(SimpleBiomeBuilder $this$generationBase) {
-    this.generationBase($this$generationBase, true);
+  private final void generationBase(SimpleBiomeBuilder _this_generationBase) {
+    this.generationBase(_this_generationBase, true);
   }
 
-  private final void generationBase(SimpleBiomeBuilder $this$generationBase, boolean addDefaultExtraVegetation) {
-    $this$generationBase.defaultOverworldGeneration();
-    BiomeDefaultFeatures.addDefaultOres($this$generationBase.getGeneration());
-    BiomeDefaultFeatures.addDefaultSoftDisks($this$generationBase.getGeneration());
-    BiomeDefaultFeatures.addDefaultMushrooms($this$generationBase.getGeneration());
+  private final void generationBase(SimpleBiomeBuilder _this_generationBase, boolean addDefaultExtraVegetation) {
+    _this_generationBase.defaultOverworldGeneration();
+    BiomeDefaultFeatures.addDefaultOres(_this_generationBase.getGeneration());
+    BiomeDefaultFeatures.addDefaultSoftDisks(_this_generationBase.getGeneration());
+    BiomeDefaultFeatures.addDefaultMushrooms(_this_generationBase.getGeneration());
     if (addDefaultExtraVegetation) {
-      BiomeDefaultFeatures.addDefaultExtraVegetation($this$generationBase.getGeneration());
+      BiomeDefaultFeatures.addDefaultExtraVegetation(_this_generationBase.getGeneration());
     }
   }
 }

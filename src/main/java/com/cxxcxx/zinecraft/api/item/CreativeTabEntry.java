@@ -17,19 +17,6 @@ public final class CreativeTabEntry {
     this.tab = tab;
   }
 
-  // $VF: synthetic method
-  public static CreativeTabEntry copy$default(CreativeTabEntry var0, ResourceKey var1, CreativeModeTab var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.key;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.tab;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   @NotNull
   public final ResourceKey<CreativeModeTab> getKey() {
     return this.key;
@@ -38,21 +25,6 @@ public final class CreativeTabEntry {
   @NotNull
   public final CreativeModeTab getTab() {
     return this.tab;
-  }
-
-  @NotNull
-  public final ResourceKey<CreativeModeTab> component1() {
-    return this.key;
-  }
-
-  @NotNull
-  public final CreativeModeTab component2() {
-    return this.tab;
-  }
-
-  @NotNull
-  public final CreativeTabEntry copy(@NotNull ResourceKey<CreativeModeTab> key, @NotNull CreativeModeTab tab) {
-    return new CreativeTabEntry(key, tab);
   }
 
   @Override

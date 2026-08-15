@@ -33,7 +33,7 @@ public final class FeatureCatalog {
     this.registrar = registrar;
   }
 
-  public static OreEntry ore$default(FeatureCatalog self, String path, Supplier<? extends Block> block, int veinSize,
+  public static OreEntry oreWithDefaults(FeatureCatalog self, String path, Supplier<? extends Block> block, int veinSize,
                                      int veinsPerChunk, int maxY, float discard, BiomeSelection biomes, int mask, Object marker) {
     return self.ore(path, block, veinSize, veinsPerChunk,
         (mask & 16) != 0 ? 0 : maxY, (mask & 32) != 0 ? 0 : discard,
@@ -65,7 +65,7 @@ public final class FeatureCatalog {
     return entry;
   }
 
-  public void bootstrapConfigured$zinecraft(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+  public void bootstrapConfigured(BootstrapContext<ConfiguredFeature<?, ?>> context) {
     for (var ore : ores) {
       var targets = List.of(
           OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), ore.getBlock().defaultBlockState()),
@@ -79,7 +79,7 @@ public final class FeatureCatalog {
     }
   }
 
-  public void bootstrapPlaced$zinecraft(BootstrapContext<PlacedFeature> context) {
+  public void bootstrapPlaced(BootstrapContext<PlacedFeature> context) {
     var configured = context.lookup(Registries.CONFIGURED_FEATURE);
     for (var ore : ores) {
       context.register(ore.placedKey(), new PlacedFeature(configured.getOrThrow(ore.configuredKey()), List.of(

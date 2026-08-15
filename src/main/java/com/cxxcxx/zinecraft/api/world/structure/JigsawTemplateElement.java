@@ -14,19 +14,6 @@ public final class JigsawTemplateElement {
     this.weight = weight;
   }
 
-  // $VF: synthetic method
-  public static JigsawTemplateElement copy$default(JigsawTemplateElement var0, String var1, int var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.template;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.weight;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   @NotNull
   public final String getTemplate() {
     return this.template;
@@ -34,20 +21,6 @@ public final class JigsawTemplateElement {
 
   public final int getWeight() {
     return this.weight;
-  }
-
-  @NotNull
-  public final String component1() {
-    return this.template;
-  }
-
-  public final int component2() {
-    return this.weight;
-  }
-
-  @NotNull
-  public final JigsawTemplateElement copy(@NotNull String template, int weight) {
-    return new JigsawTemplateElement(template, weight);
   }
 
   @Override

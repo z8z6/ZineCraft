@@ -1,16 +1,14 @@
 package com.cxxcxx.zinecraft.api.accessory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import kotlin.collections.CollectionsKt;
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public sealed interface CollectiblePower
     permits CollectiblePower.ArchiveOnly,
@@ -60,25 +58,6 @@ public sealed interface CollectiblePower
       }
     }
 
-    // $VF: synthetic method
-    public static CollectiblePower.AttributeBoost copy$default(
-        CollectiblePower.AttributeBoost var0, Holder var1, double var2, Operation var4, int var5, Object var6
-    ) {
-      if ((var5 & 1) != 0) {
-        var1 = var0.attribute;
-      }
-
-      if ((var5 & 2) != 0) {
-        var2 = var0.amount;
-      }
-
-      if ((var5 & 4) != 0) {
-        var4 = var0.operation;
-      }
-
-      return var0.copy(var1, var2, var4);
-    }
-
     @NotNull
     public final Holder<Attribute> getAttribute() {
       return this.attribute;
@@ -91,25 +70,6 @@ public sealed interface CollectiblePower
     @NotNull
     public final Operation getOperation() {
       return this.operation;
-    }
-
-    @NotNull
-    public final Holder<Attribute> component1() {
-      return this.attribute;
-    }
-
-    public final double component2() {
-      return this.amount;
-    }
-
-    @NotNull
-    public final Operation component3() {
-      return this.operation;
-    }
-
-    @NotNull
-    public final CollectiblePower.AttributeBoost copy(@NotNull Holder<Attribute> attribute, double amount, @NotNull Operation operation) {
-      return new CollectiblePower.AttributeBoost(attribute, amount, operation);
     }
 
     @Override
@@ -154,46 +114,27 @@ public sealed interface CollectiblePower
 
       Iterable iterable = this.boosts;
       int i = 0;
-      Iterable $this$mapTo$iv$iv = iterable;
-      var collection = new ArrayList(CollectionsKt.collectionSizeOrDefault(iterable, 10));
+      Iterable _this_mapTo_iv_iv = iterable;
+      var collection = new ArrayList(com.cxxcxx.zinecraft.api.util.CollectionSupport.sizeHint(iterable, 10));
       int j = 0;
 
-      for (Object object : $this$mapTo$iv$iv) {
+      for (Object object : _this_mapTo_iv_iv) {
         CollectiblePower.AttributeBoost it = (CollectiblePower.AttributeBoost) object;
         Collection collection1 = collection;
         int k = 0;
         collection1.add(it.getAttribute());
       }
 
-      if (CollectionsKt.distinct((Iterable & List) collection).size() != this.boosts.size()) {
+      if (com.cxxcxx.zinecraft.api.util.CollectionSupport.distinct((Iterable & List) collection).size() != this.boosts.size()) {
         i = 0;
         String string = "复合藏品不能重复修饰同一属性";
         throw new IllegalArgumentException(string.toString());
       }
     }
 
-    // $VF: synthetic method
-    public static CollectiblePower.AttributeSet copy$default(CollectiblePower.AttributeSet var0, List var1, int var2, Object var3) {
-      if ((var2 & 1) != 0) {
-        var1 = var0.boosts;
-      }
-
-      return var0.copy(var1);
-    }
-
     @NotNull
     public final List<CollectiblePower.AttributeBoost> getBoosts() {
       return this.boosts;
-    }
-
-    @NotNull
-    public final List<CollectiblePower.AttributeBoost> component1() {
-      return this.boosts;
-    }
-
-    @NotNull
-    public final CollectiblePower.AttributeSet copy(@NotNull List<CollectiblePower.AttributeBoost> boosts) {
-      return new CollectiblePower.AttributeSet(boosts);
     }
 
     @Override
@@ -237,43 +178,12 @@ public sealed interface CollectiblePower
       }
     }
 
-    // $VF: synthetic method
-    public Regeneration(float var1, int var2, int var3, DefaultConstructorMarker var4) {
-      this(var1, (var3 & 2) != 0 ? 20 : var2);
-    }
-
-    // $VF: synthetic method
-    public static CollectiblePower.Regeneration copy$default(CollectiblePower.Regeneration var0, float var1, int var2, int var3, Object var4) {
-      if ((var3 & 1) != 0) {
-        var1 = var0.maxHealthFraction;
-      }
-
-      if ((var3 & 2) != 0) {
-        var2 = var0.intervalTicks;
-      }
-
-      return var0.copy(var1, var2);
-    }
-
     public final float getMaxHealthFraction() {
       return this.maxHealthFraction;
     }
 
     public final int getIntervalTicks() {
       return this.intervalTicks;
-    }
-
-    public final float component1() {
-      return this.maxHealthFraction;
-    }
-
-    public final int component2() {
-      return this.intervalTicks;
-    }
-
-    @NotNull
-    public final CollectiblePower.Regeneration copy(float maxHealthFraction, int intervalTicks) {
-      return new CollectiblePower.Regeneration(maxHealthFraction, intervalTicks);
     }
 
     @Override
@@ -300,4 +210,3 @@ public sealed interface CollectiblePower
     }
   }
 }
-

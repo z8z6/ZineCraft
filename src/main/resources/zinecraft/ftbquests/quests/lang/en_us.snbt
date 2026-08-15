@@ -216,7 +216,7 @@
 	quest.6000000000000004.title: "Accessories and Collectibles"
 	quest.6000000000000004.quest_desc: ["Curios 9.5.1+1.21.1 supplies accessory capability. Zinecraft Integrated Strategies collectibles use the relic slot, currently configured with twenty player slots."]
 	quest.6000000000000005.title: "Configuration and Libraries"
-	quest.6000000000000005.quest_desc: ["Cloth Config 15.0.140 supplies configuration UI support. Architectury and Common Networking are loaded transitively. Kotlin standard library is a code runtime library rather than a standalone Minecraft mod."]
+	quest.6000000000000005.quest_desc: ["Cloth Config 15.0.140 supplies configuration UI support. Architectury and Common Networking are loaded transitively. The project source and runtime now use Java throughout, without an additional language runtime."]
 	quest.6000000000000006.title: "Development-only Helpers"
 	quest.6000000000000006.quest_desc: ["JEI 19.27.0.340, Just Enough Resources 1.6.0.17, AppleSkin 3.0.9, Jade 15.10.5, Just Enough Characters 4.5.22, JourneyMap 6.0.1, Nature's Compass 3.4.0, and Explorer's Compass 3.4.0. They support item/resource lookup, food information, block inspection, Pinyin search, map-based testing, and biome/structure location."]
 }

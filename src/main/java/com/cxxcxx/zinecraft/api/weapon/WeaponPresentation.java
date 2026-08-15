@@ -1,6 +1,5 @@
 package com.cxxcxx.zinecraft.api.weapon;
 
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -96,40 +95,6 @@ public final class WeaponPresentation {
     }
   }
 
-  // $VF: synthetic method
-  public WeaponPresentation(ResourceLocation var1, ResourceLocation var2, List var3, List var4, int var5, int var6, DefaultConstructorMarker var7) {
-    this((var6 & 1) != 0 ? null : var1, (var6 & 2) != 0 ? null : var2,
-        (var6 & 4) != 0 ? java.util.List.of() : var3,
-        (var6 & 8) != 0 ? java.util.List.of() : var4, var5);
-  }
-
-  // $VF: synthetic method
-  public static WeaponPresentation copy$default(
-      WeaponPresentation var0, ResourceLocation var1, ResourceLocation var2, List var3, List var4, int var5, int var6, Object var7
-  ) {
-    if ((var6 & 1) != 0) {
-      var1 = var0.playerAnimation;
-    }
-
-    if ((var6 & 2) != 0) {
-      var2 = var0.weaponAnimation;
-    }
-
-    if ((var6 & 4) != 0) {
-      var3 = var0.vfx;
-    }
-
-    if ((var6 & 8) != 0) {
-      var4 = var0.sounds;
-    }
-
-    if ((var6 & 16) != 0) {
-      var5 = var0.durationTicks;
-    }
-
-    return var0.copy(var1, var2, var3, var4, var5);
-  }
-
   @Nullable
   public final ResourceLocation getPlayerAnimation() {
     return this.playerAnimation;
@@ -152,41 +117,6 @@ public final class WeaponPresentation {
 
   public final int getDurationTicks() {
     return this.durationTicks;
-  }
-
-  @Nullable
-  public final ResourceLocation component1() {
-    return this.playerAnimation;
-  }
-
-  @Nullable
-  public final ResourceLocation component2() {
-    return this.weaponAnimation;
-  }
-
-  @NotNull
-  public final List<TimedWeaponVfx> component3() {
-    return this.vfx;
-  }
-
-  @NotNull
-  public final List<TimedWeaponSound> component4() {
-    return this.sounds;
-  }
-
-  public final int component5() {
-    return this.durationTicks;
-  }
-
-  @NotNull
-  public final WeaponPresentation copy(
-      @Nullable ResourceLocation playerAnimation,
-      @Nullable ResourceLocation weaponAnimation,
-      @NotNull List<TimedWeaponVfx> vfx,
-      @NotNull List<TimedWeaponSound> sounds,
-      int durationTicks
-  ) {
-    return new WeaponPresentation(playerAnimation, weaponAnimation, vfx, sounds, durationTicks);
   }
 
   @Override
@@ -231,4 +161,3 @@ public final class WeaponPresentation {
         + ")";
   }
 }
-

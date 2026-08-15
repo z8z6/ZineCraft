@@ -1,12 +1,7 @@
 package com.cxxcxx.zinecraft.api.weapon.action.firearm;
 
-import com.cxxcxx.zinecraft.api.weapon.action.TimedWeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
+import com.cxxcxx.zinecraft.api.weapon.action.*;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
-import kotlin.jvm.internal.DefaultConstructorMarker;
-import kotlin.ranges.IntRange;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,11 +21,6 @@ public final class ToggleAimAction implements WeaponAction {
     }
   }
 
-  // $VF: synthetic method
-  public ToggleAimAction(ResourceLocation var1, int var2, int var3, DefaultConstructorMarker var4) {
-    this(var1, (var3 & 2) != 0 ? 6 : var2);
-  }
-
   @NotNull
   @Override
   public ResourceLocation getId() {
@@ -45,7 +35,7 @@ public final class ToggleAimAction implements WeaponAction {
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    IntRange intRange = new IntRange(0, 0);
+    TickRange intRange = new TickRange(0, 0);
     int i = this.durationTicks;
     return new TimedWeaponActionRuntime(intRange, i) {
       @Override
@@ -58,4 +48,3 @@ public final class ToggleAimAction implements WeaponAction {
     };
   }
 }
-

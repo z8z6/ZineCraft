@@ -31,7 +31,7 @@ public final class WeaponServerController {
   private WeaponServerController() {
   }
 
-  public static void request$default(WeaponServerController self, ServerPlayer player, WeaponInput input, InteractionHand hand, int mask, Object marker) {
+  public static void requestWithDefaults(WeaponServerController self, ServerPlayer player, WeaponInput input, InteractionHand hand, int mask, Object marker) {
     self.request(player, input, (mask & 4) != 0 ? InteractionHand.MAIN_HAND : hand);
   }
 

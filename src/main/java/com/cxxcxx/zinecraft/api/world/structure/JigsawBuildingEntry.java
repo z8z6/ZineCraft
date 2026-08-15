@@ -121,71 +121,71 @@ public final class JigsawBuildingEntry {
   }
 
   @NotNull
-  public final List<JigsawPoolDefinition> getPools$zinecraft() {
+  public final List<JigsawPoolDefinition> getPools() {
     return this.pools;
   }
 
-  public final int getSpacing$zinecraft() {
+  public final int getSpacing() {
     return this.spacing;
   }
 
-  public final int getSeparation$zinecraft() {
+  public final int getSeparation() {
     return this.separation;
   }
 
-  public final int getSalt$zinecraft() {
+  public final int getSalt() {
     return this.salt;
   }
 
-  public final int getSize$zinecraft() {
+  public final int getSize() {
     return this.size;
   }
 
-  public final int getMaxDistanceFromCenter$zinecraft() {
+  public final int getMaxDistanceFromCenter() {
     return this.maxDistanceFromCenter;
   }
 
-  public final float getRemoveVinesChance$zinecraft() {
+  public final float getRemoveVinesChance() {
     return this.removeVinesChance;
   }
 
   @Nullable
-  public final ResourceKey<Biome> getBiome$zinecraft() {
+  public final ResourceKey<Biome> getBiome() {
     return this.biome;
   }
 
-  public final boolean getUnique$zinecraft() {
+  public final boolean getUnique() {
     return this.unique;
   }
 
-  public final int getRingDistance$zinecraft() {
+  public final int getRingDistance() {
     return this.ringDistance;
   }
 
   @Nullable
-  public final Types getHeightmap$zinecraft() {
+  public final Types getHeightmap() {
     return this.heightmap;
   }
 
-  public final int getStartHeight$zinecraft() {
+  public final int getStartHeight() {
     return this.startHeight;
   }
 
-  public final boolean getUseExpansionHack$zinecraft() {
+  public final boolean getUseExpansionHack() {
     return this.useExpansionHack;
   }
 
-  public final boolean getFixedOrigin$zinecraft() {
+  public final boolean getFixedOrigin() {
     return this.fixedOrigin;
   }
 
   @NotNull
-  public final Decoration getGenerationStep$zinecraft() {
+  public final Decoration getGenerationStep() {
     return this.generationStep;
   }
 
   @NotNull
-  public final TerrainAdjustment getTerrainAdjustment$zinecraft() {
+  public final TerrainAdjustment getTerrainAdjustment() {
     return this.terrainAdjustment;
   }
 }

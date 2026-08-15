@@ -4,9 +4,6 @@ import com.cxxcxx.zinecraft.api.item.ItemCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
-import kotlin.jvm.functions.Function1;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -24,9 +21,11 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class EntityCatalog {
-  public static final Companion Companion = new Companion();
+  public static final Access ACCESS = new Access();
   private final ModRegistrar registrar;
   private final ItemCatalog items;
   private final TranslationCatalog translations;
@@ -39,7 +38,7 @@ public final class EntityCatalog {
   }
 
   public <T extends Entity> EntityEntry<T> register(String path, String zhCn, String enUs,
-                                                    EntityType.EntityFactory<T> factory, MobCategory category, Function1<? super EntityType.Builder<T>, Unit> configure) {
+                                                    EntityType.EntityFactory<T> factory, MobCategory category, Consumer<? super EntityType.Builder<T>> configure) {
     var type = registrar.entity(path, factory, category, configure);
     translations.add("entity." + registrar.getNamespace() + "." + path, zhCn, enUs);
     return new EntityEntry<>(path, type);
@@ -47,8 +46,8 @@ public final class EntityCatalog {
 
   public <T extends Mob> MobEntry<T> mob(String path, String zhCn, String enUs,
                                          EntityType.EntityFactory<T> factory, MobCategory category,
-                                         Function0<? extends AttributeSupplier.Builder> attributes, MobSpawnRestriction<T> restriction,
-                                         Function1<? super EntityType.Builder<T>, Unit> configure) {
+                                         Supplier<? extends AttributeSupplier.Builder> attributes, MobSpawnRestriction<T> restriction,
+                                         Consumer<? super EntityType.Builder<T>> configure) {
     var type = registrar.mob(path, factory, category, attributes,
         restriction == null ? null : restriction.getPlacement(),
         restriction == null ? null : restriction.getHeightmap(),
@@ -78,11 +77,11 @@ public final class EntityCatalog {
                       int max, BiomeSelection biomes) {
   }
 
-  public static final class Companion {
+  public static final class Access {
     private static final ModelTemplate SPAWN_EGG_MODEL = new ModelTemplate(
         Optional.of(ResourceLocation.withDefaultNamespace("item/template_spawn_egg")), Optional.empty());
 
-    public ModelTemplate getSPAWN_EGG_MODEL$zinecraft() {
+    public ModelTemplate getSPAWN_EGG_MODEL() {
       return SPAWN_EGG_MODEL;
     }
   }

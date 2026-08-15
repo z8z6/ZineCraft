@@ -1,6 +1,5 @@
 package com.cxxcxx.zinecraft.api.skill;
 
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -20,9 +19,8 @@ public final class SkillItem extends Item {
     this.skill = skill;
   }
 
-  // $VF: synthetic method
-  public SkillItem(SkillDefinition var1, Properties var2, int var3, DefaultConstructorMarker var4) {
-    this(var1, (var3 & 2) != 0 ? new Properties().stacksTo(1).rarity(Rarity.RARE) : var2);
+  public SkillItem(SkillDefinition skill) {
+    this(skill, new Properties().stacksTo(1).rarity(Rarity.RARE));
   }
 
   @NotNull
@@ -41,4 +39,3 @@ public final class SkillItem extends Item {
     tooltipComponents.add(Component.translatable(string + ".description").withStyle(ChatFormatting.GRAY));
   }
 }
-

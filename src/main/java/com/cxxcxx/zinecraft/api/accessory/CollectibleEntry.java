@@ -16,19 +16,6 @@ public final class CollectibleEntry {
     this.itemEntry = itemEntry;
   }
 
-  // $VF: synthetic method
-  public static CollectibleEntry copy$default(CollectibleEntry var0, CollectibleSpec var1, ItemEntry var2, int var3, Object var4) {
-    if ((var3 & 1) != 0) {
-      var1 = var0.spec;
-    }
-
-    if ((var3 & 2) != 0) {
-      var2 = var0.itemEntry;
-    }
-
-    return var0.copy(var1, var2);
-  }
-
   @NotNull
   public final CollectibleSpec getSpec() {
     return this.spec;
@@ -42,21 +29,6 @@ public final class CollectibleEntry {
   @NotNull
   public final CollectibleItem getItem() {
     return (CollectibleItem) this.itemEntry.getItem();
-  }
-
-  @NotNull
-  public final CollectibleSpec component1() {
-    return this.spec;
-  }
-
-  @NotNull
-  public final ItemEntry<CollectibleItem> component2() {
-    return this.itemEntry;
-  }
-
-  @NotNull
-  public final CollectibleEntry copy(@NotNull CollectibleSpec spec, @NotNull ItemEntry<CollectibleItem> itemEntry) {
-    return new CollectibleEntry(spec, itemEntry);
   }
 
   @Override

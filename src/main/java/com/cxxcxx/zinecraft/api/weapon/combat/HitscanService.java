@@ -68,19 +68,6 @@ public final class HitscanService {
       this.distance = distance;
     }
 
-    // $VF: synthetic method
-    public static HitscanService.Hit copy$default(HitscanService.Hit var0, LivingEntity var1, double var2, int var4, Object var5) {
-      if ((var4 & 1) != 0) {
-        var1 = var0.target;
-      }
-
-      if ((var4 & 2) != 0) {
-        var2 = var0.distance;
-      }
-
-      return var0.copy(var1, var2);
-    }
-
     @NotNull
     public final LivingEntity getTarget() {
       return this.target;
@@ -88,20 +75,6 @@ public final class HitscanService {
 
     public final double getDistance() {
       return this.distance;
-    }
-
-    @NotNull
-    public final LivingEntity component1() {
-      return this.target;
-    }
-
-    public final double component2() {
-      return this.distance;
-    }
-
-    @NotNull
-    public final HitscanService.Hit copy(@NotNull LivingEntity target, double distance) {
-      return new HitscanService.Hit(target, distance);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.cxxcxx.zinecraft.api.weapon.network;
 
 import com.cxxcxx.zinecraft.api.weapon.WeaponInput;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -11,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class WeaponActionRequestPayload implements CustomPacketPayload {
   @NotNull
-  public static final WeaponActionRequestPayload.Companion Companion = new WeaponActionRequestPayload.Companion(null);
+  public static final WeaponActionRequestPayload.Access ACCESS = new WeaponActionRequestPayload.Access();
   @NotNull
   private static final Type<WeaponActionRequestPayload> TYPE = new Type(Zinecraft.INSTANCE.getREGISTRAR().id("weapon_action_request"));
   @NotNull
@@ -33,15 +32,6 @@ public final class WeaponActionRequestPayload implements CustomPacketPayload {
     this.input = input;
   }
 
-  // $VF: synthetic method
-  public static WeaponActionRequestPayload copy$default(WeaponActionRequestPayload var0, WeaponInput var1, int var2, Object var3) {
-    if ((var2 & 1) != 0) {
-      var1 = var0.input;
-    }
-
-    return var0.copy(var1);
-  }
-
   @NotNull
   public final WeaponInput getInput() {
     return this.input;
@@ -50,16 +40,6 @@ public final class WeaponActionRequestPayload implements CustomPacketPayload {
   @NotNull
   public Type<? extends CustomPacketPayload> type() {
     return TYPE;
-  }
-
-  @NotNull
-  public final WeaponInput component1() {
-    return this.input;
-  }
-
-  @NotNull
-  public final WeaponActionRequestPayload copy(@NotNull WeaponInput input) {
-    return new WeaponActionRequestPayload(input);
   }
 
   @Override
@@ -82,13 +62,8 @@ public final class WeaponActionRequestPayload implements CustomPacketPayload {
     return "WeaponActionRequestPayload(input=" + this.input + ")";
   }
 
-  public static final class Companion {
-    private Companion() {
-    }
-
-    // $VF: synthetic method
-    public Companion(DefaultConstructorMarker $constructor_marker) {
-      this();
+  public static final class Access {
+    private Access() {
     }
 
     @NotNull
@@ -102,4 +77,3 @@ public final class WeaponActionRequestPayload implements CustomPacketPayload {
     }
   }
 }
-

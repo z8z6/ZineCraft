@@ -1,11 +1,7 @@
 package com.cxxcxx.zinecraft.api.weapon.action.firearm;
 
-import com.cxxcxx.zinecraft.api.weapon.action.TimedWeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
+import com.cxxcxx.zinecraft.api.weapon.action.*;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
-import kotlin.ranges.IntRange;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -59,7 +55,7 @@ public final class FirearmReloadAction implements WeaponAction {
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    IntRange intRange = new IntRange(this.reloadTick, this.reloadTick);
+    TickRange intRange = new TickRange(this.reloadTick, this.reloadTick);
     int i = this.durationTicks;
     return new TimedWeaponActionRuntime(intRange, i) {
       @Override

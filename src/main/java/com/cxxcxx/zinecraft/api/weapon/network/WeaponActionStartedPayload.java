@@ -1,7 +1,6 @@
 package com.cxxcxx.zinecraft.api.weapon.network;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import kotlin.jvm.internal.DefaultConstructorMarker;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -11,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class WeaponActionStartedPayload implements CustomPacketPayload {
   @NotNull
-  public static final WeaponActionStartedPayload.Companion Companion = new WeaponActionStartedPayload.Companion(null);
+  public static final WeaponActionStartedPayload.Access ACCESS = new WeaponActionStartedPayload.Access();
   @NotNull
   private static final Type<WeaponActionStartedPayload> TYPE = new Type(Zinecraft.INSTANCE.getREGISTRAR().id("weapon_action_started"));
   @NotNull
@@ -45,29 +44,6 @@ public final class WeaponActionStartedPayload implements CustomPacketPayload {
     this.startGameTick = startGameTick;
   }
 
-  // $VF: synthetic method
-  public static WeaponActionStartedPayload copy$default(
-      WeaponActionStartedPayload var0, int var1, ResourceLocation var2, ResourceLocation var3, long var4, int var6, Object var7
-  ) {
-    if ((var6 & 1) != 0) {
-      var1 = var0.entityId;
-    }
-
-    if ((var6 & 2) != 0) {
-      var2 = var0.weaponId;
-    }
-
-    if ((var6 & 4) != 0) {
-      var3 = var0.actionId;
-    }
-
-    if ((var6 & 8) != 0) {
-      var4 = var0.startGameTick;
-    }
-
-    return var0.copy(var1, var2, var3, var4);
-  }
-
   public final int getEntityId() {
     return this.entityId;
   }
@@ -89,29 +65,6 @@ public final class WeaponActionStartedPayload implements CustomPacketPayload {
   @NotNull
   public Type<? extends CustomPacketPayload> type() {
     return TYPE;
-  }
-
-  public final int component1() {
-    return this.entityId;
-  }
-
-  @NotNull
-  public final ResourceLocation component2() {
-    return this.weaponId;
-  }
-
-  @NotNull
-  public final ResourceLocation component3() {
-    return this.actionId;
-  }
-
-  public final long component4() {
-    return this.startGameTick;
-  }
-
-  @NotNull
-  public final WeaponActionStartedPayload copy(int entityId, @NotNull ResourceLocation weaponId, @NotNull ResourceLocation actionId, long startGameTick) {
-    return new WeaponActionStartedPayload(entityId, weaponId, actionId, startGameTick);
   }
 
   @Override
@@ -153,13 +106,8 @@ public final class WeaponActionStartedPayload implements CustomPacketPayload {
         + ")";
   }
 
-  public static final class Companion {
-    private Companion() {
-    }
-
-    // $VF: synthetic method
-    public Companion(DefaultConstructorMarker $constructor_marker) {
-      this();
+  public static final class Access {
+    private Access() {
     }
 
     @NotNull
@@ -173,4 +121,3 @@ public final class WeaponActionStartedPayload implements CustomPacketPayload {
     }
   }
 }
-

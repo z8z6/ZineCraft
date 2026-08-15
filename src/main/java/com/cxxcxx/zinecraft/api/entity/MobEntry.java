@@ -25,21 +25,21 @@ public final class MobEntry<T extends Mob> extends EntityEntry<T> {
     this.spawnSink = spawnSink;
   }
 
-  public static ItemEntry<SpawnEggItem> spawnEgg$default(MobEntry<?> self, int primary, int secondary,
+  public static ItemEntry<SpawnEggItem> spawnEggWithDefaults(MobEntry<?> self, int primary, int secondary,
                                                          String zhCn, String enUs, Item.Properties properties, int mask, Object marker) {
     return self.spawnEgg(primary, secondary, zhCn,
         (mask & 8) != 0 ? self.getPath() + " Spawn Egg" : enUs,
         (mask & 16) != 0 ? new Item.Properties() : properties);
   }
 
-  public static MobEntry<?> naturalSpawn$default(MobEntry<?> self, int weight, int min, int max,
+  public static MobEntry<?> naturalSpawnWithDefaults(MobEntry<?> self, int weight, int min, int max,
                                                  BiomeSelection biomes, int mask, Object marker) {
     return self.naturalSpawn(weight, min, max, (mask & 8) != 0 ? BiomeSelection.overworld() : biomes);
   }
 
   public ItemEntry<SpawnEggItem> spawnEgg(int primary, int secondary, String zhCn, String enUs, Item.Properties properties) {
     return items.register(getPath() + "_spawn_egg", zhCn, enUs,
-        EntityCatalog.Companion.getSPAWN_EGG_MODEL$zinecraft(), true,
+        EntityCatalog.ACCESS.getSPAWN_EGG_MODEL(), true,
         () -> new SpawnEggItem(getType(), primary, secondary, properties));
   }
 

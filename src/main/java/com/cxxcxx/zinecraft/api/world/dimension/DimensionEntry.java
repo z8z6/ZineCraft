@@ -1,8 +1,5 @@
 package com.cxxcxx.zinecraft.api.world.dimension;
 
-import java.util.List;
-
-import kotlin.jvm.functions.Function1;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -11,6 +8,9 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.function.Function;
 
 public final class DimensionEntry {
   @NotNull
@@ -26,7 +26,7 @@ public final class DimensionEntry {
   @NotNull
   private final List<DimensionBiome> biomes;
   @Nullable
-  private final Function1<DimensionBootstrapContext, ChunkGenerator> createGenerator;
+  private final Function<DimensionBootstrapContext, ChunkGenerator> createGenerator;
 
   public DimensionEntry(
       @NotNull String path,
@@ -35,7 +35,7 @@ public final class DimensionEntry {
       @NotNull ResourceKey<DimensionType> typeKey,
       @NotNull ResourceKey<NoiseGeneratorSettings> noiseSettingsKey,
       @NotNull List<DimensionBiome> biomes,
-      @Nullable Function1<? super DimensionBootstrapContext, ? extends ChunkGenerator> createGenerator
+      @Nullable Function<? super DimensionBootstrapContext, ? extends ChunkGenerator> createGenerator
   ) {
     super();
     this.path = path;
@@ -44,7 +44,7 @@ public final class DimensionEntry {
     this.typeKey = typeKey;
     this.noiseSettingsKey = noiseSettingsKey;
     this.biomes = new java.util.ArrayList<>(biomes);
-    this.createGenerator = createGenerator == null ? null : context -> createGenerator.invoke(context);
+    this.createGenerator = createGenerator == null ? null : context -> createGenerator.apply(context);
   }
 
   @NotNull
@@ -73,12 +73,12 @@ public final class DimensionEntry {
   }
 
   @NotNull
-  public final List<DimensionBiome> getBiomes$zinecraft() {
+  public final List<DimensionBiome> getBiomes() {
     return this.biomes;
   }
 
   @Nullable
-  public final Function1<DimensionBootstrapContext, ChunkGenerator> getCreateGenerator$zinecraft() {
+  public final Function<DimensionBootstrapContext, ChunkGenerator> getCreateGenerator() {
     return this.createGenerator;
   }
 }

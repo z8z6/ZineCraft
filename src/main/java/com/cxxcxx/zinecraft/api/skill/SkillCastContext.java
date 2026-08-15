@@ -21,23 +21,6 @@ public final class SkillCastContext {
     this.hand = hand;
   }
 
-  // $VF: synthetic method
-  public static SkillCastContext copy$default(SkillCastContext var0, ServerPlayer var1, ItemStack var2, InteractionHand var3, int var4, Object var5) {
-    if ((var4 & 1) != 0) {
-      var1 = var0.player;
-    }
-
-    if ((var4 & 2) != 0) {
-      var2 = var0.stack;
-    }
-
-    if ((var4 & 4) != 0) {
-      var3 = var0.hand;
-    }
-
-    return var0.copy(var1, var2, var3);
-  }
-
   @NotNull
   public final ServerPlayer getPlayer() {
     return this.player;
@@ -51,26 +34,6 @@ public final class SkillCastContext {
   @NotNull
   public final InteractionHand getHand() {
     return this.hand;
-  }
-
-  @NotNull
-  public final ServerPlayer component1() {
-    return this.player;
-  }
-
-  @NotNull
-  public final ItemStack component2() {
-    return this.stack;
-  }
-
-  @NotNull
-  public final InteractionHand component3() {
-    return this.hand;
-  }
-
-  @NotNull
-  public final SkillCastContext copy(@NotNull ServerPlayer player, @NotNull ItemStack stack, @NotNull InteractionHand hand) {
-    return new SkillCastContext(player, stack, hand);
   }
 
   @Override

@@ -1,12 +1,7 @@
 package com.cxxcxx.zinecraft.api.weapon.tacz;
 
-import com.cxxcxx.zinecraft.api.weapon.action.TimedWeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
-import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
+import com.cxxcxx.zinecraft.api.weapon.action.*;
 import com.cxxcxx.zinecraft.api.weapon.combat.HitscanService;
-import kotlin.ranges.IntRange;
-import kotlin.ranges.RangesKt;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,20 +24,20 @@ public final class TaczMeleeAction implements WeaponAction {
 
   @Override
   public boolean canStart(@NotNull WeaponContext context) {
-    return TaczWeaponActionsKt.access$gun(context) != null && context.getPlayer().isAlive();
+    return TaczWeaponActions.gun(context) != null && context.getPlayer().isAlive();
   }
 
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    TaczGunSpec taczGunSpec1 = TaczWeaponActionsKt.access$gun(context);
+    TaczGunSpec taczGunSpec1 = TaczWeaponActions.gun(context);
     if (taczGunSpec1 == null) {
       String string = "Required value was null.";
       throw new IllegalArgumentException(string.toString());
     } else {
       final TaczGunSpec taczGunSpec = taczGunSpec1;
-      IntRange intRange = new IntRange(2, 2);
-      int i = RangesKt.coerceAtLeast(taczGunSpec.getMeleeCooldownTicks(), 3);
+      TickRange intRange = new TickRange(2, 2);
+      int i = Math.max(taczGunSpec.getMeleeCooldownTicks(), 3);
       return new TimedWeaponActionRuntime(intRange, i) {
         @Override
         protected void onTick(int tick) {

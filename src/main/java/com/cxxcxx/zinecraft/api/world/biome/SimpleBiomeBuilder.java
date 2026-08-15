@@ -49,7 +49,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setPrecipitation(boolean var1) {
-    this.precipitation = var1/* $VF was: <set-?> */;
+    this.precipitation = var1;
   }
 
   public final float getTemperature() {
@@ -57,7 +57,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setTemperature(float var1) {
-    this.temperature = var1/* $VF was: <set-?> */;
+    this.temperature = var1;
   }
 
   public final float getDownfall() {
@@ -65,7 +65,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setDownfall(float var1) {
-    this.downfall = var1/* $VF was: <set-?> */;
+    this.downfall = var1;
   }
 
   public final int getWaterColor() {
@@ -73,7 +73,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setWaterColor(int var1) {
-    this.waterColor = var1/* $VF was: <set-?> */;
+    this.waterColor = var1;
   }
 
   public final int getWaterFogColor() {
@@ -81,7 +81,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setWaterFogColor(int var1) {
-    this.waterFogColor = var1/* $VF was: <set-?> */;
+    this.waterFogColor = var1;
   }
 
   public final int getFogColor() {
@@ -89,7 +89,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setFogColor(int var1) {
-    this.fogColor = var1/* $VF was: <set-?> */;
+    this.fogColor = var1;
   }
 
   @Nullable
@@ -98,7 +98,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setSkyColor(@Nullable Integer var1) {
-    this.skyColor = var1/* $VF was: <set-?> */;
+    this.skyColor = var1;
   }
 
   @Nullable
@@ -107,7 +107,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setGrassColor(@Nullable Integer var1) {
-    this.grassColor = var1/* $VF was: <set-?> */;
+    this.grassColor = var1;
   }
 
   @Nullable
@@ -116,7 +116,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setFoliageColor(@Nullable Integer var1) {
-    this.foliageColor = var1/* $VF was: <set-?> */;
+    this.foliageColor = var1;
   }
 
   @Nullable
@@ -125,7 +125,7 @@ public final class SimpleBiomeBuilder {
   }
 
   public final void setMusic(@Nullable Music var1) {
-    this.music = var1/* $VF was: <set-?> */;
+    this.music = var1;
   }
 
   @NotNull
