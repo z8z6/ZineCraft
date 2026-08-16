@@ -1,4 +1,4 @@
 interface:
   display_name: "泰拉国家材质设计"
-  short_description: "为泰拉十九国设计专属地貌、建筑外墙、色彩规范与原创像素贴图"
-  default_prompt: "使用 $terra-nation-materials 为指定泰拉国家新增特色地貌、建筑主材和贴图，并接入群系与结构。"
+  short_description: "为泰拉十九国设计专属地貌、建筑材质与原创或可追溯直裁贴图"
+  default_prompt: "使用 $terra-nation-materials，依据官方或 PRTS 证据为指定泰拉国家新增特色地貌、建筑主材与原创或可追溯的 CG 表面直裁贴图，并接入群系与结构。"

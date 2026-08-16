@@ -1,0 +1,29 @@
+{
+  "values": {
+    "minecraft:generic.max_absorption": {
+      "intrinsic": 0.0,
+      "order": 1100,
+      "usePercent": false
+    },
+    "minecraft:generic.oxygen_bonus": {
+      "intrinsic": 0.0,
+      "order": 3100,
+      "usePercent": false
+    },
+    "minecraft:generic.safe_fall_distance": {
+      "intrinsic": 0.0,
+      "order": 4100,
+      "usePercent": false
+    },
+    "minecraft:player.block_break_speed": {
+      "intrinsic": 0.0,
+      "order": 5100,
+      "usePercent": true
+    },
+    "minecraft:player.mining_efficiency": {
+      "intrinsic": 0.0,
+      "order": 5200,
+      "usePercent": false
+    }
+  }
+}

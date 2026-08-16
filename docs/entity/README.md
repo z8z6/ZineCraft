@@ -48,3 +48,8 @@ renderer 和 model layer 放在 `src/client/java`，通过 NeoForge 客户端事
 输入或由客户端动画结算伤害。
 
 十九国居民的 PRTS 资料映射、像素贴图和逐文件来源记录见 [NATION_RESIDENT_TEXTURES.md](NATION_RESIDENT_TEXTURES.md)。
+
+# 泰拉维度生成规则
+
+泰拉维度的自然生成只允许原版友好 Mob 与实现 `NationAffiliated` 的国家居民。各国家群系的数据声明不包含 `monster` 生成项；服务端的
+`TerraMobSpawnPolicy` 仅拦截 `MobSpawnType.NATURAL` 的非友好 Mob。命令、刷怪蛋、刷怪笼、结构生成和跨维度进入均可绕过该规则。

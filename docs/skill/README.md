@@ -42,6 +42,12 @@ src/main/resources/assets/zinecraft/textures/item/<path>.png
 | 辅助 | 铃兰   | 狐火渺然    |
 | 特种 | 红    | 狼群      |
 
+## FTB Quests 技能章节
+
+`src/main/resources/zinecraft/ftbquests/quests/chapters/operator_skills.snbt` 展示上述全部技能。每个技能节点包含一个自动检测技能物品的
+Item Task，以及一个确认玩家已查看 Ponder 演示的 Checkmark。新增技能时，应同步添加技能节点和 `zh_cn.snbt`、`en_us.snbt`
+中的章节说明，并运行 FTB Quests 校验脚本。
+
 技能名称、机制和图标来自对应 PRTS 页面。逐文件来源见 [PRTS_ASSETS.md](PRTS_ASSETS.md)。第三方图标权利不受仓库代码许可证覆盖，发布前必须再次核对分发条件。
 
 训练场模板位于 `assets/zinecraft/ponder/skill_demo/training_ground.nbt`，可用以下脚本重建：

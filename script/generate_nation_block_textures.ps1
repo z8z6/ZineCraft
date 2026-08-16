@@ -175,7 +175,33 @@ function PaletteIndex($spec, [int]$x, [int]$y, [int]$seed) {
   }
 }
 
+$cgDirectIds = @(
+  'aegir_pressure_tile',
+  'bolivar_dossoles_stucco',
+  'higashi_machiya_plaster',
+  'durin_ideal_city_panel',
+  'columbia_frontier_panel',
+  'kazimierz_arena_masonry',
+  'kazdel_fortress_plate',
+  'laterano_basilica_marble',
+  'leithanien_resonant_brick',
+  'rim_billiton_corrugated_steel',
+  'minos_heroic_masonry',
+  'sargon_oasis_adobe',
+  'victoria_industrial_brick',
+  'ursus_imperial_masonry',
+  'kjerag_monastery_stone',
+  'siracusa_family_masonry',
+  'yan_courtyard_brick',
+  'iberia_coastal_masonry'
+)
+
+$generated = 0
 foreach ($spec in $specs) {
+  # These architecture textures are exact 128x128 crops from the user-supplied
+  # game backgrounds. They are rebuilt by generate_nation_cg_wall_textures.ps1
+  # and must never be replaced by the legacy 16x16 procedural renderer.
+  if ($cgDirectIds -contains $spec.id) { continue }
   $seed = StableSeed $spec.id
   $palette = @($spec.colors | ForEach-Object { Color $_ })
   $bitmap = [System.Drawing.Bitmap]::new(16, 16, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
@@ -188,9 +214,10 @@ foreach ($spec in $specs) {
     }
     $target = Join-Path $OutputRoot "$($spec.id).png"
     $bitmap.Save($target, [System.Drawing.Imaging.ImageFormat]::Png)
+    $generated++
   } finally {
     $bitmap.Dispose()
   }
 }
 
-Write-Output "Generated $($specs.Count) deterministic 16x16 nation block textures in $OutputRoot"
+Write-Output "Generated $generated deterministic 16x16 non-CG nation block textures in $OutputRoot"

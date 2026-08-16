@@ -85,7 +85,7 @@ public final class NationBiomePresets {
   public final void snowyForest(@NotNull SimpleBiomeBuilder biome) {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
-    BiomeDefaultFeatures.snowySpawns(simpleBiomeBuilder.getSpawns());
+    INSTANCE.peacefulSnowySpawns(simpleBiomeBuilder);
     INSTANCE.generationBase(simpleBiomeBuilder);
     BiomeDefaultFeatures.addSnowyTrees(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addTaigaGrass(simpleBiomeBuilder.getGeneration());
@@ -95,7 +95,7 @@ public final class NationBiomePresets {
   public final void desert(@NotNull SimpleBiomeBuilder biome) {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
-    BiomeDefaultFeatures.desertSpawns(simpleBiomeBuilder.getSpawns());
+    INSTANCE.peacefulDesertSpawns(simpleBiomeBuilder);
     INSTANCE.generationBase(simpleBiomeBuilder, false);
     BiomeDefaultFeatures.addDesertVegetation(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addDesertExtraVegetation(simpleBiomeBuilder.getGeneration());
@@ -106,7 +106,7 @@ public final class NationBiomePresets {
   public final void badlands(@NotNull SimpleBiomeBuilder biome) {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
-    BiomeDefaultFeatures.desertSpawns(simpleBiomeBuilder.getSpawns());
+    INSTANCE.peacefulDesertSpawns(simpleBiomeBuilder);
     INSTANCE.generationBase(simpleBiomeBuilder, false);
     BiomeDefaultFeatures.addBadlandsTrees(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addBadlandGrass(simpleBiomeBuilder.getGeneration());
@@ -117,7 +117,7 @@ public final class NationBiomePresets {
   public final void jungle(@NotNull SimpleBiomeBuilder biome) {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
-    BiomeDefaultFeatures.baseJungleSpawns(simpleBiomeBuilder.getSpawns());
+    INSTANCE.peacefulJungleSpawns(simpleBiomeBuilder);
     INSTANCE.generationBase(simpleBiomeBuilder);
     BiomeDefaultFeatures.addJungleTrees(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addJungleGrass(simpleBiomeBuilder.getGeneration());
@@ -128,7 +128,7 @@ public final class NationBiomePresets {
   public final void wetland(@NotNull SimpleBiomeBuilder biome) {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
-    BiomeDefaultFeatures.commonSpawns(simpleBiomeBuilder.getSpawns());
+    BiomeDefaultFeatures.caveSpawns(simpleBiomeBuilder.getSpawns());
     INSTANCE.generationBase(simpleBiomeBuilder, false);
     BiomeDefaultFeatures.addSwampVegetation(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addSwampExtraVegetation(simpleBiomeBuilder.getGeneration());
@@ -137,7 +137,9 @@ public final class NationBiomePresets {
   public final void ocean(@NotNull SimpleBiomeBuilder biome) {
     SimpleBiomeBuilder simpleBiomeBuilder = biome;
     int i = 0;
-    BiomeDefaultFeatures.oceanSpawns(simpleBiomeBuilder.getSpawns(), 3, 4, 15);
+    featuredSpawn(simpleBiomeBuilder, MobCategory.WATER_CREATURE, EntityType.SQUID, 3, 1, 4);
+    featuredSpawn(simpleBiomeBuilder, MobCategory.WATER_AMBIENT, EntityType.COD, 15, 3, 6);
+    BiomeDefaultFeatures.caveSpawns(simpleBiomeBuilder.getSpawns());
     INSTANCE.generationBase(simpleBiomeBuilder);
     BiomeDefaultFeatures.addDefaultSeagrass(simpleBiomeBuilder.getGeneration());
     BiomeDefaultFeatures.addColdOceanExtraVegetation(simpleBiomeBuilder.getGeneration());
@@ -154,8 +156,38 @@ public final class NationBiomePresets {
   }
 
   private final void commonBase(SimpleBiomeBuilder _this_commonBase) {
-    BiomeDefaultFeatures.plainsSpawns(_this_commonBase.getSpawns());
+    this.peacefulPlainsSpawns(_this_commonBase);
     this.generationBase(_this_commonBase);
+  }
+
+  /**
+   * Terra deliberately keeps the passive portions of the vanilla biome presets without copying
+   * their MONSTER entries. The dimension-level policy is the final safety net; these declarations
+   * also keep generated biome data honest and prevent hostile mobs from entering natural spawn
+   * selection in the first place.
+   */
+  private void peacefulPlainsSpawns(SimpleBiomeBuilder biome) {
+    BiomeDefaultFeatures.farmAnimals(biome.getSpawns());
+    featuredSpawn(biome, MobCategory.CREATURE, EntityType.HORSE, 5, 2, 6);
+    featuredSpawn(biome, MobCategory.CREATURE, EntityType.DONKEY, 1, 1, 3);
+    BiomeDefaultFeatures.caveSpawns(biome.getSpawns());
+  }
+
+  private void peacefulSnowySpawns(SimpleBiomeBuilder biome) {
+    featuredSpawn(biome, MobCategory.CREATURE, EntityType.RABBIT, 10, 2, 3);
+    featuredSpawn(biome, MobCategory.CREATURE, EntityType.POLAR_BEAR, 1, 1, 2);
+    BiomeDefaultFeatures.caveSpawns(biome.getSpawns());
+  }
+
+  private void peacefulDesertSpawns(SimpleBiomeBuilder biome) {
+    featuredSpawn(biome, MobCategory.CREATURE, EntityType.RABBIT, 4, 2, 3);
+    BiomeDefaultFeatures.caveSpawns(biome.getSpawns());
+  }
+
+  private void peacefulJungleSpawns(SimpleBiomeBuilder biome) {
+    BiomeDefaultFeatures.farmAnimals(biome.getSpawns());
+    featuredSpawn(biome, MobCategory.CREATURE, EntityType.CHICKEN, 10, 4, 4);
+    BiomeDefaultFeatures.caveSpawns(biome.getSpawns());
   }
 
   private final void generationBase(SimpleBiomeBuilder _this_generationBase) {

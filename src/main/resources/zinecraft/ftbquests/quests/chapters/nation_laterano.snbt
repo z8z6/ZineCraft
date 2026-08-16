@@ -1,0 +1,41 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "nation_laterano"
+	group: "4E4154494F4E5347"
+	icon: { id: "zinecraft:laterano_alluvial_chalk" }
+	id: "7A00000000000008"
+	order_index: 8
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "7B08000000000001"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C08000000000001", structure: "zinecraft:laterano_monastery_town", type: "structure" }]
+			x: -4.5d
+			y: 0.0d
+		}
+		{
+			id: "7B08000000000002"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C08000000000002", structure: "zinecraft:laterano_revelation_tower", type: "structure" }]
+			x: -1.5d
+			y: 0.0d
+		}
+		{
+			id: "7B08000000000003"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C08000000000003", structure: "zinecraft:laterano_ambrosius_chapel", type: "structure" }]
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			id: "7B08000000000004"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C08000000000004", structure: "zinecraft:laterano_host", type: "structure" }]
+			x: 4.5d
+			y: 0.0d
+		}
+	]
+}

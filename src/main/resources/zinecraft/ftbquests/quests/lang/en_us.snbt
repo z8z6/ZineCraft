@@ -219,4 +219,1324 @@
 	quest.6000000000000005.quest_desc: ["Cloth Config 15.0.140 supplies configuration UI support. Architectury and Common Networking are loaded transitively. The project source and runtime now use Java throughout, without an additional language runtime."]
 	quest.6000000000000006.title: "Development-only Helpers"
 	quest.6000000000000006.quest_desc: ["JEI 19.27.0.340, Just Enough Resources 1.6.0.17, AppleSkin 3.0.9, Jade 15.10.5, Just Enough Characters 4.5.22, JourneyMap 6.0.1, Nature's Compass 3.4.0, and Explorer's Compass 3.4.0. They support item/resource lookup, food information, block inspection, Pinyin search, map-based testing, and biome/structure location."]
+
+	chapter.7A00000000000001.title: "Aegir: Structure Exploration"
+	quest.7B01000000000001.title: "Aegir Subsea Enclave"
+	quest.7B01000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B01000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:aegir_subsea_enclave. FTB Quests checks the visit on the server."]
+	task.7C01000000000001.title: "Visit Aegir Subsea Enclave"
+	quest.7B01000000000002.title: "Aegir Volcanic Beacon"
+	quest.7B01000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B01000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:aegir_volcanic_beacon. FTB Quests checks the visit on the server."]
+	task.7C01000000000002.title: "Visit Aegir Volcanic Beacon"
+	quest.7B01000000000003.title: "Aegir Abyssal Observatory"
+	quest.7B01000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B01000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:aegir_abyssal_observatory. FTB Quests checks the visit on the server."]
+	task.7C01000000000003.title: "Visit Aegir Abyssal Observatory"
+	chapter.7A00000000000002.title: "Bolivar: Structure Exploration"
+	quest.7B02000000000001.title: "Bolivar Dossoles District"
+	quest.7B02000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B02000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:bolivar_dossoles_district. FTB Quests checks the visit on the server."]
+	task.7C02000000000001.title: "Visit Bolivar Dossoles District"
+	quest.7B02000000000002.title: "Bolivar Dossoles Yacht"
+	quest.7B02000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B02000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:bolivar_dossoles_yacht. FTB Quests checks the visit on the server."]
+	task.7C02000000000002.title: "Visit Bolivar Dossoles Yacht"
+	quest.7B02000000000003.title: "Bolivar Race Checkpoint"
+	quest.7B02000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B02000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:bolivar_race_checkpoint. FTB Quests checks the visit on the server."]
+	task.7C02000000000003.title: "Visit Bolivar Race Checkpoint"
+	chapter.7A00000000000003.title: "Higashi: Structure Exploration"
+	quest.7B03000000000001.title: "Higashi Sokogawa Town"
+	quest.7B03000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B03000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:higashi_sokogawa_town. FTB Quests checks the visit on the server."]
+	task.7C03000000000001.title: "Visit Higashi Sokogawa Town"
+	quest.7B03000000000002.title: "Higashi Rift Shrine"
+	quest.7B03000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B03000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:higashi_rift_shrine. FTB Quests checks the visit on the server."]
+	task.7C03000000000002.title: "Visit Higashi Rift Shrine"
+	quest.7B03000000000003.title: "Higashi Sokogawa Watchtower"
+	quest.7B03000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B03000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:higashi_sokogawa_watchtower. FTB Quests checks the visit on the server."]
+	task.7C03000000000003.title: "Visit Higashi Sokogawa Watchtower"
+	chapter.7A00000000000004.title: "Durin: Structure Exploration"
+	quest.7B04000000000001.title: "Durin Ideal City Block"
+	quest.7B04000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B04000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:durin_ideal_city_block. FTB Quests checks the visit on the server."]
+	task.7C04000000000001.title: "Visit Durin Ideal City Block"
+	quest.7B04000000000002.title: "Durin Dome Station"
+	quest.7B04000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B04000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:durin_dome_station. FTB Quests checks the visit on the server."]
+	task.7C04000000000002.title: "Visit Durin Dome Station"
+	quest.7B04000000000003.title: "Durin Water Park"
+	quest.7B04000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B04000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:durin_water_park. FTB Quests checks the visit on the server."]
+	task.7C04000000000003.title: "Visit Durin Water Park"
+	chapter.7A00000000000005.title: "Columbia: Structure Exploration"
+	quest.7B05000000000001.title: "Columbia Frontier Town"
+	quest.7B05000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B05000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:columbia_frontier_town. FTB Quests checks the visit on the server."]
+	task.7C05000000000001.title: "Visit Columbia Frontier Town"
+	quest.7B05000000000002.title: "Columbia Frontier Lab"
+	quest.7B05000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B05000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:columbia_frontier_lab. FTB Quests checks the visit on the server."]
+	task.7C05000000000002.title: "Visit Columbia Frontier Lab"
+	quest.7B05000000000003.title: "Columbia Prison Outpost"
+	quest.7B05000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B05000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:columbia_prison_outpost. FTB Quests checks the visit on the server."]
+	task.7C05000000000003.title: "Visit Columbia Prison Outpost"
+	chapter.7A00000000000006.title: "Kazimierz: Structure Exploration"
+	quest.7B06000000000001.title: "Kazimierz Knight Borough"
+	quest.7B06000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B06000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kazimierz_knight_borough. FTB Quests checks the visit on the server."]
+	task.7C06000000000001.title: "Visit Kazimierz Knight Borough"
+	quest.7B06000000000002.title: "Kazimierz Arena Gate"
+	quest.7B06000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B06000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kazimierz_arena_gate. FTB Quests checks the visit on the server."]
+	task.7C06000000000002.title: "Visit Kazimierz Arena Gate"
+	quest.7B06000000000003.title: "Kazimierz Knight Monument"
+	quest.7B06000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B06000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kazimierz_knight_monument. FTB Quests checks the visit on the server."]
+	task.7C06000000000003.title: "Visit Kazimierz Knight Monument"
+	chapter.7A00000000000007.title: "Kazdel: Structure Exploration"
+	quest.7B07000000000001.title: "Kazdel Sarkaz Settlement"
+	quest.7B07000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B07000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kazdel_sarkaz_settlement. FTB Quests checks the visit on the server."]
+	task.7C07000000000001.title: "Visit Kazdel Sarkaz Settlement"
+	quest.7B07000000000002.title: "Kazdel Babel Ruins"
+	quest.7B07000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B07000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kazdel_babel_ruins. FTB Quests checks the visit on the server."]
+	task.7C07000000000002.title: "Visit Kazdel Babel Ruins"
+	quest.7B07000000000003.title: "Kazdel Sarkaz Camp"
+	quest.7B07000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B07000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kazdel_sarkaz_camp. FTB Quests checks the visit on the server."]
+	task.7C07000000000003.title: "Visit Kazdel Sarkaz Camp"
+	chapter.7A00000000000008.title: "Laterano: Structure Exploration"
+	quest.7B08000000000001.title: "Laterano Monastery Town"
+	quest.7B08000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B08000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:laterano_monastery_town. FTB Quests checks the visit on the server."]
+	task.7C08000000000001.title: "Visit Laterano Monastery Town"
+	quest.7B08000000000002.title: "Laterano Revelation Tower"
+	quest.7B08000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B08000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:laterano_revelation_tower. FTB Quests checks the visit on the server."]
+	task.7C08000000000002.title: "Visit Laterano Revelation Tower"
+	quest.7B08000000000003.title: "Laterano Ambrosius Chapel"
+	quest.7B08000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B08000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:laterano_ambrosius_chapel. FTB Quests checks the visit on the server."]
+	task.7C08000000000003.title: "Visit Laterano Ambrosius Chapel"
+	quest.7B08000000000004.title: "Laterano Host"
+	quest.7B08000000000004.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B08000000000004.quest_desc: ["Travel to and enter the valid bounds of zinecraft:laterano_host. FTB Quests checks the visit on the server."]
+	task.7C08000000000004.title: "Visit Laterano Host"
+	chapter.7A00000000000009.title: "Leithanien: Structure Exploration"
+	quest.7B09000000000001.title: "Leithanien Music Town"
+	quest.7B09000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B09000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:leithanien_music_town. FTB Quests checks the visit on the server."]
+	task.7C09000000000001.title: "Visit Leithanien Music Town"
+	quest.7B09000000000002.title: "Leithanien Twin Spires"
+	quest.7B09000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B09000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:leithanien_twin_spires. FTB Quests checks the visit on the server."]
+	task.7C09000000000002.title: "Visit Leithanien Twin Spires"
+	quest.7B09000000000003.title: "Leithanien Concert Hall"
+	quest.7B09000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B09000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:leithanien_concert_hall. FTB Quests checks the visit on the server."]
+	task.7C09000000000003.title: "Visit Leithanien Concert Hall"
+	chapter.7A0000000000000A.title: "Rim Billiton: Structure Exploration"
+	quest.7B0A000000000001.title: "Rim Billiton Mining Camp"
+	quest.7B0A000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0A000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:rim_billiton_mining_camp. FTB Quests checks the visit on the server."]
+	task.7C0A000000000001.title: "Visit Rim Billiton Mining Camp"
+	quest.7B0A000000000002.title: "Rim Billiton Mining Derrick"
+	quest.7B0A000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0A000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:rim_billiton_mining_derrick. FTB Quests checks the visit on the server."]
+	task.7C0A000000000002.title: "Visit Rim Billiton Mining Derrick"
+	quest.7B0A000000000003.title: "Rim Billiton Rail Depot"
+	quest.7B0A000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0A000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:rim_billiton_rail_depot. FTB Quests checks the visit on the server."]
+	task.7C0A000000000003.title: "Visit Rim Billiton Rail Depot"
+	chapter.7A0000000000000B.title: "Minos: Structure Exploration"
+	quest.7B0B000000000001.title: "Minos Heroic Polis"
+	quest.7B0B000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0B000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:minos_heroic_polis. FTB Quests checks the visit on the server."]
+	task.7C0B000000000001.title: "Visit Minos Heroic Polis"
+	quest.7B0B000000000002.title: "Minos Heroes Temple"
+	quest.7B0B000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0B000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:minos_heroes_temple. FTB Quests checks the visit on the server."]
+	task.7C0B000000000002.title: "Visit Minos Heroes Temple"
+	quest.7B0B000000000003.title: "Minos Heroes Plaza"
+	quest.7B0B000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0B000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:minos_heroes_plaza. FTB Quests checks the visit on the server."]
+	task.7C0B000000000003.title: "Visit Minos Heroes Plaza"
+	chapter.7A0000000000000C.title: "Sargon: Structure Exploration"
+	quest.7B0C000000000001.title: "Sargon Oasis Town"
+	quest.7B0C000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0C000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:sargon_oasis_town. FTB Quests checks the visit on the server."]
+	task.7C0C000000000001.title: "Visit Sargon Oasis Town"
+	quest.7B0C000000000002.title: "Sargon Golden Bazaar"
+	quest.7B0C000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0C000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:sargon_golden_bazaar. FTB Quests checks the visit on the server."]
+	task.7C0C000000000002.title: "Visit Sargon Golden Bazaar"
+	quest.7B0C000000000003.title: "Sargon Long Spring Well"
+	quest.7B0C000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0C000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:sargon_long_spring_well. FTB Quests checks the visit on the server."]
+	task.7C0C000000000003.title: "Visit Sargon Long Spring Well"
+	chapter.7A0000000000000D.title: "Sami: Structure Exploration"
+	quest.7B0D000000000001.title: "Sami Snowpriest Village"
+	quest.7B0D000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0D000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:sami_snowpriest_village. FTB Quests checks the visit on the server."]
+	task.7C0D000000000001.title: "Visit Sami Snowpriest Village"
+	quest.7B0D000000000002.title: "Sami Cyclops Altar"
+	quest.7B0D000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0D000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:sami_cyclops_altar. FTB Quests checks the visit on the server."]
+	task.7C0D000000000002.title: "Visit Sami Cyclops Altar"
+	quest.7B0D000000000003.title: "Sami Snowpriest Lodge"
+	quest.7B0D000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0D000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:sami_snowpriest_lodge. FTB Quests checks the visit on the server."]
+	task.7C0D000000000003.title: "Visit Sami Snowpriest Lodge"
+	chapter.7A0000000000000E.title: "Victoria: Structure Exploration"
+	quest.7B0E000000000001.title: "Victoria Industrial Borough"
+	quest.7B0E000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0E000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:victoria_industrial_borough. FTB Quests checks the visit on the server."]
+	task.7C0E000000000001.title: "Visit Victoria Industrial Borough"
+	quest.7B0E000000000002.title: "Victoria Defence Cannon"
+	quest.7B0E000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0E000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:victoria_defence_cannon. FTB Quests checks the visit on the server."]
+	task.7C0E000000000002.title: "Visit Victoria Defence Cannon"
+	quest.7B0E000000000003.title: "Victoria Steam Station"
+	quest.7B0E000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0E000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:victoria_steam_station. FTB Quests checks the visit on the server."]
+	task.7C0E000000000003.title: "Visit Victoria Steam Station"
+	chapter.7A0000000000000F.title: "Ursus: Structure Exploration"
+	quest.7B0F000000000001.title: "Ursus Northern Town"
+	quest.7B0F000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0F000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:ursus_northern_town. FTB Quests checks the visit on the server."]
+	task.7C0F000000000001.title: "Visit Ursus Northern Town"
+	quest.7B0F000000000002.title: "Ursus Sarcophagus Station"
+	quest.7B0F000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0F000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:ursus_sarcophagus_station. FTB Quests checks the visit on the server."]
+	task.7C0F000000000002.title: "Visit Ursus Sarcophagus Station"
+	quest.7B0F000000000003.title: "Ursus Northern Mine Tower"
+	quest.7B0F000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B0F000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:ursus_northern_mine_tower. FTB Quests checks the visit on the server."]
+	task.7C0F000000000003.title: "Visit Ursus Northern Mine Tower"
+	chapter.7A00000000000010.title: "Kjerag: Structure Exploration"
+	quest.7B10000000000001.title: "Kjerag Mountain Village"
+	quest.7B10000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B10000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kjerag_mountain_village. FTB Quests checks the visit on the server."]
+	task.7C10000000000001.title: "Visit Kjerag Mountain Village"
+	quest.7B10000000000002.title: "Kjerag Karlan Monastery"
+	quest.7B10000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B10000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kjerag_karlan_monastery. FTB Quests checks the visit on the server."]
+	task.7C10000000000002.title: "Visit Kjerag Karlan Monastery"
+	quest.7B10000000000003.title: "Kjerag Sacred Plaza"
+	quest.7B10000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B10000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:kjerag_sacred_plaza. FTB Quests checks the visit on the server."]
+	task.7C10000000000003.title: "Visit Kjerag Sacred Plaza"
+	chapter.7A00000000000011.title: "Siracusa: Structure Exploration"
+	quest.7B11000000000001.title: "Siracusa Family Town"
+	quest.7B11000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B11000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:siracusa_family_town. FTB Quests checks the visit on the server."]
+	task.7C11000000000001.title: "Visit Siracusa Family Town"
+	quest.7B11000000000002.title: "Siracusa Family Court"
+	quest.7B11000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B11000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:siracusa_family_court. FTB Quests checks the visit on the server."]
+	task.7C11000000000002.title: "Visit Siracusa Family Court"
+	quest.7B11000000000003.title: "Siracusa Family Theatre"
+	quest.7B11000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B11000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:siracusa_family_theatre. FTB Quests checks the visit on the server."]
+	task.7C11000000000003.title: "Visit Siracusa Family Theatre"
+	chapter.7A00000000000012.title: "Yan: Structure Exploration"
+	quest.7B12000000000001.title: "Yan Shangshu Town"
+	quest.7B12000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B12000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:yan_shangshu_town. FTB Quests checks the visit on the server."]
+	task.7C12000000000001.title: "Visit Yan Shangshu Town"
+	quest.7B12000000000002.title: "Yan Yumen Beacon"
+	quest.7B12000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B12000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:yan_yumen_beacon. FTB Quests checks the visit on the server."]
+	task.7C12000000000002.title: "Visit Yan Yumen Beacon"
+	quest.7B12000000000003.title: "Yan Shangshu Pavilion"
+	quest.7B12000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B12000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:yan_shangshu_pavilion. FTB Quests checks the visit on the server."]
+	task.7C12000000000003.title: "Visit Yan Shangshu Pavilion"
+	chapter.7A00000000000013.title: "Iberia: Structure Exploration"
+	quest.7B13000000000001.title: "Iberia Coastal Town"
+	quest.7B13000000000001.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B13000000000001.quest_desc: ["Travel to and enter the valid bounds of zinecraft:iberia_coastal_town. FTB Quests checks the visit on the server."]
+	task.7C13000000000001.title: "Visit Iberia Coastal Town"
+	quest.7B13000000000002.title: "Iberia Eye Lighthouse"
+	quest.7B13000000000002.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B13000000000002.quest_desc: ["Travel to and enter the valid bounds of zinecraft:iberia_eye_lighthouse. FTB Quests checks the visit on the server."]
+	task.7C13000000000002.title: "Visit Iberia Eye Lighthouse"
+	quest.7B13000000000003.title: "Iberia Saltwind Chapel"
+	quest.7B13000000000003.quest_subtitle: "Completes automatically inside the structure"
+	quest.7B13000000000003.quest_desc: ["Travel to and enter the valid bounds of zinecraft:iberia_saltwind_chapel. FTB Quests checks the visit on the server."]
+	task.7C13000000000003.title: "Visit Iberia Saltwind Chapel"
+
+	chapter.434F4C4C45435449.title: "Collectible Encyclopedia"
+	quest.C100000000000001.title: "Offense"
+	quest.C100000000000001.quest_subtitle: "Contains 67 collectibles."
+	quest.C100000000000001.quest_desc: ["Primarily improves damage or attack speed, or reduces enemy defenses.", "Contains 67 collectibles."]
+	task.C200000000000001.title: "Read category guide"
+	quest.C300000000000031.title: "Worn-out Group Photo"
+	quest.C300000000000031.quest_subtitle: "No.049 · Offense"
+	quest.C300000000000031.quest_desc: ["Original effect: All enemy units have -12% DEF.", "Description: Do you know someone in the photo?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000031.title: "Obtain Worn-out Group Photo"
+	quest.C300000000000032.title: "Writer's Tongue"
+	quest.C300000000000032.quest_subtitle: "No.050 · Offense"
+	quest.C300000000000032.quest_desc: ["Original effect: All enemy units have -21% DEF.", "Description: The playwright penned his creations with a quill and his own blood, and for himself he devised an ending in which he perishes in a sea of flames.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000032.title: "Obtain Writer's Tongue"
+	quest.C300000000000033.title: "Rosmontis's Embrace"
+	quest.C300000000000033.quest_subtitle: "No.051 · Offense"
+	quest.C300000000000033.quest_desc: ["Original effect: All enemy units have -30% DEF.", "Description: 'Who will be the judge?'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000033.title: "Obtain Rosmontis's Embrace"
+	quest.C30000000000003A.title: "Emperor's Favor"
+	quest.C30000000000003A.quest_subtitle: "No.058 · Offense"
+	quest.C30000000000003A.quest_desc: ["Original effect: All friendly melee units have +15% ATK.", "Description: A very sharp letter opener. It was one of the favorite possessions of the last Ursus emperor, and as such it was very rarely used to actually open letters.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000003A.title: "Obtain Emperor's Favor"
+	quest.C30000000000003B.title: "Royal Rapier"
+	quest.C30000000000003B.quest_subtitle: "No.059 · Offense"
+	quest.C30000000000003B.quest_desc: ["Original effect: All friendly melee units have +25% ATK.", "Description: A highly decorative rapier for nobles. Used by Gaulish nobles first and foremost, though perhaps a little fragile for a military weapon.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000003B.title: "Obtain Royal Rapier"
+	quest.C30000000000003C.title: "Vieux Vanguard's Blade"
+	quest.C30000000000003C.quest_subtitle: "No.060 · Offense"
+	quest.C30000000000003C.quest_desc: ["Original effect: All friendly melee units have +35% ATK.", "Description: Prior to its downfall, Gaul first witnessed the sacrifices of its Vieux Vanguards.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000003C.title: "Obtain Vieux Vanguard's Blade"
+	quest.C30000000000003D.title: "Necklace of the Presence"
+	quest.C30000000000003D.quest_subtitle: "No.061 · Offense"
+	quest.C30000000000003D.quest_desc: ["Original effect: All friendly ranged units have +15% ATK.", "Description: Faith hangs ten centimeters above your heart, spoken words flow into your blood, and bullets slide into your magazine.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000003D.title: "Obtain Necklace of the Presence"
+	quest.C30000000000003E.title: "Silver Forks"
+	quest.C30000000000003E.quest_subtitle: "No.062 · Offense"
+	quest.C30000000000003E.quest_desc: ["Original effect: All friendly ranged units have +25% ATK.", "Description: One for dealing with actors who botch their performances, one for dealing with incompetent playwrights, and one for anyone who needs it. The Chief will not tolerate any mistakes on the table.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000003E.title: "Obtain Silver Forks"
+	quest.C30000000000003F.title: "Damaged Revolver Cylinder"
+	quest.C30000000000003F.quest_subtitle: "No.063 · Offense"
+	quest.C30000000000003F.quest_desc: ["Original effect: All friendly ranged units have +35% ATK.", "Description: She never capitulated, even after enduring countless trials and tribulations. Her muzzle belched tongues of flame that burned like an angry sun, and the glow above her head was brighter than the daylight itself. Buried here is Outcast, our friend.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000003F.title: "Obtain Damaged Revolver Cylinder"
+	quest.C30000000000005E.title: "Blunt Claws - Burst"
+	quest.C30000000000005E.quest_subtitle: "No.094 · Offense"
+	quest.C30000000000005E.quest_desc: ["Original effect: Vanguard Operators start with +15 SP.", "Description: He's already done all the reserve squad's work for them. What else do you expect?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000005E.title: "Obtain Blunt Claws - Burst"
+	quest.C30000000000005F.title: "Blunt Claws - Proficiency"
+	quest.C30000000000005F.quest_subtitle: "No.095 · Offense"
+	quest.C30000000000005F.quest_desc: ["Original effect: The SP Cost of Vanguard Operators' skills is decreased by -35%.", "Description: As an operator who often enters the battlefield before anyone else, you cannot fathom what they have been through.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000005F.title: "Obtain Blunt Claws - Proficiency"
+	quest.C300000000000063.title: "Bend Spears - Acuity"
+	quest.C300000000000063.quest_subtitle: "No.099 · Offense"
+	quest.C300000000000063.quest_desc: ["Original effect: Guard Operators have +25% ATK.", "Description: 'This is the 7th blade you've broken this month.' 'But I cut down eight enemies this month.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000063.title: "Obtain Bend Spears - Acuity"
+	quest.C300000000000064.title: "Bend Spears - Bloodbath"
+	quest.C300000000000064.quest_subtitle: "No.100 · Offense"
+	quest.C300000000000064.quest_desc: ["Original effect: Guard Operators restore 2 SP after each attack.", "Description: Soldiers who get bolder as time passes are rare. Most need some form of psychological counseling to alleviate the trauma of war.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000064.title: "Obtain Bend Spears - Bloodbath"
+	quest.C300000000000066.title: "Bend Spears - Deathmatch"
+	quest.C300000000000066.quest_subtitle: "No.102 · Offense"
+	quest.C300000000000066.quest_desc: ["Original effect: Guard Operators have -40% DEF, but gain +40% ATK and +30 ASPD.", "Description: I wouldn't really recommend learning those skills from Blaze.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000066.title: "Obtain Bend Spears - Deathmatch"
+	quest.C300000000000068.title: "Iron Guard - Invasion"
+	quest.C300000000000068.quest_subtitle: "No.104 · Offense"
+	quest.C300000000000068.quest_desc: ["Original effect: Defender Operators have +60% ATK.", "Description: Defensive actions for the sake of teammates or strategic purposes often make people forget about their original aggressiveness.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000068.title: "Obtain Iron Guard - Invasion"
+	quest.C30000000000006A.title: "Iron Guard - Advance"
+	quest.C30000000000006A.quest_subtitle: "No.106 · Offense"
+	quest.C30000000000006A.quest_desc: ["Original effect: Defender Operators have -1 Block (will not be reduced below 1), but gain +40% ATK and +40 ASPD.", "Description: In exchange for an opportunity to attack, the shattered ranks made one more advance.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000006A.title: "Obtain Iron Guard - Advance"
+	quest.C30000000000006B.title: "Iron Guard - Impenetrable"
+	quest.C30000000000006B.quest_subtitle: "No.107 · Offense"
+	quest.C30000000000006B.quest_desc: ["Original effect: Defender Operators restore 2 SP after being attacked.", "Description: Every blow they endure will turn into anger and be returned severalfold.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000006B.title: "Obtain Iron Guard - Impenetrable"
+	quest.C30000000000006D.title: "Fatal Bolts - Precision"
+	quest.C30000000000006D.quest_subtitle: "No.109 · Offense"
+	quest.C30000000000006D.quest_desc: ["Original effect: Sniper Operators have +20% ATK.", "Description: In an era when Originium Arts were not as robust as they are now, Yan had a saying, 'a pierced willow leaf from a hundred paces,' to praise others for their mastery of archery.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000006D.title: "Obtain Fatal Bolts - Precision"
+	quest.C30000000000006E.title: "Fatal Bolts - Synergy"
+	quest.C30000000000006E.quest_subtitle: "No.110 · Offense"
+	quest.C30000000000006E.quest_desc: ["Original effect: Increases the SP regen rate of Sniper Operators by +0.5/s", "Description: The more intimate a sniper is with her weapon, the less likely she is to be betrayed by it.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000006E.title: "Obtain Fatal Bolts - Synergy"
+	quest.C30000000000006F.title: "Fatal Bolts - Crossfire"
+	quest.C30000000000006F.quest_subtitle: "No.111 · Offense"
+	quest.C30000000000006F.quest_desc: ["Original effect: Sniper Operators have -40% HP, but gain +40% ATK.", "Description: The dense crossfire also exposes snipers to great danger. The next battle boils down to a game of vision.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000006F.title: "Obtain Fatal Bolts - Crossfire"
+	quest.C300000000000070.title: "Fatal Bolts - Divine Speed"
+	quest.C300000000000070.quest_subtitle: "No.112 · Offense"
+	quest.C300000000000070.quest_desc: ["Original effect: Sniper Operators have +70 ASPD.", "Description: It is said that the legendary archer of ancient Victoria can almost shoot a continuous stream of arrows.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000070.title: "Obtain Fatal Bolts - Divine Speed"
+	quest.C300000000000072.title: "Broken Wand - Arts Weaving"
+	quest.C300000000000072.quest_subtitle: "No.114 · Offense"
+	quest.C300000000000072.quest_desc: ["Original effect: Caster Operators have +25% ATK.", "Description: Those who gaze up at the great spires in Leithanien often see some strange or even celestial phenomena.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000072.title: "Obtain Broken Wand - Arts Weaving"
+	quest.C300000000000073.title: "Broken Wand - Chanting"
+	quest.C300000000000073.quest_subtitle: "No.115 · Offense"
+	quest.C300000000000073.quest_desc: ["Original effect: Caster Operators have +40 ASPD.", "Description: Though the relationship between music and Arts is marvelous indeed, umm, this is not an excuse for some peoples' tone-deafness.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000073.title: "Obtain Broken Wand - Chanting"
+	quest.C300000000000074.title: "Broken Wand - Concentration"
+	quest.C300000000000074.quest_subtitle: "No.116 · Offense"
+	quest.C300000000000074.quest_desc: ["Original effect: Increases the SP regen rate of Caster Operators by +0.4/s", "Description: 'When a caster intends to go all out, they will display a completely different temperament — even if we're talking about something like Miss Skyfire's grumpiness.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000074.title: "Obtain Broken Wand - Concentration"
+	quest.C300000000000075.title: "Broken Wand - Malediction"
+	quest.C300000000000075.quest_subtitle: "No.117 · Offense"
+	quest.C300000000000075.quest_desc: ["Original effect: Caster Operators have -40% HP, but deal +70% Arts damage", "Description: It is virtually impossible to identify when the Sarkaz first encountered Originium, and the origins of these ancient Arts have long been separated from actual reality and common sense.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000075.title: "Obtain Broken Wand - Malediction"
+	quest.C300000000000077.title: "Stalwart Aid - Secondary Front"
+	quest.C300000000000077.quest_subtitle: "No.119 · Offense"
+	quest.C300000000000077.quest_desc: ["Original effect: Units summoned by Supporter Operators have +50% ATK.", "Description: 'Um, I can understand the derivatives of combining mechanics with Originium Arts, but there might be something else...'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000077.title: "Obtain Stalwart Aid - Secondary Front"
+	quest.C300000000000078.title: "Stalwart Aid - Diligence"
+	quest.C300000000000078.quest_subtitle: "No.120 · Offense"
+	quest.C300000000000078.quest_desc: ["Original effect: The SP Cost of Supporter Operators' skills is decreased by -40%.", "Description: Operators tend to give it their all, even to tasks that might seem trivial. The reality is, those tasks are not trivial at all.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000078.title: "Obtain Stalwart Aid - Diligence"
+	quest.C30000000000007C.title: "Healer's Path - Self-Treating"
+	quest.C30000000000007C.quest_subtitle: "No.124 · Offense"
+	quest.C30000000000007C.quest_desc: ["Original effect: Increases the SP regen rate of Medic Operators by +0.3/s", "Description: Who says healers can't heal themselves? They simply pop some pills before continuing to help others.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000007C.title: "Obtain Healer's Path - Self-Treating"
+	quest.C30000000000007D.title: "Healer's Path - Potency"
+	quest.C30000000000007D.quest_subtitle: "No.125 · Offense"
+	quest.C30000000000007D.quest_desc: ["Original effect: Medic Operators have +40% ATK.", "Description: Nobody else dared to attempt such a radical treatment — except Warfarin. She never made a single mistake.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000007D.title: "Obtain Healer's Path - Potency"
+	quest.C30000000000007E.title: "Healer's Path - Keen Hands"
+	quest.C30000000000007E.quest_subtitle: "No.126 · Offense"
+	quest.C30000000000007E.quest_desc: ["Original effect: Medic Operators have +50 ASPD.", "Description: Compared to the feat of snatching a life from the grip of death, what is three days of coma afterwards?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000007E.title: "Obtain Healer's Path - Keen Hands"
+	quest.C300000000000081.title: "Rusted Blade - Execution"
+	quest.C300000000000081.quest_subtitle: "No.129 · Offense"
+	quest.C300000000000081.quest_desc: ["Original effect: Specialist Operators have +30 ASPD.", "Description: Projekt Red has a knife. She has a knife.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000081.title: "Obtain Rusted Blade - Execution"
+	quest.C300000000000085.title: "Hand of Spikes"
+	quest.C300000000000085.quest_subtitle: "No.133 · Offense"
+	quest.C300000000000085.quest_desc: ["Original effect: Protector, Arts Protector, and Duelist Operators deal Arts damage equal to 100% of their own DEF on enemy units they block", "Description: Let the enemy make his move. He will be his own downfall.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000085.title: "Obtain Hand of Spikes"
+	quest.C300000000000087.title: "Hand of Buckler"
+	quest.C300000000000087.quest_subtitle: "No.135 · Offense"
+	quest.C300000000000087.quest_desc: ["Original effect: Decel Binder, Hexer, and Abjurer Operators' attacks deal extra Arts damage equal to 3% of the target's HP", "Description: Drop by drop, bit by bit. It is unstoppable.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000087.title: "Obtain Hand of Buckler"
+	quest.C300000000000088.title: "Hand of Diffusion"
+	quest.C300000000000088.quest_subtitle: "No.136 · Offense"
+	quest.C300000000000088.quest_desc: ["Original effect: Splash Caster, Chain Caster, and Blast Caster Operators recover 2 SP every time they attack an enemy unit", "Description: The more enemies you strike, the more power you take hold of.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000088.title: "Obtain Hand of Diffusion"
+	quest.C30000000000008A.title: "Hand of Superspeed"
+	quest.C30000000000008A.quest_subtitle: "No.138 · Offense"
+	quest.C30000000000008A.quest_desc: ["Original effect: Executor, Ambusher, and Dollkeeper Operators gain +100 ASPD when there are no friendly units in the eight adjacent tiles", "Description: You swing your hand, leaving not even an afterimage.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000008A.title: "Obtain Hand of Superspeed"
+	quest.C300000000000095.title: "Ancient Gaulish Silver Coin"
+	quest.C300000000000095.quest_subtitle: "No.149 · Offense"
+	quest.C300000000000095.quest_desc: ["Original effect: All Operators start with +6 SP.", "Description: A coin once circulated in the now fallen nation 'Gaul.' It is in very good shape, making it highly valuable as a collector's item.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000095.title: "Obtain Ancient Gaulish Silver Coin"
+	quest.C300000000000096.title: "Élysée Purse"
+	quest.C300000000000096.quest_subtitle: "No.150 · Offense"
+	quest.C300000000000096.quest_desc: ["Original effect: All Operators start with +8 SP.", "Description: A purse used by high-class ladies who shop on the Élysée. Mousse has a purse like this.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000096.title: "Obtain Élysée Purse"
+	quest.C300000000000097.title: "Bank of Gaul Check"
+	quest.C300000000000097.quest_subtitle: "No.151 · Offense"
+	quest.C300000000000097.quest_desc: ["Original effect: All Operators start with +12 SP.", "Description: An extravagant checkbook plated in gold and silver. Can no longer be cashed.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000097.title: "Obtain Bank of Gaul Check"
+	quest.C300000000000098.title: "'Second Economic Reform Act'"
+	quest.C300000000000098.quest_subtitle: "No.152 · Offense"
+	quest.C300000000000098.quest_desc: ["Original effect: All Operators start with +18 SP.", "Description: With this bill as the starting point, Gaul formally began its path to become a hegemonic empire.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000098.title: "Obtain 'Second Economic Reform Act'"
+	quest.C300000000000099.title: "Vanilla Soda"
+	quest.C300000000000099.quest_subtitle: "No.153 · Offense"
+	quest.C300000000000099.quest_desc: ["Original effect: Increases the SP regen rate of Auto Recovery skills by +0.2/s", "Description: Bolívar's cheap specialty drink dates back hundreds of years. It is mixed with a variety of spices, and is known for not being very good.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000099.title: "Obtain Vanilla Soda"
+	quest.C30000000000009A.title: "Ball Juice"
+	quest.C30000000000009A.quest_subtitle: "No.154 · Offense"
+	quest.C30000000000009A.quest_desc: ["Original effect: Increases the SP regen rate of Auto Recovery skills by +0.25/s", "Description: They call it fruit juice, but it's actually alcohol. The bottle itself states that minors are forbidden from drinking it. Its Victorian place of origin once fell within Gaul's territory.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000009A.title: "Obtain Ball Juice"
+	quest.C30000000000009B.title: "Fowlbeast Liver Pate"
+	quest.C30000000000009B.quest_subtitle: "No.155 · Offense"
+	quest.C30000000000009B.quest_desc: ["Original effect: Increases the SP regen rate of Auto Recovery skills by +0.35/s", "Description: A small jar of fowlbeast liver pâté. Bright and vividly colorful, it is eaten only by nobles.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000009B.title: "Obtain Fowlbeast Liver Pate"
+	quest.C30000000000009C.title: "Dreaming Essence"
+	quest.C30000000000009C.quest_subtitle: "No.156 · Offense"
+	quest.C30000000000009C.quest_desc: ["Original effect: Increases the SP regen rate of Auto Recovery skills by +0.5/s", "Description: Supposedly the Banshees make their aromatics only for their beloved. A single drop is enough to enchant just about anyone, bringing out any artist's inspiration and creativity.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000009C.title: "Obtain Dreaming Essence"
+	quest.C30000000000009D.title: "Barrens Tequila"
+	quest.C30000000000009D.quest_subtitle: "No.157 · Offense"
+	quest.C30000000000009D.quest_desc: ["Original effect: Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 3.5s.", "Description: A cheap distilled spirit originally produced in Bolívar. It has a strong taste and is widely praised by Columbia's explorers.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000009D.title: "Obtain Barrens Tequila"
+	quest.C30000000000009E.title: "Captain Morgan's Wine"
+	quest.C30000000000009E.quest_subtitle: "No.158 · Offense"
+	quest.C30000000000009E.quest_desc: ["Original effect: Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 3s.", "Description: A wine produced in the Iberian region. Despite having gained popularity in the heart of Victoria's bustling cities, it is now discontinued.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000009E.title: "Obtain Captain Morgan's Wine"
+	quest.C30000000000009F.title: "Water of Life"
+	quest.C30000000000009F.quest_subtitle: "No.159 · Offense"
+	quest.C30000000000009F.quest_desc: ["Original effect: Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 2.5s.", "Description: The strongest Ursine liquors go straight to one's head, but it's said that the healthy Ursine adult can down several bottles.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000009F.title: "Obtain Water of Life"
+	quest.C3000000000000A0.title: "Royal Liqueur"
+	quest.C3000000000000A0.quest_subtitle: "No.160 · Offense"
+	quest.C3000000000000A0.quest_desc: ["Original effect: Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 1.5s.", "Description: The fine wines of the extinct country, Gaul, have now become expensive, prime treasures for collectors. The place of production is now a part of Leithanien, but the technique has been lost.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A0.title: "Obtain Royal Liqueur"
+	quest.C3000000000000A5.title: "Coin-Operated Toy"
+	quest.C3000000000000A5.quest_subtitle: "No.165 · Offense"
+	quest.C3000000000000A5.quest_desc: ["Original effect: For each 5 Originium Ingots in possession, all friendly units have +3 ASPD", "Description: No idea why anyone would like a design like this, but its overall concept is indeed praiseworthy—Just insert a coin, and even a statue will start moving. There is nothing truer in this world.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A5.title: "Obtain Coin-Operated Toy"
+	quest.C3000000000000A6.title: "Chivalric Commandments - New Edition"
+	quest.C3000000000000A6.quest_subtitle: "No.166 · Offense"
+	quest.C3000000000000A6.quest_desc: ["Original effect: For each 5 Originium Ingots in possession, all friendly units have +5 ASPD", "Description: Taking solemn vows is a thing of the past. The spirit of modern knighthood requires more flexible displays. Go ahead and input your number in the communications device, and you too will be an honorary knight.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A6.title: "Obtain Chivalric Commandments - New Edition"
+	quest.C3000000000000A7.title: "Golden Chalice"
+	quest.C3000000000000A7.quest_subtitle: "No.167 · Offense"
+	quest.C3000000000000A7.quest_desc: ["Original effect: For each 5 Originium Ingots in possession, all friendly units have +7 ASPD", "Description: Saints, knights, and pietists. All of them are madmen. Dear God, even the chalice itself is made of pure gold!", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A7.title: "Obtain Golden Chalice"
+	quest.C3000000000000A8.title: "Spinach Pack"
+	quest.C3000000000000A8.quest_subtitle: "No.168 · Offense"
+	quest.C3000000000000A8.quest_desc: ["Original effect: All friendly units have +60% ATK for one second after their skill becomes active", "Description: Many Cautus out there believe that popping the contents of this can into their mouths will grant them immense strength. The marketing's effectiveness is a classic success story in the industry.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A8.title: "Obtain Spinach Pack"
+	quest.C3000000000000A9.title: "No. 073 Safety Reagent"
+	quest.C3000000000000A9.quest_subtitle: "No.169 · Offense"
+	quest.C3000000000000A9.quest_desc: ["Original effect: All friendly units have +65% ATK for one second after their skill becomes active", "Description: A perfectly safe product of a cautiously controlled experiment. Perfectly safe, definitely will not explode, and keeps your mind at ease.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A9.title: "Obtain No. 073 Safety Reagent"
+	quest.C3000000000000AA.title: "Wrath of Siracusans"
+	quest.C3000000000000AA.quest_subtitle: "No.170 · Offense"
+	quest.C3000000000000AA.quest_desc: ["Original effect: All friendly units have +100% ATK for one second after their skill becomes active", "Description: The signature pasta dish of an 'authentic Siracusan restaurant' that once operated in the capital of Gaul. The dish's unique taste, and particularly its sauce, a blend of thick chocolate sauce and Originium Slug liver, earned the praise of many Gaulish nobles. Supposedly, though, this dish nearly caused a diplomatic crisis between Siracusa and Gaul.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000AA.title: "Obtain Wrath of Siracusans"
+	quest.C3000000000000AC.title: "Ribbon of Honor"
+	quest.C3000000000000AC.quest_subtitle: "No.172 · Offense"
+	quest.C3000000000000AC.quest_desc: ["Original effect: All friendly units have +100% ATK when blocking only one enemy", "Description: Numerous actors have played this character, yet none of them were able to save the character's dearest friend.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000AC.title: "Obtain Ribbon of Honor"
+	quest.C3000000000000C1.title: "'Right Eye of the Natator'"
+	quest.C3000000000000C1.quest_subtitle: "No.193 · Offense"
+	quest.C3000000000000C1.quest_desc: ["Original effect: Guard and Sniper Operators have +15% ATK, but Supporter and Caster Operators have -5% ATK", "Description: One half of the Gaulish empress's crown is now housed in the Royal Museum of Londinium. When she learned of the death of the emperor, the empress consort was determined to fight her enemies to the end—for her country, and for her departed beloved.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C1.title: "Obtain 'Right Eye of the Natator'"
+	quest.C3000000000000C2.title: "'Left Eye of the Natator'"
+	quest.C3000000000000C2.quest_subtitle: "No.194 · Offense"
+	quest.C3000000000000C2.quest_desc: ["Original effect: Supporter and Caster Operators have +15% ATK, but Guard and Sniper Operators have -5% ATK", "Description: One half of the Gaulish empress's crown is now stored housed in the Leithanian Queen Library. The empress dismissed all her attendants, granted clemency to all criminals, and sat solemnly alone on the throne that was once her husband's, awaiting the invaders—She was determined to die not by at hands of her enemies, but under the effects of Originium crystals.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C2.title: "Obtain 'Left Eye of the Natator'"
+	quest.C3000000000000C6.title: "Familiar Sculpture"
+	quest.C3000000000000C6.quest_subtitle: "No.198 · Offense"
+	quest.C3000000000000C6.quest_desc: ["Original effect: All enemy units have -15 ASPD.", "Description: A familiar face but a different vibe. Perhaps you have met this person?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C6.title: "Obtain Familiar Sculpture"
+	quest.C3000000000000CA.title: "'Bladedance'"
+	quest.C3000000000000CA.quest_subtitle: "No.202 · Offense"
+	quest.C3000000000000CA.quest_desc: ["Original effect: When the battle begins, a random Operator will have +100% ATK and +100% Max HP within the operation", "Description: An artifact left behind by a 'Crimson Troupe' member. 'Bladedance' was a quiet Sargon dancer as well as a warrior of spectacular martial prowess, and her loyalty to the troupe is unparalleled. Even among the members of the troupe, there are few people who know of her dark past.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000CA.title: "Obtain 'Bladedance'"
+	quest.C3000000000000E0.title: "Old Fan"
+	quest.C3000000000000E0.quest_subtitle: "No.224 · Offense"
+	quest.C3000000000000E0.quest_desc: ["Original effect: All Operators gain ATK +10% for every different type of Operator class in the squad", "Description: When it rains for several days on end, the old Yanese Tianshi complains to his friends about the pain in his knees, before casually waving his fan and driving away the rainclouds. It is about time he taught this trick to his young apprentice, currently working at the Central Judicial Office.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E0.title: "Obtain Old Fan"
+	quest.C3000000000000E5.title: "'Focus'"
+	quest.C3000000000000E5.quest_subtitle: "No.229 · Offense"
+	quest.C3000000000000E5.quest_desc: ["Original effect: Whenever you deploy a unit, deal 3000 Arts damage to a random enemy and the area around it", "Description: The stage lights focus on the hero. The actor gives one last dying cry, before the curtains are brought down by Death.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E5.title: "Obtain 'Focus'"
+	quest.C3000000000000E7.title: "Assault Co-op - Sharp Blade"
+	quest.C3000000000000E7.quest_subtitle: "No.231 · Offense"
+	quest.C3000000000000E7.quest_desc: ["Original effect: Increases the ATK of Vanguard and Guard Operators by +8% for each Vanguard or Guard Operator in the combat squad.", "Description: Use the sharpest spear to strike the hardest shield. I guarantee you that the shield will break first, trust me.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E7.title: "Obtain Assault Co-op - Sharp Blade"
+	quest.C3000000000000E9.title: "Fortification Contract - Phalanx"
+	quest.C3000000000000E9.quest_subtitle: "No.233 · Offense"
+	quest.C3000000000000E9.quest_desc: ["Original effect: Increases the ATK of Defender and Supporter Operators by +8% for each Defender or Supporter Operator in the combat squad.", "Description: Like a huge ship running over rubble.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E9.title: "Obtain Fortification Contract - Phalanx"
+	quest.C3000000000000EB.title: "Long-Range Contract - Remote Strike"
+	quest.C3000000000000EB.quest_subtitle: "No.235 · Offense"
+	quest.C3000000000000EB.quest_desc: ["Original effect: Increases the ATK of Medic and Sniper Operators by +8% for each Medic or Sniper Operator in the combat squad.", "Description: If you can solve the problem from a reasonable distance, why do you have to literally butt heads?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000EB.title: "Obtain Long-Range Contract - Remote Strike"
+	quest.C3000000000000EC.title: "Long-Range Contract - Assassination"
+	quest.C3000000000000EC.quest_subtitle: "No.236 · Offense"
+	quest.C3000000000000EC.quest_desc: ["Original effect: Increases the ASPD of Medic and Sniper Operators by +6 for each Medic or Sniper Operator in the combat squad.", "Description: Can't tell friends from foes at this distance? Unload a volley at them then. The foes are the ones that fail to avoid it.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000EC.title: "Obtain Long-Range Contract - Assassination"
+	quest.C3000000000000ED.title: "Sabotage Co-op - Elimination"
+	quest.C3000000000000ED.quest_subtitle: "No.237 · Offense"
+	quest.C3000000000000ED.quest_desc: ["Original effect: Increases the ATK of Caster and Specialist Operators by +8% for each Caster or Specialist Operator in the combat squad.", "Description: External destruction, internal disintegration.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000ED.title: "Obtain Sabotage Co-op - Elimination"
+	quest.C3000000000000EE.title: "Sabotage Co-op - Suppression"
+	quest.C3000000000000EE.quest_subtitle: "No.238 · Offense"
+	quest.C3000000000000EE.quest_desc: ["Original effect: Increases the ASPD of Caster and Specialist Operators by +6 for each Caster or Specialist Operator in the combat squad.", "Description: Don't worry about accuracy. Take enough shots, and you're guaranteed to land something!", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000EE.title: "Obtain Sabotage Co-op - Suppression"
+	quest.C3000000000000F5.title: "'Excessiveness'"
+	quest.C3000000000000F5.quest_subtitle: "No.PCS07 · Offense"
+	quest.C3000000000000F5.quest_desc: ["Original effect: Deals 3000 True Damage on all enemy units every time an enemy unit enters the Protection Objective", "Description: A gemstone without luster, just like the endless desires of the troupe's leader.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000F5.title: "Obtain 'Excessiveness'"
+	quest.C100000000000002.title: "Healing"
+	quest.C100000000000002.quest_subtitle: "Contains 8 collectibles."
+	quest.C100000000000002.quest_desc: ["Primarily improves healing, health recovery, or regeneration.", "Contains 8 collectibles."]
+	task.C200000000000002.title: "Read category guide"
+	quest.C300000000000049.title: "Live Rose"
+	quest.C300000000000049.quest_subtitle: "No.073 · Healing"
+	quest.C300000000000049.quest_desc: ["Original effect: All friendly units have +20% healing effectiveness", "Description: Is it you who nourish her, or is it her who protects you?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000049.title: "Obtain Live Rose"
+	quest.C30000000000004A.title: "White Flower Crown"
+	quest.C30000000000004A.quest_subtitle: "No.074 · Healing"
+	quest.C30000000000004A.quest_desc: ["Original effect: All friendly units have +30% healing effectiveness", "Description: A floral veil used in Vampire rituals. Its once vibrant redness has been sucked empty, leaving nothing only a pale white color.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000004A.title: "Obtain White Flower Crown"
+	quest.C30000000000004B.title: "Actor's Perfume"
+	quest.C30000000000004B.quest_subtitle: "No.075 · Healing"
+	quest.C30000000000004B.quest_desc: ["Original effect: All friendly units recover 1% of Max HP per second", "Description: Troupe actors put this on before going onstage. Stable yet aromatic fragrances like this can help them ease pressure. That's how it seems on the surface, at least.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000004B.title: "Obtain Actor's Perfume"
+	quest.C3000000000000AD.title: "'Loyality'"
+	quest.C3000000000000AD.quest_subtitle: "No.173 · Healing"
+	quest.C3000000000000AD.quest_desc: ["Original effect: All friendly units recover 150 HP per second when blocking three or more enemies", "Description: What is loyalty, and what is righteousness? A group of people found the answer several decades ago.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000AD.title: "Obtain 'Loyality'"
+	quest.C3000000000000CD.title: "'Flowers of Quinde'"
+	quest.C3000000000000CD.quest_subtitle: "No.205 · Healing"
+	quest.C3000000000000CD.quest_desc: ["Original effect: All friendly units recover 10 HP every second", "Description: An epic narrative poem etched on a stone tablet. It was written eight hundred years ago by a famous Gaulish poet, but although modern literary scholars hold the poem in extremely high regard, historical records show that he was often ridiculed by his contemporaries for his obese figure and unattractive facial features.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000CD.title: "Obtain 'Flowers of Quinde'"
+	quest.C3000000000000D8.title: "Today's Menu"
+	quest.C3000000000000D8.quest_subtitle: "No.216 · Healing"
+	quest.C3000000000000D8.quest_desc: ["Original effect: All allied units have +40% healing effectiveness", "Description: The troupe's chef never serves the same dish twice. The members of the troupe have been warned to never ask where the ingredients came from.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D8.title: "Obtain Today's Menu"
+	quest.C3000000000000D9.title: "'Intoxicated Hymnoi'"
+	quest.C3000000000000D9.quest_subtitle: "No.217 · Healing"
+	quest.C3000000000000D9.quest_desc: ["Original effect: All allied units recover 2% of Max HP per second", "Description: One sniff brings tears to Pallas's eyes. What spell has Lena cast on this perfume?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D9.title: "Obtain 'Intoxicated Hymnoi'"
+	quest.C3000000000000F3.title: "Surging Feast"
+	quest.C3000000000000F3.quest_subtitle: "No.PCS05 · Healing"
+	quest.C3000000000000F3.quest_desc: ["Original effect: All friendly units have +30% healing effects and receive -30% Elemental Injury", "Description: We've known how to indulge since birth. Do not resist your desires. Submit to them instead.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000F3.title: "Obtain Surging Feast"
+	quest.C100000000000003.title: "Defense"
+	quest.C100000000000003.quest_subtitle: "Contains 29 collectibles."
+	quest.C100000000000003.quest_desc: ["Primarily improves defenses, resistance, or damage reduction, or weakens enemy attacks.", "Contains 29 collectibles."]
+	task.C200000000000003.title: "Read category guide"
+	quest.C30000000000002D.title: "'Silent Squad'"
+	quest.C30000000000002D.quest_subtitle: "No.045 · Defense"
+	quest.C30000000000002D.quest_desc: ["Original effect: All friendly units have +35% ATK, +35% DEF, and +45% Max HP", "Description: A set of exploration drones remotely controlled by the Rhodes Island Engineering Department. More efficient and safer than ever, they provide operators on field missions the omnidirectional support and defense they need.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000002D.title: "Obtain 'Silent Squad'"
+	quest.C30000000000002E.title: "Fissured Restraints"
+	quest.C30000000000002E.quest_subtitle: "No.046 · Defense"
+	quest.C30000000000002E.quest_desc: ["Original effect: All enemy units have -7% ATK.", "Description: It seems this sturdy band was once used to restrain something terrifying... Help...", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000002E.title: "Obtain Fissured Restraints"
+	quest.C30000000000002F.title: "Abyssal Wyrdmask"
+	quest.C30000000000002F.quest_subtitle: "No.047 · Defense"
+	quest.C30000000000002F.quest_desc: ["Original effect: All enemy units have -12% ATK.", "Description: An eldritch mask not belonging to any culture you're familiar with that is capable of making people lose their will to fight... and unconsciously fall into a state of deep contemplation.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000002F.title: "Obtain Abyssal Wyrdmask"
+	quest.C300000000000030.title: "Godmother's Token"
+	quest.C300000000000030.quest_subtitle: "No.048 · Defense"
+	quest.C300000000000030.quest_desc: ["Original effect: All enemy units have -17% ATK.", "Description: A laurel of bones, the token of a Sicilian noblewoman. This symbol of order will smooth the turbulance of all desires, for conflict is not allowed. Genuine or counterfeit, it still demands you to kneel.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000030.title: "Obtain Godmother's Token"
+	quest.C300000000000037.title: "Oriron Round Shield"
+	quest.C300000000000037.quest_subtitle: "No.055 · Defense"
+	quest.C300000000000037.quest_desc: ["Original effect: All friendly units have +15% DEF.", "Description: Before the use of Oriron became widespread in today's industrial sector, the material was frequently used to forge military weapons like this one.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000037.title: "Obtain Oriron Round Shield"
+	quest.C300000000000038.title: "Military Mirror Armor"
+	quest.C300000000000038.quest_subtitle: "No.056 · Defense"
+	quest.C300000000000038.quest_desc: ["Original effect: All friendly units have +25% DEF.", "Description: This mirror armor used to be able to withstand most attacks on the chest, but with the fall of Gaul, such archaic forms of armor have become museum pieces.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000038.title: "Obtain Military Mirror Armor"
+	quest.C300000000000039.title: "Old Steam Armor"
+	quest.C300000000000039.quest_subtitle: "No.057 · Defense"
+	quest.C300000000000039.quest_desc: ["Original effect: All friendly units have +35% DEF.", "Description: Even this old, outdated steam armor seems to carry with it the resplendence of when the Victorian monarchs cast their glory across half the world.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000039.title: "Obtain Old Steam Armor"
+	quest.C300000000000043.title: "Rusted Razor"
+	quest.C300000000000043.quest_subtitle: "No.067 · Defense"
+	quest.C300000000000043.quest_desc: ["Original effect: All enemies take +15% Physical damage.", "Description: If you cut yourself with this, you know what will happen.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000043.title: "Obtain Rusted Razor"
+	quest.C300000000000044.title: "Carriage Driver's Whip"
+	quest.C300000000000044.quest_subtitle: "No.068 · Defense"
+	quest.C300000000000044.quest_desc: ["Original effect: All enemies take +25% Physical damage.", "Description: As the troupe's carriage driver, he has no name and no past. His life is meaningful only when he whips his burdenbeasts.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000044.title: "Obtain Carriage Driver's Whip"
+	quest.C300000000000045.title: "'Avenger'"
+	quest.C300000000000045.quest_subtitle: "No.069 · Defense"
+	quest.C300000000000045.quest_desc: ["Original effect: All enemies take +35% Physical damage.", "Description: A gift from Theresis and set up by Theresa, this is the very first weapon that Ascalon received after her inaugural mission as part of the Military Council.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000045.title: "Obtain 'Avenger'"
+	quest.C300000000000046.title: "Standard Anti-Riot Instrument"
+	quest.C300000000000046.quest_subtitle: "No.070 · Defense"
+	quest.C300000000000046.quest_desc: ["Original effect: All enemies take +20% Arts damage.", "Description: Standard equipment of the Ursus Guard. Comes with an intermittent blinding Originium Arts effect. Unfortunately, not many Guards out there remember this when push comes to shove.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000046.title: "Obtain Standard Anti-Riot Instrument"
+	quest.C300000000000047.title: "Emperor's Collection"
+	quest.C300000000000047.quest_subtitle: "No.071 · Defense"
+	quest.C300000000000047.quest_desc: ["Original effect: All enemies take +30% Arts damage.", "Description: The Sami revere their wild lands more than anything, and this fragment of the vast wilderness sleeps in the personal collection of the Emperor of Ursus.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000047.title: "Obtain Emperor's Collection"
+	quest.C300000000000048.title: "'Brilliant Lament'"
+	quest.C300000000000048.quest_subtitle: "No.072 · Defense"
+	quest.C300000000000048.quest_desc: ["Original effect: All enemies take +40% Arts damage.", "Description: His blood yet flows. He has never left this place.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000048.title: "Obtain 'Brilliant Lament'"
+	quest.C300000000000069.title: "Iron Guard - Tranquility"
+	quest.C300000000000069.quest_subtitle: "No.105 · Defense"
+	quest.C300000000000069.quest_desc: ["Original effect: Defender Operators have +25% DEF and +50% Max HP", "Description: 'Is there anyone who can remain in formation under a bombing of that scale?' 'Standing in formation? He moved a few steps forward.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000069.title: "Obtain Iron Guard - Tranquility"
+	quest.C300000000000079.title: "Stalwart Aid - Demoralize"
+	quest.C300000000000079.quest_subtitle: "No.121 · Defense"
+	quest.C300000000000079.quest_desc: ["Original effect: Enemies within the attack range of Supporter Operators have -15% ATK.", "Description: There are many ways to weaken an enemy's offensive capabilities: corroding their weapons, psychological warfare, increasing their weight, and... giving them a stomachache.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000079.title: "Obtain Stalwart Aid - Demoralize"
+	quest.C30000000000007F.title: "Healer's Path - Restore Sanity"
+	quest.C30000000000007F.quest_subtitle: "No.127 · Defense"
+	quest.C30000000000007F.quest_desc: ["Original effect: Allied units within the attack range of Medic Operators gain Resistance.", "Description: Reinforce your thinking. In the domain of your mind, make even every weed impregnable.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000007F.title: "Obtain Healer's Path - Restore Sanity"
+	quest.C3000000000000A2.title: "'Renowned Singer'"
+	quest.C3000000000000A2.quest_subtitle: "No.162 · Defense"
+	quest.C3000000000000A2.quest_desc: ["Original effect: Enemies receive 600 Arts Damage per second when stunned, frozen, or bound", "Description: Who cares what it's singing? Make it stop! It's hurting my ears!", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A2.title: "Obtain 'Renowned Singer'"
+	quest.C3000000000000A3.title: "String Puppet"
+	quest.C3000000000000A3.quest_subtitle: "No.163 · Defense"
+	quest.C3000000000000A3.quest_desc: ["Original effect: Enemies receive 700 Arts Damage per second when stunned, frozen, or bound", "Description: The more you struggle and try to break free, the tighter the strings get. Do you really think you are still thinking rationally?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A3.title: "Obtain String Puppet"
+	quest.C3000000000000A4.title: "'Children's Puppet'"
+	quest.C3000000000000A4.quest_subtitle: "No.164 · Defense"
+	quest.C3000000000000A4.quest_desc: ["Original effect: Enemies receive 1000 Arts Damage per second when stunned, frozen, or bound", "Description: A simple puppet made by Iberian children using trinkets found on the seacoast. Supposedly just holding it tight will give you much richer dreams.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A4.title: "Obtain 'Children's Puppet'"
+	quest.C3000000000000AB.title: "'Civilight Eterna'"
+	quest.C3000000000000AB.quest_subtitle: "No.171 · Defense"
+	quest.C3000000000000AB.quest_desc: ["Original effect: All enemies take +150% True damage.", "Description: A small, black crown.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000AB.title: "Obtain 'Civilight Eterna'"
+	quest.C3000000000000AF.title: "Royal Alliance Treaty"
+	quest.C3000000000000AF.quest_subtitle: "No.175 · Defense"
+	quest.C3000000000000AF.quest_desc: ["Original effect: All friendly units no longer receive any damage from Sarkaz enemies", "Description: The old Sarkaz courts sacrificed themselves to obtain their power. Ever since, the courts have come to terms with one another, banding together against their common enemy.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000AF.title: "Obtain Royal Alliance Treaty"
+	quest.C3000000000000B3.title: "Victoria Crown"
+	quest.C3000000000000B3.quest_subtitle: "No.179 · Defense"
+	quest.C3000000000000B3.quest_desc: ["Original effect: All enemy units have +30% ATK, DEF, and Max HP; Boss units gain an additional +15% ATK, +15% DEF, and +30% Max HP", "Description: When the last Aslan to rule Victoria was sent to the guillotine, the angry masses rushed forward to trample his reign into dust.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B3.title: "Obtain Victoria Crown"
+	quest.C3000000000000B4.title: "Victoria Crown (Reforged)"
+	quest.C3000000000000B4.quest_subtitle: "No.180 · Defense"
+	quest.C3000000000000B4.quest_desc: ["Original effect: All enemy units have +35% ATK, DEF, and Max HP; Leader enemies gain an additional +20% ATK, DEF and +50% Max HP, but these leader bonuses are halved when your squad has Operators from all 8 Classes", "Description: When the last Aslan to rule Victoria was sent to the guillotine, the angry masses rushed forward to trample his reign into dust.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B4.title: "Obtain Victoria Crown (Reforged)"
+	quest.C3000000000000CE.title: "'Numbness and Obscenity'"
+	quest.C3000000000000CE.quest_subtitle: "No.206 · Defense"
+	quest.C3000000000000CE.quest_desc: ["Original effect: All friendly units have +5 RES", "Description: A famous art piece and the final piece created by an insane Leithanian sculptor two hundred years ago. The sculptor was known for his extraordinary talent and his participation in multiple cruel homicides. However, historical records show that few people took notice of his work. He was instead known for his features and beauty.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000CE.title: "Obtain 'Numbness and Obscenity'"
+	quest.C3000000000000DE.title: "Royal Brooch"
+	quest.C3000000000000DE.quest_subtitle: "No.222 · Defense"
+	quest.C3000000000000DE.quest_desc: ["Original effect: All allied units have RES +15, and gain one-time dodge after deployment", "Description: An ornament worn by Gaulish royalty, made from gold and inlaid with expensive Originium crystals. They are more than decoration: many of these brooches hide Originium circuits loaded with defensive Arts.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000DE.title: "Obtain Royal Brooch"
+	quest.C3000000000000E3.title: "Scout's Scope"
+	quest.C3000000000000E3.quest_subtitle: "No.227 · Defense"
+	quest.C3000000000000E3.quest_desc: ["Original effect: Enemies take increased damage from allied units as range increases (max 100%)", "Description: Lock on, aim, fire, and destroy the enemy's will to resist, all in the name of a better future that Scout will never see. Maybe you can do it for him.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E3.title: "Obtain Scout's Scope"
+	quest.C3000000000000E8.title: "Assault Co-op - Skirmish"
+	quest.C3000000000000E8.quest_subtitle: "No.232 · Defense"
+	quest.C3000000000000E8.quest_desc: ["Original effect: Increases the DEF of Vanguard and Guard Operators by +10% for each Vanguard or Guard Operator in the combat squad.", "Description: A sophisticated blocking technique is essential to protecting one's body.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E8.title: "Obtain Assault Co-op - Skirmish"
+	quest.C3000000000000EA.title: "Fortification Contract - Resolution"
+	quest.C3000000000000EA.quest_subtitle: "No.234 · Defense"
+	quest.C3000000000000EA.quest_desc: ["Original effect: Increases the DEF of Defender and Supporter Operators by +10% for each Defender or Supporter Operator in the combat squad.", "Description: Use the hardest shield to block the sharpest spear. I guarantee you that the spear will break first, trust me.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000EA.title: "Obtain Fortification Contract - Resolution"
+	quest.C3000000000000F2.title: "Castle's Offspring"
+	quest.C3000000000000F2.quest_subtitle: "No.PCS04 · Defense"
+	quest.C3000000000000F2.quest_desc: ["Original effect: All friendly units have +300 DEF and +30 RES 100 seconds after deployment", "Description: With enough time, this box will become a whole new stage.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000F2.title: "Obtain Castle's Offspring"
+	quest.C100000000000004.title: "Survival"
+	quest.C100000000000004.quest_subtitle: "Contains 14 collectibles."
+	quest.C100000000000004.quest_desc: ["Primarily affects maximum health, objective life, or dodge.", "Contains 14 collectibles."]
+	task.C200000000000004.title: "Read category guide"
+	quest.C300000000000001.title: "Hot Water Kettle"
+	quest.C300000000000001.quest_subtitle: "No.001 · Survival"
+	quest.C300000000000001.quest_desc: ["Original effect: Immediately gain +2 Life Points and +1 Hope", "Description: Some people often use the hot water kettle in the Rhodes Island Office to cook instant noodles in the middle of the night. That's not a very healthy lifestyle...", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000001.title: "Obtain Hot Water Kettle"
+	quest.C300000000000002.title: "Special Suppressor"
+	quest.C300000000000002.quest_subtitle: "No.002 · Survival"
+	quest.C300000000000002.quest_desc: ["Original effect: Immediately gain +6 Life Points.", "Description: An enhanced suppressor developed by Rhodes Island that can better keep the infected from losing control of their Originium Arts.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000002.title: "Obtain Special Suppressor"
+	quest.C300000000000003.title: "Stone Gargoyle"
+	quest.C300000000000003.quest_subtitle: "No.003 · Survival"
+	quest.C300000000000003.quest_desc: ["Original effect: Immediately gain +6 Life Points.", "Description: A palm-sized sculpture. Supposedly they are handmade gifts given out by the Gargoyles as a sign of friendship.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000003.title: "Obtain Stone Gargoyle"
+	quest.C300000000000004.title: "Vampire's Bed"
+	quest.C300000000000004.quest_subtitle: "No.004 · Survival"
+	quest.C300000000000004.quest_desc: ["Original effect: Immediately gain +8 Life Points.", "Description: A lavish-looking coffin that matches the castle's aesthetics well. However, Warfarin says this is merely a stereotype.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000004.title: "Obtain Vampire's Bed"
+	quest.C300000000000005.title: "Proof of Longevity"
+	quest.C300000000000005.quest_subtitle: "No.005 · Survival"
+	quest.C300000000000005.quest_desc: ["Original effect: Immediately gain +10 Life Points.", "Description: A tree branch that has withered and flourished. \nWhen it is withered, it grows anew. When it is thriving in its fullest, it fades away yet again.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000005.title: "Obtain Proof of Longevity"
+	quest.C30000000000004C.title: "Designer's Ruler"
+	quest.C30000000000004C.quest_subtitle: "No.076 · Survival"
+	quest.C30000000000004C.quest_desc: ["Original effect: All friendly units have +15% Physical Dodge", "Description: Carefully measured with data and experience, those who wear this armor are known to be several magnitudes luckier.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000004C.title: "Obtain Designer's Ruler"
+	quest.C30000000000004D.title: "'Arts Killer'"
+	quest.C30000000000004D.quest_subtitle: "No.077 · Survival"
+	quest.C30000000000004D.quest_desc: ["Original effect: All friendly units have +15% Arts Dodge", "Description: Considering how Originium Arts and music go hand in hand in Leithanien, it's quite amazing someone came up with the bright idea of combating Arts with noise like this.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000004D.title: "Obtain 'Arts Killer'"
+	quest.C30000000000004E.title: "Dancer's Bracelets"
+	quest.C30000000000004E.quest_subtitle: "No.078 · Survival"
+	quest.C30000000000004E.quest_desc: ["Original effect: All friendly units have +10% Physical and Arts Dodge", "Description: The audience breaks into applause as the well-trained dancers waltz around the traps on stage. None of them are aware of the brushes with death the performers have just been through.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000004E.title: "Obtain Dancer's Bracelets"
+	quest.C300000000000093.title: "'Durin Overground'"
+	quest.C300000000000093.quest_subtitle: "No.147 · Survival"
+	quest.C300000000000093.quest_desc: ["Original effect: Gain 1 Temporary Life Point at the beginning of each battle.", "Description: In this expedition account, we get a glimpse of how those who live underground see those who live on the surface.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000093.title: "Obtain 'Durin Overground'"
+	quest.C300000000000094.title: "'Gaulish Toponym Origins'"
+	quest.C300000000000094.quest_subtitle: "No.148 · Survival"
+	quest.C300000000000094.quest_desc: ["Original effect: Gain 2 Temporary Life Points at the beginning of each battle.", "Description: A book of historical place names that Mint dug out of the Doctor's office. Calais-Blason is mentioned in the book.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000094.title: "Obtain 'Gaulish Toponym Origins'"
+	quest.C3000000000000AE.title: "'End of Times'"
+	quest.C3000000000000AE.quest_subtitle: "No.174 · Survival"
+	quest.C3000000000000AE.quest_desc: ["Original effect: For one time only during any battle prior to the final battle of the area, gain 1 Life Point and continue onto the next step instead of concluding the exploration upon mission failure", "Description: As long as a new cycle has not been reached, there is still time to fix your mistakes.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000AE.title: "Obtain 'End of Times'"
+	quest.C3000000000000B5.title: "Leithanien Sceptre"
+	quest.C3000000000000B5.quest_subtitle: "No.181 · Survival"
+	quest.C3000000000000B5.quest_desc: ["Original effect: All enemy units have +30% ATK, DEF, and Max HP; Entering a new node decreases Life Point by 1 (cannot be reduced beneath 1 this way)", "Description: It was not long ago that the Witch King's scepter flowed with daylight and the night sky.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B5.title: "Obtain Leithanien Sceptre"
+	quest.C3000000000000CF.title: "'Beauty and Ugliness in the Age of Terra'"
+	quest.C3000000000000CF.quest_subtitle: "No.207 · Survival"
+	quest.C3000000000000CF.quest_desc: ["Original effect: For one time only during any battle prior to the final battle of the area, gain 10 Life Points and continue onto the next step instead of concluding the exploration upon mission failure", "Description: A legendary book published in Victoria fifteen years ago. The book describes the author's appreciation of aesthetics in simple terms, and it contains a comprehensive record of literary, artistic and musical knowledge and history. The book covers both the past and present and is an easy read, with many honoring it as the 'great art encyclopedia of our generation.' Yet it is rumored that the book's author was the leader of a certain small troupe and was murdered a few years ago by a hitman codenamed 'Blood Diamond.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000CF.title: "Obtain 'Beauty and Ugliness in the Age of Terra'"
+	quest.C3000000000000DA.title: "Empresses' Wish"
+	quest.C3000000000000DA.quest_subtitle: "No.218 · Survival"
+	quest.C3000000000000DA.quest_desc: ["Original effect: All allied units have +15% Physical and Arts Dodge", "Description: The Twin Empresses tower above. When dawn and dusk are one, there shall be no more dissent in Leithanien.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000DA.title: "Obtain Empresses' Wish"
+	quest.C100000000000005.title: "Hybrid Combat"
+	quest.C100000000000005.quest_subtitle: "Contains 7 collectibles."
+	quest.C100000000000005.quest_desc: ["Affects two or more combat attributes at once.", "Contains 7 collectibles."]
+	task.C200000000000005.title: "Read category guide"
+	quest.C300000000000061.title: "Blunt Claws - Mastery"
+	quest.C300000000000061.quest_subtitle: "No.097 · Hybrid Combat"
+	quest.C300000000000061.quest_desc: ["Original effect: Vanguard Operators have +50% ATK and DEF", "Description: 'When the darkly-clad enemies rushed towards me, there were only four words on my mind — they are done for.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000061.title: "Obtain Blunt Claws - Mastery"
+	quest.C30000000000007A.title: "Stalwart Aid - Counter-Arts"
+	quest.C30000000000007A.quest_subtitle: "No.122 · Hybrid Combat"
+	quest.C30000000000007A.quest_desc: ["Original effect: Enemies within the attack range of Supporter Operators have -20% DEF and -20% RES.", "Description: There are many ways to weaken an enemy's defensive capabilities: positional devices, armor-stripping Arts, marking weak points, and... giving them a stomachache.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000007A.title: "Obtain Stalwart Aid - Counter-Arts"
+	quest.C300000000000082.title: "Rusted Blade - Isolation"
+	quest.C300000000000082.quest_subtitle: "No.130 · Hybrid Combat"
+	quest.C300000000000082.quest_desc: ["Original effect: Specialist Operators have +40% ATK and DEF", "Description: The director of S.W.E.E.P. does not have any mission participation records. *None*.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000082.title: "Obtain Rusted Blade - Isolation"
+	quest.C3000000000000A1.title: "'Unleashings'"
+	quest.C3000000000000A1.quest_subtitle: "No.161 · Hybrid Combat"
+	quest.C3000000000000A1.quest_desc: ["Original effect: All Operators recover 1 SP every time they take damage or Elemental Injury", "Description: After several attempts by Touch, nature briefly opens up to you.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000A1.title: "Obtain 'Unleashings'"
+	quest.C3000000000000B6.title: "Leithanien Sceptre (Reforged)"
+	quest.C3000000000000B6.quest_subtitle: "No.182 · Hybrid Combat"
+	quest.C3000000000000B6.quest_desc: ["Original effect: All enemy units have +35% ATK, DEF, and Max HP; Entering a new node decreases Life Point by 1 (cannot be reduced beneath 1 this way); When Life Point is below 3, all units have DP Cost + 2 and SP recovery rate -20%", "Description: It was not long ago that the Witch King's scepter flowed with daylight and the night sky.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B6.title: "Obtain Leithanien Sceptre (Reforged)"
+	quest.C3000000000000E1.title: "Nachzehrer's Cane"
+	quest.C3000000000000E1.quest_subtitle: "No.225 · Hybrid Combat"
+	quest.C3000000000000E1.quest_desc: ["Original effect: When an allied unit is overhealed, nearby enemies take Arts damage equal to the overheal amount", "Description: Nachzehrer devours life and uses it.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E1.title: "Obtain Nachzehrer's Cane"
+	quest.C3000000000000EF.title: "King's New Lance"
+	quest.C3000000000000EF.quest_subtitle: "No.PCS01 · Hybrid Combat"
+	quest.C3000000000000EF.quest_desc: ["Original effect: When Life Point is 1, all friendly units have +50 ASPD", "Description: Beautiful wishes made in dire straits can bring hope, even if they are not necessarily the truth.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000EF.title: "Obtain King's New Lance"
+	quest.C100000000000006.title: "Exploration"
+	quest.C100000000000006.quest_subtitle: "Contains 11 collectibles."
+	quest.C100000000000006.quest_desc: ["Primarily affects nodes, battle results, routes, or exploration failure rules.", "Contains 11 collectibles."]
+	task.C200000000000006.title: "Read category guide"
+	quest.C30000000000001D.title: "Crimson Troupe Ticket Stub"
+	quest.C30000000000001D.quest_subtitle: "No.029 · Exploration"
+	quest.C30000000000001D.quest_desc: ["Original effect: 25% chance to drop an additional Recruitment Voucher after battle", "Description: A Crimson Troupe ticket stub. None of the cast are listed. What kind of performance do they have in store for you?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000001D.title: "Obtain Crimson Troupe Ticket Stub"
+	quest.C30000000000001E.title: "Lucky Coin"
+	quest.C30000000000001E.quest_subtitle: "No.030 · Exploration"
+	quest.C30000000000001E.quest_desc: ["Original effect: Gain +2 Originium Ingots upon entering a noncombat node.", "Description: A coin picked up from Rhodes Island. If you find one, you're sure to be able to find many more.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000001E.title: "Obtain Lucky Coin"
+	quest.C30000000000001F.title: "Masquerade Mask"
+	quest.C30000000000001F.quest_subtitle: "No.031 · Exploration"
+	quest.C30000000000001F.quest_desc: ["Original effect: Gain +3 Originium Ingots upon entering a noncombat node.", "Description: Esteemed guests, welcome to the Crimson Troupe. The performance we have in store for you tonight will be one to remember.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000001F.title: "Obtain Masquerade Mask"
+	quest.C300000000000024.title: "Four-Leaf Clover Fossil"
+	quest.C300000000000024.quest_subtitle: "No.036 · Exploration"
+	quest.C300000000000024.quest_desc: ["Original effect: Gain an additional choice when collectibles are dropped after battle", "Description: A symbol of luck that Magallan found in a place all but devoid of life. The rock has no doubt experienced many violent changes of the lands, but it survived, giving those who come across it a small bit of lingering hope.\n", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000024.title: "Obtain Four-Leaf Clover Fossil"
+	quest.C3000000000000BE.title: "Playwright's Manuscript: Ursus"
+	quest.C3000000000000BE.quest_subtitle: "No.190 · Exploration"
+	quest.C3000000000000BE.quest_desc: ["Original effect: All enemy units have +10% ATK, DEF, and Max HP; Lose 1 Originium Ingot every time you enter a non-combat node", "Description: 'The Ursus's feast comes to an abrupt stop—'\n", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000BE.title: "Obtain Playwright's Manuscript: Ursus"
+	quest.C3000000000000C0.title: "Playwright's Manuscript: Gaul"
+	quest.C3000000000000C0.quest_subtitle: "No.192 · Exploration"
+	quest.C3000000000000C0.quest_desc: ["Original effect: All enemy units have +10% ATK, DEF, and Max HP and the bonus is doubled when you lose Life Points for the first time in each battle", "Description: 'The Liberi's bricks turn into dust—'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C0.title: "Obtain Playwright's Manuscript: Gaul"
+	quest.C3000000000000C3.title: "'Magnificent Visage'"
+	quest.C3000000000000C3.quest_subtitle: "No.195 · Exploration"
+	quest.C3000000000000C3.quest_desc: ["Original effect: Gain +1 Hope upon entering a noncombat node.", "Description: It's a good thing that a glimpse of her face feels you with hope—and especially so if you knew of the disaster.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C3.title: "Obtain 'Magnificent Visage'"
+	quest.C3000000000000D0.title: "Worn-out Puppet"
+	quest.C3000000000000D0.quest_subtitle: "No.208 · Exploration"
+	quest.C3000000000000D0.quest_desc: ["Original effect: The adventure will head towards a different ending", "Description: 'He said he has had enough. He will be a puppet no longer.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D0.title: "Obtain Worn-out Puppet"
+	quest.C3000000000000D5.title: "Abrupt Realization"
+	quest.C3000000000000D5.quest_subtitle: "No.213 · Exploration"
+	quest.C3000000000000D5.quest_desc: ["Original effect: All friendly units have -3 DP Cost and gain +5% ATK, DEF, and Max HP. The adventure will head towards a different ending", "Description: The Witch King's followers have given everything for the arts. Their flesh, their blood, their beliefs, and their souls.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D5.title: "Obtain Abrupt Realization"
+	quest.C3000000000000D7.title: "Act 1"
+	quest.C3000000000000D7.quest_subtitle: "No.215 · Exploration"
+	quest.C3000000000000D7.quest_desc: ["Original effect: Hope +3, leads the exploration toward a different conclusion", "Description: The end of the first act, the first ending that the young man wrote for himself. In the midst of the fire that consumed all that he treasured, the hero sips his foe's blood and writes the last scene of his vendetta.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D7.title: "Obtain Act 1"
+	quest.C3000000000000E6.title: "Rhodes Island Tactical Transceiver"
+	quest.C3000000000000E6.quest_subtitle: "No.230 · Exploration"
+	quest.C3000000000000E6.quest_desc: ["Original effect: Gain an additional choice when Recruitment Vouchers are dropped after battle", "Description: Hang in there, help's on the way.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E6.title: "Obtain Rhodes Island Tactical Transceiver"
+	quest.C100000000000007.title: "Squad and Recruitment"
+	quest.C100000000000007.quest_subtitle: "Contains 81 collectibles."
+	quest.C100000000000007.quest_desc: ["Primarily affects Hope, recruitment, deployment, or squad building.", "Contains 81 collectibles."]
+	task.C200000000000007.title: "Read category guide"
+	quest.C300000000000006.title: "Pried Open Toolbox"
+	quest.C300000000000006.quest_subtitle: "No.006 · Squad and Recruitment"
+	quest.C300000000000006.quest_desc: ["Original effect: Hope +4", "Description: The tool box of the troupe's prop master. From nails to dummy props, it has everything.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000006.title: "Obtain Pried Open Toolbox"
+	quest.C300000000000007.title: "Antiquated Sheet Music"
+	quest.C300000000000007.quest_subtitle: "No.007 · Squad and Recruitment"
+	quest.C300000000000007.quest_desc: ["Original effect: Hope +4", "Description: A tattered piece of sheet music. The notes can no longer be clearly read. No one knows for certain what story this piece was meant to tell.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000007.title: "Obtain Antiquated Sheet Music"
+	quest.C300000000000008.title: "Letter of Termination Contract"
+	quest.C300000000000008.quest_subtitle: "No.008 · Squad and Recruitment"
+	quest.C300000000000008.quest_desc: ["Original effect: Hope +4", "Description: You can break free of this troupe with just one autograph.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000008.title: "Obtain Letter of Termination Contract"
+	quest.C300000000000009.title: "Universal Key"
+	quest.C300000000000009.quest_subtitle: "No.009 · Squad and Recruitment"
+	quest.C300000000000009.quest_desc: ["Original effect: Hope +6", "Description: An old, silver key. It can open any door. As the keeper, the troupe's butler naturally needs a key that unlocks all the secrets here.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000009.title: "Obtain Universal Key"
+	quest.C30000000000000A.title: "Banshee's Kiss"
+	quest.C30000000000000A.quest_subtitle: "No.010 · Squad and Recruitment"
+	quest.C30000000000000A.quest_desc: ["Original effect: Hope +8", "Description: Outsiders make extraordinary displays of bravery that far surpass their normal abilities. However, as one of the few male Banshees out there, this has become a far too common sight to Logos.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000000A.title: "Obtain Banshee's Kiss"
+	quest.C30000000000000E.title: "Laughing Joker"
+	quest.C30000000000000E.quest_subtitle: "No.014 · Squad and Recruitment"
+	quest.C30000000000000E.quest_desc: ["Original effect: Immediately Promote an Operator (Does not require Hope).", "Description: You are granted this privilege.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000000E.title: "Obtain Laughing Joker"
+	quest.C30000000000000F.title: "Miss.Christine Petting Ticket"
+	quest.C30000000000000F.quest_subtitle: "No.015 · Squad and Recruitment"
+	quest.C30000000000000F.quest_desc: ["Original effect: Immediately Promote 2 Operators (Does not require Hope).", "Description: You have the lady's permission!", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000000F.title: "Obtain Miss.Christine Petting Ticket"
+	quest.C300000000000010.title: "Antique Casting"
+	quest.C300000000000010.quest_subtitle: "No.016 · Squad and Recruitment"
+	quest.C300000000000010.quest_desc: ["Original effect: Immediately Promote 3 Operators (Does not require Hope).", "Description: 'Harken the forge of the sky Awaits five earthborn metals' ...Even though it can be used for all kinds of work, nobody understands its exact mechanism.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000010.title: "Obtain Antique Casting"
+	quest.C300000000000011.title: "Blunt Claws - Training"
+	quest.C300000000000011.quest_subtitle: "No.017 · Squad and Recruitment"
+	quest.C300000000000011.quest_desc: ["Original effect: Immediately Promote a Vanguard Operator (Does not require Hope).", "Description: A formidable set of equipment to provide strength, an indomitable heart to press forward bravely.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000011.title: "Obtain Blunt Claws - Training"
+	quest.C300000000000012.title: "Bend Spears - Training"
+	quest.C300000000000012.quest_subtitle: "No.018 · Squad and Recruitment"
+	quest.C300000000000012.quest_desc: ["Original effect: Immediately Promote a Guard Operator (Does not require Hope).", "Description: Some people use swords because they don't know how to use crossbows or Arts. Others use swords because that's all they need.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000012.title: "Obtain Bend Spears - Training"
+	quest.C300000000000013.title: "Iron Guard - Training"
+	quest.C300000000000013.quest_subtitle: "No.019 · Squad and Recruitment"
+	quest.C300000000000013.quest_desc: ["Original effect: Immediately Promote a Defender Operator (Does not require Hope).", "Description: Scars symbolize glory, but who will remember the soldiers who were cut a bit too deeply?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000013.title: "Obtain Iron Guard - Training"
+	quest.C300000000000014.title: "Fatal Bolts - Training"
+	quest.C300000000000014.quest_subtitle: "No.020 · Squad and Recruitment"
+	quest.C300000000000014.quest_desc: ["Original effect: Immediately Promote a Sniper Operator (Does not require Hope).", "Description: 'Either you learn to control your ignition, or you learn to discern your target. Got it?'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000014.title: "Obtain Fatal Bolts - Training"
+	quest.C300000000000015.title: "Broken Wand - Training"
+	quest.C300000000000015.quest_subtitle: "No.021 · Squad and Recruitment"
+	quest.C300000000000015.quest_desc: ["Original effect: Immediately Promote a Caster Operator (Does not require Hope).", "Description: 'After watching the 'performance' of certain casters, I decided to quietly put away the Leithanian textbook.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000015.title: "Obtain Broken Wand - Training"
+	quest.C300000000000016.title: "Stalwart Aid - Training"
+	quest.C300000000000016.quest_subtitle: "No.022 · Squad and Recruitment"
+	quest.C300000000000016.quest_desc: ["Original effect: Immediately Promote a Supporter Operator (Does not require Hope).", "Description: Their tactics are always diverse and colorful.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000016.title: "Obtain Stalwart Aid - Training"
+	quest.C300000000000017.title: "Healer's Path - Training"
+	quest.C300000000000017.quest_subtitle: "No.023 · Squad and Recruitment"
+	quest.C300000000000017.quest_desc: ["Original effect: Immediately Promote a Medic Operator (Does not require Hope).", "Description: When the day comes when everyone is a doctor and can even cure the disease known as life, we will no longer need doctors.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000017.title: "Obtain Healer's Path - Training"
+	quest.C300000000000018.title: "Rusted Blade - Training"
+	quest.C300000000000018.quest_subtitle: "No.024 · Squad and Recruitment"
+	quest.C300000000000018.quest_desc: ["Original effect: Immediately Promote a Specialist Operator (Does not require Hope).", "Description: When conducting live combat drills with Specialist Operators, please be prepared to be 'beaten up thoroughly before you are prepared.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000018.title: "Obtain Rusted Blade - Training"
+	quest.C300000000000019.title: "Regional Action Plan"
+	quest.C300000000000019.quest_subtitle: "No.025 · Squad and Recruitment"
+	quest.C300000000000019.quest_desc: ["Original effect: 4-star Operators cost -2 Hope to recruit.", "Description: Rhodes Island has established dedicated offices in every important hub area. The messengers are doing what they can to weave a fragile web across this land.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000019.title: "Obtain Regional Action Plan"
+	quest.C30000000000001A.title: "Comprehensive Operation File"
+	quest.C30000000000001A.quest_subtitle: "No.026 · Squad and Recruitment"
+	quest.C30000000000001A.quest_desc: ["Original effect: 5-star Operators cost -2 Hope to recruit.", "Description: A vessel sailing upon the land, like treading upon thin ice. Remember to always expand your worldview.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000001A.title: "Obtain Comprehensive Operation File"
+	quest.C30000000000001B.title: "Secret HR Letter"
+	quest.C30000000000001B.quest_subtitle: "No.027 · Squad and Recruitment"
+	quest.C30000000000001B.quest_desc: ["Original effect: 6-star Operators cost -2 Hope to recruit", "Description: '■■■ gave this to you? Guess there's no problem then.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000001B.title: "Obtain Secret HR Letter"
+	quest.C30000000000001C.title: "Draft of a Speech"
+	quest.C30000000000001C.quest_subtitle: "No.028 · Squad and Recruitment"
+	quest.C30000000000001C.quest_desc: ["Original effect: All Operators cost -2 Hope to recruit", "Description: She was a little nervous, a little worried, but still remained resolute. When the microphone was turned on, her long ears quivered slightly.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000001C.title: "Obtain Draft of a Speech"
+	quest.C300000000000025.title: "Assault Co-op Expansion"
+	quest.C300000000000025.quest_subtitle: "No.037 · Squad and Recruitment"
+	quest.C300000000000025.quest_desc: ["Original effect: Vanguard Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.", "Description: It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000025.title: "Obtain Assault Co-op Expansion"
+	quest.C300000000000026.title: "Assault Co-op Reinforcements"
+	quest.C300000000000026.quest_subtitle: "No.038 · Squad and Recruitment"
+	quest.C300000000000026.quest_desc: ["Original effect: Guard Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.", "Description: It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000026.title: "Obtain Assault Co-op Reinforcements"
+	quest.C300000000000027.title: "Fortification Co-op Expansion"
+	quest.C300000000000027.quest_subtitle: "No.039 · Squad and Recruitment"
+	quest.C300000000000027.quest_desc: ["Original effect: Defender Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.", "Description: It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000027.title: "Obtain Fortification Co-op Expansion"
+	quest.C300000000000028.title: "Fortification Co-op Reinforcements"
+	quest.C300000000000028.quest_subtitle: "No.040 · Squad and Recruitment"
+	quest.C300000000000028.quest_desc: ["Original effect: Supporter Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.", "Description: It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000028.title: "Obtain Fortification Co-op Reinforcements"
+	quest.C300000000000029.title: "Ranged Co-op Expansion"
+	quest.C300000000000029.quest_subtitle: "No.041 · Squad and Recruitment"
+	quest.C300000000000029.quest_desc: ["Original effect: Medic Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.", "Description: It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000029.title: "Obtain Ranged Co-op Expansion"
+	quest.C30000000000002A.title: "Ranged Co-op Reinforcements"
+	quest.C30000000000002A.quest_subtitle: "No.042 · Squad and Recruitment"
+	quest.C30000000000002A.quest_desc: ["Original effect: Sniper Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.", "Description: It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000002A.title: "Obtain Ranged Co-op Reinforcements"
+	quest.C30000000000002B.title: "Sabotage Co-op Expansion"
+	quest.C30000000000002B.quest_subtitle: "No.043 · Squad and Recruitment"
+	quest.C30000000000002B.quest_desc: ["Original effect: Caster Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.", "Description: It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000002B.title: "Obtain Sabotage Co-op Expansion"
+	quest.C30000000000002C.title: "Sabotage Co-op Reinforcements"
+	quest.C30000000000002C.quest_subtitle: "No.044 · Squad and Recruitment"
+	quest.C30000000000002C.quest_desc: ["Original effect: Specialist Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.", "Description: It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000002C.title: "Obtain Sabotage Co-op Reinforcements"
+	quest.C30000000000004F.title: "Ursus Big Bread"
+	quest.C30000000000004F.quest_subtitle: "No.079 · Squad and Recruitment"
+	quest.C30000000000004F.quest_desc: ["Original effect: Squad Size Limit +1", "Description: Food from Ursus with a strong, fermented taste. Quite sour.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000004F.title: "Obtain Ursus Big Bread"
+	quest.C300000000000050.title: "Crucible Cream Puff"
+	quest.C300000000000050.quest_subtitle: "No.080 · Squad and Recruitment"
+	quest.C300000000000050.quest_desc: ["Original effect: Squad Size Limit +1", "Description: Those who walk treacherous paths feast on this dessert to soothe their souls.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000050.title: "Obtain Crucible Cream Puff"
+	quest.C300000000000051.title: "Iron Baguette"
+	quest.C300000000000051.quest_subtitle: "No.081 · Squad and Recruitment"
+	quest.C300000000000051.quest_desc: ["Original effect: Squad Size Limit +1", "Description: A hard, rod-shaped bread. Always keep one on you. Not only does it fill you up, you can use it as a weapon to defend yourself.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000051.title: "Obtain Iron Baguette"
+	quest.C300000000000052.title: "Test Run Chocolate"
+	quest.C300000000000052.quest_subtitle: "No.082 · Squad and Recruitment"
+	quest.C300000000000052.quest_desc: ["Original effect: Squad Size Limit +2", "Description: Just a test product a researcher threw together by tossing together their personal favorites, salted egg yolks and chocolate. Not yet suitable for the mass market. 'Still don't have that crispiness to them...'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000052.title: "Obtain Test Run Chocolate"
+	quest.C300000000000053.title: "Gaulish Macarons"
+	quest.C300000000000053.quest_subtitle: "No.083 · Squad and Recruitment"
+	quest.C300000000000053.quest_desc: ["Original effect: Squad Size Limit +2", "Description: With how much sugar there is in Gaulish macarons, some bakeries concocted these miniature treats for their customers' guilt-free enjoyment.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000053.title: "Obtain Gaulish Macarons"
+	quest.C300000000000054.title: "Victorian Cake"
+	quest.C300000000000054.quest_subtitle: "No.084 · Squad and Recruitment"
+	quest.C300000000000054.quest_desc: ["Original effect: Squad Size Limit +3", "Description: For our indomitable emperor!", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000054.title: "Obtain Victorian Cake"
+	quest.C300000000000055.title: "Route Diagram"
+	quest.C300000000000055.quest_subtitle: "No.085 · Squad and Recruitment"
+	quest.C300000000000055.quest_desc: ["Original effect: Deployment Limit +1", "Description: A hand-drawn map sketched out by an operator. Comes with explanations on the route, too. No one except its creator can decipher the map.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000055.title: "Obtain Route Diagram"
+	quest.C300000000000056.title: "Dim Lantern"
+	quest.C300000000000056.quest_subtitle: "No.086 · Squad and Recruitment"
+	quest.C300000000000056.quest_desc: ["Original effect: Deployment Limit +1", "Description: A lantern used during explorations. Operators can either hold it or hang it from their bags.\nIt's very bright outside, but it's hardly usable in here.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000056.title: "Obtain Dim Lantern"
+	quest.C300000000000057.title: "Brass Compass"
+	quest.C300000000000057.quest_subtitle: "No.087 · Squad and Recruitment"
+	quest.C300000000000057.quest_desc: ["Original effect: Deployment Limit +2", "Description: It's always pointing at the same direction, but where is it pointing exactly?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000057.title: "Obtain Brass Compass"
+	quest.C300000000000058.title: "Broke Mask"
+	quest.C300000000000058.quest_subtitle: "No.088 · Squad and Recruitment"
+	quest.C300000000000058.quest_desc: ["Original effect: Deployment Limit +2", "Description: He's wearing the mask.\nIs he the one who's speaking or is it the mask?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000058.title: "Obtain Broke Mask"
+	quest.C300000000000059.title: "Blank Business Card"
+	quest.C300000000000059.quest_subtitle: "No.089 · Squad and Recruitment"
+	quest.C300000000000059.quest_desc: ["Original effect: +1 Squad Size Limit, +1 Deployment Limit.", "Description: A mysterious card with the mysterious assassin's contact information written in most mysterious ways.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000059.title: "Obtain Blank Business Card"
+	quest.C30000000000005A.title: "Doll House"
+	quest.C30000000000005A.quest_subtitle: "No.090 · Squad and Recruitment"
+	quest.C30000000000005A.quest_desc: ["Original effect: +10 Starting DP", "Description: All kids need at least one set.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000005A.title: "Obtain Doll House"
+	quest.C30000000000005B.title: "Miniature Stage Model"
+	quest.C30000000000005B.quest_subtitle: "No.091 · Squad and Recruitment"
+	quest.C30000000000005B.quest_desc: ["Original effect: +20 Starting DP", "Description: The red paint has not dried yet. Careful. Don't get that paint on your hand.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000005B.title: "Obtain Miniature Stage Model"
+	quest.C30000000000005C.title: "Dreambind Castle Model"
+	quest.C30000000000005C.quest_subtitle: "No.092 · Squad and Recruitment"
+	quest.C30000000000005C.quest_desc: ["Original effect: +30 Starting DP", "Description: You've seen this place, and you once wandered the castle, yet you now hold it in your hand. Is this real, or is it all a dream?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000005C.title: "Obtain Dreambind Castle Model"
+	quest.C30000000000005D.title: "Blunt Claws - Advancement"
+	quest.C30000000000005D.quest_subtitle: "No.093 · Squad and Recruitment"
+	quest.C30000000000005D.quest_desc: ["Original effect: Vanguard Operators have -2 DP Cost and +60% Max HP", "Description: Plant a great stone within the waters. Split the waves and part the fog.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000005D.title: "Obtain Blunt Claws - Advancement"
+	quest.C300000000000060.title: "Blunt Claws - Inspiration"
+	quest.C300000000000060.quest_subtitle: "No.096 · Squad and Recruitment"
+	quest.C300000000000060.quest_desc: ["Original effect: The Redeployment Time of Vanguard Operators -50%.", "Description: It's just a strategic retreat. That way, you can see what they look like before penetrating the enemy.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000060.title: "Obtain Blunt Claws - Inspiration"
+	quest.C300000000000062.title: "Bend Spears - Advancement"
+	quest.C300000000000062.quest_subtitle: "No.098 · Squad and Recruitment"
+	quest.C300000000000062.quest_desc: ["Original effect: Guard Operators have -3 DP Cost and +40% Max HP", "Description: The soldiers stepped onto the battlefield, drew their blades, and met in battle.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000062.title: "Obtain Bend Spears - Advancement"
+	quest.C300000000000065.title: "Bend Spears - Army of One"
+	quest.C300000000000065.quest_subtitle: "No.101 · Squad and Recruitment"
+	quest.C300000000000065.quest_desc: ["Original effect: Guard Operators have +1 Block.", "Description: One does not need to don heavy armor or hold up a shield to resist enemy attacks. Oftentimes, the best defense is to quickly eliminate those that would harm you.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000065.title: "Obtain Bend Spears - Army of One"
+	quest.C300000000000067.title: "Iron Guard - Advancement"
+	quest.C300000000000067.quest_subtitle: "No.103 · Squad and Recruitment"
+	quest.C300000000000067.quest_desc: ["Original effect: Defender Operators have -3 DP Cost and +40% Max HP", "Description: The shieldbearers formed a mountain range and became the earth. What they fight against are not enemies of flesh and blood. They fight against fate and injustice.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000067.title: "Obtain Iron Guard - Advancement"
+	quest.C30000000000006C.title: "Fatal Bolts - Advancement"
+	quest.C30000000000006C.quest_subtitle: "No.108 · Squad and Recruitment"
+	quest.C30000000000006C.quest_desc: ["Original effect: Sniper Operators have -2 DP Cost and +60% Max HP", "Description: Load, aim, and fire. Destruction arrives as scheduled.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000006C.title: "Obtain Fatal Bolts - Advancement"
+	quest.C300000000000071.title: "Broken Wand - Advancement"
+	quest.C300000000000071.quest_subtitle: "No.113 · Squad and Recruitment"
+	quest.C300000000000071.quest_desc: ["Original effect: Caster Operators have -3 DP Cost and +60% Max HP", "Description: Let Arts dance around your fingertips. Call the wind and rain, unravel reality, and achieve your grand goals.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000071.title: "Obtain Broken Wand - Advancement"
+	quest.C300000000000076.title: "Stalwart Aid - Advancement"
+	quest.C300000000000076.quest_subtitle: "No.118 · Squad and Recruitment"
+	quest.C300000000000076.quest_desc: ["Original effect: Supporter Operators have -2 DP Cost and +60% Max HP", "Description: Whenever you're 'almost done' with a task, what you need at that moment is someone to help you with the 'almost' part.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000076.title: "Obtain Stalwart Aid - Advancement"
+	quest.C30000000000007B.title: "Healer's Path - Advancement"
+	quest.C30000000000007B.quest_subtitle: "No.123 · Squad and Recruitment"
+	quest.C30000000000007B.quest_desc: ["Original effect: Medic Operators have -2 DP Cost and +60% Max HP", "Description: The desire to save lives is a virtue that mankind must applaud, for that is the support that keeps us alive.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000007B.title: "Obtain Healer's Path - Advancement"
+	quest.C300000000000080.title: "Rusted Blade - Advancement"
+	quest.C300000000000080.quest_subtitle: "No.128 · Squad and Recruitment"
+	quest.C300000000000080.quest_desc: ["Original effect: Specialist Operators have -2 DP Cost and +60% Max HP", "Description: There may be many means, but only one end.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000080.title: "Obtain Rusted Blade - Advancement"
+	quest.C300000000000083.title: "Rusted Blade - No Man's Land"
+	quest.C300000000000083.quest_subtitle: "No.131 · Squad and Recruitment"
+	quest.C300000000000083.quest_desc: ["Original effect: The Redeployment Time of Specialist Operators -35%.", "Description: Some operators have very peculiar combat methods. Don't make a fuss over how many times you see them, or how many of them you see.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000083.title: "Obtain Rusted Blade - No Man's Land"
+	quest.C300000000000084.title: "Rusted Blade - Overwhelm"
+	quest.C300000000000084.quest_subtitle: "No.132 · Squad and Recruitment"
+	quest.C300000000000084.quest_desc: ["Original effect: Specialist Operators have +2 shift strength.", "Description: Terrain is one aspect of battle... That's all I can say.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000084.title: "Obtain Rusted Blade - Overwhelm"
+	quest.C30000000000008B.title: "Hand of Snatcher"
+	quest.C30000000000008B.quest_subtitle: "No.139 · Squad and Recruitment"
+	quest.C30000000000008B.quest_desc: ["Original effect: Charger, Pioneer, and Tactician Operators' DP Cost -12 and gain 6 additional DP after defeating an enemy", "Description: Whatever it is you do not have, snatch it away from your enemy. There is no need to hesitate.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000008B.title: "Obtain Hand of Snatcher"
+	quest.C30000000000008C.title: "Blue Silk Scarf"
+	quest.C30000000000008C.quest_subtitle: "No.140 · Squad and Recruitment"
+	quest.C30000000000008C.quest_desc: ["Original effect: Hope +2, Squad Size Limit +1", "Description: A lady's elegant scarf. Her appearance is a sign that it is safe here.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000008C.title: "Obtain Blue Silk Scarf"
+	quest.C30000000000008D.title: "Red Bow Tie"
+	quest.C30000000000008D.quest_subtitle: "No.141 · Squad and Recruitment"
+	quest.C30000000000008D.quest_desc: ["Original effect: Hope +2, Deployment Limit +1", "Description: The first present Phantom gave Miss.Christine. She is really fond of it.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000008D.title: "Obtain Red Bow Tie"
+	quest.C30000000000008E.title: "Weird Flute"
+	quest.C30000000000008E.quest_subtitle: "No.142 · Squad and Recruitment"
+	quest.C30000000000008E.quest_desc: ["Original effect: Hope +4, Squad Size Limit +1", "Description: A weird-looking flute. Someone plays it day in and day out.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000008E.title: "Obtain Weird Flute"
+	quest.C30000000000008F.title: "Glass Bird"
+	quest.C30000000000008F.quest_subtitle: "No.143 · Squad and Recruitment"
+	quest.C30000000000008F.quest_desc: ["Original effect: Hope +4, Squad Size Limit +1", "Description: 'In this paradise of mine, the bird will sing forever and ever.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000008F.title: "Obtain Glass Bird"
+	quest.C300000000000090.title: "Solo Music Box"
+	quest.C300000000000090.quest_subtitle: "No.144 · Squad and Recruitment"
+	quest.C300000000000090.quest_desc: ["Original effect: Hope +4, Deployment Limit +1", "Description: An old music box. The music does not play when the box is opened, nor does the figure inside show any signs it is about to move. There is not a peep, and no one is breaking out in dance. Before she begins her performances with Phantom, the lead actress stares blankly into the music box.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000090.title: "Obtain Solo Music Box"
+	quest.C300000000000091.title: "Originium Iris"
+	quest.C300000000000091.quest_subtitle: "No.145 · Squad and Recruitment"
+	quest.C300000000000091.quest_desc: ["Original effect: Hope +6, Squad Size Limit +2", "Description: A most extravagant bouquet of flowers. The troupe leader has handed flowers like these to the leads during countless curtain calls.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000091.title: "Obtain Originium Iris"
+	quest.C300000000000092.title: "Pure Gold Expedition"
+	quest.C300000000000092.quest_subtitle: "No.146 · Squad and Recruitment"
+	quest.C300000000000092.quest_desc: ["Original effect: Hope +4, Squad Size Limit +1, Deployment Limit +1", "Description: The regent departed from the wastelands, and markets rose from beneath her dress like sprouts budding in the spring. The road of prosperity connected high mountains and dense forests, following her until she disappeared beyond the cliffs overlooking the western waves. —Ancient Sargon Fairy Tale", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000092.title: "Obtain Pure Gold Expedition"
+	quest.C3000000000000B0.title: "Condensed Suppressant"
+	quest.C3000000000000B0.quest_subtitle: "No.176 · Squad and Recruitment"
+	quest.C3000000000000B0.quest_desc: ["Original effect: All friendly units increase their ATK to 150% and silence the enemy for 3 seconds when attacking [Infected Creatures]", "Description: A medical reagent developed by Rhodes Island to suppress acute Oripathy infections. However, further enrichment of the reagent's concentration will cause irreversible damage to the infection site.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B0.title: "Obtain Condensed Suppressant"
+	quest.C3000000000000B7.title: "Gaul Mantle"
+	quest.C3000000000000B7.quest_subtitle: "No.183 · Squad and Recruitment"
+	quest.C3000000000000B7.quest_desc: ["Original effect: All enemy units have +25% ATK, DEF, and Max HP; 4-star and above Operators cost +1 Hope when recruited", "Description: An artifact left behind by the late Gaulish emperor. A symbol of power and glory.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B7.title: "Obtain Gaul Mantle"
+	quest.C3000000000000B8.title: "Gaul Mantle (Reforged)"
+	quest.C3000000000000B8.quest_subtitle: "No.184 · Squad and Recruitment"
+	quest.C3000000000000B8.quest_desc: ["Original effect: All enemy units have +30% ATK, DEF, and Max HP; 4-star and above Operators cost +2 Hope to recruit on odd-numbered floors, and +2 Hope to promote on even-numbered floors", "Description: An artifact left behind by the late Gaulish emperor. A symbol of power and glory.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B8.title: "Obtain Gaul Mantle (Reforged)"
+	quest.C3000000000000BB.title: "Sigil of Tragodia"
+	quest.C3000000000000BB.quest_subtitle: "No.187 · Squad and Recruitment"
+	quest.C3000000000000BB.quest_desc: ["Original effect: All enemy units have +30% ATK, DEF, and Max HP; Deployment Limit -2", "Description: A symbol that can be seen everywhere within the Crimson Troupe. It burns the troupe leader and his pursuit for the arts into the eyes of all those who lay their eyes upon it.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000BB.title: "Obtain Sigil of Tragodia"
+	quest.C3000000000000BC.title: "Sigil of Tragodia (Reforged)"
+	quest.C3000000000000BC.quest_subtitle: "No.188 · Squad and Recruitment"
+	quest.C3000000000000BC.quest_desc: ["Original effect: All enemy units have +35% ATK, DEF, and Max HP; Deployment Limit -3, but gain Deployment Limit +2 whenever you enter the Downtime Recreation node", "Description: A symbol that can be seen everywhere within the Crimson Troupe. It burns the troupe leader and his pursuit for the arts into the eyes of all those who lay their eyes upon it.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000BC.title: "Obtain Sigil of Tragodia (Reforged)"
+	quest.C3000000000000BD.title: "Playwright's Manuscript: Victoria"
+	quest.C3000000000000BD.quest_subtitle: "No.189 · Squad and Recruitment"
+	quest.C3000000000000BD.quest_desc: ["Original effect: All enemy units have +10% ATK, DEF, and Max HP; Operators cost +1 Hope to recruit (effect lasts for 1 recruit)", "Description: 'The Feline's crown shatters into pieces—'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000BD.title: "Obtain Playwright's Manuscript: Victoria"
+	quest.C3000000000000BF.title: "Playwright's Manuscript: Leithanien"
+	quest.C3000000000000BF.quest_subtitle: "No.191 · Squad and Recruitment"
+	quest.C3000000000000BF.quest_desc: ["Original effect: All enemy units have +10% ATK, DEF, and Max HP; All allied units have -10% ATK when DP is below 99", "Description: 'The Caprinae's spire collapses—'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000BF.title: "Obtain Playwright's Manuscript: Leithanien"
+	quest.C3000000000000C4.title: "'Blademace'"
+	quest.C3000000000000C4.quest_subtitle: "No.196 · Squad and Recruitment"
+	quest.C3000000000000C4.quest_desc: ["Original effect: All Operators have +5 DP Cost, but gain +10% ATK, DEF, and Max HP", "Description: A sword lodged in a stone. Was someone bored enough to do this?", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C4.title: "Obtain 'Blademace'"
+	quest.C3000000000000C5.title: "'Brokenblade'"
+	quest.C3000000000000C5.quest_subtitle: "No.197 · Squad and Recruitment"
+	quest.C3000000000000C5.quest_desc: ["Original effect: All Operators have -30% Max HP, but have -50% Redeployment Time", "Description: A broken sword. It's usable... probably...", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C5.title: "Obtain 'Brokenblade'"
+	quest.C3000000000000C8.title: "Jet-Black Dance Shoes"
+	quest.C3000000000000C8.quest_subtitle: "No.200 · Squad and Recruitment"
+	quest.C3000000000000C8.quest_desc: ["Original effect: Can deploy Melee Operators on High Ground tiles", "Description: The Columbian dancer's steps are firm and strong, her taps reverberating loudly in the air as she strikes the ground.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C8.title: "Obtain Jet-Black Dance Shoes"
+	quest.C3000000000000C9.title: "Pure White Dance Shoes"
+	quest.C3000000000000C9.quest_subtitle: "No.201 · Squad and Recruitment"
+	quest.C3000000000000C9.quest_desc: ["Original effect: Can deploy Ranged Operators on Low Ground tiles", "Description: The Ursus dancer's steps are swift and elegant, her body moving as she wills.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C9.title: "Obtain Pure White Dance Shoes"
+	quest.C3000000000000CB.title: "'Whiteflower'"
+	quest.C3000000000000CB.quest_subtitle: "No.203 · Squad and Recruitment"
+	quest.C3000000000000CB.quest_desc: ["Original effect: When the battle begins, randomize all allied operators' Deployment Cost", "Description: An artifact left behind by a 'Crimson Troupe' member. The stage name 'White Solanum' belonged to a famous Leithanian opera actress. Supposedly, the actress revered as the 'Whiteflower that stands atop the high tower' had complex relationships with many of the tower's nobles, and she even tried to spark a few scuffles among them.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000CB.title: "Obtain 'Whiteflower'"
+	quest.C3000000000000CC.title: "'Shadow'"
+	quest.C3000000000000CC.quest_subtitle: "No.204 · Squad and Recruitment"
+	quest.C3000000000000CC.quest_desc: ["Original effect: Increase the probability of Temporary Recruitment when using Recruitment Voucher", "Description: An artifact left behind by a 'Crimson Troupe' member. The rumor has it that, before he joined the troupe, the 'Shadow' was a Siracusan stage caster famous for his superb illusionary techniques. It is also said that he killed many members of the family during his performances with his Originium Arts.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000CC.title: "Obtain 'Shadow'"
+	quest.C3000000000000D1.title: "Useless Scissors"
+	quest.C3000000000000D1.quest_subtitle: "No.209 · Squad and Recruitment"
+	quest.C3000000000000D1.quest_desc: ["Original effect: Immediately adds +11 Originium Ingots and +3 Hope", "Description: This pair of scissors has been used for far, far too long. So long that it can no longer cut anything tangible, and so long that it can cut all things intangible to shreds.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D1.title: "Obtain Useless Scissors"
+	quest.C3000000000000D3.title: "Mantle of the Wrongly Condemned"
+	quest.C3000000000000D3.quest_subtitle: "No.211 · Squad and Recruitment"
+	quest.C3000000000000D3.quest_desc: ["Original effect: All friendly units have +2 DP Cost.", "Description: The crazed Caster of the tower organized a special banquet. All the guests who were present at the reception hall out of courtesy became witnesses when the curtain rose.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D3.title: "Obtain Mantle of the Wrongly Condemned"
+	quest.C3000000000000D6.title: "Dance of the Condemned"
+	quest.C3000000000000D6.quest_subtitle: "No.214 · Squad and Recruitment"
+	quest.C3000000000000D6.quest_desc: ["Original effect: Operator redeployment time -10%", "Description: They have trapped themselves in this place. Ah, peace and quiet. No one can interrupt this creation now.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D6.title: "Obtain Dance of the Condemned"
+	quest.C3000000000000DF.title: "'Tear of the Departed'"
+	quest.C3000000000000DF.quest_subtitle: "No.223 · Squad and Recruitment"
+	quest.C3000000000000DF.quest_desc: ["Original effect: All Operators gain 50% Sanctuary when affected by a negative status such as stun, cold or freeze", "Description: Forged with honesty and perseverance. No flame has burned in Whitesmith's furnace ever since.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000DF.title: "Obtain 'Tear of the Departed'"
+	quest.C3000000000000E4.title: "'Silence'"
+	quest.C3000000000000E4.quest_subtitle: "No.228 · Squad and Recruitment"
+	quest.C3000000000000E4.quest_desc: ["Original effect: Allied Operators gradually gain ATK when not using a skill, up to a maximum of +60% after 60 seconds; resets when a skill expires", "Description: When the climax arrives, the actor grabs his stinging throat and holds back the roiling fire in his chest, all without a word.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E4.title: "Obtain 'Silence'"
+	quest.C3000000000000F0.title: "Guard Cap"
+	quest.C3000000000000F0.quest_subtitle: "No.PCS02 · Squad and Recruitment"
+	quest.C3000000000000F0.quest_desc: ["Original effect: For a single battle, all friendly units have +25% HP each time they are deployed", "Description: 'You and I will cease one day, but our country is everlasting.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000F0.title: "Obtain Guard Cap"
+	quest.C100000000000008.title: "Resources and Economy"
+	quest.C100000000000008.quest_subtitle: "Contains 6 collectibles."
+	quest.C100000000000008.quest_desc: ["Primarily affects Originium Ingots, shops, goods, or collectible acquisition.", "Contains 6 collectibles."]
+	task.C200000000000008.title: "Read category guide"
+	quest.C30000000000000B.title: "Antique Coins"
+	quest.C30000000000000B.quest_subtitle: "No.011 · Resources and Economy"
+	quest.C30000000000000B.quest_desc: ["Original effect: Immediately adds +10 Originium Ingots.", "Description: An ancient, rusty coin, weathered to the point where one can no longer identify its age. Things like these are all too common throughout Terra's barrens.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000000B.title: "Obtain Antique Coins"
+	quest.C30000000000000C.title: "Actor's Jewelry Box"
+	quest.C30000000000000C.quest_subtitle: "No.012 · Resources and Economy"
+	quest.C30000000000000C.quest_desc: ["Original effect: Immediately adds +18 Originium Ingots.", "Description: A box containing all kinds of shattered jewelries. The young lead actress wore these jewelries and stepped onto the stage, in the end falling from its highest point.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000000C.title: "Obtain Actor's Jewelry Box"
+	quest.C30000000000000D.title: "Flawless Jadestone"
+	quest.C30000000000000D.quest_subtitle: "No.013 · Resources and Economy"
+	quest.C30000000000000D.quest_desc: ["Original effect: Immediately adds +25 Originium Ingots.", "Description: Even though it thrice brought the city to ruins, it yet shines radiantly in its flawless form. Even today, the Sargon emperor in possession of the gem has yet to find another piece of jewelry matching its brilliance, leaving it with naught but gunsmoke for a companion.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C40000000000000D.title: "Obtain Flawless Jadestone"
+	quest.C300000000000020.title: "Supreme Ring"
+	quest.C300000000000020.quest_subtitle: "No.032 · Resources and Economy"
+	quest.C300000000000020.quest_desc: ["Original effect: +50% Originium Ingot drops from battle.", "Description: In Leithanian mythology, he who holds the ring enjoys the vast riches of the entire world, but greed will also be his undoing.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000020.title: "Obtain Supreme Ring"
+	quest.C300000000000023.title: "Rusted Iron Hammer"
+	quest.C300000000000023.quest_subtitle: "No.035 · Resources and Economy"
+	quest.C300000000000023.quest_desc: ["Original effect: Shop vendors charge -50% Originium Ingots for their goods.", "Description: 'Change is necessary, and we must do all we can to hasten the oncoming storm.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000023.title: "Obtain Rusted Iron Hammer"
+	quest.C3000000000000C7.title: "Proof of Friendship"
+	quest.C3000000000000C7.quest_subtitle: "No.199 · Resources and Economy"
+	quest.C3000000000000C7.quest_desc: ["Original effect: +30% Originium Ingot drops from battle.", "Description: Some old Vampire families are still concerned with formalities and etiquette. When they extend to others their exalted friendship, they do not allow it to be sullied.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000C7.title: "Obtain Proof of Friendship"
+	quest.C100000000000009.title: "Special Rules"
+	quest.C100000000000009.quest_subtitle: "Contains 22 collectibles."
+	quest.C100000000000009.quest_desc: ["Special Integrated Strategies rules outside the categories above.", "Contains 22 collectibles."]
+	task.C200000000000009.title: "Read category guide"
+	quest.C300000000000021.title: "Victorian 'Scrap' Medal"
+	quest.C300000000000021.quest_subtitle: "No.033 · Special Rules"
+	quest.C300000000000021.quest_desc: ["Original effect: Gain +20% Command EXP from battles", "Description: A knight's medal that Siege threw together and awarded to Dagda on the spot. The materials used are pitiful, but it holds a lot of meaning to Dagda.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000021.title: "Obtain Victorian 'Scrap' Medal"
+	quest.C300000000000022.title: "Leithanian Medal of Honor"
+	quest.C300000000000022.quest_subtitle: "No.034 · Special Rules"
+	quest.C300000000000022.quest_desc: ["Original effect: Gain +30% Command EXP from battles", "Description: The twin empresses rarely do anything together, but conferring awards on those who create art is one such thing.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000022.title: "Obtain Leithanian Medal of Honor"
+	quest.C300000000000034.title: "'The Whisperer in Darknight'"
+	quest.C300000000000034.quest_subtitle: "No.052 · Special Rules"
+	quest.C300000000000034.quest_desc: ["Original effect: All enemy units have -10% HP.", "Description: A black vinyl. DO. NOT. TOUCH. IT.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000034.title: "Obtain 'The Whisperer in Darknight'"
+	quest.C300000000000035.title: "Gold-Plated Die"
+	quest.C300000000000035.quest_subtitle: "No.053 · Special Rules"
+	quest.C300000000000035.quest_desc: ["Original effect: All enemy units have -15% HP.", "Description: The gold-plated die has one side representing life. As for the other nineteen sides...", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000035.title: "Obtain Gold-Plated Die"
+	quest.C300000000000036.title: "‘Profound Silence'"
+	quest.C300000000000036.quest_subtitle: "No.054 · Special Rules"
+	quest.C300000000000036.quest_desc: ["Original effect: All enemy units have -20% HP.", "Description: A painting that depicts the greatest disaster in Iberian history. Its brushstrokes, colors, and images are all meaningless. 'The Ægir know. The Ægir know. The Ægir know.'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000036.title: "Obtain ‘Profound Silence'"
+	quest.C300000000000040.title: "Noxious Hemostatic Agent"
+	quest.C300000000000040.quest_subtitle: "No.064 · Special Rules"
+	quest.C300000000000040.quest_desc: ["Original effect: All friendly units have +20% HP.", "Description: 'After fermentation, the body fluids of this Originium slug can be used to stop bleeding.' —'Rhodes Island Wilderness Survival Guide'", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000040.title: "Obtain Noxious Hemostatic Agent"
+	quest.C300000000000041.title: "First Aid Kit"
+	quest.C300000000000041.quest_subtitle: "No.065 · Special Rules"
+	quest.C300000000000041.quest_desc: ["Original effect: All friendly units have +35% HP.", "Description: '...Please use antibiotics and ethanol additives under the supervision of professionals...' —Rim Billiton Production Safety Manual", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000041.title: "Obtain First Aid Kit"
+	quest.C300000000000042.title: "Unknown Instrument"
+	quest.C300000000000042.quest_subtitle: "No.066 · Special Rules"
+	quest.C300000000000042.quest_desc: ["Original effect: All friendly units have +50% HP.", "Description: Don't ask. It's for your own good.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000042.title: "Obtain Unknown Instrument"
+	quest.C300000000000086.title: "Hand of Choker"
+	quest.C300000000000086.quest_subtitle: "No.134 · Special Rules"
+	quest.C300000000000086.quest_desc: ["Original effect: Heavyshooter, Deadeye, and Besieger Operators' attacks will defeat all non-Boss enemy units at 30% or less HP", "Description: With your last strength, break open a last bit of hope for yourself.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000086.title: "Obtain Hand of Choker"
+	quest.C300000000000089.title: "Hand of Shredder"
+	quest.C300000000000089.quest_subtitle: "No.137 · Special Rules"
+	quest.C300000000000089.quest_desc: ["Original effect: Dreadnought, Swordmaster, and Instructor Operators' attacks ignore 70% of target's DEF", "Description: Tear it all apart. Their armor is nothing but cloth in your hands.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C400000000000089.title: "Obtain Hand of Shredder"
+	quest.C3000000000000B1.title: "Ursus Chachek"
+	quest.C3000000000000B1.quest_subtitle: "No.177 · Special Rules"
+	quest.C3000000000000B1.quest_desc: ["Original effect: All enemy units have +40% ATK, DEF, and Max HP", "Description: The currents of steel and iron gush forth on the barren plains. From afar surge an inviolable, absolute will. Wheresoever my hands reach, there stands Ursus.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B1.title: "Obtain Ursus Chachek"
+	quest.C3000000000000B2.title: "Ursus Chachek (Reforged)"
+	quest.C3000000000000B2.quest_subtitle: "No.178 · Special Rules"
+	quest.C3000000000000B2.quest_desc: ["Original effect: All enemy units gain +35% ATK, DEF, and Max HP, and gain an additional +10% to these three stats upon entering a new floor, but clearing an Emergency Op reduces these stats by 5% (minimum 35%)", "Description: The currents of steel and iron gush forth on the barren plains. From afar surge an inviolable, absolute will. Wheresoever my hands reach, there stands Ursus.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B2.title: "Obtain Ursus Chachek (Reforged)"
+	quest.C3000000000000B9.title: "Half-Refined Diamond"
+	quest.C3000000000000B9.quest_subtitle: "No.185 · Special Rules"
+	quest.C3000000000000B9.quest_desc: ["Original effect: All enemy units have +25% ATK, DEF, and Max HP; Gain -50% Command EXP from battles", "Description: Half of it shines radiantly in the name of art, while the other half is stained in a madder red color that signifies madness. This is the 'Phantom' that the troupe leader has always dreamt of.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000B9.title: "Obtain Half-Refined Diamond"
+	quest.C3000000000000BA.title: "Half-Refined Diamond (Reforged)"
+	quest.C3000000000000BA.quest_subtitle: "No.186 · Special Rules"
+	quest.C3000000000000BA.quest_desc: ["Original effect: All enemy units have +30% ATK, DEF, and Max HP; Gain -70% Command EXP from battles; Dreadful Foe nodes grant 15x Command EXP", "Description: Half of it shines radiantly in the name of art, while the other half is stained in a madder red color that signifies madness. This is the 'Phantom' that the troupe leader has always dreamt of.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000BA.title: "Obtain Half-Refined Diamond (Reforged)"
+	quest.C3000000000000D2.title: "Blank Suicide Note"
+	quest.C3000000000000D2.quest_subtitle: "No.210 · Special Rules"
+	quest.C3000000000000D2.quest_desc: ["Original effect: Neutralizes Big Sad Lock's Self-Healing abilities", "Description: His only wish was to escape the madman who wanted control over him. Now, he got his wish.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D2.title: "Obtain Blank Suicide Note"
+	quest.C3000000000000D4.title: "Stand-in Actor"
+	quest.C3000000000000D4.quest_subtitle: "No.212 · Special Rules"
+	quest.C3000000000000D4.quest_desc: ["Original effect: All friendly units have +3% ATK, DEF, and Max HP", "Description: The playwright never approved of his inauguration of these shows. No matter, though. The master of ceremonies is not discouraged. He has as many understudies at his disposal.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000D4.title: "Obtain Stand-in Actor"
+	quest.C3000000000000DB.title: "Victory Horn"
+	quest.C3000000000000DB.quest_subtitle: "No.219 · Special Rules"
+	quest.C3000000000000DB.quest_desc: ["Original effect: Duration of single instance status effects such as stun, cold or freeze is increased by 100%", "Description: Blow the horn, cry out, and scatter our foes with its roar!", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000DB.title: "Obtain Victory Horn"
+	quest.C3000000000000DC.title: "Flash Camera"
+	quest.C3000000000000DC.quest_subtitle: "No.220 · Special Rules"
+	quest.C3000000000000DC.quest_desc: ["Original effect: Duration of single instance status effects such as stun, cold or freeze is increased by 110%", "Description: Every photo shot by this camera is washed out in white, with only the victim's twisted expression faintly visible.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000DC.title: "Obtain Flash Camera"
+	quest.C3000000000000DD.title: "Therapy Tape"
+	quest.C3000000000000DD.quest_subtitle: "No.221 · Special Rules"
+	quest.C3000000000000DD.quest_desc: ["Original effect: Duration of single instance status effects such as stun, cold or freeze is increased by 150%", "Description: He tried to stop you from listening. He said it was dangerous. He said you should not stay. Do you understand now? You are listening to his song.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000DD.title: "Obtain Therapy Tape"
+	quest.C3000000000000E2.title: "Angelina's Inspiration"
+	quest.C3000000000000E2.quest_subtitle: "No.226 · Special Rules"
+	quest.C3000000000000E2.quest_desc: ["Original effect: All enemy units have Movement Speed -15%, and their weight is reduced by one rank", "Description: The girl has no qualms about sharing her Originium Arts. She believes that you will use it for the right reasons.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000E2.title: "Obtain Angelina's Inspiration"
+	quest.C3000000000000F1.title: "'Painful Happiness'"
+	quest.C3000000000000F1.quest_subtitle: "No.PCS03 · Special Rules"
+	quest.C3000000000000F1.quest_desc: ["Original effect: All enemy units have -15% HP and Movement Speed", "Description: Oripathy is spreading among the troupe members. Some collapsed, some broke out crying, some were overjoyed, and some turned their attention to writing. It was at such a time that the young man received his coming-of-age present. He will sing his very last song as an actor.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000F1.title: "Obtain 'Painful Happiness'"
+	quest.C3000000000000F4.title: "'Eventide Terror'"
+	quest.C3000000000000F4.quest_subtitle: "No.PCS06 · Special Rules"
+	quest.C3000000000000F4.quest_desc: ["Original effect: Deals Stun on all enemy units for 5 seconds every time an enemy unit enters the Protection Objective", "Description: There will come a day of darkness that not even light can save. The leader of the troupe has prepared a fine wine to properly appreciate human despair.", "Equip in any accessory slot; see the item tooltip and Abilities panel for the Minecraft effect."]
+	task.C4000000000000F4.title: "Obtain 'Eventide Terror'"
+	chapter.534B494C4C534348.title: "Operator Skills"
+	quest.D100000000000000.title: "Operator Skill Training"
+	quest.D100000000000000.quest_subtitle: "Review skill data and Ponder demonstrations"
+	quest.D100000000000000.quest_desc: ["This chapter contains the nine currently registered Operator skill items.", "Hover over a skill item and hold the Ponder key to view its mechanics demonstration.", "Demonstrations explain the Minecraft interpretation and do not directly apply server-side damage."]
+	task.D200000000000000.title: "Read the skill training guide"
+	quest.D300000000000001.title: "Myrtle: Support β"
+	quest.D300000000000001.quest_subtitle: "Vanguard · Auto Recovery · Manual"
+	quest.D300000000000001.quest_desc: ["Initial SP 13 · SP Cost 22 · Duration 8s", "Stops attacking and gradually recovers deployment points during the skill.", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000001.title: "Obtain Support β"
+	task.D500000000000001.title: "Confirm the demonstration was viewed"
+	quest.D300000000000002.title: "SilverAsh: Truesilver Slash"
+	quest.D300000000000002.quest_subtitle: "Guard · Auto Recovery · Manual"
+	quest.D300000000000002.quest_desc: ["Initial SP 75 · SP Cost 90 · Duration 30s", "Reduces DEF, greatly increases ATK and range, and attacks up to six targets.", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000002.title: "Obtain Truesilver Slash"
+	task.D500000000000002.title: "Confirm the demonstration was viewed"
+	quest.D300000000000003.title: "Exusiai: Overloading Mode"
+	quest.D300000000000003.quest_subtitle: "Sniper · Auto Recovery · Auto Trigger"
+	quest.D300000000000003.quest_desc: ["Initial SP 20 · SP Cost 30 · Duration 15s", "Activates automatically, changes attacks to five-shot bursts, and shortens the interval.", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000003.title: "Obtain Overloading Mode"
+	task.D500000000000003.title: "Confirm the demonstration was viewed"
+	quest.D300000000000004.title: "Wiš'adel: Explosive Dawn"
+	quest.D300000000000004.quest_subtitle: "Sniper · Auto Recovery · Manual Toggled"
+	quest.D300000000000004.quest_desc: ["Initial SP 40 · SP Cost 50 · Ammo skill", "Immediately summons 2 Revenant's Shadows in attack range (up to 3 at a time; they remain after the skill expires). ATK +180%, Attack Interval is greatly increased, attacks deal 220% ATK, splash area is greatly increased, and Talent 1 trigger chance is increased to 100%. Skill activation grants 6 ammo and the skill ends when all ammo are used (can be manually deactivated).", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000004.title: "Obtain Explosive Dawn"
+	task.D500000000000004.title: "Confirm the demonstration was viewed"
+	quest.D300000000000005.title: "Eyjafjalla: Volcano"
+	quest.D300000000000005.quest_subtitle: "Caster · Auto Recovery · Manual"
+	quest.D300000000000005.quest_desc: ["Initial SP 55 · SP Cost 80 · Duration 15s", "Expands range and rapidly launches lava at up to six enemies in range.", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000005.title: "Obtain Volcano"
+	task.D500000000000005.title: "Confirm the demonstration was viewed"
+	quest.D300000000000006.title: "Saria: Calcification"
+	quest.D300000000000006.quest_subtitle: "Defender · Auto Recovery · Manual"
+	quest.D300000000000006.quest_desc: ["Initial SP 70 · SP Cost 80 · Duration 30s", "Continuously heals nearby allies while slowing enemies and amplifying Arts damage.", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000006.title: "Obtain Calcification"
+	task.D500000000000006.title: "Confirm the demonstration was viewed"
+	quest.D300000000000007.title: "Nightingale: Sanctuary"
+	quest.D300000000000007.quest_subtitle: "Medic · Auto Recovery · Manual"
+	quest.D300000000000007.quest_desc: ["Initial SP 115 · SP Cost 120 · Duration 60s", "Expands healing range and grants allies Arts resistance and Arts evasion.", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000007.title: "Obtain Sanctuary"
+	task.D500000000000007.title: "Confirm the demonstration was viewed"
+	quest.D300000000000008.title: "Suzuran: Foxfire Haze"
+	quest.D300000000000008.quest_subtitle: "Supporter · Auto Recovery · Manual"
+	quest.D300000000000008.quest_desc: ["Initial SP 50 · SP Cost 70 · Duration 35s", "Stops attacking, expands range, slows enemies, and continuously restores allies.", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000008.title: "Obtain Foxfire Haze"
+	task.D500000000000008.title: "Confirm the demonstration was viewed"
+	quest.D300000000000009.title: "Projekt Red: Wolfpack"
+	quest.D300000000000009.quest_subtitle: "Specialist · Passive · On Deployment"
+	quest.D300000000000009.quest_desc: ["Initial SP 0 · SP Cost 0 · No duration", "On deployment, damages all nearby ground enemies and stuns them for three seconds.", "Obtain the skill item, view its Ponder demonstration, then confirm manually."]
+	task.D400000000000009.title: "Obtain Wolfpack"
+	task.D500000000000009.title: "Confirm the demonstration was viewed"
 }

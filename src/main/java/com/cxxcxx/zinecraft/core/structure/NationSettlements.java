@@ -10,7 +10,19 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.List;
+
 public final class NationSettlements {
+  /**
+   * Dense national settlement placement. The 17-chunk minimum center gap remains
+   * larger than twice the 112-block Jigsaw radius, so neighbouring settlements
+   * cannot overlap even when both assemblies reach their configured boundary.
+   */
+  static final int DENSE_SETTLEMENT_SPACING = 36;
+  static final int DENSE_SETTLEMENT_SEPARATION = 16;
+  static final int DENSE_SETTLEMENT_JIGSAW_DEPTH = 9;
+  static final int DENSE_SETTLEMENT_MAX_DISTANCE = 112;
   @NotNull
   public static final NationSettlements INSTANCE = new NationSettlements();
   @NotNull
@@ -23,7 +35,7 @@ public final class NationSettlements {
       "hydroponics_lab",
       "bathysphere_dock",
       "current_archive",
-      64,
+      DENSE_SETTLEMENT_SPACING,
       Types.OCEAN_FLOOR_WG,
       0,
       0.0F,
@@ -74,7 +86,7 @@ public final class NationSettlements {
       "machine_shop",
       "arcade",
       "transit_station",
-      60,
+      DENSE_SETTLEMENT_SPACING,
       null,
       24,
       0.0F,
@@ -337,7 +349,51 @@ public final class NationSettlements {
       null
   );
 
+  static {
+    validateNationCoverage();
+  }
+
   private NationSettlements() {
+  }
+
+  /**
+   * Fails data generation early if a national biome loses its one-to-one settlement binding.
+   */
+  private static void validateNationCoverage() {
+    List<JigsawBuildingEntry> settlements = List.of(
+        AEGIR_SUBSEA_ENCLAVE, BOLIVAR_DOSSOLES_DISTRICT, HIGASHI_SOKOGAWA_TOWN,
+        DURIN_IDEAL_CITY_BLOCK, COLUMBIA_FRONTIER_TOWN, KAZIMIERZ_KNIGHT_BOROUGH,
+        KAZDEL_SARKAZ_SETTLEMENT, LATERANO_MONASTERY_TOWN, LEITHANIEN_MUSIC_TOWN,
+        RIM_BILLITON_MINING_CAMP, MINOS_HEROIC_POLIS, SARGON_OASIS_TOWN,
+        SAMI_SNOWPRIEST_VILLAGE, VICTORIA_INDUSTRIAL_BOROUGH, URSUS_NORTHERN_TOWN,
+        KJERAG_MOUNTAIN_VILLAGE, SIRACUSA_FAMILY_TOWN, YAN_SHANGSHU_TOWN,
+        IBERIA_COASTAL_TOWN
+    );
+    var biomes = new HashSet<ResourceKey<Biome>>();
+    var structureIds = new HashSet<>();
+    int fixedOriginCount = 0;
+    for (JigsawBuildingEntry settlement : settlements) {
+      if (settlement.getBiome() == null || !biomes.add(settlement.getBiome())) {
+        throw new IllegalStateException("十九国群系必须各自唯一绑定一个本国聚落");
+      }
+      if (!structureIds.add(settlement.getStructureKey())) {
+        throw new IllegalStateException("国家聚落结构 ID 不得重复");
+      }
+      if (settlement.getUnique()
+          || settlement.getSize() != DENSE_SETTLEMENT_JIGSAW_DEPTH
+          || settlement.getMaxDistanceFromCenter() != DENSE_SETTLEMENT_MAX_DISTANCE) {
+        throw new IllegalStateException("国家普通聚落不得使用唯一地标放置，且必须遵守统一展开上限");
+      }
+      if (settlement.getFixedOrigin()) {
+        fixedOriginCount++;
+      } else if (settlement.getSpacing() != DENSE_SETTLEMENT_SPACING
+          || settlement.getSeparation() != DENSE_SETTLEMENT_SEPARATION) {
+        throw new IllegalStateException("外围国家聚落必须使用统一高密度随机散布参数");
+      }
+    }
+    if (settlements.size() != 19 || biomes.size() != 19 || fixedOriginCount != 1) {
+      throw new IllegalStateException("国家聚落覆盖必须恰好为 19 国");
+    }
   }
 
   static JigsawBuildingEntry settlementWithDefaults(
@@ -357,7 +413,7 @@ public final class NationSettlements {
       Object var13
   ) {
     if ((var12 & 128) != 0) {
-      var8 = 52;
+      var8 = DENSE_SETTLEMENT_SPACING;
     }
 
     if ((var12 & 256) != 0) {
@@ -487,9 +543,21 @@ public final class NationSettlements {
     String string = "nation_settlements/" + path;
     Pair[] pairs = new Pair[]{Pair.of(first, 4), Pair.of(second, 3), Pair.of(third, 2), Pair.of(fourth, 2)};
     var templates = com.cxxcxx.zinecraft.api.util.CollectionSupport.<String, Integer>linkedMapOf(pairs);
-    if ("laterano_monastery_town".equals(path)) {
-      return structureCatalog.fixedOriginSettlement(path, string, biome, salt, templates, 7, 112, heightmap, startHeight, removeVinesChance);
+    if (spacing != DENSE_SETTLEMENT_SPACING) {
+      throw new IllegalStateException("十九国普通聚落必须使用统一高密度 spacing: " + path);
     }
-    return structureCatalog.settlement(path, string, biome, salt, templates, spacing, 24, 7, 112, heightmap, startHeight, removeVinesChance);
+    if ("laterano_monastery_town".equals(path)) {
+      return structureCatalog.fixedOriginSettlement(
+          path, string, biome, salt, templates,
+          DENSE_SETTLEMENT_JIGSAW_DEPTH, DENSE_SETTLEMENT_MAX_DISTANCE,
+          heightmap, startHeight, removeVinesChance
+      );
+    }
+    return structureCatalog.settlement(
+        path, string, biome, salt, templates,
+        spacing, DENSE_SETTLEMENT_SEPARATION,
+        DENSE_SETTLEMENT_JIGSAW_DEPTH, DENSE_SETTLEMENT_MAX_DISTANCE,
+        heightmap, startHeight, removeVinesChance
+    );
   }
 }

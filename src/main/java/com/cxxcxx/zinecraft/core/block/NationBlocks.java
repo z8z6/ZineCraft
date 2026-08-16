@@ -69,6 +69,8 @@ public final class NationBlocks {
   @NotNull
   private static final BlockEntry<Block> SAMI_RITUAL_STONE;
   @NotNull
+  private static final BlockEntry<Block> SAMI_TRIBAL_TIMBER;
+  @NotNull
   private static final BlockEntry<Block> VICTORIA_MOORLAND_SOIL;
   @NotNull
   private static final BlockEntry<Block> VICTORIA_INDUSTRIAL_BRICK;
@@ -192,6 +194,9 @@ public final class NationBlocks {
     nationBlocks = INSTANCE;
     block = Blocks.STONE_BRICKS;
     SAMI_RITUAL_STONE = nationBlocks.material("sami_ritual_stone", "萨米祭仪石", "Sami Ritual Stone", block);
+    nationBlocks = INSTANCE;
+    block = Blocks.SPRUCE_PLANKS;
+    SAMI_TRIBAL_TIMBER = nationBlocks.material("sami_tribal_timber", "萨米部族木构", "Sami Tribal Timber", block);
     nationBlocks = INSTANCE;
     block = Blocks.MUD;
     VICTORIA_MOORLAND_SOIL = nationBlocks.material("victoria_moorland_soil", "维多利亚雾沼土", "Victoria Moorland Soil", block);
@@ -396,6 +401,11 @@ public final class NationBlocks {
   @NotNull
   public final Block getSAMI_RITUAL_STONE() {
     return SAMI_RITUAL_STONE.getBlock();
+  }
+
+  @NotNull
+  public final Block getSAMI_TRIBAL_TIMBER() {
+    return SAMI_TRIBAL_TIMBER.getBlock();
   }
 
   @NotNull

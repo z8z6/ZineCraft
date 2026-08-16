@@ -1,45 +1,65 @@
 # 十九国地标结构实现
 
-状态：`ARCHITECTURE PASS / IN-GAME REVIEW REQUIRED`
+状态：`CG FIDELITY BLOCKOUT / IN-GAME REVIEW REQUIRED`
 更新：2026-08-16
 
 ## 实现范围
 
-十九国 38 个公开地标 ID 全部保留，旧单 NBT 小型图标结构已替换为六段式 Jigsaw：
+十九国 38 个公开地标 ID 保留，每座仍由六个 Jigsaw NBT 组成：
 
 ```text
-foundation → core → facade → roof → annex → surrounding
+foundation + core + facade + roof + annex + surrounding
 ```
 
-每座地标包含 6 个 NBT，共 228 个模块。确定性拼装包围范围约 `136×64×72`，达到 L 级；实际模块文件位于
-`data/zinecraft/structure/nation_landmarks/<public_id>/`。
+总计 228 个模板，位于 `data/zinecraft/structure/nation_landmarks/<public_id>/`。公开 `/locate` 与 `/place`
+路径没有改变；旧英文名称缺乏正史依据时仅作为兼容 ID。
 
-旧名称缺少证据时仅作为技术兼容 ID。建筑体量、房间和环境按对应国家 `REDESIGN.md` 转译，不继续复刻旧名称暗示的错误形体。
+本次删除了原生成器的 `kind`、`PROGRAM_FEATURES`、特征族和公共体块算法。`generate_nation_landmarks.py`
+现在只顺序调用十九个国家文件并执行全局校验；建筑逻辑位于：
 
-38 座地标各有一组显式 `PROGRAM_FEATURES`，每组包含三个用途特征。`public_program`
-参与稳定布局计算；三个特征全部进入核心体块，并分别驱动立面入口、附属用途设施和周边环境。生成器提供机械、水利、物流、防御、公共空间与空间结构六类构造语法，同时强制
-38 份最终特征签名互不重复，避免重新退化为同一建筑换材质。
+```text
+script/nation_landmarks/
+├── base.py                 # 仅方块状态、坐标、NBT/Jigsaw 序列化和通用断言
+├── aegir.py                # 每国两座独立 builder
+├── ...
+└── yan.py
+```
 
-## 注册
+每座地标都有独立函数、显式模块尺寸、接口坐标、房间、楼梯和形体循环。共享层没有房间模板、轮廓
+profile、屋顶族或国家参数表。全局校验对“忽略国家材质后的模块尺寸 + 实际方块坐标 + 状态”计算摘要，38 个摘要必须互不相同，材质换皮不能通过。
 
-`NationLandmarks.modularLandmark` 保留原结构 key、群系、环形唯一放置与 `/locate` ID，同时为每座地标注册六个唯一模板池。Jigsaw
-深度为 7，`maxDistanceFromCenter=112`；128 会因 Minecraft 1.21.1 将 `BEARD_THIN` 地形适配范围计入上限而被数据编解码拒绝。
+## CG 尺度与轮廓
 
-## 可玩性
+本轮在 `F:/netdisk/明日方舟/CG、背景/背景/` 实际查看每国高可信背景，并为38座建筑记录主图、可见锚点和可信边界，见
+`CG_FIDELITY_PASS.md`。组合尺度不再统一为 `136×64×72`，而是按画面在以下范围内变化：
 
-- 核心和附属空间包含可通行房间、Create 黄铜门、实体楼梯及两格头部净空。
-- 核心顶部的连续背板梯跨过 Jigsaw 接口和屋顶双层板，连接带落脚平台、三格高出口通道和护栏的可用屋顶空间。
-- 主照明连接顶棚、墙或结构梁；容器位于完成地板上一格。
-- 容器引用 `zinecraft:chests/nation/<country>_structure`。
-- surrounding 模块提供道路、广场、栈桥、场地或国家基础设施语境，而不是孤立地标落在空地上。
+- 水平组合：`136—192` 格；
+- 高度：`36—112` 格；
+- 纵深：`104—176` 格；
+- 玉门、萨尔贡倒金字塔等画面为 XXL 城市巨构，当前六模块只实现可游玩的 XL 裁切，文档明确保留尺度差。
 
-## 自动验证
+形体不再以正交大盒为默认：当前使用竖向压力塔群、连续拱街、悬挑晶体、半穹顶、竞技场碗、断裂塔片、音管双塔、矿井拱架、倒金字塔、挑檐栈桥、斜面炮座、山体错台、飞扶壁和盐蚀缺口等独立构造。
 
-生成器检查 38 个公开 ID、每座六模块、Jigsaw `target/name/pool`
-配对、拼装范围、入口与房间连通、门、楼梯净空、灯具承托、容器高度和国家战利品路径；还检查四组水平接口两侧的脚部与两格头部净空，以及垂直接口、舱口、连续梯背板、屋顶落脚点和护栏。屋顶动线会把
-core 与 roof 按实际世界高度组装，替换两个 Jigsaw 的 `final_state`
-，再以两格人体三维搜索证明内部顶层能够到达屋顶平台。用途验证要求每座地标恰有三个特征、核心/立面/附属/周边四模块均落实功能，并保证
-38 份生成签名唯一。数据生成进一步验证 228 个模板池与 38 个世界结构注册。
+## 注册与生成
 
-仍需在新世界逐国验证 `/place structure`、`/locate structure`、地形适配、旋转后接缝、Create 方块状态和远中近距离轮廓；完成前不标记为
-Canonical Final。
+Java 侧 `NationLandmarks.modularLandmark` 保留原结构 key、六个模板池、国家偏好群系、环形唯一放置和
+`maxDistanceFromCenter=112`。
+正式地标使用 `guaranteedLandmark`；候选优先纠偏到本国群系，在附近无本国群系时允许泰拉群系回退，避免唯一候选缺席。
+
+最大环距 56 的保守距离上界仍为 `4944` 格，低于5000格。这里指世界种子存在合法候选；候选区块必须加载后结构才会写入存档。
+
+## 可玩性与自动验证
+
+- 每座地标包含至少两扇黄铜门、实体楼梯、屋顶梯路、三只国家战利品箱和八个有承托的主灯。
+- 水平 Jigsaw 接口必须方向相对、解析为空气，脚部与两格头部净空不可被模块壳体封死。
+- 每个模板轴长不超过 Minecraft 结构模板的48格限制。
+- 战利品固定引用 `zinecraft:chests/nation/<country>_structure`，箱体下方必须是完成地板。
+- 楼梯上方两格必须为空；灯具必须邻接墙、梁、链、栏杆或结构板。
+- 生成器检查十九国、38个旧公开ID、每座六模块、228个输出、五对 Jigsaw 接口和38个实际几何摘要。
+
+## 未完成门槛
+
+本轮是形体和尺度 Blockout，不标记为 Canonical Final。仍需在新世界逐国执行 `/place structure` 与
+`/locate structure`，从500/300、150、50、10格观察轮廓，并检查旋转接缝、地形裁切、室内完整动线、Create方块状态和帧率。
+
+官方背景只用于形体研究；材质资源的裁切、授权与贴图接入由国家材质流程单独记录，地标脚本本身不内嵌官方图片。

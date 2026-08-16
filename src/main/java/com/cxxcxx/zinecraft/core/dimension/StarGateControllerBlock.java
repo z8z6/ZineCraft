@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -71,29 +72,15 @@ public final class StarGateControllerBlock extends Block {
     builder.add(propertys);
   }
 
-  protected void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState newState, boolean movedByPiston) {
-    if (!state.is(newState.getBlock()) && (Boolean) state.getValue((Property) ACTIVE)) {
-      StarGateStructure starGateStructure = StarGateStructure.INSTANCE;
-      LevelAccessor levelAccessor = (LevelAccessor) level;
-      Comparable comparable = state.getValue((Property) AXIS);
-      starGateStructure.deactivate(levelAccessor, pos, (Axis) comparable);
+  static Axis rotateAxis(@NotNull Axis axis, @NotNull Rotation rotation) {
+    if (axis == Axis.Y) {
+      return axis;
     }
-
-    super.onRemove(state, level, pos, newState, movedByPiston);
-  }
-
-  @NotNull
-  protected InteractionResult useWithoutItem(
-      @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit
-  ) {
-    if (!level.isClientSide) {
-      String string = state.getValue(ACTIVE)
-          ? "message.zinecraft.stargate.already_active"
-          : "message.zinecraft.stargate.requires_protocol_originium";
-      player.displayClientMessage((Component) Component.translatable(string), true);
-    }
-
-    return InteractionResult.SUCCESS;
+    StarGateGeometry.HorizontalAxis horizontalAxis = axis == Axis.X
+        ? StarGateGeometry.HorizontalAxis.X
+        : StarGateGeometry.HorizontalAxis.Z;
+    boolean quarterTurn = rotation == Rotation.CLOCKWISE_90 || rotation == Rotation.COUNTERCLOCKWISE_90;
+    return StarGateGeometry.rotateAxis(horizontalAxis, quarterTurn) == StarGateGeometry.HorizontalAxis.X ? Axis.X : Axis.Z;
   }
 
   @NotNull
@@ -126,7 +113,7 @@ public final class StarGateControllerBlock extends Block {
         boolean bl = starGateStructure.activate(levelAccessor, pos, (Axis) comparable);
         if (bl) {
           player.displayClientMessage((Component) Component.translatable("message.zinecraft.stargate.activated"), true);
-          BlockPos portalCenter = starGateStructure.portalCenter(pos, (Axis) comparable);
+          BlockPos portalCenter = starGateStructure.portalCenter(levelAccessor, pos, (Axis) comparable);
           level.playSound(null, portalCenter, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.8F, 0.75F);
           level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.4F, 0.65F);
           if (level instanceof ServerLevel serverLevel) {
@@ -149,6 +136,36 @@ public final class StarGateControllerBlock extends Block {
 
       return ItemInteractionResult.SUCCESS;
     }
+  }
+
+  protected void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState newState, boolean movedByPiston) {
+    if (!state.is(newState.getBlock()) && (Boolean) state.getValue((Property) ACTIVE)) {
+      StarGateStructure starGateStructure = StarGateStructure.INSTANCE;
+      LevelAccessor levelAccessor = (LevelAccessor) level;
+      Comparable comparable = state.getValue((Property) AXIS);
+      starGateStructure.deactivate(levelAccessor, pos, (Axis) comparable);
+    }
+
+    super.onRemove(state, level, pos, newState, movedByPiston);
+  }
+
+  @NotNull
+  protected InteractionResult useWithoutItem(
+      @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit
+  ) {
+    if (!level.isClientSide) {
+      String string = state.getValue(ACTIVE)
+          ? "message.zinecraft.stargate.already_active"
+          : "message.zinecraft.stargate.requires_protocol_originium";
+      player.displayClientMessage((Component) Component.translatable(string), true);
+    }
+
+    return InteractionResult.SUCCESS;
+  }
+
+  @Override
+  protected BlockState rotate(@NotNull BlockState state, @NotNull Rotation rotation) {
+    return state.setValue(AXIS, rotateAxis(state.getValue(AXIS), rotation));
   }
 
   public static final class Access {

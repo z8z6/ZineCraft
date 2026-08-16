@@ -63,12 +63,24 @@ public final class CombatService {
       double baseAttack,
       CombatRequest request
   ) {
+    return calculateDamageFromResolvedAttack(target, type, attack(attacker, baseAttack), request);
+  }
+
+  /**
+   * Calculates damage from an attack value already resolved by Minecraft attributes.
+   */
+  public float calculateDamageFromResolvedAttack(
+      LivingEntity target,
+      CombatDamageType type,
+      double resolvedAttack,
+      CombatRequest request
+  ) {
     double defensiveStat = switch (type) {
       case PHYSICAL -> target.getAttributeValue(Attributes.ARMOR);
       case ARTS -> target.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
       case TRUE -> 0.0;
     };
-    return (float) CombatFormulas.damage(type, attack(attacker, baseAttack), defensiveStat, request);
+    return (float) CombatFormulas.damage(type, resolvedAttack, defensiveStat, request);
   }
 
   public boolean damage(
@@ -79,6 +91,20 @@ public final class CombatService {
       CombatRequest request
   ) {
     float amount = calculateDamage(attacker, target, type, baseAttack, request);
+    return amount > 0.0F && target.hurt(damageSource(attacker, type), amount);
+  }
+
+  /**
+   * Applies damage when the caller already read the final Minecraft attack attribute.
+   */
+  public boolean damageFromResolvedAttack(
+      LivingEntity attacker,
+      LivingEntity target,
+      CombatDamageType type,
+      double resolvedAttack,
+      CombatRequest request
+  ) {
+    float amount = calculateDamageFromResolvedAttack(target, type, resolvedAttack, request);
     return amount > 0.0F && target.hurt(damageSource(attacker, type), amount);
   }
 

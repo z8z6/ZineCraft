@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -96,20 +95,10 @@ public final class CollectibleItem extends Item implements ICurioItem {
     }
     for (int index = 0; index < combatBoosts.size(); index++) {
       var modifier = combatBoosts.get(index).modifier();
-      Holder<Attribute> attribute = switch (modifier.stat()) {
-        case MAX_HEALTH -> Attributes.MAX_HEALTH;
-        case DEFENSE -> Attributes.ARMOR;
-        case RESISTANCE -> Attributes.ARMOR_TOUGHNESS;
-        case ATTACK, ATTACK_SPEED -> null;
-      };
-      if (attribute == null) continue;
-      AttributeModifier.Operation operation = switch (modifier.phase()) {
-        case COLLECTIBLE_ADDITION -> AttributeModifier.Operation.ADD_VALUE;
-        case COLLECTIBLE_MULTIPLIER -> AttributeModifier.Operation.ADD_MULTIPLIED_BASE;
-        default -> throw new IllegalStateException("Unsupported collectible modifier phase: " + modifier.phase());
-      };
+      Holder<Attribute> attribute = CollectibleVanillaAttributes.attribute(modifier.stat());
+      AttributeModifier.Operation operation = CollectibleVanillaAttributes.operation(modifier);
       var modifierId = ResourceLocation.fromNamespaceAndPath(namespace, "collectible/combat/" + spec.getPath() + "/" + index);
-      modifiers.put(attribute, new AttributeModifier(modifierId, modifier.amount(), operation));
+      modifiers.put(attribute, new AttributeModifier(modifierId, CollectibleVanillaAttributes.amount(modifier), operation));
     }
     return modifiers;
   }

@@ -36,27 +36,6 @@ public final class ModCollectibles {
     Zinecraft.INSTANCE.getTRANSLATIONS().add("curios.identifier.relic", "藏品", "Collectible");
     Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.tabs.curios", "饰品", "Accessories");
     Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.tabs.attribute", "能力", "Abilities");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.values", "明日方舟战斗数值", "Arknights Combat Values");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.formulas", "核心公式", "Core Formulas");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.max_health", "生命：%s", "HP: %s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.attack", "攻击：%s（基础 %s）", "ATK: %s (base %s)");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.defense", "防御：%s", "DEF: %s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.resistance", "法抗：%s", "RES: %s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.attack_speed", "攻击速度：%s", "ASPD: %s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.interval", "攻击间隔倍率：×%s", "Attack interval: ×%s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.collectibles", "已装备饰品：%s", "Equipped accessories: %s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add(
-        "menu.zinecraft.ability.formula.attribute", "属性=(基础+藏品固定)×(1+藏品百分比)，再依次应用直接与最终修正", "Stat=(base+collectible flat)×(1+collectible bonus), then direct and final modifiers"
-    );
-    Zinecraft.INSTANCE.getTRANSLATIONS().add(
-        "menu.zinecraft.ability.formula.physical", "物理=max(攻击×5%，攻击-有效防御)", "Physical=max(ATK×5%, ATK-effective DEF)"
-    );
-    Zinecraft.INSTANCE.getTRANSLATIONS().add(
-        "menu.zinecraft.ability.formula.arts", "法术=max(攻击×5%，攻击×(100-有效法抗)%)", "Arts=max(ATK×5%, ATK×(100-effective RES)%)"
-    );
-    Zinecraft.INSTANCE.getTRANSLATIONS().add(
-        "menu.zinecraft.ability.formula.speed", "间隔=理论间隔÷(clamp(攻速,20,600)÷100)", "Interval=base interval÷(clamp(ASPD,20,600)÷100)"
-    );
     powerOverrides = Map.ofEntries(
         Map.entry("rogue_1_relic_a11", INSTANCE.statPercent("防御力+15%", "+15% DEF", CombatStat.DEFENSE, 0.15)),
         Map.entry("rogue_1_relic_a12", INSTANCE.statPercent("防御力+25%", "+25% DEF", CombatStat.DEFENSE, 0.25)),

@@ -10,6 +10,10 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+
 public final class StarGateStructure {
   @NotNull
   public static final StarGateStructure INSTANCE = new StarGateStructure();
@@ -136,31 +140,23 @@ public final class StarGateStructure {
     return this.local(base, axis, 0, 1, 0);
   }
 
-  public final boolean activate(@NotNull LevelAccessor level, @NotNull BlockPos controllerPos, @NotNull Axis axis) {
-    BlockPos gateBase = this.gateBaseForController(controllerPos, axis);
-    if (!this.isFrameIntact(level, gateBase, controllerPos, axis)) {
-      return false;
-    }
-
-    this.setPortalInterior(level, gateBase, axis, true);
-    BlockState blockState = level.getBlockState(controllerPos);
-    if (blockState.is(ModBlock.INSTANCE.getSTARGATE_CONTROLLER())) {
-      level.setBlock(controllerPos, (BlockState) blockState.setValue((Property) StarGateControllerBlock.ACCESS.getACTIVE(), true), 3);
-    }
-
-    return true;
+  static Optional<GateMatch> locateGate(
+      @NotNull BlockPos controllerPos,
+      @NotNull Axis preferredAxis,
+      @NotNull Predicate<BlockPos> isArch
+  ) {
+    StarGateGeometry.Position controller = position(controllerPos);
+    return StarGateGeometry.locateGate(controller, horizontalAxis(preferredAxis), candidate -> isArch.test(blockPos(candidate)))
+        .map(match -> new GateMatch(blockPos(match.base()), minecraftAxis(match.axis())));
   }
 
-  public final void deactivate(@NotNull LevelAccessor level, @NotNull BlockPos controllerPos, @NotNull Axis axis) {
-    this.setPortalInterior(level, this.gateBaseForController(controllerPos, axis), axis, false);
+  static java.util.List<BlockPos> gateBaseCandidates(@NotNull BlockPos controllerPos, @NotNull Axis axis) {
+    return StarGateGeometry.gateBaseCandidates(position(controllerPos), horizontalAxis(axis)).stream().map(StarGateStructure::blockPos).toList();
   }
 
-  /**
-   * 返回门洞中心，供控制器在门外触发面向整座星门的粒子冲击。
-   */
-  @NotNull
-  public final BlockPos portalCenter(@NotNull BlockPos controllerPos, @NotNull Axis axis) {
-    return this.local(this.gateBaseForController(controllerPos, axis), axis, 0, OUTER_RADIUS, 0);
+  private static List<Axis> horizontalAxes(Axis preferredAxis) {
+    Axis alternate = preferredAxis == Axis.X ? Axis.Z : Axis.X;
+    return List.of(preferredAxis, alternate);
   }
 
   private final void setPortalInterior(LevelAccessor level, BlockPos base, Axis axis, boolean active) {
@@ -203,49 +199,23 @@ public final class StarGateStructure {
     }
   }
 
-  private final boolean isFrameIntact(LevelAccessor level, BlockPos base, BlockPos controllerPos, Axis axis) {
-    BlockState blockState = level.getBlockState(controllerPos);
-    if (blockState.is(ModBlock.INSTANCE.getSTARGATE_CONTROLLER()) && blockState.getValue((Property) StarGateControllerBlock.ACCESS.getAXIS()) == axis) {
-      int i = 0;
-
-      for (int j = outerHalfWidths.length; i < j; i++) {
-        int k = i + 1;
-        int l = outerHalfWidths[i];
-        int m = l - 2;
-        int n = -l;
-        if (n <= l) {
-          while (true) {
-            if (m < 0 || Math.abs(n) > m) {
-              for (int o = -1; o < 2; o++) {
-                if (!level.getBlockState(this.local(base, axis, n, k, o)).is(ModBlock.INSTANCE.getSTARGATE_ARCH())) {
-                  return false;
-                }
-              }
-            }
-
-            if (n == l) {
-              break;
-            }
-
-            n++;
-          }
-        }
-      }
-
-      return true;
-    } else {
-      return false;
-    }
+  private static StarGateGeometry.Position position(BlockPos pos) {
+    return new StarGateGeometry.Position(pos.getX(), pos.getY(), pos.getZ());
   }
 
-  /**
-   * 控制器固定在门外五格处，反向换算门洞基点。
-   */
-  private BlockPos gateBaseForController(BlockPos controllerPos, Axis axis) {
-    return this.local(controllerPos, axis, 0, 0, -CONTROLLER_DISTANCE);
+  private static BlockPos blockPos(StarGateGeometry.Position pos) {
+    return new BlockPos(pos.x(), pos.y(), pos.z());
   }
 
-  private final BlockPos local(BlockPos base, Axis axis, int horizontal, int vertical, int depth) {
+  private static StarGateGeometry.HorizontalAxis horizontalAxis(Axis axis) {
+    return axis == Axis.X ? StarGateGeometry.HorizontalAxis.X : StarGateGeometry.HorizontalAxis.Z;
+  }
+
+  private static Axis minecraftAxis(StarGateGeometry.HorizontalAxis axis) {
+    return axis == StarGateGeometry.HorizontalAxis.X ? Axis.X : Axis.Z;
+  }
+
+  private static BlockPos local(BlockPos base, Axis axis, int horizontal, int vertical, int depth) {
     BlockPos blockPos2;
     if (axis == Axis.X) {
       BlockPos blockPos = base.offset(horizontal, vertical, depth);
@@ -256,5 +226,60 @@ public final class StarGateStructure {
     }
 
     return blockPos2;
+  }
+
+  public final boolean activate(@NotNull LevelAccessor level, @NotNull BlockPos controllerPos, @NotNull Axis axis) {
+    BlockState controllerState = level.getBlockState(controllerPos);
+    if (!controllerState.is(ModBlock.INSTANCE.getSTARGATE_CONTROLLER())) {
+      return false;
+    }
+
+    Optional<GateMatch> match = locateGate(
+        controllerPos,
+        axis,
+        pos -> level.getBlockState(pos).is(ModBlock.INSTANCE.getSTARGATE_ARCH())
+    );
+    if (match.isEmpty()) {
+      return false;
+    }
+
+    GateMatch gate = match.get();
+    this.setPortalInterior(level, gate.base(), gate.axis(), true);
+    level.setBlock(
+        controllerPos,
+        (BlockState) ((BlockState) controllerState.setValue((Property) StarGateControllerBlock.ACCESS.getAXIS(), (Comparable) gate.axis()))
+            .setValue((Property) StarGateControllerBlock.ACCESS.getACTIVE(), true),
+        3
+    );
+
+    return true;
+  }
+
+  public final void deactivate(@NotNull LevelAccessor level, @NotNull BlockPos controllerPos, @NotNull Axis axis) {
+    // onRemove runs after the controller has been replaced, so cleanup cannot depend on reading
+    // its state. Check both sides and both horizontal axes to also clean portals created by old
+    // rotated templates whose controller axis was stored incorrectly.
+    for (Axis candidateAxis : horizontalAxes(axis)) {
+      for (BlockPos base : gateBaseCandidates(controllerPos, candidateAxis)) {
+        this.setPortalInterior(level, base, candidateAxis, false);
+      }
+    }
+  }
+
+  /**
+   * 返回门洞中心，供控制器在门外触发面向整座星门的粒子冲击。
+   */
+  @NotNull
+  public final BlockPos portalCenter(@NotNull LevelAccessor level, @NotNull BlockPos controllerPos, @NotNull Axis axis) {
+    Optional<GateMatch> match = locateGate(
+        controllerPos,
+        axis,
+        pos -> level.getBlockState(pos).is(ModBlock.INSTANCE.getSTARGATE_ARCH())
+    );
+    GateMatch gate = match.orElseGet(() -> new GateMatch(gateBaseCandidates(controllerPos, axis).get(0), axis));
+    return this.local(gate.base(), gate.axis(), 0, OUTER_RADIUS, 0);
+  }
+
+  record GateMatch(@NotNull BlockPos base, @NotNull Axis axis) {
   }
 }

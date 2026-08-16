@@ -5,6 +5,14 @@
 
 ## 开发指南
 
+- [萌新内容修改手册总览](development/README.md)
+    - [开始之前](development/GETTING_STARTED.md)
+    - [修改方块](development/BLOCKS.md)
+    - [修改材质](development/MATERIALS.md)
+    - [修改群系](development/BIOMES.md)
+    - [修改结构和 NBT](development/STRUCTURES.md)
+    - [修改泰拉维度](development/DIMENSIONS.md)
+    - [修改藏品](development/COLLECTIBLES.md)
 - [声明式 API 总览](API.md)
 - [物品与国家食物](item/README.md)
 - [方块、方块实体与国家材料](block/README.md)

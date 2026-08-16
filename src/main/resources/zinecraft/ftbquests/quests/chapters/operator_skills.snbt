@@ -1,0 +1,129 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "hexagon"
+	filename: "operator_skills"
+	icon: { id: "zinecraft:skill_truesilver_slash" }
+	id: "534B494C4C534348"
+	order_index: 3
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "D100000000000000"
+			icon: { id: "zinecraft:skill_support_beta" }
+			shape: "gear"
+			size: 2.0d
+			tasks: [{ id: "D200000000000000", type: "checkmark" }]
+			x: 0.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000001"
+			icon: { id: "zinecraft:skill_support_beta" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000001", item: { count: 1, id: "zinecraft:skill_support_beta" }, type: "item" }
+				{ id: "D500000000000001", type: "checkmark" }
+			]
+			x: -4.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000002"
+			icon: { id: "zinecraft:skill_truesilver_slash" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000002", item: { count: 1, id: "zinecraft:skill_truesilver_slash" }, type: "item" }
+				{ id: "D500000000000002", type: "checkmark" }
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000003"
+			icon: { id: "zinecraft:skill_overloading_mode" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000003", item: { count: 1, id: "zinecraft:skill_overloading_mode" }, type: "item" }
+				{ id: "D500000000000003", type: "checkmark" }
+			]
+			x: 4.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000004"
+			icon: { id: "zinecraft:skill_explosive_dawn" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000004", item: { count: 1, id: "zinecraft:skill_explosive_dawn" }, type: "item" }
+				{ id: "D500000000000004", type: "checkmark" }
+			]
+			x: -4.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000005"
+			icon: { id: "zinecraft:skill_volcano" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000005", item: { count: 1, id: "zinecraft:skill_volcano" }, type: "item" }
+				{ id: "D500000000000005", type: "checkmark" }
+			]
+			x: 0.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000006"
+			icon: { id: "zinecraft:skill_calcification" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000006", item: { count: 1, id: "zinecraft:skill_calcification" }, type: "item" }
+				{ id: "D500000000000006", type: "checkmark" }
+			]
+			x: 4.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000007"
+			icon: { id: "zinecraft:skill_sanctuary" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000007", item: { count: 1, id: "zinecraft:skill_sanctuary" }, type: "item" }
+				{ id: "D500000000000007", type: "checkmark" }
+			]
+			x: -4.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000008"
+			icon: { id: "zinecraft:skill_foxfire_haze" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000008", item: { count: 1, id: "zinecraft:skill_foxfire_haze" }, type: "item" }
+				{ id: "D500000000000008", type: "checkmark" }
+			]
+			x: 0.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["D100000000000000"]
+			id: "D300000000000009"
+			icon: { id: "zinecraft:skill_wolfpack" }
+			optional: true
+			tasks: [
+				{ id: "D400000000000009", item: { count: 1, id: "zinecraft:skill_wolfpack" }, type: "item" }
+				{ id: "D500000000000009", type: "checkmark" }
+			]
+			x: 4.0d
+			y: 6.0d
+		}
+	]
+}

@@ -536,6 +536,70 @@ public final class StructureCatalog {
       @NotNull TerrainAdjustment terrainAdjustment,
       @NotNull Consumer<? super JigsawBuildingBuilder> build
   ) {
+    return this.jigsawBuilding(
+        path, spacing, separation, salt, size, maxDistanceFromCenter, removeVinesChance,
+        biome, unique, ringDistance, heightmap, startHeight, useExpansionHack, fixedOrigin,
+        generationStep, terrainAdjustment, biome == null ? List.of() : List.of(biome), build
+    );
+  }
+
+  /**
+   * Registers a deterministic concentric-ring landmark which prefers its national biome but
+   * remains valid in another Zinecraft biome when vanilla's 112-block biome correction cannot
+   * find that preference. Without this fallback a one-candidate landmark can silently be absent.
+   */
+  @NotNull
+  public final JigsawBuildingEntry guaranteedLandmark(
+      @NotNull String path,
+      int ringDistance,
+      int salt,
+      int size,
+      int maxDistanceFromCenter,
+      float removeVinesChance,
+      @NotNull ResourceKey<Biome> preferredBiome,
+      @NotNull List<ResourceKey<Biome>> allowedBiomes,
+      @Nullable Types heightmap,
+      int startHeight,
+      @NotNull Decoration generationStep,
+      @NotNull TerrainAdjustment terrainAdjustment,
+      @NotNull Consumer<? super JigsawBuildingBuilder> build
+  ) {
+    int maximumRadius = ConcentricRingBounds.maximumRadiusBlocks(ringDistance);
+    if (maximumRadius > ConcentricRingBounds.GUARANTEED_LANDMARK_RADIUS_BLOCKS) {
+      throw new IllegalArgumentException(
+          "保证生成的地标超出 " + ConcentricRingBounds.GUARANTEED_LANDMARK_RADIUS_BLOCKS + " 格上界: " + path + " (" + maximumRadius + ")"
+      );
+    }
+    if (allowedBiomes.isEmpty() || !allowedBiomes.contains(preferredBiome)) {
+      throw new IllegalArgumentException("保证生成的地标允许群系必须包含其本国偏好群系: " + path);
+    }
+    return this.jigsawBuilding(
+        path, ringDistance + 1, ringDistance, salt, size, maxDistanceFromCenter,
+        removeVinesChance, preferredBiome, true, ringDistance, heightmap, startHeight,
+        false, false, generationStep, terrainAdjustment, allowedBiomes, build
+    );
+  }
+
+  private JigsawBuildingEntry jigsawBuilding(
+      String path,
+      int spacing,
+      int separation,
+      int salt,
+      int size,
+      int maxDistanceFromCenter,
+      float removeVinesChance,
+      ResourceKey<Biome> biome,
+      boolean unique,
+      int ringDistance,
+      Types heightmap,
+      int startHeight,
+      boolean useExpansionHack,
+      boolean fixedOrigin,
+      Decoration generationStep,
+      TerrainAdjustment terrainAdjustment,
+      List<ResourceKey<Biome>> allowedBiomes,
+      Consumer<? super JigsawBuildingBuilder> build
+  ) {
     if (spacing <= separation) {
       int p = 0;
       String string3 = "spacing 必须大于 separation";
@@ -605,6 +669,7 @@ public final class StructureCatalog {
         maxDistanceFromCenter,
         removeVinesChance,
         biome,
+        allowedBiomes,
         unique,
         ringDistance,
         heightmap,
@@ -700,7 +765,7 @@ public final class StructureCatalog {
   }
 
   public final void bootstrapStructures(@NotNull BootstrapContext<Structure> context) {
-    HolderGetter holderGetter = context.lookup(Registries.BIOME);
+    HolderGetter<Biome> holderGetter = context.lookup(Registries.BIOME);
     HolderGetter holderGetter1 = context.lookup(Registries.TEMPLATE_POOL);
     Iterable iterable = this.buildings;
     int i = 0;
@@ -713,7 +778,14 @@ public final class StructureCatalog {
         jigsawBuildingEntry = (JigsawBuildingEntry) object;
         int j = 0;
         ResourceKey resourceKey1 = jigsawBuildingEntry.getBiome();
-        if (resourceKey1 != null) {
+        if (!jigsawBuildingEntry.getAllowedBiomes().isEmpty()) {
+          List<Holder<Biome>> allowedBiomes = jigsawBuildingEntry.getAllowedBiomes().stream()
+              .map(holderGetter::getOrThrow)
+              .map(holder -> (Holder<Biome>) holder)
+              .toList();
+          listBacked1 = (ListBacked) HolderSet.direct(allowedBiomes);
+          break label26;
+        } else if (resourceKey1 != null) {
           ResourceKey resourceKey = resourceKey1;
           int k = 0;
           Holder[] holders = new Holder[]{holderGetter.getOrThrow(resourceKey)};

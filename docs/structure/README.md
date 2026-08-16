@@ -16,7 +16,7 @@ JigsawBuildingEntry camp = Zinecraft.INSTANCE.getSTRUCTURES().settlement(
         Pair.of("ore_workshop", 3),
         Pair.of("freight_depot", 2),
         Pair.of("canteen", 2)),
-    52, 24, 7, 112,
+    36, 16, 9, 112,
     Heightmap.Types.WORLD_SURFACE_WG,
     0, 0.0F
 );
@@ -24,6 +24,10 @@ JigsawBuildingEntry camp = Zinecraft.INSTANCE.getSTRUCTURES().settlement(
 
 目录建立 `center`、`streets` 和 `buildings` 池。模板根目录必须提供 `center.nbt`、四种道路模板及至少四种功能建筑。`spacing`
 必须大于 `separation`，Jigsaw 深度范围为 0—20，最大中心距离不能超过原版允许范围。
+
+国家普通聚落当前统一使用 `spacing=36`、`separation=16`、Jigsaw 深度 `9` 和最大中心距离 `112`。线性随机散布的最近候选
+中心间隔至少 272 格，仍大于最大 224 格结构直径；该配置只影响可重复聚落，不得复用于 `uniqueLandmark` 或
+`guaranteedLandmark`。
 
 拉特兰中心聚落使用 `fixedOriginSettlement`，确保地面建筑群和中心群系共同覆盖世界坐标 `(0, 0)`。
 

@@ -2,11 +2,17 @@
 
 ## 内容范围
 
-项目内置四个章节，并新增两个章节组：
+项目内置二十五个章节，并使用两个章节组：
 
-- `泰拉国家档案`：包含“十九国与特色建筑”，按 PRTS 国家资料逐国列出 Zinecraft 对应群系、可重复聚落与两座唯一地标。
+- `泰拉国家档案`：包含“十九国与特色建筑”总览，以及十九个独立国家章节。每个国家章节为该国每座正式结构提供一个服务端自动判定的访问任务。
 - `开发与模组`：包含“开发环境模组说明”，区分发布必需依赖、传递依赖与仅供 `runClient` 使用的辅助模组。
-- 未分组的既有章节：`Zinecraft：泰拉远征` 与 `泰拉国家关系网`，保留原有世界探索、武器教学和关系网络。
+- 未分组章节：`Zinecraft：泰拉远征`、`泰拉国家关系网`、`藏品图鉴` 与 `干员技能`，保留世界探索、武器教学、关系网络、藏品说明和技能训练。
+
+`藏品图鉴`展示“傀影与猩红孤钻”的全部 245 件藏品，按攻击、治疗、防御、生存、综合战斗、探索、编队与招募、资源经营和特殊规则九类排布。每个节点使用真实藏品图标，介绍档案编号、PRTS
+原效果、原描述和 Minecraft 装备方式；玩家持有对应藏品时，物品任务会自动完成。
+
+`干员技能`展示当前注册的九种技能物品。每个节点列出干员、职业、技力回复和触发方式、初始技力、消耗、持续时间与技能说明；物品任务自动检查技能物品，Checkmark
+用于确认玩家已查看对应 Ponder 演示。
 
 远征章节包含三条相互衔接的内容：
 
@@ -17,7 +23,11 @@
 关系网章节把 19 个国家作为可点击节点，以各国对应的特色方块作为稳定可渲染的标志，并用 FTB Quests 原生依赖线连接具有 PRTS
 明确依据的重要关系。节点详情展示国家繁荣度、稳定度、军力、开放度、战争倾向，以及相关国家间的好感、战争欲望、贸易、紧张和信任。未连线的国家采用系统的中立默认关系；依赖线颜色只表示任务查看进度，不表示外交态度。
 
-FTB Quests 原生只能自动检测维度、群系与物品状态。武器动作目前使用物品检测加手动确认，避免让客户端动画或按键直接修改服务端任务进度。
+FTB Quests 原生自动检测维度、群系、结构与物品状态。结构任务使用 `type: "structure"` 和完整结构
+ID，玩家进入有效结构边界后自动完成。武器动作目前仍使用物品检测加手动确认，避免让客户端动画或按键直接修改服务端任务进度。
+
+十九个国家章节共覆盖 58 座正式结构：19 个聚落、38 个国家地标和拉特兰地下特殊结构 `laterano_host`。主世界入口 `stargate`
+不属于国家结构；`victoria_defence_cannon_preview` 是评审预览结构，二者均不进入国家访问任务。
 
 ## 安装方式
 
@@ -28,7 +38,10 @@ FTB Quests 将任务书保存在运行目录的 `config/ftbquests/quests/`，而
 config/ftbquests/quests/
 ├─ chapter_groups.snbt
 ├─ chapters/development_mods.snbt
+├─ chapters/collectibles.snbt
+├─ chapters/operator_skills.snbt
 ├─ chapters/terra_nations.snbt
+├─ chapters/nation_<country>.snbt（十九个国家独立章节）
 ├─ chapters/zinecraft_guide.snbt
 ├─ chapters/terra_relations.snbt
 └─ lang/
@@ -42,12 +55,16 @@ Zinecraft 键后再启动游戏。
 
 ## 开发验证
 
-1. 启动开发客户端并创建新世界，确认 `run/config/ftbquests/quests/chapters/` 下四个内置章节及两个章节组均已生成。
+1. 启动开发客户端并创建新世界，确认 `run/config/ftbquests/quests/chapters/` 下二十五个内置章节及两个章节组均已生成。
 2. 使用任务书界面打开 `Zinecraft：泰拉远征`，检查中文或英文文本、依赖线和奖励物品；再检查国家档案中的 19
    个国家建筑节点、开发章节中的依赖分类，以及 `泰拉国家关系网` 的 19 个国家标志、15
-   条重要关系线和节点详情。
+   条重要关系线和节点详情；最后确认藏品图鉴包含九个分类和 245 个藏品节点，干员技能章节包含九个技能节点。
 3. 在主世界执行 `/locate biome minecraft:snowy_plains` 验证雪原任务，然后通过星门验证 `zinecraft:terra` 维度任务。
-4. 使用 `/locate biome zinecraft:<国家群系>` 或自然探索验证各群系访问任务。
-5. 修改 SNBT 后使用 `/ftbquests reload quests` 重载任务定义；已有任务进度可用 `/ftbquests change_progress` 调试。
+4. 使用 `/locate biome zinecraft:<国家群系>` 或自然探索验证各群系访问任务；使用 `/locate structure zinecraft:<结构ID>`
+   定位结构，进入其有效边界后确认对应国家章节任务自动完成。
+5. 修改结构目录后运行 `python script/generate_nation_quest_chapters.py`，再执行 FTB Quests 校验，确保十九章与 58
+   个结构目标保持同步。
+6. 修改藏品目录后运行 `python script/generate_collectible_quest_chapter.py`，同步刷新藏品章节与中英文说明。
+7. 修改 SNBT 后使用 `/ftbquests reload quests` 重载任务定义；已有任务进度可用 `/ftbquests change_progress` 调试。
 
 FTB Quests 是外部必需依赖，其 JAR 不会被打包进 Zinecraft。发布整合包时需要按照 FTB 的分发条款单独声明并下载该模组及其传递依赖。

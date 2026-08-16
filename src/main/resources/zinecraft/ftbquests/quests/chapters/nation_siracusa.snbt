@@ -1,0 +1,34 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "nation_siracusa"
+	group: "4E4154494F4E5347"
+	icon: { id: "zinecraft:siracusa_rain_darkened_soil" }
+	id: "7A00000000000011"
+	order_index: 17
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "7B11000000000001"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C11000000000001", structure: "zinecraft:siracusa_family_town", type: "structure" }]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			id: "7B11000000000002"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C11000000000002", structure: "zinecraft:siracusa_family_court", type: "structure" }]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			id: "7B11000000000003"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C11000000000003", structure: "zinecraft:siracusa_family_theatre", type: "structure" }]
+			x: 3.0d
+			y: 0.0d
+		}
+	]
+}

@@ -137,7 +137,9 @@ public final class MeleeAttackAction implements WeaponAction {
       boolean bl = false;
 
       for (LivingEntity livingEntity : list) {
-        bl = CombatService.INSTANCE.damage(serverPlayer, livingEntity, CombatDamageType.PHYSICAL, f, CombatRequest.DEFAULT) || bl;
+        bl = CombatService.INSTANCE.damageFromResolvedAttack(
+            serverPlayer, livingEntity, CombatDamageType.PHYSICAL, f, CombatRequest.DEFAULT
+        ) || bl;
       }
 
       if (bl) {

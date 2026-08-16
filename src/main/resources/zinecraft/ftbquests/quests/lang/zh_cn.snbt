@@ -219,4 +219,1324 @@
 	quest.6000000000000005.quest_desc: ["Cloth Config 15.0.140 提供配置界面能力；Architectury 与 Common Networking 等由现有模组作为传递依赖加载。项目源码与运行时现已统一为 Java，不再携带额外的语言运行库。"]
 	quest.6000000000000006.title: "仅开发环境辅助模组"
 	quest.6000000000000006.quest_desc: ["JEI 19.27.0.340、Just Enough Resources 1.6.0.17、AppleSkin 3.0.9、Jade 15.10.5、Just Enough Characters 4.5.22、JourneyMap 6.0.1、Nature's Compass 3.4.0 与 Explorer's Compass 3.4.0。\n\n它们分别用于物品与资源查询、饱食信息、方块信息、拼音搜索、地图调试，以及定位群系和结构，只作为开发运行依赖。"]
+
+	chapter.7A00000000000001.title: "阿戈尔：结构探索"
+	quest.7B01000000000001.title: "阿戈尔海底聚居地"
+	quest.7B01000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B01000000000001.quest_desc: ["前往并进入 zinecraft:aegir_subsea_enclave 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C01000000000001.title: "访问阿戈尔海底聚居地"
+	quest.7B01000000000002.title: "阿戈尔火山信标"
+	quest.7B01000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B01000000000002.quest_desc: ["前往并进入 zinecraft:aegir_volcanic_beacon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C01000000000002.title: "访问阿戈尔火山信标"
+	quest.7B01000000000003.title: "阿戈尔深渊观测站"
+	quest.7B01000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B01000000000003.quest_desc: ["前往并进入 zinecraft:aegir_abyssal_observatory 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C01000000000003.title: "访问阿戈尔深渊观测站"
+	chapter.7A00000000000002.title: "玻利瓦尔：结构探索"
+	quest.7B02000000000001.title: "玻利瓦尔多索雷斯城区"
+	quest.7B02000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B02000000000001.quest_desc: ["前往并进入 zinecraft:bolivar_dossoles_district 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C02000000000001.title: "访问玻利瓦尔多索雷斯城区"
+	quest.7B02000000000002.title: "玻利瓦尔多索雷斯游艇"
+	quest.7B02000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B02000000000002.quest_desc: ["前往并进入 zinecraft:bolivar_dossoles_yacht 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C02000000000002.title: "访问玻利瓦尔多索雷斯游艇"
+	quest.7B02000000000003.title: "玻利瓦尔竞速检查站"
+	quest.7B02000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B02000000000003.quest_desc: ["前往并进入 zinecraft:bolivar_race_checkpoint 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C02000000000003.title: "访问玻利瓦尔竞速检查站"
+	chapter.7A00000000000003.title: "东国：结构探索"
+	quest.7B03000000000001.title: "东国索谷川町"
+	quest.7B03000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B03000000000001.quest_desc: ["前往并进入 zinecraft:higashi_sokogawa_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C03000000000001.title: "访问东国索谷川町"
+	quest.7B03000000000002.title: "东国裂谷神社"
+	quest.7B03000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B03000000000002.quest_desc: ["前往并进入 zinecraft:higashi_rift_shrine 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C03000000000002.title: "访问东国裂谷神社"
+	quest.7B03000000000003.title: "东国索谷川瞭望塔"
+	quest.7B03000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B03000000000003.quest_desc: ["前往并进入 zinecraft:higashi_sokogawa_watchtower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C03000000000003.title: "访问东国索谷川瞭望塔"
+	chapter.7A00000000000004.title: "杜林：结构探索"
+	quest.7B04000000000001.title: "杜林理想城街区"
+	quest.7B04000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B04000000000001.quest_desc: ["前往并进入 zinecraft:durin_ideal_city_block 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C04000000000001.title: "访问杜林理想城街区"
+	quest.7B04000000000002.title: "杜林穹顶车站"
+	quest.7B04000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B04000000000002.quest_desc: ["前往并进入 zinecraft:durin_dome_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C04000000000002.title: "访问杜林穹顶车站"
+	quest.7B04000000000003.title: "杜林水上乐园"
+	quest.7B04000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B04000000000003.quest_desc: ["前往并进入 zinecraft:durin_water_park 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C04000000000003.title: "访问杜林水上乐园"
+	chapter.7A00000000000005.title: "哥伦比亚：结构探索"
+	quest.7B05000000000001.title: "哥伦比亚边疆城镇"
+	quest.7B05000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B05000000000001.quest_desc: ["前往并进入 zinecraft:columbia_frontier_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C05000000000001.title: "访问哥伦比亚边疆城镇"
+	quest.7B05000000000002.title: "哥伦比亚边疆实验室"
+	quest.7B05000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B05000000000002.quest_desc: ["前往并进入 zinecraft:columbia_frontier_lab 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C05000000000002.title: "访问哥伦比亚边疆实验室"
+	quest.7B05000000000003.title: "哥伦比亚监狱哨站"
+	quest.7B05000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B05000000000003.quest_desc: ["前往并进入 zinecraft:columbia_prison_outpost 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C05000000000003.title: "访问哥伦比亚监狱哨站"
+	chapter.7A00000000000006.title: "卡西米尔：结构探索"
+	quest.7B06000000000001.title: "卡西米尔骑士城区"
+	quest.7B06000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B06000000000001.quest_desc: ["前往并进入 zinecraft:kazimierz_knight_borough 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C06000000000001.title: "访问卡西米尔骑士城区"
+	quest.7B06000000000002.title: "卡西米尔竞技场大门"
+	quest.7B06000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B06000000000002.quest_desc: ["前往并进入 zinecraft:kazimierz_arena_gate 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C06000000000002.title: "访问卡西米尔竞技场大门"
+	quest.7B06000000000003.title: "卡西米尔骑士纪念碑"
+	quest.7B06000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B06000000000003.quest_desc: ["前往并进入 zinecraft:kazimierz_knight_monument 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C06000000000003.title: "访问卡西米尔骑士纪念碑"
+	chapter.7A00000000000007.title: "卡兹戴尔：结构探索"
+	quest.7B07000000000001.title: "卡兹戴尔萨卡兹聚落"
+	quest.7B07000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B07000000000001.quest_desc: ["前往并进入 zinecraft:kazdel_sarkaz_settlement 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C07000000000001.title: "访问卡兹戴尔萨卡兹聚落"
+	quest.7B07000000000002.title: "卡兹戴尔巴别塔遗迹"
+	quest.7B07000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B07000000000002.quest_desc: ["前往并进入 zinecraft:kazdel_babel_ruins 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C07000000000002.title: "访问卡兹戴尔巴别塔遗迹"
+	quest.7B07000000000003.title: "卡兹戴尔萨卡兹营地"
+	quest.7B07000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B07000000000003.quest_desc: ["前往并进入 zinecraft:kazdel_sarkaz_camp 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C07000000000003.title: "访问卡兹戴尔萨卡兹营地"
+	chapter.7A00000000000008.title: "拉特兰：结构探索"
+	quest.7B08000000000001.title: "拉特兰修道院城镇"
+	quest.7B08000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B08000000000001.quest_desc: ["前往并进入 zinecraft:laterano_monastery_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C08000000000001.title: "访问拉特兰修道院城镇"
+	quest.7B08000000000002.title: "拉特兰启示石塔"
+	quest.7B08000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B08000000000002.quest_desc: ["前往并进入 zinecraft:laterano_revelation_tower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C08000000000002.title: "访问拉特兰启示石塔"
+	quest.7B08000000000003.title: "拉特兰安布罗修礼拜堂"
+	quest.7B08000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B08000000000003.quest_desc: ["前往并进入 zinecraft:laterano_ambrosius_chapel 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C08000000000003.title: "访问拉特兰安布罗修礼拜堂"
+	quest.7B08000000000004.title: "拉特兰主机"
+	quest.7B08000000000004.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B08000000000004.quest_desc: ["前往并进入 zinecraft:laterano_host 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C08000000000004.title: "访问拉特兰主机"
+	chapter.7A00000000000009.title: "莱塔尼亚：结构探索"
+	quest.7B09000000000001.title: "莱塔尼亚音乐城镇"
+	quest.7B09000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B09000000000001.quest_desc: ["前往并进入 zinecraft:leithanien_music_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C09000000000001.title: "访问莱塔尼亚音乐城镇"
+	quest.7B09000000000002.title: "莱塔尼亚双塔"
+	quest.7B09000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B09000000000002.quest_desc: ["前往并进入 zinecraft:leithanien_twin_spires 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C09000000000002.title: "访问莱塔尼亚双塔"
+	quest.7B09000000000003.title: "莱塔尼亚音乐厅"
+	quest.7B09000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B09000000000003.quest_desc: ["前往并进入 zinecraft:leithanien_concert_hall 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C09000000000003.title: "访问莱塔尼亚音乐厅"
+	chapter.7A0000000000000A.title: "雷姆必拓：结构探索"
+	quest.7B0A000000000001.title: "雷姆必拓采矿营地"
+	quest.7B0A000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0A000000000001.quest_desc: ["前往并进入 zinecraft:rim_billiton_mining_camp 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0A000000000001.title: "访问雷姆必拓采矿营地"
+	quest.7B0A000000000002.title: "雷姆必拓采矿井架"
+	quest.7B0A000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0A000000000002.quest_desc: ["前往并进入 zinecraft:rim_billiton_mining_derrick 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0A000000000002.title: "访问雷姆必拓采矿井架"
+	quest.7B0A000000000003.title: "雷姆必拓铁路货站"
+	quest.7B0A000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0A000000000003.quest_desc: ["前往并进入 zinecraft:rim_billiton_rail_depot 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0A000000000003.title: "访问雷姆必拓铁路货站"
+	chapter.7A0000000000000B.title: "米诺斯：结构探索"
+	quest.7B0B000000000001.title: "米诺斯英雄城邦"
+	quest.7B0B000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0B000000000001.quest_desc: ["前往并进入 zinecraft:minos_heroic_polis 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0B000000000001.title: "访问米诺斯英雄城邦"
+	quest.7B0B000000000002.title: "米诺斯英雄神殿"
+	quest.7B0B000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0B000000000002.quest_desc: ["前往并进入 zinecraft:minos_heroes_temple 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0B000000000002.title: "访问米诺斯英雄神殿"
+	quest.7B0B000000000003.title: "米诺斯英雄广场"
+	quest.7B0B000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0B000000000003.quest_desc: ["前往并进入 zinecraft:minos_heroes_plaza 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0B000000000003.title: "访问米诺斯英雄广场"
+	chapter.7A0000000000000C.title: "萨尔贡：结构探索"
+	quest.7B0C000000000001.title: "萨尔贡绿洲城镇"
+	quest.7B0C000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0C000000000001.quest_desc: ["前往并进入 zinecraft:sargon_oasis_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0C000000000001.title: "访问萨尔贡绿洲城镇"
+	quest.7B0C000000000002.title: "萨尔贡黄金集市"
+	quest.7B0C000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0C000000000002.quest_desc: ["前往并进入 zinecraft:sargon_golden_bazaar 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0C000000000002.title: "访问萨尔贡黄金集市"
+	quest.7B0C000000000003.title: "萨尔贡长泉水井"
+	quest.7B0C000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0C000000000003.quest_desc: ["前往并进入 zinecraft:sargon_long_spring_well 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0C000000000003.title: "访问萨尔贡长泉水井"
+	chapter.7A0000000000000D.title: "萨米：结构探索"
+	quest.7B0D000000000001.title: "萨米雪祀村落"
+	quest.7B0D000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0D000000000001.quest_desc: ["前往并进入 zinecraft:sami_snowpriest_village 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0D000000000001.title: "访问萨米雪祀村落"
+	quest.7B0D000000000002.title: "萨米独眼巨人祭坛"
+	quest.7B0D000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0D000000000002.quest_desc: ["前往并进入 zinecraft:sami_cyclops_altar 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0D000000000002.title: "访问萨米独眼巨人祭坛"
+	quest.7B0D000000000003.title: "萨米雪祀居所"
+	quest.7B0D000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0D000000000003.quest_desc: ["前往并进入 zinecraft:sami_snowpriest_lodge 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0D000000000003.title: "访问萨米雪祀居所"
+	chapter.7A0000000000000E.title: "维多利亚：结构探索"
+	quest.7B0E000000000001.title: "维多利亚工业城区"
+	quest.7B0E000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0E000000000001.quest_desc: ["前往并进入 zinecraft:victoria_industrial_borough 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0E000000000001.title: "访问维多利亚工业城区"
+	quest.7B0E000000000002.title: "维多利亚防御炮台"
+	quest.7B0E000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0E000000000002.quest_desc: ["前往并进入 zinecraft:victoria_defence_cannon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0E000000000002.title: "访问维多利亚防御炮台"
+	quest.7B0E000000000003.title: "维多利亚蒸汽车站"
+	quest.7B0E000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0E000000000003.quest_desc: ["前往并进入 zinecraft:victoria_steam_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0E000000000003.title: "访问维多利亚蒸汽车站"
+	chapter.7A0000000000000F.title: "乌萨斯：结构探索"
+	quest.7B0F000000000001.title: "乌萨斯北方城镇"
+	quest.7B0F000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0F000000000001.quest_desc: ["前往并进入 zinecraft:ursus_northern_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0F000000000001.title: "访问乌萨斯北方城镇"
+	quest.7B0F000000000002.title: "乌萨斯石棺站"
+	quest.7B0F000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0F000000000002.quest_desc: ["前往并进入 zinecraft:ursus_sarcophagus_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0F000000000002.title: "访问乌萨斯石棺站"
+	quest.7B0F000000000003.title: "乌萨斯北方矿塔"
+	quest.7B0F000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0F000000000003.quest_desc: ["前往并进入 zinecraft:ursus_northern_mine_tower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0F000000000003.title: "访问乌萨斯北方矿塔"
+	chapter.7A00000000000010.title: "谢拉格：结构探索"
+	quest.7B10000000000001.title: "谢拉格山地村落"
+	quest.7B10000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B10000000000001.quest_desc: ["前往并进入 zinecraft:kjerag_mountain_village 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C10000000000001.title: "访问谢拉格山地村落"
+	quest.7B10000000000002.title: "谢拉格喀兰修道院"
+	quest.7B10000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B10000000000002.quest_desc: ["前往并进入 zinecraft:kjerag_karlan_monastery 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C10000000000002.title: "访问谢拉格喀兰修道院"
+	quest.7B10000000000003.title: "谢拉格圣洁广场"
+	quest.7B10000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B10000000000003.quest_desc: ["前往并进入 zinecraft:kjerag_sacred_plaza 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C10000000000003.title: "访问谢拉格圣洁广场"
+	chapter.7A00000000000011.title: "叙拉古：结构探索"
+	quest.7B11000000000001.title: "叙拉古家族城镇"
+	quest.7B11000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B11000000000001.quest_desc: ["前往并进入 zinecraft:siracusa_family_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C11000000000001.title: "访问叙拉古家族城镇"
+	quest.7B11000000000002.title: "叙拉古家族法庭"
+	quest.7B11000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B11000000000002.quest_desc: ["前往并进入 zinecraft:siracusa_family_court 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C11000000000002.title: "访问叙拉古家族法庭"
+	quest.7B11000000000003.title: "叙拉古家族剧院"
+	quest.7B11000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B11000000000003.quest_desc: ["前往并进入 zinecraft:siracusa_family_theatre 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C11000000000003.title: "访问叙拉古家族剧院"
+	chapter.7A00000000000012.title: "炎国：结构探索"
+	quest.7B12000000000001.title: "炎国尚蜀城镇"
+	quest.7B12000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B12000000000001.quest_desc: ["前往并进入 zinecraft:yan_shangshu_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C12000000000001.title: "访问炎国尚蜀城镇"
+	quest.7B12000000000002.title: "炎国玉门烽台"
+	quest.7B12000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B12000000000002.quest_desc: ["前往并进入 zinecraft:yan_yumen_beacon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C12000000000002.title: "访问炎国玉门烽台"
+	quest.7B12000000000003.title: "炎国尚蜀亭阁"
+	quest.7B12000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B12000000000003.quest_desc: ["前往并进入 zinecraft:yan_shangshu_pavilion 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C12000000000003.title: "访问炎国尚蜀亭阁"
+	chapter.7A00000000000013.title: "伊比利亚：结构探索"
+	quest.7B13000000000001.title: "伊比利亚滨海城镇"
+	quest.7B13000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B13000000000001.quest_desc: ["前往并进入 zinecraft:iberia_coastal_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C13000000000001.title: "访问伊比利亚滨海城镇"
+	quest.7B13000000000002.title: "伊比利亚之眼灯塔"
+	quest.7B13000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B13000000000002.quest_desc: ["前往并进入 zinecraft:iberia_eye_lighthouse 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C13000000000002.title: "访问伊比利亚之眼灯塔"
+	quest.7B13000000000003.title: "伊比利亚盐风礼拜堂"
+	quest.7B13000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B13000000000003.quest_desc: ["前往并进入 zinecraft:iberia_saltwind_chapel 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C13000000000003.title: "访问伊比利亚盐风礼拜堂"
+
+	chapter.434F4C4C45435449.title: "藏品图鉴"
+	quest.C100000000000001.title: "攻击类"
+	quest.C100000000000001.quest_subtitle: "共 67 件藏品。"
+	quest.C100000000000001.quest_desc: ["主要提高输出、攻击速度或削弱敌方防御。", "共 67 件藏品。"]
+	task.C200000000000001.title: "阅读分类说明"
+	quest.C300000000000031.title: "残破合影"
+	quest.C300000000000031.quest_subtitle: "No.049 · 攻击类"
+	quest.C300000000000031.quest_desc: ["PRTS 原效果：所有敌方单位的防御力-12%", "藏品介绍：里面有你认识的人吗？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000031.title: "持有残破合影"
+	quest.C300000000000032.title: "作者的喉舌"
+	quest.C300000000000032.quest_subtitle: "No.050 · 攻击类"
+	quest.C300000000000032.quest_desc: ["PRTS 原效果：所有敌方单位的防御力-21%", "藏品介绍：剧作家用笔蘸着自己的血创作。他为自己设计了丧身火海的最后一幕。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000032.title: "持有作者的喉舌"
+	quest.C300000000000033.title: "迷迭香之拥"
+	quest.C300000000000033.quest_subtitle: "No.051 · 攻击类"
+	quest.C300000000000033.quest_desc: ["PRTS 原效果：所有敌方单位的防御力-30%", "藏品介绍：“谁来审判？”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000033.title: "持有迷迭香之拥"
+	quest.C30000000000003A.title: "皇帝的恩宠"
+	quest.C30000000000003A.quest_subtitle: "No.058 · 攻击类"
+	quest.C30000000000003A.quest_desc: ["PRTS 原效果：所有我方近战单位的攻击力+15%", "藏品介绍：十分锋利的拆信刀。前任乌萨斯皇帝喜爱的日用品。大多数时候并不用来拆信。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000003A.title: "持有皇帝的恩宠"
+	quest.C30000000000003B.title: "贵族刺剑"
+	quest.C30000000000003B.quest_subtitle: "No.059 · 攻击类"
+	quest.C30000000000003B.quest_desc: ["PRTS 原效果：所有我方近战单位的攻击力+25%", "藏品介绍：装饰性强的贵族刺剑。高卢贵族首先使用，作为军事武器还是太脆了。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000003B.title: "持有贵族刺剑"
+	quest.C30000000000003C.title: "老近卫军之锋"
+	quest.C30000000000003C.quest_subtitle: "No.060 · 攻击类"
+	quest.C30000000000003C.quest_desc: ["PRTS 原效果：所有我方近战单位的攻击力+35%", "藏品介绍：高卢将见证老近卫军的牺牲，随后才迎来自己的覆灭。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000003C.title: "持有老近卫军之锋"
+	quest.C30000000000003D.title: "显圣吊坠"
+	quest.C30000000000003D.quest_subtitle: "No.061 · 攻击类"
+	quest.C30000000000003D.quest_desc: ["PRTS 原效果：所有我方远程单位的攻击力+15%", "藏品介绍：信仰悬在你的心口上方十公分处，语言流入你的血液，子弹滑进你的弹仓。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000003D.title: "持有显圣吊坠"
+	quest.C30000000000003E.title: "银餐叉"
+	quest.C30000000000003E.quest_subtitle: "No.062 · 攻击类"
+	quest.C30000000000003E.quest_desc: ["PRTS 原效果：所有我方远程单位的攻击力+25%", "藏品介绍：一把用来处理失败的演员，一把用来收拾蹩脚的剧作者，还有一把留给有需要的人。厨师长不能容忍任何人在餐桌上出错。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000003E.title: "持有银餐叉"
+	quest.C30000000000003F.title: "损坏的左轮弹巢"
+	quest.C30000000000003F.quest_subtitle: "No.063 · 攻击类"
+	quest.C30000000000003F.quest_desc: ["PRTS 原效果：所有我方远程单位的攻击力+35%", "藏品介绍：她行过刀山火海也不曾有一刻向奸邪低头，她枪口火舌焦灼好似怒阳，她头顶光芒炽烈几胜白昼。此处安葬着Outcast，我们的朋友。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000003F.title: "持有损坏的左轮弹巢"
+	quest.C30000000000005E.title: "钝爪-爆发"
+	quest.C30000000000005E.quest_subtitle: "No.094 · 攻击类"
+	quest.C30000000000005E.quest_desc: ["PRTS 原效果：所有【先锋】干员的初始技力+15", "藏品介绍：他已经把所有后续部队的事情都干完了，还要别人做什么？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000005E.title: "持有钝爪-爆发"
+	quest.C30000000000005F.title: "钝爪-熟稔"
+	quest.C30000000000005F.quest_subtitle: "No.095 · 攻击类"
+	quest.C30000000000005F.quest_desc: ["PRTS 原效果：所有【先锋】干员的技力消耗-35%", "藏品介绍：作为大部分时候最先进入战场的干员，你无法想象他们经历了多少。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000005F.title: "持有钝爪-熟稔"
+	quest.C300000000000063.title: "折戟-锋刃"
+	quest.C300000000000063.quest_subtitle: "No.099 · 攻击类"
+	quest.C300000000000063.quest_desc: ["PRTS 原效果：所有【近卫】干员的攻击力+25%", "藏品介绍：“这是你这个月砍坏的第七把刀了。”“但是我这个月砍了八个敌人。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000063.title: "持有折戟-锋刃"
+	quest.C300000000000064.title: "折戟-浴血"
+	quest.C300000000000064.quest_subtitle: "No.100 · 攻击类"
+	quest.C300000000000064.quest_desc: ["PRTS 原效果：所有【近卫】干员在攻击后获得2点技力", "藏品介绍：愈战愈勇的战士十分少见，我们常需要安排一些心理辅导来缓和战后的情绪。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000064.title: "持有折戟-浴血"
+	quest.C300000000000066.title: "折戟-破釜沉舟"
+	quest.C300000000000066.quest_subtitle: "No.102 · 攻击类"
+	quest.C300000000000066.quest_desc: ["PRTS 原效果：所有【近卫】干员的防御力-40%，但攻击力+40%，攻击速度+30", "藏品介绍：不太建议向煌学习那些技巧。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000066.title: "持有折戟-破釜沉舟"
+	quest.C300000000000068.title: "铁卫-侵掠"
+	quest.C300000000000068.quest_subtitle: "No.104 · 攻击类"
+	quest.C300000000000068.quest_desc: ["PRTS 原效果：所有【重装】干员的攻击力+60%", "藏品介绍：对队友和战略目的的保护行动往往会让人忽视他们原本的侵略性。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000068.title: "持有铁卫-侵掠"
+	quest.C30000000000006A.title: "铁卫-推进"
+	quest.C30000000000006A.quest_subtitle: "No.106 · 攻击类"
+	quest.C30000000000006A.quest_desc: ["PRTS 原效果：所有【重装】干员阻挡数-1（部署时不会低于1），但攻击力+40%，攻击速度+40", "藏品介绍：以放弃防守换取进攻的机会，毁灭的阵线向前迈进。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000006A.title: "持有铁卫-推进"
+	quest.C30000000000006B.title: "铁卫-无锋"
+	quest.C30000000000006B.quest_subtitle: "No.107 · 攻击类"
+	quest.C30000000000006B.quest_desc: ["PRTS 原效果：所有【重装】干员在受到攻击后获得2点技力", "藏品介绍：他们承受的每一次攻击，都将化作怒火数倍返还。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000006B.title: "持有铁卫-无锋"
+	quest.C30000000000006D.title: "残弩-百步穿杨"
+	quest.C30000000000006D.quest_subtitle: "No.109 · 攻击类"
+	quest.C30000000000006D.quest_desc: ["PRTS 原效果：所有【狙击】干员的攻击力+20%", "藏品介绍：在源石技艺尚不如今天发达的时代，炎国曾以“百步穿杨”的典故来称赞他人箭术高超。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000006D.title: "持有残弩-百步穿杨"
+	quest.C30000000000006E.title: "残弩-战场依存"
+	quest.C30000000000006E.quest_subtitle: "No.110 · 攻击类"
+	quest.C30000000000006E.quest_desc: ["PRTS 原效果：所有【狙击】干员的自然技力恢复+0.5/秒", "藏品介绍：和武器越发亲密的狙击手，越不容易遭到武器的背叛。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000006E.title: "持有残弩-战场依存"
+	quest.C30000000000006F.title: "残弩-交叉火力"
+	quest.C30000000000006F.quest_subtitle: "No.111 · 攻击类"
+	quest.C30000000000006F.quest_desc: ["PRTS 原效果：所有【狙击】干员的生命-40%，但攻击力+40%", "藏品介绍：密集的火力网布置同时让狙击干员们暴露在危险之中，接下来是一场关于准星的博弈。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000006F.title: "持有残弩-交叉火力"
+	quest.C300000000000070.title: "残弩-神速"
+	quest.C300000000000070.quest_subtitle: "No.112 · 攻击类"
+	quest.C300000000000070.quest_desc: ["PRTS 原效果：所有【狙击】干员的攻击速度+70", "藏品介绍：据说古维多利亚的传奇弓手可以让箭矢几乎连成一线。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000070.title: "持有残弩-神速"
+	quest.C300000000000072.title: "断杖-织法者"
+	quest.C300000000000072.quest_subtitle: "No.114 · 攻击类"
+	quest.C300000000000072.quest_desc: ["PRTS 原效果：所有【术师】干员的攻击力+25%", "藏品介绍：在莱塔尼亚仰望高塔的时候经常会看见一些奇怪的现象......甚至是天象。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000072.title: "持有断杖-织法者"
+	quest.C300000000000073.title: "断杖-咏唱"
+	quest.C300000000000073.quest_subtitle: "No.115 · 攻击类"
+	quest.C300000000000073.quest_desc: ["PRTS 原效果：所有【术师】干员的攻击速度+40", "藏品介绍：虽然音乐与法术有着奇妙的联系，呃，但这不是某些人五音不全的借口。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000073.title: "持有断杖-咏唱"
+	quest.C300000000000074.title: "断杖-凝神"
+	quest.C300000000000074.quest_subtitle: "No.116 · 攻击类"
+	quest.C300000000000074.quest_desc: ["PRTS 原效果：所有【术师】干员的技力恢复+0.4/秒", "藏品介绍：“当一个术师打算全力以赴，哪怕是天火小姐那种坏脾气术师，也会展露出截然不同的气质。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000074.title: "持有断杖-凝神"
+	quest.C300000000000075.title: "断杖-苦难巫咒"
+	quest.C300000000000075.quest_subtitle: "No.117 · 攻击类"
+	quest.C300000000000075.quest_desc: ["PRTS 原效果：所有【术师】干员生命-40%，但造成的法术伤害+70%", "藏品介绍：萨卡兹接触源石的起源几乎无从考证，古老法术的起点早已脱离物质现实与逻辑常理。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000075.title: "持有断杖-苦难巫咒"
+	quest.C300000000000077.title: "支柱-次要战场"
+	quest.C300000000000077.quest_subtitle: "No.119 · 攻击类"
+	quest.C300000000000077.quest_desc: ["PRTS 原效果：所有【辅助】干员的【召唤物】攻击力+50%", "藏品介绍：“呃，机械和源石技艺衍生物我尚且能理解，但是不是有些别的......”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000077.title: "持有支柱-次要战场"
+	quest.C300000000000078.title: "支柱-勤奋"
+	quest.C300000000000078.quest_subtitle: "No.120 · 攻击类"
+	quest.C300000000000078.quest_desc: ["PRTS 原效果：所有【辅助】干员的技力消耗-40%", "藏品介绍：即使是看似最微小的工作，干员们也会全力以赴。何况事实上，一点也不微小。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000078.title: "持有支柱-勤奋"
+	quest.C30000000000007C.title: "医者-自医"
+	quest.C30000000000007C.quest_subtitle: "No.124 · 攻击类"
+	quest.C30000000000007C.quest_desc: ["PRTS 原效果：所有【医疗】干员的技力恢复+0.3/秒", "藏品介绍：谁说医者不能自医，他们只是选择给自己来一片提神药然后继续帮助别人而已。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000007C.title: "持有医者-自医"
+	quest.C30000000000007D.title: "医者-强效试剂"
+	quest.C30000000000007D.quest_subtitle: "No.125 · 攻击类"
+	quest.C30000000000007D.quest_desc: ["PRTS 原效果：所有【医疗】干员的攻击力+40%", "藏品介绍：除了华法琳，没人敢采取这么激进的医疗手段，不过她从没失误过一次。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000007D.title: "持有医者-强效试剂"
+	quest.C30000000000007E.title: "医者-妙手"
+	quest.C30000000000007E.quest_subtitle: "No.126 · 攻击类"
+	quest.C30000000000007E.quest_desc: ["PRTS 原效果：所有【医疗】干员的攻击速度+50", "藏品介绍：比起从死亡手里多抢回一条命的伟业，事后昏睡个三天算什么？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000007E.title: "持有医者-妙手"
+	quest.C300000000000081.title: "锈刃-处决"
+	quest.C300000000000081.quest_subtitle: "No.129 · 攻击类"
+	quest.C300000000000081.quest_desc: ["PRTS 原效果：所有【特种】干员的攻击速度+30", "藏品介绍：红有一把小刀。她有一把小刀。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000081.title: "持有锈刃-处决"
+	quest.C300000000000085.title: "尖刺之手"
+	quest.C300000000000085.quest_subtitle: "No.133 · 攻击类"
+	quest.C300000000000085.quest_desc: ["PRTS 原效果：【铁卫】、【驭法铁卫】和【决战者】对自身阻挡的敌人每秒造成自身防御力100%的法术伤害", "藏品介绍：让敌人动手，自己打个头破血流。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000085.title: "持有尖刺之手"
+	quest.C300000000000087.title: "扣挠之手"
+	quest.C300000000000087.quest_subtitle: "No.135 · 攻击类"
+	quest.C300000000000087.quest_desc: ["PRTS 原效果：【凝滞师】、【削弱者】和【护佑者】攻击时额外造成目标当前生命值3%的法术伤害", "藏品介绍：点点滴滴，挡无可挡。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000087.title: "持有扣挠之手"
+	quest.C300000000000088.title: "扩散之手"
+	quest.C300000000000088.quest_subtitle: "No.136 · 攻击类"
+	quest.C300000000000088.quest_desc: ["PRTS 原效果：【扩散术师】、【链术师】和【轰击术师】每对一个单位造成伤害就回复2点技力值", "藏品介绍：多揍一个敌人，多攒一份力量。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000088.title: "持有扩散之手"
+	quest.C30000000000008A.title: "极速之手"
+	quest.C30000000000008A.quest_subtitle: "No.138 · 攻击类"
+	quest.C30000000000008A.quest_desc: ["PRTS 原效果：【处决者】、【伏击客】和【傀儡师】周围八格内没有我方单位时，攻击速度+100", "藏品介绍：振臂一挥，只留残影。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000008A.title: "持有极速之手"
+	quest.C300000000000095.title: "古高卢银币"
+	quest.C300000000000095.quest_subtitle: "No.149 · 攻击类"
+	quest.C300000000000095.quest_desc: ["PRTS 原效果：所有干员的初始技力+6", "藏品介绍：已灭亡国家“高卢”的流通货币，保存良好，收藏价值很高。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000095.title: "持有古高卢银币"
+	quest.C300000000000096.title: "爱丽舍钱袋"
+	quest.C300000000000096.quest_subtitle: "No.150 · 攻击类"
+	quest.C300000000000096.quest_desc: ["PRTS 原效果：所有干员的初始技力+8", "藏品介绍：逛爱丽舍大街的贵妇们用的钱袋，慕斯有个同款。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000096.title: "持有爱丽舍钱袋"
+	quest.C300000000000097.title: "高卢银行支票"
+	quest.C300000000000097.quest_subtitle: "No.151 · 攻击类"
+	quest.C300000000000097.quest_desc: ["PRTS 原效果：所有干员的初始技力+12", "藏品介绍：镶金嵌银、奢华无比的支票本，现在已经无从兑现。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000097.title: "持有高卢银行支票"
+	quest.C300000000000098.title: "《第二经济改革法》"
+	quest.C300000000000098.quest_subtitle: "No.152 · 攻击类"
+	quest.C300000000000098.quest_desc: ["PRTS 原效果：所有干员的初始技力+18", "藏品介绍：以此法案为起点，高卢正式迈向了霸权帝国的道路。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000098.title: "持有《第二经济改革法》"
+	quest.C300000000000099.title: "香草沙士汽水"
+	quest.C300000000000099.quest_subtitle: "No.153 · 攻击类"
+	quest.C300000000000099.quest_desc: ["PRTS 原效果：所有自然回复技能的技力恢复+0.2/秒", "藏品介绍：玻利瓦尔本地的廉价饮料，拥有上百年历史，混合多种香料，特点是不好喝。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000099.title: "持有香草沙士汽水"
+	quest.C30000000000009A.title: "球球果汁"
+	quest.C30000000000009A.quest_subtitle: "No.154 · 攻击类"
+	quest.C30000000000009A.quest_desc: ["PRTS 原效果：所有自然回复技能的技力恢复+0.25/秒", "藏品介绍：说是果汁其实是酒，瓶身上标注未成年禁止饮用。原产地曾在高卢版图内，现属于维多利亚。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000009A.title: "持有球球果汁"
+	quest.C30000000000009B.title: "羽兽肝酱"
+	quest.C30000000000009B.quest_subtitle: "No.155 · 攻击类"
+	quest.C30000000000009B.quest_desc: ["PRTS 原效果：所有自然回复技能的技力恢复+0.35/秒", "藏品介绍：小瓶高档羽兽肝酱，颜色鲜艳，贵族特供。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000009B.title: "持有羽兽肝酱"
+	quest.C30000000000009C.title: "迷梦香精"
+	quest.C30000000000009C.quest_subtitle: "No.156 · 攻击类"
+	quest.C30000000000009C.quest_desc: ["PRTS 原效果：所有自然回复技能的技力恢复+0.5/秒", "藏品介绍：据说女妖们制作的香氛只会送给心上之人，只需一滴，就能令人如痴如醉，而艺术家们的灵感与创意也随之而来。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000009C.title: "持有迷梦香精"
+	quest.C30000000000009D.title: "荒地龙舌兰"
+	quest.C30000000000009D.quest_subtitle: "No.157 · 攻击类"
+	quest.C30000000000009D.quest_desc: ["PRTS 原效果：所有攻击和受击回复的技能每3.5秒回复1点技力", "藏品介绍：原产自玻利瓦尔的廉价蒸馏酒，味道很冲，广受哥伦比亚拓荒者的好评。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000009D.title: "持有荒地龙舌兰"
+	quest.C30000000000009E.title: "摩根队长佳酿"
+	quest.C30000000000009E.quest_subtitle: "No.158 · 攻击类"
+	quest.C30000000000009E.quest_desc: ["PRTS 原效果：所有攻击和受击回复的技能每3秒回复1点技力", "藏品介绍：一种产自伊比利亚地区的酒，在维多利亚中部城市大受欢迎，现已停产。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000009E.title: "持有摩根队长佳酿"
+	quest.C30000000000009F.title: "生命之水"
+	quest.C30000000000009F.quest_subtitle: "No.159 · 攻击类"
+	quest.C30000000000009F.quest_desc: ["PRTS 原效果：所有攻击和受击回复的技能每2.5秒回复1点技力", "藏品介绍：度数奇高的乌萨斯烈酒，上头，据说一个健康的乌萨斯人能干掉好几瓶。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000009F.title: "持有生命之水"
+	quest.C3000000000000A0.title: "皇家利口酒"
+	quest.C3000000000000A0.quest_subtitle: "No.160 · 攻击类"
+	quest.C3000000000000A0.quest_desc: ["PRTS 原效果：所有攻击和受击回复的技能每1.5秒回复1点技力", "藏品介绍：已灭亡国家“高卢”的好酒，现在成为了收藏家手中的珍惜奇货，价格不菲。产地现处莱塔尼亚境内，工艺则已经失传。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A0.title: "持有皇家利口酒"
+	quest.C3000000000000A5.title: "投币玩具"
+	quest.C3000000000000A5.quest_subtitle: "No.165 · 攻击类"
+	quest.C3000000000000A5.quest_desc: ["PRTS 原效果：每有5源石锭，所有我方单位的攻击速度+3", "藏品介绍：不知道为什么会有人喜欢这种造型，但整体的设计理念确实可圈可点——只要投币，就连石像都会动起来，千真万确。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A5.title: "持有投币玩具"
+	quest.C3000000000000A6.title: "骑士戒律·新编"
+	quest.C3000000000000A6.quest_subtitle: "No.166 · 攻击类"
+	quest.C3000000000000A6.quest_desc: ["PRTS 原效果：每有5源石锭，所有我方单位的攻击速度+5", "藏品介绍：庄严宣誓那是过去的事儿了，现代骑士精神需要更加灵活的展现方式。在联络装置上输入你的编号，你便是名光荣的骑士。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A6.title: "持有骑士戒律·新编"
+	quest.C3000000000000A7.title: "金酒之杯"
+	quest.C3000000000000A7.quest_subtitle: "No.167 · 攻击类"
+	quest.C3000000000000A7.quest_desc: ["PRTS 原效果：每有5源石锭，所有我方单位的攻击速度+7", "藏品介绍：圣人、骑士、虔信之徒，无人不为之疯狂。老天啊，连杯子本身都是纯金的！", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A7.title: "持有金酒之杯"
+	quest.C3000000000000A8.title: "绿叶菜罐头"
+	quest.C3000000000000A8.quest_subtitle: "No.168 · 攻击类"
+	quest.C3000000000000A8.quest_desc: ["PRTS 原效果：所有干员技能触发后1秒内攻击力+60%", "藏品介绍：很多卡特斯相信吃下这盒罐头，他们就会变得力大无穷。出色的广告效果，业界经典成功案例。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A8.title: "持有绿叶菜罐头"
+	quest.C3000000000000A9.title: "073号安全试剂"
+	quest.C3000000000000A9.quest_subtitle: "No.169 · 攻击类"
+	quest.C3000000000000A9.quest_desc: ["PRTS 原效果：所有干员技能触发后1秒内攻击力+65%", "藏品介绍：严谨实验下的安全产物，绝对安全，不会爆炸，令人安心。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A9.title: "持有073号安全试剂"
+	quest.C3000000000000AA.title: "叙拉古人的愤怒"
+	quest.C3000000000000AA.quest_subtitle: "No.170 · 攻击类"
+	quest.C3000000000000AA.quest_desc: ["PRTS 原效果：所有干员技能触发后1秒内攻击力+100%", "藏品介绍：曾经开设在高卢首都的一家“正宗叙拉古餐厅”的招牌面食，用浓郁的巧克力酱与源石虫肝制成的酱汁以其独特风味备受高卢贵族好评。但是据说差一点引起叙拉古与高卢的外交冲突。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000AA.title: "持有叙拉古人的愤怒"
+	quest.C3000000000000AC.title: "荣耀绶带"
+	quest.C3000000000000AC.quest_subtitle: "No.172 · 攻击类"
+	quest.C3000000000000AC.quest_desc: ["PRTS 原效果：所有我方单位仅阻挡1名敌人时，攻击力+100%", "藏品介绍：曾有无数位演员出演这个角色，但永远救不了这个角色心目中的挚友。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000AC.title: "持有荣耀绶带"
+	quest.C3000000000000C1.title: "“游禽的右眼”"
+	quest.C3000000000000C1.quest_subtitle: "No.193 · 攻击类"
+	quest.C3000000000000C1.quest_desc: ["PRTS 原效果：所有近卫和狙击干员的攻击力+15%，所有辅助和术师干员的攻击力-5%", "藏品介绍：高卢皇后冠冕的一部分，现存于伦蒂尼姆皇家博物馆。在得知皇帝逝世的消息后，这位皇后决定同敌人战至最后一刻——为了国家，也为了她离世的爱人。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C1.title: "持有“游禽的右眼”"
+	quest.C3000000000000C2.title: "“游禽的左眼”"
+	quest.C3000000000000C2.quest_subtitle: "No.194 · 攻击类"
+	quest.C3000000000000C2.quest_desc: ["PRTS 原效果：所有辅助和术师干员的攻击力+15%，所有近卫和狙击干员的攻击力-5%", "藏品介绍：高卢皇后冠冕的一部分，现存于莱塔尼亚女皇图书馆。皇后遣走所有侍从，宽恕一切罪犯，随后独自坐在曾属于丈夫的宝座上，等待着入侵者的到来——她决心死于源石结晶，而非敌人的剑刃。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C2.title: "持有“游禽的左眼”"
+	quest.C3000000000000C6.title: "眼熟的雕像"
+	quest.C3000000000000C6.quest_subtitle: "No.198 · 攻击类"
+	quest.C3000000000000C6.quest_desc: ["PRTS 原效果：所有敌方单位的攻击速度-15", "藏品介绍：容貌相近，气质相异，你或许见过这个人？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C6.title: "持有眼熟的雕像"
+	quest.C3000000000000CA.title: "“刀舞”"
+	quest.C3000000000000CA.quest_subtitle: "No.202 · 攻击类"
+	quest.C3000000000000CA.quest_desc: ["PRTS 原效果：战斗开始时，使随机一名干员在本局内攻击力+100%，生命+100%", "藏品介绍：“猩红剧团”成员的遗物。“刀舞”是一位沉默寡言的萨尔贡舞者，也是一位武艺高超的战士，她对剧团无比忠诚，即便是在猩红剧团内也少有人知晓她的黑暗过去。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000CA.title: "持有“刀舞”"
+	quest.C3000000000000E0.title: "老蒲扇"
+	quest.C3000000000000E0.quest_subtitle: "No.224 · 攻击类"
+	quest.C3000000000000E0.quest_desc: ["PRTS 原效果：战斗编队中每有一个职业不同的干员，所有干员的攻击力+10%", "藏品介绍：遇上连天阴雨，大炎的老天师便会向亲友抱怨自己膝盖受不得湿寒，然后，随手扇动他的蒲扇......云开雾散，雨水退避，天气就此放晴。这一手，下回还得教教他那在大理寺当差的小徒弟。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E0.title: "持有老蒲扇"
+	quest.C3000000000000E5.title: "“聚焦”"
+	quest.C3000000000000E5.quest_subtitle: "No.229 · 攻击类"
+	quest.C3000000000000E5.quest_desc: ["PRTS 原效果：每次部署我方单位时，对场上随机一个敌人及其周围造成3000点法术伤害", "藏品介绍：聚光灯交汇于主角身上，演员发出最后的呼号，死亡突至，戏剧落幕。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E5.title: "持有“聚焦”"
+	quest.C3000000000000E7.title: "突击协议-利刃"
+	quest.C3000000000000E7.quest_subtitle: "No.231 · 攻击类"
+	quest.C3000000000000E7.quest_desc: ["PRTS 原效果：战斗编队中每有一名先锋和近卫干员，所有先锋和近卫干员的攻击力+8%", "藏品介绍：用最锋利的矛攻击最坚硬的盾，最后的结果肯定是盾碎了，相信我。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E7.title: "持有突击协议-利刃"
+	quest.C3000000000000E9.title: "堡垒协议-方阵"
+	quest.C3000000000000E9.quest_subtitle: "No.233 · 攻击类"
+	quest.C3000000000000E9.quest_desc: ["PRTS 原效果：战斗编队中每有一名重装和辅助干员，所有重装和辅助干员的攻击力+8%", "藏品介绍：如同巨舰碾过碎石。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E9.title: "持有堡垒协议-方阵"
+	quest.C3000000000000EB.title: "远程协议-遥击"
+	quest.C3000000000000EB.quest_subtitle: "No.235 · 攻击类"
+	quest.C3000000000000EB.quest_desc: ["PRTS 原效果：战斗编队中每有一名医疗和狙击干员，所有医疗和狙击干员的攻击力+8%", "藏品介绍：能保持距离解决的问题，为什么要凑脸上去？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000EB.title: "持有远程协议-遥击"
+	quest.C3000000000000EC.title: "远程协议-克敌"
+	quest.C3000000000000EC.quest_subtitle: "No.236 · 攻击类"
+	quest.C3000000000000EC.quest_desc: ["PRTS 原效果：战斗编队中每有一名医疗和狙击干员，所有医疗和狙击干员的攻击速度+6", "藏品介绍：距离太远分不清敌我？那就先射一轮，没躲开的就是敌人。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000EC.title: "持有远程协议-克敌"
+	quest.C3000000000000ED.title: "破坏协议-消除"
+	quest.C3000000000000ED.quest_subtitle: "No.237 · 攻击类"
+	quest.C3000000000000ED.quest_desc: ["PRTS 原效果：战斗编队中每有一名术师和特种干员，所有术师和特种干员的攻击力+8%", "藏品介绍：外部的毁灭与内部的瓦解。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000ED.title: "持有破坏协议-消除"
+	quest.C3000000000000EE.title: "破坏协议-压制"
+	quest.C3000000000000EE.quest_subtitle: "No.238 · 攻击类"
+	quest.C3000000000000EE.quest_desc: ["PRTS 原效果：战斗编队中每有一名术师和特种干员，所有术师和特种干员的攻击速度+6", "藏品介绍：不要在乎打得准不准，只要打得多，就是打得准！", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000EE.title: "持有破坏协议-压制"
+	quest.C3000000000000F5.title: "“无度”"
+	quest.C3000000000000F5.quest_subtitle: "No.PCS07 · 攻击类"
+	quest.C3000000000000F5.quest_desc: ["PRTS 原效果：每次敌人进入保护目标点时，立刻对全场所有敌人造成3000点真实伤害", "藏品介绍：无光的宝石，如同剧团长本人永无止境的欲望。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000F5.title: "持有“无度”"
+	quest.C100000000000002.title: "治疗类"
+	quest.C100000000000002.quest_subtitle: "共 8 件藏品。"
+	quest.C100000000000002.quest_desc: ["主要强化治疗、生命回复或持续恢复。", "共 8 件藏品。"]
+	task.C200000000000002.title: "阅读分类说明"
+	quest.C300000000000049.title: "活玫瑰"
+	quest.C300000000000049.quest_subtitle: "No.073 · 治疗类"
+	quest.C300000000000049.quest_desc: ["PRTS 原效果：所有我方单位受到的治疗和生命回复效果+20%", "藏品介绍：是你滋养她，还是她守护你？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000049.title: "持有活玫瑰"
+	quest.C30000000000004A.title: "苍白花冠"
+	quest.C30000000000004A.quest_subtitle: "No.074 · 治疗类"
+	quest.C30000000000004A.quest_desc: ["PRTS 原效果：所有我方单位受到的治疗和生命回复效果+30%", "藏品介绍：血魔仪式使用的花冠头纱，曾经鲜红的生命被吮吸殆尽，现在只余苍白。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000004A.title: "持有苍白花冠"
+	quest.C30000000000004B.title: "演出用香水"
+	quest.C30000000000004B.quest_subtitle: "No.075 · 治疗类"
+	quest.C30000000000004B.quest_desc: ["PRTS 原效果：所有我方单位每秒回复1%的最大生命值", "藏品介绍：剧团演员们上台前会喷一些在身上，这种稳定且芬芳的香气能为演员持续舒缓压力，至少，表面上，看上去是这样的。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000004B.title: "持有演出用香水"
+	quest.C3000000000000AD.title: "“忠义”"
+	quest.C3000000000000AD.quest_subtitle: "No.173 · 治疗类"
+	quest.C3000000000000AD.quest_desc: ["PRTS 原效果：所有我方单位阻挡3名及以上敌人时，每秒回复150点生命", "藏品介绍：何为忠，何为义。有一群人早在数十年前就已经给出答案。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000AD.title: "持有“忠义”"
+	quest.C3000000000000CD.title: "《坎德之花》"
+	quest.C3000000000000CD.quest_subtitle: "No.205 · 治疗类"
+	quest.C3000000000000CD.quest_desc: ["PRTS 原效果：所有我方单位每秒回复10点生命", "藏品介绍：雕刻在石板上的叙事诗，是八百年前高卢一位著名的诗人留下的巨作。尽管后世的文学家对这首诗有着相当高的评价，但是依据历史记载，这位诗人却因为自己身形的臃肿与长相的丑陋而被人嘲笑。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000CD.title: "持有《坎德之花》"
+	quest.C3000000000000D8.title: "今日菜谱"
+	quest.C3000000000000D8.quest_subtitle: "No.216 · 治疗类"
+	quest.C3000000000000D8.quest_desc: ["PRTS 原效果：所有我方单位受到的治疗和生命回复效果+40%", "藏品介绍：剧团厨师长每顿都做不同的菜品，所有人被剧团长严令不准打听食物来源。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D8.title: "持有今日菜谱"
+	quest.C3000000000000D9.title: "“迷醉荷谟伊”"
+	quest.C3000000000000D9.quest_subtitle: "No.217 · 治疗类"
+	quest.C3000000000000D9.quest_desc: ["PRTS 原效果：所有我方单位每秒回复2%的最大生命值", "藏品介绍：只要闻到一点，帕拉斯的眼角便会湿润，也不知道莱娜在香水里加了什么魔法......", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D9.title: "持有“迷醉荷谟伊”"
+	quest.C3000000000000F3.title: "涌动之餐"
+	quest.C3000000000000F3.quest_subtitle: "No.PCS05 · 治疗类"
+	quest.C3000000000000F3.quest_desc: ["PRTS 原效果：所有我方单位受到的治疗和生命回复效果+30%，且受到的元素损伤-30%", "藏品介绍：我们生来便学会摄取。别违抗欲求，顺从它。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000F3.title: "持有涌动之餐"
+	quest.C100000000000003.title: "防御类"
+	quest.C100000000000003.quest_subtitle: "共 29 件藏品。"
+	quest.C100000000000003.quest_desc: ["主要提高防御、法抗、减伤，或削弱敌方攻击。", "共 29 件藏品。"]
+	task.C200000000000003.title: "阅读分类说明"
+	quest.C30000000000002D.title: "“静音小队”"
+	quest.C30000000000002D.quest_subtitle: "No.045 · 防御类"
+	quest.C30000000000002D.quest_desc: ["PRTS 原效果：所有我方单位的攻击力和防御力+35%，生命+45%", "藏品介绍：由罗德岛工程部统一操控的探索用无人机，更高效，更安全，为外勤干员们提供全方位的支援与保障。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000002D.title: "持有“静音小队”"
+	quest.C30000000000002E.title: "开裂的束缚带"
+	quest.C30000000000002E.quest_subtitle: "No.046 · 防御类"
+	quest.C30000000000002E.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力-7%", "藏品介绍：这根坚固的带子似乎绑过什么恐怖的东西......救命......", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000002E.title: "持有开裂的束缚带"
+	quest.C30000000000002F.title: "奇渊面具"
+	quest.C30000000000002F.quest_subtitle: "No.047 · 防御类"
+	quest.C30000000000002F.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力-12%", "藏品介绍：不属于所知的任何一个文化的古怪面具，会让人丧失战意......并不自觉地陷入长久的沉思。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000002F.title: "持有奇渊面具"
+	quest.C300000000000030.title: "教母的信物"
+	quest.C300000000000030.quest_subtitle: "No.048 · 防御类"
+	quest.C300000000000030.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力-17%", "藏品介绍：骨质的桂冠，西西里夫人的信物。秩序的象征将铲平起伏的欲望，斗争不被允许。无论真假，跪下。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000030.title: "持有教母的信物"
+	quest.C300000000000037.title: "异铁小圆盾"
+	quest.C300000000000037.quest_subtitle: "No.055 · 防御类"
+	quest.C300000000000037.quest_desc: ["PRTS 原效果：所有我方单位的防御力+15%", "藏品介绍：在异铁被广泛应用于现代工业领域前，这种材料时常被用来制造军用制式武器。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000037.title: "持有异铁小圆盾"
+	quest.C300000000000038.title: "军团护心镜"
+	quest.C300000000000038.quest_subtitle: "No.056 · 防御类"
+	quest.C300000000000038.quest_desc: ["PRTS 原效果：所有我方单位的防御力+25%", "藏品介绍：这种甲片曾经能够防护住针对心脏的致命伤害，但随着高卢没落，护心镜这种过时的护甲样式也退出了历史舞台。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000038.title: "持有军团护心镜"
+	quest.C300000000000039.title: "古旧的蒸汽甲胄"
+	quest.C300000000000039.quest_subtitle: "No.057 · 防御类"
+	quest.C300000000000039.quest_desc: ["PRTS 原效果：所有我方单位的防御力+35%", "藏品介绍：哪怕是这种旧型号的蒸汽甲胄，也仿佛承载着维多利亚君主们照耀着半片大地的荣耀辉光。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000039.title: "持有古旧的蒸汽甲胄"
+	quest.C300000000000043.title: "锈蚀刀片"
+	quest.C300000000000043.quest_subtitle: "No.067 · 防御类"
+	quest.C300000000000043.quest_desc: ["PRTS 原效果：所有敌方单位受到的物理伤害+15%", "藏品介绍：如果它割破了皮肤，你知道会发生什么。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000043.title: "持有锈蚀刀片"
+	quest.C300000000000044.title: "赶车夫的长鞭"
+	quest.C300000000000044.quest_subtitle: "No.068 · 防御类"
+	quest.C300000000000044.quest_desc: ["PRTS 原效果：所有敌方单位受到的物理伤害+25%", "藏品介绍：作为剧团的赶车人，他没有名字，没有过往。唯有挥鞭驱赶驮兽，他的生命才有意义。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000044.title: "持有赶车夫的长鞭"
+	quest.C300000000000045.title: "“复仇者”"
+	quest.C300000000000045.quest_subtitle: "No.069 · 防御类"
+	quest.C300000000000045.quest_desc: ["PRTS 原效果：所有敌方单位受到的物理伤害+35%", "藏品介绍：在阿斯卡纶第一次为军事委员会完成任务后，由特雷西斯亲手赠送，特蕾西娅为她安装的第一把武器。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000045.title: "持有“复仇者”"
+	quest.C300000000000046.title: "制式防暴用具"
+	quest.C300000000000046.quest_subtitle: "No.070 · 防御类"
+	quest.C300000000000046.quest_desc: ["PRTS 原效果：所有敌方单位受到的法术伤害+20%", "藏品介绍：乌萨斯军警的制式装备，自带施放间歇性致盲源石技艺的功能。可惜关键时刻想得起来这一功能的军警寥寥无几。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000046.title: "持有制式防暴用具"
+	quest.C300000000000047.title: "皇帝的收藏"
+	quest.C300000000000047.quest_subtitle: "No.071 · 防御类"
+	quest.C300000000000047.quest_desc: ["PRTS 原效果：所有敌方单位受到的法术伤害+30%", "藏品介绍：萨米人对他们的荒野尊崇无比，而现在这片荒野的碎片正静静躺在乌萨斯皇帝的私库中。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000047.title: "持有皇帝的收藏"
+	quest.C300000000000048.title: "“璀璨悲泣”"
+	quest.C300000000000048.quest_subtitle: "No.072 · 防御类"
+	quest.C300000000000048.quest_desc: ["PRTS 原效果：所有敌方单位受到的法术伤害+40%", "藏品介绍：他的血液仍在流淌，他从不曾真的自这里离开。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000048.title: "持有“璀璨悲泣”"
+	quest.C300000000000069.title: "铁卫-不动"
+	quest.C300000000000069.quest_subtitle: "No.105 · 防御类"
+	quest.C300000000000069.quest_desc: ["PRTS 原效果：所有【重装】干员的防御力+25%，生命+50%", "藏品介绍：“真有人能在那种规模的轰炸下一动不动？”“谁说一动不动的，他还往前挪了几步。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000069.title: "持有铁卫-不动"
+	quest.C300000000000079.title: "支柱-破兵"
+	quest.C300000000000079.quest_subtitle: "No.121 · 防御类"
+	quest.C300000000000079.quest_desc: ["PRTS 原效果：所有【辅助】干员攻击范围内的敌方单位攻击力-15%", "藏品介绍：削弱敌人的伤害有很多手段：腐蚀兵器，摧残精神，加大重力，以及......让他们肚子疼。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000079.title: "持有支柱-破兵"
+	quest.C30000000000007F.title: "医者-理智固剂"
+	quest.C30000000000007F.quest_subtitle: "No.127 · 防御类"
+	quest.C30000000000007F.quest_desc: ["PRTS 原效果：所有【医疗】干员攻击范围内的我方单位获得抵抗", "藏品介绍：加固你的思维，让你脑中帝国疆域上的每株杂草都无懈可击。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000007F.title: "持有医者-理智固剂"
+	quest.C3000000000000A2.title: "“当红歌手”"
+	quest.C3000000000000A2.quest_subtitle: "No.162 · 防御类"
+	quest.C3000000000000A2.quest_desc: ["PRTS 原效果：敌人被晕眩、冰冻、束缚时，每秒受到600点法术伤害", "藏品介绍：别管它唱什么，赶紧让它闭嘴，吵死了！", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A2.title: "持有“当红歌手”"
+	quest.C3000000000000A3.title: "悬丝傀儡"
+	quest.C3000000000000A3.quest_subtitle: "No.163 · 防御类"
+	quest.C3000000000000A3.quest_desc: ["PRTS 原效果：敌人被晕眩、冰冻、束缚时，每秒受到700点法术伤害", "藏品介绍：越是用力想要挣脱，丝线就缠得越紧。你真的认为自己仍在思考？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A3.title: "持有悬丝傀儡"
+	quest.C3000000000000A4.title: "“童趣玩偶”"
+	quest.C3000000000000A4.quest_subtitle: "No.164 · 防御类"
+	quest.C3000000000000A4.quest_desc: ["PRTS 原效果：敌人被晕眩、冰冻、束缚时，每秒受到1000点法术伤害", "藏品介绍：伊比利亚的孩童们将海岸边的奇物做成了简陋玩偶，听说只要抱着它，梦乡就会变得充实起来。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A4.title: "持有“童趣玩偶”"
+	quest.C3000000000000AB.title: "“文明的存续”"
+	quest.C3000000000000AB.quest_subtitle: "No.171 · 防御类"
+	quest.C3000000000000AB.quest_desc: ["PRTS 原效果：所有敌方单位受到的真实伤害+150%", "藏品介绍：小小的黑色王冠。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000AB.title: "持有“文明的存续”"
+	quest.C3000000000000AF.title: "王庭盟约"
+	quest.C3000000000000AF.quest_subtitle: "No.175 · 防御类"
+	quest.C3000000000000AF.quest_desc: ["PRTS 原效果：所有干员不再受到来自【萨卡兹】敌人的伤害", "藏品介绍：古老的萨卡兹王庭牺牲自己，获得了力量，由此物始，诸王庭止戈言和，同仇敌忾。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000AF.title: "持有王庭盟约"
+	quest.C3000000000000B3.title: "维多利亚王冠"
+	quest.C3000000000000B3.quest_subtitle: "No.179 · 防御类"
+	quest.C3000000000000B3.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+30%，且所有领袖单位还会攻击力、防御力+15%，生命+30%", "藏品介绍：当最后一位统治维多利亚的阿斯兰被推上断头台时，愤怒的群众一拥而上，踩踏着过去的君权。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B3.title: "持有维多利亚王冠"
+	quest.C3000000000000B4.title: "维多利亚王冠（重铸）"
+	quest.C3000000000000B4.quest_subtitle: "No.180 · 防御类"
+	quest.C3000000000000B4.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+35%，所有领袖单位还会攻击力、防御力+20%，生命+50%，编入所有职业的干员时领袖加成减半", "藏品介绍：当最后一位统治维多利亚的阿斯兰被推上断头台时，愤怒的群众一拥而上，踩踏着过去的君权。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B4.title: "持有维多利亚王冠（重铸）"
+	quest.C3000000000000CE.title: "《麻木与庸俗》"
+	quest.C3000000000000CE.quest_subtitle: "No.206 · 防御类"
+	quest.C3000000000000CE.quest_desc: ["PRTS 原效果：所有我方单位法术抗性+5", "藏品介绍：一件著名的艺术品，两百年前莱塔尼亚疯狂雕塑家的遗作。这位雕塑家以才华横溢与参与多起残忍的命案而为人所知。但是依据历史记载，他生前并没有多少人关注他的作品，而是因为自己秀美的长相而被人追捧。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000CE.title: "持有《麻木与庸俗》"
+	quest.C3000000000000DE.title: "皇族金胸针"
+	quest.C3000000000000DE.quest_subtitle: "No.222 · 防御类"
+	quest.C3000000000000DE.quest_desc: ["PRTS 原效果：所有我方单位的法术抗性+15，且部署后抵挡一次伤害", "藏品介绍：高卢皇族用于彰显身份的装饰品，由黄金打造，镶嵌了大量昂贵的固化源石结晶。实际上这种胸针不单纯是装饰，许多胸针安装了搭载防御性法术的通用源石回路。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000DE.title: "持有皇族金胸针"
+	quest.C3000000000000E3.title: "Scout的狙击镜"
+	quest.C3000000000000E3.quest_subtitle: "No.227 · 防御类"
+	quest.C3000000000000E3.quest_desc: ["PRTS 原效果：所有敌人受到我方单位伤害时，距离伤害来源越远受到的伤害越高（最高100%）", "藏品介绍：锁定目标、维持精度、扣下扳机、摧毁敌人抵抗的意志，这一切都是为了那个更远大的未来。Scout已经没有机会看到了，或许你可以帮忙见证。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E3.title: "持有Scout的狙击镜"
+	quest.C3000000000000E8.title: "突击协议-散兵"
+	quest.C3000000000000E8.quest_subtitle: "No.232 · 防御类"
+	quest.C3000000000000E8.quest_desc: ["PRTS 原效果：战斗编队中每有一名先锋和近卫干员，所有先锋和近卫干员的防御力+10%", "藏品介绍：精巧的格挡技术才是保护自己身体的真髓。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E8.title: "持有突击协议-散兵"
+	quest.C3000000000000EA.title: "堡垒协议-固守"
+	quest.C3000000000000EA.quest_subtitle: "No.234 · 防御类"
+	quest.C3000000000000EA.quest_desc: ["PRTS 原效果：战斗编队中每有一名重装和辅助干员，所有重装和辅助干员的防御力+10%", "藏品介绍：用最锋利的矛攻击最坚硬的盾，最后的结果肯定是矛断了，相信我。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000EA.title: "持有堡垒协议-固守"
+	quest.C3000000000000F2.title: "古堡的子嗣"
+	quest.C3000000000000F2.quest_subtitle: "No.PCS04 · 防御类"
+	quest.C3000000000000F2.quest_desc: ["PRTS 原效果：所有干员在场上停留100秒后防御力+300，法术抗性+30", "藏品介绍：只要有足够时间，这个盒子便能成为另一座崭新的舞台。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000F2.title: "持有古堡的子嗣"
+	quest.C100000000000004.title: "生存类"
+	quest.C100000000000004.quest_subtitle: "共 14 件藏品。"
+	quest.C100000000000004.quest_desc: ["主要影响生命上限、目标生命或闪避。", "共 14 件藏品。"]
+	task.C200000000000004.title: "阅读分类说明"
+	quest.C300000000000001.title: "热水壶"
+	quest.C300000000000001.quest_subtitle: "No.001 · 生存类"
+	quest.C300000000000001.quest_desc: ["PRTS 原效果：立即获得目标生命+2，希望+1", "藏品介绍：罗德岛办公室里的同款热水壶，有人经常大半夜用热水壶煮速食面吃，这种生活习惯不是很健康......", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000001.title: "持有热水壶"
+	quest.C300000000000002.title: "特殊抑制器"
+	quest.C300000000000002.quest_subtitle: "No.002 · 生存类"
+	quest.C300000000000002.quest_desc: ["PRTS 原效果：立即获得目标生命+6", "藏品介绍：罗德岛改良款抑制器，能够有效遏制感染造成的源石技艺失控。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000002.title: "持有特殊抑制器"
+	quest.C300000000000003.title: "石像鬼塑像"
+	quest.C300000000000003.quest_subtitle: "No.003 · 生存类"
+	quest.C300000000000003.quest_desc: ["PRTS 原效果：立即获得目标生命+6", "藏品介绍：一个手掌大小的雕像，听说是石像鬼们表示友好的造物。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000003.title: "持有石像鬼塑像"
+	quest.C300000000000004.title: "血魔的寝床"
+	quest.C300000000000004.quest_subtitle: "No.004 · 生存类"
+	quest.C300000000000004.quest_desc: ["PRTS 原效果：立即获得目标生命+8", "藏品介绍：一副奢华的棺木，和古堡十分般配，华法琳说这就是刻板印象。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000004.title: "持有血魔的寝床"
+	quest.C300000000000005.title: "长生者之证"
+	quest.C300000000000005.quest_subtitle: "No.005 · 生存类"
+	quest.C300000000000005.quest_desc: ["PRTS 原效果：立即获得目标生命+10", "藏品介绍：一段树枝，枯荣一体；\n从枯萎处生长，从繁盛处枯萎。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000005.title: "持有长生者之证"
+	quest.C30000000000004C.title: "设计师量尺"
+	quest.C30000000000004C.quest_subtitle: "No.076 · 生存类"
+	quest.C30000000000004C.quest_desc: ["PRTS 原效果：所有我方单位获得15%物理闪避", "藏品介绍：在数据、经验以及精确测量下，身着铠甲的人多了几分幸运。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000004C.title: "持有设计师量尺"
+	quest.C30000000000004D.title: "“法术杀手”"
+	quest.C30000000000004D.quest_subtitle: "No.077 · 生存类"
+	quest.C30000000000004D.quest_desc: ["PRTS 原效果：所有我方单位获得15%法术闪避", "藏品介绍：由于莱塔尼亚人的源石技艺与音乐息息相关，有人竟想出了用噪音对抗法术的蠢主意。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000004D.title: "持有“法术杀手”"
+	quest.C30000000000004E.title: "舞者手链"
+	quest.C30000000000004E.quest_subtitle: "No.078 · 生存类"
+	quest.C30000000000004E.quest_desc: ["PRTS 原效果：所有我方单位获得10%物理与法术闪避", "藏品介绍：训练有素的舞者在舞台上翩翩起舞躲过陷阱，观众们鼓掌喝彩，全然不知有人刚刚与死亡擦肩而过。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000004E.title: "持有舞者手链"
+	quest.C300000000000093.title: "《杜林地上环游记》"
+	quest.C300000000000093.quest_subtitle: "No.147 · 生存类"
+	quest.C300000000000093.quest_desc: ["PRTS 原效果：每场战斗获得1点临时目标生命值", "藏品介绍：从这本游记中，我们可以一窥地底人对于地表人的奇异见解。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000093.title: "持有《杜林地上环游记》"
+	quest.C300000000000094.title: "《旧高卢地名源流考》"
+	quest.C300000000000094.quest_subtitle: "No.148 · 生存类"
+	quest.C300000000000094.quest_desc: ["PRTS 原效果：每场战斗获得2点临时目标生命值", "藏品介绍：薄绿从博士办公室里翻出来的古地名历史书，里面记载有克莱布拉松。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000094.title: "持有《旧高卢地名源流考》"
+	quest.C3000000000000AE.title: "“时光之末”"
+	quest.C3000000000000AE.quest_subtitle: "No.174 · 生存类"
+	quest.C3000000000000AE.quest_desc: ["PRTS 原效果：仅一次，在非区域最终战斗中失败时不结束探索，目标生命+1并继续下一步行动", "藏品介绍：只要到达不了新的循环，过错就还有机会挽回。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000AE.title: "持有“时光之末”"
+	quest.C3000000000000B5.title: "莱塔尼亚权杖"
+	quest.C3000000000000B5.quest_subtitle: "No.181 · 生存类"
+	quest.C3000000000000B5.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+30%，且每进入一个新节点后，失去1目标生命（最多降至1）", "藏品介绍：曾几何时，巫王的权杖上流淌着白天与黑夜。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B5.title: "持有莱塔尼亚权杖"
+	quest.C3000000000000CF.title: "《世间的美与丑》"
+	quest.C3000000000000CF.quest_subtitle: "No.207 · 生存类"
+	quest.C3000000000000CF.quest_desc: ["PRTS 原效果：仅一次，在非区域最终战斗中失败时不结束探索，目标生命+10并继续下一步行动", "藏品介绍：十五年前出版于维多利亚的传奇书籍，这本书简单地记述了作者对审美的理解，记载了大量文学、艺术、音乐相关的知识与历史。该书的内容涵盖古今，通俗易懂，被誉为“本世代的艺术大典”。然而据说该书的作者只是某个小剧团的剧团长，数年前被一个代号为“血钻”的刺客谋害。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000CF.title: "持有《世间的美与丑》"
+	quest.C3000000000000DA.title: "女皇之愿"
+	quest.C3000000000000DA.quest_subtitle: "No.218 · 生存类"
+	quest.C3000000000000DA.quest_desc: ["PRTS 原效果：所有我方单位获得15%物理与法术闪避", "藏品介绍：两位女皇如同朝夜悬于高塔之上，当晨昏相通，意见一致，莱塔尼亚便再无异议。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000DA.title: "持有女皇之愿"
+	quest.C100000000000005.title: "综合战斗类"
+	quest.C100000000000005.quest_subtitle: "共 7 件藏品。"
+	quest.C100000000000005.quest_desc: ["同时影响两种及以上战斗属性。", "共 7 件藏品。"]
+	task.C200000000000005.title: "阅读分类说明"
+	quest.C300000000000061.title: "钝爪-百战"
+	quest.C300000000000061.quest_subtitle: "No.097 · 综合战斗类"
+	quest.C300000000000061.quest_desc: ["PRTS 原效果：所有【先锋】干员的攻击力+50%，防御力+50%", "藏品介绍：“当黑漆漆的敌人向我涌来时，我脑海里只想到四个字——它们完了。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000061.title: "持有钝爪-百战"
+	quest.C30000000000007A.title: "支柱-枯法"
+	quest.C30000000000007A.quest_subtitle: "No.122 · 综合战斗类"
+	quest.C30000000000007A.quest_desc: ["PRTS 原效果：所有【辅助】干员攻击范围内的敌方单位防御力-20%，法术抗性-20%", "藏品介绍：弱化敌人的防御有很多手段：立场装置，法术彻甲，弱点标记，以及......让他们肚子疼。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000007A.title: "持有支柱-枯法"
+	quest.C300000000000082.title: "锈刃-单兵"
+	quest.C300000000000082.quest_subtitle: "No.130 · 综合战斗类"
+	quest.C300000000000082.quest_desc: ["PRTS 原效果：所有【特种】干员的攻击力+40%，防御力+40%", "藏品介绍：S.W.E.E.P.的总管没有任何任务参与记录。*没有*。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000082.title: "持有锈刃-单兵"
+	quest.C3000000000000A1.title: "“绽放”"
+	quest.C3000000000000A1.quest_subtitle: "No.161 · 综合战斗类"
+	quest.C3000000000000A1.quest_desc: ["PRTS 原效果：所有干员每次受到伤害时回复1点技力，每次受到元素损伤时回复1点技力", "藏品介绍：在Touch的尝试下，自然暂时向你敞开心扉。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000A1.title: "持有“绽放”"
+	quest.C3000000000000B6.title: "莱塔尼亚权杖（重铸）"
+	quest.C3000000000000B6.quest_subtitle: "No.182 · 综合战斗类"
+	quest.C3000000000000B6.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+35%，进入节点时目标生命-1（最低降至1），关卡生命低于3时我方部署费用+2，技力回复速度-20%", "藏品介绍：曾几何时，巫王的权杖上流淌着白天与黑夜。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B6.title: "持有莱塔尼亚权杖（重铸）"
+	quest.C3000000000000E1.title: "食腐者手杖"
+	quest.C3000000000000E1.quest_subtitle: "No.225 · 综合战斗类"
+	quest.C3000000000000E1.quest_desc: ["PRTS 原效果：所有我方单位受到的治疗溢出时，周围敌人会受到相当于该次溢出治疗量的法术伤害", "藏品介绍：食腐者吞吃生命，也利用生命。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E1.title: "持有食腐者手杖"
+	quest.C3000000000000EF.title: "国王的新枪"
+	quest.C3000000000000EF.quest_subtitle: "No.PCS01 · 综合战斗类"
+	quest.C3000000000000EF.quest_desc: ["PRTS 原效果：目标生命值为1时，所有我方单位的攻击速度+50", "藏品介绍：绝境下的美好祈愿能带给人希望，即使那并不是真相。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000EF.title: "持有国王的新枪"
+	quest.C100000000000006.title: "探索类"
+	quest.C100000000000006.quest_subtitle: "共 11 件藏品。"
+	quest.C100000000000006.quest_desc: ["主要影响节点、战斗结算、路线或探索失败规则。", "共 11 件藏品。"]
+	task.C200000000000006.title: "阅读分类说明"
+	quest.C30000000000001D.title: "猩红剧团票根"
+	quest.C30000000000001D.quest_subtitle: "No.029 · 探索类"
+	quest.C30000000000001D.quest_desc: ["PRTS 原效果：战斗后有25%的几率额外掉落一张招募券", "藏品介绍：猩红剧团的门票，没有写演出和表演者的名字。究竟是怎样的演出在等待着你？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000001D.title: "持有猩红剧团票根"
+	quest.C30000000000001E.title: "幸运硬币"
+	quest.C30000000000001E.quest_subtitle: "No.030 · 探索类"
+	quest.C30000000000001E.quest_desc: ["PRTS 原效果：每进入一个非战斗节点，获得源石锭+2", "藏品介绍：在罗德岛捡到的硬币，捡到一枚就能捡到很多枚。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000001E.title: "持有幸运硬币"
+	quest.C30000000000001F.title: "假面舞会面具"
+	quest.C30000000000001F.quest_subtitle: "No.031 · 探索类"
+	quest.C30000000000001F.quest_desc: ["PRTS 原效果：每进入一个非战斗节点，获得源石锭+3", "藏品介绍：尊敬的客人，欢迎来到猩红剧团，接下来的演出一定会令您印象深刻。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000001F.title: "持有假面舞会面具"
+	quest.C300000000000024.title: "四叶草化石"
+	quest.C300000000000024.quest_subtitle: "No.036 · 探索类"
+	quest.C300000000000024.quest_desc: ["PRTS 原效果：战斗后掉落收藏品时，增加一个可选项", "藏品介绍：麦哲伦在生命绝迹之所找到的幸运象征。这块石头无疑经历过大地的剧变，但它还是幸存下来，将残留的小小希望留给了发现它的人。 \n", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000024.title: "持有四叶草化石"
+	quest.C3000000000000BE.title: "剧作家手稿：乌萨斯"
+	quest.C3000000000000BE.quest_subtitle: "No.190 · 探索类"
+	quest.C3000000000000BE.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力和生命+10%，每次进入非战斗节点时失去1源石锭", "藏品介绍：“乌萨斯的宴会戛然而止——”\n", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000BE.title: "持有剧作家手稿：乌萨斯"
+	quest.C3000000000000C0.title: "剧作家手稿：高卢"
+	quest.C3000000000000C0.quest_subtitle: "No.192 · 探索类"
+	quest.C3000000000000C0.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力和生命+10%，每场战斗首次损失关卡生命时变为2倍", "藏品介绍：“黎博利的砖石化为齑粉——”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C0.title: "持有剧作家手稿：高卢"
+	quest.C3000000000000C3.title: "“华美容貌”"
+	quest.C3000000000000C3.quest_subtitle: "No.195 · 探索类"
+	quest.C3000000000000C3.quest_desc: ["PRTS 原效果：每进入一个非战斗节点，获得希望+1", "藏品介绍：只见其面容便能充满希望的确是件幸事——即使知晓其灾祸本质，亦是如此。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C3.title: "持有“华美容貌”"
+	quest.C3000000000000D0.title: "残破的玩偶"
+	quest.C3000000000000D0.quest_subtitle: "No.208 · 探索类"
+	quest.C3000000000000D0.quest_desc: ["PRTS 原效果：让探索走向不同的结局", "藏品介绍：“他说，他受够了，他再也不愿做他人手中的牵线木偶。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D0.title: "持有残破的玩偶"
+	quest.C3000000000000D5.title: "恍悟"
+	quest.C3000000000000D5.quest_subtitle: "No.213 · 探索类"
+	quest.C3000000000000D5.quest_desc: ["PRTS 原效果：所有我方单位的部署费用-3，攻击力、防御力、生命+5%，让探索走向不同的结局", "藏品介绍：巫王曾经的追随者已向艺术献出其全部。血肉、骨骼、信仰、心灵。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D5.title: "持有恍悟"
+	quest.C3000000000000D7.title: "初幕"
+	quest.C3000000000000D7.quest_subtitle: "No.215 · 探索类"
+	quest.C3000000000000D7.quest_desc: ["PRTS 原效果：希望+3，让探索走向不同的结局", "藏品介绍：这是第一场戏的落幕，是年轻人曾经为自己设计的第一个结局。在焚毁所有珍视之物的火焰之中，落魄的主人公蘸着仇敌的鲜血，写下复仇的最后一幕。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D7.title: "持有初幕"
+	quest.C3000000000000E6.title: "罗德岛战术电台"
+	quest.C3000000000000E6.quest_subtitle: "No.230 · 探索类"
+	quest.C3000000000000E6.quest_desc: ["PRTS 原效果：战斗后掉落招募券时，增加一个可选项", "藏品介绍：保持联络，支援马上抵达。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E6.title: "持有罗德岛战术电台"
+	quest.C100000000000007.title: "编队与招募类"
+	quest.C100000000000007.quest_subtitle: "共 81 件藏品。"
+	quest.C100000000000007.quest_desc: ["主要影响希望、招募、部署或编队。", "共 81 件藏品。"]
+	task.C200000000000007.title: "阅读分类说明"
+	quest.C300000000000006.title: "被撬开的道具箱"
+	quest.C300000000000006.quest_subtitle: "No.006 · 编队与招募类"
+	quest.C300000000000006.quest_desc: ["PRTS 原效果：希望+4", "藏品介绍：剧团道具师的道具箱，从顶针到道具假人，一应物品应有尽有。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000006.title: "持有被撬开的道具箱"
+	quest.C300000000000007.title: "古旧乐谱残章"
+	quest.C300000000000007.quest_subtitle: "No.007 · 编队与招募类"
+	quest.C300000000000007.quest_desc: ["PRTS 原效果：希望+4", "藏品介绍：一张古旧的乐谱残章，上面的音符已经模糊不清，不知这首曲子讲述着怎样的故事。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000007.title: "持有古旧乐谱残章"
+	quest.C300000000000008.title: "解约协议"
+	quest.C300000000000008.quest_subtitle: "No.008 · 编队与招募类"
+	quest.C300000000000008.quest_desc: ["PRTS 原效果：希望+4", "藏品介绍：只要拿到一个签名，就可以彻底摆脱这个剧团了。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000008.title: "持有解约协议"
+	quest.C300000000000009.title: "万能钥匙"
+	quest.C300000000000009.quest_subtitle: "No.009 · 编队与招募类"
+	quest.C300000000000009.quest_desc: ["PRTS 原效果：希望+6", "藏品介绍：银质的老旧钥匙，可以用它打开任何一扇门。作为管理者，剧团管家自然要手握开启所有秘密的银钥。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000009.title: "持有万能钥匙"
+	quest.C30000000000000A.title: "女妖之吻"
+	quest.C30000000000000A.quest_subtitle: "No.010 · 编队与招募类"
+	quest.C30000000000000A.quest_desc: ["PRTS 原效果：希望+8", "藏品介绍：外族人获得它时常常会展现出超越自身的勇气，但作为稀少的男性女妖，Logos对于这种东西已经见怪不怪了。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000000A.title: "持有女妖之吻"
+	quest.C30000000000000E.title: "尖笑鬼牌"
+	quest.C30000000000000E.quest_subtitle: "No.014 · 编队与招募类"
+	quest.C30000000000000E.quest_desc: ["PRTS 原效果：立即进阶一个干员（不消耗希望）", "藏品介绍：这是给予你的特权。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000000E.title: "持有尖笑鬼牌"
+	quest.C30000000000000F.title: "Miss.Christine摸摸券"
+	quest.C30000000000000F.quest_subtitle: "No.015 · 编队与招募类"
+	quest.C30000000000000F.quest_desc: ["PRTS 原效果：立即进阶两个干员（不消耗希望）", "藏品介绍：你已经获得了女士的准许！", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000000F.title: "持有Miss.Christine摸摸券"
+	quest.C300000000000010.title: "古旧铸物"
+	quest.C300000000000010.quest_subtitle: "No.016 · 编队与招募类"
+	quest.C300000000000010.quest_desc: ["PRTS 原效果：立即进阶三个干员（不消耗希望）", "藏品介绍：“天有洪炉，地生五金”......虽然可以用来成就各种事业，却没人知道具体原理。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000010.title: "持有古旧铸物"
+	quest.C300000000000011.title: "钝爪-典训"
+	quest.C300000000000011.quest_subtitle: "No.017 · 编队与招募类"
+	quest.C300000000000011.quest_desc: ["PRTS 原效果：立即进阶一个【先锋】干员（不消耗希望）", "藏品介绍：一套强有力的装备，一颗勇往直前的心。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000011.title: "持有钝爪-典训"
+	quest.C300000000000012.title: "折戟-典训"
+	quest.C300000000000012.quest_subtitle: "No.018 · 编队与招募类"
+	quest.C300000000000012.quest_desc: ["PRTS 原效果：立即进阶一个【近卫】干员（不消耗希望）", "藏品介绍：有的人用剑是因为他们不会用弩也不会用法术。而有的人用剑，是因为只有用剑的必要。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000012.title: "持有折戟-典训"
+	quest.C300000000000013.title: "铁卫-典训"
+	quest.C300000000000013.quest_subtitle: "No.019 · 编队与招募类"
+	quest.C300000000000013.quest_desc: ["PRTS 原效果：立即进阶一个【重装】干员（不消耗希望）", "藏品介绍：划痕是荣耀，但那些碎如齑粉的战士，谁来铭记？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000013.title: "持有铁卫-典训"
+	quest.C300000000000014.title: "残弩-典训"
+	quest.C300000000000014.quest_subtitle: "No.020 · 编队与招募类"
+	quest.C300000000000014.quest_desc: ["PRTS 原效果：立即进阶一个【狙击】干员（不消耗希望）", "藏品介绍：“要么，你们控制点火力。要么，你们搞对目标，好吗？”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000014.title: "持有残弩-典训"
+	quest.C300000000000015.title: "断杖-典训"
+	quest.C300000000000015.quest_subtitle: "No.021 · 编队与招募类"
+	quest.C300000000000015.quest_desc: ["PRTS 原效果：立即进阶一个【术师】干员（不消耗希望）", "藏品介绍：“看过某些术师干员的‘表演’后，我选择默默收起那本莱塔尼亚教材。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000015.title: "持有断杖-典训"
+	quest.C300000000000016.title: "支柱-典训"
+	quest.C300000000000016.quest_subtitle: "No.022 · 编队与招募类"
+	quest.C300000000000016.quest_desc: ["PRTS 原效果：立即进阶一个【辅助】干员（不消耗希望）", "藏品介绍：他们行动的时候总是五花八门的。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000016.title: "持有支柱-典训"
+	quest.C300000000000017.title: "医者-典训"
+	quest.C300000000000017.quest_subtitle: "No.023 · 编队与招募类"
+	quest.C300000000000017.quest_desc: ["PRTS 原效果：立即进阶一个【医疗】干员（不消耗希望）", "藏品介绍：直到所有人都是医生，都能根治名为生活的病灶，直到那一刻我们才不需要医生。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000017.title: "持有医者-典训"
+	quest.C300000000000018.title: "锈刃-典训"
+	quest.C300000000000018.quest_subtitle: "No.024 · 编队与招募类"
+	quest.C300000000000018.quest_desc: ["PRTS 原效果：立即进阶一个【特种】干员（不消耗希望）", "藏品介绍：在与特种干员们进行实战练习的时候，请做好充足的“没做好准备就被打了”的准备。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000018.title: "持有锈刃-典训"
+	quest.C300000000000019.title: "地区行动方案"
+	quest.C300000000000019.quest_subtitle: "No.025 · 编队与招募类"
+	quest.C300000000000019.quest_desc: ["PRTS 原效果：招募4星干员的希望消耗-2", "藏品介绍：罗德岛在各个重要的枢纽区域都设有专门的办事处。信使们努力在这片大地上勉强织了一张易碎的网。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000019.title: "持有地区行动方案"
+	quest.C30000000000001A.title: "全局作战文件"
+	quest.C30000000000001A.quest_subtitle: "No.026 · 编队与招募类"
+	quest.C30000000000001A.quest_desc: ["PRTS 原效果：招募5星干员的希望消耗-2", "藏品介绍：陆上行舟，如履薄冰。记得要培养自己的大局观。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000001A.title: "持有全局作战文件"
+	quest.C30000000000001B.title: "人事部密信"
+	quest.C30000000000001B.quest_subtitle: "No.027 · 编队与招募类"
+	quest.C30000000000001B.quest_desc: ["PRTS 原效果：招募6星干员的希望消耗-2", "藏品介绍：“■■■给你的？哦那没事了。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000001B.title: "持有人事部密信"
+	quest.C30000000000001C.title: "一份演讲稿"
+	quest.C30000000000001C.quest_subtitle: "No.028 · 编队与招募类"
+	quest.C30000000000001C.quest_desc: ["PRTS 原效果：招募所有干员的希望消耗-2", "藏品介绍：她有点紧张，有点担心，却一直都很坚定。话筒打开时，她两只长长的耳朵稍稍晃动了一下。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000001C.title: "持有一份演讲稿"
+	quest.C300000000000025.title: "突击协议扩充"
+	quest.C300000000000025.quest_subtitle: "No.037 · 编队与招募类"
+	quest.C300000000000025.quest_desc: ["PRTS 原效果：商店和战斗掉落的先锋招募券都被升级成高级人事调度函", "藏品介绍：单一的干员组成难以在前线战斗中取得优势，通过协议补充战力也是有效的手段。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000025.title: "持有突击协议扩充"
+	quest.C300000000000026.title: "突击协议增援"
+	quest.C300000000000026.quest_subtitle: "No.038 · 编队与招募类"
+	quest.C300000000000026.quest_desc: ["PRTS 原效果：商店和战斗掉落的近卫招募券都被升级成高级人事调度函", "藏品介绍：单一的干员组成难以在前线战斗中取得优势，通过协议补充战力也是有效的手段。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000026.title: "持有突击协议增援"
+	quest.C300000000000027.title: "堡垒协议扩充"
+	quest.C300000000000027.quest_subtitle: "No.039 · 编队与招募类"
+	quest.C300000000000027.quest_desc: ["PRTS 原效果：商店和战斗掉落的重装招募券都被升级成高级人事调度函", "藏品介绍：单一的干员组成难以在前线战斗中取得优势，通过协议补充战力也是有效的手段。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000027.title: "持有堡垒协议扩充"
+	quest.C300000000000028.title: "堡垒协议增援"
+	quest.C300000000000028.quest_subtitle: "No.040 · 编队与招募类"
+	quest.C300000000000028.quest_desc: ["PRTS 原效果：商店和战斗掉落的辅助招募券都被升级成高级人事调度函", "藏品介绍：单一的干员组成难以在前线战斗中取得优势，通过协议补充战力也是有效的手段。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000028.title: "持有堡垒协议增援"
+	quest.C300000000000029.title: "远程协议扩充"
+	quest.C300000000000029.quest_subtitle: "No.041 · 编队与招募类"
+	quest.C300000000000029.quest_desc: ["PRTS 原效果：商店和战斗掉落的医疗招募券都被升级成高级人事调度函", "藏品介绍：单一的干员组成难以在前线战斗中取得优势，通过协议补充战力也是有效的手段。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000029.title: "持有远程协议扩充"
+	quest.C30000000000002A.title: "远程协议增援"
+	quest.C30000000000002A.quest_subtitle: "No.042 · 编队与招募类"
+	quest.C30000000000002A.quest_desc: ["PRTS 原效果：商店和战斗掉落的狙击招募券都被升级成高级人事调度函", "藏品介绍：单一的干员组成难以在前线战斗中取得优势，通过协议补充战力也是有效的手段。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000002A.title: "持有远程协议增援"
+	quest.C30000000000002B.title: "破坏协议扩充"
+	quest.C30000000000002B.quest_subtitle: "No.043 · 编队与招募类"
+	quest.C30000000000002B.quest_desc: ["PRTS 原效果：商店和战斗掉落的术师招募券都被升级成高级人事调度函", "藏品介绍：单一的干员组成难以在前线战斗中取得优势，通过协议补充战力也是有效的手段。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000002B.title: "持有破坏协议扩充"
+	quest.C30000000000002C.title: "破坏协议增援"
+	quest.C30000000000002C.quest_subtitle: "No.044 · 编队与招募类"
+	quest.C30000000000002C.quest_desc: ["PRTS 原效果：商店和战斗掉落的特种招募券都被升级成高级人事调度函", "藏品介绍：单一的干员组成难以在前线战斗中取得优势，通过协议补充战力也是有效的手段。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000002C.title: "持有破坏协议增援"
+	quest.C30000000000004F.title: "乌萨斯列巴"
+	quest.C30000000000004F.quest_subtitle: "No.079 · 编队与招募类"
+	quest.C30000000000004F.quest_desc: ["PRTS 原效果：可携带干员+1", "藏品介绍：一种来自乌萨斯的食物，吃起来有一股子浓烈的发酵味儿。就是酸。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000004F.title: "持有乌萨斯列巴"
+	quest.C300000000000050.title: "苦行者泡芙"
+	quest.C300000000000050.quest_subtitle: "No.080 · 编队与招募类"
+	quest.C300000000000050.quest_desc: ["PRTS 原效果：可携带干员+1", "藏品介绍：行在苦路上的人们常常用这甘甜来抚慰心灵。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000050.title: "持有苦行者泡芙"
+	quest.C300000000000051.title: "铁棍面包"
+	quest.C300000000000051.quest_subtitle: "No.081 · 编队与招募类"
+	quest.C300000000000051.quest_desc: ["PRTS 原效果：可携带干员+1", "藏品介绍：坚硬的棍状面包，随身带上一根，既可以饱腹，又能够防身。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000051.title: "持有铁棍面包"
+	quest.C300000000000052.title: "试制巧克力"
+	quest.C300000000000052.quest_subtitle: "No.082 · 编队与招募类"
+	quest.C300000000000052.quest_desc: ["PRTS 原效果：可携带干员+2", "藏品介绍：只是将研发员个人偏爱的咸蛋黄与巧克力进行简单混合后的试制品，尚未达到能作为商品面世的水准。“还缺少酥脆的灵魂……”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000052.title: "持有试制巧克力"
+	quest.C300000000000053.title: "高卢小圆饼"
+	quest.C300000000000053.quest_subtitle: "No.083 · 编队与招募类"
+	quest.C300000000000053.quest_desc: ["PRTS 原效果：可携带干员+2", "藏品介绍：由于高卢圆饼的糖分高得吓人，部分店家推出了微缩版本以供顾客享用。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000053.title: "持有高卢小圆饼"
+	quest.C300000000000054.title: "维多利亚蛋糕"
+	quest.C300000000000054.quest_subtitle: "No.084 · 编队与招募类"
+	quest.C300000000000054.quest_desc: ["PRTS 原效果：可携带干员+3", "藏品介绍：纪念我们常胜不败的皇帝！", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000054.title: "持有维多利亚蛋糕"
+	quest.C300000000000055.title: "路线说明图"
+	quest.C300000000000055.quest_subtitle: "No.085 · 编队与招募类"
+	quest.C300000000000055.quest_desc: ["PRTS 原效果：可同时部署人数+1", "藏品介绍：一张干员亲手绘制的地图，附赠路线说明。除了书写者本人，没人看得懂。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000055.title: "持有路线说明图"
+	quest.C300000000000056.title: "昏暗的提灯"
+	quest.C300000000000056.quest_subtitle: "No.086 · 编队与招募类"
+	quest.C300000000000056.quest_desc: ["PRTS 原效果：可同时部署人数+1", "藏品介绍：干员探险用的提灯，可以手提，也可以挂在背包上。\n明明在外面很亮，但在这里就不好使。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000056.title: "持有昏暗的提灯"
+	quest.C300000000000057.title: "黄铜指南针"
+	quest.C300000000000057.quest_subtitle: "No.087 · 编队与招募类"
+	quest.C300000000000057.quest_desc: ["PRTS 原效果：可同时部署人数+2", "藏品介绍：它总是指向同一个方向。但那到底是哪儿？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000057.title: "持有黄铜指南针"
+	quest.C300000000000058.title: "破损的面具"
+	quest.C300000000000058.quest_subtitle: "No.088 · 编队与招募类"
+	quest.C300000000000058.quest_desc: ["PRTS 原效果：可同时部署人数+2", "藏品介绍：他戴上了面具。\n是他在说话还是面具在说话？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000058.title: "持有破损的面具"
+	quest.C300000000000059.title: "空白名片"
+	quest.C300000000000059.quest_subtitle: "No.089 · 编队与招募类"
+	quest.C300000000000059.quest_desc: ["PRTS 原效果：可携带干员+1，可同时部署人数+1", "藏品介绍：神秘的名片，以神秘方式记录着神秘杀手的联系方式。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000059.title: "持有空白名片"
+	quest.C30000000000005A.title: "人偶之家"
+	quest.C30000000000005A.quest_subtitle: "No.090 · 编队与招募类"
+	quest.C30000000000005A.quest_desc: ["PRTS 原效果：初始部署费用+10", "藏品介绍：每个孩子都该有一套。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000005A.title: "持有人偶之家"
+	quest.C30000000000005B.title: "微缩舞台模型"
+	quest.C30000000000005B.quest_subtitle: "No.091 · 编队与招募类"
+	quest.C30000000000005B.quest_desc: ["PRTS 原效果：初始部署费用+20", "藏品介绍：红色的颜料未干。小心，别染红了手。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000005B.title: "持有微缩舞台模型"
+	quest.C30000000000005C.title: "缠梦古堡模型"
+	quest.C30000000000005C.quest_subtitle: "No.092 · 编队与招募类"
+	quest.C30000000000005C.quest_desc: ["PRTS 原效果：初始部署费用+30", "藏品介绍：你见过这里，你曾在古堡中游荡，但你现在将其捧在掌心。这一切到底都是真的，还是只是一场梦？", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000005C.title: "持有缠梦古堡模型"
+	quest.C30000000000005D.title: "钝爪-突破"
+	quest.C30000000000005D.quest_subtitle: "No.093 · 编队与招募类"
+	quest.C30000000000005D.quest_desc: ["PRTS 原效果：所有【先锋】干员的部署费用-2，生命+60%", "藏品介绍：在波涛中插下顽石，分割巨浪，破开迷雾。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000005D.title: "持有钝爪-突破"
+	quest.C300000000000060.title: "钝爪-振奋"
+	quest.C300000000000060.quest_subtitle: "No.096 · 编队与招募类"
+	quest.C300000000000060.quest_desc: ["PRTS 原效果：所有【先锋】干员的再部署时间-50%", "藏品介绍：只是战略性撤退而已，这样才好在贯穿敌人前看清他们长什么样。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000060.title: "持有钝爪-振奋"
+	quest.C300000000000062.title: "折戟-突破"
+	quest.C300000000000062.quest_subtitle: "No.098 · 编队与招募类"
+	quest.C300000000000062.quest_desc: ["PRTS 原效果：所有【近卫】干员的部署费用-3，生命+40%", "藏品介绍：战士走入战场，战士拔出战刃，战士迎接战斗。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000062.title: "持有折戟-突破"
+	quest.C300000000000065.title: "折戟-一夫当关"
+	quest.C300000000000065.quest_subtitle: "No.101 · 编队与招募类"
+	quest.C300000000000065.quest_desc: ["PRTS 原效果：所有【近卫】干员的阻挡数+1", "藏品介绍：并不是只有身穿重甲或是手持盾牌的人才擅长抵御敌人的攻击。迅速击溃有可能对你造成伤害的敌人才是最好的防守。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000065.title: "持有折戟-一夫当关"
+	quest.C300000000000067.title: "铁卫-突破"
+	quest.C300000000000067.quest_subtitle: "No.103 · 编队与招募类"
+	quest.C300000000000067.quest_desc: ["PRTS 原效果：所有【重装】干员的部署费用-3，生命+40%", "藏品介绍：持盾者连成山脉，连成土地，他们对抗的不是血肉之敌，他们对抗命运，对抗不公。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000067.title: "持有铁卫-突破"
+	quest.C30000000000006C.title: "残弩-突破"
+	quest.C30000000000006C.quest_subtitle: "No.108 · 编队与招募类"
+	quest.C30000000000006C.quest_desc: ["PRTS 原效果：所有【狙击】干员的部署费用-2，生命+60%", "藏品介绍：上膛，瞄准，开火，毁灭如期而至。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000006C.title: "持有残弩-突破"
+	quest.C300000000000071.title: "断杖-突破"
+	quest.C300000000000071.quest_subtitle: "No.113 · 编队与招募类"
+	quest.C300000000000071.quest_desc: ["PRTS 原效果：所有【术师】干员的部署费用-3，生命+60%", "藏品介绍：让技艺在指尖起舞，呼风唤雨，搅乱现实，达成你宏伟的目的。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000071.title: "持有断杖-突破"
+	quest.C300000000000076.title: "支柱-突破"
+	quest.C300000000000076.quest_subtitle: "No.118 · 编队与招募类"
+	quest.C300000000000076.quest_desc: ["PRTS 原效果：所有【辅助】干员的部署费用-2，生命+60%", "藏品介绍：当“差一点完成任务”的时候，你需要的正是那个帮你补上“差一点”的人。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000076.title: "持有支柱-突破"
+	quest.C30000000000007B.title: "医者-突破"
+	quest.C30000000000007B.quest_subtitle: "No.123 · 编队与招募类"
+	quest.C30000000000007B.quest_desc: ["PRTS 原效果：所有【医疗】干员的部署费用-2，生命+60%", "藏品介绍：拯救是人类必须赞许的美德，是这一切得以存续的仰仗。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000007B.title: "持有医者-突破"
+	quest.C300000000000080.title: "锈刃-突破"
+	quest.C300000000000080.quest_subtitle: "No.128 · 编队与招募类"
+	quest.C300000000000080.quest_desc: ["PRTS 原效果：所有【特种】干员的部署费用-2，生命+60%", "藏品介绍：手段有很多，结局却只有一种。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000080.title: "持有锈刃-突破"
+	quest.C300000000000083.title: "锈刃-无人之境"
+	quest.C300000000000083.quest_subtitle: "No.131 · 编队与招募类"
+	quest.C300000000000083.quest_desc: ["PRTS 原效果：所有【特种】干员的再部署时间-35%", "藏品介绍：部分干员的作战方式很特殊，无论见到他们“好几次”还是“好几个”，都不要大惊小怪。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000083.title: "持有锈刃-无人之境"
+	quest.C300000000000084.title: "锈刃-神力"
+	quest.C300000000000084.quest_subtitle: "No.132 · 编队与招募类"
+	quest.C300000000000084.quest_desc: ["PRTS 原效果：所有【特种】干员的力度+2", "藏品介绍：地形是作战的一环......只能说这么多了。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000084.title: "持有锈刃-神力"
+	quest.C30000000000008B.title: "积攒之手"
+	quest.C30000000000008B.quest_subtitle: "No.139 · 编队与招募类"
+	quest.C30000000000008B.quest_desc: ["PRTS 原效果：【冲锋手】、【尖兵】和【战术家】的部署费用-12，且击败敌人后额外获得6点部署费用", "藏品介绍：缺了什么，就从敌人身上拿，别客气。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000008B.title: "持有积攒之手"
+	quest.C30000000000008C.title: "蓝色丝巾"
+	quest.C30000000000008C.quest_subtitle: "No.140 · 编队与招募类"
+	quest.C30000000000008C.quest_desc: ["PRTS 原效果：希望+2，可携带干员+1", "藏品介绍：女士优雅的丝巾，她的出现代表安全。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000008C.title: "持有蓝色丝巾"
+	quest.C30000000000008D.title: "红色蝴蝶结"
+	quest.C30000000000008D.quest_subtitle: "No.141 · 编队与招募类"
+	quest.C30000000000008D.quest_desc: ["PRTS 原效果：希望+2，可同时部署人数+1", "藏品介绍：傀影送出的第一份礼物，Miss.Christine非常中意。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000008D.title: "持有红色蝴蝶结"
+	quest.C30000000000008E.title: "古怪的长笛"
+	quest.C30000000000008E.quest_subtitle: "No.142 · 编队与招募类"
+	quest.C30000000000008E.quest_desc: ["PRTS 原效果：希望+4，可携带干员+1", "藏品介绍：外形古怪的长笛，有人日夜将其吹响。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000008E.title: "持有古怪的长笛"
+	quest.C30000000000008F.title: "玻璃小鸟"
+	quest.C30000000000008F.quest_subtitle: "No.143 · 编队与招募类"
+	quest.C30000000000008F.quest_desc: ["PRTS 原效果：希望+4，可携带干员+1", "藏品介绍：“在我的乐园里，这只小鸟会永远地歌唱下去。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000008F.title: "持有玻璃小鸟"
+	quest.C300000000000090.title: "独奏八音盒"
+	quest.C300000000000090.quest_subtitle: "No.144 · 编队与招募类"
+	quest.C300000000000090.quest_desc: ["PRTS 原效果：希望+4，可同时部署人数+1", "藏品介绍：老旧的八音盒，打开之后音乐没有响起，盒子中央的小人也没有动。没有任何响动，无人跳舞。在与傀影对戏之前，女主演总是在后台痴痴地看着它。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000090.title: "持有独奏八音盒"
+	quest.C300000000000091.title: "源石鸢尾花"
+	quest.C300000000000091.quest_subtitle: "No.145 · 编队与招募类"
+	quest.C300000000000091.quest_desc: ["PRTS 原效果：希望+6，可携带干员+2", "藏品介绍：极尽奢华的花朵，剧团长在谢幕时向主演献花的次数寥寥无几。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000091.title: "持有源石鸢尾花"
+	quest.C300000000000092.title: "赤金的远征"
+	quest.C300000000000092.quest_subtitle: "No.146 · 编队与招募类"
+	quest.C300000000000092.quest_desc: ["PRTS 原效果：希望+4，可携带干员+1，可同时部署人数+1", "藏品介绍：君王自荒地出发，集市在她的裙下如春芽萌发，财富之路连通高山密林，直到她消失在西方浪涛的边崖。——萨尔贡古老童话", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000092.title: "持有赤金的远征"
+	quest.C3000000000000B0.title: "浓缩抑制剂"
+	quest.C3000000000000B0.quest_subtitle: "No.176 · 编队与招募类"
+	quest.C3000000000000B0.quest_desc: ["PRTS 原效果：所有干员攻击【感染生物】时攻击力提升至150%并使其失去特殊能力3秒", "藏品介绍：罗德岛用于抑制急性矿石病的医疗试剂，但在浓缩提炼后，反而会对感染部位造成不可逆转的伤害。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B0.title: "持有浓缩抑制剂"
+	quest.C3000000000000B7.title: "高卢长袍"
+	quest.C3000000000000B7.quest_subtitle: "No.183 · 编队与招募类"
+	quest.C3000000000000B7.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+25%，且招募4星及以上干员时希望消耗+1", "藏品介绍：高卢皇帝的遗物，威权与盛世的象征。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B7.title: "持有高卢长袍"
+	quest.C3000000000000B8.title: "高卢长袍（重铸）"
+	quest.C3000000000000B8.quest_subtitle: "No.184 · 编队与招募类"
+	quest.C3000000000000B8.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+30%，在奇数层招募4星以上干员时希望消耗+2，偶数层晋升干员希望消耗+2", "藏品介绍：高卢皇帝的遗物，威权与盛世的象征。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B8.title: "持有高卢长袍（重铸）"
+	quest.C3000000000000BB.title: "酒神的印记"
+	quest.C3000000000000BB.quest_subtitle: "No.187 · 编队与招募类"
+	quest.C3000000000000BB.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+30%，且可同时部署人数-2", "藏品介绍：猩红剧团内随处可见的图案，将剧团长和他对艺术的渴求深深烙印进每个人的脑海中。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000BB.title: "持有酒神的印记"
+	quest.C3000000000000BC.title: "酒神的印记（重铸）"
+	quest.C3000000000000BC.quest_subtitle: "No.188 · 编队与招募类"
+	quest.C3000000000000BC.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+35%，可同时部署人数-3，每次进入幕间余兴时可同时部署人数+2", "藏品介绍：猩红剧团内随处可见的图案，将剧团长和他对艺术的渴求深深烙印进每个人的脑海中。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000BC.title: "持有酒神的印记（重铸）"
+	quest.C3000000000000BD.title: "剧作家手稿：维多利亚"
+	quest.C3000000000000BD.quest_subtitle: "No.189 · 编队与招募类"
+	quest.C3000000000000BD.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力和生命+10%，下次招募干员时希望消耗+1（招募后效果消失）", "藏品介绍：“菲林的王冠四分五裂——”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000BD.title: "持有剧作家手稿：维多利亚"
+	quest.C3000000000000BF.title: "剧作家手稿：莱塔尼亚"
+	quest.C3000000000000BF.quest_subtitle: "No.191 · 编队与招募类"
+	quest.C3000000000000BF.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力和生命+10%，部署费用低于99时我方攻击力-10%", "藏品介绍：“卡普里尼的高塔轰然倒塌——”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000BF.title: "持有剧作家手稿：莱塔尼亚"
+	quest.C3000000000000C4.title: "“剑锤”"
+	quest.C3000000000000C4.quest_subtitle: "No.196 · 编队与招募类"
+	quest.C3000000000000C4.quest_desc: ["PRTS 原效果：所有干员的部署费用+5，但攻击力、防御力和生命+10%", "藏品介绍：插在巨大石头上的剑，到底是谁这么无聊啊。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C4.title: "持有“剑锤”"
+	quest.C3000000000000C5.title: "“断剑”"
+	quest.C3000000000000C5.quest_subtitle: "No.197 · 编队与招募类"
+	quest.C3000000000000C5.quest_desc: ["PRTS 原效果：所有干员的生命-30%，但再部署时间-50%", "藏品介绍：一把折断的剑，姑且能用……大概吧……", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C5.title: "持有“断剑”"
+	quest.C3000000000000C8.title: "漆黑的舞鞋"
+	quest.C3000000000000C8.quest_subtitle: "No.200 · 编队与招募类"
+	quest.C3000000000000C8.quest_desc: ["PRTS 原效果：可以在高台部署近战位干员", "藏品介绍：哥伦比亚的舞者踩踏大地，铿锵之声响亮悦耳。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C8.title: "持有漆黑的舞鞋"
+	quest.C3000000000000C9.title: "洁白的舞鞋"
+	quest.C3000000000000C9.quest_subtitle: "No.201 · 编队与招募类"
+	quest.C3000000000000C9.quest_desc: ["PRTS 原效果：可以在低地部署远程位干员", "藏品介绍：乌萨斯的舞者轻盈灵动，于天地间尽情舒展身姿。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C9.title: "持有洁白的舞鞋"
+	quest.C3000000000000CB.title: "“白英花”"
+	quest.C3000000000000CB.quest_subtitle: "No.203 · 编队与招募类"
+	quest.C3000000000000CB.quest_desc: ["PRTS 原效果：战斗开始时，打乱所有干员的部署费用", "藏品介绍：“猩红剧团”成员的遗物。“白英花”这个艺名属于一位著名的莱塔尼亚歌剧演员，据说这位被称作“莱塔尼亚高塔上的白英花”的女演员与多位高塔贵族保持着微妙的私人关系，甚至尝试以此挑起贵族之间的争斗。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000CB.title: "持有“白英花”"
+	quest.C3000000000000CC.title: "“影子”"
+	quest.C3000000000000CC.quest_subtitle: "No.204 · 编队与招募类"
+	quest.C3000000000000CC.quest_desc: ["PRTS 原效果：提高招募券中临时招募出现的概率", "藏品介绍：“猩红剧团”成员的遗物。据说在加入剧团之前，“影子”是一位著名的叙拉古舞台魔术师，以自己高超的幻术而出名，然而他被指控在表演中使用源石技艺暗杀了多位家族成员。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000CC.title: "持有“影子”"
+	quest.C3000000000000D1.title: "无用的剪刀"
+	quest.C3000000000000D1.quest_subtitle: "No.209 · 编队与招募类"
+	quest.C3000000000000D1.quest_desc: ["PRTS 原效果：立即获得源石锭+11，希望+3", "藏品介绍：这把剪刀被使用了太久太久，久到已经没有办法再剪断任何有形之物，久到能将许多无形束缚全部剪碎。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D1.title: "持有无用的剪刀"
+	quest.C3000000000000D3.title: "替罪领巾"
+	quest.C3000000000000D3.quest_subtitle: "No.211 · 编队与招募类"
+	quest.C3000000000000D3.quest_desc: ["PRTS 原效果：所有我方单位的部署费用+2", "藏品介绍：疯癫的高塔术师主办了一场特殊的宴会，所有碍于体面而出现在会客大厅的宾客，都是幕布揭开那一瞬间的见证者。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D3.title: "持有替罪领巾"
+	quest.C3000000000000D6.title: "死囚之舞"
+	quest.C3000000000000D6.quest_subtitle: "No.214 · 编队与招募类"
+	quest.C3000000000000D6.quest_desc: ["PRTS 原效果：所有干员的再部署时间-10%", "藏品介绍：是他们自己将自己关在这里。啊，多么安静，再也没有人能打扰这场创作了。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D6.title: "持有死囚之舞"
+	quest.C3000000000000DF.title: "“逝者垂泪”"
+	quest.C3000000000000DF.quest_subtitle: "No.223 · 编队与招募类"
+	quest.C3000000000000DF.quest_desc: ["PRTS 原效果：所有干员受到晕眩、寒冷、冰冻等负面状态影响时，获得50%庇护", "藏品介绍：这枚古典挂坠以真诚和毅力铸就，在此之后，Whitesmith的锻炉再也没能燃起火焰。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000DF.title: "持有“逝者垂泪”"
+	quest.C3000000000000E4.title: "“噤声”"
+	quest.C3000000000000E4.quest_subtitle: "No.228 · 编队与招募类"
+	quest.C3000000000000E4.quest_desc: ["PRTS 原效果：所有我方干员技能未开启时60秒内攻击力逐渐提升至最高+60%，每次技能结束时失去该加成", "藏品介绍：在等候那即将到来的至高一刻时，演员捂住自己刺痛不止的喉咙，按住胸腔中翻滚的火焰，闭口不言。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E4.title: "持有“噤声”"
+	quest.C3000000000000F0.title: "近卫军帽"
+	quest.C3000000000000F0.quest_subtitle: "No.PCS02 · 编队与招募类"
+	quest.C3000000000000F0.quest_desc: ["PRTS 原效果：在一局战斗中，所有干员每部署过一次就生命+25%", "藏品介绍：“你我终会离开，但我们的国家，将长盛不衰。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000F0.title: "持有近卫军帽"
+	quest.C100000000000008.title: "资源经营类"
+	quest.C100000000000008.quest_subtitle: "共 6 件藏品。"
+	quest.C100000000000008.quest_desc: ["主要影响源石锭、商店、商品或藏品获取。", "共 6 件藏品。"]
+	task.C200000000000008.title: "阅读分类说明"
+	quest.C30000000000000B.title: "古旧钱币"
+	quest.C30000000000000B.quest_subtitle: "No.011 · 资源经营类"
+	quest.C30000000000000B.quest_desc: ["PRTS 原效果：立即获得源石锭+10", "藏品介绍：生锈的古代钱币，已经无法辨认年代，这东西在泰拉荒地上随处可见。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000000B.title: "持有古旧钱币"
+	quest.C30000000000000C.title: "演员的首饰盒"
+	quest.C30000000000000C.quest_subtitle: "No.012 · 资源经营类"
+	quest.C30000000000000C.quest_desc: ["PRTS 原效果：立即获得源石锭+18", "藏品介绍：装满了各种碎裂首饰的盒子，年轻的主演佩戴着这些珠宝登台，然后从最高处纵身跃下。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000000C.title: "持有演员的首饰盒"
+	quest.C30000000000000D.title: "无瑕宝玉"
+	quest.C30000000000000D.quest_subtitle: "No.013 · 资源经营类"
+	quest.C30000000000000D.quest_desc: ["PRTS 原效果：立即获得源石锭+25", "藏品介绍：即便城池三度因其而毁，它也依然光洁无瑕，无可挑剔。持有它的萨尔贡皇帝直至今日都没想好用什么珠宝与之相衬，只有争斗的硝烟永伴。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C40000000000000D.title: "持有无瑕宝玉"
+	quest.C300000000000020.title: "至宝指环"
+	quest.C300000000000020.quest_subtitle: "No.032 · 资源经营类"
+	quest.C300000000000020.quest_desc: ["PRTS 原效果：战斗掉落的源石锭+50%", "藏品介绍：在莱塔尼亚的神话中，持戒者享有整片大地的财富，但也终将因贪婪毁灭。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000020.title: "持有至宝指环"
+	quest.C300000000000023.title: "锈蚀的铁锤"
+	quest.C300000000000023.quest_subtitle: "No.035 · 资源经营类"
+	quest.C300000000000023.quest_desc: ["PRTS 原效果：商店中购买道具所需源石锭-50%", "藏品介绍：“变革是必须的，而我们应当让暴风雨来得更快一点。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000023.title: "持有锈蚀的铁锤"
+	quest.C3000000000000C7.title: "友谊之证"
+	quest.C3000000000000C7.quest_subtitle: "No.199 · 资源经营类"
+	quest.C3000000000000C7.quest_desc: ["PRTS 原效果：战斗掉落的源石锭+30%", "藏品介绍：一些古老的血魔家族还沿用旧时的繁琐礼节。他们交付出高昂的友谊，并不允许他人随意冒犯。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000C7.title: "持有友谊之证"
+	quest.C100000000000009.title: "特殊规则类"
+	quest.C100000000000009.quest_subtitle: "共 22 件藏品。"
+	quest.C100000000000009.quest_desc: ["不属于以上类别的特殊集成战略规则。", "共 22 件藏品。"]
+	task.C200000000000009.title: "阅读分类说明"
+	quest.C300000000000021.title: "维多利亚“废铁”勋章"
+	quest.C300000000000021.quest_subtitle: "No.033 · 特殊规则类"
+	quest.C300000000000021.quest_desc: ["PRTS 原效果：战斗获得的指挥经验+20%", "藏品介绍：推进之王临时设计并颁发给达格达的骑士勋章。材料很烂，但对达格达来说很有意义。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000021.title: "持有维多利亚“废铁”勋章"
+	quest.C300000000000022.title: "莱塔尼亚荣誉勋章"
+	quest.C300000000000022.quest_subtitle: "No.034 · 特殊规则类"
+	quest.C300000000000022.quest_desc: ["PRTS 原效果：战斗获得的指挥经验+30%", "藏品介绍：两位女皇很少同做一件事，为创造艺术的人授勋，这是其中一件。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000022.title: "持有莱塔尼亚荣誉勋章"
+	quest.C300000000000034.title: "“黑夜呢喃”"
+	quest.C300000000000034.quest_subtitle: "No.052 · 特殊规则类"
+	quest.C300000000000034.quest_desc: ["PRTS 原效果：所有敌方单位的生命-10%", "藏品介绍：一张黑色唱片。不。准。碰。它。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000034.title: "持有“黑夜呢喃”"
+	quest.C300000000000035.title: "镶金骨骰"
+	quest.C300000000000035.quest_subtitle: "No.053 · 特殊规则类"
+	quest.C300000000000035.quest_desc: ["PRTS 原效果：所有敌方单位的生命-15%", "藏品介绍：镶金的骨骰只有一面刻着代表生存的印记，至于其他十九面......", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000035.title: "持有镶金骨骰"
+	quest.C300000000000036.title: "《大静谧》"
+	quest.C300000000000036.quest_subtitle: "No.054 · 特殊规则类"
+	quest.C300000000000036.quest_desc: ["PRTS 原效果：所有敌方单位的生命-20%", "藏品介绍：描绘伊比利亚史上最大灾难的画作，笔触毫无意义，色彩毫无意义，意象毫无意义。“阿戈尔知道，阿戈尔知道，阿戈尔知道。”", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000036.title: "持有《大静谧》"
+	quest.C300000000000040.title: "难闻的止血剂"
+	quest.C300000000000040.quest_subtitle: "No.064 · 特殊规则类"
+	quest.C300000000000040.quest_desc: ["PRTS 原效果：所有我方单位的生命+20%", "藏品介绍：“这种源石虫的体液经过发酵处理之后可以用于止血”——《罗德岛野外生存指南》", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000040.title: "持有难闻的止血剂"
+	quest.C300000000000041.title: "急救药箱"
+	quest.C300000000000041.quest_subtitle: "No.065 · 特殊规则类"
+	quest.C300000000000041.quest_desc: ["PRTS 原效果：所有我方单位的生命+35%", "藏品介绍：“…抗生素与乙醇添加物，请在专业人士指导下使用…”——雷姆必拓安全生产指南", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000041.title: "持有急救药箱"
+	quest.C300000000000042.title: "未知仪器"
+	quest.C300000000000042.quest_subtitle: "No.066 · 特殊规则类"
+	quest.C300000000000042.quest_desc: ["PRTS 原效果：所有我方单位的生命+50%", "藏品介绍：不要问。就当为了你自己好。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000042.title: "持有未知仪器"
+	quest.C300000000000086.title: "扼喉之手"
+	quest.C300000000000086.quest_subtitle: "No.134 · 特殊规则类"
+	quest.C300000000000086.quest_desc: ["PRTS 原效果：【重射手】、【神射手】和【攻城手】的攻击会将生命值30%以下非领袖敌人强制击败", "藏品介绍：最后一份气力，掐断最后一点生机。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000086.title: "持有扼喉之手"
+	quest.C300000000000089.title: "撕扯之手"
+	quest.C300000000000089.quest_subtitle: "No.137 · 特殊规则类"
+	quest.C300000000000089.quest_desc: ["PRTS 原效果：【无畏者】、【剑豪】和【教官】攻击时无视目标70%的防御力", "藏品介绍：东撕西扯，铁甲如布匹。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C400000000000089.title: "持有撕扯之手"
+	quest.C3000000000000B1.title: "乌萨斯弯刀"
+	quest.C3000000000000B1.quest_subtitle: "No.177 · 特殊规则类"
+	quest.C3000000000000B1.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+40%", "藏品介绍：钢铁的洪流在荒芜的土地上疾驰，远方传来不容忤逆的绝对意志，乌萨斯，是我双手的延伸。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B1.title: "持有乌萨斯弯刀"
+	quest.C3000000000000B2.title: "乌萨斯弯刀（重铸）"
+	quest.C3000000000000B2.quest_subtitle: "No.178 · 特殊规则类"
+	quest.C3000000000000B2.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+35%，每进入新的一层额外+10%，完成紧急作战时-5%（最低35%）", "藏品介绍：钢铁的洪流在荒芜的土地上疾驰，远方传来不容忤逆的绝对意志，乌萨斯，是我双手的延伸。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B2.title: "持有乌萨斯弯刀（重铸）"
+	quest.C3000000000000B9.title: "半洗孤钻"
+	quest.C3000000000000B9.quest_subtitle: "No.185 · 特殊规则类"
+	quest.C3000000000000B9.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+25%，且战斗获得的指挥经验-50%", "藏品介绍：一半闪耀着艺术的光辉，一半浸染着猩红的疯癫，这才是剧团长梦想中的“傀影”。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000B9.title: "持有半洗孤钻"
+	quest.C3000000000000BA.title: "半洗孤钻（重铸）"
+	quest.C3000000000000BA.quest_subtitle: "No.186 · 特殊规则类"
+	quest.C3000000000000BA.quest_desc: ["PRTS 原效果：所有敌方单位的攻击力、防御力、生命+30%，战斗获得的指挥经验-70%；险路恶敌中获得的指挥经验变为15倍", "藏品介绍：一半闪耀着艺术的光辉，一半浸染着猩红的疯癫，这才是剧团长梦想中的“傀影”。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000BA.title: "持有半洗孤钻（重铸）"
+	quest.C3000000000000D2.title: "空白遗书"
+	quest.C3000000000000D2.quest_subtitle: "No.210 · 特殊规则类"
+	quest.C3000000000000D2.quest_desc: ["PRTS 原效果：使【伤心的大锁】自愈能力失效", "藏品介绍：摆脱那个试图操纵他的疯子，就是他唯一的心愿。现在，他已经如愿了。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D2.title: "持有空白遗书"
+	quest.C3000000000000D4.title: "替补演员"
+	quest.C3000000000000D4.quest_subtitle: "No.212 · 特殊规则类"
+	quest.C3000000000000D4.quest_desc: ["PRTS 原效果：所有我方单位的攻击力、防御力、生命+3%", "藏品介绍：剧作家始终未认可由他揭幕的这几场戏。但是没关系，报幕人并不气馁，他的手中从不缺少替补演员。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000D4.title: "持有替补演员"
+	quest.C3000000000000DB.title: "凯旋号角"
+	quest.C3000000000000DB.quest_subtitle: "No.219 · 特殊规则类"
+	quest.C3000000000000DB.quest_desc: ["PRTS 原效果：敌人受到的一次性晕眩、寒冷、冰冻等异常效果影响时间提高100%", "藏品介绍：吹响我们的号角，唤起我们的呼号，让敌人在震天咆哮中落荒而逃！", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000DB.title: "持有凯旋号角"
+	quest.C3000000000000DC.title: "高闪相机"
+	quest.C3000000000000DC.quest_subtitle: "No.220 · 特殊规则类"
+	quest.C3000000000000DC.quest_desc: ["PRTS 原效果：敌人受到的一次性晕眩、寒冷、冰冻等异常效果影响时间提高110%", "藏品介绍：用这部相机拍摄的照片冲洗出来后基本上只有一片花白，隐约能够看到受害者扭曲的表情。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000DC.title: "持有高闪相机"
+	quest.C3000000000000DD.title: "精神治疗录像带"
+	quest.C3000000000000DD.quest_subtitle: "No.221 · 特殊规则类"
+	quest.C3000000000000DD.quest_desc: ["PRTS 原效果：敌人受到的一次性晕眩、寒冷、冰冻等异常效果影响时间提高150%", "藏品介绍：这是他曾经多次阻止你听的，他说这很危险，他说你不该逗留——现在你明白了吗？你在听他唱歌。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000DD.title: "持有精神治疗录像带"
+	quest.C3000000000000E2.title: "安洁莉娜的创想"
+	quest.C3000000000000E2.quest_subtitle: "No.226 · 特殊规则类"
+	quest.C3000000000000E2.quest_desc: ["PRTS 原效果：所有敌方单位移动速度-15%，且重量下降一个等级", "藏品介绍：少女并不介意分享自己的源石技艺，她相信你会将之用在正确的地方。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000E2.title: "持有安洁莉娜的创想"
+	quest.C3000000000000F1.title: "“苦痛的快乐”"
+	quest.C3000000000000F1.quest_subtitle: "No.PCS03 · 特殊规则类"
+	quest.C3000000000000F1.quest_desc: ["PRTS 原效果：所有敌方单位的生命-15%，移动速度-15%", "藏品介绍：矿石病在剧团内蔓延，有人倒下，有人哭泣，有人乐不可支，有人一心书写。年轻人在这时收到他的成年礼物，他即将唱响身为演员的最后一支歌。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000F1.title: "持有“苦痛的快乐”"
+	quest.C3000000000000F4.title: "“夜骇”"
+	quest.C3000000000000F4.quest_subtitle: "No.PCS06 · 特殊规则类"
+	quest.C3000000000000F4.quest_desc: ["PRTS 原效果：每次敌人进入保护目标点时，立刻对全场所有敌人造成5秒晕眩", "藏品介绍：总有一个黑暗的日子，连光芒都无法带来救赎。而剧团长早已备好美酒，准备欣赏他人的绝望时刻。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
+	task.C4000000000000F4.title: "持有“夜骇”"
+	chapter.534B494C4C534348.title: "干员技能"
+	quest.D100000000000000.title: "干员技能训练"
+	quest.D100000000000000.quest_subtitle: "查看技能资料与 Ponder 演示"
+	quest.D100000000000000.quest_desc: ["本章收录当前已注册的九种干员技能物品。", "将鼠标移到技能物品上并按住 Ponder 键，可以查看对应机制演示。", "演示用于说明 Minecraft 机制化表达，不直接参与服务端伤害结算。"]
+	task.D200000000000000.title: "阅读技能训练说明"
+	quest.D300000000000001.title: "桃金娘：支援号令·β型"
+	quest.D300000000000001.quest_subtitle: "先锋 · 自动回复 · 手动触发"
+	quest.D300000000000001.quest_desc: ["初始技力 13 · 技力消耗 22 · 持续 8 秒", "停止攻击，并在持续时间内逐步回复部署费用。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000001.title: "持有支援号令·β型"
+	task.D500000000000001.title: "确认已查看技能演示"
+	quest.D300000000000002.title: "银灰：真银斩"
+	quest.D300000000000002.quest_subtitle: "近卫 · 自动回复 · 手动触发"
+	quest.D300000000000002.quest_desc: ["初始技力 75 · 技力消耗 90 · 持续 30 秒", "降低自身防御，大幅提高攻击并扩大范围，同时攻击至多六个目标。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000002.title: "持有真银斩"
+	task.D500000000000002.title: "确认已查看技能演示"
+	quest.D300000000000003.title: "能天使：过载模式"
+	quest.D300000000000003.quest_subtitle: "狙击 · 自动回复 · 自动触发"
+	quest.D300000000000003.quest_desc: ["初始技力 20 · 技力消耗 30 · 持续 15 秒", "自动开启，攻击变为五连射并缩短攻击间隔。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000003.title: "持有过载模式"
+	task.D500000000000003.title: "确认已查看技能演示"
+	quest.D300000000000004.title: "维什戴尔：爆裂黎明"
+	quest.D300000000000004.quest_subtitle: "狙击 · 自动回复 · 手动触发"
+	quest.D300000000000004.quest_desc: ["初始技力 40 · 技力消耗 50 · 弹药技能", "立刻在攻击范围内召唤2个魂灵之影（最多存在3个，技能结束后保留），攻击力+180%，攻击间隔大幅增大，攻击时攻击力提升至220%，溅射范围大幅扩大且第一天赋的发动概率提高至100%。攻击装有6发弹药，打完后结束（可随时停止技能）。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000004.title: "持有爆裂黎明"
+	task.D500000000000004.title: "确认已查看技能演示"
+	quest.D300000000000005.title: "艾雅法拉：火山"
+	quest.D300000000000005.quest_subtitle: "术师 · 自动回复 · 手动触发"
+	quest.D300000000000005.quest_desc: ["初始技力 55 · 技力消耗 80 · 持续 15 秒", "攻击范围扩大并快速向范围内至多六个敌人发射熔岩。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000005.title: "持有火山"
+	task.D500000000000005.title: "确认已查看技能演示"
+	quest.D300000000000006.title: "塞雷娅：钙质化"
+	quest.D300000000000006.quest_subtitle: "重装 · 自动回复 · 手动触发"
+	quest.D300000000000006.quest_desc: ["初始技力 70 · 技力消耗 80 · 持续 30 秒", "持续治疗附近友方，同时使附近敌人减速并更易受到法术伤害。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000006.title: "持有钙质化"
+	task.D500000000000006.title: "确认已查看技能演示"
+	quest.D300000000000007.title: "夜莺：圣域"
+	quest.D300000000000007.quest_subtitle: "医疗 · 自动回复 · 手动触发"
+	quest.D300000000000007.quest_desc: ["初始技力 115 · 技力消耗 120 · 持续 60 秒", "扩大治疗范围并强化攻击，使范围内友方获得法术抗性与法术闪避。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000007.title: "持有圣域"
+	task.D500000000000007.title: "确认已查看技能演示"
+	quest.D300000000000008.title: "铃兰：狐火渺然"
+	quest.D300000000000008.quest_subtitle: "辅助 · 自动回复 · 手动触发"
+	quest.D300000000000008.quest_desc: ["初始技力 50 · 技力消耗 70 · 持续 35 秒", "停止攻击，扩大范围，使敌人停顿并持续恢复范围内友方生命。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000008.title: "持有狐火渺然"
+	task.D500000000000008.title: "确认已查看技能演示"
+	quest.D300000000000009.title: "红：狼群"
+	quest.D300000000000009.quest_subtitle: "特种 · 被动 · 部署触发"
+	quest.D300000000000009.quest_desc: ["初始技力 0 · 技力消耗 0 · 无持续时间", "部署后立即伤害周围所有地面敌人，并使命中目标晕眩三秒。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000009.title: "持有狼群"
+	task.D500000000000009.title: "确认已查看技能演示"
 }

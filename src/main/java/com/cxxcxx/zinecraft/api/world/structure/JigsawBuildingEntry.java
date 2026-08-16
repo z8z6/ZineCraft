@@ -36,6 +36,8 @@ public final class JigsawBuildingEntry {
   private final float removeVinesChance;
   @Nullable
   private final ResourceKey<Biome> biome;
+  @NotNull
+  private final List<ResourceKey<Biome>> allowedBiomes;
   private final boolean unique;
   private final int ringDistance;
   @Nullable
@@ -62,6 +64,7 @@ public final class JigsawBuildingEntry {
       int maxDistanceFromCenter,
       float removeVinesChance,
       @Nullable ResourceKey<Biome> biome,
+      @NotNull List<ResourceKey<Biome>> allowedBiomes,
       boolean unique,
       int ringDistance,
       @Nullable Types heightmap,
@@ -85,6 +88,7 @@ public final class JigsawBuildingEntry {
     this.maxDistanceFromCenter = maxDistanceFromCenter;
     this.removeVinesChance = removeVinesChance;
     this.biome = biome;
+    this.allowedBiomes = List.copyOf(allowedBiomes);
     this.unique = unique;
     this.ringDistance = ringDistance;
     this.heightmap = heightmap;
@@ -154,6 +158,17 @@ public final class JigsawBuildingEntry {
     return this.biome;
   }
 
+  /**
+   * Allows a concentric-ring landmark to use any biome from this mod when its
+   * Biomes in which the structure may start. For guaranteed ring landmarks this
+   * is deliberately broader than {@link #getBiome()}, which remains the national
+   * preference used solely by concentric-ring correction.
+   */
+  @NotNull
+  public final List<ResourceKey<Biome>> getAllowedBiomes() {
+    return this.allowedBiomes;
+  }
+
   public final boolean getUnique() {
     return this.unique;
   }
@@ -189,4 +204,3 @@ public final class JigsawBuildingEntry {
     return this.terrainAdjustment;
   }
 }
-

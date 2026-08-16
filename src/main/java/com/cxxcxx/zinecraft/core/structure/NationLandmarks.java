@@ -303,21 +303,17 @@ public final class NationLandmarks {
       int startHeight
   ) {
     String templateRoot = "nation_landmarks/" + path;
-    return Zinecraft.INSTANCE.getSTRUCTURES().jigsawBuilding(
+    return Zinecraft.INSTANCE.getSTRUCTURES().guaranteedLandmark(
         path,
-        ringDistance + 1,
         ringDistance,
         path.hashCode(),
         7,
         112,
         0.0F,
         biome,
-        true,
-        ringDistance,
+        NationBiomes.INSTANCE.getALL_TERRA_BIOMES(),
         heightmap == null ? Types.WORLD_SURFACE_WG : heightmap,
         startHeight,
-        false,
-        false,
         Decoration.SURFACE_STRUCTURES,
         TerrainAdjustment.BEARD_THIN,
         builder -> {

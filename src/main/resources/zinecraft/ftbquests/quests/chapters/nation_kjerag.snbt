@@ -1,0 +1,34 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "nation_kjerag"
+	group: "4E4154494F4E5347"
+	icon: { id: "zinecraft:kjerag_sacred_snowstone" }
+	id: "7A00000000000010"
+	order_index: 16
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "7B10000000000001"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C10000000000001", structure: "zinecraft:kjerag_mountain_village", type: "structure" }]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			id: "7B10000000000002"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C10000000000002", structure: "zinecraft:kjerag_karlan_monastery", type: "structure" }]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			id: "7B10000000000003"
+			icon: { id: "minecraft:compass" }
+			tasks: [{ id: "7C10000000000003", structure: "zinecraft:kjerag_sacred_plaza", type: "structure" }]
+			x: 3.0d
+			y: 0.0d
+		}
+	]
+}

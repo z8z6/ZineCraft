@@ -9,6 +9,8 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public final class NationBiomes {
   @NotNull
   public static final NationBiomes INSTANCE = new NationBiomes();
@@ -209,10 +211,6 @@ public final class NationBiomes {
     _this_register.setGrassColor(6642512);
     _this_register.setFoliageColor(5590341);
     NationBiomePresets.INSTANCE.badlands(_this_register);
-    NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
-    MobCategory mobCategory = MobCategory.MONSTER;
-    EntityType entityType = EntityType.CAVE_SPIDER;
-    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 30, 1, 2);
     return;
   }
 
@@ -251,10 +249,6 @@ public final class NationBiomes {
     _this_register.setGrassColor(10122311);
     _this_register.setFoliageColor(8741438);
     NationBiomePresets.INSTANCE.badlands(_this_register);
-    NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
-    MobCategory mobCategory = MobCategory.MONSTER;
-    EntityType entityType = EntityType.HUSK;
-    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 35, 1, 3);
     return;
   }
 
@@ -319,10 +313,6 @@ public final class NationBiomes {
     _this_register.setGrassColor(8687754);
     _this_register.setFoliageColor(7438456);
     NationBiomePresets.INSTANCE.snowyForest(_this_register);
-    NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
-    MobCategory mobCategory = MobCategory.MONSTER;
-    EntityType entityType = EntityType.STRAY;
-    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 40, 1, 3);
     return;
   }
 
@@ -347,10 +337,6 @@ public final class NationBiomes {
     _this_register.setGrassColor(4683086);
     _this_register.setFoliageColor(3761215);
     NationBiomePresets.INSTANCE.rainyForest(_this_register);
-    NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
-    MobCategory mobCategory = MobCategory.MONSTER;
-    EntityType entityType = EntityType.SPIDER;
-    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 45, 1, 3);
     return;
   }
 
@@ -377,10 +363,6 @@ public final class NationBiomes {
     _this_register.setGrassColor(7638130);
     _this_register.setFoliageColor(6519653);
     NationBiomePresets.INSTANCE.wetland(_this_register);
-    NationBiomePresets nationBiomePresets = NationBiomePresets.INSTANCE;
-    MobCategory mobCategory = MobCategory.MONSTER;
-    EntityType entityType = EntityType.DROWNED;
-    nationBiomePresets.featuredSpawn(_this_register, mobCategory, entityType, 35, 1, 2);
     return;
   }
 
@@ -496,5 +478,21 @@ public final class NationBiomes {
   @NotNull
   public final ResourceKey<Biome> getTERRA_CATASTROPHE_ZONE() {
     return TERRA_CATASTROPHE_ZONE;
+  }
+
+  /**
+   * Every biome emitted by TerraBiomeSource, including the non-national catastrophe zone.
+   */
+  @NotNull
+  public final List<ResourceKey<Biome>> getALL_TERRA_BIOMES() {
+    return List.of(
+        AEGIR_ABYSSAL_SEA, BOLIVAR_PLAIN, HIGASHI_SHADOW_RIFT, DURIN_UNDERGROUND_GARDEN,
+        COLUMBIA_SANDSTONE_WILDS, KAZIMIERZ_KNIGHTLAND, KAZDEL_SCARRED_WASTES,
+        LATERANO_HOLY_FIELDS, LEITHANIEN_TWILIGHT_FOREST, RIM_BILLITON_MINING_BADLANDS,
+        MINOS_SUNLIT_HILLS, SARGON_ROCKY_DESERT, SAMI_FROZEN_FOREST,
+        VICTORIA_MISTY_HIGHLANDS, URSUS_FROZEN_STEPPE, KJERAG_SNOWY_PEAKS,
+        SIRACUSA_RAINY_WOODLAND, YAN_MOUNTAIN_GROVE, IBERIA_SALT_DELTA,
+        TERRA_CATASTROPHE_ZONE
+    );
   }
 }

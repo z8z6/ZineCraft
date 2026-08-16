@@ -124,7 +124,7 @@ dependencies {
     runtimeOnly "maven.modrinth:fPetb5Kh:${project.natures_compass_modrinth_version}"
     runtimeOnly "maven.modrinth:RV1qfVQ8:${project.explorers_compass_modrinth_version}"
     runtimeOnly "maven.modrinth:tooltip-overhaul:${project.tooltip_overhaul_modrinth_version}"
-    runtimeOnly "maven.modrinth:aC3cM3Vq:${project.mouse_tweaks_modrinth_version}"
+    clientAdditionalRuntimeClasspath "maven.modrinth:aC3cM3Vq:${project.mouse_tweaks_modrinth_version}"
 
     // TaCZ owns gun items, gun-pack loading, rendering, input and mechanical animations.
     implementation "maven.modrinth:tacz-1.21.1:${project.tacz_version}"
@@ -213,6 +213,9 @@ tasks.register('verifyCollectibleJarResources') {
             def enUs = readJson('assets/zinecraft/lang/en_us.json')
             catalog.each { collectible ->
                 def path = collectible.path
+                if (path.startsWith('collectible_is2_')) {
+                    throw new GradleException("Numbered collectible path is forbidden: ${path}")
+                }
                 if (zip.getEntry("assets/zinecraft/textures/item/${path}.png") == null) {
                     throw new GradleException("Missing collectible texture: ${path}")
                 }

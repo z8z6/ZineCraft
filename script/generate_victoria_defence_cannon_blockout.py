@@ -288,7 +288,7 @@ def jigsaw_nbt(name: str, target: str, pool: str, final_state: str) -> dict[str,
 def loot_chest_nbt(table: str) -> dict[str, str | int]:
     return {
         "id": "minecraft:chest",
-        "LootTable": f"zinecraft:chests/victoria_defence_cannon_{table}",
+        "LootTable": f"zinecraft:chests/nation/victoria_defence_cannon_{table}",
     }
 
 
@@ -1186,7 +1186,7 @@ if __name__ == "__main__":
         if "LootTable" in nbt
     }
     expected_loot_tables = {
-        f"zinecraft:chests/victoria_defence_cannon_{room}"
+        f"zinecraft:chests/nation/victoria_defence_cannon_{room}"
         for room in ("control", "maintenance", "ordnance", "planning", "supply")
     }
     if loot_tables != expected_loot_tables:
@@ -1295,7 +1295,7 @@ if __name__ == "__main__":
                 if x0 < x < x1 and z0 < z < z1
                 and spec.floor_y < y < spec.ceiling_y and "LootTable" in nbt
             }
-            expected_room_loot = {f"zinecraft:chests/victoria_defence_cannon_{spec.loot_table}"}
+            expected_room_loot = {f"zinecraft:chests/nation/victoria_defence_cannon_{spec.loot_table}"}
             if room_loot != expected_room_loot:
                 raise ValueError(f"{spec.room_id}: expected one purpose-matched loot chest")
 
@@ -1355,7 +1355,7 @@ if __name__ == "__main__":
         for (x, y, z), nbt in breech.block_nbt.items()
         if bx0 < x < bx1 and bz0 < z < bz1 and "LootTable" in nbt
     }
-    if breech_loot != {"zinecraft:chests/victoria_defence_cannon_maintenance"}:
+    if breech_loot != {"zinecraft:chests/nation/victoria_defence_cannon_maintenance"}:
         raise ValueError("breech_chamber: maintenance loot chest is missing")
     breech_visited = {(17, 0)}
     breech_frontier = [(17, 0)]

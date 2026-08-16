@@ -32,6 +32,7 @@ import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.block.NationBlocks;
 import com.cxxcxx.zinecraft.core.datagen.ZinecraftDataGenerator;
 import com.cxxcxx.zinecraft.core.dimension.ModDimensions;
+import com.cxxcxx.zinecraft.core.dimension.TerraMobSpawnPolicy;
 import com.cxxcxx.zinecraft.core.entity.ModBlockEntity;
 import com.cxxcxx.zinecraft.core.entity.ModEntities;
 import com.cxxcxx.zinecraft.core.item.ModCollectibles;
@@ -86,6 +87,7 @@ public final class Zinecraft {
     modBus.addListener(ZinecraftDataGenerator::gatherData);
     NeoForge.EVENT_BUS.addListener(WeaponServerController.INSTANCE::onServerTick);
     NeoForge.EVENT_BUS.addListener(WeaponServerController.INSTANCE::onPlayerLogout);
+    NeoForge.EVENT_BUS.addListener(TerraMobSpawnPolicy::onFinalizeSpawn);
     FtbQuestGuideInstaller.INSTANCE.install();
   }
 

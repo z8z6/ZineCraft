@@ -10,93 +10,63 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "zinecraft:victoria_central_valley_roast",
+          "name": "minecraft:paper",
           "weight": 24,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1,
-                "max": 2
+                "min": 3,
+                "max": 8
               }
             }
           ]
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:bread",
-          "weight": 20,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2,
-                "max": 5
-              }
-            }
-          ]
+          "name": "minecraft:compass",
+          "weight": 15
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:baked_potato",
-          "weight": 16,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2,
-                "max": 5
-              }
-            }
-          ]
+          "name": "minecraft:spyglass",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:coal",
+          "name": "zinecraft:skill_summary_2",
           "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2,
-                "max": 6
+                "min": 1,
+                "max": 2
               }
             }
           ]
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_ingot",
+          "name": "zinecraft:lmd",
           "weight": 10,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1,
-                "max": 3
+                "min": 2,
+                "max": 8
               }
             }
           ]
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:oriron_shard",
-          "weight": 8,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 2
-              }
-            }
-          ]
+          "name": "zinecraft:damaged_device",
+          "weight": 8
         }
       ]
     },
@@ -105,12 +75,27 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 98
+          "weight": 84
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:collectible_is2_084",
-          "weight": 2
+          "name": "zinecraft:collectible_regional_action_plan",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zinecraft:collectible_comprehensive_operation_file",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zinecraft:collectible_route_diagram",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zinecraft:collectible_brass_compass",
+          "weight": 3
         }
       ]
     },
