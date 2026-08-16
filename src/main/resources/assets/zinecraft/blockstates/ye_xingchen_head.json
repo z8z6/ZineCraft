@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "zinecraft:block/ye_xingchen_head"
+    },
+    "facing=east": {
+      "model": "zinecraft:block/ye_xingchen_head",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "zinecraft:block/ye_xingchen_head",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "zinecraft:block/ye_xingchen_head",
+      "y": 270
+    }
+  }
+}

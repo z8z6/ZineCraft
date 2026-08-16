@@ -67,8 +67,7 @@ public final class StructureTranslations {
       {"iberia_eye_lighthouse", "伊比利亚之眼灯塔", "Iberia Eye Lighthouse"},
       {"iberia_saltwind_chapel", "伊比利亚盐风礼拜堂", "Iberia Saltwind Chapel"},
       {"laterano_host", "拉特兰主机", "Laterano Host"},
-      {"portal_ruins_common", "通用星门遗迹", "Common Stargate Ruins"},
-      {"jigsaw_example", "拼图结构示例", "Jigsaw Structure Example"}
+      {"stargate", "雪原星门", "Snowfield Stargate"}
   };
 
   static {

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "zinecraft:block/z8z6z8z6_head"
+    },
+    "facing=east": {
+      "model": "zinecraft:block/z8z6z8z6_head",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "zinecraft:block/z8z6z8z6_head",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "zinecraft:block/z8z6z8z6_head",
+      "y": 270
+    }
+  }
+}

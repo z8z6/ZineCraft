@@ -39,7 +39,7 @@ public final class ModWeapons {
   @NotNull
   private static final ResourceLocation WEAPON_LIGHT_ATTACK = Zinecraft.INSTANCE.getREGISTRAR().id("animation/weapon/test_sword_light_attack");
   @NotNull
-  private static final ResourceLocation TEST_SWORD_TRAIL = Zinecraft.INSTANCE.getREGISTRAR().id("vfx/test_sword_trail");
+  private static final ResourceLocation TEST_SWORD_TRAIL = Zinecraft.INSTANCE.getREGISTRAR().id("weapon/sword_slash");
   @NotNull
   private static final ResourceLocation TEST_SWORD_IMPACT = Zinecraft.INSTANCE.getREGISTRAR().id("vfx/test_sword_impact");
   @NotNull
@@ -57,7 +57,7 @@ public final class ModWeapons {
   @NotNull
   private static final ResourceLocation RIFLE_MUZZLE = Zinecraft.INSTANCE.getREGISTRAR().id("vfx/test_rifle_muzzle");
   @NotNull
-  private static final ResourceLocation RIFLE_IMPACT = Zinecraft.INSTANCE.getREGISTRAR().id("vfx/test_rifle_impact");
+  private static final ResourceLocation RIFLE_IMPACT = Zinecraft.INSTANCE.getREGISTRAR().id("weapon/explosion");
   @NotNull
   private static final ResourceLocation RIFLE_FIRE_SOUND = Zinecraft.INSTANCE.getREGISTRAR().id("sound/test_rifle_fire");
   @NotNull
@@ -67,7 +67,7 @@ public final class ModWeapons {
   @NotNull
   private static final ResourceLocation STAFF_ARCANE_IMPACT = Zinecraft.INSTANCE.getREGISTRAR().id("vfx/test_staff_arcane_impact");
   @NotNull
-  private static final ResourceLocation STAFF_HEAL = Zinecraft.INSTANCE.getREGISTRAR().id("vfx/test_staff_heal");
+  private static final ResourceLocation STAFF_HEAL = Zinecraft.INSTANCE.getREGISTRAR().id("weapon/healing");
   @NotNull
   private static final ResourceLocation STAFF_CAST_SOUND = Zinecraft.INSTANCE.getREGISTRAR().id("sound/test_staff_cast");
   @NotNull

@@ -73,6 +73,16 @@ public final class NationBlocks {
   @NotNull
   private static final BlockEntry<Block> VICTORIA_INDUSTRIAL_BRICK;
   @NotNull
+  private static final BlockEntry<Block> VICTORIA_WALL_ARMOR;
+  @NotNull
+  private static final BlockEntry<Block> VICTORIA_CANNON_CASING;
+  @NotNull
+  private static final BlockEntry<Block> VICTORIA_STRUCTURAL_FRAME;
+  @NotNull
+  private static final BlockEntry<Block> VICTORIA_REINFORCED_FLOOR;
+  @NotNull
+  private static final BlockEntry<Block> VICTORIA_CONTROL_PANEL;
+  @NotNull
   private static final BlockEntry<Block> URSUS_PERMAFROST;
   @NotNull
   private static final BlockEntry<Block> URSUS_IMPERIAL_MASONRY;
@@ -184,6 +194,21 @@ public final class NationBlocks {
     nationBlocks = INSTANCE;
     block = Blocks.BRICKS;
     VICTORIA_INDUSTRIAL_BRICK = nationBlocks.material("victoria_industrial_brick", "维多利亚工业砖", "Victoria Industrial Brick", block);
+    nationBlocks = INSTANCE;
+    block = Blocks.IRON_BLOCK;
+    VICTORIA_WALL_ARMOR = nationBlocks.material("victoria_wall_armor", "维多利亚城防装甲", "Victoria Wall Armor", block);
+    nationBlocks = INSTANCE;
+    block = Blocks.IRON_BLOCK;
+    VICTORIA_CANNON_CASING = nationBlocks.material("victoria_cannon_casing", "维多利亚巨炮壳板", "Victoria Cannon Casing", block);
+    nationBlocks = INSTANCE;
+    block = Blocks.POLISHED_DEEPSLATE;
+    VICTORIA_STRUCTURAL_FRAME = nationBlocks.material("victoria_structural_frame", "维多利亚承力骨架", "Victoria Structural Frame", block);
+    nationBlocks = INSTANCE;
+    block = Blocks.IRON_BLOCK;
+    VICTORIA_REINFORCED_FLOOR = nationBlocks.material("victoria_reinforced_floor", "维多利亚防滑钢地板", "Victoria Reinforced Floor", block);
+    nationBlocks = INSTANCE;
+    block = Blocks.IRON_BLOCK;
+    VICTORIA_CONTROL_PANEL = nationBlocks.material("victoria_control_panel", "维多利亚火控面板", "Victoria Fire-Control Panel", block);
     nationBlocks = INSTANCE;
     block = Blocks.PACKED_ICE;
     URSUS_PERMAFROST = nationBlocks.material("ursus_permafrost", "乌萨斯永冻土", "Ursus Permafrost", block);
@@ -371,6 +396,31 @@ public final class NationBlocks {
   @NotNull
   public final Block getVICTORIA_INDUSTRIAL_BRICK() {
     return VICTORIA_INDUSTRIAL_BRICK.getBlock();
+  }
+
+  @NotNull
+  public final Block getVICTORIA_WALL_ARMOR() {
+    return VICTORIA_WALL_ARMOR.getBlock();
+  }
+
+  @NotNull
+  public final Block getVICTORIA_CANNON_CASING() {
+    return VICTORIA_CANNON_CASING.getBlock();
+  }
+
+  @NotNull
+  public final Block getVICTORIA_STRUCTURAL_FRAME() {
+    return VICTORIA_STRUCTURAL_FRAME.getBlock();
+  }
+
+  @NotNull
+  public final Block getVICTORIA_REINFORCED_FLOOR() {
+    return VICTORIA_REINFORCED_FLOOR.getBlock();
+  }
+
+  @NotNull
+  public final Block getVICTORIA_CONTROL_PANEL() {
+    return VICTORIA_CONTROL_PANEL.getBlock();
   }
 
   @NotNull

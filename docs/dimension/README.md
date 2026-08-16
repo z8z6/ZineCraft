@@ -25,7 +25,8 @@ src/main/resources/data/zinecraft/dimension_type/terra.json
 - 从泰拉返回时优先寻找对应主世界星门；无法使用时回退到主世界出生区域。
 - 星门实现不兼容旧版框架布局，旧门需要重建。
 
-星门自然生成仅限主世界目标群系；放置逻辑还会检查当前维度，避免共享群系设置导致其他维度生成入口。
+星门以 `zinecraft:stargate` 正式结构自然生成，仅绑定主世界使用的雪原群系；因此可以被原版结构定位命令索引。旧版 Feature
+生成入口已经移除，避免同一区域重复生成。
 
 ## 验证
 
@@ -39,6 +40,7 @@ src/main/resources/data/zinecraft/dimension_type/terra.json
 /execute in zinecraft:terra run tp @s 0 120 0
 /execute in zinecraft:terra run locate biome zinecraft:laterano_holy_fields
 /execute in zinecraft:terra run locate structure zinecraft:laterano_host
+/execute in minecraft:overworld run locate structure zinecraft:stargate
 ```
 
 必须在新世界或未生成区块验证群系与结构；已有区块不会重新执行世界生成。

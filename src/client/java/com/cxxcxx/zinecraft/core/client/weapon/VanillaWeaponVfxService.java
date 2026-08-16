@@ -21,6 +21,9 @@ public final class VanillaWeaponVfxService implements WeaponVfxService {
   private static final ResourceLocation arcaneCastId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_staff_arcane_cast");
   private static final ResourceLocation arcaneImpactId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_staff_arcane_impact");
   private static final ResourceLocation healId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_staff_heal");
+  private static final ResourceLocation explosionId = ResourceLocation.fromNamespaceAndPath("zinecraft", "weapon/explosion");
+  private static final ResourceLocation swordSlashId = ResourceLocation.fromNamespaceAndPath("zinecraft", "weapon/sword_slash");
+  private static final ResourceLocation healingId = ResourceLocation.fromNamespaceAndPath("zinecraft", "weapon/healing");
 
   private VanillaWeaponVfxService() {
   }
@@ -37,13 +40,13 @@ public final class VanillaWeaponVfxService implements WeaponVfxService {
   @Override
   public void play(@NotNull LivingEntity entity, @NotNull ResourceLocation effect) {
     ResourceLocation var3 = effect;
-    if (java.util.Objects.equals(var3, trailId)) {
+    if (java.util.Objects.equals(var3, trailId) || java.util.Objects.equals(var3, swordSlashId)) {
       this.trail(entity);
     } else if (java.util.Objects.equals(var3, impactId)) {
       this.impact(entity);
     } else if (java.util.Objects.equals(var3, muzzleId)) {
       muzzleWithDefaults(this, entity, null, 2, null);
-    } else if (java.util.Objects.equals(var3, rifleImpactId)) {
+    } else if (java.util.Objects.equals(var3, rifleImpactId) || java.util.Objects.equals(var3, explosionId)) {
       SimpleParticleType var10002 = ParticleTypes.CRIT;
       this.rangedImpact(entity, var10002);
     } else if (java.util.Objects.equals(var3, arcaneCastId)) {
@@ -52,7 +55,7 @@ public final class VanillaWeaponVfxService implements WeaponVfxService {
     } else if (java.util.Objects.equals(var3, arcaneImpactId)) {
       SimpleParticleType var5 = ParticleTypes.WITCH;
       this.rangedImpact(entity, var5);
-    } else if (java.util.Objects.equals(var3, healId)) {
+    } else if (java.util.Objects.equals(var3, healId) || java.util.Objects.equals(var3, healingId)) {
       this.heal(entity);
     }
   }

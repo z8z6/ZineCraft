@@ -393,7 +393,8 @@ public final class ModTaczWeapons {
           Pair.of(
               FIRE_ID, new WeaponPresentation(PLAYER_FIRE_ANIMATION_ID, FIRE_ANIMATION_ID, java.util.List.of(new TimedWeaponVfx(MUZZLE_ID, 0)), list, k)
           ),
-          Pair.of(RELOAD_ID, new WeaponPresentation(PLAYER_RELOAD_ANIMATION_ID, RELOAD_ANIMATION_ID, java.util.List.of(), list1, gun.getReloadDurationTicks())),
+          Pair.of(RELOAD_ID, new WeaponPresentation(PLAYER_RELOAD_ANIMATION_ID, RELOAD_ANIMATION_ID, java.util.List.of(), list1,
+              gun.getReloadTimings().durationTicks(true, gun.getCapacity()))),
           Pair.of(AIM_ID, new WeaponPresentation(null, AIM_ANIMATION_ID, java.util.List.of(), java.util.List.of(), gun.getAimTicks())),
           Pair.of(FIRE_SELECT_ID, new WeaponPresentation(null, FIRE_SELECT_ANIMATION_ID, java.util.List.of(), java.util.List.of(), 4)),
           null,
@@ -438,7 +439,8 @@ public final class ModTaczWeapons {
 
     Object object2 = null;
     byte c = 5;
-    byte d = 40;
+    int d = Math.max(gun.getAssets().animationDurationTicks("inspect", 40),
+        gun.getAssets().animationDurationTicks("inspect_empty", 40));
     List list3 = list8;
     Object object3 = object10;
     ResourceLocation resourceLocation3 = resourceLocation16;

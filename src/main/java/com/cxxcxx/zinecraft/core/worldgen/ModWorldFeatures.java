@@ -8,13 +8,10 @@ import com.cxxcxx.zinecraft.core.biome.NationBiomePlacements;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
 import com.cxxcxx.zinecraft.core.block.MaterialOres;
 import com.cxxcxx.zinecraft.core.block.ModBlock;
-import com.cxxcxx.zinecraft.core.dimension.StarGateFeature;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
@@ -43,9 +40,6 @@ public final class ModWorldFeatures {
       )
   );
 
-  private static final StarGateFeature STARGATE_FEATURE = Zinecraft.INSTANCE.getREGISTRAR().register(
-      BuiltInRegistries.FEATURE, "stargate", new StarGateFeature()
-  );
   private static final LateranoDryLandFeature LATERANO_DRY_LAND_FEATURE = Zinecraft.INSTANCE.getREGISTRAR().register(
       BuiltInRegistries.FEATURE, "laterano_dry_land", new LateranoDryLandFeature()
   );
@@ -57,12 +51,6 @@ public final class ModWorldFeatures {
   );
   private static final OriginiumSpireFeature ORIGINIUM_SPIRE_LARGE_FEATURE = Zinecraft.INSTANCE.getREGISTRAR().register(
       BuiltInRegistries.FEATURE, "originium_spire_large", new OriginiumSpireFeature(7, 11, 14, 28, 3, 12)
-  );
-  private static final SimpleFeatureEntry STARGATE = Zinecraft.INSTANCE.getFEATURES().simple(
-      "stargate", STARGATE_FEATURE,
-      List.of(RarityFilter.onAverageOnceEvery(64), InSquarePlacement.spread(),
-          HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), BiomeFilter.biome()),
-      GenerationStep.Decoration.SURFACE_STRUCTURES, BiomeSelection.of(Biomes.SNOWY_PLAINS)
   );
   private static final SimpleFeatureEntry LATERANO_DRY_LAND = Zinecraft.INSTANCE.getFEATURES().simple(
       "laterano_dry_land", LATERANO_DRY_LAND_FEATURE,
@@ -122,10 +110,6 @@ public final class ModWorldFeatures {
         List.of(CountPlacement.of(count), InSquarePlacement.spread(), BiomeFilter.biome()),
         GenerationStep.Decoration.LOCAL_MODIFICATIONS, BiomeSelection.of(NationBiomes.INSTANCE.getTERRA_CATASTROPHE_ZONE())
     );
-  }
-
-  public SimpleFeatureEntry getSTARGATE() {
-    return STARGATE;
   }
 
   public OreEntry getEXAMPLE_BLOCK_ORE() {

@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.api.weapon.tacz;
 
 import com.cxxcxx.zinecraft.api.weapon.action.*;
+import com.cxxcxx.zinecraft.api.weapon.WeaponInput;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -46,29 +47,23 @@ public final class TaczReloadAction implements WeaponAction {
     }
 
     final TaczGunSpec taczGunSpec = taczGunSpec1;
-    final boolean bl = java.util.Objects.equals(taczGunSpec.getFeedType(), "manual");
-    Integer integer = (Integer) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), taczGunSpec.getCapacity());
-    int m;
-    if (bl) {
-      int l = taczGunSpec.getCapacity();
-      m = Math.max(l - integer, 1);
-    } else {
-      m = 1;
-    }
-
-    int i = m;
-    final int j = bl ? taczGunSpec.getReloadFeedTicks() * i : taczGunSpec.getReloadFeedTicks();
-    int k = Math.max(j + (taczGunSpec.getReloadDurationTicks() - taczGunSpec.getReloadFeedTicks()), 1);
-    TickRange intRange = new TickRange(taczGunSpec.getReloadFeedTicks(), j);
-    return new TimedWeaponActionRuntime(intRange, k) {
+    final TaczReloadTimings timings = taczGunSpec.getReloadTimings();
+    int initialAmmo = context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), taczGunSpec.getCapacity());
+    int roundsNeeded = Math.max(taczGunSpec.getCapacity() - initialAmmo, 1);
+    final int firstFeed = timings.firstFeedTicks(initialAmmo <= 0);
+    final int lastFeed = timings.shellByShell()
+        ? firstFeed + (roundsNeeded - 1) * timings.feedIntervalTicks() : firstFeed;
+    int duration = timings.durationTicks(initialAmmo <= 0, roundsNeeded);
+    TickRange intRange = new TickRange(firstFeed, lastFeed);
+    return new TimedWeaponActionRuntime(intRange, duration) {
       @Override
       protected void onTick(int tick) {
-        if (tick >= taczGunSpec.getReloadFeedTicks() && tick <= j && tick % taczGunSpec.getReloadFeedTicks() == 0) {
+        if (tick >= firstFeed && tick <= lastFeed && (tick - firstFeed) % timings.feedIntervalTicks() == 0) {
           Integer integer1 = (Integer) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), taczGunSpec.getCapacity());
           int q = taczGunSpec.getCapacity();
           int n = q - integer1;
           if (n > 0) {
-            int o = bl ? 1 : n;
+            int o = timings.shellByShell() ? 1 : n;
             int p = context.getPlayer().isCreative() ? o : TaczReloadAction.this.consumeAmmo(context, taczGunSpec.getAmmoId(), o);
             if (p > 0) {
               context.getStack().set(WeaponStateComponents.INSTANCE.getAMMO(), integer1 + p);
@@ -79,6 +74,14 @@ public final class TaczReloadAction implements WeaponAction {
             }
           }
         }
+      }
+
+      @Override
+      public boolean canInterrupt(@NotNull WeaponInput input) {
+        // TaCZ permits firing/aiming to leave a shell-by-shell reload after already-fed rounds have
+        // been committed. Magazine reloads remain atomic so cancelling cannot duplicate ammunition.
+        return timings.shellByShell() && (input == WeaponInput.PRIMARY || input == WeaponInput.SECONDARY
+            || input == WeaponInput.MELEE || input == WeaponInput.RELOAD);
       }
     };
   }
@@ -118,4 +121,3 @@ public final class TaczReloadAction implements WeaponAction {
     return requested - i;
   }
 }
-

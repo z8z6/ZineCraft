@@ -31,15 +31,19 @@ public final class TaczAimAction implements WeaponAction {
     TaczGunSpec taczGunSpec = TaczWeaponActions.gun(context);
     int i = taczGunSpec != null ? taczGunSpec.getAimTicks() : 1;
     TickRange intRange = new TickRange(0, 0);
+    boolean aiming = context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false);
+    // Apply the requested toggle while handling the request on the authoritative server. This also
+    // makes a quick press/release deterministic before the next server tick.
+    context.getStack().set(WeaponStateComponents.INSTANCE.getAIMING(), !aiming);
     return new TimedWeaponActionRuntime(intRange, i) {
       @Override
       protected void onTick(int tick) {
-        if (tick == 0) {
-          Boolean boolean_ = (Boolean) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false);
-          context.getStack().set(WeaponStateComponents.INSTANCE.getAIMING(), !boolean_);
-        }
+      }
+
+      @Override
+      public boolean canInterrupt(@NotNull com.cxxcxx.zinecraft.api.weapon.WeaponInput input) {
+        return input == com.cxxcxx.zinecraft.api.weapon.WeaponInput.SECONDARY;
       }
     };
   }
 }
-

@@ -27,6 +27,7 @@ import com.cxxcxx.zinecraft.compat.jer.ZinecraftJerPlugin;
 import com.cxxcxx.zinecraft.core.biome.ModTerraBlender;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
 import com.cxxcxx.zinecraft.core.block.MaterialOres;
+import com.cxxcxx.zinecraft.core.block.AuthorHeadBlocks;
 import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.block.NationBlocks;
 import com.cxxcxx.zinecraft.core.datagen.ZinecraftDataGenerator;
@@ -95,7 +96,7 @@ public final class Zinecraft {
     Object[] content = {
         WeaponStateComponents.INSTANCE,
         ModSound.INSTANCE, ModItem.INSTANCE, ModCollectibles.INSTANCE, NationFoods.INSTANCE,
-        ModBlock.INSTANCE, MaterialOres.INSTANCE, NationBlocks.INSTANCE, ModBlockEntity.INSTANCE,
+        ModBlock.INSTANCE, AuthorHeadBlocks.INSTANCE, MaterialOres.INSTANCE, NationBlocks.INSTANCE, ModBlockEntity.INSTANCE,
         ModSkills.INSTANCE, ModWeapons.INSTANCE, ModTaczWeapons.INSTANCE, ModEntities.INSTANCE,
         TerraNationRelations.INSTANCE, NationBiomes.INSTANCE, ModDimensions.INSTANCE,
         LateranoHostStructure.INSTANCE, NationLandmarks.INSTANCE, NationSettlements.INSTANCE,

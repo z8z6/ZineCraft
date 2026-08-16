@@ -1,0 +1,82 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "down": "zinecraft:block/ye_xingchen_head_bottom",
+    "up": "zinecraft:block/ye_xingchen_head_top",
+    "north": "zinecraft:block/ye_xingchen_head_front",
+    "south": "zinecraft:block/ye_xingchen_head_back",
+    "west": "zinecraft:block/ye_xingchen_head_left",
+    "east": "zinecraft:block/ye_xingchen_head_right",
+    "particle": "zinecraft:block/ye_xingchen_head_front"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        8,
+        12
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#down"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#up"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#north"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#south"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#west"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#east"
+        }
+      }
+    }
+  ]
+}

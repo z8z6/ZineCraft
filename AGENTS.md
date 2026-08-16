@@ -11,7 +11,11 @@
 相关资料直接使用PRTS wiki中的文字，描述，图片等，不要自行生成，推断等，
 如果找不到合适的资源，再进行生产，但要符合风格
 
+## 项目文档
+
+docs 目录
+
 ## 其他
 
-不要修改 gradle\wrapper\gradle-wrapper.properties 的 distributionUrl
-distributionUrl=https\://mirrors.cloud.tencent.com/gradle/gradle-9.5.0-bin.zip
+1. 不要修改 gradle\wrapper\gradle-wrapper.properties 的 distributionUrl，使用腾讯的即可
+2. 多个并行的任务，可以使用 subagent 加速处理

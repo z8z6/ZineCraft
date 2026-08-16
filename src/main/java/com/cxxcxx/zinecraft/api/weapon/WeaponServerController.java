@@ -5,6 +5,7 @@ import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionCancelledPayload;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionRequestPayload;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionStartedPayload;
+import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
@@ -50,8 +51,6 @@ public final class WeaponServerController {
   }
 
   public void request(ServerPlayer player, WeaponInput input, InteractionHand hand) {
-    if (activeActions.containsKey(player.getUUID())) return;
-
     ItemStack stack = player.getItemInHand(hand);
     WeaponDefinition definition = Zinecraft.INSTANCE.getWEAPONS().definition(stack);
     if (definition == null) return;
@@ -63,6 +62,13 @@ public final class WeaponServerController {
     var weaponContext = new WeaponContext(player, stack, hand, definition);
     if (!action.canStart(weaponContext)) return;
 
+    ActiveAction running = activeActions.get(player.getUUID());
+    if (running != null) {
+      if (!running.runtime().canInterrupt(input)) return;
+      activeActions.remove(player.getUUID());
+      broadcast(player, new WeaponActionCancelledPayload(player.getId(), running.actionId()));
+    }
+
     player.resetAttackStrengthTicker();
     activeActions.put(player.getUUID(), new ActiveAction(
         definition, actionId, hand, stack, action.createRuntime(weaponContext)
@@ -73,6 +79,9 @@ public final class WeaponServerController {
   }
 
   private void tick(MinecraftServer server) {
+    for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+      clearInactiveAiming(player);
+    }
     var iterator = activeActions.entrySet().iterator();
     while (iterator.hasNext()) {
       var entry = iterator.next();
@@ -86,6 +95,17 @@ public final class WeaponServerController {
           broadcast(player, new WeaponActionCancelledPayload(player.getId(), active.actionId()));
         }
         iterator.remove();
+      }
+    }
+  }
+
+  private void clearInactiveAiming(ServerPlayer player) {
+    ItemStack held = player.isAlive() && !player.isSpectator() ? player.getMainHandItem() : ItemStack.EMPTY;
+    var inventory = player.getInventory();
+    for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
+      ItemStack stack = inventory.getItem(slot);
+      if (stack != held && stack.getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false)) {
+        stack.set(WeaponStateComponents.INSTANCE.getAIMING(), false);
       }
     }
   }

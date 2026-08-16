@@ -29,6 +29,8 @@ public final class TaczWeaponAnimationService implements WeaponAnimationService 
   private final Map<Integer, Playback> active = new ConcurrentHashMap<>();
   private ResourceLocation heldGun;
   private long heldSinceNanos;
+  private boolean heldAiming;
+  private long aimChangedNanos;
 
   private TaczWeaponAnimationService() {
   }
@@ -81,16 +83,33 @@ public final class TaczWeaponAnimationService implements WeaponAnimationService 
 
   static String chooseClip(ResourceLocation animation, TaczGunSpec gun, ItemStack stack,
                            Map<String, TaczAnimationClip> clips) {
+    int ammo = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), gun.getCapacity());
+    boolean aiming = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false);
+    return chooseClip(animation, gun, stack, clips, ammo, aiming);
+  }
+
+  static String chooseClip(ResourceLocation animation, TaczGunSpec gun, ItemStack stack,
+                           Map<String, TaczAnimationClip> clips, int initialAmmo, boolean initialAiming) {
     String action = animation.getPath();
     action = action.substring(action.lastIndexOf('/') + 1);
-    int ammo = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), gun.getCapacity());
     return switch (action) {
-      case "fire" -> first(clips, ammo <= 0 ? "shoot_last" : null, "shoot", "shoot_semi");
-      case "reload" -> first(clips, ammo <= 0 ? "reload_empty" : "reload_tactical", "reload_empty",
-          "reload_tactical", "reload_intro");
+      case "fire" -> first(clips, initialAmmo <= 1 ? "shoot_last" : null, "shoot", "shoot_semi");
+      case "reload" -> {
+        int currentAmmo = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), gun.getCapacity());
+        if (gun.getReloadTimings().shellByShell()) {
+          if (currentAmmo >= gun.getCapacity()) yield first(clips, "reload_end", "reload_loop");
+          if (currentAmmo > initialAmmo) yield first(clips, "reload_loop", "reload_loop_2", "reload_intro");
+          yield first(clips, initialAmmo <= 0 ? "reload_intro_empty" : "reload_intro",
+              "reload_intro", "reload_intro_empty", "reload_loop");
+        }
+        yield first(clips, initialAmmo <= 0 ? "reload_empty" : "reload_tactical", "reload_empty",
+            "reload_tactical", "reload_intro");
+      }
+      case "aim" -> first(clips, initialAiming ? "aim_start" : "aim_end", initialAiming ? "aim" : null,
+          "aim_start", "aim_end");
       case "fire_select" ->
           first(clips, "switch_" + fireMode(gun, stack), "switch_semi", "switch_auto", "switch_burst");
-      case "inspect" -> first(clips, ammo <= 0 ? "inspect_empty" : "inspect", "inspect", "inspect_empty");
+      case "inspect" -> first(clips, initialAmmo <= 0 ? "inspect_empty" : "inspect", "inspect", "inspect_empty");
       case "melee" -> first(clips, "melee_bayonet_1", "melee_stock", "melee_push", "melee");
       case "bolt" -> first(clips, "bolt", "charge");
       default -> clips.containsKey(action) ? action : null;
@@ -125,7 +144,9 @@ public final class TaczWeaponAnimationService implements WeaponAnimationService 
   public void play(@NotNull LivingEntity entity, @NotNull ItemStack stack, @NotNull ResourceLocation animation) {
     ResourceLocation gunId = stack.get(WeaponStateComponents.INSTANCE.getTACZ_GUN_ID());
     if (gunId == null || stack.getItem() != ModTaczWeapons.INSTANCE.getGUN_ITEM().getItem()) return;
-    active.put(entity.getId(), new Playback(gunId, animation, System.nanoTime()));
+    active.put(entity.getId(), new Playback(gunId, animation, System.nanoTime(),
+        stack.getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), 0),
+        stack.getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false)));
   }
 
   @Override
@@ -140,6 +161,8 @@ public final class TaczWeaponAnimationService implements WeaponAnimationService 
     active.clear();
     heldGun = null;
     heldSinceNanos = 0;
+    heldAiming = false;
+    aimChangedNanos = 0;
   }
 
   Map<String, TaczBoneTransform> sample(ItemStack stack) {
@@ -153,12 +176,27 @@ public final class TaczWeaponAnimationService implements WeaponAnimationService 
     if (!Objects.equals(heldGun, gunId)) {
       heldGun = gunId;
       heldSinceNanos = now;
+      heldAiming = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false);
+      aimChangedNanos = now;
     }
 
     Map<String, TaczBoneTransform> base = sample(clips.get("static_idle"), secondsSince(heldSinceNanos, now));
     String fireMode = fireMode(gun, stack);
     TaczAnimationClip modeClip = clips.get("static_" + fireMode);
     if (modeClip != null) base.putAll(modeClip.sample(secondsSince(heldSinceNanos, now)));
+    boolean aiming = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false);
+    if (heldAiming != aiming) {
+      heldAiming = aiming;
+      aimChangedNanos = now;
+    }
+    if (aiming) {
+      TaczAnimationClip aim = clips.get("aim");
+      if (aim != null) {
+        float aimSeconds = Math.max(gun.getAimTicks(), 1) / 20.0f;
+        float progress = Math.clamp(secondsSince(aimChangedNanos, now) / aimSeconds, 0.0f, 1.0f);
+        base = blend(base, aim.sample(aim.length() * progress), progress);
+      }
+    }
 
     Minecraft client = Minecraft.getInstance();
     if (client.player == null || !sameGun(client.player.getMainHandItem(), gunId)) return base;
@@ -170,11 +208,30 @@ public final class TaczWeaponAnimationService implements WeaponAnimationService 
       return base;
     }
 
-    String clipName = chooseClip(playback.animation(), gun, stack, clips);
+    String clipName = chooseClip(playback.animation(), gun, stack, clips, playback.initialAmmo(), playback.initialAiming());
     TaczAnimationClip action = clipName == null ? null : clips.get(clipName);
     if (action == null) return base;
     float elapsed = secondsSince(playback.startedAtNanos(), now);
+    if (gun.getReloadTimings().shellByShell() && playback.animation().getPath().endsWith("/reload")) {
+      int currentAmmo = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), gun.getCapacity());
+      if ("reload_loop".equals(clipName) || "reload_loop_2".equals(clipName)) {
+        if (action.length() > 0) elapsed %= action.length();
+      } else if ("reload_end".equals(clipName)) {
+        int needed = Math.max(gun.getCapacity() - playback.initialAmmo(), 1);
+        float endingStart = (gun.getReloadTimings().durationTicks(playback.initialAmmo() <= 0, needed)
+            - gun.getReloadTimings().endingTicks() - 1) / 20.0f;
+        elapsed = Math.max(0, elapsed - endingStart);
+      }
+    }
     float weight = transition(elapsed);
+    if (!action.loop() && action.length() > 0 && elapsed > action.length()) {
+      weight *= 1.0f - Math.clamp((elapsed - action.length())
+          / (TRANSITION_NANOS / 1_000_000_000.0f), 0.0f, 1.0f);
+      if (weight <= 0.0f) {
+        active.remove(client.player.getId(), playback);
+        return base;
+      }
+    }
     if (playback.stoppedAtNanos() != 0) {
       float fade = secondsSince(playback.stoppedAtNanos(), now);
       weight *= 1.0f - Math.clamp(fade / (TRANSITION_NANOS / 1_000_000_000.0f), 0.0f, 1.0f);
@@ -190,13 +247,14 @@ public final class TaczWeaponAnimationService implements WeaponAnimationService 
   }
 
   private record Playback(ResourceLocation gunId, ResourceLocation animation, long startedAtNanos,
-                          long stoppedAtNanos) {
-    private Playback(ResourceLocation gunId, ResourceLocation animation, long startedAtNanos) {
-      this(gunId, animation, startedAtNanos, 0);
+                          int initialAmmo, boolean initialAiming, long stoppedAtNanos) {
+    private Playback(ResourceLocation gunId, ResourceLocation animation, long startedAtNanos,
+                     int initialAmmo, boolean initialAiming) {
+      this(gunId, animation, startedAtNanos, initialAmmo, initialAiming, 0);
     }
 
     private Playback withStoppedAt(long value) {
-      return new Playback(gunId, animation, startedAtNanos, value);
+      return new Playback(gunId, animation, startedAtNanos, initialAmmo, initialAiming, value);
     }
   }
 }

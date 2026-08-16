@@ -31,6 +31,8 @@ public final class TaczGunSpec {
   private final double range;
   private final int reloadFeedTicks;
   private final int reloadDurationTicks;
+  @NotNull
+  private final TaczReloadTimings reloadTimings;
   private final int drawTicks;
   private final int aimTicks;
   private final int putAwayTicks;
@@ -65,6 +67,7 @@ public final class TaczGunSpec {
       double range,
       int reloadFeedTicks,
       int reloadDurationTicks,
+      @NotNull TaczReloadTimings reloadTimings,
       int drawTicks,
       int aimTicks,
       int putAwayTicks,
@@ -95,6 +98,7 @@ public final class TaczGunSpec {
     this.range = range;
     this.reloadFeedTicks = reloadFeedTicks;
     this.reloadDurationTicks = reloadDurationTicks;
+    this.reloadTimings = reloadTimings;
     this.drawTicks = drawTicks;
     this.aimTicks = aimTicks;
     this.putAwayTicks = putAwayTicks;
@@ -183,6 +187,11 @@ public final class TaczGunSpec {
     return this.reloadDurationTicks;
   }
 
+  @NotNull
+  public final TaczReloadTimings getReloadTimings() {
+    return reloadTimings;
+  }
+
   public final int getDrawTicks() {
     return this.drawTicks;
   }
@@ -250,6 +259,7 @@ public final class TaczGunSpec {
     i = i * 31 + Double.hashCode(this.range);
     i = i * 31 + Integer.hashCode(this.reloadFeedTicks);
     i = i * 31 + Integer.hashCode(this.reloadDurationTicks);
+    i = i * 31 + this.reloadTimings.hashCode();
     i = i * 31 + Integer.hashCode(this.drawTicks);
     i = i * 31 + Integer.hashCode(this.aimTicks);
     i = i * 31 + Integer.hashCode(this.putAwayTicks);
@@ -302,6 +312,8 @@ public final class TaczGunSpec {
     } else if (this.reloadFeedTicks != taczGunSpec.reloadFeedTicks) {
       return false;
     } else if (this.reloadDurationTicks != taczGunSpec.reloadDurationTicks) {
+      return false;
+    } else if (!java.util.Objects.equals(this.reloadTimings, taczGunSpec.reloadTimings)) {
       return false;
     } else if (this.drawTicks != taczGunSpec.drawTicks) {
       return false;
@@ -363,6 +375,8 @@ public final class TaczGunSpec {
         + this.reloadFeedTicks
         + ", reloadDurationTicks="
         + this.reloadDurationTicks
+        + ", reloadTimings="
+        + this.reloadTimings
         + ", drawTicks="
         + this.drawTicks
         + ", aimTicks="
@@ -388,4 +402,3 @@ public final class TaczGunSpec {
         + ")";
   }
 }
-

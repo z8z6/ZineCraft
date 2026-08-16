@@ -6,7 +6,10 @@ import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection;
 import org.jetbrains.annotations.NotNull;
 
 public final class NationLandmarks {
@@ -120,6 +123,8 @@ public final class NationLandmarks {
   private static final JigsawBuildingEntry VICTORIA_DEFENCE_CANNON = landmarkWithDefaults(
       INSTANCE, "victoria_defence_cannon", NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(), 32, null, 0, 24, null
   );
+  @NotNull
+  private static final JigsawBuildingEntry VICTORIA_DEFENCE_CANNON_PREVIEW = INSTANCE.defenceCannonPreview();
   @NotNull
   private static final JigsawBuildingEntry VICTORIA_STEAM_STATION = landmarkWithDefaults(
       INSTANCE, "victoria_steam_station", NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(), 48, null, 0, 24, null
@@ -316,6 +321,11 @@ public final class NationLandmarks {
   }
 
   @NotNull
+  public final JigsawBuildingEntry getVICTORIA_DEFENCE_CANNON_PREVIEW() {
+    return VICTORIA_DEFENCE_CANNON_PREVIEW;
+  }
+
+  @NotNull
   public final JigsawBuildingEntry getVICTORIA_STEAM_STATION() {
     return VICTORIA_STEAM_STATION;
   }
@@ -373,6 +383,39 @@ public final class NationLandmarks {
   private final JigsawBuildingEntry landmark(String path, ResourceKey<Biome> biome, int ringDistance, Types heightmap, int startHeight) {
     return StructureCatalog.uniqueLandmarkWithDefaults(
         Zinecraft.INSTANCE.getSTRUCTURES(), path, "nation_landmarks/" + path, biome, ringDistance, 96, heightmap, startHeight, 0.0F, 128, null
+    );
+  }
+
+  private JigsawBuildingEntry defenceCannonPreview() {
+    String path = "victoria_defence_cannon_preview";
+    String templateRoot = "blockout/victoria/londinium/defence_cannon";
+    return Zinecraft.INSTANCE.getSTRUCTURES().jigsawBuilding(
+        path,
+        37,
+        36,
+        path.hashCode(),
+        6,
+        112,
+        0.0F,
+        NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(),
+        true,
+        36,
+        Types.WORLD_SURFACE_WG,
+        0,
+        false,
+        false,
+        Decoration.SURFACE_STRUCTURES,
+        TerrainAdjustment.BEARD_THIN,
+        builder -> {
+          builder.setStartPool("start");
+          builder.pool("start", Projection.RIGID, pool -> pool.template(templateRoot + "/wall_rear_left", 1));
+          builder.pool("front_left", Projection.RIGID, pool -> pool.template(templateRoot + "/wall_front_left", 1));
+          builder.pool("rear_right", Projection.RIGID, pool -> pool.template(templateRoot + "/wall_rear_right", 1));
+          builder.pool("front_right", Projection.RIGID, pool -> pool.template(templateRoot + "/wall_front_right", 1));
+          builder.pool("turret", Projection.RIGID, pool -> pool.template(templateRoot + "/turret_core", 1));
+          builder.pool("barrel_root", Projection.RIGID, pool -> pool.template(templateRoot + "/barrel_root", 1));
+          builder.pool("barrel_muzzle", Projection.RIGID, pool -> pool.template(templateRoot + "/barrel_muzzle", 1));
+        }
     );
   }
 }

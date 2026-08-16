@@ -31,6 +31,8 @@ public final class TaczGunAssets {
   private final boolean fixedThirdPersonHand;
   @NotNull
   private final Map<String, TaczSoundAsset> sounds;
+  @NotNull
+  private final Map<String, Integer> animationDurations;
 
   public TaczGunAssets(
       @Nullable String modelPath,
@@ -44,7 +46,8 @@ public final class TaczGunAssets {
       @Nullable ResourceLocation playerAnimationId,
       @NotNull String thirdPersonAnimation,
       boolean fixedThirdPersonHand,
-      @NotNull Map<String, TaczSoundAsset> sounds
+      @NotNull Map<String, TaczSoundAsset> sounds,
+      @NotNull Map<String, Integer> animationDurations
   ) {
     super();
     this.modelPath = modelPath;
@@ -59,6 +62,7 @@ public final class TaczGunAssets {
     this.thirdPersonAnimation = thirdPersonAnimation;
     this.fixedThirdPersonHand = fixedThirdPersonHand;
     this.sounds = sounds;
+    this.animationDurations = Map.copyOf(animationDurations);
   }
 
   @Nullable
@@ -120,6 +124,15 @@ public final class TaczGunAssets {
     return this.sounds;
   }
 
+  public int animationDurationTicks(@NotNull String animation, int fallback) {
+    return Math.max(animationDurations.getOrDefault(animation, fallback), 1);
+  }
+
+  @NotNull
+  public Map<String, Integer> getAnimationDurations() {
+    return animationDurations;
+  }
+
   @Override
   public int hashCode() {
     int i = this.modelPath == null ? 0 : this.modelPath.hashCode();
@@ -133,7 +146,8 @@ public final class TaczGunAssets {
     i = i * 31 + (this.playerAnimationId == null ? 0 : this.playerAnimationId.hashCode());
     i = i * 31 + this.thirdPersonAnimation.hashCode();
     i = i * 31 + Boolean.hashCode(this.fixedThirdPersonHand);
-    return i * 31 + this.sounds.hashCode();
+    i = i * 31 + this.sounds.hashCode();
+    return i * 31 + this.animationDurations.hashCode();
   }
 
   @Override
@@ -163,7 +177,9 @@ public final class TaczGunAssets {
     } else if (!java.util.Objects.equals(this.thirdPersonAnimation, taczGunAssets.thirdPersonAnimation)) {
       return false;
     } else {
-      return this.fixedThirdPersonHand != taczGunAssets.fixedThirdPersonHand ? false : java.util.Objects.equals(this.sounds, taczGunAssets.sounds);
+      return this.fixedThirdPersonHand != taczGunAssets.fixedThirdPersonHand ? false
+          : java.util.Objects.equals(this.sounds, taczGunAssets.sounds)
+            && java.util.Objects.equals(this.animationDurations, taczGunAssets.animationDurations);
     }
   }
 
@@ -194,7 +210,8 @@ public final class TaczGunAssets {
         + this.fixedThirdPersonHand
         + ", sounds="
         + this.sounds
+        + ", animationDurations="
+        + this.animationDurations
         + ")";
   }
 }
-

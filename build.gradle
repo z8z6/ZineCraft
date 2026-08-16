@@ -31,6 +31,15 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
+                name = 'FirstDarkSnapshots'
+                url = 'https://maven.firstdark.dev/snapshots'
+            }
+        }
+        filter { includeGroupByRegex 'com\\.lowdragmc\\..*' }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
                 name = 'Modrinth'
                 url = 'https://api.modrinth.com/maven'
             }
@@ -113,6 +122,13 @@ dependencies {
     runtimeOnly "maven.modrinth:journeymap:${project.journeymap_version}"
     runtimeOnly "maven.modrinth:fPetb5Kh:${project.natures_compass_modrinth_version}"
     runtimeOnly "maven.modrinth:RV1qfVQ8:${project.explorers_compass_modrinth_version}"
+    runtimeOnly "maven.modrinth:tooltip-overhaul:${project.tooltip_overhaul_modrinth_version}"
+
+    // Development-time VFX authoring and Java integration.
+    implementation "com.lowdragmc.ldlib2:ldlib2-neoforge-${project.minecraft_version}:${project.ldlib2_version}:all"
+    implementation("com.lowdragmc.photon:photon-neoforge-${project.minecraft_version}:${project.photon_version}") {
+        transitive = false
+    }
 
     testImplementation platform("org.junit:junit-bom:5.11.4")
     testImplementation "org.junit.jupiter:junit-jupiter"
@@ -140,7 +156,8 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
-            mod_version            : mod_version
+            mod_version             : mod_version,
+            tooltip_overhaul_version: tooltip_overhaul_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties

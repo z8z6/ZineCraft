@@ -16,6 +16,11 @@
 - [群系与泰拉十九国](biome/README.md)
 - [泰拉维度与星门](dimension/README.md)
 - [Jigsaw 聚落与唯一地标](structure/README.md)
+- [泰拉建筑资产流程](architecture/TERRA_ARCHITECTURE_PIPELINE.md)
+- [十九国与建筑资料总结](architecture/TERRA_COUNTRIES_AND_ARCHITECTURE.md)
+- [《大地巡旅》建筑阅读笔记](architecture/EARTH_GUIDE_ARCHITECTURE_NOTES.md)
+- [国家建筑资产路线图](architecture/TERRA_ASSET_ROADMAP.md)
+- [现有国家结构审计](architecture/EXISTING_STRUCTURE_AUDIT.md)
 - [FTB Quests 指引](quest/README.md)
 - [国家关系系统](nation/README.md)
 

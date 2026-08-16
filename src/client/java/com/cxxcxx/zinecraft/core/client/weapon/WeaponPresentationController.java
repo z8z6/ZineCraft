@@ -23,7 +23,7 @@ import java.util.Map;
 @EventBusSubscriber(modid = Zinecraft.MOD_ID, value = Dist.CLIENT)
 public final class WeaponPresentationController {
   private static final Map<Key, ActivePresentation> ACTIVE = new HashMap<>();
-  private static final WeaponVfxService VFX = VanillaWeaponVfxService.INSTANCE;
+  private static final WeaponVfxService VFX = WeaponVfxServices.create();
   private static final WeaponSoundService SOUNDS = VanillaWeaponSoundService.INSTANCE;
   private static final WeaponAnimationService WEAPON_ANIMATIONS = TaczWeaponAnimationService.INSTANCE;
   private static final PlayerAnimationService PLAYER_ANIMATIONS = VanillaPlayerAnimationService.INSTANCE;

@@ -59,6 +59,21 @@ WeaponDefinition definition = new WeaponDefinition(
 - 没有表现资源时使用 no-op 或原版后端，不能阻止服务端玩法执行。
 - TaCZ Lua 动画状态机当前未启用；详见 [tacz-adapter.md](tacz-adapter.md)。
 
+### Photon 武器特效
+
+静态武器通过三个稳定 cue 使用 Photon 2.2 Java FX：
+
+- `zinecraft:weapon/sword_slash`：测试剑轻击，在第 4 tick 播放前向青色剑气。
+- `zinecraft:weapon/explosion`：测试步枪命中，在第 3 tick 播放暖色爆炸核心与烟尘。
+- `zinecraft:weapon/healing`：测试法杖副攻击，在第 10 tick 播放环绕上升的治疗粒子。
+
+效果定义集中在客户端 `compat/photon/PhotonWeaponEffects`，由 Photon 的 `FX`、`ParticleEmitter`
+和 `EntityEffectExecutor` 创建与播放，不参与伤害、命中或治疗结算。Photon 不是发布时的强制依赖：
+表现控制器通过反射边界加载 Photon 后端，缺少 Photon、后端链接失败或单次播放异常时均回退到原版粒子。
+若后续改用 Photon 编辑器制作资源，官方 2.2 格式应导出到
+`assets/zinecraft/fx/<name>.fx`，并以 `zinecraft:<name>` 传给 `FXHelper.getFX`；`.fx` 是压缩 NBT，
+不应手写或改成 JSON。
+
 ## 验证
 
 ```powershell

@@ -150,6 +150,27 @@ final class TaczGunPackLoader {
     double speed = decimal(bullet, "speed", 64.0);
     double feedSeconds = decimal(feed, "empty", decimal(feed, "tactical", 1.0));
     double cooldownSeconds = decimal(cooldown, "empty", decimal(cooldown, "tactical", 1.0));
+    double tacticalFeedSeconds = decimal(feed, "tactical", feedSeconds);
+    double tacticalCooldownSeconds = decimal(cooldown, "tactical", cooldownSeconds);
+    JsonObject scriptParameters = object(data, "script_param");
+    boolean shellByShell = scriptParameters != null && scriptParameters.has("loop")
+        && scriptParameters.has("loop_feed") && scriptParameters.has("ending");
+    TaczReloadTimings reloadTimings;
+    if (shellByShell) {
+      int emptyIntro = secondsToTicks(decimal(scriptParameters, "intro_empty", feedSeconds));
+      int tacticalIntro = secondsToTicks(decimal(scriptParameters, "intro", tacticalFeedSeconds));
+      int loop = secondsToTicks(decimal(scriptParameters, "loop", cooldownSeconds));
+      reloadTimings = new TaczReloadTimings(true,
+          secondsToTicks(decimal(scriptParameters, "intro_empty_feed", decimal(scriptParameters, "intro_empty", feedSeconds))),
+          tacticalIntro + ticksAllowZero(decimal(scriptParameters, "loop_feed", 0)), loop,
+          ticksAllowZero(decimal(scriptParameters, "ending", tacticalCooldownSeconds)),
+          emptyIntro + loop, tacticalIntro + loop);
+    } else {
+      int emptyFeed = secondsToTicks(feedSeconds);
+      int tacticalFeed = secondsToTicks(tacticalFeedSeconds);
+      reloadTimings = new TaczReloadTimings(false, emptyFeed, tacticalFeed, 1, 0,
+          emptyFeed + secondsToTicks(cooldownSeconds), tacticalFeed + secondsToTicks(tacticalCooldownSeconds));
+    }
     TaczPackInfo pack = packs.getOrDefault(id.getNamespace(),
         new TaczPackInfo(id.getNamespace(), id.getNamespace(), null, null, null, List.of(), null));
     List<String> fireModes = new ArrayList<>();
@@ -159,6 +180,10 @@ final class TaczGunPackLoader {
     }
     if (fireModes.isEmpty()) fireModes = List.of("semi");
 
+    String animationPath = asset(animation, "animations/", ".animation.json");
+    String defaultAnimationPath = asset(defaultAnimation, "animations/", ".animation.json");
+    Map<String, Integer> animationDurations = animationDurations(resources, defaultAnimationPath, animationPath);
+
     return new TaczGunSpec(id,
         ResourceLocation.fromNamespaceAndPath(Zinecraft.MOD_ID, "tacz/" + id.getNamespace() + "/" + id.getPath()),
         valueOr(string(index, "name"), "tacz.gun." + id.getPath().replace('/', '.') + ".name"),
@@ -167,17 +192,19 @@ final class TaczGunPackLoader {
         clamp(integer(burst, "count", 3), 1, 16), clamp(integer(burst, "bpm", rpm), 1, 2400),
         Math.max(0.1f, (float) decimal(bullet, "damage", 1.0)), clamp(integer(bullet, "bullet_amount", 1), 1, 64),
         clamp(life * speed, 1.0, 512.0), secondsToTicks(feedSeconds),
-        secondsToTicks(feedSeconds) + secondsToTicks(cooldownSeconds), secondsToTicks(decimal(data, "draw_time", 0.25)),
+        secondsToTicks(feedSeconds) + secondsToTicks(cooldownSeconds), reloadTimings,
+        secondsToTicks(decimal(data, "draw_time", 0.25)),
         secondsToTicks(decimal(data, "aim_time", 0.2)), secondsToTicks(decimal(data, "put_away_time", 0.4)),
         secondsToTicks(decimal(data, "bolt_action_time", 0.0)), valueOr(string(reload, "type"), "magazine"),
         Math.max(0.0f, (float) decimal(melee, "damage", 3.0)), clamp(decimal(melee, "distance", 1.5), 0.1, 8.0),
         secondsToTicks(decimal(melee, "cooldown", 0.5)), fireModes,
         new TaczGunAssets(asset(model, "geo_models/", ".json"), asset(texture, "textures/", ".png"),
-            asset(slot, "textures/", ".png"), asset(animation, "animations/", ".animation.json"),
-            asset(defaultAnimation, "animations/", ".animation.json"), asset(stateMachine, "scripts/", ".lua"),
+            asset(slot, "textures/", ".png"), animationPath,
+            defaultAnimationPath, asset(stateMachine, "scripts/", ".lua"),
             object(display, "state_machine_param") == null ? new JsonObject() : object(display, "state_machine_param").deepCopy(),
             asset(playerAnimation, "player_animator/", ".json"), playerAnimation,
-            valueOr(string(display, "third_person_animation"), "default"), bool(display, "3rd_fixed_hand", false), sounds), pack);
+            valueOr(string(display, "third_person_animation"), "default"), bool(display, "3rd_fixed_hand", false), sounds,
+            animationDurations), pack);
   }
 
   private static TaczAmmoSpec loadAmmo(ResourceLocation id, JsonObject index, TaczLayeredResources resources) {
@@ -208,6 +235,32 @@ final class TaczGunPackLoader {
     JsonReader reader = new JsonReader(new InputStreamReader(input, StandardCharsets.UTF_8));
     reader.setLenient(true);
     return JsonParser.parseReader(reader).getAsJsonObject();
+  }
+
+  private static Map<String, Integer> animationDurations(TaczLayeredResources resources, String... paths) {
+    Map<String, Integer> result = new LinkedHashMap<>();
+    for (String path : paths) {
+      if (path == null) continue;
+      try (InputStream input = resources.open(path)) {
+        // Default animation references are optional and are commonly supplied by TaCZ itself
+        // rather than the external pack. Missing optional layers should simply fall back.
+        if (input == null) continue;
+        JsonObject root = readObject(input);
+        JsonObject animations = object(root, "animations");
+        if (animations == null) continue;
+        animations.entrySet().forEach(entry -> {
+          if (!entry.getValue().isJsonObject()) return;
+          String name = entry.getKey();
+          int separator = Math.max(name.lastIndexOf('.'), name.lastIndexOf('/'));
+          if (separator >= 0) name = name.substring(separator + 1);
+          int ticks = secondsToTicks(decimal(entry.getValue().getAsJsonObject(), "animation_length", 0.05));
+          result.put(name, ticks);
+        });
+      } catch (IOException | RuntimeException exception) {
+        Zinecraft.INSTANCE.getLogger().warn("Unable to read TaCZ animation timing {}", path, exception);
+      }
+    }
+    return Map.copyOf(result);
   }
 
   private static ResourceLocation requiredId(JsonObject json, String key) {
@@ -273,6 +326,10 @@ final class TaczGunPackLoader {
 
   private static int secondsToTicks(double seconds) {
     return Math.max(1, (int) Math.ceil(seconds * 20.0));
+  }
+
+  private static int ticksAllowZero(double seconds) {
+    return Math.max(0, (int) Math.ceil(seconds * 20.0));
   }
 
   private static int clamp(int value, int min, int max) {
