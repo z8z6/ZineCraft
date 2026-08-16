@@ -2,7 +2,7 @@ package com.cxxcxx.zinecraft.core.client.compat.photon;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.client.weapon.VanillaWeaponVfxService;
-import com.cxxcxx.zinecraft.core.client.weapon.WeaponVfxService;
+import com.cxxcxx.zinecraft.core.client.weapon.WeaponPresentationVfxService;
 import com.lowdragmc.photon.client.fx.EntityEffectExecutor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,7 +13,7 @@ import org.joml.Vector3f;
 /**
  * Photon-backed weapon cues. Any individual failure degrades to the vanilla particle backend.
  */
-public final class PhotonWeaponVfxService implements WeaponVfxService {
+public final class PhotonWeaponVfxService implements WeaponPresentationVfxService {
   public static final PhotonWeaponVfxService INSTANCE = new PhotonWeaponVfxService();
 
   private PhotonWeaponVfxService() {

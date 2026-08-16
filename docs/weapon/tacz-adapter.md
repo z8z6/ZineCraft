@@ -1,67 +1,51 @@
-# TaCZ 枪包格式适配
+# TaCZ 1.21.1 后端集成
 
-Zinecraft 在 NeoForge 1.21.1 中读取 TaCZ 1.1.x 外置枪包，不加载 TaCZ 模组 JAR，也不把第三方枪包资产打包进 Zinecraft。服务端玩法由
-Zinecraft Weapon Runtime 实现。
+Zinecraft 将 MUKSC/TACZ-1.21.1 作为必需的枪械后端。TaCZ 负责枪械物品、枪包加载、弹道、弹药、输入、渲染、ADS、后坐力与机械动画；Zinecraft
+不复制这些能力，也不为每把枪创建 Java 类型。
 
-## 安装
+唯一 API 事实来源是 `MUKSC/TACZ-1.21.1` 的 `neoforge/1.21.1` 分支。当前开发基线为 `1.1.8-hotfix-r6`，不得用 Forge 1.20.1
+Wiki 或旧源码推断接口。
 
-将枪包目录或 ZIP 放在游戏目录的 `tacz/`：
+## 模块边界
 
 ```text
-<gameDir>/tacz/example_pack/gunpack.meta.json
-<gameDir>/tacz/example_pack/assets/...
-<gameDir>/tacz/example_pack/data/...
+TaCZ GunFireEvent (server)
+        ↓
+integration/tacz/TaczGunEvents
+        ↓
+api/weapon/event/WeaponShotEvent
+        ↓
+core/skill/SkillRuntime
+        ↓
+core/skill/TestRapidFireSkill
+        ↓
+api/weapon/vfx/WeaponVfxService
 ```
 
-ZIP 根目录必须直接包含 `gunpack.meta.json`。专用服务器和每个客户端应安装相同版本的枪包。
+项目内部的 `WeaponBackend`、`RangedWeaponBackend` 与 `WeaponShotContext` 不引用 TaCZ 类型。只有 `integration/tacz` 可以
+import `com.tacz.*`；`skill`、`combat`、`operator` 和 `vfx` 必须只依赖 Zinecraft 自身抽象。
 
-枪械和弹药使用动态 Data Component 标识的 `zinecraft:tacz_gun` 与 `zinecraft:tacz_ammunition` 物品栈，不为每把枪注册新
-Item，因而不破坏客户端/服务端注册表同步。它们位于独立 TaCZ 创造模式页。
+## 当前公共 API
 
-## 当前支持
+- `IGun.getIGunOrNull(ItemStack)`：可靠识别 TaCZ 枪械。
+- `IGun#getGunId(ItemStack)`：取得数据驱动的枪械身份，不硬编码具体枪 ID。
+- `GunFireEvent`：一次实际击发触发一次；Burst 会触发多次。
+- `GunShootEvent`：一次扳机动作触发一次；MVP 不订阅该事件。
 
-- 目录和 ZIP 枪包、宽松 JSON、枪包元数据、枪械与弹药索引。
-- 弹容、弹药类型、枪机、伤害、弹丸数、RPM、连发、射程、瞄准、近战和换弹参数。
-- 服务端权威的射击、hitscan 命中、伤害、弹药扣除、装填、开火模式与物品状态。
-- Bedrock geometry、纹理槽、语言与 OGG 声音资源读取。
-- 客户端 Bedrock 枪械骨骼动画：`static_idle`、拔枪、射击、换弹、检视、开火模式切换、近战与拉栓；动作之间使用短时混合过渡。瞄准按住/松开由服务端同步的
-  `AIMING` 组件驱动，客户端依次选择 `aim_start`、持续 `aim` 与 `aim_end`，不由动画关键帧改变玩法状态。
-- 弹匣换弹区分空枪 `reload_empty` 与战术 `reload_tactical`。声明了逐发脚本参数的武器会把 `intro/intro_empty`、`loop`、
-  `loop_feed` 与 `ending` 转成 Java 服务端时间线，并在客户端选择 `reload_intro(_empty)`、`reload_loop` 与 `reload_end`；枪包
-  Lua 仍不会执行。
-- 检视区分 `inspect` 与 `inspect_empty`，服务端动作时长来自 Bedrock `animation_length`；射击、瞄准、换弹或近战输入可取消检视。
-- 客户端可重建资源桥接包 `resourcepacks/zinecraft_tacz_bridge/`。
-- 左键射击、右键瞄准、R 换弹、B 开火模式、X 检视、V 近战和手动枪机动作。
+适配器只处理 `LogicalSide.SERVER` 的、未取消的 `GunFireEvent`，并转换 TaCZ 公开提供或 Minecraft 实体公开提供的
+shooter、ItemStack、眼部位置、视线方向和 gun ID。它不读取 private 字段，不修改 TaCZ 射击结算。
 
-## 暂未启用
+## 客户端与 VFX
 
-TaCZ Lua 动画状态机与完整第三人称人物动画模块仍未启用。客户端会读取 Bedrock 动画 JSON，但只由服务端广播的 Weapon
-Presentation 选择动作；枪包 Lua 仅保留索引，不会执行，也不会授予任何客户端伤害权限。复杂的分层移动、配件动画和第一人称程序化后坐力仍待完善。逐发装填目前支持默认枪包使用的单发
-loop，不解释任意 Lua 分支或一次装填多发的自定义逻辑。
+`WeaponShotEvent` 是服务端权威的高层业务事件。当前测试技能只把 `onShot` 传入 `WeaponVfxService` 的 no-op 实现，用来证明调用链和保留
+Photon 边界；客户端 muzzle flash、枪声与枪械动画仍由 TaCZ 自己播放。
 
-未实现的 TaCZ 模组功能还包括配件工作台、Forge API 互操作、真实弹道实体、复杂爆炸/燃烧、热量和蓄力脚本逻辑。
+未来同步技能 VFX 时只发送高层效果信息（effect id、entity、position、direction、seed），客户端自行展开效果。粒子和动画不得反向修改伤害、弹药或技能结算。
 
-## 安全与覆盖
+## 第一阶段限制
 
-- 枪包按稳定顺序加载，后加载资源覆盖同虚拟路径。
-- 所有目录和 ZIP 条目经过相对路径校验，拒绝 `..` 与绝对路径。
-- 服务端不信任客户端提交的伤害、命中或弹药数量。
-- 桥接包只写入可重建的本地资源缓存，不修改原枪包。
+当前不实现自定义 ADS、后坐力、枪械渲染、换弹动画、配件框架、TaCZ/GeckoLib 混合动画、Mixin 或 TaCZ 源码修改。动画 API
+仅作为后续扩展点调查，枪械机械动画继续由 TaCZ 控制。
 
-## 验证与授权
-
-启动日志会报告枪包、枪械和弹药数量。默认开发基线为 1 个包、54 把枪和 24 种弹药；枪包位于被忽略的 `run/tacz`，不进入发布 JAR。
-
-TaCZ 代码和官方资产分别受其上游许可证约束。Zinecraft
-只实现独立格式读取与运行时桥接；使用者仍需遵守每个枪包的作者、署名和分发条款。官方项目：<https://github.com/MCModderAnchor/TACZ>
-
-动作语义参考 TaCZ 官方 `1.20.1` 分支（代码 GPL-3.0；本适配为独立 Java 实现，没有复制 Forge 客户端类）：
-
--
-默认动画状态机：<https://github.com/MCModderAnchor/TACZ/blob/1.20.1/src/main/resources/assets/tacz/custom/tacz_default_gun/assets/tacz/scripts/default_state_machine.lua>
-- M1014
-  逐发换弹状态机：<https://github.com/MCModderAnchor/TACZ/blob/1.20.1/src/main/resources/assets/tacz/custom/tacz_default_gun/assets/tacz/scripts/m1014_state_machine.lua>
-- M870
-  服务端换弹时序示例：<https://github.com/MCModderAnchor/TACZ/blob/1.20.1/src/main/resources/assets/tacz/custom/tacz_default_gun/data/tacz/scripts/m870_gun_logic.lua>
--
-瞄准进度语义：<https://github.com/MCModderAnchor/TACZ/blob/1.20.1/src/main/java/com/tacz/guns/entity/shooter/LivingEntityAim.java>
+TaCZ 1.21.1 是非官方移植版，其 API 和数据格式可能在 hotfix 间变化；升级依赖时必须重新核对事件触发位置、`IGun`
+接口和枪包兼容性，并运行客户端与专用服务器烟测。

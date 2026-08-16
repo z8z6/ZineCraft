@@ -13,14 +13,14 @@ public final class WeaponVfxServices {
   private WeaponVfxServices() {
   }
 
-  public static WeaponVfxService create() {
+  public static WeaponPresentationVfxService create() {
     if (!ModList.get().isLoaded("photon")) {
       return VanillaWeaponVfxService.INSTANCE;
     }
 
     try {
       Class<?> backendClass = Class.forName(PHOTON_BACKEND);
-      return (WeaponVfxService) backendClass.getField("INSTANCE").get(null);
+      return (WeaponPresentationVfxService) backendClass.getField("INSTANCE").get(null);
     } catch (ReflectiveOperationException | LinkageError exception) {
       Zinecraft.INSTANCE.getLogger().warn("Photon is present but the weapon VFX backend could not be loaded; using vanilla particles", exception);
       return VanillaWeaponVfxService.INSTANCE;

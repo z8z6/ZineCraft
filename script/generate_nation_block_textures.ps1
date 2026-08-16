@@ -55,6 +55,8 @@ $specs += @(
   @{ id='victoria_structural_frame'; kind='corrugated'; colors=@('#14191D','#252D32','#3B464B','#586268','#8C5537') }
   @{ id='victoria_reinforced_floor'; kind='diamond_plate'; colors=@('#161B1E','#293136','#424C50','#647075','#B07B42') }
   @{ id='victoria_control_panel'; kind='panel'; colors=@('#10171B','#243039','#3E5159','#D39A45','#63AEB5') }
+  @{ id='victoria_battle_scarred_armor'; kind='ballistic_plate'; colors=@('#12171A','#2B3338','#4A565B','#717B7D','#9A633D') }
+  @{ id='victoria_blast_scarred_armor'; kind='blast_plate'; colors=@('#0D1113','#252A2C','#454B4C','#696B66','#875038') }
   @{ id='ursus_permafrost'; kind='terrain'; colors=@('#50626B','#71848D','#9BABB0','#C5D0D2','#E2E9E8') }
   @{ id='ursus_imperial_masonry'; kind='masonry'; colors=@('#434950','#626A70','#879096','#ADB5B6','#704348') }
   @{ id='kjerag_sacred_snowstone'; kind='terrain'; colors=@('#607B88','#83A2AD','#B2CBD2','#DCE9EA','#F4F4EC') }
@@ -120,6 +122,23 @@ function PaletteIndex($spec, [int]$x, [int]$y, [int]$seed) {
       if ($phase -eq 5 -and (($x + $y) % 3) -eq 0) { return 0 }
       if ($noise -gt 246) { return 4 }
       return 1 + [int]($noise -gt 150)
+    }
+    'ballistic_plate' {
+      if (($x % 8) -eq 0 -or ($y % 8) -eq 0) { return 0 }
+      $impact = (($x - 4) * ($x - 4)) + (($y - 5) * ($y - 5))
+      if ($impact -le 1 -or (($x -eq 12) -and ($y -eq 11))) { return 0 }
+      if ($impact -le 5) { return 4 }
+      if ((($x + 2 * $y + $seed) % 23) -eq 0) { return 4 }
+      return 1 + [int]($noise -gt 150)
+    }
+    'blast_plate' {
+      $dx = $x - 7
+      $dy = $y - 8
+      $radius = ($dx * $dx) + ($dy * $dy)
+      if ($radius -le 5) { return 0 }
+      if ($radius -le 18) { return 4 }
+      if ((($x * 5 + $y * 7 + $seed) % 17) -in 0,1) { return 0 }
+      return 1 + [int]($noise -gt 145)
     }
     'timber' {
       if (($x % 8) -eq 0 -or ($x % 8) -eq 1 -or ($y % 8) -eq 0 -or ($y % 8) -eq 1) { return 0 }

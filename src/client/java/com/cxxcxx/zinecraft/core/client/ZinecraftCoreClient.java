@@ -5,7 +5,6 @@ import com.cxxcxx.zinecraft.core.client.entity.LateranoCitizenRenderer;
 import com.cxxcxx.zinecraft.core.client.entity.NationResidentRenderer;
 import com.cxxcxx.zinecraft.core.client.ponder.ZinecraftPonderPlugin;
 import com.cxxcxx.zinecraft.core.client.weapon.WeaponPresentationController;
-import com.cxxcxx.zinecraft.core.client.weapon.tacz.TaczClientResourceBridge;
 import com.cxxcxx.zinecraft.core.entity.ModEntities;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.neoforged.api.distmarker.Dist;
@@ -24,7 +23,6 @@ public final class ZinecraftCoreClient {
     event.enqueueWork(() -> {
       PonderIndex.addPlugin(ZinecraftPonderPlugin.INSTANCE);
       WeaponPresentationController.initialize();
-      TaczClientResourceBridge.INSTANCE.initialize();
     });
   }
 

@@ -10,7 +10,7 @@ Fabric/Forge/Quilt 兼容层。
 - 星门传送、拉特兰中心与固定原点结构。
 - Curios 藏品栏、集成战略藏品资料和服务端效果。
 - 技能物品与 Ponder 演示。
-- 服务端权威 Weapon Runtime 与 TaCZ 外置枪包格式适配。
+- 服务端权威 Weapon Runtime 与 TaCZ 1.21.1 后端事件适配。
 - FTB Quests 远征、国家档案、关系网和开发说明。
 - `test`、`runData`、`build`、`runClient` 开发验证链路。
 

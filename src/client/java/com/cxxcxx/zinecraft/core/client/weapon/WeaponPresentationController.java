@@ -5,7 +5,6 @@ import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionCancelledPayload;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionStartedPayload;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.client.weapon.tacz.TaczWeaponAnimationService;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,9 +22,9 @@ import java.util.Map;
 @EventBusSubscriber(modid = Zinecraft.MOD_ID, value = Dist.CLIENT)
 public final class WeaponPresentationController {
   private static final Map<Key, ActivePresentation> ACTIVE = new HashMap<>();
-  private static final WeaponVfxService VFX = WeaponVfxServices.create();
+  private static final WeaponPresentationVfxService VFX = WeaponVfxServices.create();
   private static final WeaponSoundService SOUNDS = VanillaWeaponSoundService.INSTANCE;
-  private static final WeaponAnimationService WEAPON_ANIMATIONS = TaczWeaponAnimationService.INSTANCE;
+  private static final WeaponAnimationService WEAPON_ANIMATIONS = NoopWeaponAnimationService.INSTANCE;
   private static final PlayerAnimationService PLAYER_ANIMATIONS = VanillaPlayerAnimationService.INSTANCE;
 
   private WeaponPresentationController() {
@@ -94,7 +93,6 @@ public final class WeaponPresentationController {
   @SubscribeEvent
   public static void logout(ClientPlayerNetworkEvent.LoggingOut event) {
     ACTIVE.clear();
-    TaczWeaponAnimationService.INSTANCE.reset();
   }
 
   private static void stop(int entityId, ActivePresentation running) {

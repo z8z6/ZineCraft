@@ -1,7 +1,7 @@
 # Weapon Runtime
 
-Zinecraft 的 Weapon Runtime 是服务端权威的 Java 动作系统，支持近战、枪械、法杖和 TaCZ
-动态枪械。客户端输入只发送动作意图；服务端解析手中物品、校验状态、执行时间线并广播表现。
+Zinecraft 的 Weapon Runtime 是服务端权威的 Java 动作系统，支持项目原生近战、枪械和法杖。客户端输入只发送动作意图；服务端解析手中物品、校验状态、执行时间线并广播表现。TaCZ
+枪械由 TaCZ 自身运行时结算，并通过独立后端事件适配接入技能系统。
 
 ## 核心模型
 
@@ -50,14 +50,16 @@ WeaponDefinition definition = new WeaponDefinition(
 );
 ```
 
-物品必须通过静态绑定或解析器返回该定义。TaCZ 枪械由 Data Component 中的外部枪 ID 动态解析，不为每把枪注册 Item。
+项目原生物品必须通过静态绑定或解析器返回该定义。TaCZ 物品、枪械身份和枪包数据由 TaCZ 管理，不注册为 Zinecraft
+`WeaponDefinition`。
 
 ## 客户端边界
 
 - 通用端不得 import `net.minecraft.client`。
 - renderer、按键、Ponder、声音后端、粒子后端和资源桥接放在 `src/client/java`。
 - 没有表现资源时使用 no-op 或原版后端，不能阻止服务端玩法执行。
-- TaCZ Lua 动画状态机当前未启用；详见 [tacz-adapter.md](tacz-adapter.md)。
+- TaCZ 的渲染、ADS、后坐力与枪械机械动画由 TaCZ 控制；Zinecraft 不注入自定义枪械
+  renderer。详见 [tacz-adapter.md](tacz-adapter.md)。
 
 ### Photon 武器特效
 

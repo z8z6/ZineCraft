@@ -26,8 +26,8 @@ import com.cxxcxx.zinecraft.api.world.structure.StructureCatalog;
 import com.cxxcxx.zinecraft.compat.jer.ZinecraftJerPlugin;
 import com.cxxcxx.zinecraft.core.biome.ModTerraBlender;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
-import com.cxxcxx.zinecraft.core.block.MaterialOres;
 import com.cxxcxx.zinecraft.core.block.AuthorHeadBlocks;
+import com.cxxcxx.zinecraft.core.block.MaterialOres;
 import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.block.NationBlocks;
 import com.cxxcxx.zinecraft.core.datagen.ZinecraftDataGenerator;
@@ -42,9 +42,9 @@ import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
 import com.cxxcxx.zinecraft.core.skill.ModSkills;
 import com.cxxcxx.zinecraft.core.sound.ModSound;
 import com.cxxcxx.zinecraft.core.structure.*;
-import com.cxxcxx.zinecraft.core.weapon.ModTaczWeapons;
 import com.cxxcxx.zinecraft.core.weapon.ModWeapons;
 import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures;
+import com.cxxcxx.zinecraft.integration.tacz.TaczIntegration;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
@@ -97,7 +97,7 @@ public final class Zinecraft {
         WeaponStateComponents.INSTANCE,
         ModSound.INSTANCE, ModItem.INSTANCE, ModCollectibles.INSTANCE, NationFoods.INSTANCE,
         ModBlock.INSTANCE, AuthorHeadBlocks.INSTANCE, MaterialOres.INSTANCE, NationBlocks.INSTANCE, ModBlockEntity.INSTANCE,
-        ModSkills.INSTANCE, ModWeapons.INSTANCE, ModTaczWeapons.INSTANCE, ModEntities.INSTANCE,
+        ModSkills.INSTANCE, ModWeapons.INSTANCE, TaczIntegration.INSTANCE, ModEntities.INSTANCE,
         TerraNationRelations.INSTANCE, NationBiomes.INSTANCE, ModDimensions.INSTANCE,
         LateranoHostStructure.INSTANCE, NationLandmarks.INSTANCE, NationSettlements.INSTANCE,
         ModWorldFeatures.INSTANCE, ModStructure.INSTANCE, StructureTranslations.INSTANCE
@@ -129,13 +129,6 @@ public final class Zinecraft {
         output -> skills.forEach(output::accept)
     );
 
-    CREATIVE_TABS.register(
-        "tacz",
-        "Zinecraft TaCZ",
-        "Zinecraft TaCZ",
-        () -> new ItemStack(ModTaczWeapons.INSTANCE.getGUN_ITEM().getItem()),
-        ModTaczWeapons::addCreativeItems
-    );
   }
 
   private void commonSetup(FMLCommonSetupEvent event) {

@@ -83,6 +83,10 @@ public final class NationBlocks {
   @NotNull
   private static final BlockEntry<Block> VICTORIA_CONTROL_PANEL;
   @NotNull
+  private static final BlockEntry<Block> VICTORIA_BATTLE_SCARRED_ARMOR;
+  @NotNull
+  private static final BlockEntry<Block> VICTORIA_BLAST_SCARRED_ARMOR;
+  @NotNull
   private static final BlockEntry<Block> URSUS_PERMAFROST;
   @NotNull
   private static final BlockEntry<Block> URSUS_IMPERIAL_MASONRY;
@@ -209,6 +213,12 @@ public final class NationBlocks {
     nationBlocks = INSTANCE;
     block = Blocks.IRON_BLOCK;
     VICTORIA_CONTROL_PANEL = nationBlocks.material("victoria_control_panel", "维多利亚火控面板", "Victoria Fire-Control Panel", block);
+    nationBlocks = INSTANCE;
+    block = Blocks.IRON_BLOCK;
+    VICTORIA_BATTLE_SCARRED_ARMOR = nationBlocks.material("victoria_battle_scarred_armor", "维多利亚弹痕装甲", "Victoria Battle-Scarred Armor", block);
+    nationBlocks = INSTANCE;
+    block = Blocks.IRON_BLOCK;
+    VICTORIA_BLAST_SCARRED_ARMOR = nationBlocks.material("victoria_blast_scarred_armor", "维多利亚爆蚀装甲", "Victoria Blast-Scarred Armor", block);
     nationBlocks = INSTANCE;
     block = Blocks.PACKED_ICE;
     URSUS_PERMAFROST = nationBlocks.material("ursus_permafrost", "乌萨斯永冻土", "Ursus Permafrost", block);
@@ -421,6 +431,16 @@ public final class NationBlocks {
   @NotNull
   public final Block getVICTORIA_CONTROL_PANEL() {
     return VICTORIA_CONTROL_PANEL.getBlock();
+  }
+
+  @NotNull
+  public final Block getVICTORIA_BATTLE_SCARRED_ARMOR() {
+    return VICTORIA_BATTLE_SCARRED_ARMOR.getBlock();
+  }
+
+  @NotNull
+  public final Block getVICTORIA_BLAST_SCARRED_ARMOR() {
+    return VICTORIA_BLAST_SCARRED_ARMOR.getBlock();
   }
 
   @NotNull

@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public final class VanillaWeaponVfxService implements WeaponVfxService {
+public final class VanillaWeaponVfxService implements WeaponPresentationVfxService {
   @NotNull
   public static final VanillaWeaponVfxService INSTANCE = new VanillaWeaponVfxService();
   private static final ResourceLocation trailId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_sword_trail");
