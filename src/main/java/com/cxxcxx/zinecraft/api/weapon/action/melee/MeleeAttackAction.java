@@ -1,5 +1,8 @@
 package com.cxxcxx.zinecraft.api.weapon.action.melee;
 
+import com.cxxcxx.zinecraft.api.combat.CombatDamageType;
+import com.cxxcxx.zinecraft.api.combat.CombatRequest;
+import com.cxxcxx.zinecraft.api.combat.CombatService;
 import com.cxxcxx.zinecraft.api.weapon.action.ActionPhase;
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
@@ -11,7 +14,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -81,11 +83,16 @@ public final class MeleeAttackAction implements WeaponAction {
   private final class Runtime implements WeaponActionRuntime {
     @NotNull
     private final WeaponContext context;
+    private final int hitTick;
+    private final int durationTicks;
     private int currentTick;
 
     public Runtime(@NotNull WeaponContext context) {
       super();
       this.context = context;
+      var timing = CombatService.INSTANCE.actionTiming(context.getPlayer(), MeleeAttackAction.this.hitTick, MeleeAttackAction.this.durationTicks);
+      this.hitTick = timing.effectTick();
+      this.durationTicks = timing.durationTicks();
     }
 
     @Override
@@ -96,12 +103,12 @@ public final class MeleeAttackAction implements WeaponAction {
     @NotNull
     @Override
     public ActionPhase getPhase() {
-      return this.getCurrentTick() < MeleeAttackAction.this.hitTick
+      return this.getCurrentTick() < this.hitTick
           ? ActionPhase.STARTUP
           : (
-          this.getCurrentTick() == MeleeAttackAction.this.hitTick
+          this.getCurrentTick() == this.hitTick
           ? ActionPhase.ACTIVE
-          : (this.getCurrentTick() < MeleeAttackAction.this.durationTicks ? ActionPhase.RECOVERY : ActionPhase.FINISHED)
+          : (this.getCurrentTick() < this.durationTicks ? ActionPhase.RECOVERY : ActionPhase.FINISHED)
       );
     }
 
@@ -113,7 +120,7 @@ public final class MeleeAttackAction implements WeaponAction {
     @Override
     public void tick() {
       if (!this.getFinished()) {
-        if (this.getCurrentTick() == MeleeAttackAction.this.hitTick) {
+        if (this.getCurrentTick() == this.hitTick) {
           this.performHit();
         }
 
@@ -130,7 +137,7 @@ public final class MeleeAttackAction implements WeaponAction {
       boolean bl = false;
 
       for (LivingEntity livingEntity : list) {
-        bl = livingEntity.hurt(serverPlayer.damageSources().playerAttack((Player) serverPlayer), f) || bl;
+        bl = CombatService.INSTANCE.damage(serverPlayer, livingEntity, CombatDamageType.PHYSICAL, f, CombatRequest.DEFAULT) || bl;
       }
 
       if (bl) {
@@ -139,4 +146,3 @@ public final class MeleeAttackAction implements WeaponAction {
     }
   }
 }
-

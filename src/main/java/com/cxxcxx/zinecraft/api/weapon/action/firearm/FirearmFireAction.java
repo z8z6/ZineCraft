@@ -1,11 +1,13 @@
 package com.cxxcxx.zinecraft.api.weapon.action.firearm;
 
+import com.cxxcxx.zinecraft.api.combat.CombatDamageType;
+import com.cxxcxx.zinecraft.api.combat.CombatRequest;
+import com.cxxcxx.zinecraft.api.combat.CombatService;
 import com.cxxcxx.zinecraft.api.weapon.action.*;
 import com.cxxcxx.zinecraft.api.weapon.combat.HitscanService;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class FirearmFireAction implements WeaponAction {
@@ -60,12 +62,12 @@ public final class FirearmFireAction implements WeaponAction {
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    TickRange intRange = new TickRange(this.fireTick, this.fireTick);
-    int i = this.durationTicks;
-    return new TimedWeaponActionRuntime(intRange, i) {
+    var timing = CombatService.INSTANCE.actionTiming(context.getPlayer(), this.fireTick, this.durationTicks);
+    TickRange intRange = new TickRange(timing.effectTick(), timing.effectTick());
+    return new TimedWeaponActionRuntime(intRange, timing.durationTicks()) {
       @Override
       protected void onTick(int tick) {
-        if (tick == FirearmFireAction.this.fireTick) {
+        if (tick == timing.effectTick()) {
           Integer integer = (Integer) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), 0);
           if (integer > 0) {
             context.getStack().set(WeaponStateComponents.INSTANCE.getAMMO(), integer - 1);
@@ -75,7 +77,9 @@ public final class FirearmFireAction implements WeaponAction {
               LivingEntity livingEntity1 = hit.getTarget();
               if (livingEntity1 != null) {
                 LivingEntity livingEntity = livingEntity1;
-                livingEntity.hurt(context.getPlayer().damageSources().playerAttack((Player) context.getPlayer()), FirearmFireAction.this.damage);
+                CombatService.INSTANCE.damage(
+                    context.getPlayer(), livingEntity, CombatDamageType.PHYSICAL, FirearmFireAction.this.damage, CombatRequest.DEFAULT
+                );
                 return;
               }
             }
@@ -85,4 +89,3 @@ public final class FirearmFireAction implements WeaponAction {
     };
   }
 }
-

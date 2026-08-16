@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.api.accessory;
 
+import com.cxxcxx.zinecraft.api.combat.CombatStatModifier;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -14,7 +15,11 @@ public sealed interface CollectiblePower
     permits CollectiblePower.ArchiveOnly,
     CollectiblePower.AttributeBoost,
     CollectiblePower.AttributeSet,
-    CollectiblePower.Regeneration {
+    CollectiblePower.CombatStatBoost,
+    CollectiblePower.CombatStatSet,
+    CollectiblePower.FlatRegeneration,
+    CollectiblePower.Regeneration,
+    CollectiblePower.SourceRule {
   final class ArchiveOnly implements CollectiblePower {
     @NotNull
     public static final CollectiblePower.ArchiveOnly INSTANCE = new CollectiblePower.ArchiveOnly();
@@ -36,6 +41,26 @@ public sealed interface CollectiblePower
     @Override
     public String toString() {
       return "ArchiveOnly";
+    }
+  }
+
+  /**
+   * Arknights collectible-rune modifier used by every Zinecraft combat calculation.
+   */
+  record CombatStatBoost(@NotNull CombatStatModifier modifier) implements CollectiblePower {
+    public CombatStatBoost {
+      java.util.Objects.requireNonNull(modifier, "modifier");
+      if (modifier.phase() != com.cxxcxx.zinecraft.api.combat.CombatModifierPhase.COLLECTIBLE_ADDITION
+          && modifier.phase() != com.cxxcxx.zinecraft.api.combat.CombatModifierPhase.COLLECTIBLE_MULTIPLIER) {
+        throw new IllegalArgumentException("Collectibles may only use collectible-rune modifier phases");
+      }
+    }
+  }
+
+  record CombatStatSet(@NotNull List<CombatStatBoost> boosts) implements CollectiblePower {
+    public CombatStatSet {
+      boosts = List.copyOf(boosts);
+      if (boosts.isEmpty()) throw new IllegalArgumentException("Combat stat set must not be empty");
     }
   }
 
@@ -207,6 +232,27 @@ public sealed interface CollectiblePower
     @Override
     public String toString() {
       return "Regeneration(maxHealthFraction=" + this.maxHealthFraction + ", intervalTicks=" + this.intervalTicks + ")";
+    }
+  }
+
+  /**
+   * Fixed health regeneration used when the PRTS rule is expressed as HP per second.
+   */
+  record FlatRegeneration(float health, int intervalTicks) implements CollectiblePower {
+    public FlatRegeneration {
+      if (!Float.isFinite(health) || health <= 0.0F)
+        throw new IllegalArgumentException("Fixed regeneration must be finite and positive");
+      if (intervalTicks <= 0) throw new IllegalArgumentException("Regeneration interval must be positive");
+    }
+  }
+
+  /**
+   * Faithful declarative rule for an Integrated Strategies mechanic not yet represented by a Minecraft runtime domain.
+   */
+  record SourceRule(@NotNull String originalRule) implements CollectiblePower {
+    public SourceRule {
+      originalRule = java.util.Objects.requireNonNull(originalRule, "originalRule").trim();
+      if (originalRule.isEmpty()) throw new IllegalArgumentException("Source rule must not be blank");
     }
   }
 }

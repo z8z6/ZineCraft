@@ -1,7 +1,6 @@
 package com.cxxcxx.zinecraft.core.structure;
 
 import com.cxxcxx.zinecraft.api.world.structure.JigsawBuildingEntry;
-import com.cxxcxx.zinecraft.api.world.structure.StructureCatalog;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.biome.NationBiomes;
 import net.minecraft.resources.ResourceKey;
@@ -16,173 +15,89 @@ public final class NationLandmarks {
   @NotNull
   public static final NationLandmarks INSTANCE = new NationLandmarks();
   @NotNull
-  private static final JigsawBuildingEntry AEGIR_VOLCANIC_BEACON = landmarkWithDefaults(
-      INSTANCE, "aegir_volcanic_beacon", NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA(), 40, Types.OCEAN_FLOOR_WG, 0, 16, null
-  );
+  private static final JigsawBuildingEntry AEGIR_VOLCANIC_BEACON = INSTANCE.modularLandmark("aegir_volcanic_beacon", NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA(), 40, Types.OCEAN_FLOOR_WG, 0);
   @NotNull
-  private static final JigsawBuildingEntry AEGIR_ABYSSAL_OBSERVATORY = landmarkWithDefaults(
-      INSTANCE, "aegir_abyssal_observatory", NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA(), 52, Types.OCEAN_FLOOR_WG, 0, 16, null
-  );
+  private static final JigsawBuildingEntry AEGIR_ABYSSAL_OBSERVATORY = INSTANCE.modularLandmark("aegir_abyssal_observatory", NationBiomes.INSTANCE.getAEGIR_ABYSSAL_SEA(), 52, Types.OCEAN_FLOOR_WG, 0);
   @NotNull
-  private static final JigsawBuildingEntry BOLIVAR_DOSSOLES_YACHT = landmarkWithDefaults(
-      INSTANCE, "bolivar_dossoles_yacht", NationBiomes.INSTANCE.getBOLIVAR_PLAIN(), 30, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry BOLIVAR_DOSSOLES_YACHT = INSTANCE.modularLandmark("bolivar_dossoles_yacht", NationBiomes.INSTANCE.getBOLIVAR_PLAIN(), 30, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry BOLIVAR_RACE_CHECKPOINT = landmarkWithDefaults(
-      INSTANCE, "bolivar_race_checkpoint", NationBiomes.INSTANCE.getBOLIVAR_PLAIN(), 46, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry BOLIVAR_RACE_CHECKPOINT = INSTANCE.modularLandmark("bolivar_race_checkpoint", NationBiomes.INSTANCE.getBOLIVAR_PLAIN(), 46, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry HIGASHI_RIFT_SHRINE = landmarkWithDefaults(
-      INSTANCE, "higashi_rift_shrine", NationBiomes.INSTANCE.getHIGASHI_SHADOW_RIFT(), 34, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry HIGASHI_RIFT_SHRINE = INSTANCE.modularLandmark("higashi_rift_shrine", NationBiomes.INSTANCE.getHIGASHI_SHADOW_RIFT(), 34, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry HIGASHI_SOKOGAWA_WATCHTOWER = landmarkWithDefaults(
-      INSTANCE, "higashi_sokogawa_watchtower", NationBiomes.INSTANCE.getHIGASHI_SHADOW_RIFT(), 50, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry HIGASHI_SOKOGAWA_WATCHTOWER = INSTANCE.modularLandmark("higashi_sokogawa_watchtower", NationBiomes.INSTANCE.getHIGASHI_SHADOW_RIFT(), 50, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry DURIN_DOME_STATION = INSTANCE.landmark(
+  private static final JigsawBuildingEntry DURIN_DOME_STATION = INSTANCE.modularLandmark(
       "durin_dome_station", NationBiomes.INSTANCE.getDURIN_UNDERGROUND_GARDEN(), 24, null, 24
   );
   @NotNull
-  private static final JigsawBuildingEntry DURIN_WATER_PARK = INSTANCE.landmark(
+  private static final JigsawBuildingEntry DURIN_WATER_PARK = INSTANCE.modularLandmark(
       "durin_water_park", NationBiomes.INSTANCE.getDURIN_UNDERGROUND_GARDEN(), 40, null, 24
   );
   @NotNull
-  private static final JigsawBuildingEntry COLUMBIA_FRONTIER_LAB = landmarkWithDefaults(
-      INSTANCE, "columbia_frontier_lab", NationBiomes.INSTANCE.getCOLUMBIA_SANDSTONE_WILDS(), 32, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry COLUMBIA_FRONTIER_LAB = INSTANCE.modularLandmark("columbia_frontier_lab", NationBiomes.INSTANCE.getCOLUMBIA_SANDSTONE_WILDS(), 32, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry COLUMBIA_PRISON_OUTPOST = landmarkWithDefaults(
-      INSTANCE, "columbia_prison_outpost", NationBiomes.INSTANCE.getCOLUMBIA_SANDSTONE_WILDS(), 48, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry COLUMBIA_PRISON_OUTPOST = INSTANCE.modularLandmark("columbia_prison_outpost", NationBiomes.INSTANCE.getCOLUMBIA_SANDSTONE_WILDS(), 48, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry KAZIMIERZ_ARENA_GATE = landmarkWithDefaults(
-      INSTANCE, "kazimierz_arena_gate", NationBiomes.INSTANCE.getKAZIMIERZ_KNIGHTLAND(), 30, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry KAZIMIERZ_ARENA_GATE = INSTANCE.modularLandmark("kazimierz_arena_gate", NationBiomes.INSTANCE.getKAZIMIERZ_KNIGHTLAND(), 30, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry KAZIMIERZ_KNIGHT_MONUMENT = landmarkWithDefaults(
-      INSTANCE, "kazimierz_knight_monument", NationBiomes.INSTANCE.getKAZIMIERZ_KNIGHTLAND(), 46, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry KAZIMIERZ_KNIGHT_MONUMENT = INSTANCE.modularLandmark("kazimierz_knight_monument", NationBiomes.INSTANCE.getKAZIMIERZ_KNIGHTLAND(), 46, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry KAZDEL_BABEL_RUINS = landmarkWithDefaults(
-      INSTANCE, "kazdel_babel_ruins", NationBiomes.INSTANCE.getKAZDEL_SCARRED_WASTES(), 36, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry KAZDEL_BABEL_RUINS = INSTANCE.modularLandmark("kazdel_babel_ruins", NationBiomes.INSTANCE.getKAZDEL_SCARRED_WASTES(), 36, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry KAZDEL_SARKAZ_CAMP = landmarkWithDefaults(
-      INSTANCE, "kazdel_sarkaz_camp", NationBiomes.INSTANCE.getKAZDEL_SCARRED_WASTES(), 52, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry KAZDEL_SARKAZ_CAMP = INSTANCE.modularLandmark("kazdel_sarkaz_camp", NationBiomes.INSTANCE.getKAZDEL_SCARRED_WASTES(), 52, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry LATERANO_REVELATION_TOWER = landmarkWithDefaults(
-      INSTANCE, "laterano_revelation_tower", NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(), 28, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry LATERANO_REVELATION_TOWER = INSTANCE.modularLandmark("laterano_revelation_tower", NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(), 28, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry LATERANO_AMBROSIUS_CHAPEL = landmarkWithDefaults(
-      INSTANCE, "laterano_ambrosius_chapel", NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(), 44, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry LATERANO_AMBROSIUS_CHAPEL = INSTANCE.modularLandmark("laterano_ambrosius_chapel", NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(), 44, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry LEITHANIEN_TWIN_SPIRES = landmarkWithDefaults(
-      INSTANCE, "leithanien_twin_spires", NationBiomes.INSTANCE.getLEITHANIEN_TWILIGHT_FOREST(), 34, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry LEITHANIEN_TWIN_SPIRES = INSTANCE.modularLandmark("leithanien_twin_spires", NationBiomes.INSTANCE.getLEITHANIEN_TWILIGHT_FOREST(), 34, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry LEITHANIEN_CONCERT_HALL = landmarkWithDefaults(
-      INSTANCE, "leithanien_concert_hall", NationBiomes.INSTANCE.getLEITHANIEN_TWILIGHT_FOREST(), 50, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry LEITHANIEN_CONCERT_HALL = INSTANCE.modularLandmark("leithanien_concert_hall", NationBiomes.INSTANCE.getLEITHANIEN_TWILIGHT_FOREST(), 50, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry RIM_BILLITON_MINING_DERRICK = landmarkWithDefaults(
-      INSTANCE, "rim_billiton_mining_derrick", NationBiomes.INSTANCE.getRIM_BILLITON_MINING_BADLANDS(), 32, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry RIM_BILLITON_MINING_DERRICK = INSTANCE.modularLandmark("rim_billiton_mining_derrick", NationBiomes.INSTANCE.getRIM_BILLITON_MINING_BADLANDS(), 32, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry RIM_BILLITON_RAIL_DEPOT = landmarkWithDefaults(
-      INSTANCE, "rim_billiton_rail_depot", NationBiomes.INSTANCE.getRIM_BILLITON_MINING_BADLANDS(), 48, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry RIM_BILLITON_RAIL_DEPOT = INSTANCE.modularLandmark("rim_billiton_rail_depot", NationBiomes.INSTANCE.getRIM_BILLITON_MINING_BADLANDS(), 48, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry MINOS_HEROES_TEMPLE = landmarkWithDefaults(
-      INSTANCE, "minos_heroes_temple", NationBiomes.INSTANCE.getMINOS_SUNLIT_HILLS(), 28, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry MINOS_HEROES_TEMPLE = INSTANCE.modularLandmark("minos_heroes_temple", NationBiomes.INSTANCE.getMINOS_SUNLIT_HILLS(), 28, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry MINOS_HEROES_PLAZA = landmarkWithDefaults(
-      INSTANCE, "minos_heroes_plaza", NationBiomes.INSTANCE.getMINOS_SUNLIT_HILLS(), 44, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry MINOS_HEROES_PLAZA = INSTANCE.modularLandmark("minos_heroes_plaza", NationBiomes.INSTANCE.getMINOS_SUNLIT_HILLS(), 44, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry SARGON_GOLDEN_BAZAAR = landmarkWithDefaults(
-      INSTANCE, "sargon_golden_bazaar", NationBiomes.INSTANCE.getSARGON_ROCKY_DESERT(), 34, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry SARGON_GOLDEN_BAZAAR = INSTANCE.modularLandmark("sargon_golden_bazaar", NationBiomes.INSTANCE.getSARGON_ROCKY_DESERT(), 34, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry SARGON_LONG_SPRING_WELL = landmarkWithDefaults(
-      INSTANCE, "sargon_long_spring_well", NationBiomes.INSTANCE.getSARGON_ROCKY_DESERT(), 50, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry SARGON_LONG_SPRING_WELL = INSTANCE.modularLandmark("sargon_long_spring_well", NationBiomes.INSTANCE.getSARGON_ROCKY_DESERT(), 50, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry SAMI_CYCLOPS_ALTAR = landmarkWithDefaults(
-      INSTANCE, "sami_cyclops_altar", NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST(), 38, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry SAMI_CYCLOPS_ALTAR = INSTANCE.modularLandmark("sami_cyclops_altar", NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST(), 38, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry SAMI_SNOWPRIEST_LODGE = landmarkWithDefaults(
-      INSTANCE, "sami_snowpriest_lodge", NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST(), 54, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry SAMI_SNOWPRIEST_LODGE = INSTANCE.modularLandmark("sami_snowpriest_lodge", NationBiomes.INSTANCE.getSAMI_FROZEN_FOREST(), 54, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry VICTORIA_DEFENCE_CANNON = landmarkWithDefaults(
-      INSTANCE, "victoria_defence_cannon", NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(), 32, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry VICTORIA_DEFENCE_CANNON = INSTANCE.modularLandmark("victoria_defence_cannon", NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(), 32, null, 0);
   @NotNull
   private static final JigsawBuildingEntry VICTORIA_DEFENCE_CANNON_PREVIEW = INSTANCE.defenceCannonPreview();
   @NotNull
-  private static final JigsawBuildingEntry VICTORIA_STEAM_STATION = landmarkWithDefaults(
-      INSTANCE, "victoria_steam_station", NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(), 48, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry VICTORIA_STEAM_STATION = INSTANCE.modularLandmark("victoria_steam_station", NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(), 48, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry URSUS_SARCOPHAGUS_STATION = landmarkWithDefaults(
-      INSTANCE, "ursus_sarcophagus_station", NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE(), 34, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry URSUS_SARCOPHAGUS_STATION = INSTANCE.modularLandmark("ursus_sarcophagus_station", NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE(), 34, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry URSUS_NORTHERN_MINE_TOWER = landmarkWithDefaults(
-      INSTANCE, "ursus_northern_mine_tower", NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE(), 50, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry URSUS_NORTHERN_MINE_TOWER = INSTANCE.modularLandmark("ursus_northern_mine_tower", NationBiomes.INSTANCE.getURSUS_FROZEN_STEPPE(), 50, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry KJERAG_KARLAN_MONASTERY = landmarkWithDefaults(
-      INSTANCE, "kjerag_karlan_monastery", NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(), 40, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry KJERAG_KARLAN_MONASTERY = INSTANCE.modularLandmark("kjerag_karlan_monastery", NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(), 40, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry KJERAG_SACRED_PLAZA = landmarkWithDefaults(
-      INSTANCE, "kjerag_sacred_plaza", NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(), 56, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry KJERAG_SACRED_PLAZA = INSTANCE.modularLandmark("kjerag_sacred_plaza", NationBiomes.INSTANCE.getKJERAG_SNOWY_PEAKS(), 56, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry SIRACUSA_FAMILY_COURT = landmarkWithDefaults(
-      INSTANCE, "siracusa_family_court", NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(), 30, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry SIRACUSA_FAMILY_COURT = INSTANCE.modularLandmark("siracusa_family_court", NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(), 30, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry SIRACUSA_FAMILY_THEATRE = landmarkWithDefaults(
-      INSTANCE, "siracusa_family_theatre", NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(), 46, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry SIRACUSA_FAMILY_THEATRE = INSTANCE.modularLandmark("siracusa_family_theatre", NationBiomes.INSTANCE.getSIRACUSA_RAINY_WOODLAND(), 46, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry YAN_YUMEN_BEACON = landmarkWithDefaults(
-      INSTANCE, "yan_yumen_beacon", NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(), 36, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry YAN_YUMEN_BEACON = INSTANCE.modularLandmark("yan_yumen_beacon", NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(), 36, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry YAN_SHANGSHU_PAVILION = landmarkWithDefaults(
-      INSTANCE, "yan_shangshu_pavilion", NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(), 52, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry YAN_SHANGSHU_PAVILION = INSTANCE.modularLandmark("yan_shangshu_pavilion", NationBiomes.INSTANCE.getYAN_MOUNTAIN_GROVE(), 52, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry IBERIA_EYE_LIGHTHOUSE = landmarkWithDefaults(
-      INSTANCE, "iberia_eye_lighthouse", NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 38, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry IBERIA_EYE_LIGHTHOUSE = INSTANCE.modularLandmark("iberia_eye_lighthouse", NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 38, null, 0);
   @NotNull
-  private static final JigsawBuildingEntry IBERIA_SALTVIND_CHAPEL = landmarkWithDefaults(
-      INSTANCE, "iberia_saltwind_chapel", NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 54, null, 0, 24, null
-  );
+  private static final JigsawBuildingEntry IBERIA_SALTVIND_CHAPEL = INSTANCE.modularLandmark("iberia_saltwind_chapel", NationBiomes.INSTANCE.getIBERIA_SALT_DELTA(), 54, null, 0);
 
   private NationLandmarks() {
-  }
-
-  static JigsawBuildingEntry landmarkWithDefaults(NationLandmarks var0, String var1, ResourceKey var2, int var3, Types var4, int var5, int var6, Object var7) {
-    if ((var6 & 8) != 0) {
-      var4 = Types.WORLD_SURFACE_WG;
-    }
-
-    if ((var6 & 16) != 0) {
-      var5 = 0;
-    }
-
-    return var0.landmark(var1, var2, var3, var4, var5);
   }
 
   @NotNull
@@ -380,9 +295,40 @@ public final class NationLandmarks {
     return IBERIA_SALTVIND_CHAPEL;
   }
 
-  private final JigsawBuildingEntry landmark(String path, ResourceKey<Biome> biome, int ringDistance, Types heightmap, int startHeight) {
-    return StructureCatalog.uniqueLandmarkWithDefaults(
-        Zinecraft.INSTANCE.getSTRUCTURES(), path, "nation_landmarks/" + path, biome, ringDistance, 96, heightmap, startHeight, 0.0F, 128, null
+  private JigsawBuildingEntry modularLandmark(
+      String path,
+      ResourceKey<Biome> biome,
+      int ringDistance,
+      Types heightmap,
+      int startHeight
+  ) {
+    String templateRoot = "nation_landmarks/" + path;
+    return Zinecraft.INSTANCE.getSTRUCTURES().jigsawBuilding(
+        path,
+        ringDistance + 1,
+        ringDistance,
+        path.hashCode(),
+        7,
+        112,
+        0.0F,
+        biome,
+        true,
+        ringDistance,
+        heightmap == null ? Types.WORLD_SURFACE_WG : heightmap,
+        startHeight,
+        false,
+        false,
+        Decoration.SURFACE_STRUCTURES,
+        TerrainAdjustment.BEARD_THIN,
+        builder -> {
+          builder.setStartPool("start");
+          builder.pool("start", Projection.RIGID, pool -> pool.template(templateRoot + "/foundation", 1));
+          builder.pool("core", Projection.RIGID, pool -> pool.template(templateRoot + "/core", 1));
+          builder.pool("facade", Projection.RIGID, pool -> pool.template(templateRoot + "/facade", 1));
+          builder.pool("roof", Projection.RIGID, pool -> pool.template(templateRoot + "/roof", 1));
+          builder.pool("annex", Projection.RIGID, pool -> pool.template(templateRoot + "/annex", 1));
+          builder.pool("surrounding", Projection.RIGID, pool -> pool.template(templateRoot + "/surrounding", 1));
+        }
     );
   }
 

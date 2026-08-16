@@ -89,14 +89,18 @@ docs/architecture/
 - 地标必须同时有 plaza、road、adjacent block、background 和 skyline 设计。
 - 移动城市设计必须在资料允许时表达地块边缘、结构层级、动力/工业设施、交通和基座，而不是现实城市平铺。
 
-## 当前冻结线
+## 原型冻结线与当前状态
 
-现有 19 套聚落和 38 座唯一地标统一归类为 `PROTOTYPE_NON_CANONICAL`。在逐国完成资料链前：
+初次审计时，19 套聚落和 38 座唯一地标统一归类为 `PROTOTYPE_NON_CANONICAL`，并采用以下冻结规则：
 
 - 保留已发布 ID 以免破坏存档和数据引用；
 - 不继续为旧盒体补细节或贴图；
 - 不把现有名称、轮廓、调色板后三槽视为官方设定；
 - 新设计先以未注册 Blockout 并行存在，通过评审后再替换旧模板。
+
+2026-08-16 用户批准实际替换后，旧公开 ID 已指向新版 Architecture Pass：19 套聚落包含 171 个模块，38 座地标包含 228 个六段式
+Jigsaw 模块。它们可以继续自然生成和 `/locate`，但在完成游戏内旋转、地形、光照、动线和 Fidelity Review 前仍不得标记为 `FINAL`
+或 `Canonical Reconstruction`。
 
 ## 验证门槛
 

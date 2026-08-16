@@ -37,6 +37,18 @@ ItemStack stack = new ItemStack(SCANNER.getItem());
 - `compost(chance)`：堆肥成功概率，必须位于 0—1。
 - `includeInCreative=false`：不进入目录自动收集的创造模式页。
 
+## 合成材料稀有度
+
+泰拉合成材料的物品稀有度由 `CraftingMaterialRarities` 根据加工站配方层级统一声明：
+
+- 1 级基础材料：`COMMON`。
+- 2 级初级加工材料：`UNCOMMON`。
+- 3 级中级加工、稀有矿物产物：`RARE`。
+- 4—5 级高级加工站产物：`EPIC`。
+
+由于 Minecraft 只有四档物品稀有度，配方 4 级与 5 级合并为 `EPIC`。这套稀有度只控制合成材料的 Minecraft 物品颜色，不覆盖
+PRTS 藏品自身的稀有度。
+
 ## 模型与贴图
 
 普通物品默认使用 `ModelTemplates.FLAT_ITEM`；唱片使用 `ModelTemplates.MUSIC_DISC`。贴图路径为：

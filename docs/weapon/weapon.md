@@ -35,6 +35,10 @@ Zinecraft 的 Weapon Runtime 是服务端权威的 Java 动作系统，支持项
 近战命中使用服务端 hitbox/raycast，并避免重复叠加武器基础伤害。枪械命中使用服务端 hitscan；法杖技能调用 `SkillService`
 或明确的服务端效果接口。
 
+所有原生武器伤害和治疗必须进入 `CombatService`，由统一攻击力、物理/法术/真实伤害、穿透和治疗公式结算；不得直接调用实体
+`hurt` 绕开藏品修正。详细公式与新增武器约束见
+[战斗数值机制](../combat/combat-stats.md)。TaCZ 保留自己的弹种、爆头与防具结算，但命中前会通过公开事件应用相同的攻击力藏品增益。
+
 ## 新增静态武器
 
 ```java

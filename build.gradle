@@ -110,6 +110,7 @@ dependencies {
     implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
     compileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
     runtimeOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
+    implementation "curse.maven:l2library-620203:${project.l2library_file_id}"
 
     // Optional development conveniences; they are available in runClient but are not production requirements.
     compileOnly "mezz.jei:jei-${project.minecraft_version}-neoforge-api:${project.jei_version}"
@@ -123,6 +124,7 @@ dependencies {
     runtimeOnly "maven.modrinth:fPetb5Kh:${project.natures_compass_modrinth_version}"
     runtimeOnly "maven.modrinth:RV1qfVQ8:${project.explorers_compass_modrinth_version}"
     runtimeOnly "maven.modrinth:tooltip-overhaul:${project.tooltip_overhaul_modrinth_version}"
+    runtimeOnly "maven.modrinth:aC3cM3Vq:${project.mouse_tweaks_modrinth_version}"
 
     // TaCZ owns gun items, gun-pack loading, rendering, input and mechanical animations.
     implementation "maven.modrinth:tacz-1.21.1:${project.tacz_version}"
@@ -135,7 +137,7 @@ dependencies {
 
     testImplementation platform("org.junit:junit-bom:5.11.4")
     testImplementation "org.junit.jupiter:junit-jupiter"
-    testRuntimeOnly "com.google.code.gson:gson:2.11.0"
+    testImplementation "com.google.code.gson:gson:2.11.0"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
 }

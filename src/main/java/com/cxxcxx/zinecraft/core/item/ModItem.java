@@ -258,7 +258,17 @@ public final class ModItem {
   }
 
   private final ItemEntry<Item> item(String path, String zhCn, String enUs) {
-    return ItemCatalog.registerWithDefaults(Zinecraft.INSTANCE.getITEMS(), path, zhCn, enUs, null, null, false, 56, null);
+    return ItemCatalog.registerWithDefaults(
+        Zinecraft.INSTANCE.getITEMS(),
+        path,
+        zhCn,
+        enUs,
+        null,
+        CraftingMaterialRarities.properties(path),
+        false,
+        40,
+        null
+    );
   }
 
   private final ItemEntry<Item> ItemWrap(String path, String zhCn) {

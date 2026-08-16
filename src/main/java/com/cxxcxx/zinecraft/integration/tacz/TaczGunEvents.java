@@ -1,8 +1,10 @@
 package com.cxxcxx.zinecraft.integration.tacz;
 
+import com.cxxcxx.zinecraft.api.combat.CombatService;
 import com.cxxcxx.zinecraft.api.weapon.backend.WeaponShotContext;
 import com.cxxcxx.zinecraft.api.weapon.event.WeaponShotEvent;
 import com.cxxcxx.zinecraft.core.Zinecraft;
+import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
 import com.tacz.guns.api.event.common.GunFireEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,6 +21,13 @@ import net.neoforged.neoforge.common.NeoForge;
 @EventBusSubscriber(modid = Zinecraft.MOD_ID)
 public final class TaczGunEvents {
   private TaczGunEvents() {
+  }
+
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void onEntityHurtByGun(EntityHurtByGunEvent.Pre event) {
+    LivingEntity attacker = event.getAttacker();
+    if (attacker == null || attacker.level().isClientSide) return;
+    event.setBaseAmount((float) CombatService.INSTANCE.attack(attacker, event.getBaseAmount()));
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)

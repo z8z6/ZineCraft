@@ -1,11 +1,13 @@
 package com.cxxcxx.zinecraft.core.weapon;
 
+import com.cxxcxx.zinecraft.api.combat.CombatDamageType;
+import com.cxxcxx.zinecraft.api.combat.CombatRequest;
+import com.cxxcxx.zinecraft.api.combat.CombatService;
 import com.cxxcxx.zinecraft.api.skill.SkillCastContext;
 import com.cxxcxx.zinecraft.api.skill.SkillEffect;
 import com.cxxcxx.zinecraft.api.weapon.combat.HitscanService;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +33,9 @@ public final class ModWeaponSkillEffects {
           LivingEntity livingEntity1 = hit.getTarget();
           if (livingEntity1 != null) {
             LivingEntity livingEntity = livingEntity1;
-            livingEntity.hurt(context.getPlayer().damageSources().indirectMagic((Entity) context.getPlayer(), (Entity) context.getPlayer()), 8.0F);
+            CombatService.INSTANCE.damage(
+                context.getPlayer(), livingEntity, CombatDamageType.ARTS, 8.0, CombatRequest.DEFAULT
+            );
             return;
           }
         }
@@ -45,7 +49,7 @@ public final class ModWeaponSkillEffects {
 
       @Override
       public void cast(SkillCastContext context) {
-        context.getPlayer().heal(6.0F);
+        CombatService.INSTANCE.heal(context.getPlayer(), context.getPlayer(), 6.0, 1.0, 0.0);
       }
     });
   }
@@ -63,4 +67,3 @@ public final class ModWeaponSkillEffects {
     return MENDING_LIGHT;
   }
 }
-

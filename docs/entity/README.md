@@ -46,3 +46,5 @@ renderer 和 model layer 放在 `src/client/java`，通过 NeoForge 客户端事
 
 默认持有物和枪械由服务端生成逻辑设置且掉落率为零。以后增加射击 AI 时必须调用服务端 Weapon Runtime，不能复用玩家 C2S
 输入或由客户端动画结算伤害。
+
+十九国居民的 PRTS 资料映射、像素贴图和逐文件来源记录见 [NATION_RESIDENT_TEXTURES.md](NATION_RESIDENT_TEXTURES.md)。

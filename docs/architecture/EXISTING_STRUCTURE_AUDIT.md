@@ -1,12 +1,16 @@
 # 现有国家结构审计
 
-状态：`PROTOTYPE_NON_CANONICAL`  
+状态：`LEGACY AUDIT / SUPERSEDED BY ARCHITECTURE PASS`
 审计日期：2026-08-16
 
 ## 结论
 
 仓库已有 19 套聚落、171 个聚落 NBT（每国中心、四条道路、四栋功能建筑）和 38 座唯一地标。但它们是在 Source of Truth、Visual
 Bible 和逐建筑证据表建立前生成的，只能作为注册、Jigsaw 与国家材质接入原型。
+
+上述结论描述的是替换前基线。2026-08-16 后续实施已保留公开 ID 并替换全部旧 NBT：聚落为 171 个新版模块，38 座地标为 228 个多模块
+NBT。新版状态为 `ARCHITECTURE_PASS / IN-GAME REVIEW REQUIRED`，不再是本节审计的统一盒体或单模板地标，但仍不能标为 Canonical
+Final。
 
 ## 关键问题
 
@@ -77,6 +81,15 @@ Bible 和逐建筑证据表建立前生成的，只能作为注册、Jigsaw 与�
 - 新 Blockout 使用独立目录，不覆盖自然生成模板。
 - Pilot 资产通过评审后，用旧 ID 指向新模块化结构；必要时保留旧技术别名。
 - 其余国家按路线图分批替换，不做一次性机械放大。
+
+## 重设计合同
+
+十九国现有 76 栋功能建筑与 38 座地标均已建立逐项重设计合同，入口见 `docs/architecture/ALL_NATIONS_REDESIGN.md`。合同明确旧
+ID 的保留、改名、替换或冻结策略，并给出目标尺度、轮廓、模块、房间、机械与战利品需求。
+
+用户批准后已按这些合同实施兼容替换。公开结构 ID、聚落路径和 `/locate` 键保持不变；未批准的仍是 Canonical/Final
+状态，而不是资源接入本身。实现见 `NATION_SETTLEMENT_IMPLEMENTATION.md`、`NATION_LANDMARK_IMPLEMENTATION.md` 与
+`NATION_STRUCTURE_LOOT.md`。
 
 ## 关键实现
 

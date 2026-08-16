@@ -3,13 +3,10 @@ package com.cxxcxx.zinecraft.core.item;
 import com.cxxcxx.zinecraft.api.accessory.CollectibleEntry;
 import com.cxxcxx.zinecraft.api.accessory.CollectiblePower;
 import com.cxxcxx.zinecraft.api.accessory.CollectibleSpec;
+import com.cxxcxx.zinecraft.api.combat.CombatStat;
+import com.cxxcxx.zinecraft.api.combat.CombatStatModifier;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.google.gson.Gson;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.core.Holder;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Rarity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,126 +34,64 @@ public final class ModCollectibles {
     Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.collectible.original_effect", "原效果：%s", "Original effect: %s");
     Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.collectible.minecraft_effect", "装备效果：%s", "Equipped effect: %s");
     Zinecraft.INSTANCE.getTRANSLATIONS().add("curios.identifier.relic", "藏品", "Collectible");
-    Pair[] _this_map_iv = new Pair[18];
-    ModCollectibles modCollectibles = INSTANCE;
-    Holder holder = Attributes.ARMOR;
-    _this_map_iv[0] = Pair.of("rogue_1_relic_a11", attributeWithDefaults(modCollectibles, "盔甲值+3", "+3 Armor", holder, 3.0, null, 16, null));
-    modCollectibles = INSTANCE;
-    holder = Attributes.ARMOR;
-    _this_map_iv[1] = Pair.of("rogue_1_relic_a12", attributeWithDefaults(modCollectibles, "盔甲值+5", "+5 Armor", holder, 5.0, null, 16, null));
-    modCollectibles = INSTANCE;
-    holder = Attributes.ARMOR;
-    _this_map_iv[2] = Pair.of("rogue_1_relic_a13", attributeWithDefaults(modCollectibles, "盔甲值+7", "+7 Armor", holder, 7.0, null, 16, null));
-    modCollectibles = INSTANCE;
-    holder = Attributes.ATTACK_DAMAGE;
-    _this_map_iv[3] = Pair.of(
-        "rogue_1_relic_a14",
-        modCollectibles.attribute("装备者近战攻击伤害+15%", "The wearer gains +15% melee attack damage", holder, 0.15, Operation.ADD_MULTIPLIED_TOTAL)
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.tabs.curios", "饰品", "Accessories");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.tabs.attribute", "能力", "Abilities");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.values", "明日方舟战斗数值", "Arknights Combat Values");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.formulas", "核心公式", "Core Formulas");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.max_health", "生命：%s", "HP: %s");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.attack", "攻击：%s（基础 %s）", "ATK: %s (base %s)");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.defense", "防御：%s", "DEF: %s");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.resistance", "法抗：%s", "RES: %s");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.attack_speed", "攻击速度：%s", "ASPD: %s");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.interval", "攻击间隔倍率：×%s", "Attack interval: ×%s");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.zinecraft.ability.collectibles", "已装备饰品：%s", "Equipped accessories: %s");
+    Zinecraft.INSTANCE.getTRANSLATIONS().add(
+        "menu.zinecraft.ability.formula.attribute", "属性=(基础+藏品固定)×(1+藏品百分比)，再依次应用直接与最终修正", "Stat=(base+collectible flat)×(1+collectible bonus), then direct and final modifiers"
     );
-    modCollectibles = INSTANCE;
-    holder = Attributes.ATTACK_DAMAGE;
-    _this_map_iv[4] = Pair.of(
-        "rogue_1_relic_a15",
-        modCollectibles.attribute("装备者近战攻击伤害+25%", "The wearer gains +25% melee attack damage", holder, 0.25, Operation.ADD_MULTIPLIED_TOTAL)
+    Zinecraft.INSTANCE.getTRANSLATIONS().add(
+        "menu.zinecraft.ability.formula.physical", "物理=max(攻击×5%，攻击-有效防御)", "Physical=max(ATK×5%, ATK-effective DEF)"
     );
-    modCollectibles = INSTANCE;
-    holder = Attributes.ATTACK_DAMAGE;
-    _this_map_iv[5] = Pair.of(
-        "rogue_1_relic_a16",
-        modCollectibles.attribute("装备者近战攻击伤害+35%", "The wearer gains +35% melee attack damage", holder, 0.35, Operation.ADD_MULTIPLIED_TOTAL)
+    Zinecraft.INSTANCE.getTRANSLATIONS().add(
+        "menu.zinecraft.ability.formula.arts", "法术=max(攻击×5%，攻击×(100-有效法抗)%)", "Arts=max(ATK×5%, ATK×(100-effective RES)%)"
     );
-    modCollectibles = INSTANCE;
-    holder = Attributes.MAX_HEALTH;
-    _this_map_iv[6] = Pair.of(
-        "rogue_1_relic_a20", modCollectibles.attribute("最大生命值+20%", "+20% maximum health", holder, 0.2, Operation.ADD_MULTIPLIED_BASE)
+    Zinecraft.INSTANCE.getTRANSLATIONS().add(
+        "menu.zinecraft.ability.formula.speed", "间隔=理论间隔÷(clamp(攻速,20,600)÷100)", "Interval=base interval÷(clamp(ASPD,20,600)÷100)"
     );
-    modCollectibles = INSTANCE;
-    holder = Attributes.MAX_HEALTH;
-    _this_map_iv[7] = Pair.of(
-        "rogue_1_relic_a21", modCollectibles.attribute("最大生命值+35%", "+35% maximum health", holder, 0.35, Operation.ADD_MULTIPLIED_BASE)
+    powerOverrides = Map.ofEntries(
+        Map.entry("rogue_1_relic_a11", INSTANCE.statPercent("防御力+15%", "+15% DEF", CombatStat.DEFENSE, 0.15)),
+        Map.entry("rogue_1_relic_a12", INSTANCE.statPercent("防御力+25%", "+25% DEF", CombatStat.DEFENSE, 0.25)),
+        Map.entry("rogue_1_relic_a13", INSTANCE.statPercent("防御力+35%", "+35% DEF", CombatStat.DEFENSE, 0.35)),
+        Map.entry("rogue_1_relic_a14", INSTANCE.statPercent("攻击力+15%", "+15% ATK", CombatStat.ATTACK, 0.15)),
+        Map.entry("rogue_1_relic_a15", INSTANCE.statPercent("攻击力+25%", "+25% ATK", CombatStat.ATTACK, 0.25)),
+        Map.entry("rogue_1_relic_a16", INSTANCE.statPercent("攻击力+35%", "+35% ATK", CombatStat.ATTACK, 0.35)),
+        Map.entry("rogue_1_relic_a20", INSTANCE.statPercent("最大生命值+20%", "+20% maximum HP", CombatStat.MAX_HEALTH, 0.20)),
+        Map.entry("rogue_1_relic_a21", INSTANCE.statPercent("最大生命值+35%", "+35% maximum HP", CombatStat.MAX_HEALTH, 0.35)),
+        Map.entry("rogue_1_relic_a22", INSTANCE.statPercent("最大生命值+50%", "+50% maximum HP", CombatStat.MAX_HEALTH, 0.50)),
+        Map.entry(
+            "rogue_1_relic_a31",
+            new PowerOverride("每秒回复1%的最大生命值", "Recover 1% of maximum HP every second", new CollectiblePower.Regeneration(0.01F, 20))
+        ),
+        Map.entry("rogue_1_relic_p05", INSTANCE.stats(
+            "攻击力+50%，防御力+50%", "+50% ATK and +50% DEF",
+            percent(CombatStat.ATTACK, 0.50), percent(CombatStat.DEFENSE, 0.50)
+        )),
+        Map.entry("rogue_1_relic_p07", INSTANCE.statPercent("攻击力+25%", "+25% ATK", CombatStat.ATTACK, 0.25)),
+        Map.entry("rogue_1_relic_p10", INSTANCE.stats(
+            "防御力-40%，攻击力+40%，攻击速度+30", "-40% DEF, +40% ATK and +30 ASPD",
+            percent(CombatStat.DEFENSE, -0.40), percent(CombatStat.ATTACK, 0.40), flat(CombatStat.ATTACK_SPEED, 30.0)
+        )),
+        Map.entry("rogue_1_relic_p12", INSTANCE.statPercent("攻击力+60%", "+60% ATK", CombatStat.ATTACK, 0.60)),
+        Map.entry("rogue_1_relic_p13", INSTANCE.stats(
+            "防御力+25%，最大生命值+50%", "+25% DEF and +50% maximum HP",
+            percent(CombatStat.DEFENSE, 0.25), percent(CombatStat.MAX_HEALTH, 0.50)
+        )),
+        Map.entry("rogue_1_relic_p20", INSTANCE.statFlat("攻击速度+70", "+70 ASPD", CombatStat.ATTACK_SPEED, 70.0)),
+        Map.entry("rogue_1_relic_p23", INSTANCE.statFlat("攻击速度+40", "+40 ASPD", CombatStat.ATTACK_SPEED, 40.0)),
+        Map.entry("rogue_1_relic_p38", INSTANCE.stats(
+            "攻击力+40%，防御力+40%", "+40% ATK and +40% DEF",
+            percent(CombatStat.ATTACK, 0.40), percent(CombatStat.DEFENSE, 0.40)
+        ))
     );
-    modCollectibles = INSTANCE;
-    holder = Attributes.MAX_HEALTH;
-    _this_map_iv[8] = Pair.of(
-        "rogue_1_relic_a22", modCollectibles.attribute("最大生命值+50%", "+50% maximum health", holder, 0.5, Operation.ADD_MULTIPLIED_BASE)
-    );
-    _this_map_iv[9] = Pair.of(
-        "rogue_1_relic_a31",
-        new ModCollectibles.PowerOverride("每秒回复1%的最大生命值", "Recover 1% of maximum health every second", new CollectiblePower.Regeneration(0.01F, 20))
-    );
-    modCollectibles = INSTANCE;
-    CollectiblePower.AttributeBoost[] _i_f_map = new CollectiblePower.AttributeBoost[2];
-    ModCollectibles modCollectibles1 = INSTANCE;
-    Holder holder1 = Attributes.ATTACK_DAMAGE;
-    _i_f_map[0] = modCollectibles1.boost(holder1, 0.5, Operation.ADD_MULTIPLIED_TOTAL);
-    modCollectibles1 = INSTANCE;
-    holder1 = Attributes.ARMOR;
-    _i_f_map[1] = boostWithDefaults(modCollectibles1, holder1, 10.0, null, 4, null);
-    _this_map_iv[10] = Pair.of(
-        "rogue_1_relic_p05", modCollectibles.attributes("装备者近战攻击伤害+50%，盔甲值+10", "The wearer gains +50% melee attack damage and +10 Armor", _i_f_map)
-    );
-    modCollectibles = INSTANCE;
-    holder = Attributes.ATTACK_DAMAGE;
-    _this_map_iv[11] = Pair.of(
-        "rogue_1_relic_p07",
-        modCollectibles.attribute("装备者近战攻击伤害+25%", "The wearer gains +25% melee attack damage", holder, 0.25, Operation.ADD_MULTIPLIED_TOTAL)
-    );
-    modCollectibles = INSTANCE;
-    _i_f_map = new CollectiblePower.AttributeBoost[3];
-    modCollectibles1 = INSTANCE;
-    holder1 = Attributes.ARMOR;
-    _i_f_map[0] = boostWithDefaults(modCollectibles1, holder1, -8.0, null, 4, null);
-    modCollectibles1 = INSTANCE;
-    holder1 = Attributes.ATTACK_DAMAGE;
-    _i_f_map[1] = modCollectibles1.boost(holder1, 0.4, Operation.ADD_MULTIPLIED_TOTAL);
-    modCollectibles1 = INSTANCE;
-    holder1 = Attributes.ATTACK_SPEED;
-    _i_f_map[2] = modCollectibles1.boost(holder1, 0.3, Operation.ADD_MULTIPLIED_TOTAL);
-    _this_map_iv[12] = Pair.of(
-        "rogue_1_relic_p10",
-        modCollectibles.attributes(
-            "装备者盔甲值-8，近战攻击伤害+40%，攻击速度+30%", "The wearer loses 8 Armor but gains +40% melee attack damage and +30% attack speed", _i_f_map
-        )
-    );
-    modCollectibles = INSTANCE;
-    holder = Attributes.ATTACK_DAMAGE;
-    _this_map_iv[13] = Pair.of(
-        "rogue_1_relic_p12",
-        modCollectibles.attribute("装备者近战攻击伤害+60%", "The wearer gains +60% melee attack damage", holder, 0.6, Operation.ADD_MULTIPLIED_TOTAL)
-    );
-    modCollectibles = INSTANCE;
-    _i_f_map = new CollectiblePower.AttributeBoost[2];
-    modCollectibles1 = INSTANCE;
-    holder1 = Attributes.ARMOR;
-    _i_f_map[0] = boostWithDefaults(modCollectibles1, holder1, 5.0, null, 4, null);
-    modCollectibles1 = INSTANCE;
-    holder1 = Attributes.MAX_HEALTH;
-    _i_f_map[1] = modCollectibles1.boost(holder1, 0.5, Operation.ADD_MULTIPLIED_BASE);
-    _this_map_iv[14] = Pair.of(
-        "rogue_1_relic_p13", modCollectibles.attributes("装备者盔甲值+5，最大生命值+50%", "The wearer gains +5 Armor and +50% maximum health", _i_f_map)
-    );
-    modCollectibles = INSTANCE;
-    holder = Attributes.ATTACK_SPEED;
-    _this_map_iv[15] = Pair.of(
-        "rogue_1_relic_p20", modCollectibles.attribute("装备者攻击速度+70%", "The wearer gains +70% attack speed", holder, 0.7, Operation.ADD_MULTIPLIED_TOTAL)
-    );
-    modCollectibles = INSTANCE;
-    holder = Attributes.ATTACK_SPEED;
-    _this_map_iv[16] = Pair.of(
-        "rogue_1_relic_p23", modCollectibles.attribute("装备者攻击速度+40%", "The wearer gains +40% attack speed", holder, 0.4, Operation.ADD_MULTIPLIED_TOTAL)
-    );
-    modCollectibles = INSTANCE;
-    _i_f_map = new CollectiblePower.AttributeBoost[2];
-    modCollectibles1 = INSTANCE;
-    holder1 = Attributes.ATTACK_DAMAGE;
-    _i_f_map[0] = modCollectibles1.boost(holder1, 0.4, Operation.ADD_MULTIPLIED_TOTAL);
-    modCollectibles1 = INSTANCE;
-    holder1 = Attributes.ARMOR;
-    _i_f_map[1] = boostWithDefaults(modCollectibles1, holder1, 8.0, null, 4, null);
-    _this_map_iv[17] = Pair.of(
-        "rogue_1_relic_p38", modCollectibles.attributes("装备者近战攻击伤害+40%，盔甲值+8", "The wearer gains +40% melee attack damage and +8 Armor", _i_f_map)
-    );
-    powerOverrides = com.cxxcxx.zinecraft.api.util.CollectionSupport.mapOf(_this_map_iv);
     Iterable iterable1 = INSTANCE.loadCatalog();
     int k = 0;
     Iterable _this_mapTo_iv_iv = iterable1;
@@ -169,11 +104,8 @@ public final class ModCollectibles {
       int j = 0;
       ModCollectibles.PowerOverride powerOverride1 = powerOverrides.get(imported.getSourceId());
       if (powerOverride1 == null) {
-        powerOverride1 = new ModCollectibles.PowerOverride(
-            "仅保留原效果与藏品资料，暂未映射为 Minecraft 玩法",
-            "Original effect and archive text preserved; no Minecraft adaptation yet",
-            CollectiblePower.ArchiveOnly.INSTANCE
-        );
+        var adaptation = CollectiblePowerAdapter.adapt(imported.getOriginalEffectZhCn());
+        powerOverride1 = new ModCollectibles.PowerOverride(adaptation.zhCn(), adaptation.enUs(), adaptation.power());
       }
 
       ModCollectibles.PowerOverride powerOverride = powerOverride1;
@@ -205,24 +137,6 @@ public final class ModCollectibles {
   }
 
   private ModCollectibles() {
-  }
-
-  static CollectiblePower.AttributeBoost boostWithDefaults(ModCollectibles var0, Holder var1, double var2, Operation var4, int var5, Object var6) {
-    if ((var5 & 4) != 0) {
-      var4 = Operation.ADD_VALUE;
-    }
-
-    return var0.boost(var1, var2, var4);
-  }
-
-  static ModCollectibles.PowerOverride attributeWithDefaults(
-      ModCollectibles var0, String var1, String var2, Holder var3, double var4, Operation var6, int var7, Object var8
-  ) {
-    if ((var7 & 16) != 0) {
-      var6 = Operation.ADD_VALUE;
-    }
-
-    return var0.attribute(var1, var2, var3, var4, var6);
   }
 
   @NotNull
@@ -517,18 +431,24 @@ public final class ModCollectibles {
     }
   }
 
-  private final CollectiblePower.AttributeBoost boost(Holder<Attribute> attribute, double amount, Operation operation) {
-    return new CollectiblePower.AttributeBoost(attribute, amount, operation);
+  private static CollectiblePower.CombatStatBoost percent(CombatStat stat, double amount) {
+    return new CollectiblePower.CombatStatBoost(CombatStatModifier.collectibleMultiplier(stat, amount));
   }
 
-  private final ModCollectibles.PowerOverride attribute(
-      String minecraftEffectZhCn, String minecraftEffectEnUs, Holder<Attribute> attribute, double amount, Operation operation
-  ) {
-    return new ModCollectibles.PowerOverride(minecraftEffectZhCn, minecraftEffectEnUs, new CollectiblePower.AttributeBoost(attribute, amount, operation));
+  private static CollectiblePower.CombatStatBoost flat(CombatStat stat, double amount) {
+    return new CollectiblePower.CombatStatBoost(CombatStatModifier.collectibleAddition(stat, amount));
   }
 
-  private final ModCollectibles.PowerOverride attributes(String minecraftEffectZhCn, String minecraftEffectEnUs, CollectiblePower.AttributeBoost... boosts) {
-    return new ModCollectibles.PowerOverride(minecraftEffectZhCn, minecraftEffectEnUs, new CollectiblePower.AttributeSet(java.util.List.of(boosts)));
+  private PowerOverride statPercent(String zhCn, String enUs, CombatStat stat, double amount) {
+    return new PowerOverride(zhCn, enUs, percent(stat, amount));
+  }
+
+  private PowerOverride statFlat(String zhCn, String enUs, CombatStat stat, double amount) {
+    return new PowerOverride(zhCn, enUs, flat(stat, amount));
+  }
+
+  private PowerOverride stats(String zhCn, String enUs, CollectiblePower.CombatStatBoost... boosts) {
+    return new PowerOverride(zhCn, enUs, new CollectiblePower.CombatStatSet(List.of(boosts)));
   }
 
   private static final class ImportedCollectible {

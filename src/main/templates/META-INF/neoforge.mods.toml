@@ -66,6 +66,13 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.${ mod_id }]]
+modId = "l2library"
+type = "required"
+versionRange = "[3.0.8,3.1.0)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
 modId = "tooltipoverhaul"
 type = "required"
 versionRange = "[${tooltip_overhaul_version},)"

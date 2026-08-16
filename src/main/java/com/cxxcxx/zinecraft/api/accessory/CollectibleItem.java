@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,7 +18,7 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import java.util.List;
 
 /**
- * 仅能装备到 Curios `relic` 槽的集成战略藏品。
+ * 装备在任意 Curios 饰品槽时生效的集成战略藏品。
  */
 public final class CollectibleItem extends Item implements ICurioItem {
   private final CollectibleSpec spec;
@@ -47,19 +48,22 @@ public final class CollectibleItem extends Item implements ICurioItem {
 
   @Override
   public void curioTick(SlotContext slotContext, ItemStack stack) {
-    if (!(spec.getPower() instanceof CollectiblePower.Regeneration regeneration)) {
-      return;
-    }
     var entity = slotContext.entity();
-    if (entity.level().isClientSide || entity.tickCount % regeneration.getIntervalTicks() != 0 || entity.getHealth() >= entity.getMaxHealth()) {
+    if (entity.level().isClientSide || entity.getHealth() >= entity.getMaxHealth()) {
       return;
     }
-    entity.heal(entity.getMaxHealth() * regeneration.getMaxHealthFraction());
+    if (spec.getPower() instanceof CollectiblePower.Regeneration regeneration
+        && entity.tickCount % regeneration.getIntervalTicks() == 0) {
+      entity.heal(entity.getMaxHealth() * regeneration.getMaxHealthFraction());
+    } else if (spec.getPower() instanceof CollectiblePower.FlatRegeneration regeneration
+        && entity.tickCount % regeneration.intervalTicks() == 0) {
+      entity.heal(regeneration.health());
+    }
   }
 
   @Override
   public boolean canEquip(SlotContext slotContext, ItemStack stack) {
-    return "relic".equals(slotContext.identifier());
+    return true;
   }
 
   @Override
@@ -81,6 +85,31 @@ public final class CollectibleItem extends Item implements ICurioItem {
       var boost = boosts.get(index);
       var modifierId = ResourceLocation.fromNamespaceAndPath(namespace, "collectible/" + spec.getPath() + "/" + index);
       modifiers.put(boost.getAttribute(), new AttributeModifier(modifierId, boost.getAmount(), boost.getOperation()));
+    }
+    List<CollectiblePower.CombatStatBoost> combatBoosts;
+    if (spec.getPower() instanceof CollectiblePower.CombatStatBoost boost) {
+      combatBoosts = List.of(boost);
+    } else if (spec.getPower() instanceof CollectiblePower.CombatStatSet set) {
+      combatBoosts = set.boosts();
+    } else {
+      combatBoosts = List.of();
+    }
+    for (int index = 0; index < combatBoosts.size(); index++) {
+      var modifier = combatBoosts.get(index).modifier();
+      Holder<Attribute> attribute = switch (modifier.stat()) {
+        case MAX_HEALTH -> Attributes.MAX_HEALTH;
+        case DEFENSE -> Attributes.ARMOR;
+        case RESISTANCE -> Attributes.ARMOR_TOUGHNESS;
+        case ATTACK, ATTACK_SPEED -> null;
+      };
+      if (attribute == null) continue;
+      AttributeModifier.Operation operation = switch (modifier.phase()) {
+        case COLLECTIBLE_ADDITION -> AttributeModifier.Operation.ADD_VALUE;
+        case COLLECTIBLE_MULTIPLIER -> AttributeModifier.Operation.ADD_MULTIPLIED_BASE;
+        default -> throw new IllegalStateException("Unsupported collectible modifier phase: " + modifier.phase());
+      };
+      var modifierId = ResourceLocation.fromNamespaceAndPath(namespace, "collectible/combat/" + spec.getPath() + "/" + index);
+      modifiers.put(attribute, new AttributeModifier(modifierId, modifier.amount(), operation));
     }
     return modifiers;
   }

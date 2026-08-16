@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.api.weapon.action.staff;
 
+import com.cxxcxx.zinecraft.api.combat.CombatService;
 import com.cxxcxx.zinecraft.api.skill.SkillCastContext;
 import com.cxxcxx.zinecraft.api.skill.SkillService;
 import com.cxxcxx.zinecraft.api.weapon.action.*;
@@ -46,12 +47,12 @@ public final class CastSkillAction implements WeaponAction {
   @NotNull
   @Override
   public WeaponActionRuntime createRuntime(@NotNull final WeaponContext context) {
-    TickRange intRange = new TickRange(this.castTick, this.castTick);
-    int i = this.durationTicks;
-    return new TimedWeaponActionRuntime(intRange, i) {
+    var timing = CombatService.INSTANCE.actionTiming(context.getPlayer(), this.castTick, this.durationTicks);
+    TickRange intRange = new TickRange(timing.effectTick(), timing.effectTick());
+    return new TimedWeaponActionRuntime(intRange, timing.durationTicks()) {
       @Override
       protected void onTick(int tick) {
-        if (tick == CastSkillAction.this.castTick) {
+        if (tick == timing.effectTick()) {
           CastSkillAction.this.skillService.cast(CastSkillAction.this.skillId, CastSkillAction.this.toSkillContext(context));
         }
       }
@@ -62,4 +63,3 @@ public final class CastSkillAction implements WeaponAction {
     return new SkillCastContext(_this_toSkillContext.getPlayer(), _this_toSkillContext.getStack(), _this_toSkillContext.getHand());
   }
 }
-

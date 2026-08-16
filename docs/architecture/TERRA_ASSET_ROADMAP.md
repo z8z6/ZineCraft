@@ -43,6 +43,21 @@ Architecture；分数接近时优先能形成完整“地标—街区—道路�
 
 ## 阶段路线
 
+### Phase 0.5 — 十九国重设计合同（已完成）
+
+- 为十九国分别建立 `docs/architecture/countries/<country>/REDESIGN.md`。
+- 共覆盖现有 76 栋聚落功能建筑与 38 座地标；每项明确保留、改名、替换或冻结。
+- 每国至少拆分两套不可混用的城市/聚落语境，并定义尺度、轮廓、模块、房间、Create 机械链和战利品类别。
+- 该阶段本身只完成设计合同，不代表逐国 `SOURCE_OF_TRUTH`、`VISUAL_BIBLE` 或 Fidelity Review 已通过。
+- 总索引与共用约束见 `docs/architecture/ALL_NATIONS_REDESIGN.md`。
+
+### Phase 0.6 — 兼容结构替换（已完成，待实机评审）
+
+- 保留 19 套聚落、76 个功能建筑和 38 个地标的公开 ID。
+- 聚落替换为 171 个有室内、动线、照明、家具、机械和国家战利品的 NBT。
+- 地标替换为 38×6=228 个 `foundation/core/facade/roof/annex/surrounding` 模块，并改用确定性 Jigsaw 池。
+- 资源状态为 `ARCHITECTURE_PASS / IN-GAME REVIEW REQUIRED`；实机评审前不得升级为 `FINAL`。
+
 ### Phase 0 — 全局基线（本轮）
 
 - 完成 19 国资料总表、旧结构审计、Pipeline 和 Roadmap。
