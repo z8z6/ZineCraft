@@ -33,6 +33,8 @@ public final class ModWeapons {
   private static final int TEST_RIFLE_CAPACITY = 12;
   private static final int LIGHT_ATTACK_DURATION = 20;
   @NotNull
+  private static final ModelTemplate VANILLA_IRON_SWORD_MODEL = INSTANCE.vanillaModel("iron_sword");
+  @NotNull
   public static final ItemEntry<SwordItem> TEST_SWORD_ITEM = ItemCatalog.registerWithDefaults(
       Zinecraft.ITEMS, "test_sword", "测试剑", "Test Sword", VANILLA_IRON_SWORD_MODEL, false, ModWeapons::TEST_SWORD_ITEMHelper0, 16, null
   );
@@ -94,8 +96,7 @@ public final class ModWeapons {
   public static final FirearmReloadAction RELOAD = new FirearmReloadAction(RELOAD_ID, 24, 32, 12, TEST_CARTRIDGE);
   @NotNull
   private static final ResourceLocation TOGGLE_AIM_ID = Zinecraft.REGISTRAR.id("test_rifle_toggle_aim");
-  @NotNull
-  private static final ModelTemplate VANILLA_IRON_SWORD_MODEL = INSTANCE.vanillaModel("iron_sword");
+
   @NotNull
   public static final ToggleAimAction TOGGLE_AIM = new ToggleAimAction(TOGGLE_AIM_ID, 6);
   @NotNull

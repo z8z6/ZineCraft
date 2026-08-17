@@ -12,7 +12,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.CountPlacement;
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -40,6 +43,15 @@ public final class ModWorldFeatures {
           NationBiomes.IBERIA_SALT_DELTA, NationBiomes.TERRA_CATASTROPHE_ZONE
       )
   );
+  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_SMALL_FEATURE = Zinecraft.REGISTRAR.register(
+      BuiltInRegistries.FEATURE, "originium_spire_small", new OriginiumSpireFeature(2, 4, 4, 8, 1, 4)
+  );
+  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_MEDIUM_FEATURE = Zinecraft.REGISTRAR.register(
+      BuiltInRegistries.FEATURE, "originium_spire_medium", new OriginiumSpireFeature(4, 7, 8, 15, 2, 7)
+  );
+  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_LARGE_FEATURE = Zinecraft.REGISTRAR.register(
+      BuiltInRegistries.FEATURE, "originium_spire_large", new OriginiumSpireFeature(7, 11, 14, 28, 3, 12)
+  );
   public static final OreEntry ORIGINITE_ORE = ore("originite_ore", MaterialOres.ORIGINITE_ORE::getBlock, 3, 2, -32, .25f);
   public static final OreEntry ORIROCK_ORE = ore("orirock_ore", MaterialOres.ORIROCK_ORE::getBlock, 10, 12, 64, 0);
   public static final OreEntry ORIRON_ORE = ore("oriron_ore", MaterialOres.ORIRON_ORE::getBlock, 7, 8, 32, 0);
@@ -66,15 +78,7 @@ public final class ModWorldFeatures {
   private static final LateranoDryLandFeature LATERANO_DRY_LAND_FEATURE = Zinecraft.REGISTRAR.register(
       BuiltInRegistries.FEATURE, "laterano_dry_land", new LateranoDryLandFeature()
   );
-  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_SMALL_FEATURE = Zinecraft.REGISTRAR.register(
-      BuiltInRegistries.FEATURE, "originium_spire_small", new OriginiumSpireFeature(2, 4, 4, 8, 1, 4)
-  );
-  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_MEDIUM_FEATURE = Zinecraft.REGISTRAR.register(
-      BuiltInRegistries.FEATURE, "originium_spire_medium", new OriginiumSpireFeature(4, 7, 8, 15, 2, 7)
-  );
-  private static final OriginiumSpireFeature ORIGINIUM_SPIRE_LARGE_FEATURE = Zinecraft.REGISTRAR.register(
-      BuiltInRegistries.FEATURE, "originium_spire_large", new OriginiumSpireFeature(7, 11, 14, 28, 3, 12)
-  );
+
   private static final SimpleFeatureEntry LATERANO_DRY_LAND = Zinecraft.WORLDGEN.getFeatures().simple(
       "laterano_dry_land", LATERANO_DRY_LAND_FEATURE,
       List.of(CountPlacement.of(1), InSquarePlacement.spread(), BiomeFilter.biome()),
