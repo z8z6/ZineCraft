@@ -31,10 +31,10 @@ public final class WeaponRegistry {
   }
 
   public synchronized void replaceDynamic(ResourceLocation source, Collection<WeaponDefinition> replacements) {
+    Set<ResourceLocation> existingForSource = dynamicDefinitionIds.getOrDefault(source, Set.of());
     for (var definition : replacements) {
       validateActions(definition);
-      boolean ownedByDynamicSource = dynamicDefinitionIds.values().stream().anyMatch(ids -> ids.contains(definition.getId()));
-      if (definitions.containsKey(definition.getId()) && !ownedByDynamicSource)
+      if (definitions.containsKey(definition.getId()) && !existingForSource.contains(definition.getId()))
         throw new IllegalArgumentException("动态武器 ID 与静态武器冲突：" + definition.getId());
     }
     var old = dynamicDefinitionIds.remove(source);
