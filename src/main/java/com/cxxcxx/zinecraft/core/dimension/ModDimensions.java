@@ -55,7 +55,7 @@ public final class ModDimensions {
   private static final ChunkGenerator TERRAHelper1(DimensionBootstrapContext context) {
     Reference reference = context.getBiomes().getOrThrow(NationBiomes.LATERANO_HOLY_FIELDS);
     ParameterList parameterList = context.getBiomeParameters();
-    return (ChunkGenerator) (new NoiseBasedChunkGenerator(new TerraBiomeSource(parameterList, (Holder<Biome>) reference, 1024), context.getNoiseSettings()));
+    return (ChunkGenerator) (new NoiseBasedChunkGenerator(new TerraBiomeSource(parameterList, (Holder<Biome>) reference, LATERANO_CENTER_RADIUS), context.getNoiseSettings()));
   }
 
 }
