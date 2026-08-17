@@ -5,41 +5,38 @@
 ## Java 示例
 
 ```java
-public static final ItemEntry<Item> ORIROCK = Zinecraft.ITEMS.register(
-    "orirock",
-    "源岩",
-    "Orirock",
-    ModelTemplates.FLAT_ITEM,
-    new Item.Properties(),
-    true
-);
+public final DeferredItem<Item> orirock = Zinecraft.ITEMS
+    .builder("orirock", "源岩")
+    .enUs("Orirock")
+    .build();
 ```
 
 自定义物品通过 factory 保留具体类型：
 
 ```java
-public static final ItemEntry<ScannerItem> SCANNER = Zinecraft.ITEMS.register(
-    "scanner", "扫描器", "Scanner",
-    ModelTemplates.FLAT_ITEM, true,
-    () -> new ScannerItem(new Item.Properties().stacksTo(1))
-);
+public final DeferredItem<ScannerItem> scanner = Zinecraft.ITEMS
+    .builder("scanner", "扫描器",
+        () -> new ScannerItem(new Item.Properties().stacksTo(1)))
+    .enUs("Scanner")
+    .build();
 ```
 
-返回值是 `ItemEntry<T>`；通过 `getItem()` 取得物品。`ItemEntry` 实现 `ItemLike`，原版接受 `ItemLike` 的 API 可直接使用条目。
+`build()` 返回 NeoForge 原生 `DeferredItem<T>`。模型、创造栏、燃料与堆肥等数据保存在 `ItemBuilder` 中，不再使用额外的 entry
+包装。`DeferredItem` 可直接作为 `ItemLike` 传递；只在注册完成后需要具体物品方法时调用 `.get()`。
 
 ```java
-ItemStack stack = new ItemStack(SCANNER.getItem());
+ItemStack stack = new ItemStack(scanner);
 ```
 
 可组合元数据：
 
 - `fuel(ticks)`：燃烧时间，20 tick 为 1 秒。
 - `compost(chance)`：堆肥成功概率，必须位于 0—1。
-- `includeInCreative=false`：不进入目录自动收集的创造模式页。
+- `hideCreativeTab()`：不进入目录自动收集的创造模式页。
 
 ## 合成材料稀有度
 
-泰拉合成材料的物品稀有度由 `CraftingMaterialRarities` 根据加工站配方层级统一声明：
+泰拉合成材料在 `ModItem` 的注册声明中显式传入 `Rarity`，不再根据物品 ID 隐式推导：
 
 - 1 级基础材料：`COMMON`。
 - 2 级初级加工材料：`UNCOMMON`。
@@ -66,5 +63,7 @@ src/main/resources/assets/zinecraft/textures/item/<path>.png
 
 ## 国家食物与藏品
 
+- 藏品通过 `Zinecraft.COLLECTIBLES.builder(path, orderId, zhCn)` 链式声明名称、原效果、描述、Minecraft 效果和稀有度；
+  `build()` 直接返回 `DeferredItem<CollectibleItem>`。
 - 十九国食物的资料、参数和配方见 [NATION_FOODS.md](NATION_FOODS.md)。
 - PRTS 藏品导入、效果与权利记录见 [PRTS_COLLECTIBLES.md](PRTS_COLLECTIBLES.md)。

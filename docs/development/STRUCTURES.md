@@ -20,7 +20,7 @@
 公开 ID 在：
 
 ```text
-src/main/java/com/cxxcxx/zinecraft/core/structure/NationSettlements.java
+src/main/java/com/cxxcxx/zinecraft/core/structure/ModSettlement.java
 ```
 
 例如搜索：
@@ -51,7 +51,7 @@ street_end.nbt
 公开 ID 在：
 
 ```text
-src/main/java/com/cxxcxx/zinecraft/core/structure/NationLandmarks.java
+src/main/java/com/cxxcxx/zinecraft/core/structure/ModLandmark.java
 ```
 
 例如：

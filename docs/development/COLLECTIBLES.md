@@ -105,7 +105,7 @@ src/main/java/com/cxxcxx/zinecraft/core/item/ModCollectibles.java
 搜索：
 
 ```text
-powerOverrides = Map.ofEntries(
+createPowerOverrides()
 ```
 
 覆盖表使用 `sourceId`，不是 Minecraft `path`。
@@ -115,7 +115,7 @@ powerOverrides = Map.ofEntries(
 ```java
 Map.entry(
     "rogue_1_relic_a14",
-    INSTANCE.statPercent(
+    statPercent(
         "攻击力+15%",
         "+15% ATK",
         CombatStat.ATTACK,
@@ -137,7 +137,7 @@ Map.entry(
 ```java
 Map.entry(
     "rogue_1_relic_example",
-    INSTANCE.statFlat(
+    statFlat(
         "攻击速度+30",
         "+30 ASPD",
         CombatStat.ATTACK_SPEED,
@@ -153,7 +153,7 @@ Map.entry(
 ```java
 Map.entry(
     "rogue_1_relic_example",
-    INSTANCE.stats(
+    stats(
         "攻击力+20%，防御力+10%",
         "+20% ATK and +10% DEF",
         percent(CombatStat.ATTACK, 0.20),

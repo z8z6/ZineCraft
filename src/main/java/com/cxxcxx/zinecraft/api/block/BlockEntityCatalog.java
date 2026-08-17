@@ -5,22 +5,18 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
 public final class BlockEntityCatalog {
-  @NotNull
   private final ModRegistrar registrar;
 
-  public BlockEntityCatalog(@NotNull ModRegistrar registrar) {
+  public BlockEntityCatalog(ModRegistrar registrar) {
     super();
     this.registrar = registrar;
   }
-
-  @NotNull
   public final <T extends BlockEntity> Supplier<BlockEntityType<T>> register(
-      @NotNull String path, @NotNull BlockEntitySupplier<? extends T> factory, @NotNull Supplier<? extends Block>... blocks
+      String path, BlockEntitySupplier<? extends T> factory, Supplier<? extends Block>... blocks
   ) {
     if (blocks.length == 0) {
       int i = 0;

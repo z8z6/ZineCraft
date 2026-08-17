@@ -33,7 +33,7 @@ public final class CollectibleItem extends Item implements ICurioItem {
       String originalEffectLabelTranslationKey,
       String minecraftEffectLabelTranslationKey
   ) {
-    super(new Item.Properties().stacksTo(1).rarity(spec.getRarity()));
+    super(new Item.Properties().stacksTo(1).rarity(spec.rarity()));
     this.spec = spec;
     this.namespace = namespace;
     this.seriesTranslationKey = seriesTranslationKey;
@@ -41,7 +41,7 @@ public final class CollectibleItem extends Item implements ICurioItem {
     this.minecraftEffectLabelTranslationKey = minecraftEffectLabelTranslationKey;
   }
 
-  public CollectibleSpec getSpec() {
+  public CollectibleSpec spec() {
     return spec;
   }
 
@@ -51,10 +51,10 @@ public final class CollectibleItem extends Item implements ICurioItem {
     if (entity.level().isClientSide || entity.getHealth() >= entity.getMaxHealth()) {
       return;
     }
-    if (spec.getPower() instanceof CollectiblePower.Regeneration regeneration
+    if (spec.power() instanceof CollectiblePower.Regeneration regeneration
         && entity.tickCount % regeneration.getIntervalTicks() == 0) {
       entity.heal(entity.getMaxHealth() * regeneration.getMaxHealthFraction());
-    } else if (spec.getPower() instanceof CollectiblePower.FlatRegeneration regeneration
+    } else if (spec.power() instanceof CollectiblePower.FlatRegeneration regeneration
         && entity.tickCount % regeneration.intervalTicks() == 0) {
       entity.heal(regeneration.health());
     }
@@ -73,22 +73,22 @@ public final class CollectibleItem extends Item implements ICurioItem {
   ) {
     var modifiers = ArrayListMultimap.<Holder<Attribute>, AttributeModifier>create();
     List<CollectiblePower.AttributeBoost> boosts;
-    if (spec.getPower() instanceof CollectiblePower.AttributeBoost boost) {
+    if (spec.power() instanceof CollectiblePower.AttributeBoost boost) {
       boosts = List.of(boost);
-    } else if (spec.getPower() instanceof CollectiblePower.AttributeSet set) {
+    } else if (spec.power() instanceof CollectiblePower.AttributeSet set) {
       boosts = set.getBoosts();
     } else {
       boosts = List.of();
     }
     for (int index = 0; index < boosts.size(); index++) {
       var boost = boosts.get(index);
-      var modifierId = ResourceLocation.fromNamespaceAndPath(namespace, "collectible/" + spec.getPath() + "/" + index);
+      var modifierId = ResourceLocation.fromNamespaceAndPath(namespace, "collectible/" + spec.path() + "/" + index);
       modifiers.put(boost.getAttribute(), new AttributeModifier(modifierId, boost.getAmount(), boost.getOperation()));
     }
     List<CollectiblePower.CombatStatBoost> combatBoosts;
-    if (spec.getPower() instanceof CollectiblePower.CombatStatBoost boost) {
+    if (spec.power() instanceof CollectiblePower.CombatStatBoost boost) {
       combatBoosts = List.of(boost);
-    } else if (spec.getPower() instanceof CollectiblePower.CombatStatSet set) {
+    } else if (spec.power() instanceof CollectiblePower.CombatStatSet set) {
       combatBoosts = set.boosts();
     } else {
       combatBoosts = List.of();
@@ -97,7 +97,7 @@ public final class CollectibleItem extends Item implements ICurioItem {
       var modifier = combatBoosts.get(index).modifier();
       Holder<Attribute> attribute = CollectibleVanillaAttributes.attribute(modifier.stat());
       AttributeModifier.Operation operation = CollectibleVanillaAttributes.operation(modifier);
-      var modifierId = ResourceLocation.fromNamespaceAndPath(namespace, "collectible/combat/" + spec.getPath() + "/" + index);
+      var modifierId = ResourceLocation.fromNamespaceAndPath(namespace, "collectible/combat/" + spec.path() + "/" + index);
       modifiers.put(attribute, new AttributeModifier(modifierId, CollectibleVanillaAttributes.amount(modifier), operation));
     }
     return modifiers;
@@ -111,14 +111,14 @@ public final class CollectibleItem extends Item implements ICurioItem {
   @Override
   public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
     super.appendHoverText(stack, context, tooltip, flag);
-    tooltip.add(Component.translatable(seriesTranslationKey, spec.getOrderId()).withStyle(ChatFormatting.DARK_AQUA));
-    for (int index = 0; index < spec.getOriginalEffectLineCount(); index++) {
+    tooltip.add(Component.translatable(seriesTranslationKey, spec.orderId()).withStyle(ChatFormatting.DARK_AQUA));
+    for (int index = 0; index < spec.originalEffectLineCount(); index++) {
       var line = Component.translatable(getDescriptionId() + ".original_effect." + index);
       tooltip.add(index == 0
           ? Component.translatable(originalEffectLabelTranslationKey, line).withStyle(ChatFormatting.GOLD)
           : line.withStyle(ChatFormatting.GOLD));
     }
-    for (int index = 0; index < spec.getDescriptionLineCount(); index++) {
+    for (int index = 0; index < spec.descriptionLineCount(); index++) {
       tooltip.add(Component.translatable(getDescriptionId() + ".description." + index).withStyle(ChatFormatting.GRAY));
     }
     tooltip.add(Component.translatable(

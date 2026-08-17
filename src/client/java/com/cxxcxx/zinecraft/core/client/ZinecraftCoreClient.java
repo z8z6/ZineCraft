@@ -5,7 +5,7 @@ import com.cxxcxx.zinecraft.core.client.entity.LateranoCitizenRenderer;
 import com.cxxcxx.zinecraft.core.client.entity.NationResidentRenderer;
 import com.cxxcxx.zinecraft.core.client.ponder.ZinecraftPonderPlugin;
 import com.cxxcxx.zinecraft.core.client.weapon.WeaponPresentationController;
-import com.cxxcxx.zinecraft.core.entity.ModEntities;
+import com.cxxcxx.zinecraft.core.entity.ModEntity;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,9 +28,9 @@ public final class ZinecraftCoreClient {
 
   @SubscribeEvent
   public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerEntityRenderer(ModEntities.LATERANO_CITIZEN.getType(), LateranoCitizenRenderer::new);
-    for (var type : ModEntities.INSTANCE.getGENERIC_RESIDENT_TYPES()) {
-      event.registerEntityRenderer(type, NationResidentRenderer::new);
+    event.registerEntityRenderer(ModEntity.LATERANO_CITIZEN.get(), LateranoCitizenRenderer::new);
+    for (var resident : ModEntity.GENERIC_RESIDENTS) {
+      event.registerEntityRenderer(resident.get(), NationResidentRenderer::new);
     }
   }
 }

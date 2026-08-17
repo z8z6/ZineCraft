@@ -30,6 +30,8 @@ import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementTy
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
@@ -39,20 +41,15 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-/**
- * 绑定模组命名空间并通过 NeoForge DeferredRegister 提交静态注册内容。
- */
+
 public final class ModRegistrar {
-  private final String namespace;
+  // 模组名称
+  public final String namespace;
   private final Map<ResourceKey<?>, DeferredRegister<?>> deferredRegisters = new LinkedHashMap<>();
   private final List<MobRegistration<?>> mobs = new ArrayList<>();
 
   public ModRegistrar(String namespace) {
     this.namespace = namespace;
-  }
-
-  public static Supplier<? extends Block> blockWithDefaults(ModRegistrar self, String path, Supplier<? extends Block> factory, boolean registerItem, Item.Properties properties, int mask, Object marker) {
-    return self.block(path, factory, (mask & 4) != 0 || registerItem, (mask & 8) != 0 ? new Item.Properties() : properties);
   }
 
   public static Supplier<? extends EntityType<?>> entityWithDefaults(
@@ -64,10 +61,10 @@ public final class ModRegistrar {
       int mask,
       Object marker
   ) {
-    @SuppressWarnings("unchecked")
-    var typedFactory = (EntityType.EntityFactory<Entity>) factory;
-    @SuppressWarnings("unchecked")
-    Consumer<EntityType.Builder<Entity>> typedConfigure;
+
+    @SuppressWarnings("unchecked") var typedFactory = (EntityType.EntityFactory<Entity>) factory;
+
+    @SuppressWarnings("unchecked") Consumer<EntityType.Builder<Entity>> typedConfigure;
     if ((mask & 8) != 0) {
       typedConfigure = builder -> {
       };
@@ -104,10 +101,6 @@ public final class ModRegistrar {
         (mask & 32) != 0 ? null : heightmap,
         (mask & 64) != 0 ? null : typedPredicate,
         typedConfigure);
-  }
-
-  public String getNamespace() {
-    return namespace;
   }
 
   public ResourceLocation id(String path) {
@@ -149,25 +142,30 @@ public final class ModRegistrar {
     return value;
   }
 
+
   @SuppressWarnings("unchecked")
-  public <T extends Item> Supplier<T> item(String path, Supplier<? extends T> factory) {
+  public <T extends Item> DeferredItem<T> item(String path, Supplier<? extends T> factory) {
     var items = (DeferredRegister.Items) deferredRegisters.computeIfAbsent(
         BuiltInRegistries.ITEM.key(), ignored -> DeferredRegister.createItems(namespace)
     );
     return items.register(path, factory);
   }
 
+
   @SuppressWarnings("unchecked")
-  public <T extends Block> Supplier<T> block(String path, Supplier<? extends T> factory, boolean registerItem, Item.Properties itemProperties) {
+  public <T extends Block> DeferredBlock<T> block(
+      String path, Supplier<? extends T> factory, boolean registerItem, Item.Properties itemProperties
+  ) {
     var blocks = (DeferredRegister.Blocks) deferredRegisters.computeIfAbsent(
         BuiltInRegistries.BLOCK.key(), ignored -> DeferredRegister.createBlocks(namespace)
     );
-    Supplier<T> block = blocks.register(path, factory);
+    DeferredBlock<T> block = blocks.register(path, factory);
     if (registerItem) {
       item(path, () -> new BlockItem(block.get(), itemProperties));
     }
     return block;
   }
+
 
   @SuppressWarnings({"unchecked", "rawtypes"})
   public <T extends BlockEntity> Supplier<BlockEntityType<T>> blockEntity(
@@ -184,6 +182,7 @@ public final class ModRegistrar {
       return BlockEntityType.Builder.of((BlockEntityType.BlockEntitySupplier) factory, boundBlocks).build(null);
     });
   }
+
 
   @SuppressWarnings("unchecked")
   public <T extends Entity> Supplier<EntityType<T>> entity(
@@ -226,6 +225,7 @@ public final class ModRegistrar {
     register(BuiltInRegistries.CREATIVE_MODE_TAB, path, tab);
     return new Pair<>(key, tab);
   }
+
 
   @SuppressWarnings("unchecked")
   public Holder<SoundEvent> sound(String path) {

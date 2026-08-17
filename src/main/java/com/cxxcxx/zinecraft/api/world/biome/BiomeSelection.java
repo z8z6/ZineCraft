@@ -23,6 +23,10 @@ public sealed interface BiomeSelection permits BiomeSelection.TagSelection, Biom
     return new KeySelection(List.copyOf(Arrays.asList(keys)));
   }
 
+  static BiomeSelection of(List<ResourceKey<Biome>> keys) {
+    return new KeySelection(List.copyOf(keys));
+  }
+
   static BiomeSelection union(BiomeSelection... selections) {
     return new UnionSelection(List.copyOf(Arrays.asList(selections)));
   }

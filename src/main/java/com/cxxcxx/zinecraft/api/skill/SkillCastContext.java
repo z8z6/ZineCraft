@@ -6,53 +6,20 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public final class SkillCastContext {
-  @NotNull
-  private final ServerPlayer player;
-  @NotNull
-  private final ItemStack stack;
-  @NotNull
-  private final InteractionHand hand;
+import java.util.Objects;
 
-  public SkillCastContext(@NotNull ServerPlayer player, @NotNull ItemStack stack, @NotNull InteractionHand hand) {
-    super();
-    this.player = player;
-    this.stack = stack;
-    this.hand = hand;
-  }
-
-  @NotNull
-  public final ServerPlayer getPlayer() {
-    return this.player;
-  }
-
-  @NotNull
-  public final ItemStack getStack() {
-    return this.stack;
-  }
-
-  @NotNull
-  public final InteractionHand getHand() {
-    return this.hand;
-  }
-
-  @Override
-  public int hashCode() {
-    int i = this.player.hashCode();
-    i = i * 31 + this.stack.hashCode();
-    return i * 31 + this.hand.hashCode();
-  }
+public record SkillCastContext(@NotNull ServerPlayer player, @NotNull ItemStack stack, @NotNull InteractionHand hand) {
 
   @Override
   public boolean equals(@Nullable Object other) {
     if (this == other) {
       return true;
-    } else if (!(other instanceof SkillCastContext skillCastContext)) {
+    } else if (!(other instanceof SkillCastContext(ServerPlayer player1, ItemStack stack1, InteractionHand hand1))) {
       return false;
-    } else if (!java.util.Objects.equals(this.player, skillCastContext.player)) {
+    } else if (!Objects.equals(this.player, player1)) {
       return false;
     } else {
-      return !java.util.Objects.equals(this.stack, skillCastContext.stack) ? false : this.hand == skillCastContext.hand;
+      return Objects.equals(this.stack, stack1) && this.hand == hand1;
     }
   }
 

@@ -6,7 +6,7 @@ modifier、自然生成和生成蛋。
 ## 普通实体
 
 ```java
-EntityEntry<ExampleProjectile> projectile = Zinecraft.ENTITIES.register(
+Supplier<EntityType<ExampleProjectile>> projectile = Zinecraft.ENTITIES.register(
     "example_projectile", "示例投射物", "Example Projectile",
     ExampleProjectile::new, MobCategory.MISC,
     builder -> builder.sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10)
@@ -22,18 +22,23 @@ MobSpawnRestriction<ExampleMob> restriction = new MobSpawnRestriction<>(
     ExampleMob::canSpawn
 );
 
-MobEntry<ExampleMob> mob = Zinecraft.ENTITIES.mob(
+Supplier<EntityType<ExampleMob>> mob = Zinecraft.ENTITIES.mob(
     "example_mob", "示例生物", "Example Mob",
     ExampleMob::new, MobCategory.CREATURE,
     ExampleMob::attributes, restriction,
     builder -> builder.sized(0.6F, 1.8F).clientTrackingRange(8)
-);
+).naturalSpawn(8, 1, 3, BiomeSelection.tag(ExampleBiomeTags.EXAMPLE_MOBS))
+ .spawnEgg(0x6B7A58, 0xD8C7A1, "示例生物刷怪蛋", "Example Mob Spawn Egg")
+ .drop(Items.EMERALD)
+ .build();
 ```
 
 属性和生成限制在 NeoForge 注册生命周期中统一接入。`naturalSpawn` 记录生成权重、群体范围与 `BiomeSelection`，数据生成时导出
 `NeoForgeRegistries.Keys.BIOME_MODIFIERS`；不要另外调用旧 Loader 的属性或群系注入 API。
 
-生成蛋由 `MobEntry.spawnEgg(...)` 创建，并自动生成翻译与 `minecraft:item/template_spawn_egg` 模型。
+`MobBuilder` 保存完整注册声明，`build()` 返回原生 `Supplier<EntityType<T>>`。`spawnEgg(...)` 会同步注册刷怪蛋，并自动生成翻译与
+`minecraft:item/template_spawn_egg` 模型；`drop(...)`
+声明实体战利品，数据生成时自动导出对应的 entity loot table。实体手持装备是否掉落仍由实体自身的装备掉落率控制，和这里声明的战利品相互独立。
 
 ## 客户端渲染
 
@@ -41,7 +46,7 @@ renderer 和 model layer 放在 `src/client/java`，通过 NeoForge 客户端事
 
 ## 十九国居民
 
-`ModEntities` 为每个国家群系提供居民实体。拉特兰使用 `LateranoCitizen`，其余国家使用带 `NationResidentProfile` 的
+`ModEntity` 为每个国家群系提供居民实体。拉特兰使用 `LateranoCitizen`，其余国家使用带 `NationResidentProfile` 的
 `NationResident`。所有居民实现 `NationAffiliated`；任务、声望或外交逻辑读取明确的 `TerraNation`，不要从名称、皮肤或当前位置推断国籍。
 
 默认持有物和枪械由服务端生成逻辑设置且掉落率为零。以后增加射击 AI 时必须调用服务端 Weapon Runtime，不能复用玩家 C2S

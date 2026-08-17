@@ -3,100 +3,121 @@ package com.cxxcxx.zinecraft.api.block;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationNames;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
+/**
+ * Shared block registration API. Content classes should declare entries through {@link #builder}.
+ */
 public final class BlockCatalog {
-  @NotNull
   private final ModRegistrar registrar;
-  @NotNull
   private final TranslationCatalog translations;
-  @NotNull
-  private final List<BlockEntry<?>> entries;
+  private final List<BlockBuilder<?>> mutableEntries = new ArrayList<>();
+  public final List<BlockBuilder<?>> entries = Collections.unmodifiableList(mutableEntries);
 
-  public BlockCatalog(@NotNull ModRegistrar registrar, @NotNull TranslationCatalog translations) {
-    super();
-    this.registrar = registrar;
-    this.translations = translations;
-    this.entries = new ArrayList<>();
+  public BlockCatalog(ModRegistrar registrar, TranslationCatalog translations) {
+    this.registrar = Objects.requireNonNull(registrar, "registrar");
+    this.translations = Objects.requireNonNull(translations, "translations");
   }
 
-  public static BlockEntry registerWithDefaults(
-      BlockCatalog var0, String var1, String var2, String var3, boolean var4, ItemLike var5, boolean var6, boolean var7, Supplier var8, int var9, Object var10
-  ) {
-    if ((var9 & 4) != 0) {
-      var3 = TranslationNames.toDisplayName(var1);
-    }
-
-    if ((var9 & 8) != 0) {
-      var4 = true;
-    }
-
-    if ((var9 & 16) != 0) {
-      var5 = null;
-    }
-
-    if ((var9 & 32) != 0) {
-      var6 = true;
-    }
-
-    if ((var9 & 64) != 0) {
-      var7 = true;
-    }
-
-    return var0.register(var1, var2, var3, var4, var5, var6, var7, var8);
+  private static void validate(String path, String zhCn, String enUs) {
+    if (!ResourceLocation.isValidPath(path)) throw new IllegalArgumentException("方块 ID 路径无效：" + path);
+    if (zhCn == null || zhCn.isBlank()) throw new IllegalArgumentException("方块中文名不能为空：" + path);
+    if (enUs == null || enUs.isBlank()) throw new IllegalArgumentException("方块英文名不能为空：" + path);
   }
 
-  @NotNull
-  public final List<BlockEntry<?>> getEntries() {
-    return this.entries;
+  public <T extends Block> BlockBuilder<T> builder(String path, String zhCn, Supplier<? extends T> factory) {
+    return new BlockBuilder<>(this, path, zhCn, factory);
   }
 
-  @NotNull
-  public final <T extends Block> BlockEntry<T> register(
-      @NotNull String path,
-      @NotNull String zhCn,
-      @NotNull String enUs,
-      boolean dropSelf,
-      @Nullable ItemLike dropItem,
-      boolean cubeModel,
-      boolean registerItem,
-      @NotNull Supplier<? extends T> factory
-  ) {
-    return register(path, zhCn, enUs, dropSelf, dropItem, cubeModel, registerItem, new Item.Properties(), factory);
+  private <T extends Block> DeferredBlock<T> register(BlockBuilder<T> builder) {
+    validate(builder.path, builder.zhCn, builder.enUs);
+    Objects.requireNonNull(builder.factory, "方块 factory 不能为空：" + builder.path);
+    Objects.requireNonNull(builder.itemProperties, "方块物品属性不能为空：" + builder.path);
+    if (builder.dropSelf && builder.dropItem != null) {
+      throw new IllegalArgumentException("方块不能同时掉落自身和指定物品：" + builder.path);
+    }
+    if (mutableEntries.stream().anyMatch(entry -> entry.path.equals(builder.path))) {
+      throw new IllegalArgumentException("方块 ID 重复：" + builder.path);
+    }
+
+    DeferredBlock<T> block = registrar.block(
+        builder.path, builder.factory, builder.registerItem, builder.itemProperties
+    );
+    builder.block = block;
+    mutableEntries.add(builder);
+    translations.add("block." + registrar.namespace + "." + builder.path, builder.zhCn, builder.enUs);
+    return block;
   }
 
-  @NotNull
-  public final <T extends Block> BlockEntry<T> register(
-      @NotNull String path,
-      @NotNull String zhCn,
-      @NotNull String enUs,
-      boolean dropSelf,
-      @Nullable ItemLike dropItem,
-      boolean cubeModel,
-      boolean registerItem,
-      @NotNull Item.Properties itemProperties,
-      @NotNull Supplier<? extends T> factory
-  ) {
-    if (dropSelf && dropItem != null) {
-      int i = 0;
-      String string = "方块不能同时掉落自身和指定物品: " + path;
-      throw new IllegalArgumentException(string.toString());
-    } else {
-      var block = this.registrar.block(path, factory, registerItem, itemProperties);
-      BlockEntry blockEntry = new BlockEntry<>(path, block, dropSelf, dropItem, cubeModel, registerItem);
-      this.entries.add(blockEntry);
-      TranslationCatalog translationCatalog = this.translations;
-      String string1 = "block." + this.registrar.getNamespace() + "." + path;
-      translationCatalog.add(string1, zhCn, enUs);
-      return blockEntry;
+  /**
+   * Holds both the declaration options and the lazy NeoForge block handle.
+   */
+  public static final class BlockBuilder<T extends Block> {
+    private final BlockCatalog catalog;
+    private final Supplier<? extends T> factory;
+    public final String path;
+    public final String zhCn;
+    public String enUs;
+    public boolean dropSelf = true;
+    public ItemLike dropItem;
+    public boolean cubeModel = true;
+    public boolean registerItem = true;
+    public Item.Properties itemProperties = new Item.Properties();
+    public DeferredBlock<T> block;
+
+    private BlockBuilder(BlockCatalog catalog, String path, String zhCn, Supplier<? extends T> factory) {
+      this.catalog = catalog;
+      this.path = path;
+      this.zhCn = zhCn;
+      this.enUs = TranslationNames.toDisplayName(path);
+      this.factory = Objects.requireNonNull(factory, "方块 factory 不能为空：" + path);
+    }
+
+    public BlockBuilder<T> enUs(String enUs) {
+      this.enUs = enUs;
+      return this;
+    }
+
+    public BlockBuilder<T> noLoot() {
+      dropSelf = false;
+      dropItem = null;
+      return this;
+    }
+
+    public BlockBuilder<T> drop(ItemLike item) {
+      dropSelf = false;
+      dropItem = Objects.requireNonNull(item, "drop item");
+      return this;
+    }
+
+    public BlockBuilder<T> noCubeModel() {
+      cubeModel = false;
+      return this;
+    }
+
+    public BlockBuilder<T> noBlockItem() {
+      registerItem = false;
+      return this;
+    }
+
+    public BlockBuilder<T> itemProperties(Item.Properties itemProperties) {
+      this.itemProperties = itemProperties;
+      return this;
+    }
+
+    public DeferredBlock<T> build() {
+      if (block != null) throw new IllegalStateException("方块 builder 不能重复 build：" + path);
+      return catalog.register(this);
     }
   }
 }

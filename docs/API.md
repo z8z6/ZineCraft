@@ -7,8 +7,8 @@
 
 | `Zinecraft` 入口               | 类型                             | 职责                      |
 |------------------------------|--------------------------------|-------------------------|
-| `getITEMS()`                 | `ItemCatalog`                  | 物品、翻译、模型元数据、燃料与堆肥       |
-| `getBLOCKS()`                | `BlockCatalog`                 | 方块、方块物品、翻译、简单模型与默认掉落    |
+| `ITEMS`                      | `ItemCatalog`                  | 物品、翻译、模型元数据、燃料与堆肥       |
+| `BLOCKS`                     | `BlockCatalog`                 | 方块、方块物品、翻译、简单模型与默认掉落    |
 | `getBLOCK_ENTITIES()`        | `BlockEntityCatalog`           | 方块实体类型与有效方块绑定           |
 | `getSOUNDS()` / `getSONGS()` | `SoundCatalog` / `SongCatalog` | 声音、唱片物品与 Jukebox Song   |
 | `getCREATIVE_TABS()`         | `CreativeTabCatalog`           | 创造模式页及条目收集              |
@@ -25,18 +25,19 @@
 ## Java 声明示例
 
 ```java
-ItemEntry<Item> dust = Zinecraft.ITEMS.register(
-    "magic_dust", "魔法粉尘", "Magic Dust"
-).fuel(600).compost(0.3F);
+DeferredItem<Item> dust = Zinecraft.ITEMS.builder("magic_dust", "魔法粉尘")
+    .enUs("Magic Dust")
+    .fuel(600)
+    .compost(0.3F)
+    .build();
 
-BlockEntry<Block> machine = Zinecraft.BLOCKS.register(
-    "machine", "机器", "Machine",
-    true, null, true, true,
-    () -> new Block(BlockBehaviour.Properties.of().strength(4.0F))
-);
+DeferredBlock<Block> machine = Zinecraft.BLOCKS
+    .builder("machine", "机器", () -> new Block(BlockBehaviour.Properties.of().strength(4.0F)))
+    .enUs("Machine")
+    .build();
 
 OreEntry ore = Zinecraft.FEATURES.ore(
-    "machine_ore", machine::getBlock,
+    "machine_ore", machine,
     8, 4, 32, 0.0F
 );
 ```

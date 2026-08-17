@@ -1,55 +1,68 @@
 package com.cxxcxx.zinecraft.api.world.biome;
 
+import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
+import com.cxxcxx.zinecraft.api.localization.TranslationNames;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public final class BiomeCatalog {
-  @NotNull
   private final ModRegistrar registrar;
-  @NotNull
-  private final List<BiomeEntry> entries;
+  private final TranslationCatalog translations;
+  private final List<BiomeRegistration> entries = new ArrayList<>();
 
-  public BiomeCatalog(@NotNull ModRegistrar registrar) {
-    super();
-    this.registrar = registrar;
-    this.entries = new ArrayList<>();
+  public BiomeCatalog(ModRegistrar registrar, TranslationCatalog translations) {
+    this.registrar = Objects.requireNonNull(registrar, "registrar");
+    this.translations = Objects.requireNonNull(translations, "translations");
   }
 
-  @NotNull
-  public final ResourceKey<Biome> register(@NotNull String path, @NotNull Consumer<? super SimpleBiomeBuilder> build) {
-    ModRegistrar modRegistrar = this.registrar;
-    ResourceKey resourceKey1 = Registries.BIOME;
-    ResourceKey resourceKey = modRegistrar.key(resourceKey1, path);
-    this.entries.add(new BiomeEntry(resourceKey, build));
-    return resourceKey;
+  public ResourceKey<Biome> register(
+      String path,
+      String zhCn,
+      Consumer<? super SimpleBiomeBuilder> configure
+  ) {
+    if (!ResourceLocation.isValidPath(path)) {
+      throw new IllegalArgumentException("群系 ID 路径无效：" + path);
+    }
+    if (zhCn == null || zhCn.isBlank()) {
+      throw new IllegalArgumentException("群系中文名不能为空：" + path);
+    }
+    Objects.requireNonNull(configure, "群系配置不能为空：" + path);
+    if (entries.stream().anyMatch(entry -> entry.key().location().getPath().equals(path))) {
+      throw new IllegalArgumentException("群系 ID 重复：" + path);
+    }
+
+    ResourceKey<Biome> key = registrar.key(Registries.BIOME, path);
+    entries.add(new BiomeRegistration(key, configure::accept));
+    translations.add(
+        "biome." + registrar.namespace + "." + path,
+        zhCn,
+        TranslationNames.toDisplayName(path)
+    );
+    return key;
   }
 
-  public final void bootstrap(@NotNull BootstrapContext<Biome> context) {
-    HolderGetter holderGetter2 = context.lookup(Registries.PLACED_FEATURE);
-    HolderGetter holderGetter = holderGetter2;
-    holderGetter2 = context.lookup(Registries.CONFIGURED_CARVER);
-    HolderGetter holderGetter1 = holderGetter2;
-    Iterable iterable = this.entries;
-    int i = 0;
-
-    for (Object object : iterable) {
-      BiomeEntry biomeEntry = (BiomeEntry) object;
-      int j = 0;
-      ModRegistrar modRegistrar = this.registrar;
-      ResourceKey resourceKey = biomeEntry.getKey();
-      SimpleBiomeBuilder simpleBiomeBuilder = new SimpleBiomeBuilder(holderGetter, holderGetter1);
-      biomeEntry.getBuild().accept(simpleBiomeBuilder);
-      modRegistrar.dynamic(context, resourceKey, simpleBiomeBuilder.build());
+  public void bootstrap(BootstrapContext<Biome> context) {
+    var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
+    var configuredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
+    for (BiomeRegistration entry : entries) {
+      SimpleBiomeBuilder builder = new SimpleBiomeBuilder(placedFeatures, configuredCarvers);
+      entry.configure().accept(builder);
+      registrar.dynamic(context, entry.key(), builder.build());
     }
   }
-}
 
+  private record BiomeRegistration(
+      ResourceKey<Biome> key,
+      Consumer<SimpleBiomeBuilder> configure
+  ) {
+  }
+}

@@ -63,7 +63,7 @@ public final class StarGateStructure {
 
   @NotNull
   public final BlockPos place(@NotNull LevelAccessor level, @NotNull BlockPos base, @NotNull Axis axis, boolean active) {
-    BlockState blockState = ModBlock.STARGATE_ARCH.getBlock().defaultBlockState();
+    BlockState blockState = ModBlock.INSTANCE.STARGATE_ARCH.get().defaultBlockState();
 
     for (int i = -FOUNDATION_HALF_WIDTH; i <= FOUNDATION_HALF_WIDTH; i++) {
       for (int j = -3; j <= FOUNDATION_HALF_DEPTH; j++) {
@@ -112,7 +112,7 @@ public final class StarGateStructure {
               level.setBlock(this.local(base, axis, y, v, z), blockState, 2);
             }
           } else {
-            BlockState blockState1 = active ? ModBlock.STARGATE_PORTAL.getBlock().defaultBlockState() : Blocks.AIR.defaultBlockState();
+            BlockState blockState1 = active ? ModBlock.INSTANCE.STARGATE_PORTAL.get().defaultBlockState() : Blocks.AIR.defaultBlockState();
             level.setBlock(this.local(base, axis, y, v, 0), blockState1, 2);
           }
 
@@ -130,7 +130,7 @@ public final class StarGateStructure {
     BlockPos controllerPos = this.local(base, axis, 0, 0, CONTROLLER_DISTANCE);
     level.setBlock(
         controllerPos,
-        (BlockState) ((BlockState) ModBlock.STARGATE_CONTROLLER.getBlock()
+        (BlockState) ((BlockState) ModBlock.INSTANCE.STARGATE_CONTROLLER.get()
             .defaultBlockState()
             .setValue((Property) StarGateControllerBlock.ACCESS.getAXIS(), (Comparable) axis))
             .setValue((Property) StarGateControllerBlock.ACCESS.getACTIVE(), active),
@@ -170,8 +170,8 @@ public final class StarGateStructure {
         if (m <= k) {
           while (true) {
             BlockPos blockPos = this.local(base, axis, m, l, 0);
-            if (active || level.getBlockState(blockPos).is(ModBlock.STARGATE_PORTAL.getBlock())) {
-              level.setBlock(blockPos, active ? ModBlock.STARGATE_PORTAL.getBlock().defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
+            if (active || level.getBlockState(blockPos).is(ModBlock.INSTANCE.STARGATE_PORTAL.get())) {
+              level.setBlock(blockPos, active ? ModBlock.INSTANCE.STARGATE_PORTAL.get().defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
             }
 
             if (m == k) {
@@ -192,8 +192,8 @@ public final class StarGateStructure {
     int interiorHalfWidth = outerHalfWidths[0] - 2;
     for (int horizontal = -interiorHalfWidth; horizontal <= interiorHalfWidth; horizontal++) {
       BlockPos pos = this.local(base, axis, horizontal, 0, 0);
-      if (active || level.getBlockState(pos).is(ModBlock.STARGATE_PORTAL.getBlock())) {
-        level.setBlock(pos, active ? ModBlock.STARGATE_PORTAL.getBlock().defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
+      if (active || level.getBlockState(pos).is(ModBlock.INSTANCE.STARGATE_PORTAL.get())) {
+        level.setBlock(pos, active ? ModBlock.INSTANCE.STARGATE_PORTAL.get().defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
       }
     }
   }
@@ -229,14 +229,14 @@ public final class StarGateStructure {
 
   public final boolean activate(@NotNull LevelAccessor level, @NotNull BlockPos controllerPos, @NotNull Axis axis) {
     BlockState controllerState = level.getBlockState(controllerPos);
-    if (!controllerState.is(ModBlock.STARGATE_CONTROLLER.getBlock())) {
+    if (!controllerState.is(ModBlock.INSTANCE.STARGATE_CONTROLLER.get())) {
       return false;
     }
 
     Optional<GateMatch> match = locateGate(
         controllerPos,
         axis,
-        pos -> level.getBlockState(pos).is(ModBlock.STARGATE_ARCH.getBlock())
+        pos -> level.getBlockState(pos).is(ModBlock.INSTANCE.STARGATE_ARCH.get())
     );
     if (match.isEmpty()) {
       return false;
@@ -273,7 +273,7 @@ public final class StarGateStructure {
     Optional<GateMatch> match = locateGate(
         controllerPos,
         axis,
-        pos -> level.getBlockState(pos).is(ModBlock.STARGATE_ARCH.getBlock())
+        pos -> level.getBlockState(pos).is(ModBlock.INSTANCE.STARGATE_ARCH.get())
     );
     GateMatch gate = match.orElseGet(() -> new GateMatch(gateBaseCandidates(controllerPos, axis).get(0), axis));
     return this.local(gate.base(), gate.axis(), 0, OUTER_RADIUS, 0);

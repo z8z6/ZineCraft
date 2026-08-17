@@ -8,6 +8,7 @@
 ```java
 JigsawBuildingEntry camp = Zinecraft.STRUCTURES.settlement(
     "mining_camp",
+    "采矿营地",
     "settlements/mining_camp",
     ModBiomes.MINING_BADLANDS,
     41002001,
@@ -35,7 +36,7 @@ JigsawBuildingEntry camp = Zinecraft.STRUCTURES.settlement(
 
 ```java
 JigsawBuildingEntry tower = Zinecraft.STRUCTURES.uniqueLandmark(
-    "unique_tower", "landmarks/unique_tower",
+    "unique_tower", "唯一高塔", "landmarks/unique_tower",
     ModBiomes.TARGET_BIOME,
     32, 96,
     Heightmap.Types.WORLD_SURFACE_WG,
@@ -47,7 +48,7 @@ JigsawBuildingEntry tower = Zinecraft.STRUCTURES.uniqueLandmark(
 
 ```java
 JigsawBuildingEntry host = Zinecraft.STRUCTURES.fixedOriginUndergroundLandmark(
-    "laterano_host", "laterano_host/core",
+    "laterano_host", "拉特兰主机", "laterano_host/core",
     NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(),
     -32, 112
 );

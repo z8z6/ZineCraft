@@ -22,19 +22,19 @@ public final class ModWeaponSkillEffects {
   static {
     Zinecraft.SKILL_SERVICE.register(ARCANE_BOLT, new SkillEffect() {
       @Override
-      public boolean canCast(SkillCastContext context) {
-        return context.getPlayer().isAlive() && !context.getPlayer().isSpectator();
+      public boolean canCast(@NotNull SkillCastContext context) {
+        return context.player().isAlive() && !context.player().isSpectator();
       }
 
       @Override
-      public void cast(SkillCastContext context) {
-        HitscanService.Hit hit = HitscanService.INSTANCE.trace(context.getPlayer(), 24.0, 0.45);
+      public void cast(@NotNull SkillCastContext context) {
+        HitscanService.Hit hit = HitscanService.INSTANCE.trace(context.player(), 24.0, 0.45);
         if (hit != null) {
           LivingEntity livingEntity1 = hit.getTarget();
           if (livingEntity1 != null) {
             LivingEntity livingEntity = livingEntity1;
             CombatService.INSTANCE.damage(
-                context.getPlayer(), livingEntity, CombatDamageType.ARTS, 8.0, CombatRequest.DEFAULT
+                context.player(), livingEntity, CombatDamageType.ARTS, 8.0, CombatRequest.DEFAULT
             );
             return;
           }
@@ -43,13 +43,13 @@ public final class ModWeaponSkillEffects {
     });
     Zinecraft.SKILL_SERVICE.register(MENDING_LIGHT, new SkillEffect() {
       @Override
-      public boolean canCast(SkillCastContext context) {
-        return context.getPlayer().isAlive() && context.getPlayer().getHealth() < context.getPlayer().getMaxHealth();
+      public boolean canCast(@NotNull SkillCastContext context) {
+        return context.player().isAlive() && context.player().getHealth() < context.player().getMaxHealth();
       }
 
       @Override
-      public void cast(SkillCastContext context) {
-        CombatService.INSTANCE.heal(context.getPlayer(), context.getPlayer(), 6.0, 1.0, 0.0);
+      public void cast(@NotNull SkillCastContext context) {
+        CombatService.INSTANCE.heal(context.player(), context.player(), 6.0, 1.0, 0.0);
       }
     });
   }

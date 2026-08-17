@@ -1,12 +1,10 @@
 package com.cxxcxx.zinecraft.api.sound;
 
 import com.cxxcxx.zinecraft.api.item.ItemCatalog;
-import com.cxxcxx.zinecraft.api.item.ItemEntry;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -14,24 +12,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.item.Rarity;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class SongCatalog {
-  @NotNull
   private final ModRegistrar registrar;
-  @NotNull
   private final SoundCatalog sounds;
-  @NotNull
   private final ItemCatalog items;
-  @NotNull
   private final TranslationCatalog translations;
-  @NotNull
   private final List<SongEntry> entries;
 
-  public SongCatalog(@NotNull ModRegistrar registrar, @NotNull SoundCatalog sounds, @NotNull ItemCatalog items, @NotNull TranslationCatalog translations) {
+  public SongCatalog(ModRegistrar registrar, SoundCatalog sounds, ItemCatalog items, TranslationCatalog translations) {
     super();
     this.registrar = registrar;
     this.sounds = sounds;
@@ -60,14 +53,12 @@ public final class SongCatalog {
     return new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(_key));
   }
 
-  @NotNull
   public final List<SongEntry> getEntries() {
     return this.entries;
   }
 
-  @NotNull
   public final SongEntry register(
-      @NotNull String path, float lengthSeconds, @NotNull String description, @NotNull String zhCn, @NotNull String enUs, int signal
+      String path, float lengthSeconds, String description, String zhCn, String enUs, int signal
   ) {
     if (!(lengthSeconds > 0.0F)) {
       int k = 0;
@@ -82,12 +73,12 @@ public final class SongCatalog {
       ModRegistrar modRegistrar = this.registrar;
       ResourceKey resourceKey1 = Registries.JUKEBOX_SONG;
       ResourceKey resourceKey = modRegistrar.key(resourceKey1, path);
-      String string = "jukebox_song." + this.registrar.getNamespace() + "." + path.replace('.', '_');
-      ItemCatalog itemCatalog = this.items;
-      ModelTemplate modelTemplate = ModelTemplates.MUSIC_DISC;
-      ItemEntry itemEntry = itemCatalog.register(path, zhCn, enUs, modelTemplate, true,
-          () -> registerHelper2(resourceKey));
-      SongEntry songEntry = new SongEntry(path, reference, resourceKey, string, lengthSeconds, signal, itemEntry);
+      String string = "jukebox_song." + this.registrar.namespace + "." + path.replace('.', '_');
+      DeferredItem<Item> item = this.items.builder(path, zhCn, () -> registerHelper2(resourceKey))
+          .enUs(enUs)
+          .model(ModelTemplates.MUSIC_DISC)
+          .build();
+      SongEntry songEntry = new SongEntry(path, reference, resourceKey, string, lengthSeconds, signal, item);
       SongEntry songEntry1 = songEntry;
       int i = 0;
       this.entries.add(songEntry1);
@@ -96,7 +87,7 @@ public final class SongCatalog {
     }
   }
 
-  public final void bootstrap(@NotNull BootstrapContext<JukeboxSong> context) {
+  public final void bootstrap(BootstrapContext<JukeboxSong> context) {
     Iterable iterable = this.entries;
     int i = 0;
 
@@ -107,4 +98,3 @@ public final class SongCatalog {
     }
   }
 }
-

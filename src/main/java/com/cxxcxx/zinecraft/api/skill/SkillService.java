@@ -11,7 +11,7 @@ public final class SkillService {
   private final Map<ResourceLocation, SkillEffect> effects = new LinkedHashMap<>();
 
   @NotNull
-  public final ResourceLocation register(@NotNull ResourceLocation id, @NotNull SkillEffect effect) {
+  public ResourceLocation register(@NotNull ResourceLocation id, @NotNull SkillEffect effect) {
     if (this.effects.putIfAbsent(id, effect) != null) {
       int i = 0;
       String string = "重复的技能效果 ID：" + id;
@@ -21,18 +21,17 @@ public final class SkillService {
     }
   }
 
-  public final boolean canCast(@NotNull ResourceLocation id, @NotNull SkillCastContext context) {
+  public boolean canCast(@NotNull ResourceLocation id, @NotNull SkillCastContext context) {
     SkillEffect skillEffect = this.effects.get(id);
-    return skillEffect != null ? skillEffect.canCast(context) : false;
+    return skillEffect != null && skillEffect.canCast(context);
   }
 
-  public final boolean cast(@NotNull ResourceLocation id, @NotNull SkillCastContext context) {
-    SkillEffect skillEffect1 = this.effects.get(id);
-    if (skillEffect1 == null) {
+  public boolean cast(@NotNull ResourceLocation id, @NotNull SkillCastContext context) {
+    SkillEffect skillEffect = this.effects.get(id);
+    if (skillEffect == null) {
       return false;
     }
 
-    SkillEffect skillEffect = skillEffect1;
     if (!skillEffect.canCast(context)) {
       return false;
     }

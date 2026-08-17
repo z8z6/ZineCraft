@@ -29,12 +29,12 @@ public final class DimensionEntry {
   private final Function<DimensionBootstrapContext, ChunkGenerator> createGenerator;
 
   public DimensionEntry(
-      @NotNull String path,
-      @NotNull ResourceKey<Level> levelKey,
-      @NotNull ResourceKey<LevelStem> stemKey,
-      @NotNull ResourceKey<DimensionType> typeKey,
-      @NotNull ResourceKey<NoiseGeneratorSettings> noiseSettingsKey,
-      @NotNull List<DimensionBiome> biomes,
+      String path,
+      ResourceKey<Level> levelKey,
+      ResourceKey<LevelStem> stemKey,
+      ResourceKey<DimensionType> typeKey,
+      ResourceKey<NoiseGeneratorSettings> noiseSettingsKey,
+      List<DimensionBiome> biomes,
       @Nullable Function<? super DimensionBootstrapContext, ? extends ChunkGenerator> createGenerator
   ) {
     super();
@@ -48,37 +48,37 @@ public final class DimensionEntry {
   }
 
   @NotNull
-  public final String getPath() {
+  public String getPath() {
     return this.path;
   }
 
   @NotNull
-  public final ResourceKey<Level> getLevelKey() {
+  public ResourceKey<Level> getLevelKey() {
     return this.levelKey;
   }
 
   @NotNull
-  public final ResourceKey<LevelStem> getStemKey() {
+  public ResourceKey<LevelStem> getStemKey() {
     return this.stemKey;
   }
 
   @NotNull
-  public final ResourceKey<DimensionType> getTypeKey() {
+  public ResourceKey<DimensionType> getTypeKey() {
     return this.typeKey;
   }
 
   @NotNull
-  public final ResourceKey<NoiseGeneratorSettings> getNoiseSettingsKey() {
+  public ResourceKey<NoiseGeneratorSettings> getNoiseSettingsKey() {
     return this.noiseSettingsKey;
   }
 
   @NotNull
-  public final List<DimensionBiome> getBiomes() {
+  public List<DimensionBiome> getBiomes() {
     return this.biomes;
   }
 
   @Nullable
-  public final Function<DimensionBootstrapContext, ChunkGenerator> getCreateGenerator() {
+  public Function<DimensionBootstrapContext, ChunkGenerator> getCreateGenerator() {
     return this.createGenerator;
   }
 }

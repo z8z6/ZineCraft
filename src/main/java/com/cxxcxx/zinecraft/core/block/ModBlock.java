@@ -1,7 +1,5 @@
 package com.cxxcxx.zinecraft.core.block;
 
-import com.cxxcxx.zinecraft.api.block.BlockCatalog;
-import com.cxxcxx.zinecraft.api.block.BlockEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.dimension.StarGateControllerBlock;
 import com.cxxcxx.zinecraft.core.dimension.StarGatePortalBlock;
@@ -11,57 +9,29 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 public final class ModBlock {
-  @NotNull
   public static final ModBlock INSTANCE = new ModBlock();
-  @NotNull
-  public static final BlockEntry<Block> STARGATE_ARCH = BlockCatalog.registerWithDefaults(
-      Zinecraft.BLOCKS, "stargate_arch", "星门拱石", "Stargate Archstone", false, null, false, false, ModBlock::STARGATE_ARCHHelper0, 120, null
-  );
-  @NotNull
-  public static final BlockEntry<StarGateControllerBlock> STARGATE_CONTROLLER = BlockCatalog.registerWithDefaults(
-      Zinecraft.BLOCKS,
-          "stargate_controller",
-          "星门协议控制器",
-          "Stargate Protocol Controller",
-          false,
-          null,
-          false,
-          false,
-      ModBlock::STARGATE_CONTROLLERHelper0,
-          120,
-          null
-  );
-  @NotNull
-  public static final BlockEntry<StarGatePortalBlock> STARGATE_PORTAL = BlockCatalog.registerWithDefaults(
-      Zinecraft.BLOCKS,
-          "stargate_portal",
-          "星门事件视界",
-          "Stargate Event Horizon",
-          false,
-          null,
-          false,
-          false,
-      ModBlock::STARGATE_PORTALHelper0,
-          16,
-          null
-  );
-  @NotNull
-  public static final BlockEntry<ExampleEntityBlock> EXAMPLE_ENTITY_BLOCK = BlockCatalog.registerWithDefaults(
-      Zinecraft.BLOCKS,
-          "example_entity_block",
-          "示例实体方块",
-          "Example Entity Block",
-          false,
-          null,
-          false,
-          false,
-      ModBlock::EXAMPLE_ENTITY_BLOCKHelper0,
-          120,
-          null
-  );
+  public final DeferredBlock<Block> STARGATE_ARCH = Zinecraft.BLOCKS
+      .builder("stargate_arch", "星门拱石", ModBlock::createStargateArch)
+      .enUs("Stargate Archstone")
+      .build();
+  public final DeferredBlock<StarGateControllerBlock> STARGATE_CONTROLLER = Zinecraft.BLOCKS
+      .builder("stargate_controller", "星门协议控制器", ModBlock::createStargateController)
+      .enUs("Stargate Protocol Controller")
+      .build();
+  public final DeferredBlock<StarGatePortalBlock> STARGATE_PORTAL = Zinecraft.BLOCKS
+      .builder("stargate_portal", "星门事件视界", ModBlock::createStargatePortal)
+      .enUs("Stargate Event Horizon")
+      .noLoot()
+      .noCubeModel()
+      .noBlockItem()
+      .build();
+  public final DeferredBlock<ExampleEntityBlock> EXAMPLE_ENTITY_BLOCK = Zinecraft.BLOCKS
+      .builder("example_entity_block", "示例实体方块", ModBlock::createExampleEntityBlock)
+      .enUs("Example Entity Block")
+      .build();
 
   static {
     Zinecraft.TRANSLATIONS
@@ -76,40 +46,40 @@ public final class ModBlock {
   private ModBlock() {
   }
 
-  private static final Block STARGATE_ARCHHelper0() {
+  private static Block createStargateArch() {
     return new Block(Properties.of().mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(18.0F, 1200.0F).sound(SoundType.DEEPSLATE));
   }
 
-  private static final int STARGATE_CONTROLLERHelper0$0(BlockState state) {
+  private static int stargateControllerLight(BlockState state) {
     return state.getValue(StarGateControllerBlock.ACCESS.getACTIVE()) ? 12 : 3;
   }
 
-  private static final StarGateControllerBlock STARGATE_CONTROLLERHelper0() {
+  private static StarGateControllerBlock createStargateController() {
     Properties properties = Properties.of()
         .mapColor(MapColor.COLOR_CYAN)
         .requiresCorrectToolForDrops()
         .strength(18.0F, 1200.0F)
-        .lightLevel(ModBlock::STARGATE_CONTROLLERHelper0$0)
+        .lightLevel(ModBlock::stargateControllerLight)
         .sound(SoundType.METAL);
     return new StarGateControllerBlock(properties);
   }
 
-  private static final int STARGATE_PORTALHelper0$0(BlockState it) {
+  private static int stargatePortalLight(BlockState state) {
     return 12;
   }
 
-  private static final StarGatePortalBlock STARGATE_PORTALHelper0() {
+  private static StarGatePortalBlock createStargatePortal() {
     Properties properties = Properties.of()
         .mapColor(MapColor.COLOR_CYAN)
         .noCollission()
         .noOcclusion()
         .strength(-1.0F, 3600000.0F)
-        .lightLevel(ModBlock::STARGATE_PORTALHelper0$0)
+        .lightLevel(ModBlock::stargatePortalLight)
         .sound(SoundType.GLASS);
     return new StarGatePortalBlock(properties);
   }
 
-  private static final ExampleEntityBlock EXAMPLE_ENTITY_BLOCKHelper0() {
+  private static ExampleEntityBlock createExampleEntityBlock() {
     Properties properties = Properties.of().sound(SoundType.GRASS);
     return new ExampleEntityBlock(properties);
   }

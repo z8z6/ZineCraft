@@ -3,17 +3,18 @@
 `BlockCatalog` 将方块、可选 `BlockItem`、双语翻译、简单模型和默认掉落合并为一个 Java 声明。
 
 ```java
-public static final BlockEntry<Block> ORIROCK_BLOCK = Zinecraft.BLOCKS.register(
-    "orirock_block", "源岩块", "Orirock Block",
-    true, null, true, true,
-    () -> new Block(BlockBehaviour.Properties.of()
+public final DeferredBlock<Block> orirockBlock = Zinecraft.BLOCKS
+    .builder("orirock_block", "源岩块",
+        () -> new Block(BlockBehaviour.Properties.of()
         .strength(3.0F, 6.0F)
-        .sound(SoundType.STONE))
-);
+        .sound(SoundType.STONE)))
+    .enUs("Orirock Block")
+    .build();
 ```
 
-参数含义依次为 `dropSelf`、`dropItem`、`cubeModel`、`registerItem` 和 factory。`dropSelf` 与 `dropItem`
-不能同时启用。关闭默认模型或掉落后，必须自行提供对应资源。
+builder 默认掉落自身、生成简单立方体模型并注册 `BlockItem`。使用 `drop(item)` 指定掉落，或通过 `noLoot()`、
+`noCubeModel()`、`noBlockItem()` 关闭对应默认行为。`build()` 返回 NeoForge 原生 `DeferredBlock<T>`，factory 保持懒加载；
+声明和数据生成元数据由 `BlockBuilder` 自身保存，不需要额外的 entry 包装。需要原版实例时调用 `get()`。
 
 方块贴图路径：
 

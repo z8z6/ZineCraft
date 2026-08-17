@@ -2,9 +2,8 @@ package com.cxxcxx.zinecraft.compat.jer;
 
 import com.cxxcxx.zinecraft.api.world.feature.OreEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.dimension.ModDimensions;
-import com.cxxcxx.zinecraft.core.item.ModItem;
-import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures;
+import com.cxxcxx.zinecraft.core.block.ModOre;
+import com.cxxcxx.zinecraft.core.dimension.ModDimension;
 import jeresources.api.IJERAPI;
 import jeresources.api.IJERPlugin;
 import jeresources.api.JERPlugin;
@@ -39,10 +38,10 @@ public final class ZinecraftJerPlugin implements IJERPlugin {
   private static void register(IJERAPI api, OreEntry ore, ItemLike drop) {
     var distribution = biasedToBottomDistribution(ore);
     var loot = new LootDrop(new ItemStack(drop));
-    api.getWorldGenRegistry().register(new ItemStack(ore.getBlock()), distribution, Restriction.OVERWORLD, false, loot);
+    api.getWorldGenRegistry().register(new ItemStack(ore.block().get()), distribution, Restriction.OVERWORLD, false, loot);
     api.getWorldGenRegistry().register(
-        new ItemStack(ore.getBlock()), distribution,
-        new Restriction(new DimensionRestriction(ModDimensions.TERRA.getLevelKey())), false, loot
+        new ItemStack(ore.block().get()), distribution,
+        new Restriction(new DimensionRestriction(ModDimension.TERRA.getLevelKey())), false, loot
     );
   }
 
@@ -52,13 +51,13 @@ public final class ZinecraftJerPlugin implements IJERPlugin {
    */
   private static DistributionCustom biasedToBottomDistribution(OreEntry ore) {
     float[] chances = new float[MAX_JER_Y - MIN_Y + 1];
-    int maxY = Math.min(ore.getMaxY(), MAX_JER_Y);
+    int maxY = Math.min(ore.maxY(), MAX_JER_Y);
     int outerChoices = maxY - MIN_Y - BIASED_INNER + 1;
     if (outerChoices <= 0) {
-      throw new IllegalArgumentException("JER 矿脉高度范围无效: " + ore.getPlacedKey().location());
+      throw new IllegalArgumentException("JER 矿脉高度范围无效: " + ore.placedKey().location());
     }
 
-    float densityScale = ore.getVeinsPerChunk() * ore.getVeinSize() / (float) chances.length;
+    float densityScale = ore.veinsPerChunk() * ore.veinSize() / (float) chances.length;
     for (int outer = 0; outer < outerChoices; outer++) {
       int innerChoices = outer + BIASED_INNER;
       float sampleChance = densityScale / outerChoices / innerChoices;
@@ -72,14 +71,9 @@ public final class ZinecraftJerPlugin implements IJERPlugin {
   @Override
   public void receive(IJERAPI api) {
     if (!REGISTERED.compareAndSet(false, true)) return;
-    register(api, ModWorldFeatures.ORIGINITE_ORE, ModItem.ORIGINITE);
-    register(api, ModWorldFeatures.ORIROCK_ORE, ModItem.ORIROCK);
-    register(api, ModWorldFeatures.ORIRON_ORE, ModItem.ORIRON_SHARD);
-    register(api, ModWorldFeatures.MANGANESE_ORE, ModItem.MANGANESE_ORE);
-    register(api, ModWorldFeatures.GRINDSTONE_ORE, ModItem.GRINDSTONE);
-    register(api, ModWorldFeatures.RMA70_ORE, ModItem.RMA70_12);
-    register(api, ModWorldFeatures.CRYSTAL_ELEMENT_ORE, ModItem.CRYSTAL_ELEMENT);
-    register(api, ModWorldFeatures.LOXIC_KOHL_ORE, ModItem.LOXIC_KOHL);
+    for (ModOre.MaterialOre ore : ModOre.ALL) {
+      register(api, ore.feature(), ore.drop());
+    }
     Zinecraft.LOGGER.info("Registered 8 material ore distributions for JER in the Overworld and Terra");
   }
 }

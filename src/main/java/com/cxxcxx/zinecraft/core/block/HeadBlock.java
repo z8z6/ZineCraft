@@ -20,12 +20,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * A decorative author head with the same 8x8x8 footprint as a vanilla player head.
  */
-public final class AuthorHeadBlock extends HorizontalDirectionalBlock {
+public final class HeadBlock extends HorizontalDirectionalBlock {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
   private static final VoxelShape SHAPE = Shapes.box(0.25D, 0.0D, 0.25D, 0.75D, 0.5D, 0.75D);
-  private static final MapCodec<AuthorHeadBlock> CODEC = simpleCodec(AuthorHeadBlock::new);
+  private static final MapCodec<HeadBlock> CODEC = simpleCodec(HeadBlock::new);
 
-  public AuthorHeadBlock(Properties properties) {
+  public HeadBlock(Properties properties) {
     super(properties);
     registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
   }

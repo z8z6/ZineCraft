@@ -41,23 +41,23 @@ public class CatalogModelProvider implements DataProvider {
     Map<ResourceLocation, Supplier<JsonElement>> models = new LinkedHashMap<>();
     Map<ResourceLocation, Supplier<JsonElement>> states = new LinkedHashMap<>();
 
-    for (var entry : blocks.getEntries()) {
-      if (!entry.getCubeModel()) continue;
-      var model = ModelTemplates.CUBE_ALL.create(entry.getBlock(), TextureMapping.cube(entry.getBlock()), models::put);
+    for (var entry : blocks.entries) {
+      if (!entry.cubeModel) continue;
+      var model = ModelTemplates.CUBE_ALL.create(entry.block.get(), TextureMapping.cube(entry.block.get()), models::put);
       var state = MultiVariantGenerator.multiVariant(
-          entry.getBlock(), Variant.variant().with(VariantProperties.MODEL, model)
+          entry.block.get(), Variant.variant().with(VariantProperties.MODEL, model)
       );
-      states.put(entry.getBlock().builtInRegistryHolder().key().location(), state::get);
-      if (entry.getRegisterItem()) {
+      states.put(entry.block.get().builtInRegistryHolder().key().location(), state::get);
+      if (entry.registerItem) {
         var itemModel = new JsonObject();
         itemModel.addProperty("parent", model.toString());
-        models.put(ModelLocationUtils.getModelLocation(entry.getBlock().asItem()), () -> itemModel);
+        models.put(ModelLocationUtils.getModelLocation(entry.block.asItem()), () -> itemModel);
       }
     }
-    for (var entry : items.getEntries()) {
-      entry.getModel().create(
-          ModelLocationUtils.getModelLocation(entry.getItem()),
-          TextureMapping.layer0(entry.getItem()),
+    for (var entry : items.entries) {
+      entry.model.create(
+          ModelLocationUtils.getModelLocation(entry.item.get()),
+          TextureMapping.layer0(entry.item.get()),
           models::put
       );
     }

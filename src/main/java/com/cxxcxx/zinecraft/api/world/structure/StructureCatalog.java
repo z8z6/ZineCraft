@@ -1,5 +1,7 @@
 package com.cxxcxx.zinecraft.api.world.structure;
 
+import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
+import com.cxxcxx.zinecraft.api.localization.TranslationNames;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Holder;
@@ -44,6 +46,7 @@ import java.util.function.Consumer;
 public final class StructureCatalog {
   @NotNull
   private final ModRegistrar registrar;
+  private final TranslationCatalog translations;
   @NotNull
   private final List<JigsawBuildingEntry> buildings;
   @NotNull
@@ -51,9 +54,10 @@ public final class StructureCatalog {
   @NotNull
   private final List<Consumer<BootstrapContext<StructureSet>>> structureSetGenerators;
 
-  public StructureCatalog(@NotNull ModRegistrar registrar) {
+  public StructureCatalog(@NotNull ModRegistrar registrar, TranslationCatalog translations) {
     super();
     this.registrar = registrar;
+    this.translations = Objects.requireNonNull(translations, "translations");
     this.buildings = new ArrayList<>();
     this.structureGenerators = new ArrayList<>();
     this.structureSetGenerators = new ArrayList<>();
@@ -400,6 +404,24 @@ public final class StructureCatalog {
     }
   }
 
+  public JigsawBuildingEntry uniqueLandmark(
+      String path,
+      String zhCn,
+      String template,
+      ResourceKey<Biome> biome,
+      int ringDistance,
+      int maxDistanceFromCenter,
+      Types heightmap,
+      int startHeight,
+      float removeVinesChance
+  ) {
+    registerTranslation(path, zhCn);
+    return uniqueLandmark(
+        path, template, biome, ringDistance, maxDistanceFromCenter,
+        heightmap, startHeight, removeVinesChance
+    );
+  }
+
   @NotNull
   public final JigsawBuildingEntry fixedOriginUndergroundLandmark(
       @NotNull String path, @NotNull String template, @NotNull ResourceKey<Biome> biome, int startHeight, int maxDistanceFromCenter
@@ -431,6 +453,18 @@ public final class StructureCatalog {
     );
   }
 
+  public JigsawBuildingEntry fixedOriginUndergroundLandmark(
+      String path,
+      String zhCn,
+      String template,
+      ResourceKey<Biome> biome,
+      int startHeight,
+      int maxDistanceFromCenter
+  ) {
+    registerTranslation(path, zhCn);
+    return fixedOriginUndergroundLandmark(path, template, biome, startHeight, maxDistanceFromCenter);
+  }
+
   @NotNull
   public final JigsawBuildingEntry settlement(
       @NotNull String path,
@@ -449,6 +483,28 @@ public final class StructureCatalog {
     return this.settlement(
         path, templateRoot, biome, salt, buildingTemplates, spacing, separation, size,
         maxDistanceFromCenter, heightmap, startHeight, removeVinesChance, false
+    );
+  }
+
+  public JigsawBuildingEntry settlement(
+      String path,
+      String zhCn,
+      String templateRoot,
+      ResourceKey<Biome> biome,
+      int salt,
+      Map<String, Integer> buildingTemplates,
+      int spacing,
+      int separation,
+      int size,
+      int maxDistanceFromCenter,
+      Types heightmap,
+      int startHeight,
+      float removeVinesChance
+  ) {
+    registerTranslation(path, zhCn);
+    return settlement(
+        path, templateRoot, biome, salt, buildingTemplates, spacing, separation,
+        size, maxDistanceFromCenter, heightmap, startHeight, removeVinesChance
     );
   }
 
@@ -471,6 +527,26 @@ public final class StructureCatalog {
     return this.settlement(
         path, templateRoot, biome, salt, buildingTemplates, 2, 1, size,
         maxDistanceFromCenter, heightmap, startHeight, removeVinesChance, true
+    );
+  }
+
+  public JigsawBuildingEntry fixedOriginSettlement(
+      String path,
+      String zhCn,
+      String templateRoot,
+      ResourceKey<Biome> biome,
+      int salt,
+      Map<String, Integer> buildingTemplates,
+      int size,
+      int maxDistanceFromCenter,
+      Types heightmap,
+      int startHeight,
+      float removeVinesChance
+  ) {
+    registerTranslation(path, zhCn);
+    return fixedOriginSettlement(
+        path, templateRoot, biome, salt, buildingTemplates, size,
+        maxDistanceFromCenter, heightmap, startHeight, removeVinesChance
     );
   }
 
@@ -543,6 +619,35 @@ public final class StructureCatalog {
     );
   }
 
+  public JigsawBuildingEntry jigsawBuilding(
+      String path,
+      String zhCn,
+      String enUs,
+      int spacing,
+      int separation,
+      int salt,
+      int size,
+      int maxDistanceFromCenter,
+      float removeVinesChance,
+      ResourceKey<Biome> biome,
+      boolean unique,
+      int ringDistance,
+      Types heightmap,
+      int startHeight,
+      boolean useExpansionHack,
+      boolean fixedOrigin,
+      Decoration generationStep,
+      TerrainAdjustment terrainAdjustment,
+      Consumer<? super JigsawBuildingBuilder> build
+  ) {
+    registerTranslation(path, zhCn, enUs);
+    return jigsawBuilding(
+        path, spacing, separation, salt, size, maxDistanceFromCenter, removeVinesChance,
+        biome, unique, ringDistance, heightmap, startHeight, useExpansionHack, fixedOrigin,
+        generationStep, terrainAdjustment, build
+    );
+  }
+
   /**
    * Registers a deterministic concentric-ring landmark which prefers its national biome but
    * remains valid in another Zinecraft biome when vanilla's 112-block biome correction cannot
@@ -577,6 +682,42 @@ public final class StructureCatalog {
         path, ringDistance + 1, ringDistance, salt, size, maxDistanceFromCenter,
         removeVinesChance, preferredBiome, true, ringDistance, heightmap, startHeight,
         false, false, generationStep, terrainAdjustment, allowedBiomes, build
+    );
+  }
+
+  public JigsawBuildingEntry guaranteedLandmark(
+      String path,
+      String zhCn,
+      int ringDistance,
+      int salt,
+      int size,
+      int maxDistanceFromCenter,
+      float removeVinesChance,
+      ResourceKey<Biome> preferredBiome,
+      List<ResourceKey<Biome>> allowedBiomes,
+      Types heightmap,
+      int startHeight,
+      Decoration generationStep,
+      TerrainAdjustment terrainAdjustment,
+      Consumer<? super JigsawBuildingBuilder> build
+  ) {
+    registerTranslation(path, zhCn);
+    return guaranteedLandmark(
+        path, ringDistance, salt, size, maxDistanceFromCenter, removeVinesChance,
+        preferredBiome, allowedBiomes, heightmap, startHeight, generationStep,
+        terrainAdjustment, build
+    );
+  }
+
+  private void registerTranslation(String path, String zhCn) {
+    registerTranslation(path, zhCn, TranslationNames.toDisplayName(path));
+  }
+
+  private void registerTranslation(String path, String zhCn, String enUs) {
+    translations.add(
+        "structure." + registrar.namespace + "." + path,
+        zhCn,
+        enUs
     );
   }
 

@@ -3,17 +3,15 @@ package com.cxxcxx.zinecraft.core.structure;
 import com.cxxcxx.zinecraft.api.world.structure.JigsawBuildingEntry;
 import com.cxxcxx.zinecraft.api.world.structure.StructureCatalog;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.biome.NationBiomes;
+import com.cxxcxx.zinecraft.core.biome.ModBiome;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashSet;
 import java.util.List;
 
-public final class NationSettlements {
+public final class ModSettlement {
   /**
    * Dense national settlement placement. The 17-chunk minimum center gap remains
    * larger than twice the 112-block Jigsaw radius, so neighbouring settlements
@@ -23,13 +21,12 @@ public final class NationSettlements {
   static final int DENSE_SETTLEMENT_SEPARATION = 16;
   static final int DENSE_SETTLEMENT_JIGSAW_DEPTH = 9;
   static final int DENSE_SETTLEMENT_MAX_DISTANCE = 112;
-  @NotNull
-  public static final NationSettlements INSTANCE = new NationSettlements();
-  @NotNull
+  public static final ModSettlement INSTANCE = new ModSettlement();
   public static final JigsawBuildingEntry AEGIR_SUBSEA_ENCLAVE = settlementWithDefaults(
       INSTANCE,
       "aegir_subsea_enclave",
-      NationBiomes.AEGIR_ABYSSAL_SEA,
+      "阿戈尔海底聚居地",
+      ModBiome.AEGIR_ABYSSAL_SEA,
       41000001,
       "pressure_residence",
       "hydroponics_lab",
@@ -42,11 +39,11 @@ public final class NationSettlements {
       1536,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry BOLIVAR_DOSSOLES_DISTRICT = settlementWithDefaults(
       INSTANCE,
       "bolivar_dossoles_district",
-      NationBiomes.BOLIVAR_PLAIN,
+      "玻利瓦尔多索雷斯城区",
+      ModBiome.BOLIVAR_PLAIN,
       41000002,
       "canal_house",
       "beach_market",
@@ -59,11 +56,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry HIGASHI_SOKOGAWA_TOWN = settlementWithDefaults(
       INSTANCE,
       "higashi_sokogawa_town",
-      NationBiomes.HIGASHI_SHADOW_RIFT,
+      "东国索谷川町",
+      ModBiome.HIGASHI_SHADOW_RIFT,
       41000003,
       "machiya",
       "swordsmith",
@@ -76,11 +73,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry DURIN_IDEAL_CITY_BLOCK = settlementWithDefaults(
       INSTANCE,
       "durin_ideal_city_block",
-      NationBiomes.DURIN_UNDERGROUND_GARDEN,
+      "杜林理想城街区",
+      ModBiome.DURIN_UNDERGROUND_GARDEN,
       41000004,
       "dome_apartment",
       "machine_shop",
@@ -93,11 +90,11 @@ public final class NationSettlements {
       1024,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry COLUMBIA_FRONTIER_TOWN = settlementWithDefaults(
       INSTANCE,
       "columbia_frontier_town",
-      NationBiomes.COLUMBIA_SANDSTONE_WILDS,
+      "哥伦比亚边疆城镇",
+      ModBiome.COLUMBIA_SANDSTONE_WILDS,
       41000005,
       "prefab_house",
       "pioneer_lab",
@@ -110,11 +107,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry KAZIMIERZ_KNIGHT_BOROUGH = settlementWithDefaults(
       INSTANCE,
       "kazimierz_knight_borough",
-      NationBiomes.KAZIMIERZ_KNIGHTLAND,
+      "卡西米尔骑士城区",
+      ModBiome.KAZIMIERZ_KNIGHTLAND,
       41000006,
       "tenement",
       "armor_workshop",
@@ -127,11 +124,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry KAZDEL_SARKAZ_SETTLEMENT = settlementWithDefaults(
       INSTANCE,
       "kazdel_sarkaz_settlement",
-      NationBiomes.KAZDEL_SCARRED_WASTES,
+      "卡兹戴尔萨卡兹聚落",
+      ModBiome.KAZDEL_SCARRED_WASTES,
       41000007,
       "canvas_house",
       "forge",
@@ -144,11 +141,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry LATERANO_MONASTERY_TOWN = settlementWithDefaults(
       INSTANCE,
       "laterano_monastery_town",
-      NationBiomes.LATERANO_HOLY_FIELDS,
+      "拉特兰修道院城镇",
+      ModBiome.LATERANO_HOLY_FIELDS,
       41000008,
       "white_residence",
       "confectionery",
@@ -161,11 +158,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry LEITHANIEN_MUSIC_TOWN = settlementWithDefaults(
       INSTANCE,
       "leithanien_music_town",
-      NationBiomes.LEITHANIEN_TWILIGHT_FOREST,
+      "莱塔尼亚音乐城镇",
+      ModBiome.LEITHANIEN_TWILIGHT_FOREST,
       41000009,
       "twilight_house",
       "instrument_workshop",
@@ -178,11 +175,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry RIM_BILLITON_MINING_CAMP = settlementWithDefaults(
       INSTANCE,
       "rim_billiton_mining_camp",
-      NationBiomes.RIM_BILLITON_MINING_BADLANDS,
+      "雷姆必拓采矿营地",
+      ModBiome.RIM_BILLITON_MINING_BADLANDS,
       41000010,
       "miner_bunkhouse",
       "ore_workshop",
@@ -195,11 +192,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry MINOS_HEROIC_POLIS = settlementWithDefaults(
       INSTANCE,
       "minos_heroic_polis",
-      NationBiomes.MINOS_SUNLIT_HILLS,
+      "米诺斯英雄城邦",
+      ModBiome.MINOS_SUNLIT_HILLS,
       41000011,
       "courtyard_house",
       "olive_market",
@@ -212,11 +209,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry SARGON_OASIS_TOWN = settlementWithDefaults(
       INSTANCE,
       "sargon_oasis_town",
-      NationBiomes.SARGON_ROCKY_DESERT,
+      "萨尔贡绿洲城镇",
+      ModBiome.SARGON_ROCKY_DESERT,
       41000012,
       "adobe_house",
       "spice_market",
@@ -229,11 +226,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry SAMI_SNOWPRIEST_VILLAGE = settlementWithDefaults(
       INSTANCE,
       "sami_snowpriest_village",
-      NationBiomes.SAMI_FROZEN_FOREST,
+      "萨米雪祀村落",
+      ModBiome.SAMI_FROZEN_FOREST,
       41000013,
       "snow_lodge",
       "hunter_camp",
@@ -246,11 +243,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry VICTORIA_INDUSTRIAL_BOROUGH = settlementWithDefaults(
       INSTANCE,
       "victoria_industrial_borough",
-      NationBiomes.VICTORIA_MISTY_HIGHLANDS,
+      "维多利亚工业城区",
+      ModBiome.VICTORIA_MISTY_HIGHLANDS,
       41000014,
       "brick_tenement",
       "steam_workshop",
@@ -263,11 +260,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry URSUS_NORTHERN_TOWN = settlementWithDefaults(
       INSTANCE,
       "ursus_northern_town",
-      NationBiomes.URSUS_FROZEN_STEPPE,
+      "乌萨斯北方城镇",
+      ModBiome.URSUS_FROZEN_STEPPE,
       41000015,
       "heated_house",
       "military_storehouse",
@@ -280,11 +277,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry KJERAG_MOUNTAIN_VILLAGE = settlementWithDefaults(
       INSTANCE,
       "kjerag_mountain_village",
-      NationBiomes.KJERAG_SNOWY_PEAKS,
+      "谢拉格山地村落",
+      ModBiome.KJERAG_SNOWY_PEAKS,
       41000016,
       "stone_chalet",
       "tea_workshop",
@@ -297,11 +294,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry SIRACUSA_FAMILY_TOWN = settlementWithDefaults(
       INSTANCE,
       "siracusa_family_town",
-      NationBiomes.SIRACUSA_RAINY_WOODLAND,
+      "叙拉古家族城镇",
+      ModBiome.SIRACUSA_RAINY_WOODLAND,
       41000017,
       "family_house",
       "trattoria",
@@ -314,11 +311,11 @@ public final class NationSettlements {
       896,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry YAN_SHANGSHU_TOWN = settlementWithDefaults(
       INSTANCE,
       "yan_shangshu_town",
-      NationBiomes.YAN_MOUNTAIN_GROVE,
+      "炎国尚蜀城镇",
+      ModBiome.YAN_MOUNTAIN_GROVE,
       41000018,
       "courtyard_residence",
       "tea_house",
@@ -331,11 +328,11 @@ public final class NationSettlements {
       1920,
       null
   );
-  @NotNull
   public static final JigsawBuildingEntry IBERIA_COASTAL_TOWN = settlementWithDefaults(
       INSTANCE,
       "iberia_coastal_town",
-      NationBiomes.IBERIA_SALT_DELTA,
+      "伊比利亚滨海城镇",
+      ModBiome.IBERIA_SALT_DELTA,
       41000019,
       "saltstone_house",
       "shipwright",
@@ -353,7 +350,7 @@ public final class NationSettlements {
     validateNationCoverage();
   }
 
-  private NationSettlements() {
+  private ModSettlement() {
   }
 
   /**
@@ -397,42 +394,47 @@ public final class NationSettlements {
   }
 
   static JigsawBuildingEntry settlementWithDefaults(
-      NationSettlements var0,
-      String var1,
-      ResourceKey var2,
-      int var3,
-      String var4,
-      String var5,
-      String var6,
-      String var7,
-      int var8,
-      Types var9,
-      int var10,
-      float var11,
-      int var12,
-      Object var13
+      ModSettlement self,
+      String path,
+      String zhCn,
+      ResourceKey<Biome> biome,
+      int salt,
+      String first,
+      String second,
+      String third,
+      String fourth,
+      int spacing,
+      Types heightmap,
+      int startHeight,
+      float removeVinesChance,
+      int mask,
+      Object marker
   ) {
-    if ((var12 & 128) != 0) {
-      var8 = DENSE_SETTLEMENT_SPACING;
+    if ((mask & 128) != 0) {
+      spacing = DENSE_SETTLEMENT_SPACING;
     }
 
-    if ((var12 & 256) != 0) {
-      var9 = Types.WORLD_SURFACE_WG;
+    if ((mask & 256) != 0) {
+      heightmap = Types.WORLD_SURFACE_WG;
     }
 
-    if ((var12 & 512) != 0) {
-      var10 = 0;
+    if ((mask & 512) != 0) {
+      startHeight = 0;
     }
 
-    if ((var12 & 1024) != 0) {
-      var11 = 0.0F;
+    if ((mask & 1024) != 0) {
+      removeVinesChance = 0.0F;
     }
 
-    return var0.settlement(var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11);
+    return self.settlement(
+        path, zhCn, biome, salt, first, second, third, fourth,
+        spacing, heightmap, startHeight, removeVinesChance
+    );
   }
 
   private final JigsawBuildingEntry settlement(
       String path,
+      String zhCn,
       ResourceKey<Biome> biome,
       int salt,
       String first,
@@ -453,13 +455,13 @@ public final class NationSettlements {
     }
     if ("laterano_monastery_town".equals(path)) {
       return structureCatalog.fixedOriginSettlement(
-          path, string, biome, salt, templates,
+          path, zhCn, string, biome, salt, templates,
           DENSE_SETTLEMENT_JIGSAW_DEPTH, DENSE_SETTLEMENT_MAX_DISTANCE,
           heightmap, startHeight, removeVinesChance
       );
     }
     return structureCatalog.settlement(
-        path, string, biome, salt, templates,
+        path, zhCn, string, biome, salt, templates,
         spacing, DENSE_SETTLEMENT_SEPARATION,
         DENSE_SETTLEMENT_JIGSAW_DEPTH, DENSE_SETTLEMENT_MAX_DISTANCE,
         heightmap, startHeight, removeVinesChance

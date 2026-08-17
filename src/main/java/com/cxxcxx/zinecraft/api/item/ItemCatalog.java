@@ -7,150 +7,105 @@ import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public final class ItemCatalog {
-  @NotNull
   private final ModRegistrar registrar;
-  @NotNull
   private final TranslationCatalog translations;
-  @NotNull
-  private final List<ItemEntry<?>> entries;
+  private final List<ItemBuilder<?>> mutableEntries = new ArrayList<>();
+  public final List<ItemBuilder<?>> entries = Collections.unmodifiableList(mutableEntries);
 
-  public ItemCatalog(@NotNull ModRegistrar registrar, @NotNull TranslationCatalog translations) {
-    super();
-    this.registrar = registrar;
-    this.translations = translations;
-    this.entries = new ArrayList<>();
+  public ItemCatalog(ModRegistrar registrar, TranslationCatalog translations) {
+    this.registrar = Objects.requireNonNull(registrar, "registrar");
+    this.translations = Objects.requireNonNull(translations, "translations");
   }
 
-  public static ItemEntry registerWithDefaults(
-      ItemCatalog var0, String var1, String var2, String var3, ModelTemplate var4, boolean var5, Supplier var6, int var7, Object var8
-  ) {
-    if ((var7 & 4) != 0) {
-      var3 = TranslationNames.toDisplayName(var1);
-    }
-
-    if ((var7 & 8) != 0) {
-      ModelTemplate modelTemplate = ModelTemplates.FLAT_ITEM;
-      var4 = modelTemplate;
-    }
-
-    if ((var7 & 16) != 0) {
-      var5 = true;
-    }
-
-    return var0.register(var1, var2, var3, var4, var5, var6);
+  public ItemBuilder<Item> builder(String path, String zhCn) {
+    return new ItemBuilder<>(this, path, zhCn, () -> new Item(new Item.Properties()));
   }
 
-  public static ItemEntry registerWithDefaults(
-      ItemCatalog var0, String var1, String var2, String var3, ModelTemplate var4, Properties var5, boolean var6, int var7, Object var8
-  ) {
-    if ((var7 & 4) != 0) {
-      var3 = TranslationNames.toDisplayName(var1);
-    }
-
-    if ((var7 & 8) != 0) {
-      ModelTemplate modelTemplate = ModelTemplates.FLAT_ITEM;
-      var4 = modelTemplate;
-    }
-
-    if ((var7 & 16) != 0) {
-      var5 = new Properties();
-    }
-
-    if ((var7 & 32) != 0) {
-      var6 = true;
-    }
-
-    return var0.register(var1, var2, var3, var4, var5, var6);
+  public <T extends Item> ItemBuilder<T> builder(String path, String zhCn, Supplier<? extends T> factory) {
+    return new ItemBuilder<>(this, path, zhCn, factory);
   }
 
-  private static final Item registerHelper5(Properties _properties) {
-    return new Item(_properties);
+  private static void validate(String path, String zhCn, String enUs) {
+    if (!ResourceLocation.isValidPath(path)) throw new IllegalArgumentException("物品 ID 路径无效：" + path);
+    if (zhCn == null || zhCn.isBlank()) throw new IllegalArgumentException("物品中文名不能为空：" + path);
+    if (enUs == null || enUs.isBlank()) throw new IllegalArgumentException("物品英文名不能为空：" + path);
   }
 
-  @NotNull
-  public final List<ItemEntry<?>> getEntries() {
-    return this.entries;
+  // 注册物品的核心方法
+  private <T extends Item> DeferredItem<T> register(ItemBuilder<T> builder) {
+    validate(builder.path, builder.zhCn, builder.enUs);
+    Objects.requireNonNull(builder.model, "物品模型不能为空：" + builder.path);
+    if (mutableEntries.stream().anyMatch(entry -> entry.path.equals(builder.path))) {
+      throw new IllegalArgumentException("物品 ID 重复：" + builder.path);
+    }
+
+    DeferredItem<T> item = registrar.item(builder.path, builder.factory);
+    builder.item = item;
+    mutableEntries.add(builder);
+    translations.add("item." + registrar.namespace + "." + builder.path, builder.zhCn, builder.enUs);
+    return item;
   }
 
-  @NotNull
-  public final <T extends Item> ItemEntry<T> register(
-      @NotNull String path,
-      @NotNull String zhCn,
-      @NotNull String enUs,
-      @NotNull ModelTemplate model,
-      boolean includeInCreative,
-      @NotNull Supplier<? extends T> factory
-  ) {
-    if (!ResourceLocation.isValidPath(path)) {
-      int m = 0;
-      String string3 = "物品 ID 路径无效：" + path;
-      throw new IllegalArgumentException(string3.toString());
+  // Item 物品辅助注册类
+  public static final class ItemBuilder<T extends Item> {
+    private final ItemCatalog catalog;
+    private final Supplier<? extends T> factory;
+    public final String path;
+    public final String zhCn;
+    public String enUs;
+    public ModelTemplate model = ModelTemplates.FLAT_ITEM;
+    public boolean inCreativeTab = true;
+    public int fuelTicks;
+    public float compostChance = -1.0F;
+    public DeferredItem<T> item;
+
+    private ItemBuilder(ItemCatalog catalog, String path, String zhCn, Supplier<? extends T> factory) {
+      this.catalog = catalog;
+      this.path = path;
+      this.zhCn = zhCn;
+      this.enUs = TranslationNames.toDisplayName(path);
+      this.factory = Objects.requireNonNull(factory, "物品 factory 不能为空：" + path);
     }
 
-    if (zhCn.isBlank()) {
-      int l = 0;
-      String string2 = "物品中文名不能为空：" + path;
-      throw new IllegalArgumentException(string2.toString());
+    public ItemBuilder<T> enUs(String enUs) {
+      this.enUs = enUs;
+      return this;
     }
 
-    if (enUs.isBlank()) {
-      int k = 0;
-      String string1 = "物品英文名不能为空：" + path;
-      throw new IllegalArgumentException(string1.toString());
+    public ItemBuilder<T> model(ModelTemplate model) {
+      this.model = model;
+      return this;
     }
 
-    var iterable = this.entries;
-    int i = 0;
-    boolean bl;
-    if (iterable instanceof Collection && ((Collection) iterable).isEmpty()) {
-      bl = true;
-    } else {
-      Iterator iterator = iterable.iterator();
-
-      while (true) {
-        if (!iterator.hasNext()) {
-          bl = true;
-          break;
-        }
-
-        Object object = iterator.next();
-        ItemEntry itemEntry = (ItemEntry) object;
-        int j = 0;
-        if (java.util.Objects.equals(itemEntry.getPath(), path)) {
-          bl = false;
-          break;
-        }
-      }
+    public ItemBuilder<T> hideCreativeTab() {
+      inCreativeTab = false;
+      return this;
     }
 
-    if (!bl) {
-      i = 0;
-      String string = "物品 ID 重复：" + path;
-      throw new IllegalArgumentException(string.toString());
-    } else {
-      ItemEntry itemEntry1 = new ItemEntry<>(path, this.registrar.item(path, factory), model, includeInCreative);
-      this.entries.add(itemEntry1);
-      TranslationCatalog translationCatalog = this.translations;
-      String string4 = "item." + this.registrar.getNamespace() + "." + path;
-      translationCatalog.add(string4, zhCn, enUs);
-      return itemEntry1;
+    public ItemBuilder<T> fuel(int ticks) {
+      if (ticks <= 0) throw new IllegalArgumentException("燃料时间必须大于 0");
+      fuelTicks = ticks;
+      return this;
     }
-  }
 
-  @NotNull
-  public final ItemEntry<Item> register(
-      @NotNull String path, @NotNull String zhCn, @NotNull String enUs, @NotNull ModelTemplate model, @NotNull Properties properties, boolean includeInCreative
-  ) {
-    return this.register(path, zhCn, enUs, model, includeInCreative, () -> new Item(properties));
+    public ItemBuilder<T> compost(float chance) {
+      if (chance < 0.0F || chance > 1.0F) throw new IllegalArgumentException("堆肥概率必须在 0 到 1 之间");
+      compostChance = chance;
+      return this;
+    }
+
+    public DeferredItem<T> build() {
+      if (item != null) throw new IllegalStateException("物品 builder 不能重复 build：" + path);
+      return catalog.register(this);
+    }
   }
 }

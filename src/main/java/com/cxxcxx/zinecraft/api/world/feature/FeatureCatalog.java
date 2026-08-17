@@ -33,13 +33,6 @@ public final class FeatureCatalog {
     this.registrar = registrar;
   }
 
-  public static OreEntry oreWithDefaults(FeatureCatalog self, String path, Supplier<? extends Block> block, int veinSize,
-                                     int veinsPerChunk, int maxY, float discard, BiomeSelection biomes, int mask, Object marker) {
-    return self.ore(path, block, veinSize, veinsPerChunk,
-        (mask & 16) != 0 ? 0 : maxY, (mask & 32) != 0 ? 0 : discard,
-        (mask & 64) != 0 ? BiomeSelection.overworld() : biomes);
-  }
-
   public OreEntry ore(String path, Supplier<? extends Block> block, int veinSize, int veinsPerChunk, int maxY,
                       float discardChanceOnAirExposure, BiomeSelection biomes) {
     if (veinSize <= 0 || veinsPerChunk <= 0) throw new IllegalArgumentException("矿脉参数必须大于 0");
@@ -68,8 +61,8 @@ public final class FeatureCatalog {
   public void bootstrapConfigured(BootstrapContext<ConfiguredFeature<?, ?>> context) {
     for (var ore : ores) {
       var targets = List.of(
-          OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), ore.getBlock().defaultBlockState()),
-          OreConfiguration.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), ore.getBlock().defaultBlockState())
+          OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), ore.block().get().defaultBlockState()),
+          OreConfiguration.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), ore.block().get().defaultBlockState())
       );
       context.register(ore.configuredKey(), new ConfiguredFeature<>(Feature.ORE,
           new OreConfiguration(targets, ore.veinSize(), ore.discardChanceOnAirExposure())));

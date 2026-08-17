@@ -32,7 +32,7 @@ public final class NationResident extends PathfinderMob implements NationAffilia
   }
 
   @NotNull
-  public final NationResidentProfile getProfile() {
+  public NationResidentProfile getProfile() {
     return this.profile;
   }
 
@@ -68,12 +68,12 @@ public final class NationResident extends PathfinderMob implements NationAffilia
     }
 
     @NotNull
-    public final Builder attributes() {
+    public Builder attributes() {
       Builder builder = Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0).add(Attributes.MOVEMENT_SPEED, 0.25).add(Attributes.FOLLOW_RANGE, 16.0);
       return builder;
     }
 
-    public final boolean canSpawn(
+    public boolean canSpawn(
         @NotNull EntityType<NationResident> type,
         @NotNull ServerLevelAccessor level,
         @NotNull MobSpawnType reason,

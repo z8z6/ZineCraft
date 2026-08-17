@@ -12,6 +12,6 @@ final class LateranoLoadout {
   }
 
   static ItemStack createGun(RandomSource random) {
-    return new ItemStack(ModWeapons.TEST_RIFLE_ITEM.getItem());
+    return new ItemStack(ModWeapons.TEST_RIFLE_ITEM.get());
   }
 }

@@ -18,35 +18,4 @@ public record OreEntry(
     float discardChanceOnAirExposure,
     BiomeSelection biomes
 ) {
-  public ResourceKey<ConfiguredFeature<?, ?>> getConfiguredKey() {
-    return configuredKey;
-  }
-
-  public ResourceKey<PlacedFeature> getPlacedKey() {
-    return placedKey;
-  }
-
-  public Block getBlock() {
-    return block.get();
-  }
-
-  public int getVeinSize() {
-    return veinSize;
-  }
-
-  public int getVeinsPerChunk() {
-    return veinsPerChunk;
-  }
-
-  public int getMaxY() {
-    return maxY;
-  }
-
-  public float getDiscardChanceOnAirExposure() {
-    return discardChanceOnAirExposure;
-  }
-
-  public BiomeSelection getBiomes() {
-    return biomes;
-  }
 }

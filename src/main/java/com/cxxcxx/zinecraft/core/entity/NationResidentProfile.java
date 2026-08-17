@@ -51,7 +51,7 @@ public final class NationResidentProfile implements NationAffiliated {
     } else if (this.nation != nationResidentProfile.nation) {
       return false;
     } else {
-      return !java.util.Objects.equals(this.heldItem, nationResidentProfile.heldItem) ? false : this.aquatic == nationResidentProfile.aquatic;
+      return java.util.Objects.equals(this.heldItem, nationResidentProfile.heldItem) && this.aquatic == nationResidentProfile.aquatic;
     }
   }
 

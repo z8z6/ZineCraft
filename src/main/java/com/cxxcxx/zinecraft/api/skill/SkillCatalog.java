@@ -1,9 +1,8 @@
 package com.cxxcxx.zinecraft.api.skill;
 
 import com.cxxcxx.zinecraft.api.item.ItemCatalog;
-import com.cxxcxx.zinecraft.api.item.ItemEntry;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -12,14 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public final class SkillCatalog {
-  @NotNull
   private final ItemCatalog items;
-  @NotNull
   private final TranslationCatalog translations;
-  @NotNull
   private final List<SkillEntry> entries;
 
-  public SkillCatalog(@NotNull ItemCatalog items, @NotNull TranslationCatalog translations) {
+  public SkillCatalog(ItemCatalog items, TranslationCatalog translations) {
     super();
     this.items = items;
     this.translations = translations;
@@ -30,29 +26,27 @@ public final class SkillCatalog {
     return new SkillItem(definition);
   }
 
-  @NotNull
   public final List<SkillEntry> getEntries() {
     return this.entries;
   }
 
-  @NotNull
   public final SkillEntry register(
-      @NotNull String path,
-      @NotNull String zhCn,
-      @NotNull String enUs,
-      @NotNull String operatorZhCn,
-      @NotNull String operatorEnUs,
-      @NotNull SkillProfession profession,
-      @NotNull String recoveryZhCn,
-      @NotNull String recoveryEnUs,
-      @NotNull String triggerZhCn,
-      @NotNull String triggerEnUs,
+      String path,
+      String zhCn,
+      String enUs,
+      String operatorZhCn,
+      String operatorEnUs,
+      SkillProfession profession,
+      String recoveryZhCn,
+      String recoveryEnUs,
+      String triggerZhCn,
+      String triggerEnUs,
       int initialSp,
       int spCost,
       @Nullable Integer durationSeconds,
-      @NotNull String descriptionZhCn,
-      @NotNull String descriptionEnUs,
-      @NotNull SkillDemoTheme theme
+      String descriptionZhCn,
+      String descriptionEnUs,
+      SkillDemoTheme theme
   ) {
     if (initialSp < 0) {
       int m = 0;
@@ -89,7 +83,7 @@ public final class SkillCatalog {
         Object object = iterator.next();
         SkillEntry skillEntry = (SkillEntry) object;
         int j = 0;
-        if (java.util.Objects.equals(skillEntry.getDefinition().getPath(), path)) {
+        if (java.util.Objects.equals(skillEntry.definition().getPath(), path)) {
           bl = false;
           break;
         }
@@ -119,11 +113,12 @@ public final class SkillCatalog {
           descriptionEnUs,
           theme
       );
-      ItemEntry itemEntry = this.items.register(path, zhCn, enUs,
-          net.minecraft.data.models.model.ModelTemplates.FLAT_ITEM, false,
-          () -> createItem(skillDefinition));
+      DeferredItem<SkillItem> item = this.items.builder(path, zhCn, () -> createItem(skillDefinition))
+          .enUs(enUs)
+          .hideCreativeTab()
+          .build();
       this.registerTranslations(skillDefinition);
-      SkillEntry skillEntry1 = new SkillEntry(skillDefinition, itemEntry);
+      SkillEntry skillEntry1 = new SkillEntry(skillDefinition, item);
       List list = this.entries;
       SkillEntry skillEntry2 = skillEntry1;
       int n = 0;

@@ -16,7 +16,7 @@ public final class TerraNationRelations {
   private TerraNationRelations() {
   }
 
-  private final List<NationState> states() {
+  private List<NationState> states() {
     NationState[] nationStates = new NationState[]{
         this.state(TerraNation.AEGIR, 72, 50, 80, 10, 15),
         this.state(TerraNation.BOLIVAR, 35, 20, 45, 55, 55),
@@ -41,7 +41,7 @@ public final class TerraNationRelations {
     return java.util.List.of(nationStates);
   }
 
-  private final List<NationRelation> relations() {
+  private List<NationRelation> relations() {
     List list = new ArrayList();
     List list1 = list;
     int i = 0;
@@ -136,15 +136,15 @@ public final class TerraNationRelations {
     return List.copyOf(list);
   }
 
-  private final NationState state(TerraNation nation, int prosperity, int stability, int military, int openness, int aggression) {
+  private NationState state(TerraNation nation, int prosperity, int stability, int military, int openness, int aggression) {
     return new NationState(nation, prosperity, stability, military, openness, aggression);
   }
 
-  private final NationRelationEvidence evidence(String url, String fact) {
+  private NationRelationEvidence evidence(String url, String fact) {
     return new NationRelationEvidence(url, fact);
   }
 
-  private final List<NationRelation> mutual(
+  private List<NationRelation> mutual(
       TerraNation first,
       TerraNation second,
       int favor,
@@ -162,7 +162,7 @@ public final class TerraNationRelations {
     return java.util.List.of(nationRelations);
   }
 
-  private final NationRelation relation(
+  private NationRelation relation(
       TerraNation from, TerraNation to, int favor, int warDesire, int trade, int tension, int trust, NationRelationEvidence evidence, NationRelationTag... tags
   ) {
     return new NationRelation(from, to, favor, warDesire, trade, tension, trust, java.util.Set.of(tags), evidence.getFactSummary(), evidence);

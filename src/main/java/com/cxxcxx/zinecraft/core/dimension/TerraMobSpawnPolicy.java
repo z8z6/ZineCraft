@@ -12,7 +12,7 @@ public final class TerraMobSpawnPolicy {
   }
 
   public static void onFinalizeSpawn(FinalizeSpawnEvent event) {
-    if (!event.getLevel().getLevel().dimension().equals(ModDimensions.TERRA.getLevelKey())) {
+    if (!event.getLevel().getLevel().dimension().equals(ModDimension.TERRA.getLevelKey())) {
       return;
     }
 

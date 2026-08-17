@@ -48,9 +48,9 @@ Minecraft 化提炼，不表示整个国家只有这一种地貌，也不直接�
 - `TerraBiomeSource`：将原点半径 1024 格固定为拉特兰圣田，外围对其余十八国和天灾区执行多噪声分区，并拒绝非 `zinecraft` 群系。
 - `NationBlocks`：为十九个国家各注册一种地貌方块和一种建筑外墙方块，并提供独立贴图。
 - `ModSurfaceRule`：为十九个国家分配专属主表层，并按生态需要混入少量草方块斑块，不修改原版群系。
-- `NationLandmarks`：为每个国家声明两座绑定群系的唯一建筑。
-- `NationSettlements`：为每个国家声明一套可重复生成的大型 Jigsaw 城镇、村落或营地。
-- `ModEntities`：为每个国家群系限定生成特色生物与所属国家明确的居民实体。
+- `ModLandmark`：为每个国家声明两座绑定群系的唯一建筑，并在注册时写入中文名。
+- `ModSettlement`：为每个国家声明一套可重复生成的大型 Jigsaw 城镇、村落或营地，并在注册时写入中文名。
+- `ModEntity`：为每个国家群系限定生成特色生物与所属国家明确的居民实体。
 - `TerraNationRelations`：提供十九国状态以及完整的有向国家关系网。
 - `generate_nation_landmarks.py`：确定性生成 38 个不同轮廓和材料的 structure NBT。
 - `generate_nation_settlements.py`：确定性生成 19 套、共 171 个聚落 Jigsaw 模板。

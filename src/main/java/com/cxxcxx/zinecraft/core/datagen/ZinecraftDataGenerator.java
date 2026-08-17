@@ -37,7 +37,7 @@ public final class ZinecraftDataGenerator {
       registryBuilder.add(Registries.JUKEBOX_SONG, ModSound.INSTANCE::configure);
       event.createDatapackRegistryObjects(registryBuilder);
 
-      event.addProvider(new CatalogLootTableProvider(output, lookup, Zinecraft.BLOCKS));
+      event.addProvider(new CatalogLootTableProvider(output, lookup, Zinecraft.BLOCKS, Zinecraft.ENTITIES));
       event.addProvider(new ModRecipeProvider(output, lookup));
     }
   }

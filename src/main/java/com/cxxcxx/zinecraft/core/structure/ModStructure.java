@@ -16,6 +16,8 @@ public final class ModStructure {
   @NotNull
   public static final JigsawBuildingEntry STARGATE = Zinecraft.WORLDGEN.getStructures().jigsawBuilding(
       "stargate",
+      "雪原星门",
+      "Snowfield Stargate",
       8,
       4,
       958853901,

@@ -7,6 +7,7 @@ public final class TranslationNames {
   private TranslationNames() {
   }
 
+  // 将 chip_defender 转为 Chip Defender
   public static String toDisplayName(String value) {
     return Arrays.stream(value.split("[_.]"))
         .filter(word -> !word.isEmpty())

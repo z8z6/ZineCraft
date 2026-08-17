@@ -20,7 +20,7 @@ public final class CollectibleCombatStats {
     CuriosApi.getCuriosInventory(entity).ifPresent(handler -> handler.findCurios(
         stack -> stack.getItem() instanceof CollectibleItem
     ).forEach(slot -> {
-      if (slot.stack().getItem() instanceof CollectibleItem item) add(item.getSpec().getPower(), stat, result);
+      if (slot.stack().getItem() instanceof CollectibleItem item) add(item.spec().power(), stat, result);
     }));
     return List.copyOf(result);
   }

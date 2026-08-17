@@ -2,8 +2,8 @@ package com.cxxcxx.zinecraft.core.dimension;
 
 import com.cxxcxx.zinecraft.api.world.dimension.*;
 import com.cxxcxx.zinecraft.core.Zinecraft;
+import com.cxxcxx.zinecraft.core.biome.ModBiome;
 import com.cxxcxx.zinecraft.core.biome.NationBiomePlacements;
-import com.cxxcxx.zinecraft.core.biome.NationBiomes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Holder.Reference;
@@ -11,18 +11,15 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate.ParameterList;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ModDimensions {
-  @NotNull
-  public static final ModDimensions INSTANCE = new ModDimensions();
+public final class ModDimension {
+
+  public static final ModDimension INSTANCE = new ModDimension();
   public static final int LATERANO_CENTER_RADIUS = 1024;
-  @NotNull
   public static final DimensionEntry TERRA;
-  @NotNull
   private static final MapCodec<TerraBiomeSource> TERRA_BIOME_SOURCE = Zinecraft.REGISTRAR
       .biomeSource("terra", TerraBiomeSource.ACCESS.getCODEC());
 
@@ -39,21 +36,19 @@ public final class ModDimensions {
     for (Object object : _this_filterNotTo_iv_iv) {
       DimensionBiome dimensionBiome = (DimensionBiome) object;
       int k = 0;
-      if (!java.util.Objects.equals(dimensionBiome.getBiome(), NationBiomes.LATERANO_HOLY_FIELDS)) {
+      if (!java.util.Objects.equals(dimensionBiome.getBiome(), ModBiome.LATERANO_HOLY_FIELDS)) {
         collection.add(object);
       }
     }
 
-    List list = (List) collection;
-    TERRA = dimensionCatalog.register(string, list, ModDimensions::TERRAHelper1);
+    List list = collection;
+    TERRA = dimensionCatalog.register(string, list, ModDimension::TERRAHelper1);
     Zinecraft.TRANSLATIONS.add("dimension.zinecraft.terra", "泰拉", "Terra");
   }
 
-  private ModDimensions() {
-  }
 
   private static final ChunkGenerator TERRAHelper1(DimensionBootstrapContext context) {
-    Reference reference = context.getBiomes().getOrThrow(NationBiomes.LATERANO_HOLY_FIELDS);
+    Reference reference = context.getBiomes().getOrThrow(ModBiome.LATERANO_HOLY_FIELDS);
     ParameterList parameterList = context.getBiomeParameters();
     return (ChunkGenerator) (new NoiseBasedChunkGenerator(new TerraBiomeSource(parameterList, (Holder<Biome>) reference, 1024), context.getNoiseSettings()));
   }

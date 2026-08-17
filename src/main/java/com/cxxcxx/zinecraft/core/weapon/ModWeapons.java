@@ -1,7 +1,5 @@
 package com.cxxcxx.zinecraft.core.weapon;
 
-import com.cxxcxx.zinecraft.api.item.ItemCatalog;
-import com.cxxcxx.zinecraft.api.item.ItemEntry;
 import com.cxxcxx.zinecraft.api.weapon.*;
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
 import com.cxxcxx.zinecraft.api.weapon.action.firearm.FirearmFireAction;
@@ -22,6 +20,7 @@ import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
+import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -35,37 +34,29 @@ public final class ModWeapons {
   @NotNull
   private static final ModelTemplate VANILLA_IRON_SWORD_MODEL = INSTANCE.vanillaModel("iron_sword");
   @NotNull
-  public static final ItemEntry<SwordItem> TEST_SWORD_ITEM = ItemCatalog.registerWithDefaults(
-      Zinecraft.ITEMS, "test_sword", "测试剑", "Test Sword", VANILLA_IRON_SWORD_MODEL, false, ModWeapons::TEST_SWORD_ITEMHelper0, 16, null
-  );
+  public static final DeferredItem<SwordItem> TEST_SWORD_ITEM = Zinecraft.ITEMS
+      .builder("test_sword", "测试剑", ModWeapons::TEST_SWORD_ITEMHelper0)
+      .enUs("Test Sword")
+      .model(VANILLA_IRON_SWORD_MODEL)
+      .build();
   @NotNull
-  public static final ItemEntry<Item> TEST_CARTRIDGE = ItemCatalog.registerWithDefaults(
-      Zinecraft.ITEMS, "test_cartridge", "测试弹药", "Test Cartridge", INSTANCE.vanillaModel("iron_nugget"), null, false, 48, null
-  );
+  public static final DeferredItem<Item> TEST_CARTRIDGE = Zinecraft.ITEMS
+      .builder("test_cartridge", "测试弹药")
+      .enUs("Test Cartridge")
+      .model(INSTANCE.vanillaModel("iron_nugget"))
+      .build();
   @NotNull
-  public static final ItemEntry<FirearmItem> TEST_RIFLE_ITEM = ItemCatalog.registerWithDefaults(
-      Zinecraft.ITEMS,
-      "test_rifle",
-      "测试步枪",
-      "Test Rifle",
-      INSTANCE.vanillaModel("crossbow"),
-      false,
-      ModWeapons::TEST_RIFLE_ITEMHelper0,
-      16,
-      null
-  );
+  public static final DeferredItem<FirearmItem> TEST_RIFLE_ITEM = Zinecraft.ITEMS
+      .builder("test_rifle", "测试步枪", ModWeapons::TEST_RIFLE_ITEMHelper0)
+      .enUs("Test Rifle")
+      .model(INSTANCE.vanillaModel("crossbow"))
+      .build();
   @NotNull
-  public static final ItemEntry<ActionWeaponItem> TEST_STAFF_ITEM = ItemCatalog.registerWithDefaults(
-      Zinecraft.ITEMS,
-      "test_staff",
-      "测试法杖",
-      "Test Staff",
-      INSTANCE.vanillaModel("blaze_rod"),
-      false,
-      ModWeapons::TEST_STAFF_ITEMHelper0,
-      16,
-      null
-  );
+  public static final DeferredItem<ActionWeaponItem> TEST_STAFF_ITEM = Zinecraft.ITEMS
+      .builder("test_staff", "测试法杖", ModWeapons::TEST_STAFF_ITEMHelper0)
+      .enUs("Test Staff")
+      .model(INSTANCE.vanillaModel("blaze_rod"))
+      .build();
   @NotNull
   public static final WeaponDefinition TEST_SWORD;
   @NotNull
@@ -230,9 +221,9 @@ public final class ModWeapons {
   }
 
   public void bindRegisteredItems() {
-    Zinecraft.WEAPONS.register(TEST_SWORD_ITEM.getItem(), TEST_SWORD);
-    Zinecraft.WEAPONS.register(TEST_RIFLE_ITEM.getItem(), TEST_RIFLE);
-    Zinecraft.WEAPONS.register(TEST_STAFF_ITEM.getItem(), TEST_STAFF);
+    Zinecraft.WEAPONS.register(TEST_SWORD_ITEM.get(), TEST_SWORD);
+    Zinecraft.WEAPONS.register(TEST_RIFLE_ITEM.get(), TEST_RIFLE);
+    Zinecraft.WEAPONS.register(TEST_STAFF_ITEM.get(), TEST_STAFF);
   }
 
   private static final SwordItem TEST_SWORD_ITEMHelper0() {

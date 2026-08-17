@@ -160,7 +160,7 @@ public final class EnchantmentCatalog {
           configure
       );
       this.entries.add(enchantmentEntry);
-      this.translations.add("enchantment." + this.registrar.getNamespace() + "." + path, zhCn, enUs);
+      this.translations.add("enchantment." + this.registrar.namespace + "." + path, zhCn, enUs);
       return enchantmentEntry;
     }
   }
@@ -216,4 +216,3 @@ public final class EnchantmentCatalog {
     }
   }
 }
-

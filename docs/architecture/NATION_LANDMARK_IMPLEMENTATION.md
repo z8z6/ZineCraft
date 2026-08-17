@@ -42,7 +42,7 @@ profile、屋顶族或国家参数表。全局校验对“忽略国家材质后�
 
 ## 注册与生成
 
-Java 侧 `NationLandmarks.modularLandmark` 保留原结构 key、六个模板池、国家偏好群系、环形唯一放置和
+Java 侧 `ModLandmark.landmark` 保留原结构 key、六个模板池、国家偏好群系、环形唯一放置和
 `maxDistanceFromCenter=112`。
 正式地标使用 `guaranteedLandmark`；候选优先纠偏到本国群系，在附近无本国群系时允许泰拉群系回退，避免唯一候选缺席。
 
