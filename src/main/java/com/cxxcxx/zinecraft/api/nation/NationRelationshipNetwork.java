@@ -14,9 +14,11 @@ public final class NationRelationshipNetwork {
       for (var to : TerraNation.values())
         if (from != to)
           relationsByKey.put(new NationRelationKey(from, to), defaultRelation(from, to));
+    Set<NationRelationKey> explicitKeys = new HashSet<>();
     for (var relation : explicitRelations) {
       var key = new NationRelationKey(relation.from(), relation.to());
-      if (relationsByKey.put(key, relation) == relation) throw new IllegalArgumentException("存在重复的有向国家关系");
+      if (!explicitKeys.add(key)) throw new IllegalArgumentException("存在重复的有向国家关系");
+      relationsByKey.put(key, relation);
     }
   }
 
