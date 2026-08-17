@@ -57,7 +57,6 @@ Linux/macOS 将 `.\gradlew.bat` 替换为 `./gradlew`。构建产物位于 `buil
 src/main/java/       通用注册、玩法、世界生成和兼容层
 src/client/java/     渲染、输入、Ponder 与客户端资源桥接
 src/main/resources/  发布资源、结构 NBT、任务模板和手写数据
-src/test/java/       JUnit 测试
 docs/                开发和内容文档
 .agents/skills/      面向仓库维护代理的领域工作流
 script/              资源与结构生成脚本

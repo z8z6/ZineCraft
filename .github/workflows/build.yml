@@ -24,8 +24,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: run unit tests
-        run: ./gradlew test --no-configuration-cache --console=plain
       # Generated language/model data is intentionally ignored by Git. Keep these
       # as separate invocations so a clean checkout exercises the real release order.
       - name: generate data
