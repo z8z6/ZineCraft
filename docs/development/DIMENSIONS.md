@@ -32,7 +32,7 @@ src/generated/resources/data/zinecraft/dimension_type/terra.json
 会看到：
 
 ```java
-Zinecraft.INSTANCE.getTRANSLATIONS().add(
+Zinecraft.TRANSLATIONS.add(
     "dimension.zinecraft.terra",
     "泰拉",
     "Terra"
@@ -42,7 +42,7 @@ Zinecraft.INSTANCE.getTRANSLATIONS().add(
 例如改成：
 
 ```java
-Zinecraft.INSTANCE.getTRANSLATIONS().add(
+Zinecraft.TRANSLATIONS.add(
     "dimension.zinecraft.terra",
     "泰拉大陆",
     "Terra"

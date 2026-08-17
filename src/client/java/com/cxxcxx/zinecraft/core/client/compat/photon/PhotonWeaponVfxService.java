@@ -52,7 +52,7 @@ public final class PhotonWeaponVfxService implements WeaponPresentationVfxServic
       executor.setOffset(offset(entity, effect));
       executor.start();
     } catch (RuntimeException exception) {
-      Zinecraft.INSTANCE.getLogger().warn("Photon failed to play weapon effect {}; using vanilla particles", effect, exception);
+      Zinecraft.LOGGER.warn("Photon failed to play weapon effect {}; using vanilla particles", effect, exception);
       VanillaWeaponVfxService.INSTANCE.play(entity, effect);
     }
   }

@@ -42,7 +42,7 @@ public final class ZinecraftJerPlugin implements IJERPlugin {
     api.getWorldGenRegistry().register(new ItemStack(ore.getBlock()), distribution, Restriction.OVERWORLD, false, loot);
     api.getWorldGenRegistry().register(
         new ItemStack(ore.getBlock()), distribution,
-        new Restriction(new DimensionRestriction(ModDimensions.INSTANCE.getTERRA().getLevelKey())), false, loot
+        new Restriction(new DimensionRestriction(ModDimensions.TERRA.getLevelKey())), false, loot
     );
   }
 
@@ -72,14 +72,14 @@ public final class ZinecraftJerPlugin implements IJERPlugin {
   @Override
   public void receive(IJERAPI api) {
     if (!REGISTERED.compareAndSet(false, true)) return;
-    register(api, ModWorldFeatures.INSTANCE.getORIGINITE_ORE(), ModItem.INSTANCE.getORIGINITE());
-    register(api, ModWorldFeatures.INSTANCE.getORIROCK_ORE(), ModItem.INSTANCE.getORIROCK());
-    register(api, ModWorldFeatures.INSTANCE.getORIRON_ORE(), ModItem.INSTANCE.getORIRON_SHARD());
-    register(api, ModWorldFeatures.INSTANCE.getMANGANESE_ORE(), ModItem.INSTANCE.getMANGANESE_ORE());
-    register(api, ModWorldFeatures.INSTANCE.getGRINDSTONE_ORE(), ModItem.INSTANCE.getGRINDSTONE());
-    register(api, ModWorldFeatures.INSTANCE.getRMA70_ORE(), ModItem.INSTANCE.getRMA70_12());
-    register(api, ModWorldFeatures.INSTANCE.getCRYSTAL_ELEMENT_ORE(), ModItem.INSTANCE.getCRYSTAL_ELEMENT());
-    register(api, ModWorldFeatures.INSTANCE.getLOXIC_KOHL_ORE(), ModItem.INSTANCE.getLOXIC_KOHL());
-    Zinecraft.INSTANCE.getLogger().info("Registered 8 material ore distributions for JER in the Overworld and Terra");
+    register(api, ModWorldFeatures.ORIGINITE_ORE, ModItem.ORIGINITE);
+    register(api, ModWorldFeatures.ORIROCK_ORE, ModItem.ORIROCK);
+    register(api, ModWorldFeatures.ORIRON_ORE, ModItem.ORIRON_SHARD);
+    register(api, ModWorldFeatures.MANGANESE_ORE, ModItem.MANGANESE_ORE);
+    register(api, ModWorldFeatures.GRINDSTONE_ORE, ModItem.GRINDSTONE);
+    register(api, ModWorldFeatures.RMA70_ORE, ModItem.RMA70_12);
+    register(api, ModWorldFeatures.CRYSTAL_ELEMENT_ORE, ModItem.CRYSTAL_ELEMENT);
+    register(api, ModWorldFeatures.LOXIC_KOHL_ORE, ModItem.LOXIC_KOHL);
+    Zinecraft.LOGGER.info("Registered 8 material ore distributions for JER in the Overworld and Terra");
   }
 }

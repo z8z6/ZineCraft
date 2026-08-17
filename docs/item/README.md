@@ -1,11 +1,11 @@
 # 添加物品
 
-物品通过 `Zinecraft.INSTANCE.getITEMS()` 声明。目录负责注册、双语翻译、模型元数据、创造模式收集、燃料和堆肥信息。
+物品通过 `Zinecraft.ITEMS` 声明。目录负责注册、双语翻译、模型元数据、创造模式收集、燃料和堆肥信息。
 
 ## Java 示例
 
 ```java
-private static final ItemEntry<Item> ORIROCK = Zinecraft.INSTANCE.getITEMS().register(
+public static final ItemEntry<Item> ORIROCK = Zinecraft.ITEMS.register(
     "orirock",
     "源岩",
     "Orirock",
@@ -18,7 +18,7 @@ private static final ItemEntry<Item> ORIROCK = Zinecraft.INSTANCE.getITEMS().reg
 自定义物品通过 factory 保留具体类型：
 
 ```java
-private static final ItemEntry<ScannerItem> SCANNER = Zinecraft.INSTANCE.getITEMS().register(
+public static final ItemEntry<ScannerItem> SCANNER = Zinecraft.ITEMS.register(
     "scanner", "扫描器", "Scanner",
     ModelTemplates.FLAT_ITEM, true,
     () -> new ScannerItem(new Item.Properties().stacksTo(1))
@@ -61,7 +61,7 @@ src/main/resources/assets/zinecraft/textures/item/<path>.png
 
 ## 创造模式页
 
-创造模式页通过 `Zinecraft.INSTANCE.getCREATIVE_TABS()` 注册。应在需要收集的物品声明完成后创建页面；藏品、技能和 TaCZ
+创造模式页通过 `Zinecraft.CREATIVE_TABS` 注册。应在需要收集的物品声明完成后创建页面；藏品、技能和 TaCZ
 动态物品分别使用独立页面。
 
 ## 国家食物与藏品

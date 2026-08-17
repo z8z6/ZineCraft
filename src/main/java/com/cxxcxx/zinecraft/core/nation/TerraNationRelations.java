@@ -11,14 +11,9 @@ public final class TerraNationRelations {
   @NotNull
   public static final TerraNationRelations INSTANCE = new TerraNationRelations();
   @NotNull
-  private static final NationRelationshipNetwork NETWORK = new NationRelationshipNetwork(INSTANCE.states(), INSTANCE.relations());
+  public static final NationRelationshipNetwork NETWORK = new NationRelationshipNetwork(INSTANCE.states(), INSTANCE.relations());
 
   private TerraNationRelations() {
-  }
-
-  @NotNull
-  public final NationRelationshipNetwork getNETWORK() {
-    return NETWORK;
   }
 
   private final List<NationState> states() {

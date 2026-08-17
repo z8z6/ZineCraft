@@ -14,14 +14,14 @@ import net.minecraft.world.level.material.MapColor;
 public final class AuthorHeadBlocks {
   public static final AuthorHeadBlocks INSTANCE = new AuthorHeadBlocks();
 
-  private static final BlockEntry<AuthorHeadBlock> Z8Z6Z8Z6_HEAD = register("z8z6z8z6_head", "z8z6z8z6 的头", "z8z6z8z6's Head");
-  private static final BlockEntry<AuthorHeadBlock> YE_XINGCHEN_HEAD = register("ye_xingchen_head", "Ye_xingchen 的头", "Ye_xingchen's Head");
+  public static final BlockEntry<AuthorHeadBlock> Z8Z6Z8Z6_HEAD = register("z8z6z8z6_head", "z8z6z8z6 的头", "z8z6z8z6's Head");
+  public static final BlockEntry<AuthorHeadBlock> YE_XINGCHEN_HEAD = register("ye_xingchen_head", "Ye_xingchen 的头", "Ye_xingchen's Head");
 
   private AuthorHeadBlocks() {
   }
 
   private static BlockEntry<AuthorHeadBlock> register(String path, String zhCn, String enUs) {
-    return Zinecraft.INSTANCE.getBLOCKS().register(
+    return Zinecraft.BLOCKS.register(
         path,
         zhCn,
         enUs,
@@ -38,11 +38,4 @@ public final class AuthorHeadBlocks {
     );
   }
 
-  public AuthorHeadBlock getZ8Z6Z8Z6Head() {
-    return Z8Z6Z8Z6_HEAD.getBlock();
-  }
-
-  public AuthorHeadBlock getYeXingchenHead() {
-    return YE_XINGCHEN_HEAD.getBlock();
-  }
 }

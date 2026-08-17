@@ -25,17 +25,16 @@ public final class ModCollectibles {
   @NotNull
   private static final Map<String, ModCollectibles.PowerOverride> powerOverrides;
   @NotNull
-  private static final List<CollectibleEntry> ALL;
+  public static final List<CollectibleEntry> ALL;
 
   static {
-    Zinecraft.INSTANCE
-        .getTRANSLATIONS()
+    Zinecraft.TRANSLATIONS
         .add("item.zinecraft.collectible.series", "集成战略「傀影与猩红孤钻」 · No.%s", "Integrated Strategies: Phantom & Crimson Solitaire · No.%s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.collectible.original_effect", "原效果：%s", "Original effect: %s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("item.zinecraft.collectible.minecraft_effect", "装备效果：%s", "Equipped effect: %s");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("curios.identifier.relic", "藏品", "Collectible");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.tabs.curios", "饰品", "Accessories");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("menu.tabs.attribute", "能力", "Abilities");
+    Zinecraft.TRANSLATIONS.add("item.zinecraft.collectible.original_effect", "原效果：%s", "Original effect: %s");
+    Zinecraft.TRANSLATIONS.add("item.zinecraft.collectible.minecraft_effect", "装备效果：%s", "Equipped effect: %s");
+    Zinecraft.TRANSLATIONS.add("curios.identifier.relic", "藏品", "Collectible");
+    Zinecraft.TRANSLATIONS.add("menu.tabs.curios", "饰品", "Accessories");
+    Zinecraft.TRANSLATIONS.add("menu.tabs.attribute", "能力", "Abilities");
     powerOverrides = Map.ofEntries(
         Map.entry("rogue_1_relic_a11", INSTANCE.statPercent("防御力+15%", "+15% DEF", CombatStat.DEFENSE, 0.15)),
         Map.entry("rogue_1_relic_a12", INSTANCE.statPercent("防御力+25%", "+25% DEF", CombatStat.DEFENSE, 0.25)),
@@ -89,8 +88,7 @@ public final class ModCollectibles {
 
       ModCollectibles.PowerOverride powerOverride = powerOverride1;
       collection1.add(
-          Zinecraft.INSTANCE
-              .getCOLLECTIBLES()
+          Zinecraft.COLLECTIBLES
               .register(
                   new CollectibleSpec(
                       imported.getPath(),
@@ -116,11 +114,6 @@ public final class ModCollectibles {
   }
 
   private ModCollectibles() {
-  }
-
-  @NotNull
-  public final List<CollectibleEntry> getALL() {
-    return ALL;
   }
 
   private final List<ModCollectibles.ImportedCollectible> loadCatalog() {

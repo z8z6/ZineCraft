@@ -14,7 +14,7 @@ public final class ModStructure {
   public static final ModStructure INSTANCE = new ModStructure();
 
   @NotNull
-  private static final JigsawBuildingEntry STARGATE = Zinecraft.INSTANCE.getSTRUCTURES().jigsawBuilding(
+  public static final JigsawBuildingEntry STARGATE = Zinecraft.WORLDGEN.getStructures().jigsawBuilding(
       "stargate",
       8,
       4,
@@ -37,8 +37,4 @@ public final class ModStructure {
   private ModStructure() {
   }
 
-  @NotNull
-  public JigsawBuildingEntry getSTARGATE() {
-    return STARGATE;
-  }
 }

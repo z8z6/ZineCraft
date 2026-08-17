@@ -24,16 +24,16 @@ public final class LateranoDryLandFeature extends Feature<NoneFeatureConfigurati
   @Override
   public boolean place(@NotNull FeaturePlaceContext<NoneFeatureConfiguration> context) {
     WorldGenLevel level = context.level();
-    if (!level.getLevel().dimension().equals(ModDimensions.INSTANCE.getTERRA().getLevelKey())) return false;
+    if (!level.getLevel().dimension().equals(ModDimensions.TERRA.getLevelKey())) return false;
 
     ChunkPos chunk = new ChunkPos(context.origin());
     int seaLevel = level.getSeaLevel();
-    BlockState chalk = NationBlocks.INSTANCE.getLATERANO_ALLUVIAL_CHALK().defaultBlockState();
+    BlockState chalk = NationBlocks.LATERANO_ALLUVIAL_CHALK.getBlock().defaultBlockState();
     boolean placed = false;
     for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX(); x++) {
       for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ(); z++) {
         BlockPos biomePos = new BlockPos(x, seaLevel, z);
-        if (!level.getBiome(biomePos).is(NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS())) continue;
+        if (!level.getBiome(biomePos).is(NationBiomes.LATERANO_HOLY_FIELDS)) continue;
         int fillStart = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z);
         if (fillStart > seaLevel) continue;
         for (int y = fillStart; y <= seaLevel; y++) {

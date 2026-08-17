@@ -23,7 +23,7 @@ public final class CombatService {
   }
 
   private static ResourceKey<DamageType> damageType(String path) {
-    return ResourceKey.create(Registries.DAMAGE_TYPE, Zinecraft.INSTANCE.getREGISTRAR().id(path));
+    return ResourceKey.create(Registries.DAMAGE_TYPE, Zinecraft.REGISTRAR.id(path));
   }
 
   /**

@@ -13,19 +13,15 @@ public final class ModBlockEntity {
   @NotNull
   public static final ModBlockEntity INSTANCE = new ModBlockEntity();
   @NotNull
-  private static final Supplier<BlockEntityType<ExampleBlockEntity>> EXAMPLE_BLOCK_ENTITY;
+  public static final Supplier<BlockEntityType<ExampleBlockEntity>> EXAMPLE_BLOCK_ENTITY;
 
   static {
-    BlockEntityCatalog blockEntityCatalog = Zinecraft.INSTANCE.getBLOCK_ENTITIES();
+    BlockEntityCatalog blockEntityCatalog = Zinecraft.BLOCK_ENTITIES;
     BlockEntitySupplier blockEntitySupplier = ExampleBlockEntity::new;
-    EXAMPLE_BLOCK_ENTITY = blockEntityCatalog.register("example_block_entity", blockEntitySupplier, ModBlock.INSTANCE::getEXAMPLE_ENTITY_BLOCK);
+    EXAMPLE_BLOCK_ENTITY = blockEntityCatalog.register("example_block_entity", blockEntitySupplier, ModBlock.EXAMPLE_ENTITY_BLOCK::getBlock);
   }
 
   private ModBlockEntity() {
   }
 
-  @NotNull
-  public final BlockEntityType<ExampleBlockEntity> getEXAMPLE_BLOCK_ENTITY() {
-    return EXAMPLE_BLOCK_ENTITY.get();
-  }
 }

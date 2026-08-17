@@ -10,8 +10,7 @@ public final class ModSkills {
   @NotNull
   public static final ModSkills INSTANCE = new ModSkills();
   @NotNull
-  private static final SkillEntry SUPPORT_BETA = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry SUPPORT_BETA = Zinecraft.SKILLS
       .register(
           "skill_support_beta",
           "支援号令·β型",
@@ -31,8 +30,7 @@ public final class ModSkills {
           SkillDemoTheme.COST_RECOVERY
       );
   @NotNull
-  private static final SkillEntry TRUESILVER_SLASH = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry TRUESILVER_SLASH = Zinecraft.SKILLS
       .register(
           "skill_truesilver_slash",
           "真银斩",
@@ -52,8 +50,7 @@ public final class ModSkills {
           SkillDemoTheme.AREA_SLASH
       );
   @NotNull
-  private static final SkillEntry OVERLOADING_MODE = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry OVERLOADING_MODE = Zinecraft.SKILLS
       .register(
           "skill_overloading_mode",
           "过载模式",
@@ -73,8 +70,7 @@ public final class ModSkills {
           SkillDemoTheme.RAPID_FIRE
       );
   @NotNull
-  private static final SkillEntry EXPLOSIVE_DAWN = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry EXPLOSIVE_DAWN = Zinecraft.SKILLS
       .register(
           "skill_explosive_dawn",
           "爆裂黎明",
@@ -94,8 +90,7 @@ public final class ModSkills {
           SkillDemoTheme.EXPLOSIVE_DAWN
       );
   @NotNull
-  private static final SkillEntry VOLCANO = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry VOLCANO = Zinecraft.SKILLS
       .register(
           "skill_volcano",
           "火山",
@@ -115,8 +110,7 @@ public final class ModSkills {
           SkillDemoTheme.VOLCANIC_BURST
       );
   @NotNull
-  private static final SkillEntry CALCIFICATION = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry CALCIFICATION = Zinecraft.SKILLS
       .register(
           "skill_calcification",
           "钙质化",
@@ -136,8 +130,7 @@ public final class ModSkills {
           SkillDemoTheme.HEAL_AND_SLOW
       );
   @NotNull
-  private static final SkillEntry SANCTUARY = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry SANCTUARY = Zinecraft.SKILLS
       .register(
           "skill_sanctuary",
           "圣域",
@@ -157,8 +150,7 @@ public final class ModSkills {
           SkillDemoTheme.SANCTUARY
       );
   @NotNull
-  private static final SkillEntry FOXFIRE_HAZE = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry FOXFIRE_HAZE = Zinecraft.SKILLS
       .register(
           "skill_foxfire_haze",
           "狐火渺然",
@@ -178,8 +170,7 @@ public final class ModSkills {
           SkillDemoTheme.SLOWING_FIELD
       );
   @NotNull
-  private static final SkillEntry WOLFPACK = Zinecraft.INSTANCE
-      .getSKILLS()
+  public static final SkillEntry WOLFPACK = Zinecraft.SKILLS
       .register(
           "skill_wolfpack",
           "狼群",
@@ -202,48 +193,4 @@ public final class ModSkills {
   private ModSkills() {
   }
 
-  @NotNull
-  public final SkillEntry getSUPPORT_BETA() {
-    return SUPPORT_BETA;
-  }
-
-  @NotNull
-  public final SkillEntry getTRUESILVER_SLASH() {
-    return TRUESILVER_SLASH;
-  }
-
-  @NotNull
-  public final SkillEntry getOVERLOADING_MODE() {
-    return OVERLOADING_MODE;
-  }
-
-  @NotNull
-  public final SkillEntry getEXPLOSIVE_DAWN() {
-    return EXPLOSIVE_DAWN;
-  }
-
-  @NotNull
-  public final SkillEntry getVOLCANO() {
-    return VOLCANO;
-  }
-
-  @NotNull
-  public final SkillEntry getCALCIFICATION() {
-    return CALCIFICATION;
-  }
-
-  @NotNull
-  public final SkillEntry getSANCTUARY() {
-    return SANCTUARY;
-  }
-
-  @NotNull
-  public final SkillEntry getFOXFIRE_HAZE() {
-    return FOXFIRE_HAZE;
-  }
-
-  @NotNull
-  public final SkillEntry getWOLFPACK() {
-    return WOLFPACK;
-  }
 }

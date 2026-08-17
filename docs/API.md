@@ -25,17 +25,17 @@
 ## Java 声明示例
 
 ```java
-ItemEntry<Item> dust = Zinecraft.INSTANCE.getITEMS().register(
+ItemEntry<Item> dust = Zinecraft.ITEMS.register(
     "magic_dust", "魔法粉尘", "Magic Dust"
 ).fuel(600).compost(0.3F);
 
-BlockEntry<Block> machine = Zinecraft.INSTANCE.getBLOCKS().register(
+BlockEntry<Block> machine = Zinecraft.BLOCKS.register(
     "machine", "机器", "Machine",
     true, null, true, true,
     () -> new Block(BlockBehaviour.Properties.of().strength(4.0F))
 );
 
-OreEntry ore = Zinecraft.INSTANCE.getFEATURES().ore(
+OreEntry ore = Zinecraft.FEATURES.ore(
     "machine_ore", machine::getBlock,
     8, 4, 32, 0.0F
 );

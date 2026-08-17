@@ -93,7 +93,7 @@ public final class StarGateControllerBlock extends Block {
       @NotNull InteractionHand hand,
       @NotNull BlockHitResult hit
   ) {
-    if (!stack.is(ModItem.INSTANCE.getPROTOCOL_ORIGINIUM().getItem())) {
+    if (!stack.is(ModItem.PROTOCOL_ORIGINIUM.getItem())) {
       if (!level.isClientSide) {
         player.displayClientMessage((Component) Component.translatable("message.zinecraft.stargate.requires_protocol_originium"), true);
       }

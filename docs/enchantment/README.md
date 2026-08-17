@@ -4,7 +4,7 @@ Minecraft 1.21.1 的附魔属于动态注册表内容。`EnchantmentCatalog` 保
 `data/zinecraft/enchantment/<path>.json`。
 
 ```java
-EnchantmentEntry edge = Zinecraft.INSTANCE.getENCHANTMENTS().register(
+EnchantmentEntry edge = Zinecraft.ENCHANTMENTS.register(
     "originite_edge",
     "源石锋芒",
     "Originite Edge",

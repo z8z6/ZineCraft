@@ -3,7 +3,7 @@
 `BlockCatalog` 将方块、可选 `BlockItem`、双语翻译、简单模型和默认掉落合并为一个 Java 声明。
 
 ```java
-private static final BlockEntry<Block> ORIROCK_BLOCK = Zinecraft.INSTANCE.getBLOCKS().register(
+public static final BlockEntry<Block> ORIROCK_BLOCK = Zinecraft.BLOCKS.register(
     "orirock_block", "源岩块", "Orirock Block",
     true, null, true, true,
     () -> new Block(BlockBehaviour.Properties.of()

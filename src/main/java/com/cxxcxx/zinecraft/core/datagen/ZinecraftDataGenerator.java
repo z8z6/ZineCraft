@@ -22,22 +22,22 @@ public final class ZinecraftDataGenerator {
     var output = event.getGenerator().getPackOutput();
     var lookup = event.getLookupProvider();
     if (event.includeClient()) {
-      event.addProvider(new CatalogLanguageProvider(output, Zinecraft.INSTANCE.getTRANSLATIONS(), "en_us"));
-      event.addProvider(new CatalogLanguageProvider(output, Zinecraft.INSTANCE.getTRANSLATIONS(), "zh_cn"));
+      event.addProvider(new CatalogLanguageProvider(output, Zinecraft.TRANSLATIONS, "en_us"));
+      event.addProvider(new CatalogLanguageProvider(output, Zinecraft.TRANSLATIONS, "zh_cn"));
       event.addProvider(new ModCatalogModelProvider(output));
     }
     if (event.includeServer()) {
       var registryBuilder = new RegistrySetBuilder();
-      Zinecraft.INSTANCE.getWORLDGEN().addDataGeneration(registryBuilder);
+      Zinecraft.WORLDGEN.addDataGeneration(registryBuilder);
       registryBuilder.add(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.BIOME_MODIFIERS, context -> {
-        Zinecraft.INSTANCE.getFEATURES().bootstrapBiomeModifiers(context);
-        Zinecraft.INSTANCE.getENTITIES().bootstrapBiomeModifiers(context);
+        Zinecraft.WORLDGEN.getFeatures().bootstrapBiomeModifiers(context);
+        Zinecraft.ENTITIES.bootstrapBiomeModifiers(context);
       });
-      registryBuilder.add(Registries.ENCHANTMENT, Zinecraft.INSTANCE.getENCHANTMENTS()::bootstrap);
+      registryBuilder.add(Registries.ENCHANTMENT, Zinecraft.ENCHANTMENTS::bootstrap);
       registryBuilder.add(Registries.JUKEBOX_SONG, ModSound.INSTANCE::configure);
       event.createDatapackRegistryObjects(registryBuilder);
 
-      event.addProvider(new CatalogLootTableProvider(output, lookup, Zinecraft.INSTANCE.getBLOCKS()));
+      event.addProvider(new CatalogLootTableProvider(output, lookup, Zinecraft.BLOCKS));
       event.addProvider(new ModRecipeProvider(output, lookup));
     }
   }

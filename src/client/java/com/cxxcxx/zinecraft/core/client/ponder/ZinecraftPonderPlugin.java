@@ -40,14 +40,14 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
   }
 
   public void registerScenes(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
-    Iterable _this_forEach_iv = Zinecraft.INSTANCE.getSKILLS().getEntries();
+    Iterable _this_forEach_iv = Zinecraft.SKILLS.getEntries();
     int _i_f_forEach = 0;
 
     for (Object element_iv : _this_forEach_iv) {
       SkillEntry entry = (SkillEntry) element_iv;
       int var7 = 0;
       helper.addStoryBoard(
-          Zinecraft.INSTANCE.getREGISTRAR().id(entry.getDefinition().getPath()),
+          Zinecraft.REGISTRAR.id(entry.getDefinition().getPath()),
           "skill_demo/training_ground",
           (scene, util) -> INSTANCE.buildSkillScene(scene, util, entry.getDefinition()),
           new ResourceLocation[0]

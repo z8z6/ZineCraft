@@ -11,7 +11,7 @@ public final class ExampleBlockEntity extends BlockEntity {
   private int clicks;
 
   public ExampleBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-    super(ModBlockEntity.INSTANCE.getEXAMPLE_BLOCK_ENTITY(), blockPos, blockState);
+    super(ModBlockEntity.EXAMPLE_BLOCK_ENTITY.get(), blockPos, blockState);
   }
 
   public final int getClicks() {

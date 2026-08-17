@@ -21,15 +21,14 @@ public final class ModDimensions {
   public static final ModDimensions INSTANCE = new ModDimensions();
   public static final int LATERANO_CENTER_RADIUS = 1024;
   @NotNull
-  private static final MapCodec<TerraBiomeSource> TERRA_BIOME_SOURCE = Zinecraft.INSTANCE
-      .getREGISTRAR()
-      .biomeSource("terra", TerraBiomeSource.ACCESS.getCODEC());
+  public static final DimensionEntry TERRA;
   @NotNull
-  private static final DimensionEntry TERRA;
+  private static final MapCodec<TerraBiomeSource> TERRA_BIOME_SOURCE = Zinecraft.REGISTRAR
+      .biomeSource("terra", TerraBiomeSource.ACCESS.getCODEC());
 
   static {
-    DimensionCatalog dimensionCatalog1 = Zinecraft.INSTANCE.getDIMENSIONS();
-    Iterable _this_filterNot_iv = NationBiomePlacements.INSTANCE.getALL();
+    DimensionCatalog dimensionCatalog1 = Zinecraft.WORLDGEN.getDimensions();
+    Iterable _this_filterNot_iv = NationBiomePlacements.ALL;
     String string = "terra";
     DimensionCatalog dimensionCatalog = dimensionCatalog1;
     int i = 0;
@@ -40,28 +39,24 @@ public final class ModDimensions {
     for (Object object : _this_filterNotTo_iv_iv) {
       DimensionBiome dimensionBiome = (DimensionBiome) object;
       int k = 0;
-      if (!java.util.Objects.equals(dimensionBiome.getBiome(), NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS())) {
+      if (!java.util.Objects.equals(dimensionBiome.getBiome(), NationBiomes.LATERANO_HOLY_FIELDS)) {
         collection.add(object);
       }
     }
 
     List list = (List) collection;
     TERRA = dimensionCatalog.register(string, list, ModDimensions::TERRAHelper1);
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("dimension.zinecraft.terra", "泰拉", "Terra");
+    Zinecraft.TRANSLATIONS.add("dimension.zinecraft.terra", "泰拉", "Terra");
   }
 
   private ModDimensions() {
   }
 
   private static final ChunkGenerator TERRAHelper1(DimensionBootstrapContext context) {
-    Reference reference = context.getBiomes().getOrThrow(NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS());
+    Reference reference = context.getBiomes().getOrThrow(NationBiomes.LATERANO_HOLY_FIELDS);
     ParameterList parameterList = context.getBiomeParameters();
     return (ChunkGenerator) (new NoiseBasedChunkGenerator(new TerraBiomeSource(parameterList, (Holder<Biome>) reference, 1024), context.getNoiseSettings()));
   }
 
-  @NotNull
-  public final DimensionEntry getTERRA() {
-    return TERRA;
-  }
 }
 

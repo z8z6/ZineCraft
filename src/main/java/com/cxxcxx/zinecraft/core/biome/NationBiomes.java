@@ -15,105 +15,86 @@ public final class NationBiomes {
   @NotNull
   public static final NationBiomes INSTANCE = new NationBiomes();
   @NotNull
-  private static final ResourceKey<Biome> AEGIR_ABYSSAL_SEA = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> AEGIR_ABYSSAL_SEA = Zinecraft.WORLDGEN.getBiomes()
       .register("aegir_abyssal_sea", NationBiomes::AEGIR_ABYSSAL_SEAHelper0);
   @NotNull
-  private static final ResourceKey<Biome> BOLIVAR_PLAIN = Zinecraft.INSTANCE.getBIOMES().register("bolivar_plain", NationBiomes::BOLIVAR_PLAINHelper0);
+  public static final ResourceKey<Biome> BOLIVAR_PLAIN = Zinecraft.WORLDGEN.getBiomes().register("bolivar_plain", NationBiomes::BOLIVAR_PLAINHelper0);
   @NotNull
-  private static final ResourceKey<Biome> HIGASHI_SHADOW_RIFT = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> HIGASHI_SHADOW_RIFT = Zinecraft.WORLDGEN.getBiomes()
       .register("higashi_shadow_rift", NationBiomes::HIGASHI_SHADOW_RIFTHelper0);
   @NotNull
-  private static final ResourceKey<Biome> DURIN_UNDERGROUND_GARDEN = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> DURIN_UNDERGROUND_GARDEN = Zinecraft.WORLDGEN.getBiomes()
       .register("durin_underground_garden", NationBiomes::DURIN_UNDERGROUND_GARDENHelper0);
   @NotNull
-  private static final ResourceKey<Biome> COLUMBIA_SANDSTONE_WILDS = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> COLUMBIA_SANDSTONE_WILDS = Zinecraft.WORLDGEN.getBiomes()
       .register("columbia_sandstone_wilds", NationBiomes::COLUMBIA_SANDSTONE_WILDSHelper0);
   @NotNull
-  private static final ResourceKey<Biome> KAZIMIERZ_KNIGHTLAND = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> KAZIMIERZ_KNIGHTLAND = Zinecraft.WORLDGEN.getBiomes()
       .register("kazimierz_knightland", NationBiomes::KAZIMIERZ_KNIGHTLANDHelper0);
   @NotNull
-  private static final ResourceKey<Biome> KAZDEL_SCARRED_WASTES = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> KAZDEL_SCARRED_WASTES = Zinecraft.WORLDGEN.getBiomes()
       .register("kazdel_scarred_wastes", NationBiomes::KAZDEL_SCARRED_WASTESHelper0);
   @NotNull
-  private static final ResourceKey<Biome> LATERANO_HOLY_FIELDS = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> LATERANO_HOLY_FIELDS = Zinecraft.WORLDGEN.getBiomes()
       .register("laterano_holy_fields", NationBiomes::LATERANO_HOLY_FIELDSHelper0);
   @NotNull
-  private static final ResourceKey<Biome> LEITHANIEN_TWILIGHT_FOREST = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> LEITHANIEN_TWILIGHT_FOREST = Zinecraft.WORLDGEN.getBiomes()
       .register("leithanien_twilight_forest", NationBiomes::LEITHANIEN_TWILIGHT_FORESTHelper0);
   @NotNull
-  private static final ResourceKey<Biome> RIM_BILLITON_MINING_BADLANDS = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> RIM_BILLITON_MINING_BADLANDS = Zinecraft.WORLDGEN.getBiomes()
       .register("rim_billiton_mining_badlands", NationBiomes::RIM_BILLITON_MINING_BADLANDSHelper0);
   @NotNull
-  private static final ResourceKey<Biome> MINOS_SUNLIT_HILLS = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> MINOS_SUNLIT_HILLS = Zinecraft.WORLDGEN.getBiomes()
       .register("minos_sunlit_hills", NationBiomes::MINOS_SUNLIT_HILLSHelper0);
   @NotNull
-  private static final ResourceKey<Biome> SARGON_ROCKY_DESERT = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> SARGON_ROCKY_DESERT = Zinecraft.WORLDGEN.getBiomes()
       .register("sargon_rocky_desert", NationBiomes::SARGON_ROCKY_DESERTHelper0);
   @NotNull
-  private static final ResourceKey<Biome> SAMI_FROZEN_FOREST = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> SAMI_FROZEN_FOREST = Zinecraft.WORLDGEN.getBiomes()
       .register("sami_frozen_forest", NationBiomes::SAMI_FROZEN_FORESTHelper0);
   @NotNull
-  private static final ResourceKey<Biome> VICTORIA_MISTY_HIGHLANDS = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> VICTORIA_MISTY_HIGHLANDS = Zinecraft.WORLDGEN.getBiomes()
       .register("victoria_misty_highlands", NationBiomes::VICTORIA_MISTY_HIGHLANDSHelper0);
   @NotNull
-  private static final ResourceKey<Biome> URSUS_FROZEN_STEPPE = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> URSUS_FROZEN_STEPPE = Zinecraft.WORLDGEN.getBiomes()
       .register("ursus_frozen_steppe", NationBiomes::URSUS_FROZEN_STEPPEHelper0);
   @NotNull
-  private static final ResourceKey<Biome> KJERAG_SNOWY_PEAKS = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> KJERAG_SNOWY_PEAKS = Zinecraft.WORLDGEN.getBiomes()
       .register("kjerag_snowy_peaks", NationBiomes::KJERAG_SNOWY_PEAKSHelper0);
   @NotNull
-  private static final ResourceKey<Biome> SIRACUSA_RAINY_WOODLAND = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> SIRACUSA_RAINY_WOODLAND = Zinecraft.WORLDGEN.getBiomes()
       .register("siracusa_rainy_woodland", NationBiomes::SIRACUSA_RAINY_WOODLANDHelper0);
   @NotNull
-  private static final ResourceKey<Biome> YAN_MOUNTAIN_GROVE = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> YAN_MOUNTAIN_GROVE = Zinecraft.WORLDGEN.getBiomes()
       .register("yan_mountain_grove", NationBiomes::YAN_MOUNTAIN_GROVEHelper0);
   @NotNull
-  private static final ResourceKey<Biome> IBERIA_SALT_DELTA = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> IBERIA_SALT_DELTA = Zinecraft.WORLDGEN.getBiomes()
       .register("iberia_salt_delta", NationBiomes::IBERIA_SALT_DELTAHelper0);
   @NotNull
-  private static final ResourceKey<Biome> TERRA_CATASTROPHE_ZONE = Zinecraft.INSTANCE
-      .getBIOMES()
+  public static final ResourceKey<Biome> TERRA_CATASTROPHE_ZONE = Zinecraft.WORLDGEN.getBiomes()
       .register("terra_catastrophe_zone", NationBiomes::TERRA_CATASTROPHE_ZONEHelper0);
 
   static {
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.aegir_abyssal_sea", "阿戈尔深海", "Aegir Abyssal Sea");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.bolivar_plain", "玻利瓦尔平原", "Bolivar Plain");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.higashi_shadow_rift", "东国常暗裂谷", "Higashi Shadow Rift");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.durin_underground_garden", "杜林地下花园", "Durin Underground Garden");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.columbia_sandstone_wilds", "哥伦比亚砂岩荒野", "Columbia Sandstone Wilds");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.kazimierz_knightland", "卡西米尔骑士领", "Kazimierz Knightland");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.kazdel_scarred_wastes", "卡兹戴尔伤痕荒地", "Kazdel Scarred Wastes");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.laterano_holy_fields", "拉特兰圣田", "Laterano Holy Fields");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.leithanien_twilight_forest", "莱塔尼亚暮色林", "Leithanien Twilight Forest");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.rim_billiton_mining_badlands", "雷姆必拓矿业荒地", "Rim Billiton Mining Badlands");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.minos_sunlit_hills", "米诺斯日照丘陵", "Minos Sunlit Hills");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.sargon_rocky_desert", "萨尔贡岩漠", "Sargon Rocky Desert");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.sami_frozen_forest", "萨米冻林", "Sami Frozen Forest");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.victoria_misty_highlands", "维多利亚雾岭", "Victoria Misty Highlands");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.ursus_frozen_steppe", "乌萨斯冻原", "Ursus Frozen Steppe");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.kjerag_snowy_peaks", "谢拉格雪峰", "Kjerag Snowy Peaks");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.siracusa_rainy_woodland", "叙拉古雨林", "Siracusa Rainy Woodland");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.yan_mountain_grove", "炎国山林", "Yan Mountain Grove");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.iberia_salt_delta", "伊比利亚盐风三角洲", "Iberia Salt Delta");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("biome.zinecraft.terra_catastrophe_zone", "泰拉天灾区", "Terra Catastrophe Zone");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.aegir_abyssal_sea", "阿戈尔深海", "Aegir Abyssal Sea");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.bolivar_plain", "玻利瓦尔平原", "Bolivar Plain");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.higashi_shadow_rift", "东国常暗裂谷", "Higashi Shadow Rift");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.durin_underground_garden", "杜林地下花园", "Durin Underground Garden");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.columbia_sandstone_wilds", "哥伦比亚砂岩荒野", "Columbia Sandstone Wilds");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.kazimierz_knightland", "卡西米尔骑士领", "Kazimierz Knightland");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.kazdel_scarred_wastes", "卡兹戴尔伤痕荒地", "Kazdel Scarred Wastes");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.laterano_holy_fields", "拉特兰圣田", "Laterano Holy Fields");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.leithanien_twilight_forest", "莱塔尼亚暮色林", "Leithanien Twilight Forest");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.rim_billiton_mining_badlands", "雷姆必拓矿业荒地", "Rim Billiton Mining Badlands");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.minos_sunlit_hills", "米诺斯日照丘陵", "Minos Sunlit Hills");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.sargon_rocky_desert", "萨尔贡岩漠", "Sargon Rocky Desert");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.sami_frozen_forest", "萨米冻林", "Sami Frozen Forest");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.victoria_misty_highlands", "维多利亚雾岭", "Victoria Misty Highlands");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.ursus_frozen_steppe", "乌萨斯冻原", "Ursus Frozen Steppe");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.kjerag_snowy_peaks", "谢拉格雪峰", "Kjerag Snowy Peaks");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.siracusa_rainy_woodland", "叙拉古雨林", "Siracusa Rainy Woodland");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.yan_mountain_grove", "炎国山林", "Yan Mountain Grove");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.iberia_salt_delta", "伊比利亚盐风三角洲", "Iberia Salt Delta");
+    Zinecraft.TRANSLATIONS.add("biome.zinecraft.terra_catastrophe_zone", "泰拉天灾区", "Terra Catastrophe Zone");
   }
 
   private NationBiomes() {
@@ -378,106 +359,6 @@ public final class NationBiomes {
     _this_register.setFoliageColor(0x51453F);
     NationBiomePresets.INSTANCE.badlands(_this_register);
     return;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getAEGIR_ABYSSAL_SEA() {
-    return AEGIR_ABYSSAL_SEA;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getBOLIVAR_PLAIN() {
-    return BOLIVAR_PLAIN;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getHIGASHI_SHADOW_RIFT() {
-    return HIGASHI_SHADOW_RIFT;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getDURIN_UNDERGROUND_GARDEN() {
-    return DURIN_UNDERGROUND_GARDEN;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getCOLUMBIA_SANDSTONE_WILDS() {
-    return COLUMBIA_SANDSTONE_WILDS;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getKAZIMIERZ_KNIGHTLAND() {
-    return KAZIMIERZ_KNIGHTLAND;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getKAZDEL_SCARRED_WASTES() {
-    return KAZDEL_SCARRED_WASTES;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getLATERANO_HOLY_FIELDS() {
-    return LATERANO_HOLY_FIELDS;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getLEITHANIEN_TWILIGHT_FOREST() {
-    return LEITHANIEN_TWILIGHT_FOREST;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getRIM_BILLITON_MINING_BADLANDS() {
-    return RIM_BILLITON_MINING_BADLANDS;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getMINOS_SUNLIT_HILLS() {
-    return MINOS_SUNLIT_HILLS;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getSARGON_ROCKY_DESERT() {
-    return SARGON_ROCKY_DESERT;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getSAMI_FROZEN_FOREST() {
-    return SAMI_FROZEN_FOREST;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getVICTORIA_MISTY_HIGHLANDS() {
-    return VICTORIA_MISTY_HIGHLANDS;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getURSUS_FROZEN_STEPPE() {
-    return URSUS_FROZEN_STEPPE;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getKJERAG_SNOWY_PEAKS() {
-    return KJERAG_SNOWY_PEAKS;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getSIRACUSA_RAINY_WOODLAND() {
-    return SIRACUSA_RAINY_WOODLAND;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getYAN_MOUNTAIN_GROVE() {
-    return YAN_MOUNTAIN_GROVE;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getIBERIA_SALT_DELTA() {
-    return IBERIA_SALT_DELTA;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getTERRA_CATASTROPHE_ZONE() {
-    return TERRA_CATASTROPHE_ZONE;
   }
 
   /**

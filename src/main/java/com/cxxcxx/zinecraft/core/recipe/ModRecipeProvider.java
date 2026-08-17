@@ -50,35 +50,35 @@ public final class ModRecipeProvider extends RecipeProvider {
         .save(exporter);
     Item[] items = new Item[]{Items.BREAD, Items.COOKIE, Items.HAY_BLOCK};
     RecipeHelpers.oreSmelting(exporter, java.util.List.of(items), RecipeCategory.FOOD, (ItemLike) Items.WHEAT, 0.1F, 300, "food_to_wheat");
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.INSTANCE.getMAGIC_DUST().getItem(), 4)
-        .requires((ItemLike) ModItem.INSTANCE.getMAGIC_DUST().getItem(), 2)
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.MAGIC_DUST.getItem(), 4)
+        .requires((ItemLike) ModItem.MAGIC_DUST.getItem(), 2)
         .unlockedBy(
-            RecipeHelpers.getHasName((ItemLike) ModItem.INSTANCE.getMAGIC_DUST().getItem()),
-            RecipeHelpers.has((ItemLike) ModItem.INSTANCE.getMAGIC_DUST().getItem())
+            RecipeHelpers.getHasName((ItemLike) ModItem.MAGIC_DUST.getItem()),
+            RecipeHelpers.has((ItemLike) ModItem.MAGIC_DUST.getItem())
         )
         .save(exporter);
     RecipeHelpers.oreSmelting(
         exporter,
-        java.util.List.of(ModItem.INSTANCE.getMAGIC_DUST().getItem()),
+        java.util.List.of(ModItem.MAGIC_DUST.getItem()),
         RecipeCategory.MISC,
-        (ItemLike) ModItem.INSTANCE.getMAGIC_DUST().getItem(),
+        (ItemLike) ModItem.MAGIC_DUST.getItem(),
         0.1F,
         20,
         "magic_dust_copy"
     );
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.INSTANCE.getPROTOCOL_ORIGINIUM().getItem())
-        .requires((ItemLike) ModItem.INSTANCE.getORIGINITE().getItem())
-        .requires((ItemLike) ModItem.INSTANCE.getCRYSTALLINE_CIRCUIT().getItem())
-        .requires((ItemLike) ModItem.INSTANCE.getDEVICE_GROUP().getItem())
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.PROTOCOL_ORIGINIUM.getItem())
+        .requires((ItemLike) ModItem.ORIGINITE.getItem())
+        .requires((ItemLike) ModItem.CRYSTALLINE_CIRCUIT.getItem())
+        .requires((ItemLike) ModItem.DEVICE_GROUP.getItem())
         .unlockedBy(
-            RecipeHelpers.getHasName((ItemLike) ModItem.INSTANCE.getORIGINITE().getItem()),
-            RecipeHelpers.has((ItemLike) ModItem.INSTANCE.getORIGINITE().getItem())
+            RecipeHelpers.getHasName((ItemLike) ModItem.ORIGINITE.getItem()),
+            RecipeHelpers.has((ItemLike) ModItem.ORIGINITE.getItem())
         )
         .save(exporter);
     this.addArknightsMaterialRecipes(exporter);
     this.addSkillSummaryRecipes(exporter);
     this.addChipConversionRecipes(exporter);
-    ItemLike itemLike1 = NationFoods.INSTANCE.getAEGIR_FRESH_SHELLCRAB_SASHIMI();
+    ItemLike itemLike1 = NationFoods.AEGIR_FRESH_SHELLCRAB_SASHIMI;
     itemLikes = new ItemLike[3];
     Item item = Items.SALMON;
     itemLikes[0] = item;
@@ -87,7 +87,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BEETROOT;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getBOLIVAR_SMOKED_CAPSULE();
+    itemLike1 = NationFoods.BOLIVAR_SMOKED_CAPSULE;
     itemLikes = new ItemLike[3];
     item = Items.COOKED_CHICKEN;
     itemLikes[0] = item;
@@ -96,7 +96,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.DRIED_KELP;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getHIGASHI_NANO_KAPPO();
+    itemLike1 = NationFoods.HIGASHI_NANO_KAPPO;
     itemLikes = new ItemLike[3];
     item = Items.SALMON;
     itemLikes[0] = item;
@@ -105,7 +105,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BOWL;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getDURIN_HONEY_SLUGPUDDING();
+    itemLike1 = NationFoods.DURIN_HONEY_SLUGPUDDING;
     itemLikes = new ItemLike[3];
     item = Items.HONEY_BOTTLE;
     itemLikes[0] = item;
@@ -114,7 +114,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BOWL;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getCOLUMBIA_ORIGINIUM_ROASTED_FOWL();
+    itemLike1 = NationFoods.COLUMBIA_ORIGINIUM_ROASTED_FOWL;
     itemLikes = new ItemLike[3];
     item = Items.COOKED_CHICKEN;
     itemLikes[0] = item;
@@ -123,7 +123,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.PAPER;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getKAZIMIERZ_KNIGHT_SUPPLEMENT();
+    itemLike1 = NationFoods.KAZIMIERZ_KNIGHT_SUPPLEMENT;
     itemLikes = new ItemLike[3];
     item = Items.HONEY_BOTTLE;
     itemLikes[0] = item;
@@ -132,7 +132,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.GOLDEN_CARROT;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getKAZDEL_CARTILAGE_TACK();
+    itemLike1 = NationFoods.KAZDEL_CARTILAGE_TACK;
     itemLikes = new ItemLike[3];
     item = Items.COOKED_BEEF;
     itemLikes[0] = item;
@@ -141,7 +141,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.WHEAT;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getLATERANO_SACRED_TONE_SOUP();
+    itemLike1 = NationFoods.LATERANO_SACRED_TONE_SOUP;
     itemLikes = new ItemLike[3];
     item = Items.MILK_BUCKET;
     itemLikes[0] = item;
@@ -150,7 +150,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BOWL;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getLEITHANIEN_MUSICAL_ROAST_EXTRACT();
+    itemLike1 = NationFoods.LEITHANIEN_MUSICAL_ROAST_EXTRACT;
     itemLikes = new ItemLike[3];
     item = Items.COOKED_BEEF;
     itemLikes[0] = item;
@@ -159,7 +159,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BOWL;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getRIM_BILLITON_MINING_RATION();
+    itemLike1 = NationFoods.RIM_BILLITON_MINING_RATION;
     itemLikes = new ItemLike[3];
     item = Items.COOKED_BEEF;
     itemLikes[0] = item;
@@ -168,7 +168,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.PAPER;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getMINOS_POETRY_GEL();
+    itemLike1 = NationFoods.MINOS_POETRY_GEL;
     itemLikes = new ItemLike[3];
     item = Items.HONEY_BOTTLE;
     itemLikes[0] = item;
@@ -177,7 +177,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.AMETHYST_SHARD;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getSARGON_GRASS_CHEESE_GEL();
+    itemLike1 = NationFoods.SARGON_GRASS_CHEESE_GEL;
     itemLikes = new ItemLike[3];
     item = Items.WHEAT;
     itemLikes[0] = item;
@@ -186,7 +186,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.CACTUS;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getSAMI_INSTANT_BONE_SOUP();
+    itemLike1 = NationFoods.SAMI_INSTANT_BONE_SOUP;
     itemLikes = new ItemLike[3];
     item = Items.COOKED_RABBIT;
     itemLikes[0] = item;
@@ -195,7 +195,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BOWL;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getVICTORIA_CENTRAL_VALLEY_ROAST();
+    itemLike1 = NationFoods.VICTORIA_CENTRAL_VALLEY_ROAST;
     itemLikes = new ItemLike[3];
     item = Items.COOKED_BEEF;
     itemLikes[0] = item;
@@ -204,7 +204,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BOWL;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getURSUS_HAM_SUPPLEMENT();
+    itemLike1 = NationFoods.URSUS_HAM_SUPPLEMENT;
     itemLikes = new ItemLike[3];
     item = Items.COOKED_PORKCHOP;
     itemLikes[0] = item;
@@ -213,7 +213,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.PAPER;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getKJERAG_VALLEY_PIE();
+    itemLike1 = NationFoods.KJERAG_VALLEY_PIE;
     itemLikes = new ItemLike[3];
     item = Items.BREAD;
     itemLikes[0] = item;
@@ -222,7 +222,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.SWEET_BERRIES;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getSIRACUSA_STEW_GATHERING();
+    itemLike1 = NationFoods.SIRACUSA_STEW_GATHERING;
     itemLikes = new ItemLike[4];
     item = Items.COOKED_BEEF;
     itemLikes[0] = item;
@@ -233,7 +233,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BOWL;
     itemLikes[3] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getYAN_WASTELAND_MEAT_STIR_FRY();
+    itemLike1 = NationFoods.YAN_WASTELAND_MEAT_STIR_FRY;
     itemLikes = new ItemLike[4];
     item = Items.COOKED_PORKCHOP;
     itemLikes[0] = item;
@@ -244,7 +244,7 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.BOWL;
     itemLikes[3] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    itemLike1 = NationFoods.INSTANCE.getIBERIA_CHITIN_CLUSTER();
+    itemLike1 = NationFoods.IBERIA_CHITIN_CLUSTER;
     itemLikes = new ItemLike[3];
     item = Items.NAUTILUS_SHELL;
     itemLikes[0] = item;
@@ -253,21 +253,21 @@ public final class ModRecipeProvider extends RecipeProvider {
     item = Items.DRIED_KELP;
     itemLikes[2] = item;
     this.nationFoodRecipe(exporter, itemLike1, itemLikes);
-    Zinecraft.INSTANCE.getRECIPES().generate(exporter);
+    Zinecraft.RECIPES.generate(exporter);
   }
 
   /**
    * 矿石方块可通过普通熔炉或高炉还原为其直接掉落的基础材料。
    */
   private void addMaterialOreCookingRecipes(RecipeOutput exporter) {
-    this.oreCooking(exporter, MaterialOres.INSTANCE.getORIGINITE_ORE().getBlock(), ModItem.INSTANCE.getORIGINITE().getItem(), "originite");
-    this.oreCooking(exporter, MaterialOres.INSTANCE.getORIROCK_ORE().getBlock(), ModItem.INSTANCE.getORIROCK().getItem(), "orirock");
-    this.oreCooking(exporter, MaterialOres.INSTANCE.getORIRON_ORE().getBlock(), ModItem.INSTANCE.getORIRON_SHARD().getItem(), "oriron_shard");
-    this.oreCooking(exporter, MaterialOres.INSTANCE.getMANGANESE_ORE().getBlock(), ModItem.INSTANCE.getMANGANESE_ORE().getItem(), "manganese_ore");
-    this.oreCooking(exporter, MaterialOres.INSTANCE.getGRINDSTONE_ORE().getBlock(), ModItem.INSTANCE.getGRINDSTONE().getItem(), "grindstone");
-    this.oreCooking(exporter, MaterialOres.INSTANCE.getRMA70_ORE().getBlock(), ModItem.INSTANCE.getRMA70_12().getItem(), "rma70_12");
-    this.oreCooking(exporter, MaterialOres.INSTANCE.getCRYSTAL_ELEMENT_ORE().getBlock(), ModItem.INSTANCE.getCRYSTAL_ELEMENT().getItem(), "crystal_element");
-    this.oreCooking(exporter, MaterialOres.INSTANCE.getLOXIC_KOHL_ORE().getBlock(), ModItem.INSTANCE.getLOXIC_KOHL().getItem(), "loxic_kohl");
+    this.oreCooking(exporter, MaterialOres.ORIGINITE_ORE.getBlock(), ModItem.ORIGINITE.getItem(), "originite");
+    this.oreCooking(exporter, MaterialOres.ORIROCK_ORE.getBlock(), ModItem.ORIROCK.getItem(), "orirock");
+    this.oreCooking(exporter, MaterialOres.ORIRON_ORE.getBlock(), ModItem.ORIRON_SHARD.getItem(), "oriron_shard");
+    this.oreCooking(exporter, MaterialOres.MANGANESE_ORE.getBlock(), ModItem.MANGANESE_ORE.getItem(), "manganese_ore");
+    this.oreCooking(exporter, MaterialOres.GRINDSTONE_ORE.getBlock(), ModItem.GRINDSTONE.getItem(), "grindstone");
+    this.oreCooking(exporter, MaterialOres.RMA70_ORE.getBlock(), ModItem.RMA70_12.getItem(), "rma70_12");
+    this.oreCooking(exporter, MaterialOres.CRYSTAL_ELEMENT_ORE.getBlock(), ModItem.CRYSTAL_ELEMENT.getItem(), "crystal_element");
+    this.oreCooking(exporter, MaterialOres.LOXIC_KOHL_ORE.getBlock(), ModItem.LOXIC_KOHL.getItem(), "loxic_kohl");
   }
 
   private void oreCooking(RecipeOutput exporter, ItemLike ore, ItemLike result, String group) {
@@ -275,11 +275,11 @@ public final class ModRecipeProvider extends RecipeProvider {
     SimpleCookingRecipeBuilder.smelting(ingredient, RecipeCategory.MISC, result, 0.7F, 200)
         .group(group)
         .unlockedBy(RecipeHelpers.getHasName(ore), RecipeHelpers.has(ore))
-        .save(exporter, Zinecraft.INSTANCE.getREGISTRAR().id(group + "_from_smelting"));
+        .save(exporter, Zinecraft.REGISTRAR.id(group + "_from_smelting"));
     SimpleCookingRecipeBuilder.blasting(ingredient, RecipeCategory.MISC, result, 0.7F, 100)
         .group(group)
         .unlockedBy(RecipeHelpers.getHasName(ore), RecipeHelpers.has(ore))
-        .save(exporter, Zinecraft.INSTANCE.getREGISTRAR().id(group + "_from_blasting"));
+        .save(exporter, Zinecraft.REGISTRAR.id(group + "_from_blasting"));
   }
 
   private final void nationFoodRecipe(RecipeOutput exporter, ItemLike result, ItemLike... ingredients) {
@@ -301,211 +301,211 @@ public final class ModRecipeProvider extends RecipeProvider {
   }
 
   private final void addArknightsMaterialRecipes(RecipeOutput exporter) {
-    ItemLike itemLike = (ItemLike) ModItem.INSTANCE.getORIROCK_CUBE().getItem();
-    Pair[] pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIROCK().getItem(), 3)};
+    ItemLike itemLike = (ItemLike) ModItem.ORIROCK_CUBE.getItem();
+    Pair[] pairs = new Pair[]{Pair.of(ModItem.ORIROCK.getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getORIROCK_CLUSTER().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIROCK_CUBE().getItem(), 5)};
+    itemLike = (ItemLike) ModItem.ORIROCK_CLUSTER.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.ORIROCK_CUBE.getItem(), 5)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getORIROCK_CONCENTRATION().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 4)};
+    itemLike = (ItemLike) ModItem.ORIROCK_CONCENTRATION.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.ORIROCK_CLUSTER.getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getPOLYESTER().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getESTER_RAW().getItem(), 3)};
+    itemLike = (ItemLike) ModItem.POLYESTER.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.ESTER_RAW.getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getPOLYESTER_GROUP().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getPOLYESTER().getItem(), 4)};
+    itemLike = (ItemLike) ModItem.POLYESTER_GROUP.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.POLYESTER.getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getPOLYESTER_BLOCK().getItem();
+    itemLike = (ItemLike) ModItem.POLYESTER_BLOCK.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getPOLYKETON().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1)
+        Pair.of(ModItem.POLYESTER_GROUP.getItem(), 2),
+        Pair.of(ModItem.POLYKETON.getItem(), 1),
+        Pair.of(ModItem.TWISTED_ALCOHOL.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getSUGAR().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getSUGAR_SUBSTITUTE().getItem(), 3)};
+    itemLike = (ItemLike) ModItem.SUGAR.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.SUGAR_SUBSTITUTE.getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getSUGAR_GROUP().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getSUGAR().getItem(), 4)};
+    itemLike = (ItemLike) ModItem.SUGAR_GROUP.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.SUGAR.getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getSUGAR_POLYMER().getItem();
+    itemLike = (ItemLike) ModItem.SUGAR_POLYMER.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 1)
+        Pair.of(ModItem.SUGAR_GROUP.getItem(), 2),
+        Pair.of(ModItem.ORIRON_GROUP.getItem(), 1),
+        Pair.of(ModItem.MANGANESE_ORE.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getORIRON().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIRON_SHARD().getItem(), 3)};
+    itemLike = (ItemLike) ModItem.ORIRON.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.ORIRON_SHARD.getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getORIRON_GROUP().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getORIRON().getItem(), 4)};
+    itemLike = (ItemLike) ModItem.ORIRON_GROUP.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.ORIRON.getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getORIRON_CLUSTER().getItem();
+    itemLike = (ItemLike) ModItem.ORIRON_CLUSTER.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 1)
+        Pair.of(ModItem.ORIRON_GROUP.getItem(), 2),
+        Pair.of(ModItem.DEVICE_GROUP.getItem(), 1),
+        Pair.of(ModItem.POLYESTER_GROUP.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getAKETON().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getDIKETONE().getItem(), 3)};
+    itemLike = (ItemLike) ModItem.AKETON.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.DIKETONE.getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getPOLYKETON().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getAKETON().getItem(), 4)};
+    itemLike = (ItemLike) ModItem.POLYKETON.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.AKETON.getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getKETON_COLLOID().getItem();
+    itemLike = (ItemLike) ModItem.KETON_COLLOID.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getPOLYKETON().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 1)
+        Pair.of(ModItem.POLYKETON.getItem(), 2),
+        Pair.of(ModItem.SUGAR_GROUP.getItem(), 1),
+        Pair.of(ModItem.MANGANESE_ORE.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getDEVICE_CORE().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getDAMAGED_DEVICE().getItem(), 3)};
+    itemLike = (ItemLike) ModItem.DEVICE_CORE.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.DAMAGED_DEVICE.getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getDEVICE_GROUP().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getDEVICE_CORE().getItem(), 4)};
+    itemLike = (ItemLike) ModItem.DEVICE_GROUP.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.DEVICE_CORE.getItem(), 4)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getOPTIMIZED_DEVICE().getItem();
+    itemLike = (ItemLike) ModItem.OPTIMIZED_DEVICE.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1)
+        Pair.of(ModItem.DEVICE_GROUP.getItem(), 1),
+        Pair.of(ModItem.ORIROCK_CLUSTER.getItem(), 2),
+        Pair.of(ModItem.GRINDSTONE.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getMANGANESE_TRIHYDRATE().getItem();
+    itemLike = (ItemLike) ModItem.MANGANESE_TRIHYDRATE.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getMANGANESE_ORE().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getPOLYESTER_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1)
+        Pair.of(ModItem.MANGANESE_ORE.getItem(), 2),
+        Pair.of(ModItem.POLYESTER_GROUP.getItem(), 1),
+        Pair.of(ModItem.TWISTED_ALCOHOL.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getGRINDSTONE_PENTAHYDRATE().getItem();
+    itemLike = (ItemLike) ModItem.GRINDSTONE_PENTAHYDRATE.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1)
+        Pair.of(ModItem.GRINDSTONE.getItem(), 1),
+        Pair.of(ModItem.ORIRON_GROUP.getItem(), 1),
+        Pair.of(ModItem.DEVICE_GROUP.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getRMA70_24().getItem();
+    itemLike = (ItemLike) ModItem.RMA70_24.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getRMA70_12().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getORIROCK_CLUSTER().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getPOLYKETON().getItem(), 1)
+        Pair.of(ModItem.RMA70_12.getItem(), 1),
+        Pair.of(ModItem.ORIROCK_CLUSTER.getItem(), 2),
+        Pair.of(ModItem.POLYKETON.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getWHITE_HORSE_KOHL().getItem();
+    itemLike = (ItemLike) ModItem.WHITE_HORSE_KOHL.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getTWISTED_ALCOHOL().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getSUGAR_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getRMA70_12().getItem(), 1)
+        Pair.of(ModItem.TWISTED_ALCOHOL.getItem(), 1),
+        Pair.of(ModItem.SUGAR_GROUP.getItem(), 1),
+        Pair.of(ModItem.RMA70_12.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getCRYSTAL_GROUP().getItem();
+    itemLike = (ItemLike) ModItem.CRYSTAL_GROUP.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getCRYSTAL_ELEMENT().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getGEL().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
+        Pair.of(ModItem.CRYSTAL_ELEMENT.getItem(), 2),
+        Pair.of(ModItem.GEL.getItem(), 1),
+        Pair.of(ModItem.LOXIC_KOHL.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getCUTTING_FLUID_SOLUTION().getItem();
+    itemLike = (ItemLike) ModItem.CUTTING_FLUID_SOLUTION.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getCOMBINED_CUTTING_FLUID().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getCRYSTAL_ELEMENT().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getRMA70_12().getItem(), 1)
+        Pair.of(ModItem.COMBINED_CUTTING_FLUID.getItem(), 1),
+        Pair.of(ModItem.CRYSTAL_ELEMENT.getItem(), 1),
+        Pair.of(ModItem.RMA70_12.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getREFINED_SOLVENT().getItem();
+    itemLike = (ItemLike) ModItem.REFINED_SOLVENT.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getSEMI_SYNTHETIC_SOLVENT().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getCOMBINED_CUTTING_FLUID().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getGEL().getItem(), 1)
+        Pair.of(ModItem.SEMI_SYNTHETIC_SOLVENT.getItem(), 1),
+        Pair.of(ModItem.COMBINED_CUTTING_FLUID.getItem(), 1),
+        Pair.of(ModItem.GEL.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getINCANDESCENT_ALLOY().getItem();
+    itemLike = (ItemLike) ModItem.INCANDESCENT_ALLOY.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getDEVICE_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getGRINDSTONE().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
+        Pair.of(ModItem.DEVICE_GROUP.getItem(), 1),
+        Pair.of(ModItem.GRINDSTONE.getItem(), 1),
+        Pair.of(ModItem.LOXIC_KOHL.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getCOAGULATING_GEL().getItem();
+    itemLike = (ItemLike) ModItem.COAGULATING_GEL.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getORIRON_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getGEL().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getLOXIC_KOHL().getItem(), 1)
+        Pair.of(ModItem.ORIRON_GROUP.getItem(), 1),
+        Pair.of(ModItem.GEL.getItem(), 1),
+        Pair.of(ModItem.LOXIC_KOHL.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getCRYSTALLINE_CIRCUIT().getItem();
+    itemLike = (ItemLike) ModItem.CRYSTALLINE_CIRCUIT.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getCRYSTAL_GROUP().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getCOAGULATING_GEL().getItem(), 2),
-        Pair.of(ModItem.INSTANCE.getINCANDESCENT_ALLOY().getItem(), 1)
+        Pair.of(ModItem.CRYSTAL_GROUP.getItem(), 1),
+        Pair.of(ModItem.COAGULATING_GEL.getItem(), 2),
+        Pair.of(ModItem.INCANDESCENT_ALLOY.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getBIPOLAR_NANOSHEET().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getOPTIMIZED_DEVICE().getItem(), 1), Pair.of(ModItem.INSTANCE.getWHITE_HORSE_KOHL().getItem(), 2)};
+    itemLike = (ItemLike) ModItem.BIPOLAR_NANOSHEET.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.OPTIMIZED_DEVICE.getItem(), 1), Pair.of(ModItem.WHITE_HORSE_KOHL.getItem(), 2)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getD32_STEEL().getItem();
+    itemLike = (ItemLike) ModItem.D32_STEEL.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getMANGANESE_TRIHYDRATE().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getGRINDSTONE_PENTAHYDRATE().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getRMA70_24().getItem(), 1)
+        Pair.of(ModItem.MANGANESE_TRIHYDRATE.getItem(), 1),
+        Pair.of(ModItem.GRINDSTONE_PENTAHYDRATE.getItem(), 1),
+        Pair.of(ModItem.RMA70_24.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getPOLYMER_AGENT().getItem();
+    itemLike = (ItemLike) ModItem.POLYMER_AGENT.getItem();
     pairs = new Pair[]{
-        Pair.of(ModItem.INSTANCE.getORIROCK_CONCENTRATION().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getORIRON_CLUSTER().getItem(), 1),
-        Pair.of(ModItem.INSTANCE.getKETON_COLLOID().getItem(), 1)
+        Pair.of(ModItem.ORIROCK_CONCENTRATION.getItem(), 1),
+        Pair.of(ModItem.ORIRON_CLUSTER.getItem(), 1),
+        Pair.of(ModItem.KETON_COLLOID.getItem(), 1)
     };
     this.workshopRecipe(exporter, itemLike, pairs);
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.INSTANCE.getORIGINIUM_POWDER().getItem())
-        .requires((ItemLike) ModItem.INSTANCE.getORIROCK_CUBE().getItem(), 2)
-        .requires((ItemLike) ModItem.INSTANCE.getLMD().getItem())
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.ORIGINIUM_POWDER.getItem())
+        .requires((ItemLike) ModItem.ORIROCK_CUBE.getItem(), 2)
+        .requires((ItemLike) ModItem.LMD.getItem())
         .unlockedBy(
-            RecipeHelpers.getHasName((ItemLike) ModItem.INSTANCE.getORIROCK_CUBE().getItem()),
-            RecipeHelpers.has((ItemLike) ModItem.INSTANCE.getORIROCK_CUBE().getItem())
+            RecipeHelpers.getHasName((ItemLike) ModItem.ORIROCK_CUBE.getItem()),
+            RecipeHelpers.has((ItemLike) ModItem.ORIROCK_CUBE.getItem())
         )
-        .save(exporter, Zinecraft.INSTANCE.getREGISTRAR().id("originium_powder_from_orirock"));
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.INSTANCE.getORIGINIUM_POWDER().getItem())
-        .requires((ItemLike) ModItem.INSTANCE.getDEVICE_CORE().getItem())
-        .requires((ItemLike) ModItem.INSTANCE.getLMD().getItem())
+        .save(exporter, Zinecraft.REGISTRAR.id("originium_powder_from_orirock"));
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, (ItemLike) ModItem.ORIGINIUM_POWDER.getItem())
+        .requires((ItemLike) ModItem.DEVICE_CORE.getItem())
+        .requires((ItemLike) ModItem.LMD.getItem())
         .unlockedBy(
-            RecipeHelpers.getHasName((ItemLike) ModItem.INSTANCE.getDEVICE_CORE().getItem()),
-            RecipeHelpers.has((ItemLike) ModItem.INSTANCE.getDEVICE_CORE().getItem())
+            RecipeHelpers.getHasName((ItemLike) ModItem.DEVICE_CORE.getItem()),
+            RecipeHelpers.has((ItemLike) ModItem.DEVICE_CORE.getItem())
         )
-        .save(exporter, Zinecraft.INSTANCE.getREGISTRAR().id("originium_powder_from_device"));
+        .save(exporter, Zinecraft.REGISTRAR.id("originium_powder_from_device"));
   }
 
   private final void addSkillSummaryRecipes(RecipeOutput exporter) {
-    ItemLike itemLike = (ItemLike) ModItem.INSTANCE.getSKILL_SUMMARY_2().getItem();
-    Pair[] pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getSKILL_SUMMARY_1().getItem(), 3)};
+    ItemLike itemLike = (ItemLike) ModItem.SKILL_SUMMARY_2.getItem();
+    Pair[] pairs = new Pair[]{Pair.of(ModItem.SKILL_SUMMARY_1.getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
-    itemLike = (ItemLike) ModItem.INSTANCE.getSKILL_SUMMARY_3().getItem();
-    pairs = new Pair[]{Pair.of(ModItem.INSTANCE.getSKILL_SUMMARY_2().getItem(), 3)};
+    itemLike = (ItemLike) ModItem.SKILL_SUMMARY_3.getItem();
+    pairs = new Pair[]{Pair.of(ModItem.SKILL_SUMMARY_2.getItem(), 3)};
     this.workshopRecipe(exporter, itemLike, pairs);
   }
 
   private final void addChipConversionRecipes(RecipeOutput exporter) {
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_VANGUARD().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_SUPPORT().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_SUPPORT().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_VANGUARD().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_GUARD().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_SPECIAL().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_SPECIAL().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_GUARD().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_DEFENDER().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_MEDIC().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_MEDIC().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_DEFENDER().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_SNIPER().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_CASTER().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_CASTER().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_SNIPER().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_VANGUARD_GROUP().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_SUPPORT_GROUP().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_SUPPORT_GROUP().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_VANGUARD_GROUP().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_GUARD_GROUP().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_SPECIAL_GROUP().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_SPECIAL_GROUP().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_GUARD_GROUP().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_DEFENDER_GROUP().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_MEDIC_GROUP().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_MEDIC_GROUP().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_DEFENDER_GROUP().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_SNIPER_GROUP().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_CASTER_GROUP().getItem());
-    this.chipRecipe(exporter, (ItemLike) ModItem.INSTANCE.getCHIP_CASTER_GROUP().getItem(), (ItemLike) ModItem.INSTANCE.getCHIP_SNIPER_GROUP().getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_VANGUARD.getItem(), (ItemLike) ModItem.CHIP_SUPPORT.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_SUPPORT.getItem(), (ItemLike) ModItem.CHIP_VANGUARD.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_GUARD.getItem(), (ItemLike) ModItem.CHIP_SPECIAL.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_SPECIAL.getItem(), (ItemLike) ModItem.CHIP_GUARD.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_DEFENDER.getItem(), (ItemLike) ModItem.CHIP_MEDIC.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_MEDIC.getItem(), (ItemLike) ModItem.CHIP_DEFENDER.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_SNIPER.getItem(), (ItemLike) ModItem.CHIP_CASTER.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_CASTER.getItem(), (ItemLike) ModItem.CHIP_SNIPER.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_VANGUARD_GROUP.getItem(), (ItemLike) ModItem.CHIP_SUPPORT_GROUP.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_SUPPORT_GROUP.getItem(), (ItemLike) ModItem.CHIP_VANGUARD_GROUP.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_GUARD_GROUP.getItem(), (ItemLike) ModItem.CHIP_SPECIAL_GROUP.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_SPECIAL_GROUP.getItem(), (ItemLike) ModItem.CHIP_GUARD_GROUP.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_DEFENDER_GROUP.getItem(), (ItemLike) ModItem.CHIP_MEDIC_GROUP.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_MEDIC_GROUP.getItem(), (ItemLike) ModItem.CHIP_DEFENDER_GROUP.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_SNIPER_GROUP.getItem(), (ItemLike) ModItem.CHIP_CASTER_GROUP.getItem());
+    this.chipRecipe(exporter, (ItemLike) ModItem.CHIP_CASTER_GROUP.getItem(), (ItemLike) ModItem.CHIP_SNIPER_GROUP.getItem());
   }
 
   private final void workshopRecipe(RecipeOutput exporter, ItemLike result, Pair<? extends ItemLike, Integer>... ingredients) {

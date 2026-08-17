@@ -35,7 +35,7 @@ public final class WeaponPresentationController {
   }
 
   private static void start(WeaponActionStartedPayload payload) {
-    var definition = Zinecraft.INSTANCE.getWEAPONS().definition(payload.getWeaponId());
+    var definition = Zinecraft.WEAPONS.definition(payload.getWeaponId());
     if (definition == null) return;
     var timeline = definition.presentation(payload.getActionId());
     if (timeline != null) ACTIVE.put(new Key(payload.getEntityId(), payload.getActionId()),

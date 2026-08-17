@@ -1,12 +1,12 @@
 # 添加实体与 Mob
 
-普通实体和 Mob 通过 `Zinecraft.INSTANCE.getENTITIES()` 注册。Mob 目录额外管理默认属性、生成限制、NeoForge biome
+普通实体和 Mob 通过 `Zinecraft.ENTITIES` 注册。Mob 目录额外管理默认属性、生成限制、NeoForge biome
 modifier、自然生成和生成蛋。
 
 ## 普通实体
 
 ```java
-EntityEntry<ExampleProjectile> projectile = Zinecraft.INSTANCE.getENTITIES().register(
+EntityEntry<ExampleProjectile> projectile = Zinecraft.ENTITIES.register(
     "example_projectile", "示例投射物", "Example Projectile",
     ExampleProjectile::new, MobCategory.MISC,
     builder -> builder.sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10)
@@ -22,7 +22,7 @@ MobSpawnRestriction<ExampleMob> restriction = new MobSpawnRestriction<>(
     ExampleMob::canSpawn
 );
 
-MobEntry<ExampleMob> mob = Zinecraft.INSTANCE.getENTITIES().mob(
+MobEntry<ExampleMob> mob = Zinecraft.ENTITIES.mob(
     "example_mob", "示例生物", "Example Mob",
     ExampleMob::new, MobCategory.CREATURE,
     ExampleMob::attributes, restriction,

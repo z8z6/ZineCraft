@@ -12,7 +12,7 @@ public final class WeaponActionStartedPayload implements CustomPacketPayload {
   @NotNull
   public static final WeaponActionStartedPayload.Access ACCESS = new WeaponActionStartedPayload.Access();
   @NotNull
-  private static final Type<WeaponActionStartedPayload> TYPE = new Type(Zinecraft.INSTANCE.getREGISTRAR().id("weapon_action_started"));
+  private static final Type<WeaponActionStartedPayload> TYPE = new Type(Zinecraft.REGISTRAR.id("weapon_action_started"));
   @NotNull
   private static final StreamCodec<RegistryFriendlyByteBuf, WeaponActionStartedPayload> CODEC = new StreamCodec<RegistryFriendlyByteBuf, WeaponActionStartedPayload>() {
     public WeaponActionStartedPayload decode(RegistryFriendlyByteBuf buffer) {

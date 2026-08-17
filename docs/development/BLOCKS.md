@@ -47,7 +47,7 @@ src/main/java/com/cxxcxx/zinecraft/core/block/ModBlock.java
 
 ```java
 private static final BlockEntry<Block> TEST_STONE_BRICKS =
-    Zinecraft.INSTANCE.getBLOCKS().register(
+    Zinecraft.BLOCKS.register(
         "test_stone_bricks",
         "测试石砖",
         "Test Stone Bricks",

@@ -1,10 +1,10 @@
 # 添加群系
 
-群系通过 `Zinecraft.INSTANCE.getBIOMES().register` 声明，并由动态注册表 provider
+群系通过 `Zinecraft.BIOMES.register` 声明，并由动态注册表 provider
 导出。十九国设计依据见 [TERRA_NATIONS.md](TERRA_NATIONS.md)。
 
 ```java
-ResourceKey<Biome> example = Zinecraft.INSTANCE.getBIOMES().register(
+ResourceKey<Biome> example = Zinecraft.BIOMES.register(
     "example_biome",
     builder -> {
       builder.setPrecipitation(false);

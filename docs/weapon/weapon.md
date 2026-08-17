@@ -42,12 +42,12 @@ Zinecraft 的 Weapon Runtime 是服务端权威的 Java 动作系统，支持项
 ## 新增静态武器
 
 ```java
-ResourceLocation actionId = Zinecraft.INSTANCE.getREGISTRAR().id("example_attack");
+ResourceLocation actionId = Zinecraft.REGISTRAR.id("example_attack");
 WeaponAction action = new MeleeAttackAction(actionId, 7, 20, 7.0F, 3.25, 100.0);
-Zinecraft.INSTANCE.getWEAPONS().registerAction(action);
+Zinecraft.WEAPONS.registerAction(action);
 
 WeaponDefinition definition = new WeaponDefinition(
-    Zinecraft.INSTANCE.getREGISTRAR().id("example_sword"),
+    Zinecraft.REGISTRAR.id("example_sword"),
     Map.of(WeaponInput.PRIMARY, actionId),
     Map.of(),
     new WeaponMetadata("item.zinecraft.example_sword")

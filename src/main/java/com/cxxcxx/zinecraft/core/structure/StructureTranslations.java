@@ -72,7 +72,7 @@ public final class StructureTranslations {
 
   static {
     for (String[] name : NAMES) {
-      Zinecraft.INSTANCE.getTRANSLATIONS().add("structure.zinecraft." + name[0], name[1], name[2]);
+      Zinecraft.TRANSLATIONS.add("structure.zinecraft." + name[0], name[1], name[2]);
     }
   }
 

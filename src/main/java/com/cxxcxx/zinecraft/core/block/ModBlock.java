@@ -17,12 +17,12 @@ public final class ModBlock {
   @NotNull
   public static final ModBlock INSTANCE = new ModBlock();
   @NotNull
-  private static final BlockEntry<Block> STARGATE_ARCH = BlockCatalog.registerWithDefaults(
-      Zinecraft.INSTANCE.getBLOCKS(), "stargate_arch", "星门拱石", "Stargate Archstone", false, null, false, false, ModBlock::STARGATE_ARCHHelper0, 120, null
+  public static final BlockEntry<Block> STARGATE_ARCH = BlockCatalog.registerWithDefaults(
+      Zinecraft.BLOCKS, "stargate_arch", "星门拱石", "Stargate Archstone", false, null, false, false, ModBlock::STARGATE_ARCHHelper0, 120, null
   );
   @NotNull
-  private static final BlockEntry<StarGateControllerBlock> STARGATE_CONTROLLER = BlockCatalog.registerWithDefaults(
-          Zinecraft.INSTANCE.getBLOCKS(),
+  public static final BlockEntry<StarGateControllerBlock> STARGATE_CONTROLLER = BlockCatalog.registerWithDefaults(
+      Zinecraft.BLOCKS,
           "stargate_controller",
           "星门协议控制器",
           "Stargate Protocol Controller",
@@ -35,8 +35,8 @@ public final class ModBlock {
           null
   );
   @NotNull
-  private static final BlockEntry<StarGatePortalBlock> STARGATE_PORTAL = BlockCatalog.registerWithDefaults(
-          Zinecraft.INSTANCE.getBLOCKS(),
+  public static final BlockEntry<StarGatePortalBlock> STARGATE_PORTAL = BlockCatalog.registerWithDefaults(
+      Zinecraft.BLOCKS,
           "stargate_portal",
           "星门事件视界",
           "Stargate Event Horizon",
@@ -49,8 +49,8 @@ public final class ModBlock {
           null
   );
   @NotNull
-  private static final BlockEntry<ExampleEntityBlock> EXAMPLE_ENTITY_BLOCK = BlockCatalog.registerWithDefaults(
-          Zinecraft.INSTANCE.getBLOCKS(),
+  public static final BlockEntry<ExampleEntityBlock> EXAMPLE_ENTITY_BLOCK = BlockCatalog.registerWithDefaults(
+      Zinecraft.BLOCKS,
           "example_entity_block",
           "示例实体方块",
           "Example Entity Block",
@@ -64,15 +64,12 @@ public final class ModBlock {
   );
 
   static {
-    Zinecraft.INSTANCE
-        .getTRANSLATIONS()
+    Zinecraft.TRANSLATIONS
         .add("message.zinecraft.stargate.requires_protocol_originium", "控制器拒绝访问：请手持协议源石右键激活", "Access denied: right-click while holding Protocol Originium");
-    Zinecraft.INSTANCE
-        .getTRANSLATIONS()
+    Zinecraft.TRANSLATIONS
         .add("message.zinecraft.stargate.activated", "协议认证完成，星门事件视界已建立", "Protocol accepted. Stargate event horizon established");
-    Zinecraft.INSTANCE.getTRANSLATIONS().add("message.zinecraft.stargate.already_active", "星门已处于激活状态", "The stargate is already active");
-    Zinecraft.INSTANCE
-        .getTRANSLATIONS()
+    Zinecraft.TRANSLATIONS.add("message.zinecraft.stargate.already_active", "星门已处于激活状态", "The stargate is already active");
+    Zinecraft.TRANSLATIONS
         .add("message.zinecraft.stargate.damaged", "星门拱体不完整，无法建立事件视界", "The stargate arch is incomplete and cannot form an event horizon");
   }
 
@@ -117,23 +114,4 @@ public final class ModBlock {
     return new ExampleEntityBlock(properties);
   }
 
-  @NotNull
-  public final Block getSTARGATE_ARCH() {
-    return STARGATE_ARCH.getBlock();
-  }
-
-  @NotNull
-  public final StarGateControllerBlock getSTARGATE_CONTROLLER() {
-    return STARGATE_CONTROLLER.getBlock();
-  }
-
-  @NotNull
-  public final StarGatePortalBlock getSTARGATE_PORTAL() {
-    return STARGATE_PORTAL.getBlock();
-  }
-
-  @NotNull
-  public final ExampleEntityBlock getEXAMPLE_ENTITY_BLOCK() {
-    return EXAMPLE_ENTITY_BLOCK.getBlock();
-  }
 }

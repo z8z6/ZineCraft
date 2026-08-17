@@ -29,9 +29,9 @@ public final class StarGateTeleporter {
     ResourceKey target = source.dimension();
     ResourceKey resourceKey2;
     if (java.util.Objects.equals(target, Level.OVERWORLD)) {
-      resourceKey2 = ModDimensions.INSTANCE.getTERRA().getLevelKey();
+      resourceKey2 = ModDimensions.TERRA.getLevelKey();
     } else {
-      if (!java.util.Objects.equals(target, ModDimensions.INSTANCE.getTERRA().getLevelKey())) {
+      if (!java.util.Objects.equals(target, ModDimensions.TERRA.getLevelKey())) {
         return null;
       }
 
@@ -52,7 +52,7 @@ public final class StarGateTeleporter {
     BlockPos blockPos1 = this.findGate(serverLevel, blockPos);
     BlockPos blockPos3 = blockPos1;
     if (blockPos1 == null) {
-      blockPos3 = java.util.Objects.equals(serverLevel.dimension(), ModDimensions.INSTANCE.getTERRA().getLevelKey())
+      blockPos3 = java.util.Objects.equals(serverLevel.dimension(), ModDimensions.TERRA.getLevelKey())
           ? this.createTerraGate(serverLevel, blockPos)
           : serverLevel.getSharedSpawnPos();
     }
@@ -83,7 +83,7 @@ public final class StarGateTeleporter {
             if (n <= o) {
               while (true) {
                 BlockPos blockPos = new BlockPos(i, n, k);
-                if (level.getBlockState(blockPos).is(ModBlock.INSTANCE.getSTARGATE_PORTAL())) {
+                if (level.getBlockState(blockPos).is(ModBlock.STARGATE_PORTAL.getBlock())) {
                   return blockPos;
                 }
 

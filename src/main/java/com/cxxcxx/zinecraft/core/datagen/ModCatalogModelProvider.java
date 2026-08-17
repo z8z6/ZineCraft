@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 final class ModCatalogModelProvider extends CatalogModelProvider {
   public ModCatalogModelProvider(@NotNull PackOutput output) {
-    super(output, Zinecraft.INSTANCE.getITEMS(), Zinecraft.INSTANCE.getBLOCKS());
+    super(output, Zinecraft.ITEMS, Zinecraft.BLOCKS);
   }
 }
 

@@ -58,24 +58,28 @@ import org.slf4j.LoggerFactory;
 @Mod(Zinecraft.MOD_ID)
 public final class Zinecraft {
   public static final String MOD_ID = "zinecraft";
-  private static final TranslationCatalog TRANSLATIONS = new TranslationCatalog();
+  public static final TranslationCatalog TRANSLATIONS = new TranslationCatalog();
   public static Zinecraft INSTANCE;
-  private static final ModRegistrar REGISTRAR = new ModRegistrar(MOD_ID);
-  private static final ItemCatalog ITEMS = new ItemCatalog(REGISTRAR, TRANSLATIONS);
-  private static final CollectibleCatalog COLLECTIBLES = new CollectibleCatalog(ITEMS, TRANSLATIONS, MOD_ID);
-  private static final EntityCatalog ENTITIES = new EntityCatalog(REGISTRAR, ITEMS, TRANSLATIONS);
-  private static final SkillCatalog SKILLS = new SkillCatalog(ITEMS, TRANSLATIONS);
-  private static final BlockCatalog BLOCKS = new BlockCatalog(REGISTRAR, TRANSLATIONS);
-  private static final CreativeTabCatalog CREATIVE_TABS = new CreativeTabCatalog(REGISTRAR, ITEMS, BLOCKS, TRANSLATIONS);
-  private static final BlockEntityCatalog BLOCK_ENTITIES = new BlockEntityCatalog(REGISTRAR);
-  private static final SoundCatalog SOUNDS = new SoundCatalog(REGISTRAR);
-  private static final SongCatalog SONGS = new SongCatalog(REGISTRAR, SOUNDS, ITEMS, TRANSLATIONS);
-  private static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(REGISTRAR, TRANSLATIONS);
-  private static final WorldgenManager WORLDGEN = new WorldgenManager(REGISTRAR);
-  private static final RecipeCatalog RECIPES = new RecipeCatalog();
-  private static final SkillService SKILL_SERVICE = new SkillService();
-  private static final WeaponRegistry WEAPONS = new WeaponRegistry();
-  private static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+  public static final ModRegistrar REGISTRAR = new ModRegistrar(MOD_ID);
+  public static final ItemCatalog ITEMS = new ItemCatalog(REGISTRAR, TRANSLATIONS);
+  public static final CollectibleCatalog COLLECTIBLES = new CollectibleCatalog(ITEMS, TRANSLATIONS, MOD_ID);
+  public static final EntityCatalog ENTITIES = new EntityCatalog(REGISTRAR, ITEMS, TRANSLATIONS);
+  public static final SkillCatalog SKILLS = new SkillCatalog(ITEMS, TRANSLATIONS);
+  public static final BlockCatalog BLOCKS = new BlockCatalog(REGISTRAR, TRANSLATIONS);
+  public static final CreativeTabCatalog CREATIVE_TABS = new CreativeTabCatalog(REGISTRAR, ITEMS, BLOCKS, TRANSLATIONS);
+  public static final BlockEntityCatalog BLOCK_ENTITIES = new BlockEntityCatalog(REGISTRAR);
+  public static final SoundCatalog SOUNDS = new SoundCatalog(REGISTRAR);
+  public static final SongCatalog SONGS = new SongCatalog(REGISTRAR, SOUNDS, ITEMS, TRANSLATIONS);
+  public static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(REGISTRAR, TRANSLATIONS);
+  public static final WorldgenManager WORLDGEN = new WorldgenManager(REGISTRAR);
+  public static final BiomeCatalog BIOMES = WORLDGEN.getBiomes();
+  public static final DimensionCatalog DIMENSIONS = WORLDGEN.getDimensions();
+  public static final FeatureCatalog FEATURES = WORLDGEN.getFeatures();
+  public static final StructureCatalog STRUCTURES = WORLDGEN.getStructures();
+  public static final RecipeCatalog RECIPES = new RecipeCatalog();
+  public static final SkillService SKILL_SERVICE = new SkillService();
+  public static final WeaponRegistry WEAPONS = new WeaponRegistry();
+  public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
   public Zinecraft(IEventBus modBus) {
     INSTANCE = this;
@@ -111,7 +115,7 @@ public final class Zinecraft {
    * 藏品与技能数量较多且语义独立，因此不混入普通物品页。
    */
   private void registerSpecialCreativeTabs() {
-    var collectibles = ModCollectibles.INSTANCE.getALL();
+    var collectibles = ModCollectibles.ALL;
     if (collectibles.isEmpty()) throw new IllegalStateException("藏品创造模式页不能为空");
     CREATIVE_TABS.register(
         "collectibles",
@@ -141,87 +145,4 @@ public final class Zinecraft {
     });
   }
 
-  public ModRegistrar getREGISTRAR() {
-    return REGISTRAR;
-  }
-
-  public TranslationCatalog getTRANSLATIONS() {
-    return TRANSLATIONS;
-  }
-
-  public ItemCatalog getITEMS() {
-    return ITEMS;
-  }
-
-  public CollectibleCatalog getCOLLECTIBLES() {
-    return COLLECTIBLES;
-  }
-
-  public BlockCatalog getBLOCKS() {
-    return BLOCKS;
-  }
-
-  public BlockEntityCatalog getBLOCK_ENTITIES() {
-    return BLOCK_ENTITIES;
-  }
-
-  public SoundCatalog getSOUNDS() {
-    return SOUNDS;
-  }
-
-  public RecipeCatalog getRECIPES() {
-    return RECIPES;
-  }
-
-  public SongCatalog getSONGS() {
-    return SONGS;
-  }
-
-  public CreativeTabCatalog getCREATIVE_TABS() {
-    return CREATIVE_TABS;
-  }
-
-  public EntityCatalog getENTITIES() {
-    return ENTITIES;
-  }
-
-  public EnchantmentCatalog getENCHANTMENTS() {
-    return ENCHANTMENTS;
-  }
-
-  public SkillCatalog getSKILLS() {
-    return SKILLS;
-  }
-
-  public SkillService getSKILL_SERVICE() {
-    return SKILL_SERVICE;
-  }
-
-  public WeaponRegistry getWEAPONS() {
-    return WEAPONS;
-  }
-
-  public WorldgenManager getWORLDGEN() {
-    return WORLDGEN;
-  }
-
-  public BiomeCatalog getBIOMES() {
-    return WORLDGEN.getBiomes();
-  }
-
-  public DimensionCatalog getDIMENSIONS() {
-    return WORLDGEN.getDimensions();
-  }
-
-  public FeatureCatalog getFEATURES() {
-    return WORLDGEN.getFeatures();
-  }
-
-  public StructureCatalog getSTRUCTURES() {
-    return WORLDGEN.getStructures();
-  }
-
-  public Logger getLogger() {
-    return LOGGER;
-  }
 }

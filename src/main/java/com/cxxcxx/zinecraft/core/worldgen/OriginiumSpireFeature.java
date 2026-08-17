@@ -39,7 +39,7 @@ public final class OriginiumSpireFeature extends Feature<NoneFeatureConfiguratio
   @Override
   public boolean place(@NotNull FeaturePlaceContext<NoneFeatureConfiguration> context) {
     WorldGenLevel level = context.level();
-    if (!level.getLevel().dimension().equals(ModDimensions.INSTANCE.getTERRA().getLevelKey())) return false;
+    if (!level.getLevel().dimension().equals(ModDimensions.TERRA.getLevelKey())) return false;
 
     RandomSource random = context.random();
     int spikeCount = random.nextIntBetweenInclusive(minSpikes, maxSpikes);
@@ -58,7 +58,7 @@ public final class OriginiumSpireFeature extends Feature<NoneFeatureConfiguratio
   }
 
   private boolean placeSpire(WorldGenLevel level, BlockPos base, int height, double angle, double lean) {
-    BlockState crystal = MaterialOres.INSTANCE.getORIGINITE_ORE().getBlock().defaultBlockState();
+    BlockState crystal = MaterialOres.ORIGINITE_ORE.getBlock().defaultBlockState();
     boolean placed = false;
     for (int y = 0; y < height; y++) {
       double progress = y / (double) Math.max(1, height - 1);

@@ -12,7 +12,7 @@ public final class WeaponActionCancelledPayload implements CustomPacketPayload {
   @NotNull
   public static final WeaponActionCancelledPayload.Access ACCESS = new WeaponActionCancelledPayload.Access();
   @NotNull
-  private static final Type<WeaponActionCancelledPayload> TYPE = new Type(Zinecraft.INSTANCE.getREGISTRAR().id("weapon_action_cancelled"));
+  private static final Type<WeaponActionCancelledPayload> TYPE = new Type(Zinecraft.REGISTRAR.id("weapon_action_cancelled"));
   @NotNull
   private static final StreamCodec<RegistryFriendlyByteBuf, WeaponActionCancelledPayload> CODEC = new StreamCodec<RegistryFriendlyByteBuf, WeaponActionCancelledPayload>() {
     public WeaponActionCancelledPayload decode(RegistryFriendlyByteBuf buffer) {

@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
-@EventBusSubscriber(modid = Zinecraft.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Zinecraft.MOD_ID, value = Dist.CLIENT)
 public final class ZinecraftCoreClient {
   private ZinecraftCoreClient() {
   }
@@ -28,7 +28,7 @@ public final class ZinecraftCoreClient {
 
   @SubscribeEvent
   public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerEntityRenderer(ModEntities.INSTANCE.getLATERANO_CITIZEN().getType(), LateranoCitizenRenderer::new);
+    event.registerEntityRenderer(ModEntities.LATERANO_CITIZEN.getType(), LateranoCitizenRenderer::new);
     for (var type : ModEntities.INSTANCE.getGENERIC_RESIDENT_TYPES()) {
       event.registerEntityRenderer(type, NationResidentRenderer::new);
     }

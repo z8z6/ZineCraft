@@ -22,7 +22,7 @@ public final class WeaponVfxServices {
       Class<?> backendClass = Class.forName(PHOTON_BACKEND);
       return (WeaponPresentationVfxService) backendClass.getField("INSTANCE").get(null);
     } catch (ReflectiveOperationException | LinkageError exception) {
-      Zinecraft.INSTANCE.getLogger().warn("Photon is present but the weapon VFX backend could not be loaded; using vanilla particles", exception);
+      Zinecraft.LOGGER.warn("Photon is present but the weapon VFX backend could not be loaded; using vanilla particles", exception);
       return VanillaWeaponVfxService.INSTANCE;
     }
   }

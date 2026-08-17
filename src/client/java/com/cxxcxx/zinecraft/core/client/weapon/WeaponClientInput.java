@@ -38,7 +38,7 @@ public final class WeaponClientInput {
   public static boolean requestPrimary() {
     Minecraft client = Minecraft.getInstance();
     var player = client.player;
-    if (player == null || Zinecraft.INSTANCE.getWEAPONS().definition(player.getMainHandItem()) == null) return false;
+    if (player == null || Zinecraft.WEAPONS.definition(player.getMainHandItem()) == null) return false;
     if (client.hitResult != null && client.hitResult.getType() == HitResult.Type.BLOCK
         && player.getMainHandItem().getItem() instanceof SwordItem) return false;
     PacketDistributor.sendToServer(new WeaponActionRequestPayload(WeaponInput.PRIMARY));
@@ -48,12 +48,12 @@ public final class WeaponClientInput {
   private static void request(Minecraft client, WeaponInput input) {
     var player = client.player;
     if (player == null) return;
-    var definition = Zinecraft.INSTANCE.getWEAPONS().definition(player.getMainHandItem());
+    var definition = Zinecraft.WEAPONS.definition(player.getMainHandItem());
     if (definition == null || definition.action(input) == null) return;
     PacketDistributor.sendToServer(new WeaponActionRequestPayload(input));
   }
 
-  @EventBusSubscriber(modid = Zinecraft.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+  @EventBusSubscriber(modid = Zinecraft.MOD_ID, value = Dist.CLIENT)
   public static final class ModEvents {
     private ModEvents() {
     }

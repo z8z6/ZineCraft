@@ -52,11 +52,11 @@ public final class WeaponServerController {
 
   public void request(ServerPlayer player, WeaponInput input, InteractionHand hand) {
     ItemStack stack = player.getItemInHand(hand);
-    WeaponDefinition definition = Zinecraft.INSTANCE.getWEAPONS().definition(stack);
+    WeaponDefinition definition = Zinecraft.WEAPONS.definition(stack);
     if (definition == null) return;
     ResourceLocation actionId = definition.action(input);
     if (actionId == null) return;
-    var action = Zinecraft.INSTANCE.getWEAPONS().action(actionId);
+    var action = Zinecraft.WEAPONS.action(actionId);
     if (action == null) return;
 
     var weaponContext = new WeaponContext(player, stack, hand, definition);
@@ -113,7 +113,7 @@ public final class WeaponServerController {
   private boolean isStillValid(ServerPlayer player, ActiveAction active) {
     if (!player.isAlive() || player.isSpectator() || player.getItemInHand(active.hand()) != active.stack())
       return false;
-    var definition = Zinecraft.INSTANCE.getWEAPONS().definition(player.getItemInHand(active.hand()));
+    var definition = Zinecraft.WEAPONS.definition(player.getItemInHand(active.hand()));
     return definition != null && definition.getId().equals(active.weapon().getId());
   }
 

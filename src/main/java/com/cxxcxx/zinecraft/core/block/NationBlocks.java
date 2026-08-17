@@ -13,101 +13,101 @@ public final class NationBlocks {
   @NotNull
   public static final NationBlocks INSTANCE = new NationBlocks();
   @NotNull
-  private static final BlockEntry<Block> AEGIR_ABYSSAL_SLATE;
+  public static final BlockEntry<Block> AEGIR_ABYSSAL_SLATE;
   @NotNull
-  private static final BlockEntry<Block> AEGIR_PRESSURE_TILE;
+  public static final BlockEntry<Block> AEGIR_PRESSURE_TILE;
   @NotNull
-  private static final BlockEntry<Block> BOLIVAR_WAR_SCOURED_SOIL;
+  public static final BlockEntry<Block> BOLIVAR_WAR_SCOURED_SOIL;
   @NotNull
-  private static final BlockEntry<Block> BOLIVAR_DOSSOLES_STUCCO;
+  public static final BlockEntry<Block> BOLIVAR_DOSSOLES_STUCCO;
   @NotNull
-  private static final BlockEntry<Block> HIGASHI_SHADOW_LOAM;
+  public static final BlockEntry<Block> HIGASHI_SHADOW_LOAM;
   @NotNull
-  private static final BlockEntry<Block> HIGASHI_MACHIYA_PLASTER;
+  public static final BlockEntry<Block> HIGASHI_MACHIYA_PLASTER;
   @NotNull
-  private static final BlockEntry<Block> DURIN_GARDEN_MOSS;
+  public static final BlockEntry<Block> DURIN_GARDEN_MOSS;
   @NotNull
-  private static final BlockEntry<Block> DURIN_IDEAL_CITY_PANEL;
+  public static final BlockEntry<Block> DURIN_IDEAL_CITY_PANEL;
   @NotNull
-  private static final BlockEntry<Block> COLUMBIA_CANYON_SOIL;
+  public static final BlockEntry<Block> COLUMBIA_CANYON_SOIL;
   @NotNull
-  private static final BlockEntry<Block> COLUMBIA_FRONTIER_PANEL;
+  public static final BlockEntry<Block> COLUMBIA_FRONTIER_PANEL;
   @NotNull
-  private static final BlockEntry<Block> KAZIMIERZ_STEPPE_TURF;
+  public static final BlockEntry<Block> KAZIMIERZ_STEPPE_TURF;
   @NotNull
-  private static final BlockEntry<Block> KAZIMIERZ_ARENA_MASONRY;
+  public static final BlockEntry<Block> KAZIMIERZ_ARENA_MASONRY;
   @NotNull
-  private static final BlockEntry<Block> KAZDEL_SCARRED_ASH;
+  public static final BlockEntry<Block> KAZDEL_SCARRED_ASH;
   @NotNull
-  private static final BlockEntry<Block> KAZDEL_FORTRESS_PLATE;
+  public static final BlockEntry<Block> KAZDEL_FORTRESS_PLATE;
   @NotNull
-  private static final BlockEntry<Block> LATERANO_ALLUVIAL_CHALK;
+  public static final BlockEntry<Block> LATERANO_ALLUVIAL_CHALK;
   @NotNull
-  private static final BlockEntry<Block> LATERANO_BASILICA_MARBLE;
+  public static final BlockEntry<Block> LATERANO_BASILICA_MARBLE;
   @NotNull
-  private static final BlockEntry<Block> LATERANO_HOST_CASING;
+  public static final BlockEntry<Block> LATERANO_HOST_CASING;
   @NotNull
-  private static final BlockEntry<Block> LATERANO_HOST_CONDUIT;
+  public static final BlockEntry<Block> LATERANO_HOST_CONDUIT;
   @NotNull
-  private static final BlockEntry<Block> LEITHANIEN_TWILIGHT_HUMUS;
+  public static final BlockEntry<Block> LEITHANIEN_TWILIGHT_HUMUS;
   @NotNull
-  private static final BlockEntry<Block> LEITHANIEN_RESONANT_BRICK;
+  public static final BlockEntry<Block> LEITHANIEN_RESONANT_BRICK;
   @NotNull
-  private static final BlockEntry<Block> RIM_BILLITON_MINE_TAILINGS;
+  public static final BlockEntry<Block> RIM_BILLITON_MINE_TAILINGS;
   @NotNull
-  private static final BlockEntry<Block> RIM_BILLITON_CORRUGATED_STEEL;
+  public static final BlockEntry<Block> RIM_BILLITON_CORRUGATED_STEEL;
   @NotNull
-  private static final BlockEntry<Block> MINOS_SUNBAKED_EARTH;
+  public static final BlockEntry<Block> MINOS_SUNBAKED_EARTH;
   @NotNull
-  private static final BlockEntry<Block> MINOS_HEROIC_MASONRY;
+  public static final BlockEntry<Block> MINOS_HEROIC_MASONRY;
   @NotNull
-  private static final BlockEntry<Block> SARGON_DESERT_CRUST;
+  public static final BlockEntry<Block> SARGON_DESERT_CRUST;
   @NotNull
-  private static final BlockEntry<Block> SARGON_OASIS_ADOBE;
+  public static final BlockEntry<Block> SARGON_OASIS_ADOBE;
   @NotNull
-  private static final BlockEntry<Block> SAMI_FROST_MOSS;
+  public static final BlockEntry<Block> SAMI_FROST_MOSS;
   @NotNull
-  private static final BlockEntry<Block> SAMI_RITUAL_STONE;
+  public static final BlockEntry<Block> SAMI_RITUAL_STONE;
   @NotNull
-  private static final BlockEntry<Block> SAMI_TRIBAL_TIMBER;
+  public static final BlockEntry<Block> SAMI_TRIBAL_TIMBER;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_MOORLAND_SOIL;
+  public static final BlockEntry<Block> VICTORIA_MOORLAND_SOIL;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_INDUSTRIAL_BRICK;
+  public static final BlockEntry<Block> VICTORIA_INDUSTRIAL_BRICK;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_WALL_ARMOR;
+  public static final BlockEntry<Block> VICTORIA_WALL_ARMOR;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_CANNON_CASING;
+  public static final BlockEntry<Block> VICTORIA_CANNON_CASING;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_STRUCTURAL_FRAME;
+  public static final BlockEntry<Block> VICTORIA_STRUCTURAL_FRAME;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_REINFORCED_FLOOR;
+  public static final BlockEntry<Block> VICTORIA_REINFORCED_FLOOR;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_CONTROL_PANEL;
+  public static final BlockEntry<Block> VICTORIA_CONTROL_PANEL;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_BATTLE_SCARRED_ARMOR;
+  public static final BlockEntry<Block> VICTORIA_BATTLE_SCARRED_ARMOR;
   @NotNull
-  private static final BlockEntry<Block> VICTORIA_BLAST_SCARRED_ARMOR;
+  public static final BlockEntry<Block> VICTORIA_BLAST_SCARRED_ARMOR;
   @NotNull
-  private static final BlockEntry<Block> URSUS_PERMAFROST;
+  public static final BlockEntry<Block> URSUS_PERMAFROST;
   @NotNull
-  private static final BlockEntry<Block> URSUS_IMPERIAL_MASONRY;
+  public static final BlockEntry<Block> URSUS_IMPERIAL_MASONRY;
   @NotNull
-  private static final BlockEntry<Block> KJERAG_SACRED_SNOWSTONE;
+  public static final BlockEntry<Block> KJERAG_SACRED_SNOWSTONE;
   @NotNull
-  private static final BlockEntry<Block> KJERAG_MONASTERY_STONE;
+  public static final BlockEntry<Block> KJERAG_MONASTERY_STONE;
   @NotNull
-  private static final BlockEntry<Block> SIRACUSA_RAIN_DARKENED_SOIL;
+  public static final BlockEntry<Block> SIRACUSA_RAIN_DARKENED_SOIL;
   @NotNull
-  private static final BlockEntry<Block> SIRACUSA_FAMILY_MASONRY;
+  public static final BlockEntry<Block> SIRACUSA_FAMILY_MASONRY;
   @NotNull
-  private static final BlockEntry<Block> YAN_MOUNTAIN_SOIL;
+  public static final BlockEntry<Block> YAN_MOUNTAIN_SOIL;
   @NotNull
-  private static final BlockEntry<Block> YAN_COURTYARD_BRICK;
+  public static final BlockEntry<Block> YAN_COURTYARD_BRICK;
   @NotNull
-  private static final BlockEntry<Block> IBERIA_SALT_CRUSTED_GRAVEL;
+  public static final BlockEntry<Block> IBERIA_SALT_CRUSTED_GRAVEL;
   @NotNull
-  private static final BlockEntry<Block> IBERIA_COASTAL_MASONRY;
+  public static final BlockEntry<Block> IBERIA_COASTAL_MASONRY;
 
   static {
     NationBlocks nationBlocks = INSTANCE;
@@ -263,249 +263,9 @@ public final class NationBlocks {
     return new Block(Properties.ofFullCopy((BlockBehaviour) _physicalTemplate));
   }
 
-  @NotNull
-  public final Block getAEGIR_ABYSSAL_SLATE() {
-    return AEGIR_ABYSSAL_SLATE.getBlock();
-  }
-
-  @NotNull
-  public final Block getAEGIR_PRESSURE_TILE() {
-    return AEGIR_PRESSURE_TILE.getBlock();
-  }
-
-  @NotNull
-  public final Block getBOLIVAR_WAR_SCOURED_SOIL() {
-    return BOLIVAR_WAR_SCOURED_SOIL.getBlock();
-  }
-
-  @NotNull
-  public final Block getBOLIVAR_DOSSOLES_STUCCO() {
-    return BOLIVAR_DOSSOLES_STUCCO.getBlock();
-  }
-
-  @NotNull
-  public final Block getHIGASHI_SHADOW_LOAM() {
-    return HIGASHI_SHADOW_LOAM.getBlock();
-  }
-
-  @NotNull
-  public final Block getHIGASHI_MACHIYA_PLASTER() {
-    return HIGASHI_MACHIYA_PLASTER.getBlock();
-  }
-
-  @NotNull
-  public final Block getDURIN_GARDEN_MOSS() {
-    return DURIN_GARDEN_MOSS.getBlock();
-  }
-
-  @NotNull
-  public final Block getDURIN_IDEAL_CITY_PANEL() {
-    return DURIN_IDEAL_CITY_PANEL.getBlock();
-  }
-
-  @NotNull
-  public final Block getCOLUMBIA_CANYON_SOIL() {
-    return COLUMBIA_CANYON_SOIL.getBlock();
-  }
-
-  @NotNull
-  public final Block getCOLUMBIA_FRONTIER_PANEL() {
-    return COLUMBIA_FRONTIER_PANEL.getBlock();
-  }
-
-  @NotNull
-  public final Block getKAZIMIERZ_STEPPE_TURF() {
-    return KAZIMIERZ_STEPPE_TURF.getBlock();
-  }
-
-  @NotNull
-  public final Block getKAZIMIERZ_ARENA_MASONRY() {
-    return KAZIMIERZ_ARENA_MASONRY.getBlock();
-  }
-
-  @NotNull
-  public final Block getKAZDEL_SCARRED_ASH() {
-    return KAZDEL_SCARRED_ASH.getBlock();
-  }
-
-  @NotNull
-  public final Block getKAZDEL_FORTRESS_PLATE() {
-    return KAZDEL_FORTRESS_PLATE.getBlock();
-  }
-
-  @NotNull
-  public final Block getLATERANO_ALLUVIAL_CHALK() {
-    return LATERANO_ALLUVIAL_CHALK.getBlock();
-  }
-
-  @NotNull
-  public final Block getLATERANO_BASILICA_MARBLE() {
-    return LATERANO_BASILICA_MARBLE.getBlock();
-  }
-
-  @NotNull
-  public final Block getLATERANO_HOST_CASING() {
-    return LATERANO_HOST_CASING.getBlock();
-  }
-
-  @NotNull
-  public final Block getLATERANO_HOST_CONDUIT() {
-    return LATERANO_HOST_CONDUIT.getBlock();
-  }
-
-  @NotNull
-  public final Block getLEITHANIEN_TWILIGHT_HUMUS() {
-    return LEITHANIEN_TWILIGHT_HUMUS.getBlock();
-  }
-
-  @NotNull
-  public final Block getLEITHANIEN_RESONANT_BRICK() {
-    return LEITHANIEN_RESONANT_BRICK.getBlock();
-  }
-
-  @NotNull
-  public final Block getRIM_BILLITON_MINE_TAILINGS() {
-    return RIM_BILLITON_MINE_TAILINGS.getBlock();
-  }
-
-  @NotNull
-  public final Block getRIM_BILLITON_CORRUGATED_STEEL() {
-    return RIM_BILLITON_CORRUGATED_STEEL.getBlock();
-  }
-
-  @NotNull
-  public final Block getMINOS_SUNBAKED_EARTH() {
-    return MINOS_SUNBAKED_EARTH.getBlock();
-  }
-
-  @NotNull
-  public final Block getMINOS_HEROIC_MASONRY() {
-    return MINOS_HEROIC_MASONRY.getBlock();
-  }
-
-  @NotNull
-  public final Block getSARGON_DESERT_CRUST() {
-    return SARGON_DESERT_CRUST.getBlock();
-  }
-
-  @NotNull
-  public final Block getSARGON_OASIS_ADOBE() {
-    return SARGON_OASIS_ADOBE.getBlock();
-  }
-
-  @NotNull
-  public final Block getSAMI_FROST_MOSS() {
-    return SAMI_FROST_MOSS.getBlock();
-  }
-
-  @NotNull
-  public final Block getSAMI_RITUAL_STONE() {
-    return SAMI_RITUAL_STONE.getBlock();
-  }
-
-  @NotNull
-  public final Block getSAMI_TRIBAL_TIMBER() {
-    return SAMI_TRIBAL_TIMBER.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_MOORLAND_SOIL() {
-    return VICTORIA_MOORLAND_SOIL.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_INDUSTRIAL_BRICK() {
-    return VICTORIA_INDUSTRIAL_BRICK.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_WALL_ARMOR() {
-    return VICTORIA_WALL_ARMOR.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_CANNON_CASING() {
-    return VICTORIA_CANNON_CASING.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_STRUCTURAL_FRAME() {
-    return VICTORIA_STRUCTURAL_FRAME.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_REINFORCED_FLOOR() {
-    return VICTORIA_REINFORCED_FLOOR.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_CONTROL_PANEL() {
-    return VICTORIA_CONTROL_PANEL.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_BATTLE_SCARRED_ARMOR() {
-    return VICTORIA_BATTLE_SCARRED_ARMOR.getBlock();
-  }
-
-  @NotNull
-  public final Block getVICTORIA_BLAST_SCARRED_ARMOR() {
-    return VICTORIA_BLAST_SCARRED_ARMOR.getBlock();
-  }
-
-  @NotNull
-  public final Block getURSUS_PERMAFROST() {
-    return URSUS_PERMAFROST.getBlock();
-  }
-
-  @NotNull
-  public final Block getURSUS_IMPERIAL_MASONRY() {
-    return URSUS_IMPERIAL_MASONRY.getBlock();
-  }
-
-  @NotNull
-  public final Block getKJERAG_SACRED_SNOWSTONE() {
-    return KJERAG_SACRED_SNOWSTONE.getBlock();
-  }
-
-  @NotNull
-  public final Block getKJERAG_MONASTERY_STONE() {
-    return KJERAG_MONASTERY_STONE.getBlock();
-  }
-
-  @NotNull
-  public final Block getSIRACUSA_RAIN_DARKENED_SOIL() {
-    return SIRACUSA_RAIN_DARKENED_SOIL.getBlock();
-  }
-
-  @NotNull
-  public final Block getSIRACUSA_FAMILY_MASONRY() {
-    return SIRACUSA_FAMILY_MASONRY.getBlock();
-  }
-
-  @NotNull
-  public final Block getYAN_MOUNTAIN_SOIL() {
-    return YAN_MOUNTAIN_SOIL.getBlock();
-  }
-
-  @NotNull
-  public final Block getYAN_COURTYARD_BRICK() {
-    return YAN_COURTYARD_BRICK.getBlock();
-  }
-
-  @NotNull
-  public final Block getIBERIA_SALT_CRUSTED_GRAVEL() {
-    return IBERIA_SALT_CRUSTED_GRAVEL.getBlock();
-  }
-
-  @NotNull
-  public final Block getIBERIA_COASTAL_MASONRY() {
-    return IBERIA_COASTAL_MASONRY.getBlock();
-  }
-
   private final BlockEntry<Block> material(String path, String zhCn, String enUs, Block physicalTemplate) {
     return BlockCatalog.registerWithDefaults(
-        Zinecraft.INSTANCE.getBLOCKS(), path, zhCn, enUs, false, null, false, false, () -> materialHelper0(physicalTemplate), 120, null
+        Zinecraft.BLOCKS, path, zhCn, enUs, false, null, false, false, () -> materialHelper0(physicalTemplate), 120, null
     );
   }
 }

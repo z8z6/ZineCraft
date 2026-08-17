@@ -91,7 +91,7 @@ public final class FtbQuestGuideInstaller {
       }
       if (changed) SNBT.tryWrite(target, installed);
     } catch (Exception error) {
-      Zinecraft.INSTANCE.getLogger().error("无法合并 FTB Quests 章节组 {}", target, error);
+      Zinecraft.LOGGER.error("无法合并 FTB Quests 章节组 {}", target, error);
     }
   }
 
@@ -104,7 +104,7 @@ public final class FtbQuestGuideInstaller {
       Files.createDirectories(target.getParent());
       Files.write(target, content);
     } catch (Exception error) {
-      Zinecraft.INSTANCE.getLogger().error("无法安装 FTB Quests 指引章节 {}", target, error);
+      Zinecraft.LOGGER.error("无法安装 FTB Quests 指引章节 {}", target, error);
     }
   }
 
@@ -124,7 +124,7 @@ public final class FtbQuestGuideInstaller {
       installed.merge(bundled, false);
       SNBT.tryWrite(target, installed);
     } catch (Exception error) {
-      Zinecraft.INSTANCE.getLogger().error("无法合并 FTB Quests 指引语言表 {}", target, error);
+      Zinecraft.LOGGER.error("无法合并 FTB Quests 指引语言表 {}", target, error);
     }
   }
 

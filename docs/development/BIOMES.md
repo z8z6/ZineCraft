@@ -64,7 +64,7 @@ VICTORIA_MISTY_HIGHLANDSHelper0
 修改后面的中文和英文：
 
 ```java
-Zinecraft.INSTANCE.getTRANSLATIONS().add(
+Zinecraft.TRANSLATIONS.add(
     "biome.zinecraft.victoria_misty_highlands",
     "维多利亚雾雨高地",
     "Victoria Misty Highlands"

@@ -4,7 +4,7 @@
 `SkillDemoTheme` 注册演示。技能物品使用独立创造模式页。
 
 ```java
-SkillEntry volcano = Zinecraft.INSTANCE.getSKILLS().register(
+SkillEntry volcano = Zinecraft.SKILLS.register(
     "skill_volcano",
     "火山", "Volcano",
     "艾雅法拉", "Eyjafjalla",

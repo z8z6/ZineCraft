@@ -17,7 +17,7 @@ public final class WeaponStateComponents {
   }
 
   private static <T> DataComponentType<T> register(String path, DataComponentType<T> type) {
-    return Zinecraft.INSTANCE.getREGISTRAR().register(BuiltInRegistries.DATA_COMPONENT_TYPE, path, type);
+    return Zinecraft.REGISTRAR.register(BuiltInRegistries.DATA_COMPONENT_TYPE, path, type);
   }
 
   public DataComponentType<Integer> getAMMO() {

@@ -15,12 +15,12 @@ public final class ModWeaponSkillEffects {
   @NotNull
   public static final ModWeaponSkillEffects INSTANCE = new ModWeaponSkillEffects();
   @NotNull
-  private static final ResourceLocation ARCANE_BOLT = Zinecraft.INSTANCE.getREGISTRAR().id("skill/arcane_bolt");
+  public static final ResourceLocation ARCANE_BOLT = Zinecraft.REGISTRAR.id("skill/arcane_bolt");
   @NotNull
-  private static final ResourceLocation MENDING_LIGHT = Zinecraft.INSTANCE.getREGISTRAR().id("skill/mending_light");
+  public static final ResourceLocation MENDING_LIGHT = Zinecraft.REGISTRAR.id("skill/mending_light");
 
   static {
-    Zinecraft.INSTANCE.getSKILL_SERVICE().register(ARCANE_BOLT, new SkillEffect() {
+    Zinecraft.SKILL_SERVICE.register(ARCANE_BOLT, new SkillEffect() {
       @Override
       public boolean canCast(SkillCastContext context) {
         return context.getPlayer().isAlive() && !context.getPlayer().isSpectator();
@@ -41,7 +41,7 @@ public final class ModWeaponSkillEffects {
         }
       }
     });
-    Zinecraft.INSTANCE.getSKILL_SERVICE().register(MENDING_LIGHT, new SkillEffect() {
+    Zinecraft.SKILL_SERVICE.register(MENDING_LIGHT, new SkillEffect() {
       @Override
       public boolean canCast(SkillCastContext context) {
         return context.getPlayer().isAlive() && context.getPlayer().getHealth() < context.getPlayer().getMaxHealth();
@@ -57,13 +57,4 @@ public final class ModWeaponSkillEffects {
   private ModWeaponSkillEffects() {
   }
 
-  @NotNull
-  public final ResourceLocation getARCANE_BOLT() {
-    return ARCANE_BOLT;
-  }
-
-  @NotNull
-  public final ResourceLocation getMENDING_LIGHT() {
-    return MENDING_LIGHT;
-  }
 }
