@@ -53,15 +53,16 @@ public final class CatalogLootTableProvider extends LootTableProvider {
     @Override
     protected void generate() {
       for (var entry : blocks.entries) {
-        if (entry.dropSelf) dropSelf(entry.block.get());
-        else if (entry.dropItem != null) dropOther(entry.block.get(), entry.dropItem);
-        else add(entry.block.get(), noDrop());
+        var block = entry.entry.block().get();
+        if (entry.dropSelf) dropSelf(block);
+        else if (entry.dropItem != null) dropOther(block, entry.dropItem);
+        else add(block, noDrop());
       }
     }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-      return blocks.entries.stream().map(entry -> (Block) entry.block.get()).toList();
+      return blocks.entries.stream().map(entry -> (Block) entry.entry.get()).toList();
     }
   }
 
@@ -84,13 +85,13 @@ public final class CatalogLootTableProvider extends LootTableProvider {
                   .add(LootItem.lootTableItem(drop.item()))
           );
         }
-        add(entity.type.get(), table);
+        add(entity.entry.get(), table);
       }
     }
 
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
-      return entities.mobs.stream().map(entity -> (EntityType<?>) entity.type.get());
+      return entities.mobs.stream().map(entity -> (EntityType<?>) entity.entry.get());
     }
   }
 }

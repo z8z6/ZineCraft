@@ -27,9 +27,6 @@ import com.cxxcxx.zinecraft.compat.jer.ZinecraftJerPlugin;
 import com.cxxcxx.zinecraft.core.biome.ModBiome;
 import com.cxxcxx.zinecraft.core.biome.ModTerraBlender;
 import com.cxxcxx.zinecraft.core.block.ModBlock;
-import com.cxxcxx.zinecraft.core.block.ModHeadBlock;
-import com.cxxcxx.zinecraft.core.block.ModNationBlock;
-import com.cxxcxx.zinecraft.core.block.ModOre;
 import com.cxxcxx.zinecraft.core.datagen.ZinecraftDataGenerator;
 import com.cxxcxx.zinecraft.core.dimension.ModDimension;
 import com.cxxcxx.zinecraft.core.dimension.TerraMobSpawnPolicy;
@@ -107,10 +104,7 @@ public final class Zinecraft {
         ModCollectible.INSTANCE,
         ModFood.INSTANCE,
         ModBlock.INSTANCE,
-        ModHeadBlock.INSTANCE,
         ModBiome.INSTANCE,
-        ModOre.INSTANCE,
-        ModNationBlock.INSTANCE,
         ModBlockEntity.INSTANCE,
         ModSkills.INSTANCE,
         ModWeapons.INSTANCE,

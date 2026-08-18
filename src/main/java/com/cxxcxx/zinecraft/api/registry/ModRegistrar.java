@@ -34,10 +34,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -153,17 +150,23 @@ public final class ModRegistrar {
 
 
   @SuppressWarnings("unchecked")
-  public <T extends Block> DeferredBlock<T> block(
+  public <T extends Block> BlockRegistration<T> block(
       String path, Supplier<? extends T> factory, boolean registerItem, Item.Properties itemProperties
   ) {
     var blocks = (DeferredRegister.Blocks) deferredRegisters.computeIfAbsent(
         BuiltInRegistries.BLOCK.key(), ignored -> DeferredRegister.createBlocks(namespace)
     );
     DeferredBlock<T> block = blocks.register(path, factory);
-    if (registerItem) {
-      item(path, () -> new BlockItem(block.get(), itemProperties));
-    }
-    return block;
+    DeferredItem<BlockItem> blockItem = registerItem
+        ? item(path, () -> new BlockItem(block.get(), itemProperties))
+        : null;
+    return new BlockRegistration<>(block, Optional.ofNullable(blockItem));
+  }
+
+  public record BlockRegistration<T extends Block>(
+      DeferredBlock<T> block,
+      Optional<DeferredItem<BlockItem>> blockItem
+  ) {
   }
 
 

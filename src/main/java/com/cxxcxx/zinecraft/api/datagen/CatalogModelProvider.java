@@ -43,15 +43,16 @@ public class CatalogModelProvider implements DataProvider {
 
     for (var entry : blocks.entries) {
       if (!entry.cubeModel) continue;
-      var model = ModelTemplates.CUBE_ALL.create(entry.block.get(), TextureMapping.cube(entry.block.get()), models::put);
+      var block = entry.entry.block();
+      var model = ModelTemplates.CUBE_ALL.create(block.get(), TextureMapping.cube(block.get()), models::put);
       var state = MultiVariantGenerator.multiVariant(
-          entry.block.get(), Variant.variant().with(VariantProperties.MODEL, model)
+          block.get(), Variant.variant().with(VariantProperties.MODEL, model)
       );
-      states.put(entry.block.get().builtInRegistryHolder().key().location(), state::get);
-      if (entry.registerItem) {
+      states.put(block.get().builtInRegistryHolder().key().location(), state::get);
+      if (entry.entry.blockItem().isPresent()) {
         var itemModel = new JsonObject();
         itemModel.addProperty("parent", model.toString());
-        models.put(ModelLocationUtils.getModelLocation(entry.block.asItem()), () -> itemModel);
+        models.put(ModelLocationUtils.getModelLocation(entry.entry.blockItem().orElseThrow().get()), () -> itemModel);
       }
     }
     for (var entry : items.entries) {

@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.registries.DeferredBlock;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +38,7 @@ public final class BlockCatalog {
     return new BlockBuilder<>(this, path, zhCn, factory);
   }
 
-  private <T extends Block> DeferredBlock<T> register(BlockBuilder<T> builder) {
+  private <T extends Block> BlockEntry<T> register(BlockBuilder<T> builder) {
     validate(builder.path, builder.zhCn, builder.enUs);
     Objects.requireNonNull(builder.factory, "方块 factory 不能为空：" + builder.path);
     Objects.requireNonNull(builder.itemProperties, "方块物品属性不能为空：" + builder.path);
@@ -50,13 +49,16 @@ public final class BlockCatalog {
       throw new IllegalArgumentException("方块 ID 重复：" + builder.path);
     }
 
-    DeferredBlock<T> block = registrar.block(
+    var registration = registrar.<T>block(
         builder.path, builder.factory, builder.registerItem, builder.itemProperties
     );
-    builder.block = block;
+    BlockEntry<T> entry = new BlockEntry<>(
+        registration.block(), registration.blockItem(), builder.dropSelf, builder.dropItem
+    );
+    builder.entry = entry;
     mutableEntries.add(builder);
     translations.add("block." + registrar.namespace + "." + builder.path, builder.zhCn, builder.enUs);
-    return block;
+    return entry;
   }
 
   /**
@@ -73,7 +75,7 @@ public final class BlockCatalog {
     public boolean cubeModel = true;
     public boolean registerItem = true;
     public Item.Properties itemProperties = new Item.Properties();
-    public DeferredBlock<T> block;
+    public BlockEntry<T> entry;
 
     private BlockBuilder(BlockCatalog catalog, String path, String zhCn, Supplier<? extends T> factory) {
       this.catalog = catalog;
@@ -115,8 +117,8 @@ public final class BlockCatalog {
       return this;
     }
 
-    public DeferredBlock<T> build() {
-      if (block != null) throw new IllegalStateException("方块 builder 不能重复 build：" + path);
+    public BlockEntry<T> build() {
+      if (entry != null) throw new IllegalStateException("方块 builder 不能重复 build：" + path);
       return catalog.register(this);
     }
   }

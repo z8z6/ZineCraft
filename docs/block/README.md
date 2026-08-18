@@ -3,7 +3,7 @@
 `BlockCatalog` 将方块、可选 `BlockItem`、双语翻译、简单模型和默认掉落合并为一个 Java 声明。
 
 ```java
-public final DeferredBlock<Block> orirockBlock = Zinecraft.BLOCKS
+public final BlockEntry<Block> orirockBlock = Zinecraft.BLOCKS
     .builder("orirock_block", "源岩块",
         () -> new Block(BlockBehaviour.Properties.of()
         .strength(3.0F, 6.0F)
@@ -13,8 +13,9 @@ public final DeferredBlock<Block> orirockBlock = Zinecraft.BLOCKS
 ```
 
 builder 默认掉落自身、生成简单立方体模型并注册 `BlockItem`。使用 `drop(item)` 指定掉落，或通过 `noLoot()`、
-`noCubeModel()`、`noBlockItem()` 关闭对应默认行为。`build()` 返回 NeoForge 原生 `DeferredBlock<T>`，factory 保持懒加载；
-声明和数据生成元数据由 `BlockBuilder` 自身保存，不需要额外的 entry 包装。需要原版实例时调用 `get()`。
+`noCubeModel()`、`noBlockItem()` 关闭对应默认行为。`build()` 返回 `BlockEntry<T>`，可从同一个结果取得
+`block()`、`blockItem()` 和 `dropItem()`；后两者使用 `Optional` 表示声明中可能没有对应物品。`BlockEntry` 同时实现
+`Supplier<T>` 与 `ItemLike`，原有需要方块 supplier/物品的调用可直接使用 entry，需要原版实例时调用 `get()`。
 
 方块贴图路径：
 
@@ -39,6 +40,6 @@ public final class MachineBlockEntity extends BlockEntity {
 
 ## 国家材料
 
-`NationBlocks`
-为十九国分别声明地貌与建筑墙体材料。ID、群系表层用途、结构调色板与纹理规则见 [NATION_MATERIALS.md](NATION_MATERIALS.md)
+`ModBlock`
+集中声明普通方块、矿石、装饰头颅以及十九国地貌与建筑墙体材料。ID、群系表层用途、结构调色板与纹理规则见 [NATION_MATERIALS.md](NATION_MATERIALS.md)
 。修改纹理生成规则后运行对应脚本，并确认输出仍为 16×16 PNG。

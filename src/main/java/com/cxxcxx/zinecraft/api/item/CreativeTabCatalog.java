@@ -59,7 +59,7 @@ public final class CreativeTabCatalog {
             items.entries.stream().filter(entry -> entry.inCreativeTab).forEach(entry -> output.accept(entry.item));
           }
           if (builder.includeBlocks) {
-            blocks.entries.stream().filter(entry -> entry.registerItem).forEach(entry -> output.accept(entry.block));
+            blocks.entries.forEach(entry -> entry.entry.blockItem().ifPresent(output::accept));
           }
           builder.displayItems.accept(output);
         })

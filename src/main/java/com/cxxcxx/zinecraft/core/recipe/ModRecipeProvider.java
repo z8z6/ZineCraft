@@ -1,7 +1,8 @@
 package com.cxxcxx.zinecraft.core.recipe;
 
+import com.cxxcxx.zinecraft.api.world.feature.MaterialOre;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.block.ModOre;
+import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.item.ModFood;
 import com.cxxcxx.zinecraft.core.item.ModItem;
 import net.minecraft.core.HolderLookup.Provider;
@@ -22,7 +23,7 @@ public final class ModRecipeProvider extends RecipeProvider {
   }
 
   private static void addOreCookingRecipes(RecipeOutput output) {
-    for (ModOre.MaterialOre ore : ModOre.ALL) {
+    for (MaterialOre ore : ModBlock.INSTANCE.ORES) {
       oreCooking(output, ore.block(), ore.drop(), ore.cookingGroup());
     }
   }

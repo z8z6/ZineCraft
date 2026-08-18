@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.core.worldgen;
 
 import com.cxxcxx.zinecraft.core.biome.ModBiome;
-import com.cxxcxx.zinecraft.core.block.ModNationBlock;
+import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.dimension.ModDimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
@@ -28,7 +28,7 @@ public final class LateranoDryLandFeature extends Feature<NoneFeatureConfigurati
 
     ChunkPos chunk = new ChunkPos(context.origin());
     int seaLevel = level.getSeaLevel();
-    BlockState chalk = ModNationBlock.LATERANO_ALLUVIAL_CHALK.get().defaultBlockState();
+    BlockState chalk = ModBlock.INSTANCE.LATERANO_ALLUVIAL_CHALK.get().defaultBlockState();
     boolean placed = false;
     for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX(); x++) {
       for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ(); z++) {

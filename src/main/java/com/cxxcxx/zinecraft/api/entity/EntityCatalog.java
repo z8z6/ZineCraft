@@ -53,16 +53,15 @@ public final class EntityCatalog {
     return new MobBuilder<>(this, path, zhCn, enUs, factory, category, attributes, restriction, configure);
   }
 
-  <T extends Mob> Supplier<EntityType<T>> register(MobBuilder<T> builder) {
+  <T extends Mob> MobEntry<T> register(MobBuilder<T> builder) {
     validate(builder);
     var restriction = builder.restriction;
     var type = registrar.mob(builder.path, builder.factory, builder.category, builder.attributes,
         restriction == null ? null : restriction.getPlacement(),
         restriction == null ? null : restriction.getHeightmap(),
         restriction == null ? null : restriction.getPredicate(), builder.configure);
-    builder.type = type;
     var egg = builder.spawnEggData;
-    builder.spawnEgg = items.builder(
+    var spawnEgg = items.builder(
             builder.path + "_spawn_egg",
             egg.zhCn(),
             () -> new SpawnEggItem(type.get(), egg.primary(), egg.secondary(), new Item.Properties())
@@ -70,13 +69,15 @@ public final class EntityCatalog {
         .enUs(egg.enUs())
         .model(ACCESS.getSPAWN_EGG_MODEL())
         .build();
+    MobEntry<T> entry = new MobEntry<>(type, spawnEgg);
+    builder.entry = entry;
     translations.add("entity." + registrar.namespace + "." + builder.path, builder.zhCn, builder.enUs);
     if (builder.naturalSpawn != null) {
       var spawn = builder.naturalSpawn;
       naturalSpawns.add(new NaturalSpawn(builder.path, type, spawn.weight(), spawn.min(), spawn.max(), spawn.biomes()));
     }
     mutableMobs.add(builder);
-    return type;
+    return entry;
   }
 
   private void validate(MobBuilder<?> builder) {

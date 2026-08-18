@@ -22,7 +22,7 @@ MobSpawnRestriction<ExampleMob> restriction = new MobSpawnRestriction<>(
     ExampleMob::canSpawn
 );
 
-Supplier<EntityType<ExampleMob>> mob = Zinecraft.ENTITIES.mob(
+MobEntry<ExampleMob> mob = Zinecraft.ENTITIES.mob(
     "example_mob", "示例生物", "Example Mob",
     ExampleMob::new, MobCategory.CREATURE,
     ExampleMob::attributes, restriction,
@@ -36,7 +36,8 @@ Supplier<EntityType<ExampleMob>> mob = Zinecraft.ENTITIES.mob(
 属性和生成限制在 NeoForge 注册生命周期中统一接入。`naturalSpawn` 记录生成权重、群体范围与 `BiomeSelection`，数据生成时导出
 `NeoForgeRegistries.Keys.BIOME_MODIFIERS`；不要另外调用旧 Loader 的属性或群系注入 API。
 
-`MobBuilder` 保存完整注册声明，`build()` 返回原生 `Supplier<EntityType<T>>`。`spawnEgg(...)` 会同步注册刷怪蛋，并自动生成翻译与
+`MobBuilder` 保存完整注册声明，`build()` 返回 `MobEntry<T>`，通过 `type()` 与 `spawnEgg()` 可一起取得实体类型和刷怪蛋；
+entry 本身也实现 `Supplier<EntityType<T>>`。`spawnEgg(...)` 会同步注册刷怪蛋，并自动生成翻译与
 `minecraft:item/template_spawn_egg` 模型；`drop(...)`
 声明实体战利品，数据生成时自动导出对应的 entity loot table。实体手持装备是否掉落仍由实体自身的装备掉落率控制，和这里声明的战利品相互独立。
 

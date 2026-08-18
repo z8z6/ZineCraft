@@ -5,9 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,8 +26,7 @@ public final class MobBuilder<T extends Mob> {
   private final EntityCatalog catalog;
   private final List<MobDrop> mutableDrops = new ArrayList<>();
   public final List<MobDrop> drops = Collections.unmodifiableList(mutableDrops);
-  public Supplier<EntityType<T>> type;
-  public DeferredItem<SpawnEggItem> spawnEgg;
+  public MobEntry<T> entry;
   NaturalSpawn naturalSpawn;
   SpawnEggData spawnEggData;
 
@@ -73,8 +70,8 @@ public final class MobBuilder<T extends Mob> {
     return this;
   }
 
-  public Supplier<EntityType<T>> build() {
-    if (type != null) throw new IllegalStateException("Mob builder 不能重复 build：" + path);
+  public MobEntry<T> build() {
+    if (entry != null) throw new IllegalStateException("Mob builder 不能重复 build：" + path);
     return catalog.register(this);
   }
 

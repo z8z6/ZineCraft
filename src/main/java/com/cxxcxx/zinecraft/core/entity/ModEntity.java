@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.entity;
 
+import com.cxxcxx.zinecraft.api.entity.MobEntry;
 import com.cxxcxx.zinecraft.api.entity.MobSpawnRestriction;
 import com.cxxcxx.zinecraft.api.nation.TerraNation;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
@@ -21,7 +22,7 @@ import java.util.function.Supplier;
 public final class ModEntity {
   public static final ModEntity INSTANCE = new ModEntity();
 
-  public static final Supplier<EntityType<LateranoCitizen>> LATERANO_CITIZEN = Zinecraft.ENTITIES
+  public static final MobEntry<LateranoCitizen> LATERANO_CITIZEN = Zinecraft.ENTITIES
       .mob(
           "laterano_citizen",
           "拉特兰公民",
@@ -41,62 +42,62 @@ public final class ModEntity {
       .drop(Items.COOKIE)
       .build();
 
-  public static final Supplier<EntityType<NationResident>> AEGIR_RESIDENT = resident(
+  public static final MobEntry<NationResident> AEGIR_RESIDENT = resident(
       TerraNation.AEGIR,
       ModBiome.AEGIR_ABYSSAL_SEA,
       Items.NAUTILUS_SHELL,
       SpawnPlacementTypes.IN_WATER,
       true
   );
-  public static final Supplier<EntityType<NationResident>> BOLIVAR_RESIDENT = resident(
+  public static final MobEntry<NationResident> BOLIVAR_RESIDENT = resident(
       TerraNation.BOLIVAR, ModBiome.BOLIVAR_PLAIN, Items.COOKIE
   );
-  public static final Supplier<EntityType<NationResident>> HIGASHI_RESIDENT = resident(
+  public static final MobEntry<NationResident> HIGASHI_RESIDENT = resident(
       TerraNation.HIGASHI, ModBiome.HIGASHI_SHADOW_RIFT, Items.IRON_SWORD
   );
-  public static final Supplier<EntityType<NationResident>> DURIN_RESIDENT = resident(
+  public static final MobEntry<NationResident> DURIN_RESIDENT = resident(
       TerraNation.DURIN, ModBiome.DURIN_UNDERGROUND_GARDEN, Items.REDSTONE
   );
-  public static final Supplier<EntityType<NationResident>> COLUMBIA_RESIDENT = resident(
+  public static final MobEntry<NationResident> COLUMBIA_RESIDENT = resident(
       TerraNation.COLUMBIA, ModBiome.COLUMBIA_SANDSTONE_WILDS, Items.COMPASS
   );
-  public static final Supplier<EntityType<NationResident>> KAZIMIERZ_RESIDENT = resident(
+  public static final MobEntry<NationResident> KAZIMIERZ_RESIDENT = resident(
       TerraNation.KAZIMIERZ, ModBiome.KAZIMIERZ_KNIGHTLAND, Items.IRON_SWORD
   );
-  public static final Supplier<EntityType<NationResident>> KAZDEL_RESIDENT = resident(
+  public static final MobEntry<NationResident> KAZDEL_RESIDENT = resident(
       TerraNation.KAZDEL, ModBiome.KAZDEL_SCARRED_WASTES, Items.IRON_AXE
   );
-  public static final Supplier<EntityType<NationResident>> LEITHANIEN_RESIDENT = resident(
+  public static final MobEntry<NationResident> LEITHANIEN_RESIDENT = resident(
       TerraNation.LEITHANIEN, ModBiome.LEITHANIEN_TWILIGHT_FOREST, Items.NOTE_BLOCK
   );
-  public static final Supplier<EntityType<NationResident>> RIM_BILLITON_RESIDENT = resident(
+  public static final MobEntry<NationResident> RIM_BILLITON_RESIDENT = resident(
       TerraNation.RIM_BILLITON, ModBiome.RIM_BILLITON_MINING_BADLANDS, Items.IRON_PICKAXE
   );
-  public static final Supplier<EntityType<NationResident>> MINOS_RESIDENT = resident(
+  public static final MobEntry<NationResident> MINOS_RESIDENT = resident(
       TerraNation.MINOS, ModBiome.MINOS_SUNLIT_HILLS, Items.SHIELD
   );
-  public static final Supplier<EntityType<NationResident>> SARGON_RESIDENT = resident(
+  public static final MobEntry<NationResident> SARGON_RESIDENT = resident(
       TerraNation.SARGON, ModBiome.SARGON_ROCKY_DESERT, Items.EMERALD
   );
-  public static final Supplier<EntityType<NationResident>> SAMI_RESIDENT = resident(
+  public static final MobEntry<NationResident> SAMI_RESIDENT = resident(
       TerraNation.SAMI, ModBiome.SAMI_FROZEN_FOREST, Items.BONE
   );
-  public static final Supplier<EntityType<NationResident>> VICTORIA_RESIDENT = resident(
+  public static final MobEntry<NationResident> VICTORIA_RESIDENT = resident(
       TerraNation.VICTORIA, ModBiome.VICTORIA_MISTY_HIGHLANDS, Items.IRON_INGOT
   );
-  public static final Supplier<EntityType<NationResident>> URSUS_RESIDENT = resident(
+  public static final MobEntry<NationResident> URSUS_RESIDENT = resident(
       TerraNation.URSUS, ModBiome.URSUS_FROZEN_STEPPE, Items.IRON_AXE
   );
-  public static final Supplier<EntityType<NationResident>> KJERAG_RESIDENT = resident(
+  public static final MobEntry<NationResident> KJERAG_RESIDENT = resident(
       TerraNation.KJERAG, ModBiome.KJERAG_SNOWY_PEAKS, Items.EMERALD
   );
-  public static final Supplier<EntityType<NationResident>> SIRACUSA_RESIDENT = resident(
+  public static final MobEntry<NationResident> SIRACUSA_RESIDENT = resident(
       TerraNation.SIRACUSA, ModBiome.SIRACUSA_RAINY_WOODLAND, Items.SHEARS
   );
-  public static final Supplier<EntityType<NationResident>> YAN_RESIDENT = resident(
+  public static final MobEntry<NationResident> YAN_RESIDENT = resident(
       TerraNation.YAN, ModBiome.YAN_MOUNTAIN_GROVE, Items.PAPER
   );
-  public static final Supplier<EntityType<NationResident>> IBERIA_RESIDENT = resident(
+  public static final MobEntry<NationResident> IBERIA_RESIDENT = resident(
       TerraNation.IBERIA, ModBiome.IBERIA_SALT_DELTA, Items.COD
   );
 
@@ -109,7 +110,7 @@ public final class ModEntity {
   );
   public static final Map<TerraNation, Supplier<? extends EntityType<? extends Mob>>> RESIDENTS_BY_NATION = residentsByNation();
 
-  private static Supplier<EntityType<NationResident>> resident(
+  private static MobEntry<NationResident> resident(
       TerraNation nation,
       ResourceKey<Biome> biome,
       Item heldItem
@@ -117,7 +118,7 @@ public final class ModEntity {
     return resident(nation, biome, heldItem, SpawnPlacementTypes.ON_GROUND, false);
   }
 
-  private static Supplier<EntityType<NationResident>> resident(
+  private static MobEntry<NationResident> resident(
       TerraNation nation,
       ResourceKey<Biome> biome,
       Item heldItem,
