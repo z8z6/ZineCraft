@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.core.client.entity;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.entity.NationResident;
+import com.cxxcxx.zinecraft.core.entity.resident.NationResident;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -17,7 +17,7 @@ public final class NationResidentRenderer extends HumanoidMobRenderer<NationResi
   public ResourceLocation getTextureLocation(NationResident entity) {
     return ResourceLocation.fromNamespaceAndPath(
         Zinecraft.MOD_ID,
-        "textures/entity/nation_resident/" + entity.getNation().getId() + ".png"
+        "textures/entity/nation_resident/" + entity.nation().getId() + ".png"
     );
   }
 }

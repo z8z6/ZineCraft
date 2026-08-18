@@ -40,7 +40,7 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
   }
 
   public void registerScenes(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
-    Iterable _this_forEach_iv = Zinecraft.SKILLS.getEntries();
+    Iterable _this_forEach_iv = Zinecraft.SKILLS.entries;
     int _i_f_forEach = 0;
 
     for (Object element_iv : _this_forEach_iv) {

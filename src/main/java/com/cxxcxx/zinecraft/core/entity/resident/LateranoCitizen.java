@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.entity;
+package com.cxxcxx.zinecraft.core.entity.resident;
 
 import com.cxxcxx.zinecraft.api.nation.NationAffiliated;
 import com.cxxcxx.zinecraft.api.nation.TerraNation;
@@ -29,7 +29,7 @@ public final class LateranoCitizen extends PathfinderMob implements NationAffili
 
   @NotNull
   @Override
-  public TerraNation getNation() {
+  public TerraNation nation() {
     return this.nation;
   }
 

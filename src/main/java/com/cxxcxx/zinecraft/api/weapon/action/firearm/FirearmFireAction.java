@@ -56,7 +56,7 @@ public final class FirearmFireAction implements WeaponAction {
   public boolean canStart(@NotNull WeaponContext context) {
     return context.getPlayer().isAlive()
         && !context.getPlayer().isSpectator()
-        && ((Number) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), 0)).intValue() > 0;
+        && ((Number) context.getStack().getOrDefault(WeaponStateComponents.AMMO, 0)).intValue() > 0;
   }
 
   @NotNull
@@ -68,10 +68,10 @@ public final class FirearmFireAction implements WeaponAction {
       @Override
       protected void onTick(int tick) {
         if (tick == timing.effectTick()) {
-          Integer integer = (Integer) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), 0);
+          Integer integer = (Integer) context.getStack().getOrDefault(WeaponStateComponents.AMMO, 0);
           if (integer > 0) {
-            context.getStack().set(WeaponStateComponents.INSTANCE.getAMMO(), integer - 1);
-            Boolean boolean_ = (Boolean) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false);
+            context.getStack().set(WeaponStateComponents.AMMO, integer - 1);
+            Boolean boolean_ = (Boolean) context.getStack().getOrDefault(WeaponStateComponents.AIMING, false);
             HitscanService.Hit hit = HitscanService.INSTANCE.trace(context.getPlayer(), FirearmFireAction.this.range, boolean_ ? 0.65 : 0.15);
             if (hit != null) {
               LivingEntity livingEntity1 = hit.getTarget();

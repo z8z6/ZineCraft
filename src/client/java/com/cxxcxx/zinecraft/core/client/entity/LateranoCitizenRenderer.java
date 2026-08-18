@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.core.client.entity;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.entity.LateranoCitizen;
+import com.cxxcxx.zinecraft.core.entity.resident.LateranoCitizen;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

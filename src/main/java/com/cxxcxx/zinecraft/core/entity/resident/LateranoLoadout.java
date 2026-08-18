@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.entity;
+package com.cxxcxx.zinecraft.core.entity.resident;
 
 import com.cxxcxx.zinecraft.core.weapon.ModWeapons;
 import net.minecraft.util.RandomSource;

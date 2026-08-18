@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public final class ModBiome {
-  public static final ModBiome INSTANCE = new ModBiome();
 
   public static final ResourceKey<Biome> AEGIR_ABYSSAL_SEA = biome(
       "aegir_abyssal_sea",
@@ -299,23 +298,22 @@ public final class ModBiome {
   );
 
   /**
-   * Every biome emitted by TerraBiomeSource, including the non-national catastrophe zone.
+   * 泰拉群系目录注册的全部群系，其中包含非国家群系“天灾区”。
    */
-  public static final List<ResourceKey<Biome>> ALL_TERRA_BIOMES = List.of(
-      AEGIR_ABYSSAL_SEA, BOLIVAR_PLAIN, HIGASHI_SHADOW_RIFT, DURIN_UNDERGROUND_GARDEN,
-      COLUMBIA_SANDSTONE_WILDS, KAZIMIERZ_KNIGHTLAND, KAZDEL_SCARRED_WASTES,
-      LATERANO_HOLY_FIELDS, LEITHANIEN_TWILIGHT_FOREST, RIM_BILLITON_MINING_BADLANDS,
-      MINOS_SUNLIT_HILLS, SARGON_ROCKY_DESERT, SAMI_FROZEN_FOREST,
-      VICTORIA_MISTY_HIGHLANDS, URSUS_FROZEN_STEPPE, KJERAG_SNOWY_PEAKS,
-      SIRACUSA_RAINY_WOODLAND, YAN_MOUNTAIN_GROVE, IBERIA_SALT_DELTA,
-      TERRA_CATASTROPHE_ZONE
-  );
+  public static final List<ResourceKey<Biome>> ALL_TERRA_BIOMES =
+      List.copyOf(Zinecraft.WORLDGEN.biomes.keys);
+
+  private ModBiome() {
+  }
 
   private static ResourceKey<Biome> biome(
       String path,
       String zhCn,
       Consumer<? super SimpleBiomeBuilder> configure
   ) {
-    return Zinecraft.WORLDGEN.getBiomes().register(path, zhCn, configure);
+    return Zinecraft.WORLDGEN.biomes.register(path, zhCn, configure);
+  }
+
+  public static void bootstrap() {
   }
 }

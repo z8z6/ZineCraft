@@ -10,7 +10,7 @@ import java.util.Objects;
  * Groups the registrations and recipe metadata belonging to one material ore.
  */
 public record MaterialOre(
-    BlockEntry<Block> block,
+    BlockEntry<? extends Block> block,
     OreEntry feature,
     ItemLike drop,
     String cookingGroup

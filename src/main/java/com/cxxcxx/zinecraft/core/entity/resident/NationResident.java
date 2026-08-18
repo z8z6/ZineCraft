@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.entity;
+package com.cxxcxx.zinecraft.core.entity.resident;
 
 import com.cxxcxx.zinecraft.api.nation.NationAffiliated;
 import com.cxxcxx.zinecraft.api.nation.TerraNation;
@@ -38,8 +38,8 @@ public final class NationResident extends PathfinderMob implements NationAffilia
 
   @NotNull
   @Override
-  public TerraNation getNation() {
-    return this.profile.getNation();
+  public TerraNation nation() {
+    return this.profile.nation();
   }
 
   protected void registerGoals() {
@@ -54,9 +54,9 @@ public final class NationResident extends PathfinderMob implements NationAffilia
       @NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData
   ) {
     SpawnGroupData spawnGroupData = super.finalizeSpawn(level, difficulty, reason, spawnData);
-    this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack((ItemLike) this.profile.getHeldItem()));
+    this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack((ItemLike) this.profile.heldItem()));
     this.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
-    if (this.profile.getAquatic()) {
+    if (this.profile.aquatic()) {
       this.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, -1, 0, false, false));
     }
 

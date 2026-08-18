@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.biome;
 
+import com.cxxcxx.zinecraft.api.block.BlockEntry;
 import com.cxxcxx.zinecraft.core.block.ModBlock;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
@@ -8,106 +9,91 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+import java.util.List;
 
 public final class ModSurfaceRule {
-  @NotNull
-  public static final ModSurfaceRule INSTANCE = new ModSurfaceRule();
+  private static final double ECOLOGICAL_PATCH_MIN = -0.12;
+  private static final double ECOLOGICAL_PATCH_MAX = 0.12;
+
+  private static final List<SurfaceDefinition> SURFACES = List.of(
+      solid(ModBiome.AEGIR_ABYSSAL_SEA, ModBlock.AEGIR_ABYSSAL_SLATE),
+      ecological(ModBiome.BOLIVAR_PLAIN, ModBlock.BOLIVAR_WAR_SCOURED_SOIL),
+      ecological(ModBiome.HIGASHI_SHADOW_RIFT, ModBlock.HIGASHI_SHADOW_LOAM),
+      solid(ModBiome.DURIN_UNDERGROUND_GARDEN, ModBlock.DURIN_GARDEN_MOSS),
+      ecological(ModBiome.COLUMBIA_SANDSTONE_WILDS, ModBlock.COLUMBIA_CANYON_SOIL),
+      solid(ModBiome.KAZIMIERZ_KNIGHTLAND, ModBlock.KAZIMIERZ_STEPPE_TURF),
+      solid(ModBiome.KAZDEL_SCARRED_WASTES, ModBlock.KAZDEL_SCARRED_ASH),
+      ecological(ModBiome.LATERANO_HOLY_FIELDS, ModBlock.LATERANO_ALLUVIAL_CHALK),
+      ecological(ModBiome.LEITHANIEN_TWILIGHT_FOREST, ModBlock.LEITHANIEN_TWILIGHT_HUMUS),
+      solid(ModBiome.RIM_BILLITON_MINING_BADLANDS, ModBlock.RIM_BILLITON_MINE_TAILINGS),
+      ecological(ModBiome.MINOS_SUNLIT_HILLS, ModBlock.MINOS_SUNBAKED_EARTH),
+      solid(ModBiome.SARGON_ROCKY_DESERT, ModBlock.SARGON_DESERT_CRUST),
+      solid(ModBiome.SAMI_FROZEN_FOREST, ModBlock.SAMI_FROST_MOSS),
+      ecological(ModBiome.VICTORIA_MISTY_HIGHLANDS, ModBlock.VICTORIA_MOORLAND_SOIL),
+      solid(ModBiome.URSUS_FROZEN_STEPPE, ModBlock.URSUS_PERMAFROST),
+      solid(ModBiome.KJERAG_SNOWY_PEAKS, ModBlock.KJERAG_SACRED_SNOWSTONE),
+      ecological(ModBiome.SIRACUSA_RAINY_WOODLAND, ModBlock.SIRACUSA_RAIN_DARKENED_SOIL),
+      ecological(ModBiome.YAN_MOUNTAIN_GROVE, ModBlock.YAN_MOUNTAIN_SOIL),
+      solid(ModBiome.IBERIA_SALT_DELTA, ModBlock.IBERIA_SALT_CRUSTED_GRAVEL),
+      solid(ModBiome.TERRA_CATASTROPHE_ZONE, ModBlock.KAZDEL_SCARRED_ASH)
+  );
 
   private ModSurfaceRule() {
   }
 
-  private final RuleSource singleBlock(Block block) {
-    RuleSource ruleSource = SurfaceRules.state(block.defaultBlockState());
-    return ruleSource;
+  private static SurfaceDefinition solid(ResourceKey<Biome> biome, BlockEntry<? extends Block> block) {
+    return new SurfaceDefinition(biome, block, SurfaceType.SOLID);
   }
 
-  @NotNull
-  public final RuleSource rules() {
-    RuleSource[] ruleSources = new RuleSource[20];
-    RuleSource ruleSource1 = this.singleBlock(ModBlock.INSTANCE.AEGIR_ABYSSAL_SLATE.get());
-    ResourceKey[] resourceKeys = new ResourceKey[]{ModBiome.AEGIR_ABYSSAL_SEA};
-    ruleSources[0] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.BOLIVAR_WAR_SCOURED_SOIL.get());
-    resourceKeys = new ResourceKey[]{ModBiome.BOLIVAR_PLAIN};
-    ruleSources[1] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.HIGASHI_SHADOW_LOAM.get());
-    resourceKeys = new ResourceKey[]{ModBiome.HIGASHI_SHADOW_RIFT};
-    ruleSources[2] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.DURIN_GARDEN_MOSS.get());
-    resourceKeys = new ResourceKey[]{ModBiome.DURIN_UNDERGROUND_GARDEN};
-    ruleSources[3] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.COLUMBIA_CANYON_SOIL.get());
-    resourceKeys = new ResourceKey[]{ModBiome.COLUMBIA_SANDSTONE_WILDS};
-    ruleSources[4] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.KAZIMIERZ_STEPPE_TURF.get());
-    resourceKeys = new ResourceKey[]{ModBiome.KAZIMIERZ_KNIGHTLAND};
-    ruleSources[5] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.KAZDEL_SCARRED_ASH.get());
-    resourceKeys = new ResourceKey[]{ModBiome.KAZDEL_SCARRED_WASTES};
-    ruleSources[6] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.LATERANO_ALLUVIAL_CHALK.get());
-    resourceKeys = new ResourceKey[]{ModBiome.LATERANO_HOLY_FIELDS};
-    ruleSources[7] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.LEITHANIEN_TWILIGHT_HUMUS.get());
-    resourceKeys = new ResourceKey[]{ModBiome.LEITHANIEN_TWILIGHT_FOREST};
-    ruleSources[8] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.RIM_BILLITON_MINE_TAILINGS.get());
-    resourceKeys = new ResourceKey[]{ModBiome.RIM_BILLITON_MINING_BADLANDS};
-    ruleSources[9] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.MINOS_SUNBAKED_EARTH.get());
-    resourceKeys = new ResourceKey[]{ModBiome.MINOS_SUNLIT_HILLS};
-    ruleSources[10] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.SARGON_DESERT_CRUST.get());
-    resourceKeys = new ResourceKey[]{ModBiome.SARGON_ROCKY_DESERT};
-    ruleSources[11] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.SAMI_FROST_MOSS.get());
-    resourceKeys = new ResourceKey[]{ModBiome.SAMI_FROZEN_FOREST};
-    ruleSources[12] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.VICTORIA_MOORLAND_SOIL.get());
-    resourceKeys = new ResourceKey[]{ModBiome.VICTORIA_MISTY_HIGHLANDS};
-    ruleSources[13] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.URSUS_PERMAFROST.get());
-    resourceKeys = new ResourceKey[]{ModBiome.URSUS_FROZEN_STEPPE};
-    ruleSources[14] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.KJERAG_SACRED_SNOWSTONE.get());
-    resourceKeys = new ResourceKey[]{ModBiome.KJERAG_SNOWY_PEAKS};
-    ruleSources[15] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.SIRACUSA_RAIN_DARKENED_SOIL.get());
-    resourceKeys = new ResourceKey[]{ModBiome.SIRACUSA_RAINY_WOODLAND};
-    ruleSources[16] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.ecologicalSurface(ModBlock.INSTANCE.YAN_MOUNTAIN_SOIL.get());
-    resourceKeys = new ResourceKey[]{ModBiome.YAN_MOUNTAIN_GROVE};
-    ruleSources[17] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.IBERIA_SALT_CRUSTED_GRAVEL.get());
-    resourceKeys = new ResourceKey[]{ModBiome.IBERIA_SALT_DELTA};
-    ruleSources[18] = this.onFloorIn(ruleSource1, resourceKeys);
-    ruleSource1 = this.singleBlock(ModBlock.INSTANCE.KAZDEL_SCARRED_ASH.get());
-    resourceKeys = new ResourceKey[]{ModBiome.TERRA_CATASTROPHE_ZONE};
-    ruleSources[19] = this.onFloorIn(ruleSource1, resourceKeys);
-    RuleSource ruleSource = SurfaceRules.sequence(ruleSources);
-    return ruleSource;
+  private static SurfaceDefinition ecological(ResourceKey<Biome> biome, BlockEntry<? extends Block> block) {
+    return new SurfaceDefinition(biome, block, SurfaceType.ECOLOGICAL);
   }
 
-  private final RuleSource ecologicalSurface(Block primary) {
-    Block block = Blocks.GRASS_BLOCK;
-    return this.mixedSurface(primary, block);
+  private static RuleSource blockStateRule(Block block) {
+    return SurfaceRules.state(block.defaultBlockState());
   }
 
-  private final RuleSource mixedSurface(Block primary, Block patch) {
-    RuleSource[] ruleSources = new RuleSource[]{
-        SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE_SECONDARY, -0.12, 0.12), this.singleBlock(patch)), this.singleBlock(primary)
-    };
-    RuleSource ruleSource = SurfaceRules.sequence(ruleSources);
-    return ruleSource;
-  }
-
-  private final RuleSource onFloorIn(RuleSource surface, ResourceKey<Biome>... biomes) {
-    RuleSource ruleSource = SurfaceRules.ifTrue(
-        SurfaceRules.isBiome(Arrays.copyOf(biomes, biomes.length)), SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surface)
+  private static RuleSource ecologicalSurface(Block primary) {
+    return SurfaceRules.sequence(
+        SurfaceRules.ifTrue(
+            SurfaceRules.noiseCondition(Noises.SURFACE_SECONDARY, ECOLOGICAL_PATCH_MIN, ECOLOGICAL_PATCH_MAX),
+            blockStateRule(Blocks.GRASS_BLOCK)
+        ),
+        blockStateRule(primary)
     );
-    return ruleSource;
+  }
+
+  private static RuleSource onFloorIn(ResourceKey<Biome> biome, RuleSource surface) {
+    return SurfaceRules.ifTrue(
+        SurfaceRules.isBiome(biome),
+        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surface)
+    );
+  }
+
+  public static RuleSource rules() {
+    RuleSource[] biomeRules = SURFACES.stream()
+        .map(SurfaceDefinition::rule)
+        .toArray(RuleSource[]::new);
+    return SurfaceRules.sequence(biomeRules);
+  }
+
+  private enum SurfaceType {
+    SOLID,
+    ECOLOGICAL
+  }
+
+  private record SurfaceDefinition(
+      ResourceKey<Biome> biome,
+      BlockEntry<? extends Block> block,
+      SurfaceType type
+  ) {
+    private RuleSource rule() {
+      Block surfaceBlock = block.get();
+      RuleSource surface = type == SurfaceType.ECOLOGICAL
+          ? ecologicalSurface(surfaceBlock)
+          : blockStateRule(surfaceBlock);
+      return onFloorIn(biome, surface);
+    }
   }
 }

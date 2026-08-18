@@ -23,20 +23,17 @@ import java.util.function.Function;
  * Registers all Integrated Strategies collectibles through the collectible builder API.
  */
 public final class ModCollectible {
-  public static final ModCollectible INSTANCE = new ModCollectible();
-
   private static final String CATALOG_RESOURCE = "/zinecraft/collectibles/phantom_crimson_solitaire.json";
   private static final int EXPECTED_COUNT = 245;
 
-  public final List<DeferredItem<CollectibleItem>> ALL;
-  private final Map<String, PowerOverride> powerOverrides;
+  public static final List<DeferredItem<CollectibleItem>> ALL;
 
-  private ModCollectible() {
+  static {
     registerCommonTranslations();
-    powerOverrides = createPowerOverrides();
+    Map<String, PowerOverride> powerOverrides = createPowerOverrides();
     List<ImportedCollectible> imported = loadCatalog();
-    validateCatalog(imported);
-    ALL = imported.stream().map(this::register).toList();
+    validateCatalog(imported, powerOverrides);
+    ALL = imported.stream().map(entry -> register(entry, powerOverrides)).toList();
   }
 
   private static void registerCommonTranslations() {
@@ -158,7 +155,13 @@ public final class ModCollectible {
     return new CollectiblePower.CombatStatBoost(CombatStatModifier.collectibleAddition(stat, amount));
   }
 
-  private DeferredItem<CollectibleItem> register(ImportedCollectible imported) {
+  private ModCollectible() {
+  }
+
+  private static DeferredItem<CollectibleItem> register(
+      ImportedCollectible imported,
+      Map<String, PowerOverride> powerOverrides
+  ) {
     PowerOverride effect = powerOverrides.get(imported.sourceId());
     if (effect == null) {
       var adaptation = CollectiblePowerAdapter.adapt(imported.originalEffectZhCn());
@@ -175,7 +178,10 @@ public final class ModCollectible {
         .build();
   }
 
-  private void validateCatalog(List<ImportedCollectible> imported) {
+  private static void validateCatalog(
+      List<ImportedCollectible> imported,
+      Map<String, PowerOverride> powerOverrides
+  ) {
     if (imported.size() != EXPECTED_COUNT) {
       throw new IllegalArgumentException("《傀影与猩红孤钻》藏品目录应有 " + EXPECTED_COUNT
           + " 件，实际为 " + imported.size() + " 件");
@@ -185,7 +191,7 @@ public final class ModCollectible {
     validateUnique(imported, ImportedCollectible::orderId, "档案编号");
     validateUnique(imported, ImportedCollectible::sourceId, "来源 ID");
     validateUnique(imported, ImportedCollectible::iconId, "图片 ID");
-    imported.forEach(this::validateImported);
+    imported.forEach(ModCollectible::validateImported);
 
     Set<String> sourceIds = new HashSet<>();
     imported.forEach(entry -> sourceIds.add(entry.sourceId()));
@@ -196,7 +202,25 @@ public final class ModCollectible {
     }
   }
 
-  private void validateImported(ImportedCollectible imported) {
+  private record ImportedCollectible(
+      String path,
+      String orderId,
+      String sourceId,
+      String iconId,
+      String zhCn,
+      String enUs,
+      String originalEffectZhCn,
+      String originalEffectEnUs,
+      String descriptionZhCn,
+      String descriptionEnUs,
+      String rarity
+  ) {
+  }
+
+  private record PowerOverride(String zhCn, String enUs, CollectiblePower power) {
+  }
+
+  private static void validateImported(ImportedCollectible imported) {
     if (imported.path() == null || !imported.path().matches("[a-z0-9_]+")) {
       throw new IllegalArgumentException("藏品物品 ID 格式无效：" + imported.path());
     }
@@ -221,21 +245,6 @@ public final class ModCollectible {
     parseRarity(imported);
   }
 
-  private record ImportedCollectible(
-      String path,
-      String orderId,
-      String sourceId,
-      String iconId,
-      String zhCn,
-      String enUs,
-      String originalEffectZhCn,
-      String originalEffectEnUs,
-      String descriptionZhCn,
-      String descriptionEnUs,
-      String rarity
-  ) {
-  }
-
-  private record PowerOverride(String zhCn, String enUs, CollectiblePower power) {
+  public static void bootstrap() {
   }
 }

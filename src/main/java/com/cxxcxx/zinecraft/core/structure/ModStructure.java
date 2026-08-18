@@ -7,14 +7,9 @@ import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection;
-import org.jetbrains.annotations.NotNull;
 
 public final class ModStructure {
-  @NotNull
-  public static final ModStructure INSTANCE = new ModStructure();
-
-  @NotNull
-  public static final JigsawBuildingEntry STARGATE = Zinecraft.WORLDGEN.getStructures().jigsawBuilding(
+  public static final JigsawBuildingEntry STARGATE = Zinecraft.WORLDGEN.structures.jigsawBuilding(
       "stargate",
       "雪原星门",
       "Snowfield Stargate",
@@ -39,4 +34,6 @@ public final class ModStructure {
   private ModStructure() {
   }
 
+  public static void bootstrap() {
+  }
 }

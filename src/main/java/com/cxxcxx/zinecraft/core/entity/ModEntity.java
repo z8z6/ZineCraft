@@ -6,6 +6,9 @@ import com.cxxcxx.zinecraft.api.nation.TerraNation;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.biome.ModBiome;
+import com.cxxcxx.zinecraft.core.entity.resident.LateranoCitizen;
+import com.cxxcxx.zinecraft.core.entity.resident.NationResident;
+import com.cxxcxx.zinecraft.core.entity.resident.NationResidentProfile;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.Item;
@@ -13,34 +16,19 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public final class ModEntity {
-  public static final ModEntity INSTANCE = new ModEntity();
-
-  public static final MobEntry<LateranoCitizen> LATERANO_CITIZEN = Zinecraft.ENTITIES
-      .mob(
-          "laterano_citizen",
-          "拉特兰公民",
-          "Laterano Citizen",
-          LateranoCitizen::new,
-          MobCategory.CREATURE,
-          LateranoCitizen.ACCESS::attributes,
-          new MobSpawnRestriction<>(
-              SpawnPlacementTypes.ON_GROUND,
-              Types.MOTION_BLOCKING_NO_LEAVES,
-              LateranoCitizen.ACCESS::canSpawn
-          ),
-          builder -> builder.sized(0.6F, 1.8F).clientTrackingRange(8)
-      )
-      .naturalSpawn(10, 1, 2, BiomeSelection.of(ModBiome.LATERANO_HOLY_FIELDS))
-      .spawnEgg(15853776, 14267980, "拉特兰公民刷怪蛋", "Laterano Citizen Spawn Egg")
-      .drop(Items.COOKIE)
-      .build();
+  private static final List<Supplier<EntityType<NationResident>>> MUTABLE_GENERIC_RESIDENTS =
+      new ArrayList<>();
+  public static final List<Supplier<EntityType<NationResident>>> GENERIC_RESIDENTS =
+      List.copyOf(MUTABLE_GENERIC_RESIDENTS);
+  private static final Map<TerraNation, Supplier<? extends EntityType<? extends Mob>>>
+      MUTABLE_RESIDENTS_BY_NATION = new EnumMap<>(TerraNation.class);
 
   public static final MobEntry<NationResident> AEGIR_RESIDENT = resident(
       TerraNation.AEGIR,
@@ -100,15 +88,30 @@ public final class ModEntity {
   public static final MobEntry<NationResident> IBERIA_RESIDENT = resident(
       TerraNation.IBERIA, ModBiome.IBERIA_SALT_DELTA, Items.COD
   );
-
-  public static final List<Supplier<EntityType<NationResident>>> GENERIC_RESIDENTS = List.of(
-      AEGIR_RESIDENT, BOLIVAR_RESIDENT, HIGASHI_RESIDENT, DURIN_RESIDENT,
-      COLUMBIA_RESIDENT, KAZIMIERZ_RESIDENT, KAZDEL_RESIDENT, LEITHANIEN_RESIDENT,
-      RIM_BILLITON_RESIDENT, MINOS_RESIDENT, SARGON_RESIDENT, SAMI_RESIDENT,
-      VICTORIA_RESIDENT, URSUS_RESIDENT, KJERAG_RESIDENT, SIRACUSA_RESIDENT,
-      YAN_RESIDENT, IBERIA_RESIDENT
+  public static final MobEntry<LateranoCitizen> LATERANO_CITIZEN = registerResident(
+      TerraNation.LATERANO,
+      Zinecraft.ENTITIES
+      .mob(
+          "laterano_citizen",
+          "拉特兰公民",
+          "Laterano Citizen",
+          LateranoCitizen::new,
+          MobCategory.CREATURE,
+          LateranoCitizen.ACCESS::attributes,
+          new MobSpawnRestriction<>(
+              SpawnPlacementTypes.ON_GROUND,
+              Types.MOTION_BLOCKING_NO_LEAVES,
+              LateranoCitizen.ACCESS::canSpawn
+          ),
+          builder -> builder.sized(0.6F, 1.8F).clientTrackingRange(8)
+      )
+      .naturalSpawn(10, 1, 2, BiomeSelection.of(ModBiome.LATERANO_HOLY_FIELDS))
+      .spawnEgg(15853776, 14267980, "拉特兰公民刷怪蛋", "Laterano Citizen Spawn Egg")
+      .drop(Items.COOKIE)
+          .build()
   );
-  public static final Map<TerraNation, Supplier<? extends EntityType<? extends Mob>>> RESIDENTS_BY_NATION = residentsByNation();
+  public static final Map<TerraNation, Supplier<? extends EntityType<? extends Mob>>>
+      RESIDENTS_BY_NATION = validatedResidents();
 
   private static MobEntry<NationResident> resident(
       TerraNation nation,
@@ -116,6 +119,14 @@ public final class ModEntity {
       Item heldItem
   ) {
     return resident(nation, biome, heldItem, SpawnPlacementTypes.ON_GROUND, false);
+  }
+
+  private ModEntity() {
+  }
+
+  private static int eggColor(TerraNation nation, int rotation) {
+    int hash = Integer.rotateLeft(nation.getId().hashCode() * 0x45D9F3B, rotation);
+    return 0x303030 | (hash & 0xCFCFCF);
   }
 
   private static MobEntry<NationResident> resident(
@@ -126,7 +137,7 @@ public final class ModEntity {
       boolean aquatic
   ) {
     NationResidentProfile profile = new NationResidentProfile(nation, heldItem, aquatic);
-    return Zinecraft.ENTITIES
+    MobEntry<NationResident> entry = Zinecraft.ENTITIES
         .mob(
             nation.getId() + "_resident",
             nation.getZhCn() + "居民",
@@ -150,38 +161,24 @@ public final class ModEntity {
         )
         .drop(heldItem)
         .build();
+    MUTABLE_GENERIC_RESIDENTS.add(entry);
+    return registerResident(nation, entry);
   }
 
-  private static int eggColor(TerraNation nation, int rotation) {
-    int hash = Integer.rotateLeft(nation.getId().hashCode() * 0x45D9F3B, rotation);
-    return 0x303030 | (hash & 0xCFCFCF);
+  private static <T extends Mob> MobEntry<T> registerResident(TerraNation nation, MobEntry<T> entry) {
+    if (MUTABLE_RESIDENTS_BY_NATION.putIfAbsent(nation, entry) != null) {
+      throw new IllegalArgumentException("国家居民重复注册: " + nation.getId());
+    }
+    return entry;
   }
 
-  private static Map<TerraNation, Supplier<? extends EntityType<? extends Mob>>> residentsByNation() {
-    Map<TerraNation, Supplier<? extends EntityType<? extends Mob>>> residents = new LinkedHashMap<>();
-    residents.put(TerraNation.AEGIR, AEGIR_RESIDENT);
-    residents.put(TerraNation.BOLIVAR, BOLIVAR_RESIDENT);
-    residents.put(TerraNation.HIGASHI, HIGASHI_RESIDENT);
-    residents.put(TerraNation.DURIN, DURIN_RESIDENT);
-    residents.put(TerraNation.COLUMBIA, COLUMBIA_RESIDENT);
-    residents.put(TerraNation.KAZIMIERZ, KAZIMIERZ_RESIDENT);
-    residents.put(TerraNation.KAZDEL, KAZDEL_RESIDENT);
-    residents.put(TerraNation.LATERANO, LATERANO_CITIZEN);
-    residents.put(TerraNation.LEITHANIEN, LEITHANIEN_RESIDENT);
-    residents.put(TerraNation.RIM_BILLITON, RIM_BILLITON_RESIDENT);
-    residents.put(TerraNation.MINOS, MINOS_RESIDENT);
-    residents.put(TerraNation.SARGON, SARGON_RESIDENT);
-    residents.put(TerraNation.SAMI, SAMI_RESIDENT);
-    residents.put(TerraNation.VICTORIA, VICTORIA_RESIDENT);
-    residents.put(TerraNation.URSUS, URSUS_RESIDENT);
-    residents.put(TerraNation.KJERAG, KJERAG_RESIDENT);
-    residents.put(TerraNation.SIRACUSA, SIRACUSA_RESIDENT);
-    residents.put(TerraNation.YAN, YAN_RESIDENT);
-    residents.put(TerraNation.IBERIA, IBERIA_RESIDENT);
-
-    if (!residents.keySet().equals(new HashSet<>(TerraNation.getEntries()))) {
+  private static Map<TerraNation, Supplier<? extends EntityType<? extends Mob>>> validatedResidents() {
+    if (MUTABLE_RESIDENTS_BY_NATION.size() != TerraNation.getEntries().size()) {
       throw new IllegalStateException("必须为全部十九国注册居民");
     }
-    return Map.copyOf(residents);
+    return Map.copyOf(MUTABLE_RESIDENTS_BY_NATION);
+  }
+
+  public static void bootstrap() {
   }
 }

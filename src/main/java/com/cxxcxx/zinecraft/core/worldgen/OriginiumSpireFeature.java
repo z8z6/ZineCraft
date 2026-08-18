@@ -58,7 +58,7 @@ public final class OriginiumSpireFeature extends Feature<NoneFeatureConfiguratio
   }
 
   private boolean placeSpire(WorldGenLevel level, BlockPos base, int height, double angle, double lean) {
-    BlockState crystal = ModBlock.INSTANCE.ORIGINITE_ORE.block().get().defaultBlockState();
+    BlockState crystal = ModBlock.ORIGINITE_ORE.block().get().defaultBlockState();
     boolean placed = false;
     for (int y = 0; y < height; y++) {
       double progress = y / (double) Math.max(1, height - 1);

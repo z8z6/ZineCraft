@@ -28,7 +28,7 @@ public final class LateranoDryLandFeature extends Feature<NoneFeatureConfigurati
 
     ChunkPos chunk = new ChunkPos(context.origin());
     int seaLevel = level.getSeaLevel();
-    BlockState chalk = ModBlock.INSTANCE.LATERANO_ALLUVIAL_CHALK.get().defaultBlockState();
+    BlockState chalk = ModBlock.LATERANO_ALLUVIAL_CHALK.get().defaultBlockState();
     boolean placed = false;
     for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX(); x++) {
       for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ(); z++) {

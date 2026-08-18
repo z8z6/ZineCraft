@@ -4,12 +4,8 @@ import com.cxxcxx.zinecraft.api.skill.SkillDemoTheme;
 import com.cxxcxx.zinecraft.api.skill.SkillEntry;
 import com.cxxcxx.zinecraft.api.skill.SkillProfession;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import org.jetbrains.annotations.NotNull;
 
 public final class ModSkills {
-  @NotNull
-  public static final ModSkills INSTANCE = new ModSkills();
-  @NotNull
   public static final SkillEntry SUPPORT_BETA = Zinecraft.SKILLS
       .register(
           "skill_support_beta",
@@ -29,7 +25,6 @@ public final class ModSkills {
           "Stops attacking and gradually recovers deployment points during the skill.",
           SkillDemoTheme.COST_RECOVERY
       );
-  @NotNull
   public static final SkillEntry TRUESILVER_SLASH = Zinecraft.SKILLS
       .register(
           "skill_truesilver_slash",
@@ -49,7 +44,6 @@ public final class ModSkills {
           "Reduces DEF, greatly increases ATK and range, and attacks up to six targets.",
           SkillDemoTheme.AREA_SLASH
       );
-  @NotNull
   public static final SkillEntry OVERLOADING_MODE = Zinecraft.SKILLS
       .register(
           "skill_overloading_mode",
@@ -69,7 +63,6 @@ public final class ModSkills {
           "Activates automatically, changes attacks to five-shot bursts, and shortens the interval.",
           SkillDemoTheme.RAPID_FIRE
       );
-  @NotNull
   public static final SkillEntry EXPLOSIVE_DAWN = Zinecraft.SKILLS
       .register(
           "skill_explosive_dawn",
@@ -89,7 +82,6 @@ public final class ModSkills {
           "Immediately summons 2 Revenant's Shadows in attack range (up to 3 at a time; they remain after the skill expires). ATK +180%, Attack Interval is greatly increased, attacks deal 220% ATK, splash area is greatly increased, and Talent 1 trigger chance is increased to 100%. Skill activation grants 6 ammo and the skill ends when all ammo are used (can be manually deactivated).",
           SkillDemoTheme.EXPLOSIVE_DAWN
       );
-  @NotNull
   public static final SkillEntry VOLCANO = Zinecraft.SKILLS
       .register(
           "skill_volcano",
@@ -109,7 +101,6 @@ public final class ModSkills {
           "Expands range and rapidly launches lava at up to six enemies in range.",
           SkillDemoTheme.VOLCANIC_BURST
       );
-  @NotNull
   public static final SkillEntry CALCIFICATION = Zinecraft.SKILLS
       .register(
           "skill_calcification",
@@ -129,7 +120,6 @@ public final class ModSkills {
           "Continuously heals nearby allies while slowing enemies and amplifying Arts damage.",
           SkillDemoTheme.HEAL_AND_SLOW
       );
-  @NotNull
   public static final SkillEntry SANCTUARY = Zinecraft.SKILLS
       .register(
           "skill_sanctuary",
@@ -149,7 +139,6 @@ public final class ModSkills {
           "Expands healing range and grants allies Arts resistance and Arts evasion.",
           SkillDemoTheme.SANCTUARY
       );
-  @NotNull
   public static final SkillEntry FOXFIRE_HAZE = Zinecraft.SKILLS
       .register(
           "skill_foxfire_haze",
@@ -169,7 +158,6 @@ public final class ModSkills {
           "Stops attacking, expands range, slows enemies, and continuously restores allies.",
           SkillDemoTheme.SLOWING_FIELD
       );
-  @NotNull
   public static final SkillEntry WOLFPACK = Zinecraft.SKILLS
       .register(
           "skill_wolfpack",
@@ -193,4 +181,6 @@ public final class ModSkills {
   private ModSkills() {
   }
 
+  public static void bootstrap() {
+  }
 }

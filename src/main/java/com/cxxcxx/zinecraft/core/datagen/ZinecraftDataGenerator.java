@@ -30,11 +30,11 @@ public final class ZinecraftDataGenerator {
       var registryBuilder = new RegistrySetBuilder();
       Zinecraft.WORLDGEN.addDataGeneration(registryBuilder);
       registryBuilder.add(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.BIOME_MODIFIERS, context -> {
-        Zinecraft.WORLDGEN.getFeatures().bootstrapBiomeModifiers(context);
+        Zinecraft.WORLDGEN.features.bootstrapBiomeModifiers(context);
         Zinecraft.ENTITIES.bootstrapBiomeModifiers(context);
       });
       registryBuilder.add(Registries.ENCHANTMENT, Zinecraft.ENCHANTMENTS::bootstrap);
-      registryBuilder.add(Registries.JUKEBOX_SONG, ModSound.INSTANCE::configure);
+      registryBuilder.add(Registries.JUKEBOX_SONG, ModSound::configure);
       event.createDatapackRegistryObjects(registryBuilder);
 
       event.addProvider(new CatalogLootTableProvider(output, lookup, Zinecraft.BLOCKS, Zinecraft.ENTITIES));

@@ -4,35 +4,39 @@ import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.world.item.CreativeModeTab;
 
 /**
- * All Zinecraft creative tabs, initialized after their content dependencies.
+ * 集中声明 Zinecraft 的全部创造模式页签。
  */
 public final class ModCreativeTab {
-  public static final ModCreativeTab INSTANCE = new ModCreativeTab();
+  public static final CreativeModeTab ITEMS;
+  public static final CreativeModeTab COLLECTIBLES;
+  public static final CreativeModeTab SKILLS;
 
-  public final CreativeModeTab items;
-  public final CreativeModeTab collectibles;
-  public final CreativeModeTab skills;
-
-  private ModCreativeTab() {
-    items = Zinecraft.CREATIVE_TABS.builder("item", "Zinecraft")
+  static {
+    ITEMS = Zinecraft.CREATIVE_TABS.builder("item", "Zinecraft")
         .enUs("Zinecraft")
-        .icon(ModItem.INSTANCE.D32_STEEL)
+        .icon(ModItem.D32_STEEL)
         .includeCatalogItems()
         .includeCatalogBlocks()
         .build();
 
-    if (ModCollectible.INSTANCE.ALL.isEmpty()) throw new IllegalStateException("藏品创造模式页不能为空");
-    collectibles = Zinecraft.CREATIVE_TABS.builder("collectibles", "Zinecraft 藏品")
+    if (ModCollectible.ALL.isEmpty()) throw new IllegalStateException("藏品创造模式页不能为空");
+    COLLECTIBLES = Zinecraft.CREATIVE_TABS.builder("collectibles", "Zinecraft 藏品")
         .enUs("Zinecraft Collectibles")
-        .icon(ModCollectible.INSTANCE.ALL.getFirst())
-        .displayItems(output -> ModCollectible.INSTANCE.ALL.forEach(output::accept))
+        .icon(ModCollectible.ALL.getFirst())
+        .displayItems(output -> ModCollectible.ALL.forEach(output::accept))
         .build();
 
-    if (Zinecraft.SKILLS.getEntries().isEmpty()) throw new IllegalStateException("技能创造模式页不能为空");
-    skills = Zinecraft.CREATIVE_TABS.builder("skills", "Zinecraft 技能")
+    if (Zinecraft.SKILLS.entries.isEmpty()) throw new IllegalStateException("技能创造模式页不能为空");
+    SKILLS = Zinecraft.CREATIVE_TABS.builder("skills", "Zinecraft 技能")
         .enUs("Zinecraft Skills")
-        .icon(Zinecraft.SKILLS.getEntries().getFirst())
-        .displayItems(output -> Zinecraft.SKILLS.getEntries().forEach(output::accept))
+        .icon(Zinecraft.SKILLS.entries.getFirst())
+        .displayItems(output -> Zinecraft.SKILLS.entries.forEach(output::accept))
         .build();
+  }
+
+  private ModCreativeTab() {
+  }
+
+  public static void bootstrap() {
   }
 }

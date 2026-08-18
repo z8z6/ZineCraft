@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -18,6 +19,8 @@ public final class BiomeCatalog {
   private final ModRegistrar registrar;
   private final TranslationCatalog translations;
   private final List<BiomeRegistration> entries = new ArrayList<>();
+  private final List<ResourceKey<Biome>> mutableKeys = new ArrayList<>();
+  public final List<ResourceKey<Biome>> keys = Collections.unmodifiableList(mutableKeys);
 
   public BiomeCatalog(ModRegistrar registrar, TranslationCatalog translations) {
     this.registrar = Objects.requireNonNull(registrar, "registrar");
@@ -42,6 +45,7 @@ public final class BiomeCatalog {
 
     ResourceKey<Biome> key = registrar.key(Registries.BIOME, path);
     entries.add(new BiomeRegistration(key, configure::accept));
+    mutableKeys.add(key);
     translations.add(
         "biome." + registrar.namespace + "." + path,
         zhCn,

@@ -19,10 +19,6 @@ import com.cxxcxx.zinecraft.api.weapon.WeaponServerController;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import com.cxxcxx.zinecraft.api.world.WorldgenManager;
-import com.cxxcxx.zinecraft.api.world.biome.BiomeCatalog;
-import com.cxxcxx.zinecraft.api.world.dimension.DimensionCatalog;
-import com.cxxcxx.zinecraft.api.world.feature.FeatureCatalog;
-import com.cxxcxx.zinecraft.api.world.structure.StructureCatalog;
 import com.cxxcxx.zinecraft.compat.jer.ZinecraftJerPlugin;
 import com.cxxcxx.zinecraft.core.biome.ModBiome;
 import com.cxxcxx.zinecraft.core.biome.ModTerraBlender;
@@ -34,7 +30,6 @@ import com.cxxcxx.zinecraft.core.entity.ModBlockEntity;
 import com.cxxcxx.zinecraft.core.entity.ModEntity;
 import com.cxxcxx.zinecraft.core.item.ModCollectible;
 import com.cxxcxx.zinecraft.core.item.ModCreativeTab;
-import com.cxxcxx.zinecraft.core.item.ModFood;
 import com.cxxcxx.zinecraft.core.item.ModItem;
 import com.cxxcxx.zinecraft.core.nation.TerraNationRelations;
 import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
@@ -71,11 +66,7 @@ public final class Zinecraft {
   public static final SoundCatalog SOUNDS = new SoundCatalog(REGISTRAR);
   public static final SongCatalog SONGS = new SongCatalog(REGISTRAR, SOUNDS, ITEMS, TRANSLATIONS);
   public static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(REGISTRAR, TRANSLATIONS);
-  public static final WorldgenManager WORLDGEN = new WorldgenManager(REGISTRAR, TRANSLATIONS);
-  public static final BiomeCatalog BIOMES = WORLDGEN.getBiomes();
-  public static final DimensionCatalog DIMENSIONS = WORLDGEN.getDimensions();
-  public static final FeatureCatalog FEATURES = WORLDGEN.getFeatures();
-  public static final StructureCatalog STRUCTURES = WORLDGEN.getStructures();
+  public static final WorldgenManager WORLDGEN = new WorldgenManager(REGISTRAR, TRANSLATIONS, BLOCKS);
   public static final RecipeCatalog RECIPES = new RecipeCatalog();
   public static final SkillService SKILL_SERVICE = new SkillService();
   public static final WeaponRegistry WEAPONS = new WeaponRegistry();
@@ -95,35 +86,32 @@ public final class Zinecraft {
     FtbQuestGuideInstaller.INSTANCE.install();
   }
 
-  // 初始化单例，注册所有静态对象
+  // 按依赖顺序显式触发静态内容注册，避免依赖单例数组和类加载副作用。
   public static void bootstrapContent() {
-    Object[] content = {
-        WeaponStateComponents.INSTANCE,
-        ModSound.INSTANCE,
-        ModItem.INSTANCE,
-        ModCollectible.INSTANCE,
-        ModFood.INSTANCE,
-        ModBlock.INSTANCE,
-        ModBiome.INSTANCE,
-        ModBlockEntity.INSTANCE,
-        ModSkills.INSTANCE,
-        ModWeapons.INSTANCE,
-        TaczIntegration.INSTANCE,
-        ModEntity.INSTANCE,
-        TerraNationRelations.INSTANCE,
-        ModDimension.INSTANCE,
-        LateranoHostStructure.INSTANCE,
-        ModLandmark.INSTANCE,
-        ModSettlement.INSTANCE,
-        ModWorldFeatures.INSTANCE,
-        ModStructure.INSTANCE,
-        ModCreativeTab.INSTANCE
-    };
+    WeaponStateComponents.bootstrap();
+    ModSound.bootstrap();
+    ModItem.bootstrap();
+    ModCollectible.bootstrap();
+    ModBlock.bootstrap();
+    ModBiome.bootstrap();
+    ModBlockEntity.bootstrap();
+    ModSkills.bootstrap();
+    ModWeapons.bootstrap();
+    TaczIntegration.bootstrap();
+    ModEntity.bootstrap();
+    TerraNationRelations.bootstrap();
+    ModDimension.bootstrap();
+    LateranoHostStructure.bootstrap();
+    ModLandmark.bootstrap();
+    ModSettlement.bootstrap();
+    ModWorldFeatures.bootstrap();
+    ModStructure.bootstrap();
+    ModCreativeTab.bootstrap();
   }
 
   private void commonSetup(FMLCommonSetupEvent event) {
     event.enqueueWork(() -> {
-      ModWeapons.INSTANCE.bindRegisteredItems();
+      ModWeapons.bindRegisteredItems();
       ModTerraBlender.initialize();
       if (ModList.get().isLoaded("jeresources")) ZinecraftJerPlugin.install();
     });

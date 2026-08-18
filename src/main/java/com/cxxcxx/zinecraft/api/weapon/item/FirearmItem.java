@@ -32,12 +32,12 @@ public final class FirearmItem extends ActionWeaponItem {
       @NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag
   ) {
     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-    Integer integer = (Integer) stack.getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), this.capacity);
+    Integer integer = (Integer) stack.getOrDefault(WeaponStateComponents.AMMO, this.capacity);
     Collection aimingKey = tooltipComponents;
     Object[] objects = new Object[]{integer, this.capacity};
     MutableComponent mutableComponent = Component.translatable("item.zinecraft.firearm.ammo", objects).withStyle(ChatFormatting.YELLOW);
     aimingKey.add(mutableComponent);
-    String string = stack.getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false)
+    String string = stack.getOrDefault(WeaponStateComponents.AIMING, false)
         ? "item.zinecraft.firearm.aiming"
         : "item.zinecraft.firearm.hip_fire";
     tooltipComponents.add(Component.translatable(string).withStyle(ChatFormatting.GRAY));

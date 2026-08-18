@@ -12,8 +12,6 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.
 
 public final class ModLandmark {
 
-  public static final ModLandmark INSTANCE = new ModLandmark();
-
   public static final JigsawBuildingEntry AEGIR_VOLCANIC_BEACON = landmark("aegir_volcanic_beacon", "阿戈尔火山信标", ModBiome.AEGIR_ABYSSAL_SEA, 40, Types.OCEAN_FLOOR_WG, 0);
 
   public static final JigsawBuildingEntry AEGIR_ABYSSAL_OBSERVATORY = landmark("aegir_abyssal_observatory", "阿戈尔深渊观测站", ModBiome.AEGIR_ABYSSAL_SEA, 52, Types.OCEAN_FLOOR_WG, 0);
@@ -106,7 +104,7 @@ public final class ModLandmark {
       int startHeight
   ) {
     String templateRoot = "nation_landmarks/" + path;
-    return Zinecraft.WORLDGEN.getStructures().guaranteedLandmark(
+    return Zinecraft.WORLDGEN.structures.guaranteedLandmark(
         path,
         zhCn,
         ringDistance,
@@ -130,5 +128,8 @@ public final class ModLandmark {
           builder.pool("surrounding", Projection.RIGID, pool -> pool.template(templateRoot + "/surrounding", 1));
         }
     );
+  }
+
+  public static void bootstrap() {
   }
 }

@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.core.entity;
+package com.cxxcxx.zinecraft.core.entity.resident;
 
 import com.cxxcxx.zinecraft.api.nation.NationAffiliated;
 import com.cxxcxx.zinecraft.api.nation.TerraNation;
@@ -6,34 +6,10 @@ import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public final class NationResidentProfile implements NationAffiliated {
-  @NotNull
-  private final TerraNation nation;
-  @NotNull
-  private final Item heldItem;
-  private final boolean aquatic;
+import java.util.Objects;
 
-  public NationResidentProfile(@NotNull TerraNation nation, @NotNull Item heldItem, boolean aquatic) {
-    super();
-    this.nation = nation;
-    this.heldItem = heldItem;
-    this.aquatic = aquatic;
-  }
-
-  @NotNull
-  @Override
-  public TerraNation getNation() {
-    return this.nation;
-  }
-
-  @NotNull
-  public final Item getHeldItem() {
-    return this.heldItem;
-  }
-
-  public final boolean getAquatic() {
-    return this.aquatic;
-  }
+public record NationResidentProfile(TerraNation nation, Item heldItem,
+                                    boolean aquatic) implements NationAffiliated {
 
   @Override
   public int hashCode() {
@@ -51,7 +27,7 @@ public final class NationResidentProfile implements NationAffiliated {
     } else if (this.nation != nationResidentProfile.nation) {
       return false;
     } else {
-      return java.util.Objects.equals(this.heldItem, nationResidentProfile.heldItem) && this.aquatic == nationResidentProfile.aquatic;
+      return Objects.equals(this.heldItem, nationResidentProfile.heldItem) && this.aquatic == nationResidentProfile.aquatic;
     }
   }
 

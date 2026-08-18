@@ -9,7 +9,7 @@ public final class ModTerraBlender {
     SurfaceRuleManager.addSurfaceRules(
         SurfaceRuleManager.RuleCategory.OVERWORLD,
         Zinecraft.MOD_ID,
-        ModSurfaceRule.INSTANCE.rules()
+        ModSurfaceRule.rules()
     );
   }
 }

@@ -3,7 +3,6 @@ package com.cxxcxx.zinecraft.compat.jer;
 import com.cxxcxx.zinecraft.api.world.feature.MaterialOre;
 import com.cxxcxx.zinecraft.api.world.feature.OreEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.dimension.ModDimension;
 import jeresources.api.IJERAPI;
 import jeresources.api.IJERPlugin;
@@ -72,7 +71,7 @@ public final class ZinecraftJerPlugin implements IJERPlugin {
   @Override
   public void receive(IJERAPI api) {
     if (!REGISTERED.compareAndSet(false, true)) return;
-    for (MaterialOre ore : ModBlock.INSTANCE.ORES) {
+    for (MaterialOre ore : Zinecraft.WORLDGEN.features.materialOres) {
       register(api, ore.feature(), ore.drop());
     }
     Zinecraft.LOGGER.info("Registered 8 material ore distributions for JER in the Overworld and Terra");

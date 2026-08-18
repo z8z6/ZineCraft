@@ -41,8 +41,8 @@ public final class ToggleAimAction implements WeaponAction {
       @Override
       protected void onTick(int tick) {
         if (tick == 0) {
-          Boolean boolean_ = (Boolean) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false);
-          context.getStack().set(WeaponStateComponents.INSTANCE.getAIMING(), !boolean_);
+          Boolean boolean_ = (Boolean) context.getStack().getOrDefault(WeaponStateComponents.AIMING, false);
+          context.getStack().set(WeaponStateComponents.AIMING, !boolean_);
         }
       }
     };

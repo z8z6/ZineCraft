@@ -104,8 +104,8 @@ public final class WeaponServerController {
     var inventory = player.getInventory();
     for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
       ItemStack stack = inventory.getItem(slot);
-      if (stack != held && stack.getOrDefault(WeaponStateComponents.INSTANCE.getAIMING(), false)) {
-        stack.set(WeaponStateComponents.INSTANCE.getAIMING(), false);
+      if (stack != held && stack.getOrDefault(WeaponStateComponents.AIMING, false)) {
+        stack.set(WeaponStateComponents.AIMING, false);
       }
     }
   }

@@ -47,7 +47,7 @@ public final class FirearmReloadAction implements WeaponAction {
 
   @Override
   public boolean canStart(@NotNull WeaponContext context) {
-    return ((Number) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), this.capacity)).intValue() >= this.capacity
+    return ((Number) context.getStack().getOrDefault(WeaponStateComponents.AMMO, this.capacity)).intValue() >= this.capacity
         ? false
         : context.getPlayer().isCreative() || this.countAmmunition(context) > 0;
   }
@@ -61,13 +61,13 @@ public final class FirearmReloadAction implements WeaponAction {
       @Override
       protected void onTick(int tick) {
         if (tick == FirearmReloadAction.this.reloadTick) {
-          Integer integer = (Integer) context.getStack().getOrDefault(WeaponStateComponents.INSTANCE.getAMMO(), FirearmReloadAction.this.capacity);
+          Integer integer = (Integer) context.getStack().getOrDefault(WeaponStateComponents.AMMO, FirearmReloadAction.this.capacity);
           int l = FirearmReloadAction.this.capacity;
           int j = l - integer;
           if (j > 0) {
             int k = context.getPlayer().isCreative() ? j : FirearmReloadAction.this.consumeAmmunition(context, j);
             if (k > 0) {
-              context.getStack().set(WeaponStateComponents.INSTANCE.getAMMO(), integer + k);
+              context.getStack().set(WeaponStateComponents.AMMO, integer + k);
             }
           }
         }

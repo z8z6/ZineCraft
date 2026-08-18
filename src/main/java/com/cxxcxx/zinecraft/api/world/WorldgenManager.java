@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.api.world;
 
+import com.cxxcxx.zinecraft.api.block.BlockCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeCatalog;
@@ -10,36 +11,19 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 
 public final class WorldgenManager {
-  private final BiomeCatalog biomes;
-  private final DimensionCatalog dimensions;
-  private final FeatureCatalog features;
-  private final StructureCatalog structures;
+  public final BiomeCatalog biomes;
+  public final DimensionCatalog dimensions;
+  public final FeatureCatalog features;
+  public final StructureCatalog structures;
 
-  public WorldgenManager(ModRegistrar registrar, TranslationCatalog translations) {
-    super();
+  public WorldgenManager(ModRegistrar registrar, TranslationCatalog translations, BlockCatalog blocks) {
     this.biomes = new BiomeCatalog(registrar, translations);
     this.dimensions = new DimensionCatalog(registrar);
-    this.features = new FeatureCatalog(registrar);
+    this.features = new FeatureCatalog(registrar, blocks);
     this.structures = new StructureCatalog(registrar, translations);
   }
 
-  public final BiomeCatalog getBiomes() {
-    return this.biomes;
-  }
-
-  public final DimensionCatalog getDimensions() {
-    return this.dimensions;
-  }
-
-  public final FeatureCatalog getFeatures() {
-    return this.features;
-  }
-
-  public final StructureCatalog getStructures() {
-    return this.structures;
-  }
-
-  public final void addDataGeneration(RegistrySetBuilder builder) {
+  public void addDataGeneration(RegistrySetBuilder builder) {
     builder.add(Registries.CONFIGURED_FEATURE, this.features::bootstrapConfigured);
     builder.add(Registries.PLACED_FEATURE, this.features::bootstrapPlaced);
     builder.add(Registries.BIOME, this.biomes::bootstrap);

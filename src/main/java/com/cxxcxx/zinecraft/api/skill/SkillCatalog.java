@@ -6,31 +6,44 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public final class SkillCatalog {
   private final ItemCatalog items;
   private final TranslationCatalog translations;
-  private final List<SkillEntry> entries;
+  private final List<SkillEntry> mutableEntries = new ArrayList<>();
+
+  public final List<SkillEntry> entries = Collections.unmodifiableList(mutableEntries);
 
   public SkillCatalog(ItemCatalog items, TranslationCatalog translations) {
-    super();
-    this.items = items;
-    this.translations = translations;
-    this.entries = new ArrayList<>();
+    this.items = Objects.requireNonNull(items, "items");
+    this.translations = Objects.requireNonNull(translations, "translations");
   }
 
-  private static SkillItem createItem(SkillDefinition definition) {
-    return new SkillItem(definition);
-  }
-
-  public final List<SkillEntry> getEntries() {
-    return this.entries;
-  }
-
-  public final SkillEntry register(
+  /**
+   * 注册技能定义及其对应技能物品，并集中生成技能说明与 Ponder 文本。
+   *
+   * @param path            技能和技能物品共用的注册路径
+   * @param zhCn            技能中文名
+   * @param enUs            技能英文名
+   * @param operatorZhCn    干员中文名
+   * @param operatorEnUs    干员英文名
+   * @param profession      技能所属职业
+   * @param recoveryZhCn    中文技力回复类型
+   * @param recoveryEnUs    英文技力回复类型
+   * @param triggerZhCn     中文触发方式
+   * @param triggerEnUs     英文触发方式
+   * @param initialSp       初始技力，不能为负数
+   * @param spCost          技力消耗，不能为负数
+   * @param durationSeconds 持续秒数；瞬时技能传入 {@code null}
+   * @param descriptionZhCn 中文技能描述
+   * @param descriptionEnUs 英文技能描述
+   * @param theme           Ponder 演示使用的视觉主题
+   * @return 同时包含技能定义和注册物品的封装条目
+   */
+  public SkillEntry register(
       String path,
       String zhCn,
       String enUs,
@@ -48,149 +61,86 @@ public final class SkillCatalog {
       String descriptionEnUs,
       SkillDemoTheme theme
   ) {
-    if (initialSp < 0) {
-      int m = 0;
-      String string3 = "初始技力不能为负数";
-      throw new IllegalArgumentException(string3.toString());
-    }
-
-    if (spCost < 0) {
-      int l = 0;
-      String string2 = "技力消耗不能为负数";
-      throw new IllegalArgumentException(string2.toString());
-    }
-
+    if (initialSp < 0) throw new IllegalArgumentException("初始技力不能为负数");
+    if (spCost < 0) throw new IllegalArgumentException("技力消耗不能为负数");
     if (durationSeconds != null && durationSeconds <= 0) {
-      int k = 0;
-      String string1 = "技能持续时间必须大于 0";
-      throw new IllegalArgumentException(string1.toString());
+      throw new IllegalArgumentException("技能持续时间必须大于 0");
+    }
+    if (entries.stream().anyMatch(entry -> entry.definition().getPath().equals(path))) {
+      throw new IllegalArgumentException("技能 ID 重复: " + path);
     }
 
-    var iterable = this.entries;
-    int i = 0;
-    boolean bl;
-    if (iterable instanceof Collection && ((Collection) iterable).isEmpty()) {
-      bl = true;
-    } else {
-      Iterator iterator = iterable.iterator();
+    SkillDefinition definition = new SkillDefinition(
+        path,
+        zhCn,
+        enUs,
+        operatorZhCn,
+        operatorEnUs,
+        profession,
+        recoveryZhCn,
+        recoveryEnUs,
+        triggerZhCn,
+        triggerEnUs,
+        initialSp,
+        spCost,
+        durationSeconds,
+        descriptionZhCn,
+        descriptionEnUs,
+        theme
+    );
+    DeferredItem<SkillItem> item = items.builder(path, zhCn, () -> new SkillItem(definition))
+        .enUs(enUs)
+        .hideCreativeTab()
+        .build();
+    registerTranslations(definition);
 
-      while (true) {
-        if (!iterator.hasNext()) {
-          bl = true;
-          break;
-        }
-
-        Object object = iterator.next();
-        SkillEntry skillEntry = (SkillEntry) object;
-        int j = 0;
-        if (java.util.Objects.equals(skillEntry.definition().getPath(), path)) {
-          bl = false;
-          break;
-        }
-      }
-    }
-
-    if (!bl) {
-      i = 0;
-      String string = "技能 ID 重复: " + path;
-      throw new IllegalArgumentException(string.toString());
-    } else {
-      SkillDefinition skillDefinition = new SkillDefinition(
-          path,
-          zhCn,
-          enUs,
-          operatorZhCn,
-          operatorEnUs,
-          profession,
-          recoveryZhCn,
-          recoveryEnUs,
-          triggerZhCn,
-          triggerEnUs,
-          initialSp,
-          spCost,
-          durationSeconds,
-          descriptionZhCn,
-          descriptionEnUs,
-          theme
-      );
-      DeferredItem<SkillItem> item = this.items.builder(path, zhCn, () -> createItem(skillDefinition))
-          .enUs(enUs)
-          .hideCreativeTab()
-          .build();
-      this.registerTranslations(skillDefinition);
-      SkillEntry skillEntry1 = new SkillEntry(skillDefinition, item);
-      List list = this.entries;
-      SkillEntry skillEntry2 = skillEntry1;
-      int n = 0;
-      list.add(skillEntry2);
-      return skillEntry1;
-    }
+    SkillEntry entry = new SkillEntry(definition, item);
+    mutableEntries.add(entry);
+    return entry;
   }
 
-  private final void registerTranslations(SkillDefinition skill) {
-    String string = "item.zinecraft." + skill.getPath() + ".tooltip";
-    this.translations
-        .add(
-            string + ".operator",
-            "干员：" + skill.getOperatorZhCn() + " · " + skill.getProfession().getZhCn(),
-            "Operator: " + skill.getOperatorEnUs() + " · " + skill.getProfession().getEnUs()
-        );
-    this.translations
-        .add(string + ".activation", skill.getRecoveryZhCn() + " · " + skill.getTriggerZhCn(), skill.getRecoveryEnUs() + " · " + skill.getTriggerEnUs());
-    Integer integer = skill.getDurationSeconds();
-    String string4;
-    if (integer != null) {
-      int i = integer.intValue();
-      int j = 0;
-      string4 = " · 持续 " + i + "秒";
-    } else {
-      string4 = null;
-    }
+  private void registerTranslations(SkillDefinition skill) {
+    String tooltipKey = "item.zinecraft." + skill.getPath() + ".tooltip";
+    translations.add(
+        tooltipKey + ".operator",
+        "干员：" + skill.getOperatorZhCn() + " · " + skill.getProfession().getZhCn(),
+        "Operator: " + skill.getOperatorEnUs() + " · " + skill.getProfession().getEnUs()
+    );
+    translations.add(
+        tooltipKey + ".activation",
+        skill.getRecoveryZhCn() + " · " + skill.getTriggerZhCn(),
+        skill.getRecoveryEnUs() + " · " + skill.getTriggerEnUs()
+    );
 
-    if (string4 == null) {
-      string4 = "";
-    }
+    String durationZhCn = skill.getDurationSeconds() == null ? "" : " · 持续 " + skill.getDurationSeconds() + "秒";
+    String durationEnUs = skill.getDurationSeconds() == null ? "" : " · Duration " + skill.getDurationSeconds() + "s";
+    String statsZhCn = "初始 " + skill.getInitialSp() + " · 消耗 " + skill.getSpCost() + durationZhCn;
+    String statsEnUs = "Initial " + skill.getInitialSp() + " · Cost " + skill.getSpCost() + durationEnUs;
+    translations.add(tooltipKey + ".stats", statsZhCn, statsEnUs);
+    translations.add(tooltipKey + ".description", skill.getDescriptionZhCn(), skill.getDescriptionEnUs());
 
-    String string1 = string4;
-    integer = skill.getDurationSeconds();
-    String string5;
-    if (integer != null) {
-      int l = integer.intValue();
-      int k = 0;
-      string5 = " · Duration " + l + "s";
-    } else {
-      string5 = null;
-    }
-
-    if (string5 == null) {
-      string5 = "";
-    }
-
-    String string2 = string5;
-    this.translations
-        .add(
-            string + ".stats",
-            "初始 " + skill.getInitialSp() + " · 消耗 " + skill.getSpCost() + string1,
-            "Initial " + skill.getInitialSp() + " · Cost " + skill.getSpCost() + string2
-        );
-    this.translations.add(string + ".description", skill.getDescriptionZhCn(), skill.getDescriptionEnUs());
-    String string3 = "zinecraft.ponder.skill_demo_" + skill.getPath();
-    this.translations.add(string3 + ".header", skill.getOperatorZhCn() + "：" + skill.getZhCn(), skill.getOperatorEnUs() + ": " + skill.getEnUs());
-    this.translations
-        .add(
-            string3 + ".text_1",
-            skill.getOperatorZhCn() + "的" + skill.getProfession().getZhCn() + "技能",
-            "A " + skill.getProfession().getEnUs() + " skill used by " + skill.getOperatorEnUs()
-        );
-    this.translations
-        .add(string3 + ".text_2", skill.getRecoveryZhCn() + " · " + skill.getTriggerZhCn(), skill.getRecoveryEnUs() + " · " + skill.getTriggerEnUs());
-    this.translations
-        .add(
-            string3 + ".text_3",
-            "初始 " + skill.getInitialSp() + " · 消耗 " + skill.getSpCost() + string1,
-            "Initial " + skill.getInitialSp() + " · Cost " + skill.getSpCost() + string2
-        );
-    this.translations.add(string3 + ".text_4", skill.getDescriptionZhCn(), skill.getDescriptionEnUs());
-    this.translations.add(string3 + ".text_5", "演示为 Minecraft 机制化表达，技能资料取自 PRTS。", "This is a Minecraft interpretation based on PRTS skill data.");
+    String ponderKey = "zinecraft.ponder.skill_demo_" + skill.getPath();
+    translations.add(
+        ponderKey + ".header",
+        skill.getOperatorZhCn() + "：" + skill.getZhCn(),
+        skill.getOperatorEnUs() + ": " + skill.getEnUs()
+    );
+    translations.add(
+        ponderKey + ".text_1",
+        skill.getOperatorZhCn() + "的" + skill.getProfession().getZhCn() + "技能",
+        "A " + skill.getProfession().getEnUs() + " skill used by " + skill.getOperatorEnUs()
+    );
+    translations.add(
+        ponderKey + ".text_2",
+        skill.getRecoveryZhCn() + " · " + skill.getTriggerZhCn(),
+        skill.getRecoveryEnUs() + " · " + skill.getTriggerEnUs()
+    );
+    translations.add(ponderKey + ".text_3", statsZhCn, statsEnUs);
+    translations.add(ponderKey + ".text_4", skill.getDescriptionZhCn(), skill.getDescriptionEnUs());
+    translations.add(
+        ponderKey + ".text_5",
+        "演示为 Minecraft 机制化表达，技能资料取自 PRTS。",
+        "This is a Minecraft interpretation based on PRTS skill data."
+    );
   }
 }

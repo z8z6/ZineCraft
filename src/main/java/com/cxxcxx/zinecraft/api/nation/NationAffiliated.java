@@ -4,5 +4,5 @@ import org.jetbrains.annotations.NotNull;
 
 public interface NationAffiliated {
   @NotNull
-  TerraNation getNation();
+  TerraNation nation();
 }
