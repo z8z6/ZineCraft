@@ -5,34 +5,26 @@
 ## Java 示例
 
 ```java
-public final DeferredItem<Item> orirock = Zinecraft.ITEMS
-    .builder("orirock", "源岩")
-    .enUs("Orirock")
-    .build();
+public final ItemBuilder<Item> orirock = Zinecraft.ITEMS.builder(
+    "orirock", "源岩", "Orirock", () -> new Item(new Item.Properties())
+);
 ```
 
 自定义物品通过 factory 保留具体类型：
 
 ```java
-public final DeferredItem<ScannerItem> scanner = Zinecraft.ITEMS
-    .builder("scanner", "扫描器",
-        () -> new ScannerItem(new Item.Properties().stacksTo(1)))
-    .enUs("Scanner")
-    .build();
+public final ItemBuilder<ScannerItem> scanner = Zinecraft.ITEMS.builder(
+    "scanner", "扫描器", "Scanner",
+    () -> new ScannerItem(new Item.Properties().stacksTo(1))
+);
 ```
 
-`build()` 返回 NeoForge 原生 `DeferredItem<T>`。模型、创造栏、燃料与堆肥等数据保存在 `ItemBuilder` 中，不再使用额外的 entry
-包装。`DeferredItem` 可直接作为 `ItemLike` 传递；只在注册完成后需要具体物品方法时调用 `.get()`。
+`ItemBuilder` 不提供链式配置；`ItemCatalog.builder(...)` 接收 factory 并立即登记物品。物品属性全部在 factory 的
+`Item.Properties` 中声明。需要 NeoForge 注册对象时调用 `getItem()`；`ItemBuilder` 本身也可直接作为 `ItemLike` 传递。
 
 ```java
 ItemStack stack = new ItemStack(scanner);
 ```
-
-可组合元数据：
-
-- `fuel(ticks)`：燃烧时间，20 tick 为 1 秒。
-- `compost(chance)`：堆肥成功概率，必须位于 0—1。
-- `hideCreativeTab()`：不进入目录自动收集的创造模式页。
 
 ## 合成材料稀有度
 
@@ -54,7 +46,8 @@ PRTS 藏品自身的稀有度。
 src/main/resources/assets/zinecraft/textures/item/<path>.png
 ```
 
-复杂手持、动态或多层模型不能由目录推断，应在资源目录提供 JSON，或扩展 `CatalogModelProvider`。运行 `runData` 后检查生成模型和双语语言文件。
+特殊模型模板与是否加入主创造栏通过 `builder(...)` 的非链式参数传入。复杂手持、动态或多层模型不能由目录推断，应在资源目录提供
+JSON，或扩展 `CatalogModelProvider`。运行 `runData` 后检查生成模型和双语语言文件。
 
 ## 创造模式页
 

@@ -1,19 +1,12 @@
 package com.cxxcxx.zinecraft.core;
 
 import com.cxxcxx.zinecraft.api.accessory.CollectibleCatalog;
-import com.cxxcxx.zinecraft.api.block.BlockCatalog;
-import com.cxxcxx.zinecraft.api.block.BlockEntityCatalog;
 import com.cxxcxx.zinecraft.api.enchantment.EnchantmentCatalog;
 import com.cxxcxx.zinecraft.api.entity.EntityCatalog;
-import com.cxxcxx.zinecraft.api.item.CreativeTabCatalog;
-import com.cxxcxx.zinecraft.api.item.ItemCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import com.cxxcxx.zinecraft.api.recipe.RecipeCatalog;
-import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
+import com.cxxcxx.zinecraft.api.registry.*;
 import com.cxxcxx.zinecraft.api.skill.SkillCatalog;
 import com.cxxcxx.zinecraft.api.skill.SkillService;
-import com.cxxcxx.zinecraft.api.sound.SongCatalog;
-import com.cxxcxx.zinecraft.api.sound.SoundCatalog;
 import com.cxxcxx.zinecraft.api.weapon.WeaponRegistry;
 import com.cxxcxx.zinecraft.api.weapon.WeaponServerController;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
@@ -56,15 +49,14 @@ public final class Zinecraft {
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
   public static final ModRegistrar REGISTRAR = new ModRegistrar(MOD_ID);
   public static final TranslationCatalog TRANSLATIONS = new TranslationCatalog();
-  public static final ItemCatalog ITEMS = new ItemCatalog(REGISTRAR, TRANSLATIONS);
+  public static final ItemCatalog ITEMS = new ItemCatalog(MOD_ID, TRANSLATIONS);
   public static final CollectibleCatalog COLLECTIBLES = new CollectibleCatalog(ITEMS, TRANSLATIONS, MOD_ID);
   public static final EntityCatalog ENTITIES = new EntityCatalog(REGISTRAR, ITEMS, TRANSLATIONS);
   public static final SkillCatalog SKILLS = new SkillCatalog(ITEMS, TRANSLATIONS);
-  public static final BlockCatalog BLOCKS = new BlockCatalog(REGISTRAR, TRANSLATIONS);
+  public static final BlockCatalog BLOCKS = new BlockCatalog(MOD_ID, ITEMS, TRANSLATIONS);
   public static final CreativeTabCatalog CREATIVE_TABS = new CreativeTabCatalog(REGISTRAR, ITEMS, BLOCKS, TRANSLATIONS);
   public static final BlockEntityCatalog BLOCK_ENTITIES = new BlockEntityCatalog(REGISTRAR);
-  public static final SoundCatalog SOUNDS = new SoundCatalog(REGISTRAR);
-  public static final SongCatalog SONGS = new SongCatalog(REGISTRAR, SOUNDS, ITEMS, TRANSLATIONS);
+  public static final SoundCatalog SOUNDS = new SoundCatalog(MOD_ID, TRANSLATIONS);
   public static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(REGISTRAR, TRANSLATIONS);
   public static final WorldgenManager WORLDGEN = new WorldgenManager(REGISTRAR, TRANSLATIONS, BLOCKS);
   public static final RecipeCatalog RECIPES = new RecipeCatalog();
@@ -76,6 +68,9 @@ public final class Zinecraft {
   public Zinecraft(IEventBus modBus) {
     INSTANCE = this;
     bootstrapContent();
+    ITEMS.registry.register(modBus);
+    BLOCKS.registry.register(modBus);
+    SOUNDS.registry.register(modBus);
     REGISTRAR.register(modBus);
     modBus.addListener(WeaponPayloadTypes::register);
     modBus.addListener(this::commonSetup);

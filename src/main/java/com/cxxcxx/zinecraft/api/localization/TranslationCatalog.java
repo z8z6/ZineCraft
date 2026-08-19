@@ -19,6 +19,10 @@ public final class TranslationCatalog {
     return entries;
   }
 
+  public MessageBuilder message(String key, String zhCn, String enUs) {
+    return new MessageBuilder(this, key, zhCn, enUs);
+  }
+
   public void add(String key, String zhCn, String enUs) {
     var text = validatedText(key, zhCn, enUs);
     var previous = entries.putIfAbsent(key, text);

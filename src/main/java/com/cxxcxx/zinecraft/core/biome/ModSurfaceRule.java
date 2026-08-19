@@ -1,6 +1,6 @@
 package com.cxxcxx.zinecraft.core.biome;
 
-import com.cxxcxx.zinecraft.api.block.BlockEntry;
+import com.cxxcxx.zinecraft.api.registry.builder.BlockBuilder;
 import com.cxxcxx.zinecraft.core.block.ModBlock;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
@@ -42,11 +42,11 @@ public final class ModSurfaceRule {
   private ModSurfaceRule() {
   }
 
-  private static SurfaceDefinition solid(ResourceKey<Biome> biome, BlockEntry<? extends Block> block) {
+  private static SurfaceDefinition solid(ResourceKey<Biome> biome, BlockBuilder<? extends Block> block) {
     return new SurfaceDefinition(biome, block, SurfaceType.SOLID);
   }
 
-  private static SurfaceDefinition ecological(ResourceKey<Biome> biome, BlockEntry<? extends Block> block) {
+  private static SurfaceDefinition ecological(ResourceKey<Biome> biome, BlockBuilder<? extends Block> block) {
     return new SurfaceDefinition(biome, block, SurfaceType.ECOLOGICAL);
   }
 
@@ -85,7 +85,7 @@ public final class ModSurfaceRule {
 
   private record SurfaceDefinition(
       ResourceKey<Biome> biome,
-      BlockEntry<? extends Block> block,
+      BlockBuilder<? extends Block> block,
       SurfaceType type
   ) {
     private RuleSource rule() {

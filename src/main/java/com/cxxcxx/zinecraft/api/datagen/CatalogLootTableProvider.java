@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.api.datagen;
 
-import com.cxxcxx.zinecraft.api.block.BlockCatalog;
 import com.cxxcxx.zinecraft.api.entity.EntityCatalog;
+import com.cxxcxx.zinecraft.api.registry.BlockCatalog;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -53,7 +53,7 @@ public final class CatalogLootTableProvider extends LootTableProvider {
     @Override
     protected void generate() {
       for (var entry : blocks.entries) {
-        var block = entry.entry.block().get();
+        var block = entry.block().get();
         if (entry.dropSelf) dropSelf(block);
         else if (entry.dropItem != null) dropOther(block, entry.dropItem);
         else add(block, noDrop());
@@ -62,7 +62,7 @@ public final class CatalogLootTableProvider extends LootTableProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-      return blocks.entries.stream().map(entry -> (Block) entry.entry.get()).toList();
+      return blocks.entries.stream().map(entry -> (Block) entry.get()).toList();
     }
   }
 

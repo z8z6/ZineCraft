@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.api.entity;
 
-import com.cxxcxx.zinecraft.api.item.ItemCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
+import com.cxxcxx.zinecraft.api.registry.ItemCatalog;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
 import net.minecraft.core.registries.Registries;
@@ -64,11 +64,10 @@ public final class EntityCatalog {
     var spawnEgg = items.builder(
             builder.path + "_spawn_egg",
             egg.zhCn(),
+        egg.enUs(),
             () -> new SpawnEggItem(type.get(), egg.primary(), egg.secondary(), new Item.Properties())
-        )
-        .enUs(egg.enUs())
-        .model(ACCESS.getSPAWN_EGG_MODEL())
-        .build();
+        , ACCESS.getSPAWN_EGG_MODEL(), true
+    ).getItem();
     MobEntry<T> entry = new MobEntry<>(type, spawnEgg);
     builder.entry = entry;
     translations.add("entity." + registrar.namespace + "." + builder.path, builder.zhCn, builder.enUs);

@@ -1,8 +1,8 @@
 package com.cxxcxx.zinecraft.api.world.feature;
 
-import com.cxxcxx.zinecraft.api.block.BlockCatalog;
-import com.cxxcxx.zinecraft.api.block.BlockEntry;
+import com.cxxcxx.zinecraft.api.registry.BlockCatalog;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
+import com.cxxcxx.zinecraft.api.registry.builder.BlockBuilder;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -74,7 +74,7 @@ public final class FeatureCatalog {
       BiomeSelection biomes
   ) {
     Objects.requireNonNull(drop, "drop");
-    BlockEntry<? extends Block> block = blocks.builder(blockPath, zhCn, blockFactory)
+    BlockBuilder<? extends Block> block = blocks.builder(blockPath, zhCn, blockFactory)
         .drop(drop)
         .build();
     OreEntry feature = ore(

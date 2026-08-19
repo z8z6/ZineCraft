@@ -30,26 +30,22 @@ public final class ModWeapons {
   private static final int LIGHT_ATTACK_DURATION = 20;
 
   public static final DeferredItem<Item> TEST_CARTRIDGE = Zinecraft.ITEMS
-      .builder("test_cartridge", "测试弹药")
-      .enUs("Test Cartridge")
-      .model(vanillaModel("iron_nugget"))
-      .build();
+      .builder("test_cartridge", "测试弹药", "Test Cartridge",
+          () -> new Item(new Item.Properties()), vanillaModel("iron_nugget"), true)
+      .getItem();
   public static final DeferredItem<FirearmItem> TEST_RIFLE_ITEM = Zinecraft.ITEMS
-      .builder("test_rifle", "测试步枪", ModWeapons::createTestRifle)
-      .enUs("Test Rifle")
-      .model(vanillaModel("crossbow"))
-      .build();
+      .builder("test_rifle", "测试步枪", "Test Rifle", ModWeapons::createTestRifle,
+          vanillaModel("crossbow"), true)
+      .getItem();
   public static final DeferredItem<ActionWeaponItem> TEST_STAFF_ITEM = Zinecraft.ITEMS
-      .builder("test_staff", "测试法杖", ModWeapons::createTestStaff)
-      .enUs("Test Staff")
-      .model(vanillaModel("blaze_rod"))
-      .build();
+      .builder("test_staff", "测试法杖", "Test Staff", ModWeapons::createTestStaff,
+          vanillaModel("blaze_rod"), true)
+      .getItem();
   private static final ModelTemplate VANILLA_IRON_SWORD_MODEL = vanillaModel("iron_sword");
   public static final DeferredItem<SwordItem> TEST_SWORD_ITEM = Zinecraft.ITEMS
-      .builder("test_sword", "测试剑", ModWeapons::createTestSword)
-      .enUs("Test Sword")
-      .model(VANILLA_IRON_SWORD_MODEL)
-      .build();
+      .builder("test_sword", "测试剑", "Test Sword", ModWeapons::createTestSword,
+          VANILLA_IRON_SWORD_MODEL, true)
+      .getItem();
   private static final ResourceLocation LIGHT_ATTACK_ID = id("light_attack");
   public static final MeleeAttackAction LIGHT_ATTACK = new MeleeAttackAction(
       LIGHT_ATTACK_ID, 7, LIGHT_ATTACK_DURATION, 7.0F, 3.25, 100.0

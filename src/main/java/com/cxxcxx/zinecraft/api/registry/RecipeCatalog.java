@@ -1,4 +1,4 @@
-package com.cxxcxx.zinecraft.api.recipe;
+package com.cxxcxx.zinecraft.api.registry;
 
 
 import net.minecraft.data.recipes.RecipeOutput;

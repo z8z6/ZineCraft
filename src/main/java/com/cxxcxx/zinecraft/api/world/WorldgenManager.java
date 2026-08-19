@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.api.world;
 
-import com.cxxcxx.zinecraft.api.block.BlockCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
+import com.cxxcxx.zinecraft.api.registry.BlockCatalog;
 import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeCatalog;
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionCatalog;

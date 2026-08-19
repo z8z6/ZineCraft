@@ -1,6 +1,5 @@
-package com.cxxcxx.zinecraft.api.block;
+package com.cxxcxx.zinecraft.api.registry;
 
-import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;

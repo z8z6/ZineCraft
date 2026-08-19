@@ -2,18 +2,14 @@ package com.cxxcxx.zinecraft.api.registry;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -30,11 +26,12 @@ import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementTy
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -139,37 +136,6 @@ public final class ModRegistrar {
     return value;
   }
 
-
-  @SuppressWarnings("unchecked")
-  public <T extends Item> DeferredItem<T> item(String path, Supplier<? extends T> factory) {
-    var items = (DeferredRegister.Items) deferredRegisters.computeIfAbsent(
-        BuiltInRegistries.ITEM.key(), ignored -> DeferredRegister.createItems(namespace)
-    );
-    return items.register(path, factory);
-  }
-
-
-  @SuppressWarnings("unchecked")
-  public <T extends Block> BlockRegistration<T> block(
-      String path, Supplier<? extends T> factory, boolean registerItem, Item.Properties itemProperties
-  ) {
-    var blocks = (DeferredRegister.Blocks) deferredRegisters.computeIfAbsent(
-        BuiltInRegistries.BLOCK.key(), ignored -> DeferredRegister.createBlocks(namespace)
-    );
-    DeferredBlock<T> block = blocks.register(path, factory);
-    DeferredItem<BlockItem> blockItem = registerItem
-        ? item(path, () -> new BlockItem(block.get(), itemProperties))
-        : null;
-    return new BlockRegistration<>(block, Optional.ofNullable(blockItem));
-  }
-
-  public record BlockRegistration<T extends Block>(
-      DeferredBlock<T> block,
-      Optional<DeferredItem<BlockItem>> blockItem
-  ) {
-  }
-
-
   @SuppressWarnings({"unchecked", "rawtypes"})
   public <T extends BlockEntity> Supplier<BlockEntityType<T>> blockEntity(
       String path,
@@ -227,16 +193,6 @@ public final class ModRegistrar {
     var key = key(BuiltInRegistries.CREATIVE_MODE_TAB.key(), path);
     register(BuiltInRegistries.CREATIVE_MODE_TAB, path, tab);
     return new Pair<>(key, tab);
-  }
-
-
-  @SuppressWarnings("unchecked")
-  public Holder<SoundEvent> sound(String path) {
-    var deferred = (DeferredRegister<SoundEvent>) deferredRegisters.computeIfAbsent(
-        BuiltInRegistries.SOUND_EVENT.key(),
-        ignored -> DeferredRegister.create(BuiltInRegistries.SOUND_EVENT.key(), namespace)
-    );
-    return deferred.register(path, () -> SoundEvent.createVariableRangeEvent(id(path)));
   }
 
   public <S extends Structure> StructureType<S> structureType(String path, MapCodec<S> codec) {

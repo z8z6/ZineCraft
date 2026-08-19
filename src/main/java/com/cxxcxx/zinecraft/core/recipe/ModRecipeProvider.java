@@ -77,20 +77,6 @@ public final class ModRecipeProvider extends RecipeProvider {
   }
 
   private static void addCoreRecipes(RecipeOutput output) {
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItem.MAGIC_DUST, 4)
-        .requires(ModItem.MAGIC_DUST, 2)
-        .unlockedBy(getHasName(ModItem.MAGIC_DUST), has(ModItem.MAGIC_DUST))
-        .save(output);
-
-    oreSmelting(
-        output,
-        List.of(ModItem.MAGIC_DUST),
-        RecipeCategory.MISC,
-        ModItem.MAGIC_DUST,
-        0.1F,
-        20,
-        "magic_dust_copy"
-    );
 
     ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItem.PROTOCOL_ORIGINIUM)
         .requires(ModItem.ORIGINITE)

@@ -1,7 +1,8 @@
 package com.cxxcxx.zinecraft.api.skill;
 
-import com.cxxcxx.zinecraft.api.item.ItemCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
+import com.cxxcxx.zinecraft.api.registry.ItemCatalog;
+import net.minecraft.data.models.model.ModelTemplates;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.Nullable;
 
@@ -88,10 +89,9 @@ public final class SkillCatalog {
         descriptionEnUs,
         theme
     );
-    DeferredItem<SkillItem> item = items.builder(path, zhCn, () -> new SkillItem(definition))
-        .enUs(enUs)
-        .hideCreativeTab()
-        .build();
+    DeferredItem<SkillItem> item = items.builder(
+        path, zhCn, enUs, () -> new SkillItem(definition), ModelTemplates.FLAT_ITEM, false
+    ).getItem();
     registerTranslations(definition);
 
     SkillEntry entry = new SkillEntry(definition, item);

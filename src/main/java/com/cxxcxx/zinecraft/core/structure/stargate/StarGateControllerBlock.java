@@ -1,11 +1,12 @@
 package com.cxxcxx.zinecraft.core.structure.stargate;
 
+import com.cxxcxx.zinecraft.api.localization.MessageBuilder;
+import com.cxxcxx.zinecraft.core.block.ModBlock;
 import com.cxxcxx.zinecraft.core.item.ModItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,11 +26,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 public final class StarGateControllerBlock extends Block {
-  public static final String REQUIRES_KEY_MESSAGE = "message.zinecraft.stargate.requires_protocol_originium";
-  public static final String ACTIVATED_MESSAGE = "message.zinecraft.stargate.activated";
-  public static final String ALREADY_ACTIVE_MESSAGE = "message.zinecraft.stargate.already_active";
-  public static final String DAMAGED_MESSAGE = "message.zinecraft.stargate.damaged";
-
   public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
   public static final EnumProperty<Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
   public static final MapCodec<StarGateControllerBlock> CODEC = Block.simpleCodec(StarGateControllerBlock::new);
@@ -54,9 +50,9 @@ public final class StarGateControllerBlock extends Block {
         : Axis.Z;
   }
 
-  private static void displayMessage(Level level, Player player, String translationKey) {
+  private static void displayMessage(Level level, Player player, MessageBuilder message) {
     if (!level.isClientSide) {
-      player.displayClientMessage(Component.translatable(translationKey), true);
+      player.displayClientMessage(message.component(), true);
     }
   }
 
@@ -104,7 +100,13 @@ public final class StarGateControllerBlock extends Block {
       Player player,
       BlockHitResult hit
   ) {
-    displayMessage(level, player, state.getValue(ACTIVE) ? ALREADY_ACTIVE_MESSAGE : REQUIRES_KEY_MESSAGE);
+    displayMessage(
+        level,
+        player,
+        state.getValue(ACTIVE)
+            ? ModBlock.STARGATE_ALREADY_ACTIVE_MESSAGE
+            : ModBlock.STARGATE_REQUIRES_PROTOCOL_ORIGINIUM_MESSAGE
+    );
     return InteractionResult.SUCCESS;
   }
 
@@ -118,12 +120,12 @@ public final class StarGateControllerBlock extends Block {
       InteractionHand hand,
       BlockHitResult hit
   ) {
-    if (!stack.is(ModItem.PROTOCOL_ORIGINIUM)) {
-      displayMessage(level, player, REQUIRES_KEY_MESSAGE);
+    if (!stack.is(ModItem.PROTOCOL_ORIGINIUM.asItem())) {
+      displayMessage(level, player, ModBlock.STARGATE_REQUIRES_PROTOCOL_ORIGINIUM_MESSAGE);
       return ItemInteractionResult.FAIL;
     }
     if (state.getValue(ACTIVE)) {
-      displayMessage(level, player, ALREADY_ACTIVE_MESSAGE);
+      displayMessage(level, player, ModBlock.STARGATE_ALREADY_ACTIVE_MESSAGE);
       return ItemInteractionResult.SUCCESS;
     }
     if (level.isClientSide) {
@@ -132,10 +134,10 @@ public final class StarGateControllerBlock extends Block {
 
     Axis axis = state.getValue(AXIS);
     if (StarGateStructure.INSTANCE.activate(level, pos, axis)) {
-      player.displayClientMessage(Component.translatable(ACTIVATED_MESSAGE), true);
+      player.displayClientMessage(ModBlock.STARGATE_ACTIVATED_MESSAGE.component(), true);
       playActivationEffects(level, pos, StarGateStructure.INSTANCE.portalCenter(level, pos, axis));
     } else {
-      player.displayClientMessage(Component.translatable(DAMAGED_MESSAGE), true);
+      player.displayClientMessage(ModBlock.STARGATE_DAMAGED_MESSAGE.component(), true);
       level.playSound(null, pos, SoundEvents.DISPENSER_FAIL, SoundSource.BLOCKS, 0.8F, 0.8F);
     }
     return ItemInteractionResult.SUCCESS;

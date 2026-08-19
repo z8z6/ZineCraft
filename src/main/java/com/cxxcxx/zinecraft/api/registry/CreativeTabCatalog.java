@@ -1,8 +1,6 @@
-package com.cxxcxx.zinecraft.api.item;
+package com.cxxcxx.zinecraft.api.registry;
 
-import com.cxxcxx.zinecraft.api.block.BlockCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import com.cxxcxx.zinecraft.api.registry.ModRegistrar;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -56,10 +54,10 @@ public final class CreativeTabCatalog {
         .title(Component.translatable(translationKey))
         .displayItems((parameters, output) -> {
           if (builder.includeItems) {
-            items.entries.stream().filter(entry -> entry.inCreativeTab).forEach(entry -> output.accept(entry.item));
+            items.entries.stream().filter(entry -> entry.inCreativeTab).forEach(entry -> output.accept(entry.getItem()));
           }
           if (builder.includeBlocks) {
-            blocks.entries.forEach(entry -> entry.entry.blockItem().ifPresent(output::accept));
+            blocks.entries.forEach(entry -> entry.blockItem().ifPresent(output::accept));
           }
           builder.displayItems.accept(output);
         })

@@ -5,33 +5,40 @@
 
 ## 目录入口
 
-| `Zinecraft` 入口               | 类型                             | 职责                      |
-|------------------------------|--------------------------------|-------------------------|
-| `ITEMS`                      | `ItemCatalog`                  | 物品、翻译、模型元数据、燃料与堆肥       |
-| `BLOCKS`                     | `BlockCatalog`                 | 方块、方块物品、翻译、简单模型与默认掉落    |
-| `getBLOCK_ENTITIES()`        | `BlockEntityCatalog`           | 方块实体类型与有效方块绑定           |
-| `getSOUNDS()` / `getSONGS()` | `SoundCatalog` / `SongCatalog` | 声音、唱片物品与 Jukebox Song   |
-| `getCREATIVE_TABS()`         | `CreativeTabCatalog`           | 创造模式页及条目收集              |
-| `getENTITIES()`              | `EntityCatalog`                | 实体、Mob、属性、生成限制、生成蛋与自然生成 |
-| `getENCHANTMENTS()`          | `EnchantmentCatalog`           | 1.21.1 动态附魔及数据生成        |
-| `getSKILLS()`                | `SkillCatalog`                 | 技能物品、双语资料与 Ponder 元数据   |
-| `getWEAPONS()`               | `WeaponRegistry`               | 服务端动作、武器定义与物品解析器        |
-| `getBIOMES()`                | `BiomeCatalog`                 | 群系资源键与 bootstrap        |
-| `getDIMENSIONS()`            | `DimensionCatalog`             | 维度、维度类型与群系源             |
-| `getFEATURES()`              | `FeatureCatalog`               | 配置/放置地物与矿物参数            |
-| `getSTRUCTURES()`            | `StructureCatalog`             | 简易建筑、Jigsaw 聚落、唯一地标与结构集 |
-| `getRECIPES()`               | `RecipeCatalog`                | 配方数据生成回调                |
+| `Zinecraft` 入口        | 类型                   | 职责                                            |
+|-----------------------|----------------------|-----------------------------------------------|
+| `TRANSLATIONS`        | `TranslationCatalog` | 双语翻译与可直接创建 `Component` 的消息条目                  |
+| `ITEMS`               | `ItemCatalog`        | 物品、翻译、模型元数据、燃料与堆肥                             |
+| `BLOCKS`              | `BlockCatalog`       | 方块、方块物品、翻译、简单模型与默认掉落                          |
+| `getBLOCK_ENTITIES()` | `BlockEntityCatalog` | 方块实体类型与有效方块绑定                                 |
+| `SOUNDS`              | `SoundCatalog`       | 声音及由 `MusicDiscBuilder` 组合的唱片物品与 Jukebox Song |
+| `getCREATIVE_TABS()`  | `CreativeTabCatalog` | 创造模式页及条目收集                                    |
+| `getENTITIES()`       | `EntityCatalog`      | 实体、Mob、属性、生成限制、生成蛋与自然生成                       |
+| `getENCHANTMENTS()`   | `EnchantmentCatalog` | 1.21.1 动态附魔及数据生成                              |
+| `getSKILLS()`         | `SkillCatalog`       | 技能物品、双语资料与 Ponder 元数据                         |
+| `getWEAPONS()`        | `WeaponRegistry`     | 服务端动作、武器定义与物品解析器                              |
+| `getBIOMES()`         | `BiomeCatalog`       | 群系资源键与 bootstrap                              |
+| `getDIMENSIONS()`     | `DimensionCatalog`   | 维度、维度类型与群系源                                   |
+| `getFEATURES()`       | `FeatureCatalog`     | 配置/放置地物与矿物参数                                  |
+| `getSTRUCTURES()`     | `StructureCatalog`   | 简易建筑、Jigsaw 聚落、唯一地标与结构集                       |
+| `getRECIPES()`        | `RecipeCatalog`      | 配方数据生成回调                                      |
 
 ## Java 声明示例
 
 ```java
-DeferredItem<Item> dust = Zinecraft.ITEMS.builder("magic_dust", "魔法粉尘")
-    .enUs("Magic Dust")
-    .fuel(600)
-    .compost(0.3F)
-    .build();
+ItemBuilder<Item> dust = Zinecraft.ITEMS.builder(
+    "magic_dust", "魔法粉尘", "Magic Dust",
+    () -> new Item(new Item.Properties())
+);
 
-DeferredBlock<Block> machine = Zinecraft.BLOCKS
+MessageBuilder denied = Zinecraft.TRANSLATIONS.message(
+    "message.zinecraft.machine.denied",
+    "机器拒绝访问",
+    "Machine access denied"
+);
+player.displayClientMessage(denied.component(), true);
+
+BlockBuilder<Block> machine = Zinecraft.BLOCKS
     .builder("machine", "机器", () -> new Block(BlockBehaviour.Properties.of().strength(4.0F)))
     .enUs("Machine")
     .build();
@@ -41,6 +48,8 @@ OreEntry ore = Zinecraft.FEATURES.ore(
     8, 4, 32, 0.0F
 );
 ```
+
+`BlockCatalog.builder(...).build()` 直接返回 `BlockBuilder<T>`；该对象持有方块与可选方块物品注册结果。
 
 目录构造时注入其真实依赖；内容类通过显式静态字段和初始化入口声明内容，不依赖语言级对象初始化。`Zinecraft` 的 NeoForge
 构造入口创建目录并将延迟注册器接到模组事件总线，`commonSetup` 只处理必须在注册后执行的绑定与可选兼容层。

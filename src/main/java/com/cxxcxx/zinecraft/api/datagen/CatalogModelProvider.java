@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.api.datagen;
 
-import com.cxxcxx.zinecraft.api.block.BlockCatalog;
-import com.cxxcxx.zinecraft.api.item.ItemCatalog;
+import com.cxxcxx.zinecraft.api.registry.BlockCatalog;
+import com.cxxcxx.zinecraft.api.registry.ItemCatalog;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.data.CachedOutput;
@@ -43,22 +43,23 @@ public class CatalogModelProvider implements DataProvider {
 
     for (var entry : blocks.entries) {
       if (!entry.cubeModel) continue;
-      var block = entry.entry.block();
+      var block = entry.block();
       var model = ModelTemplates.CUBE_ALL.create(block.get(), TextureMapping.cube(block.get()), models::put);
       var state = MultiVariantGenerator.multiVariant(
           block.get(), Variant.variant().with(VariantProperties.MODEL, model)
       );
       states.put(block.get().builtInRegistryHolder().key().location(), state::get);
-      if (entry.entry.blockItem().isPresent()) {
+      if (entry.blockItem().isPresent()) {
         var itemModel = new JsonObject();
         itemModel.addProperty("parent", model.toString());
-        models.put(ModelLocationUtils.getModelLocation(entry.entry.blockItem().orElseThrow().get()), () -> itemModel);
+        models.put(ModelLocationUtils.getModelLocation(entry.blockItem().orElseThrow().get()), () -> itemModel);
       }
     }
     for (var entry : items.entries) {
+      if (entry.model == null) continue;
       entry.model.create(
-          ModelLocationUtils.getModelLocation(entry.item.get()),
-          TextureMapping.layer0(entry.item.get()),
+          ModelLocationUtils.getModelLocation(entry.getItem().get()),
+          TextureMapping.layer0(entry.getItem().get()),
           models::put
       );
     }

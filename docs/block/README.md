@@ -3,7 +3,7 @@
 `BlockCatalog` 将方块、可选 `BlockItem`、双语翻译、简单模型和默认掉落合并为一个 Java 声明。
 
 ```java
-public final BlockEntry<Block> orirockBlock = Zinecraft.BLOCKS
+public final BlockBuilder<Block> orirockBlock = Zinecraft.BLOCKS
     .builder("orirock_block", "源岩块",
         () -> new Block(BlockBehaviour.Properties.of()
         .strength(3.0F, 6.0F)
@@ -13,9 +13,9 @@ public final BlockEntry<Block> orirockBlock = Zinecraft.BLOCKS
 ```
 
 builder 默认掉落自身、生成简单立方体模型并注册 `BlockItem`。使用 `drop(item)` 指定掉落，或通过 `noLoot()`、
-`noCubeModel()`、`noBlockItem()` 关闭对应默认行为。`build()` 返回 `BlockEntry<T>`，可从同一个结果取得
-`block()`、`blockItem()` 和 `dropItem()`；后两者使用 `Optional` 表示声明中可能没有对应物品。`BlockEntry` 同时实现
-`Supplier<T>` 与 `ItemLike`，原有需要方块 supplier/物品的调用可直接使用 entry，需要原版实例时调用 `get()`。
+`noCubeModel()`、`noBlockItem()` 关闭对应默认行为。`build()` 返回同一个 `BlockBuilder<T>`，可从中取得
+`block()`、`blockItem()` 和 `dropItem()`；后两者使用 `Optional` 表示声明中可能没有对应物品。`BlockBuilder` 同时实现
+`Supplier<T>` 与 `ItemLike`，需要方块 supplier/物品的调用可直接使用 builder，需要原版实例时调用 `get()`。
 
 方块贴图路径：
 

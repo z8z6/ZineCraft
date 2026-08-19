@@ -1,6 +1,6 @@
 package com.cxxcxx.zinecraft.api.world.feature;
 
-import com.cxxcxx.zinecraft.api.block.BlockEntry;
+import com.cxxcxx.zinecraft.api.registry.builder.BlockBuilder;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
  * Groups the registrations and recipe metadata belonging to one material ore.
  */
 public record MaterialOre(
-    BlockEntry<? extends Block> block,
+    BlockBuilder<? extends Block> block,
     OreEntry feature,
     ItemLike drop,
     String cookingGroup

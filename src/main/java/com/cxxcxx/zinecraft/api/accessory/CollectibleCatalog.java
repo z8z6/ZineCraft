@@ -1,7 +1,8 @@
 package com.cxxcxx.zinecraft.api.accessory;
 
-import com.cxxcxx.zinecraft.api.item.ItemCatalog;
 import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
+import com.cxxcxx.zinecraft.api.registry.ItemCatalog;
+import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -64,17 +65,18 @@ public final class CollectibleCatalog {
     DeferredItem<CollectibleItem> item = items.builder(
             builder.path,
             builder.zhCn,
+            builder.enUs,
             () -> new CollectibleItem(
                 registeredSpec,
                 namespace,
                 seriesTranslationKey,
                 originalEffectLabelTranslationKey,
                 minecraftEffectLabelTranslationKey
-            )
+            ),
+            ModelTemplates.FLAT_ITEM,
+            false
         )
-        .enUs(builder.enUs)
-        .hideCreativeTab()
-        .build();
+        .getItem();
 
     registerTranslations(registeredSpec, originalEffectLines, descriptionLines);
     builder.spec = registeredSpec;
