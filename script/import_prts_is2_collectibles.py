@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Import all Phantom & Crimson Solitaire collectibles and their PRTS PNGs.
+"""Audit Phantom & Crimson Solitaire source data and import its PRTS PNGs.
 
 The textual fields come from the extracted Arknights game-data table. Images are
-downloaded unchanged from PRTS's asset host. The generated catalog is consumed by
-ModCollectibles at runtime and also drives the Curios relic tag and the source ledger.
+downloaded unchanged from PRTS's asset host. Runtime registration lives directly in
+ModCollectible.java; the generated JSON is an ignored audit snapshot only.
 """
 
 from __future__ import annotations
@@ -44,8 +44,8 @@ PRTS_IMAGE_ROOT = "https://torappu.prts.wiki/assets/roguelike_topic_itempic"
 USER_AGENT = "Zinecraft collectible importer/1.0 (+PRTS source ledger)"
 EXPECTED_COUNT = 245
 
-CATALOG_PATH = REPOSITORY_ROOT / (
-    "src/main/resources/zinecraft/collectibles/phantom_crimson_solitaire.json"
+AUDIT_CATALOG_PATH = REPOSITORY_ROOT / (
+    "build/prts-cache/phantom_crimson_solitaire.json"
 )
 TEXTURE_DIRECTORY = REPOSITORY_ROOT / "src/main/resources/assets/zinecraft/textures/item"
 CURIOS_TAG_PATH = REPOSITORY_ROOT / (
@@ -216,7 +216,7 @@ def english_name_to_path(name: str) -> str:
     slug = re.sub(r"_+", "_", re.sub(r"[^a-z0-9]+", "_", ascii_name)).strip("_")
     if not slug:
         raise ValueError(f"英文藏品名无法生成物品 ID：{name!r}")
-    return f"collectible_{slug}"
+    return slug
 
 
 def build_records(game_data: dict[str, Any], english_game_data: dict[str, Any]) -> list[ImportRecord]:
@@ -382,9 +382,9 @@ def stage_images(
 
 
 def load_previous_paths() -> dict[str, str]:
-    if not CATALOG_PATH.is_file():
+    if not AUDIT_CATALOG_PATH.is_file():
         return {}
-    catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    catalog = json.loads(AUDIT_CATALOG_PATH.read_text(encoding="utf-8"))
     previous_paths: dict[str, str] = {}
     for entry in catalog:
         source_id = entry.get("sourceId")
@@ -452,7 +452,7 @@ def write_source_ledger(
         "",
         "- 无条件的生命、攻击、防御、法抗、攻速和每秒回复按 PRTS 数值直接进入服务端运行时；职业限定效果在 Minecraft 中明确适配为“装备者”。",
         "- 希望、源石锭、招募、部署、关卡生命、节点和指定首领等规则保存为 `SourceRule`，逐字保留原始触发条件，供对应的集成战略子系统消费；在该子系统存在前不会伪装成幸运、经验或其他无关效果。",
-        "- 目录测试逐项读取 245 条 `originalEffectZhCn`，保证每条都能生成 `CombatStatBoost`、回复能力或 `SourceRule`，且不会回退到 `ArchiveOnly`。",
+        "- 245 个 Java Builder 声明逐项写明原效果、描述和最终 `CollectiblePower`，构建验证保证每件藏品都生成物品、翻译、模型和纹理引用。",
         "",
         "## L2 Library 页面",
         "",
@@ -489,7 +489,8 @@ def write_source_ledger(
     lines.extend(
         [
             "",
-            "脚本每次运行都会核对固定输入摘要、藏品总数、字段完整性、ID 唯一性、PNG 文件头和逐图 SHA-256。",
+            "脚本每次运行都会核对固定输入摘要、藏品总数、字段完整性、ID 唯一性、PNG 文件头和逐图 SHA-256；JSON 仅写入",
+            "`build/prts-cache` 作为审计快照，运行时注册以 `ModCollectible.java` 为唯一数据源。",
             "",
             "## 权利说明",
             "",
@@ -586,11 +587,11 @@ def main() -> int:
         staging_root = Path(temporary).resolve()
         outputs: list[tuple[Path, Path]] = []
 
-        staged_catalog = staged_path(staging_root, CATALOG_PATH)
+        staged_catalog = staged_path(staging_root, AUDIT_CATALOG_PATH)
         write_json(staged_catalog, [record.to_json() for record in records])
         # Parse the staged JSON once more so serialization failures cannot publish partial metadata.
         json.loads(staged_catalog.read_text(encoding="utf-8"))
-        outputs.append((staged_catalog, CATALOG_PATH))
+        outputs.append((staged_catalog, AUDIT_CATALOG_PATH))
 
         staged_tag = staged_path(staging_root, CURIOS_TAG_PATH)
         write_json(staged_tag, {"replace": False, "values": [f"zinecraft:{r.path}" for r in records]})

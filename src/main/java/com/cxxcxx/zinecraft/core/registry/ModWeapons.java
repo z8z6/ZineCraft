@@ -1,7 +1,8 @@
 package com.cxxcxx.zinecraft.core.registry;
 
+import com.cxxcxx.zinecraft.api.combat.CombatDamageProfile;
+import com.cxxcxx.zinecraft.api.combat.CombatDamageType;
 import com.cxxcxx.zinecraft.api.registry.builder.ItemBuilder;
-import com.cxxcxx.zinecraft.api.util.CollectionSupport;
 import com.cxxcxx.zinecraft.api.weapon.*;
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
 import com.cxxcxx.zinecraft.api.weapon.action.firearm.FirearmFireAction;
@@ -13,7 +14,6 @@ import com.cxxcxx.zinecraft.api.weapon.item.ActionWeaponItem;
 import com.cxxcxx.zinecraft.api.weapon.item.FirearmItem;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +24,7 @@ import net.minecraft.world.item.Tiers;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public final class ModWeapons {
@@ -53,7 +54,8 @@ public final class ModWeapons {
       .getItem();
   private static final ResourceLocation LIGHT_ATTACK_ID = id("light_attack");
   public static final MeleeAttackAction LIGHT_ATTACK = new MeleeAttackAction(
-      LIGHT_ATTACK_ID, 7, LIGHT_ATTACK_DURATION, 7.0F, 3.25, 100.0
+      LIGHT_ATTACK_ID, 7, LIGHT_ATTACK_DURATION,
+      CombatDamageProfile.flat(7.0, CombatDamageType.PHYSICAL), 3.25, 100.0
   );
   private static final ResourceLocation FIRE_ID = id("test_rifle_fire");
   private static final ResourceLocation RELOAD_ID = id("test_rifle_reload");
@@ -62,7 +64,9 @@ public final class ModWeapons {
   );
   private static final ResourceLocation TOGGLE_AIM_ID = id("test_rifle_toggle_aim");
   private static final ResourceLocation ARCANE_CAST_ID = id("test_staff_arcane_cast");
-  public static final FirearmFireAction FIRE = new FirearmFireAction(FIRE_ID, 2, 10, 6.0F, 48.0);
+  public static final FirearmFireAction FIRE = new FirearmFireAction(
+      FIRE_ID, 2, 10, CombatDamageProfile.flat(6.0, CombatDamageType.PHYSICAL), 48.0
+  );
   private static final ResourceLocation HEAL_CAST_ID = id("test_staff_heal_cast");
   public static final ToggleAimAction TOGGLE_AIM = new ToggleAimAction(TOGGLE_AIM_ID, 6);
   public static final CastSkillAction ARCANE_CAST = new CastSkillAction(
@@ -110,8 +114,8 @@ public final class ModWeapons {
   private static WeaponDefinition createSwordDefinition() {
     return new WeaponDefinition(
         id("test_sword"),
-        CollectionSupport.mapOf(Pair.of(WeaponInput.PRIMARY, LIGHT_ATTACK_ID)),
-        CollectionSupport.mapOf(Pair.of(
+        Map.of(WeaponInput.PRIMARY, LIGHT_ATTACK_ID),
+        Map.of(
             LIGHT_ATTACK_ID,
             new WeaponPresentation(
                 PLAYER_LIGHT_ATTACK,
@@ -120,7 +124,7 @@ public final class ModWeapons {
                 List.of(new TimedWeaponSound(TEST_SWORD_SWING, 4)),
                 LIGHT_ATTACK_DURATION
             )
-        )),
+        ),
         new WeaponMetadata("item.zinecraft.test_sword")
     );
   }
@@ -128,29 +132,29 @@ public final class ModWeapons {
   private static WeaponDefinition createRifleDefinition() {
     return new WeaponDefinition(
         id("test_rifle"),
-        CollectionSupport.mapOf(
-            Pair.of(WeaponInput.PRIMARY, FIRE_ID),
-            Pair.of(WeaponInput.SECONDARY, TOGGLE_AIM_ID),
-            Pair.of(WeaponInput.RELOAD, RELOAD_ID)
+        Map.of(
+            WeaponInput.PRIMARY, FIRE_ID,
+            WeaponInput.SECONDARY, TOGGLE_AIM_ID,
+            WeaponInput.RELOAD, RELOAD_ID
         ),
-        CollectionSupport.mapOf(
-            Pair.of(FIRE_ID, new WeaponPresentation(
+        Map.of(
+            FIRE_ID, new WeaponPresentation(
                 id("animation/player/rifle_fire"),
                 id("animation/weapon/test_rifle_fire"),
                 List.of(new TimedWeaponVfx(RIFLE_MUZZLE, 2), new TimedWeaponVfx(RIFLE_IMPACT, 3)),
                 List.of(new TimedWeaponSound(RIFLE_FIRE_SOUND, 2)),
                 10
-            )),
-            Pair.of(RELOAD_ID, new WeaponPresentation(
+            ),
+            RELOAD_ID, new WeaponPresentation(
                 id("animation/player/rifle_reload"),
                 id("animation/weapon/test_rifle_reload"),
                 List.of(),
                 List.of(new TimedWeaponSound(RIFLE_RELOAD_SOUND, 24)),
                 32
-            )),
-            Pair.of(TOGGLE_AIM_ID, new WeaponPresentation(
+            ),
+            TOGGLE_AIM_ID, new WeaponPresentation(
                 id("animation/player/rifle_aim"), null, List.of(), List.of(), 6
-            ))
+            )
         ),
         new WeaponMetadata("item.zinecraft.test_rifle")
     );
@@ -159,25 +163,25 @@ public final class ModWeapons {
   private static WeaponDefinition createStaffDefinition() {
     return new WeaponDefinition(
         id("test_staff"),
-        CollectionSupport.mapOf(
-            Pair.of(WeaponInput.PRIMARY, ARCANE_CAST_ID),
-            Pair.of(WeaponInput.SECONDARY, HEAL_CAST_ID)
+        Map.of(
+            WeaponInput.PRIMARY, ARCANE_CAST_ID,
+            WeaponInput.SECONDARY, HEAL_CAST_ID
         ),
-        CollectionSupport.mapOf(
-            Pair.of(ARCANE_CAST_ID, new WeaponPresentation(
+        Map.of(
+            ARCANE_CAST_ID, new WeaponPresentation(
                 id("animation/player/staff_cast"),
                 id("animation/weapon/test_staff_cast"),
                 List.of(new TimedWeaponVfx(STAFF_ARCANE_CAST, 5), new TimedWeaponVfx(STAFF_ARCANE_IMPACT, 6)),
                 List.of(new TimedWeaponSound(STAFF_CAST_SOUND, 5)),
                 18
-            )),
-            Pair.of(HEAL_CAST_ID, new WeaponPresentation(
+            ),
+            HEAL_CAST_ID, new WeaponPresentation(
                 id("animation/player/staff_heal"),
                 null,
                 List.of(new TimedWeaponVfx(STAFF_HEAL, 10)),
                 List.of(new TimedWeaponSound(STAFF_CAST_SOUND, 10)),
                 28
-            ))
+            )
         ),
         new WeaponMetadata("item.zinecraft.test_staff")
     );

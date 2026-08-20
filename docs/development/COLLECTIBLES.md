@@ -4,25 +4,25 @@
 
 ## 先了解藏品文件
 
-| 内容            | 文件                                                                          |
-|---------------|-----------------------------------------------------------------------------|
-| 245 件藏品目录     | `src/main/resources/zinecraft/collectibles/phantom_crimson_solitaire.json`  |
-| PRTS/游戏数据导入脚本 | `script/import_prts_is2_collectibles.py`                                    |
-| 特殊效果覆盖        | `src/main/java/com/cxxcxx/zinecraft/core/item/ModCollectibles.java`         |
-| 自动识别普通效果      | `src/main/java/com/cxxcxx/zinecraft/core/item/CollectiblePowerAdapter.java` |
-| 藏品图片          | `src/main/resources/assets/zinecraft/textures/item/`                        |
-| 图片摘要清单        | `script/data/prts_is2_image_sha256.json`                                    |
-| Curios 藏品标签   | `src/main/resources/data/curios/tags/item/relic.json`                       |
-| 来源记录          | `docs/item/PRTS_COLLECTIBLES.md`                                            |
+| 内容            | 文件                                                                                |
+|---------------|-----------------------------------------------------------------------------------|
+| 245 件藏品声明     | `src/main/java/com/cxxcxx/zinecraft/core/item/ModCollectible.java`                |
+| PRTS/游戏数据导入脚本 | `script/import_prts_is2_collectibles.py`                                          |
+| Builder API   | `src/main/java/com/cxxcxx/zinecraft/api/registry/builder/CollectibleBuilder.java` |
+| 可组合效果模型       | `src/main/java/com/cxxcxx/zinecraft/api/collection/CollectiblePower.java`         |
+| 藏品图片          | `src/main/resources/assets/zinecraft/textures/item/`                              |
+| 图片摘要清单        | `script/data/prts_is2_image_sha256.json`                                          |
+| Curios 藏品标签   | `src/main/resources/data/curios/tags/item/relic.json`                             |
+| 来源记录          | `docs/item/PRTS_COLLECTIBLES.md`                                                  |
 
 藏品只要装备在任意 Curios 饰品槽中就会生效，不需要限定在名为 `relic` 的槽位。
 
 ## 1. 找到目标藏品
 
-打开：
+打开 Java 藏品声明：
 
 ```text
-src/main/resources/zinecraft/collectibles/phantom_crimson_solitaire.json
+src/main/java/com/cxxcxx/zinecraft/core/item/ModCollectible.java
 ```
 
 可以按编号、中文名或来源 ID 搜索。例如 No.097“钝爪-百战”：
@@ -33,39 +33,41 @@ src/main/resources/zinecraft/collectibles/phantom_crimson_solitaire.json
 rogue_1_relic_p05
 ```
 
-每条数据类似：
+每件藏品与普通物品一样使用 Builder 直接注册，例如：
 
-```json
-{
-  "path": "collectible_blunt_claws_mastery",
-  "orderId": "097",
-  "sourceId": "rogue_1_relic_p05",
-  "iconId": "rogue_1_relic_p05",
-  "zhCn": "钝爪-百战",
-  "enUs": "钝爪-百战",
-  "originalEffectZhCn": "……",
-  "originalEffectEnUs": "……",
-  "descriptionZhCn": "……",
-  "descriptionEnUs": "……",
-  "rarity": "RARE"
-}
+```java
+public static final CollectibleBuilder BLUNT_CLAWS_MASTERY = collectible(
+    "blunt_claws_mastery",
+    "097",
+    "钝爪-百战",
+    "所有我方单位攻击力+50%，防御力+50%",
+    "...",
+    "...",
+    "...",
+    effect(
+        "攻击力+50%，防御力+50%",
+        "+50% ATK and +50% DEF",
+        statSet(percent(CombatStat.ATTACK, 0.5), percent(CombatStat.DEFENSE, 0.5))
+    ),
+    Rarity.RARE
+);
 ```
 
 字段含义：
 
-| 字段                | 用途                              | 是否可以随意改          |
-|-------------------|---------------------------------|------------------|
-| `path`            | Minecraft 物品 ID，由官方英文名转成小写下划线格式 | 一般不要手改；重新导入时自动生成 |
-| `orderId`         | PRTS 档案编号                       | 不可以              |
-| `sourceId`        | 游戏数据 ID                         | 不可以              |
-| `iconId`          | PRTS 图片文件 ID                    | 不可以，除非上游资料改变     |
-| `zhCn`            | 中文名                             | 只按资料原文修正         |
-| `enUs`            | 英文服官方显示名                        | 由英文游戏数据导入，不要自行翻译 |
-| `originalEffect*` | 明日方舟原效果                         | 只按资料原文修正         |
-| `description*`    | 明日方舟描述                          | 只按资料原文修正         |
-| `rarity`          | Minecraft 稀有度                   | 应与导入映射保持一致       |
+| 字段                | 用途                                                   | 是否可以随意改          |
+|-------------------|------------------------------------------------------|------------------|
+| `path`            | Minecraft 物品 ID，由官方英文名转成小写下划线格式，不带 `collectible_` 前缀 | 一般不要手改；重新导入时自动生成 |
+| `orderId`         | PRTS 档案编号                                            | 不可以              |
+| `zhCn`            | 中文名                                                  | 只按资料原文修正         |
+| 英文物品名             | 由 `TranslationCatalog.toDisplayName(path)` 自动生成      | 不在藏品声明中重复填写      |
+| `originalEffect*` | 明日方舟原效果                                              | 只按资料原文修正         |
+| `description*`    | 明日方舟描述                                               | 只按资料原文修正         |
+| `Rarity`          | Minecraft 稀有度                                        | 应与导入映射保持一致       |
 
-目录由导入脚本生成。直接修改 JSON 适合临时验证；正式修正应该修改上游输入或导入规则，再重新运行脚本。
+Java 声明是运行时唯一数据源。来源 ID 与图片 ID 保存在来源记录和图片摘要清单中，不参与运行时注册。
+
+`CollectibleSpec` 已移除。`CollectibleItem` 直接读取 build 后锁定的 `CollectibleBuilder`，避免重复复制名称、说明、稀有度和提示行数。
 
 ## 2. 重新导入全部藏品
 
@@ -81,7 +83,9 @@ python script/import_prts_is2_collectibles.py --skip-images
 - 检查 245 件藏品是否齐全。
 - 检查 ID 和必填字段。
 - 检查现有 PNG 与 SHA-256 清单。
-- 重建藏品目录、Curios 标签和来源记录。
+- 在 `build/prts-cache` 写入审计快照，并重建 Curios 标签和来源记录。
+
+审计脚本不会覆盖 Java 声明。确认上游文本变化后，需要人工审查差异并同步修改 `ModCollectible.java`。
 
 如果你有经过核对的本地游戏数据文件：
 
@@ -96,31 +100,40 @@ python script/import_prts_is2_collectibles.py `
 
 ## 3. 修改 Minecraft 适配效果
 
-原效果文字不能为了 Minecraft 玩法而改写。Minecraft 适配效果单独定义在：
+原效果文字不能为了 Minecraft 玩法而改写。Minecraft 适配效果与对应藏品一起定义在：
 
 ```text
-src/main/java/com/cxxcxx/zinecraft/core/item/ModCollectibles.java
+src/main/java/com/cxxcxx/zinecraft/core/item/ModCollectible.java
 ```
 
-搜索：
+搜索藏品常量名或物品路径，例如：
 
 ```text
-createPowerOverrides()
+BLUNT_CLAWS_MASTERY
 ```
 
-覆盖表使用 `sourceId`，不是 Minecraft `path`。
+效果参数必须显式传给该藏品的 `collectible(...)` 声明。
+
+`CollectiblePower` 是可组合值：同一藏品可以同时包含战斗属性、原版属性、持续回复和探索资源。
+探索资源字段包括希望、目标生命、临时目标生命、源石锭、编队上限、部署上限、初始部署费用、钥匙、骰子、灯火、指挥经验倍率，以及按节点或战斗触发的资源字段。例如：
+
+```java
+explorationRule(
+    "立即获得目标生命+2，希望+1",
+    power -> power.objectiveLife(2).hope(1)
+)
+```
+
+尚未有对应 Minecraft/探索运行时的复杂规则继续保存在 `sourceRules`，不能删除或根据文字自行推断玩法实现。
 
 ### 示例：攻击力增加 15%
 
 ```java
-Map.entry(
-    "rogue_1_relic_a14",
-    statPercent(
-        "攻击力+15%",
-        "+15% ATK",
-        CombatStat.ATTACK,
-        0.15
-    )
+statPercent(
+    "攻击力+15%",
+    "+15% ATK",
+    CombatStat.ATTACK,
+    0.15
 )
 ```
 
@@ -135,14 +148,11 @@ Map.entry(
 ### 示例：攻击速度增加 30 点
 
 ```java
-Map.entry(
-    "rogue_1_relic_example",
-    statFlat(
-        "攻击速度+30",
-        "+30 ASPD",
-        CombatStat.ATTACK_SPEED,
-        30.0
-    )
+statFlat(
+    "攻击速度+30",
+    "+30 ASPD",
+    CombatStat.ATTACK_SPEED,
+    30.0
 )
 ```
 
@@ -151,11 +161,10 @@ Map.entry(
 ### 示例：同时增加攻击和防御
 
 ```java
-Map.entry(
-    "rogue_1_relic_example",
-    stats(
-        "攻击力+20%，防御力+10%",
-        "+20% ATK and +10% DEF",
+effect(
+    "攻击力+20%，防御力+10%",
+    "+20% ATK and +10% DEF",
+    statSet(
         percent(CombatStat.ATTACK, 0.20),
         percent(CombatStat.DEFENSE, 0.10)
     )
@@ -165,13 +174,10 @@ Map.entry(
 ### 示例：每秒回复最大生命值 1%
 
 ```java
-Map.entry(
-    "rogue_1_relic_example",
-    new PowerOverride(
-        "每秒回复1%的最大生命值",
-        "Recover 1% of maximum HP every second",
-        new CollectiblePower.Regeneration(0.01F, 20)
-    )
+effect(
+    "每秒回复1%的最大生命值",
+    "Recover 1% of maximum HP every second",
+    new CollectiblePower.Regeneration(0.01F, 20)
 )
 ```
 
@@ -189,37 +195,19 @@ Map.entry(
 
 明日方舟机制只用于解释和换算原效果，最终值会回到原版属性，因此 L2 原有“能力”面板和其他模组能够看到。
 
-## 4. 让普通文字效果自动识别
+## 4. 声明尚未实现的原作规则
 
-没有专用覆盖的藏品会经过：
-
-```text
-src/main/java/com/cxxcxx/zinecraft/core/item/CollectiblePowerAdapter.java
-```
-
-它能够识别常见无条件效果，例如：
-
-```text
-攻击力+15%
-防御力+25%
-最大生命值+20%
-法术抗性+10
-攻击速度+30
-每秒回复1%的最大生命值
-```
-
-带有“攻击后”“技能开启时”“每有一名干员”等条件的效果不会被强行近似为原版属性，而会保留为等待对应系统触发的来源规则。
-
-如果新增一种无法自动识别的效果，优先在 `powerOverrides` 为具体藏品添加明确适配。不要为了省事把闪避、部署费用或招募规则伪装成幸运、经验或移动速度。
+带有“攻击后”“技能开启时”“每有一名干员”等条件且尚无运行时系统的效果，应在该藏品声明中显式使用
+`sourceRule("原效果")`。不要把闪避、部署费用或招募规则伪装成幸运、经验或移动速度。
 
 ## 5. 修改稀有度
 
-目录中的可用值：
+Java 声明中的可用值：
 
 ```text
-UNCOMMON
-RARE
-EPIC
+Rarity.UNCOMMON
+Rarity.RARE
+Rarity.EPIC
 ```
 
 导入脚本当前把游戏数据映射为：
@@ -230,7 +218,7 @@ EPIC
 | `RARE`       | `RARE`        |
 | `SUPER_RARE` | `EPIC`        |
 
-如果只是临时测试，可以修改单条 JSON 的 `rarity`。正式修改必须调整导入脚本中的 `RARITY_MAP`，然后重新导入；否则下次运行脚本会恢复。
+修改对应 Builder 声明的 `Rarity` 即可；仍应遵循导入映射，不要根据效果强弱自行改变 PRTS 档案稀有度。
 
 不要根据效果强弱自行改变 PRTS 档案稀有度。若项目确实需要独立的 Minecraft 稀有度规则，应在文档中明确它是玩法适配。
 
@@ -245,7 +233,7 @@ src/main/resources/assets/zinecraft/textures/item/<path>.png
 例如：
 
 ```text
-src/main/resources/assets/zinecraft/textures/item/collectible_blunt_claws_mastery.png
+src/main/resources/assets/zinecraft/textures/item/blunt_claws_mastery.png
 ```
 
 图片来自 PRTS 原始资源，不生成、不重绘、不使用占位图。
@@ -274,14 +262,15 @@ python script/import_prts_is2_collectibles.py `
 2. 使用 `/give` 获得目标藏品：
 
    ```mcfunction
-   /give @s zinecraft:collectible_blunt_claws_mastery
+   /give @s zinecraft:blunt_claws_mastery
    ```
 
 3. 打开物品栏，进入 L2/Curios“饰品”页。
 4. 把藏品放入任意饰品槽。
 5. 打开 L2 原有“能力”页。
-6. 记录装备前后的最终原版属性。
-7. 把藏品移出饰品栏，确认属性恢复。
+6. 在属性列表旁确认“藏品效果”面板显示希望、目标生命、源石锭、编队/部署上限等结构化探索字段。
+7. 记录装备前后的最终原版属性。
+8. 把藏品移出饰品栏，确认属性与藏品效果汇总恢复。
 
 ### 示例检查
 
@@ -302,30 +291,29 @@ python script/import_prts_is2_collectibles.py `
 
 ## 8. 生成和验证
 
-修改目录、图片或效果后依次运行：
+修改 Java 声明、图片或效果后依次运行：
 
 ```powershell
-python script/import_prts_is2_collectibles.py --skip-images
 .\gradlew.bat test
 .\gradlew.bat runData
 .\gradlew.bat build
 .\gradlew.bat runClient
 ```
 
-如果只是修改 `powerOverrides`，可以不重新导入目录，但仍要运行 `test` 和 `build`。
+只有核对上游游戏数据或 PNG 时才需要运行导入审计脚本。
 
 ## 常见错误
 
-| 现象           | 处理方法                                |
-|--------------|-------------------------------------|
-| 修改 JSON 后又恢复 | 目录由导入脚本生成，应修改上游数据或导入规则              |
-| 藏品无法放入饰品栏    | 检查 `curios:relic` 标签是否包含该物品         |
-| 装备后属性面板没变化   | 确认使用 `CombatStatBoost`，重新装备并检查原版能力页 |
-| 攻速增长异常       | `+30` 应写 `30.0`，不是 `0.30`           |
-| 回复在客户端看起来跳动  | 确认效果由服务端结算，没有同时添加客户端治疗              |
-| 图片摘要不匹配      | 对比 PRTS 原图；未确认上游变化时不要更新摘要           |
-| 条件效果被错误常驻    | 删除错误属性适配，改为具体触发或 `SourceRule`       |
-| 移除藏品后属性不恢复   | 检查修改是否通过 Curios 属性修正，而不是永久写入玩家数据    |
+| 现象              | 处理方法                                  |
+|-----------------|---------------------------------------|
+| Java 声明与上游资料不一致 | 运行导入审计脚本，对照 `build/prts-cache` 快照人工修正 |
+| 藏品无法放入饰品栏       | 检查 `curios:relic` 标签是否包含该物品           |
+| 装备后属性面板没变化      | 确认使用 `CombatStatBoost`，重新装备并检查原版能力页   |
+| 攻速增长异常          | `+30` 应写 `30.0`，不是 `0.30`             |
+| 回复在客户端看起来跳动     | 确认效果由服务端结算，没有同时添加客户端治疗                |
+| 图片摘要不匹配         | 对比 PRTS 原图；未确认上游变化时不要更新摘要             |
+| 条件效果被错误常驻       | 删除错误属性适配，改为具体触发或 `SourceRule`         |
+| 移除藏品后属性不恢复      | 检查修改是否通过 Curios 属性修正，而不是永久写入玩家数据      |
 
 ## 完成检查
 

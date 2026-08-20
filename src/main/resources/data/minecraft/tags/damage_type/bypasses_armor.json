@@ -3,6 +3,11 @@
   "values": [
     "zinecraft:physical",
     "zinecraft:arts",
+    "zinecraft:magic",
+    "zinecraft:fire",
+    "zinecraft:ice",
+    "zinecraft:lightning",
+    "zinecraft:poison",
     "zinecraft:true"
   ]
 }

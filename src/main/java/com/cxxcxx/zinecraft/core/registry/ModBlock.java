@@ -41,6 +41,11 @@ public final class ModBlock {
       "星门拱体不完整，无法建立事件视界",
       "The stargate arch is incomplete and cannot form an event horizon"
   );
+  public static final MessageBuilder STARGATE_TERRA_ONLY_MESSAGE = message(
+      "stargate.terra_only",
+      "控制器拒绝访问：星门只能在泰拉维度激活",
+      "Access denied: the stargate can only be activated in Terra"
+  );
 
   public static final BlockBuilder<Block> AEGIR_ABYSSAL_SLATE = block(
       "aegir_abyssal_slate", "阿戈尔深渊岩板", Blocks.DARK_PRISMARINE

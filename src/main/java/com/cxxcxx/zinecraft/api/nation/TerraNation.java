@@ -1,7 +1,8 @@
 package com.cxxcxx.zinecraft.api.nation;
 
-import java.util.Arrays;
-import java.util.List;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
 
 public enum TerraNation {
   AEGIR("aegir", "阿戈尔", "Aegir"),
@@ -24,19 +25,38 @@ public enum TerraNation {
   YAN("yan", "炎", "Yan"),
   IBERIA("iberia", "伊比利亚", "Iberia");
 
+  private static final List<TerraNation> ENTRIES = List.of(values());
+  private static final Map<String, TerraNation> BY_ID = indexById();
   public static final Access ACCESS = new Access();
   private final String id;
   private final String zhCn;
   private final String enUs;
 
   TerraNation(String id, String zhCn, String enUs) {
-    this.id = id;
-    this.zhCn = zhCn;
-    this.enUs = enUs;
+    this.id = requireText(id, "国家 ID");
+    this.zhCn = requireText(zhCn, "国家中文名");
+    this.enUs = requireText(enUs, "国家英文名");
   }
 
+  /**
+   * @return 按枚举声明顺序排列的不可变十九国目录。
+   */
+  public static List<TerraNation> entries() {
+    return ENTRIES;
+  }
+
+  /** 保留旧调用名称；新代码优先使用 {@link #entries()}。 */
   public static List<TerraNation> getEntries() {
-    return List.of(values());
+    return entries();
+  }
+
+  public static Optional<TerraNation> findById(String id) {
+    if (id == null) return Optional.empty();
+    return Optional.ofNullable(BY_ID.get(id));
+  }
+
+  public static TerraNation requireById(String id) {
+    return findById(id).orElseThrow(() -> new IllegalArgumentException("未知泰拉国家 ID：" + id));
   }
 
   public String getId() {
@@ -51,9 +71,31 @@ public enum TerraNation {
     return enUs;
   }
 
+  private static Map<String, TerraNation> indexById() {
+    Map<String, TerraNation> nations = new LinkedHashMap<>();
+    for (TerraNation nation : values()) {
+      TerraNation previous = nations.put(nation.id, nation);
+      if (previous != null) throw new IllegalStateException("泰拉国家 ID 重复：" + nation.id);
+    }
+    return Collections.unmodifiableMap(nations);
+  }
+
+  private static String requireText(String value, String field) {
+    String text = Objects.requireNonNull(value, field + "不能为空").strip();
+    if (text.isEmpty()) throw new IllegalArgumentException(field + "不能为空");
+    return text;
+  }
+
   public static final class Access {
+    private Access() {
+    }
+
+    /**
+     * 兼容旧 API；无法识别时返回 {@code null}。
+     */
+    @Nullable
     public TerraNation byId(String id) {
-      return Arrays.stream(values()).filter(nation -> nation.id.equals(id)).findFirst().orElse(null);
+      return findById(id).orElse(null);
     }
   }
 }

@@ -1,8 +1,6 @@
 package com.cxxcxx.zinecraft.api.weapon.action.melee;
 
-import com.cxxcxx.zinecraft.api.combat.CombatDamageType;
-import com.cxxcxx.zinecraft.api.combat.CombatRequest;
-import com.cxxcxx.zinecraft.api.combat.CombatService;
+import com.cxxcxx.zinecraft.api.combat.*;
 import com.cxxcxx.zinecraft.api.weapon.action.ActionPhase;
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponAction;
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
@@ -17,22 +15,30 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
-public final class MeleeAttackAction implements WeaponAction {
+public final class MeleeAttackAction implements WeaponAction, CombatDamageProvider {
   @NotNull
   private final ResourceLocation id;
   private final int hitTick;
   private final int durationTicks;
-  private final float damage;
+  private final CombatDamageProfile damage;
   private final double range;
   private final double arcDegrees;
 
-  public MeleeAttackAction(@NotNull ResourceLocation id, int hitTick, int durationTicks, float damage, double range, double arcDegrees) {
+  public MeleeAttackAction(
+      @NotNull ResourceLocation id,
+      int hitTick,
+      int durationTicks,
+      CombatDamageProfile damage,
+      double range,
+      double arcDegrees
+  ) {
     super();
     this.id = id;
     this.hitTick = hitTick;
     this.durationTicks = durationTicks;
-    this.damage = damage;
+    this.damage = Objects.requireNonNull(damage, "近战伤害描述不能为空");
     this.range = range;
     this.arcDegrees = arcDegrees;
     int i = this.durationTicks;
@@ -43,10 +49,8 @@ public final class MeleeAttackAction implements WeaponAction {
       throw new IllegalArgumentException(string3.toString());
     }
 
-    if (!(this.damage > 0.0F)) {
-      j = 0;
-      String string2 = "近战伤害必须大于 0";
-      throw new IllegalArgumentException(string2.toString());
+    if (this.damage.basis() != CombatDamageBasis.FLAT) {
+      throw new IllegalArgumentException("近战动作必须声明固定基础攻击力");
     }
 
     if (!(this.range > 0.0)) {
@@ -67,6 +71,11 @@ public final class MeleeAttackAction implements WeaponAction {
   @Override
   public ResourceLocation getId() {
     return this.id;
+  }
+
+  @Override
+  public List<CombatDamageProfile> damageProfiles() {
+    return List.of(damage);
   }
 
   @Override
@@ -133,12 +142,15 @@ public final class MeleeAttackAction implements WeaponAction {
       ServerPlayer serverPlayer = this.context.getPlayer();
       List<LivingEntity> list = MeleeHitboxService.INSTANCE.findTargets(serverPlayer, MeleeAttackAction.this.range, MeleeAttackAction.this.arcDegrees);
       AttributeInstance attributeInstance = serverPlayer.getAttribute(Attributes.ATTACK_DAMAGE);
-      float f = MeleeDamage.resolveActionMeleeDamage(MeleeAttackAction.this.damage, attributeInstance != null ? attributeInstance.getValue() : null);
+      float f = MeleeDamage.resolveActionMeleeDamage(
+          (float) MeleeAttackAction.this.damage.amount(),
+          attributeInstance != null ? attributeInstance.getValue() : null
+      );
       boolean bl = false;
 
       for (LivingEntity livingEntity : list) {
         bl = CombatService.INSTANCE.damageFromResolvedAttack(
-            serverPlayer, livingEntity, CombatDamageType.PHYSICAL, f, CombatRequest.DEFAULT
+            serverPlayer, livingEntity, MeleeAttackAction.this.damage.type(), f, CombatRequest.DEFAULT
         ) || bl;
       }
 

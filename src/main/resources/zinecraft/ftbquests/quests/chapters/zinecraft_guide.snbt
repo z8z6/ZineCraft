@@ -20,8 +20,8 @@
 		{
 			dependencies: ["1000000000000001"]
 			id: "1000000000000002"
-			icon: { id: "minecraft:snow_block" }
-			tasks: [{ biome: "minecraft:snowy_plains", id: "1100000000000002", type: "biome" }]
+			icon: { id: "zinecraft:sami_frost_moss" }
+			tasks: [{ biome: "zinecraft:sami_frozen_forest", id: "1100000000000002", type: "biome" }]
 			x: 0.0d
 			y: 2.0d
 		}
@@ -33,7 +33,7 @@
 			size: 2.0d
 			tasks: [
 				{ id: "1100000000000004", item: { count: 1, id: "zinecraft:protocol_originium" }, type: "item" }
-				{ dimension: "zinecraft:terra", id: "1100000000000003", type: "dimension" }
+				{ dimension: "minecraft:overworld", id: "1100000000000003", type: "dimension" }
 			]
 			x: 0.0d
 			y: 4.0d

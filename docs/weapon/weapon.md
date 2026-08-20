@@ -43,7 +43,11 @@ Zinecraft 的 Weapon Runtime 是服务端权威的 Java 动作系统，支持项
 
 ```java
 ResourceLocation actionId = Zinecraft.id("example_attack");
-WeaponAction action = new MeleeAttackAction(actionId, 7, 20, 7.0F, 3.25, 100.0);
+WeaponAction action = new MeleeAttackAction(
+    actionId, 7, 20,
+    CombatDamageProfile.flat(7.0, CombatDamageType.PHYSICAL),
+    3.25, 100.0
+);
 Zinecraft.WEAPONS.registerAction(action);
 
 WeaponDefinition definition = new WeaponDefinition(

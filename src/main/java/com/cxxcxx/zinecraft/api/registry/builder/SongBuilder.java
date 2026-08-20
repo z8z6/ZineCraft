@@ -38,16 +38,6 @@ public class SongBuilder extends SoundBuilder {
   }
 
   /**
-   * 生成点唱机歌曲描述使用的翻译键。
-   *
-   * @return 完整翻译键
-   */
-  @Override
-  public String transKey() {
-    return "jukebox_song." + resourceKey().getNamespace() + "." + path.replace('.', '_');
-  }
-
-  /**
    * 校验红石信号并登记歌曲对应的声音事件。
    *
    * @return 当前构建器

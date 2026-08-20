@@ -47,6 +47,10 @@ A = 攻击力 × 攻击倍率 + 附加攻击力
 
 1. 武器只声明基础攻击力、伤害类型和可选 `CombatRequest`（倍率、附加攻击、穿透、最终倍率）。
 2. 服务器命中后调用 `CombatService.damage`；治疗调用 `CombatService.heal`。
+   武器动作和技能声明通过 `CombatDamageProvider.damageProfiles()` 公开统一的多段 `CombatDamageProfile` 列表；固定武器伤害使用
+   `FLAT`，技能百分比伤害使用 `ATTACK_MULTIPLIER`，不直接造成伤害的内容返回空列表。
+   每段伤害拥有独立类型；物理伤害走防御通道，魔法、法术、火焰、冰霜、雷电和毒素伤害走法抗通道，真实伤害不减免。
+   命中结算可将完整列表传给 `CombatService.damage(attacker, target, profiles)`，服务会按顺序独立结算每一段。
 3. 攻击冷却通过 `CombatService.attackIntervalSeconds` 计算；整数 tick 动作通过 `CombatService.actionTiming` 缩放命中/施法
    tick 和总时长。禁止把“攻击速度+N”解释为百分比。
 4. 藏品用 `CombatStatBoost` / `CombatStatSet` 声明修正。最大生命、防御和法抗会桥接到实体属性；攻击与攻速由战斗服务读取，避免重复叠加。

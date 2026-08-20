@@ -1,7 +1,9 @@
 # 角色技能物品与 Ponder
 
-在 `src/main/java/com/cxxcxx/zinecraft/core/skill/ModSkills.java` 通过 `Zinecraft.INSTANCE.getSKILLS().register(...)`
-声明技能。目录创建不可堆叠技能物品、双语名称/tooltip 和模型元数据，并校验初始技力、消耗与持续时间。
+在 `src/main/java/com/cxxcxx/zinecraft/core/skill/ModSkills.java` 通过 `SkillBuilder` 链式声明技能并调用 `build()`。
+目录创建不可堆叠技能物品、双语名称/tooltip 和模型元数据，并校验初始技力、消耗与持续时间。
+直接伤害通过可重复调用的 `SkillBuilder.damage(attackMultiplier, CombatDamageType)` 逐段声明，并与武器共用
+`CombatDamageProvider.damageProfiles()`；辅助、治疗和纯控制技能不伪造伤害值。
 
 图标位于 `assets/zinecraft/textures/item/<path>.png`。名称、说明、数值和图标只从官网或 PRTS 核对；更新
 `docs/skill/PRTS_ASSETS.md` 的逐文件来源与访问日期，不生成所谓官方图标。

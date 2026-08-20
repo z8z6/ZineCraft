@@ -11,10 +11,10 @@ public final class CombatFormulas {
     validateNonNegative("defenseOrResistance", defenseOrResistance);
     double basic = Math.max(0.0, attack * request.attackMultiplier() + request.additionalAttack());
     double effectiveDefense = (1.0 - request.percentPenetration()) * Math.max(0.0, defenseOrResistance - request.flatPenetration());
-    double resolved = switch (type) {
+    double resolved = switch (type.mitigation()) {
       case PHYSICAL -> Math.max(MINIMUM_DAMAGE_RATIO * basic, basic - effectiveDefense);
-      case ARTS -> Math.max(MINIMUM_DAMAGE_RATIO * basic, basic * Math.max(0.0, 100.0 - effectiveDefense) / 100.0);
-      case TRUE -> basic;
+      case MAGIC -> Math.max(MINIMUM_DAMAGE_RATIO * basic, basic * Math.max(0.0, 100.0 - effectiveDefense) / 100.0);
+      case NONE -> basic;
     };
     return resolved * request.finalMultiplier();
   }

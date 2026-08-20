@@ -164,6 +164,24 @@ public final class StructureCatalog implements RegistryDataContributor {
   }
 
   /**
+   * 注册供城市内部引用的独立结构，不为它创建自然生成结构集。
+   */
+  public JigsawBuilder embeddedBuilding(
+      String path,
+      String zhCn,
+      String enUs,
+      String template,
+      int maxDistanceFromCenter
+  ) {
+    return jigsaw(path, zhCn)
+        .enUs(enUs)
+        .embedded()
+        .layout(1, maxDistanceFromCenter)
+        .pool("start", pool -> pool.template(template))
+        .build();
+  }
+
+  /**
    * 注册在偏好群系附近按同心环放置一次的地标。
    *
    * @param path                  结构注册路径
@@ -485,9 +503,12 @@ public final class StructureCatalog implements RegistryDataContributor {
     HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
     HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
     for (JigsawBuilder building : buildings) {
+      if (!building.naturalPlacement()) continue;
       StructurePlacement placement;
       if (building.fixedOriginPlacement()) {
-        placement = FixedOriginStructurePlacement.ACCESS.create();
+        placement = FixedOriginStructurePlacement.ACCESS.create(
+            building.fixedChunkX(), building.fixedChunkZ()
+        );
       } else if (building.unique()) {
         placement = new ConcentricRingsStructurePlacement(
             building.ringDistance(), 1, 1, HolderSet.direct(biomes.getOrThrow(building.biome()))

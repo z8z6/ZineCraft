@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the FTB Quests collectible encyclopedia from the runtime catalog."""
+"""Generate the FTB Quests collectible encyclopedia from Java Builder declarations."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEST_ROOT = ROOT / "src/main/resources/zinecraft/ftbquests/quests"
-CATALOG_PATH = ROOT / "src/main/resources/zinecraft/collectibles/phantom_crimson_solitaire.json"
+CATALOG_PATH = ROOT / "src/main/java/com/cxxcxx/zinecraft/core/item/ModCollectible.java"
 CHAPTER_PATH = QUEST_ROOT / "chapters/collectibles.snbt"
 CHAPTER_ID = "434F4C4C45435449"
 QUEST_PREFIX = "C3"
@@ -96,10 +96,42 @@ def snbt_text(value: str) -> str:
     return value.replace("\\", "\\\\").replace('"', '\\"').replace("\r", "").replace("\n", "\\n")
 
 
+def to_display_name(path: str) -> str:
+    """Mirror TranslationCatalog.toDisplayName for generated English quest text."""
+    return " ".join(word[0].upper() + word[1:] for word in re.split(r"[_.]", path) if word)
+
+
 def load_catalog() -> list[dict[str, str]]:
-    catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    source = CATALOG_PATH.read_text(encoding="utf-8")
+    declaration = re.compile(
+        r"public static final CollectibleBuilder\s+[A-Z0-9_]+\s*=\s*collectible\((.*?)\n\s*\);",
+        re.DOTALL,
+    )
+    java_string = re.compile(r'"(?:\\.|[^"\\])*"')
+    rarity = re.compile(r"Rarity\.(UNCOMMON|RARE|EPIC)")
+    catalog: list[dict[str, str]] = []
+    for match in declaration.finditer(source):
+        arguments = match.group(1)
+        strings = java_string.findall(arguments)
+        rarity_match = rarity.search(arguments)
+        if len(strings) < 7 or rarity_match is None:
+            raise ValueError("Malformed collectible Builder declaration")
+        values = [json.loads(value) for value in strings[:7]]
+        catalog.append(
+            {
+                "path": values[0],
+                "orderId": values[1],
+                "zhCn": values[2],
+                "enUs": to_display_name(values[0]),
+                "originalEffectZhCn": values[3],
+                "originalEffectEnUs": values[4],
+                "descriptionZhCn": values[5],
+                "descriptionEnUs": values[6],
+                "rarity": rarity_match.group(1),
+            }
+        )
     if len(catalog) != EXPECTED_COUNT:
-        raise ValueError(f"Expected {EXPECTED_COUNT} collectibles, found {len(catalog)}")
+        raise ValueError(f"Expected {EXPECTED_COUNT} Java collectibles, found {len(catalog)}")
     paths = [entry["path"] for entry in catalog]
     if len(paths) != len(set(paths)):
         raise ValueError("Collectible paths must be unique")
@@ -163,7 +195,7 @@ def write_chapter(grouped: dict[str, list[dict[str, str]]]) -> None:
             "\tdefault_hide_dependency_lines: true",
             '\tdefault_quest_shape: "circle"',
             '\tfilename: "collectibles"',
-            '\ticon: { id: "zinecraft:collectible_hot_water_kettle" }',
+            '\ticon: { id: "zinecraft:hot_water_kettle" }',
             f'\tid: "{CHAPTER_ID}"',
             "\torder_index: 2",
             '\tprogression_mode: "flexible"',

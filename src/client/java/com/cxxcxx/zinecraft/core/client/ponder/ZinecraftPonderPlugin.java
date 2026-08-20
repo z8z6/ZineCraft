@@ -1,8 +1,9 @@
 package com.cxxcxx.zinecraft.core.client.ponder;
 
-import com.cxxcxx.zinecraft.api.skill.SkillDefinition;
+import com.cxxcxx.zinecraft.api.combat.CombatDamageBasis;
+import com.cxxcxx.zinecraft.api.combat.CombatDamageProfile;
+import com.cxxcxx.zinecraft.api.registry.builder.SkillBuilder;
 import com.cxxcxx.zinecraft.api.skill.SkillDemoTheme;
-import com.cxxcxx.zinecraft.api.skill.SkillEntry;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.createmod.ponder.api.ParticleEmitter;
 import net.createmod.ponder.api.PonderPalette;
@@ -21,6 +22,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 public final class ZinecraftPonderPlugin implements PonderPlugin {
   private static final String TRAINING_GROUND_SCENE = "skill_demo/training_ground";
   private static final int CENTER_X = 3;
@@ -35,9 +38,9 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
   private static void buildSkillScene(
       SceneBuilder scene,
       SceneBuildingUtil util,
-      SkillDefinition skill
+      SkillBuilder skill
   ) {
-    scene.title("skill_demo_" + skill.getPath(), skill.getOperatorEnUs() + ": " + skill.getEnUs());
+    scene.title("skill_demo_" + skill.path, skill.operatorEnUs + ": " + skill.enUs);
     scene.configureBasePlate(0, 0, 7);
     scene.showBasePlate();
     scene.idle(10);
@@ -48,13 +51,13 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
     scene.overlay()
         .showText(45)
         .colored(PonderPalette.WHITE)
-        .text("A " + skill.getProfession().getEnUs() + " skill used by " + skill.getOperatorEnUs())
+        .text("A " + skill.profession.getEnUs() + " skill used by " + skill.operatorEnUs)
         .pointAt(textAnchor);
     scene.idle(50);
     scene.overlay()
         .showText(40)
         .colored(PonderPalette.BLUE)
-        .text(skill.getRecoveryEnUs() + " · " + skill.getTriggerEnUs())
+        .text(skill.recoveryEnUs + " · " + skill.triggerEnUs)
         .pointAt(textAnchor);
     scene.idle(45);
     scene.overlay()
@@ -63,13 +66,19 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
         .text(statsText(skill))
         .pointAt(textAnchor);
     scene.idle(50);
+    scene.overlay()
+        .showText(40)
+        .colored(PonderPalette.RED)
+        .text(damageText(skill.damageProfiles()))
+        .pointAt(textAnchor);
+    scene.idle(45);
 
-    animateTheme(scene, util, skill.getTheme());
+    animateTheme(scene, util, skill.theme);
 
     scene.overlay()
         .showText(80)
         .colored(PonderPalette.WHITE)
-        .text(skill.getDescriptionEnUs())
+        .text(skill.descriptionEnUs)
         .independent(8);
     scene.idle(85);
     scene.overlay()
@@ -81,10 +90,40 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
     scene.markAsFinished();
   }
 
-  private static String statsText(SkillDefinition skill) {
-    Integer durationSeconds = skill.getDurationSeconds();
+  private static String statsText(SkillBuilder skill) {
+    Integer durationSeconds = skill.durationSeconds;
     String duration = durationSeconds == null ? "" : " · Duration " + durationSeconds + "s";
-    return "Initial " + skill.getInitialSp() + " · Cost " + skill.getSpCost() + duration;
+    return "Initial " + skill.initialSp + " · Cost " + skill.spCost + duration;
+  }
+
+  private static String damageText(java.util.List<CombatDamageProfile> profiles) {
+    if (profiles.isEmpty()) return "Damage: No direct damage";
+    return "Damage: " + profiles.stream()
+        .map(ZinecraftPonderPlugin::damageSegment)
+        .collect(java.util.stream.Collectors.joining("; "));
+  }
+
+  private static String damageSegment(CombatDamageProfile profile) {
+    String amount = profile.basis() == CombatDamageBasis.ATTACK_MULTIPLIER
+        ? formatNumber(profile.amount() * 100.0) + "% ATK"
+        : formatNumber(profile.amount());
+    String type = switch (profile.type()) {
+      case PHYSICAL -> "Physical";
+      case MAGIC -> "Magic";
+      case ARTS -> "Arts";
+      case FIRE -> "Fire";
+      case ICE -> "Ice";
+      case LIGHTNING -> "Lightning";
+      case POISON -> "Poison";
+      case TRUE -> "True";
+    };
+    return amount + " · " + type;
+  }
+
+  private static String formatNumber(double value) {
+    return value == Math.rint(value)
+        ? Long.toString(Math.round(value))
+        : String.format(Locale.ROOT, "%.2f", value).replaceAll("0+$", "").replaceAll("\\.$", "");
   }
 
   private static void animateTheme(
@@ -288,12 +327,11 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
 
   @Override
   public void registerScenes(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
-    for (SkillEntry entry : Zinecraft.SKILLS.entries) {
-      SkillDefinition skill = entry.definition();
+    for (SkillBuilder entry : Zinecraft.SKILLS.entries) {
       helper.addStoryBoard(
-          Zinecraft.id(skill.getPath()),
+          Zinecraft.id(entry.path),
           TRAINING_GROUND_SCENE,
-          (scene, util) -> buildSkillScene(scene, util, skill)
+          (scene, util) -> buildSkillScene(scene, util, entry)
       );
     }
   }

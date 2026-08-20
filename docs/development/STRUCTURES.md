@@ -87,7 +87,7 @@ surrounding.nbt
 src/main/resources/data/zinecraft/structure/laterano_host/core.nbt
 ```
 
-主世界星门：
+萨米固定星门：
 
 ```text
 src/main/resources/data/zinecraft/structure/stargate.nbt

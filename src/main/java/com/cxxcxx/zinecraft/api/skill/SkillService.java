@@ -1,9 +1,11 @@
 package com.cxxcxx.zinecraft.api.skill;
 
+import com.cxxcxx.zinecraft.api.combat.CombatDamageProfile;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class SkillService {
@@ -24,6 +26,14 @@ public final class SkillService {
   public boolean canCast(@NotNull ResourceLocation id, @NotNull SkillCastContext context) {
     SkillEffect skillEffect = this.effects.get(id);
     return skillEffect != null && skillEffect.canCast(context);
+  }
+
+  /**
+   * @return 已注册技能效果的全部直接伤害段；效果不存在或不直接造成伤害时为空列表
+   */
+  public List<CombatDamageProfile> damageProfiles(@NotNull ResourceLocation id) {
+    SkillEffect effect = effects.get(id);
+    return effect == null ? List.of() : effect.damageProfiles();
   }
 
   public boolean cast(@NotNull ResourceLocation id, @NotNull SkillCastContext context) {

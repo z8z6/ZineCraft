@@ -2,6 +2,7 @@ package com.cxxcxx.zinecraft.core.structure.stargate;
 
 import com.cxxcxx.zinecraft.api.registry.builder.MessageBuilder;
 import com.cxxcxx.zinecraft.core.registry.ModBlock;
+import com.cxxcxx.zinecraft.core.registry.ModDimension;
 import com.cxxcxx.zinecraft.core.registry.ModItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -100,6 +101,10 @@ public final class StarGateControllerBlock extends Block {
       Player player,
       BlockHitResult hit
   ) {
+    if (!level.dimension().equals(ModDimension.TERRA.levelKey())) {
+      displayMessage(level, player, ModBlock.STARGATE_TERRA_ONLY_MESSAGE);
+      return InteractionResult.SUCCESS;
+    }
     displayMessage(
         level,
         player,
@@ -120,6 +125,10 @@ public final class StarGateControllerBlock extends Block {
       InteractionHand hand,
       BlockHitResult hit
   ) {
+    if (!level.dimension().equals(ModDimension.TERRA.levelKey())) {
+      displayMessage(level, player, ModBlock.STARGATE_TERRA_ONLY_MESSAGE);
+      return ItemInteractionResult.FAIL;
+    }
     if (!stack.is(ModItem.PROTOCOL_ORIGINIUM.asItem())) {
       displayMessage(level, player, ModBlock.STARGATE_REQUIRES_PROTOCOL_ORIGINIUM_MESSAGE);
       return ItemInteractionResult.FAIL;

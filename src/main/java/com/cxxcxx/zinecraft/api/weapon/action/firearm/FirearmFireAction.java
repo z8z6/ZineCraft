@@ -1,7 +1,8 @@
 package com.cxxcxx.zinecraft.api.weapon.action.firearm;
 
-import com.cxxcxx.zinecraft.api.combat.CombatDamageType;
-import com.cxxcxx.zinecraft.api.combat.CombatRequest;
+import com.cxxcxx.zinecraft.api.combat.CombatDamageBasis;
+import com.cxxcxx.zinecraft.api.combat.CombatDamageProfile;
+import com.cxxcxx.zinecraft.api.combat.CombatDamageProvider;
 import com.cxxcxx.zinecraft.api.combat.CombatService;
 import com.cxxcxx.zinecraft.api.weapon.action.*;
 import com.cxxcxx.zinecraft.api.weapon.combat.HitscanService;
@@ -10,20 +11,29 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
-public final class FirearmFireAction implements WeaponAction {
+import java.util.List;
+import java.util.Objects;
+
+public final class FirearmFireAction implements WeaponAction, CombatDamageProvider {
   @NotNull
   private final ResourceLocation id;
   private final int fireTick;
   private final int durationTicks;
-  private final float damage;
+  private final CombatDamageProfile damage;
   private final double range;
 
-  public FirearmFireAction(@NotNull ResourceLocation id, int fireTick, int durationTicks, float damage, double range) {
+  public FirearmFireAction(
+      @NotNull ResourceLocation id,
+      int fireTick,
+      int durationTicks,
+      CombatDamageProfile damage,
+      double range
+  ) {
     super();
     this.id = id;
     this.fireTick = fireTick;
     this.durationTicks = durationTicks;
-    this.damage = damage;
+    this.damage = Objects.requireNonNull(damage, "枪械伤害描述不能为空");
     this.range = range;
     int i = this.durationTicks;
     int j = this.fireTick;
@@ -33,10 +43,8 @@ public final class FirearmFireAction implements WeaponAction {
       throw new IllegalArgumentException(string2.toString());
     }
 
-    if (!(this.damage > 0.0F)) {
-      j = 0;
-      String string1 = "枪械伤害必须大于 0";
-      throw new IllegalArgumentException(string1.toString());
+    if (this.damage.basis() != CombatDamageBasis.FLAT) {
+      throw new IllegalArgumentException("枪械动作必须声明固定基础攻击力");
     }
 
     if (!(this.range > 0.0)) {
@@ -50,6 +58,11 @@ public final class FirearmFireAction implements WeaponAction {
   @Override
   public ResourceLocation getId() {
     return this.id;
+  }
+
+  @Override
+  public List<CombatDamageProfile> damageProfiles() {
+    return List.of(damage);
   }
 
   @Override
@@ -77,9 +90,7 @@ public final class FirearmFireAction implements WeaponAction {
               LivingEntity livingEntity1 = hit.getTarget();
               if (livingEntity1 != null) {
                 LivingEntity livingEntity = livingEntity1;
-                CombatService.INSTANCE.damage(
-                    context.getPlayer(), livingEntity, CombatDamageType.PHYSICAL, FirearmFireAction.this.damage, CombatRequest.DEFAULT
-                );
+                CombatService.INSTANCE.damage(context.getPlayer(), livingEntity, FirearmFireAction.this.damage);
                 return;
               }
             }

@@ -109,12 +109,12 @@
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:collectible_oriron_round_shield",
+          "name": "zinecraft:oriron_round_shield",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:collectible_old_steam_armor",
+          "name": "zinecraft:old_steam_armor",
           "weight": 1
         }
       ]

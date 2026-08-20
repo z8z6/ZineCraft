@@ -46,6 +46,9 @@ public final class JigsawBuilder {
   private int startHeight;
   private boolean useExpansionHack;
   private boolean fixedOrigin;
+  private boolean naturalPlacement = true;
+  private int fixedChunkX = -1;
+  private int fixedChunkZ = -1;
   private Decoration generationStep = Decoration.SURFACE_STRUCTURES;
   private TerrainAdjustment terrainAdjustment = TerrainAdjustment.BEARD_THIN;
   @Nullable
@@ -179,10 +182,33 @@ public final class JigsawBuilder {
    * @return 当前构建器，并将结构固定在世界原点区块
    */
   public JigsawBuilder fixedOrigin() {
+    return fixedAt(-1, -1);
+  }
+
+  /**
+   * @param chunkX 唯一生成区块 X
+   * @param chunkZ 唯一生成区块 Z
+   * @return 当前构建器，并将结构固定到指定区块
+   */
+  public JigsawBuilder fixedAt(int chunkX, int chunkZ) {
     this.fixedOrigin = true;
     this.unique = false;
+    this.fixedChunkX = chunkX;
+    this.fixedChunkZ = chunkZ;
     this.spacing = 2;
     this.separation = 1;
+    return this;
+  }
+
+  /**
+   * 仅注册可被城市 Piece 或 {@code /place structure} 引用的结构，不创建自然生成结构集。
+   *
+   * @return 当前构建器
+   */
+  public JigsawBuilder embedded() {
+    this.naturalPlacement = false;
+    this.unique = false;
+    this.fixedOrigin = false;
     return this;
   }
 
@@ -345,6 +371,18 @@ public final class JigsawBuilder {
    */
   public boolean fixedOriginPlacement() {
     return fixedOrigin;
+  }
+
+  public boolean naturalPlacement() {
+    return naturalPlacement;
+  }
+
+  public int fixedChunkX() {
+    return fixedChunkX;
+  }
+
+  public int fixedChunkZ() {
+    return fixedChunkZ;
   }
 
   /**

@@ -10,25 +10,57 @@
 	quest_links: [ ]
 	quests: [
 		{
+			id: "7D07000000000001"
+			icon: { id: "minecraft:writable_book" }
+			optional: true
+			tasks: [{ id: "7E07000000000001", type: "checkmark" }]
+			x: -4.5d
+			y: 0.0d
+		}
+		{
+			id: "7D07000000000002"
+			icon: { id: "minecraft:filled_map" }
+			optional: true
+			tasks: [{ id: "7E07000000000002", type: "checkmark" }]
+			x: -1.5d
+			y: 0.0d
+		}
+		{
+			id: "7D07000000000003"
+			icon: { id: "minecraft:compass" }
+			optional: true
+			tasks: [{ id: "7E07000000000003", type: "checkmark" }]
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			id: "7D07000000000004"
+			icon: { id: "minecraft:bricks" }
+			optional: true
+			tasks: [{ id: "7E07000000000004", type: "checkmark" }]
+			x: 4.5d
+			y: 0.0d
+		}
+		{
 			id: "7B07000000000001"
 			icon: { id: "minecraft:compass" }
 			tasks: [{ id: "7C07000000000001", structure: "zinecraft:kazdel_sarkaz_settlement", type: "structure" }]
 			x: -3.0d
-			y: 0.0d
+			y: 4.0d
 		}
 		{
 			id: "7B07000000000002"
 			icon: { id: "minecraft:compass" }
 			tasks: [{ id: "7C07000000000002", structure: "zinecraft:kazdel_babel_ruins", type: "structure" }]
 			x: 0.0d
-			y: 0.0d
+			y: 4.0d
 		}
 		{
 			id: "7B07000000000003"
 			icon: { id: "minecraft:compass" }
 			tasks: [{ id: "7C07000000000003", structure: "zinecraft:kazdel_sarkaz_camp", type: "structure" }]
 			x: 3.0d
-			y: 0.0d
+			y: 4.0d
 		}
 	]
 }

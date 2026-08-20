@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.core.registry;
 
+import com.cxxcxx.zinecraft.api.combat.CombatDamageProfile;
 import com.cxxcxx.zinecraft.api.combat.CombatDamageType;
-import com.cxxcxx.zinecraft.api.combat.CombatRequest;
 import com.cxxcxx.zinecraft.api.combat.CombatService;
 import com.cxxcxx.zinecraft.api.skill.SkillCastContext;
 import com.cxxcxx.zinecraft.api.skill.SkillEffect;
@@ -10,6 +10,8 @@ import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public final class ModWeaponSkillEffects {
   @NotNull
@@ -21,6 +23,13 @@ public final class ModWeaponSkillEffects {
 
   static {
     Zinecraft.SKILL_SERVICE.register(ARCANE_BOLT, new SkillEffect() {
+      private final CombatDamageProfile damage = CombatDamageProfile.flat(8.0, CombatDamageType.ARTS);
+
+      @Override
+      public List<CombatDamageProfile> damageProfiles() {
+        return List.of(damage);
+      }
+
       @Override
       public boolean canCast(@NotNull SkillCastContext context) {
         return context.player().isAlive() && !context.player().isSpectator();
@@ -33,9 +42,7 @@ public final class ModWeaponSkillEffects {
           LivingEntity livingEntity1 = hit.getTarget();
           if (livingEntity1 != null) {
             LivingEntity livingEntity = livingEntity1;
-            CombatService.INSTANCE.damage(
-                context.player(), livingEntity, CombatDamageType.ARTS, 8.0, CombatRequest.DEFAULT
-            );
+            CombatService.INSTANCE.damage(context.player(), livingEntity, damage);
             return;
           }
         }

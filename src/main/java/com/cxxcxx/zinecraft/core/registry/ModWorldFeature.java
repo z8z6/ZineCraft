@@ -7,6 +7,7 @@ import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.cxxcxx.zinecraft.core.entity.ExampleEntityBlock;
 import com.cxxcxx.zinecraft.core.worldgen.LateranoDryLandFeature;
 import com.cxxcxx.zinecraft.core.worldgen.OriginiumSpireFeature;
+import com.cxxcxx.zinecraft.core.worldgen.TerraHydrologyFeature;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
 import net.minecraft.world.level.levelgen.placement.CountPlacement;
@@ -29,6 +30,15 @@ public final class ModWorldFeature {
   private static final BiomeSelection TERRA_BIOMES = BiomeSelection.of(
       ModBiome.ALL_TERRA_BIOMES
   );
+  private static final TerraHydrologyFeature TERRA_HYDROLOGY_FEATURE = Zinecraft.FEATURES.register(
+      "terra_hydrology", new TerraHydrologyFeature()
+  );
+  private static final SimpleFeatureBuilder TERRA_HYDROLOGY = new SimpleFeatureBuilder(
+      Zinecraft.FEATURES, "terra_hydrology", TERRA_HYDROLOGY_FEATURE
+  ).placement(List.of(CountPlacement.of(1), InSquarePlacement.spread(), BiomeFilter.biome()))
+      .generationStep(GenerationStep.Decoration.TOP_LAYER_MODIFICATION)
+      .biomes(TERRA_BIOMES)
+      .build();
   private static final OriginiumSpireFeature ORIGINIUM_SPIRE_SMALL_FEATURE = Zinecraft.FEATURES.register(
       "originium_spire_small",
       new OriginiumSpireFeature(2, 4, 4, 8, 1, 4)

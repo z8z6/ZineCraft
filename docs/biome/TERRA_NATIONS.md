@@ -1,49 +1,50 @@
 # 泰拉国家群系设计
 
-本项目为 PRTS“泰拉大典”当前列出的 19 个现存国家各注册一个群系。群系是对国家自然环境、代表城市周边地貌和剧情场景的
-Minecraft 化提炼，不表示整个国家只有这一种地貌，也不直接复刻移动城市。
+本项目为 PRTS“泰拉大典”当前列出的 19 个国家各维护一个专属群系池。国家是固定地图区域，城市是国家内地点，群系则是国家内部
+随气候变化的自然环境；三者是独立数据。生成器先确定国家，再只从该国群系池选择，绝不会在一个国家内生成另一国群系。
 
 ## 资料口径
 
 - [《明日方舟》官网](https://ak.hypergryph.com/)用于确认泰拉、源石、天灾和移动城邦等官方世界观概念；官网的“WORLD /
   设定”页面是本设计的一级来源。
-- [PRTS 泰拉大典地理一览](https://prts.wiki/w/泰拉大典:地理)用于确定当前国家清单，并补充官网页面没有集中列出的城市、地貌和气候信息。
+- [PRTS 泰拉大典地理一览](https://prts.wiki/w/泰拉大典:地理)
+  用于确定当前国家清单和地名层级；完整整理见[城市与重要地区目录](../nation/TERRA_GEOGRAPHY.md)。
 - PRTS 是玩家共同维护的二级来源；表中“群系设计”属于本项目根据资料做出的玩法转译，并非鹰角官方设定原文。
 - 汐斯塔属于独立城邦，高卢等属于古国，因此没有计入本轮“现存国家”群系。
 
-## 国家与群系
+## 国家专属群系
 
-每行的表层方块、特色生物和两座建筑均不与其他国家完全重复。居民与特色生物都使用群系注册时直接声明的 Minecraft 普通友好生物，
-不注册国家专属居民实体，也不把原版生物直接等同于明日方舟中的种族或生物。
+每个群系 ID 和显示名均包含所属国家名称。第一项保留已有注册 ID 以兼容存档，第二项用于表现该国另一类气候地貌；两者共用该国专属
+表层材料。下列自然环境是有资料依据的 Minecraft 玩法转译，不是新增的官方行政区或城市名。
 
-| 国家   | 群系 ID                          | 独特地表  | 特色生物 | 每世界唯一建筑            | 资料                                       |
-|------|--------------------------------|-------|------|--------------------|------------------------------------------|
-| 阿戈尔  | `aegir_abyssal_sea`            | 深渊岩板  | 海豚   | 火山能源信标、深海观测穹顶      | [PRTS](https://prts.wiki/w/泰拉大典:地理/阿戈尔)  |
-| 玻利瓦尔 | `bolivar_plain`                | 战蚀土   | 鹦鹉   | 多索雷斯游艇、极限铁人赛检查站    | [PRTS](https://prts.wiki/w/泰拉大典:地理/玻利瓦尔) |
-| 东    | `higashi_shadow_rift`          | 裂谷暗壤  | 狐    | 常暗裂谷神社、锁川边境望楼      | [PRTS](https://prts.wiki/w/泰拉大典:地理/东)    |
-| 杜林   | `durin_underground_garden`     | 花园苔土  | 发光鱿鱼 | 际崖城穹顶车站、大水坑水上乐园    | [PRTS](https://prts.wiki/w/泰拉大典:地理/杜林)   |
-| 哥伦比亚 | `columbia_sandstone_wilds`     | 峡谷砂土  | 犰狳   | 拓荒区科研站、移动监狱补给站     | [PRTS](https://prts.wiki/w/泰拉大典:地理/哥伦比亚) |
-| 卡西米尔 | `kazimierz_knightland`         | 旱原草皮  | 马    | 大骑士竞技场门楼、征战骑士纪念碑   | [PRTS](https://prts.wiki/w/泰拉大典:地理/卡西米尔) |
-| 卡兹戴尔 | `kazdel_scarred_wastes`        | 战痕灰烬  | 洞穴蜘蛛 | 巴别塔遗迹、萨卡兹流动营地      | [PRTS](https://prts.wiki/w/泰拉大典:地理/卡兹戴尔) |
-| 拉特兰  | `laterano_holy_fields`         | 冲积白垩  | 蜜蜂   | 启示石塔、安布罗修礼拜堂       | [PRTS](https://prts.wiki/w/拉特兰)          |
-| 莱塔尼亚 | `leithanien_twilight_forest`   | 暮林腐殖土 | 狼    | 崔林特尔梅双塔、夕照音乐厅      | [PRTS](https://prts.wiki/w/泰拉大典:地理/莱塔尼亚) |
-| 雷姆必拓 | `rim_billiton_mining_badlands` | 矿渣土   | 尸壳   | 源石矿井架、矿石运输铁路站      | [PRTS](https://prts.wiki/w/泰拉大典:地理/雷姆必拓) |
-| 米诺斯  | `minos_sunlit_hills`           | 晒土地   | 山羊   | 十二英雄神殿、科林尼亚英雄广场    | [PRTS](https://prts.wiki/w/泰拉大典:地理/米诺斯)  |
-| 萨尔贡  | `sargon_rocky_desert`          | 岩漠硬壳  | 骆驼   | 黄金之城宝石集市、长泉镇古井     | [PRTS](https://prts.wiki/w/泰拉大典:地理/萨尔贡)  |
-| 萨米   | `sami_frozen_forest`           | 冻原苔土  | 北极熊  | 独眼巨人祭坛、雪祀仪式屋       | [PRTS](https://prts.wiki/w/泰拉大典:地理/萨米)   |
-| 维多利亚 | `victoria_misty_highlands`     | 雾沼土   | 羊    | 伦蒂尼姆城防炮、蒸汽铁路站      | [PRTS](https://prts.wiki/w/泰拉大典:地理/维多利亚) |
-| 乌萨斯  | `ursus_frozen_steppe`          | 永冻土   | 流髑   | 切尔诺伯格石棺站、远北矿区哨塔    | [PRTS](https://prts.wiki/w/泰拉大典:地理/乌萨斯)  |
-| 谢拉格  | `kjerag_snowy_peaks`           | 圣雪岩   | 兔    | 喀兰峰蔓珠院、圣山大典广场      | [PRTS](https://prts.wiki/w/泰拉大典:地理/谢拉格)  |
-| 叙拉古  | `siracusa_rainy_woodland`      | 雨浸土   | 蜘蛛   | 家族联合法院、家族歌剧院       | [PRTS](https://prts.wiki/w/叙拉古)          |
-| 炎    | `yan_mountain_grove`           | 山壤    | 熊猫   | 玉门烽火台、尚蜀山间亭        | [PRTS](https://prts.wiki/w/泰拉大典:地理/炎)    |
-| 伊比利亚 | `iberia_salt_delta`            | 盐壳砾石  | 溺尸   | 伊比利亚之眼灯塔、盐风城审判庭礼拜堂 | [PRTS](https://prts.wiki/w/泰拉大典:地理/伊比利亚) |
+| 国家   | 专属群系 ID                                                 | 独特地表      |
+|------|---------------------------------------------------------|-----------|
+| 阿戈尔  | `aegir_abyssal_sea`、`aegir_pelagic_depths`              | 深渊岩板      |
+| 玻利瓦尔 | `bolivar_plain`、`bolivar_blackflow_forest`              | 战蚀土       |
+| 东国   | `higashi_shadow_rift`、`higashi_mountain_forest`         | 裂谷暗壤      |
+| 杜林   | `durin_underground_garden`、`durin_cavern_lake`          | 花园苔土      |
+| 哥伦比亚 | `columbia_sandstone_wilds`、`columbia_eastern_prairie`   | 峡谷砂土      |
+| 卡西米尔 | `kazimierz_knightland`、`kazimierz_forested_hills`       | 旱原草皮      |
+| 卡兹戴尔 | `kazdel_scarred_wastes`、`kazdel_ruined_highlands`       | 战痕灰烬      |
+| 拉特兰  | `laterano_holy_fields`、`laterano_highland_plateau`      | 冲积白垩      |
+| 莱塔尼亚 | `leithanien_twilight_forest`、`leithanien_alpine_valley` | 暮林腐殖土     |
+| 雷姆必拓 | `rim_billiton_mining_badlands`、`rim_billiton_arid_mesa` | 矿渣土       |
+| 米诺斯  | `minos_sunlit_hills`、`minos_river_valley`               | 晒土地       |
+| 萨尔贡  | `sargon_rocky_desert`、`sargon_tropical_rainforest`      | 岩漠硬壳/生态斑块 |
+| 萨米   | `sami_frozen_forest`、`sami_glacial_mountains`           | 冻原苔土      |
+| 维多利亚 | `victoria_misty_highlands`、`victoria_central_lowlands`  | 雾沼土       |
+| 乌萨斯  | `ursus_frozen_steppe`、`ursus_eastern_highlands`         | 永冻土       |
+| 谢拉格  | `kjerag_snowy_peaks`、`kjerag_alpine_forest`             | 圣雪岩       |
+| 叙拉古  | `siracusa_rainy_woodland`、`siracusa_lowland_forest`     | 雨浸土       |
+| 炎    | `yan_mountain_grove`、`yan_river_plains`                 | 山壤        |
+| 伊比利亚 | `iberia_salt_delta`、`iberia_coastal_cliffs`             | 盐壳砾石      |
 
 ## 代码布局
 
 - `ModBiome`：以 `BiomeBuilder` 同时声明群系气候点、颜色、刷怪规则和植被预设。
 - `BiomeBuilder`：提供多噪声气候点、和平生物、地下生成及植被的 fluent API。
-- `ModDimension`：直接读取 `ModBiome.ALL` 的 Builder 和气候点接入 `zinecraft:terra`，不会向主世界注入国家群系。
-- `TerraBiomeSource`：将原点半径 1024 格固定为拉特兰圣田，外围对其余十八国和天灾区执行多噪声分区，并拒绝非 `zinecraft` 群系。
+- `ModDimension`：保存十九个唯一国家锚点，以及国家到专属群系池的直接绑定。
+- `TerraBiomeSource`：先按固定地图决定国家，再用六轴气候从该国群系池选择；拒绝跨国群系和非 `zinecraft` 群系。
 - `NationBlocks`：为十九个国家各注册一种地貌方块和一种建筑外墙方块，并提供独立贴图。
 - `ModSurfaceRule`：为十九个国家分配专属主表层，并按生态需要混入少量草方块斑块，不修改原版群系。
 - `ModStructure`：为每个国家声明两座绑定群系的唯一建筑和一套可重复生成的大型 Jigsaw 城镇、村落或营地，并在注册时写入中文名。
@@ -52,11 +53,11 @@ Minecraft 化提炼，不表示整个国家只有这一种地貌，也不直接�
 - `generate_nation_landmarks.py`：确定性生成 38 个不同轮廓和材料的 structure NBT。
 - `generate_nation_settlements.py`：确定性生成 19 套、共 171 个聚落 Jigsaw 模板。
 
-阿戈尔使用深海气候点，杜林使用地下深度点，其余国家与天灾区分布在泰拉维度地表。20 个群系均由动态注册表数据生成器输出到
-`data/zinecraft/worldgen/biome/`。
+阿戈尔使用深海气候，杜林使用地下环境，其余国家在各自固定范围内按气候生成。十九国共 38 个国家专属群系；另有外海、旧版河流
+兼容项和天灾区。所有群系均由动态注册表数据生成器输出到 `data/zinecraft/worldgen/biome/`。
 
-拉特兰不参与外围随机多噪声分区，而是固定覆盖泰拉 `(0, 0)` 周围半径 1024 格；`laterano_dry_land` 会把该群系内低于海平面的
-开放水域填为冲积白垩，保证中心为连续陆地。该中心地下 `y=-32..-4` 生成唯一的
+拉特兰国家锚点固定在泰拉 `(0, 0)`；其内部会在圣田与高原台地之间按气候选择。`laterano_dry_land` 保证中心设施附近为连续陆地。
+该中心地下 `y=-32..-4` 生成唯一的
 `laterano_host`：33×29×33 的银色机械山体、同心同步环和垂直 PCS 核心。它是根据 [PRTS 拉特兰资料](https://prts.wiki/w/拉特兰)
 对大教堂地下、“银色山脉”和
 人格与认知同步系统的资料所作的原创玩法化表达，并非官方场景模型复刻。

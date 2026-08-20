@@ -14,21 +14,21 @@ import import_prts_is2_collectibles as importer  # noqa: E402
 class EnglishPathTest(unittest.TestCase):
     def test_uses_official_english_name_instead_of_archive_number(self) -> None:
         self.assertEqual(
-            "collectible_special_suppressor",
+            "special_suppressor",
             importer.english_name_to_path("Special Suppressor"),
         )
 
     def test_normalizes_punctuation_apostrophes_and_accents(self) -> None:
         self.assertEqual(
-            "collectible_godmothers_token",
+            "godmothers_token",
             importer.english_name_to_path("Godmother's Token"),
         )
         self.assertEqual(
-            "collectible_elysee_purse",
+            "elysee_purse",
             importer.english_name_to_path("Élysée Purse"),
         )
         self.assertEqual(
-            "collectible_profound_silence",
+            "profound_silence",
             importer.english_name_to_path("‘Profound Silence'"),
         )
 

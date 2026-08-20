@@ -1,6 +1,6 @@
 package com.cxxcxx.zinecraft.api.combat;
 
-import com.cxxcxx.zinecraft.api.accessory.CollectibleCombatStats;
+import com.cxxcxx.zinecraft.api.collection.CollectibleCombatStats;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -9,15 +9,13 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
+import java.util.List;
+
 /**
  * Server-authoritative entry point for all Zinecraft combat stat and result calculations.
  */
 public final class CombatService {
   public static final CombatService INSTANCE = new CombatService();
-
-  private static final ResourceKey<DamageType> PHYSICAL = damageType("physical");
-  private static final ResourceKey<DamageType> ARTS = damageType("arts");
-  private static final ResourceKey<DamageType> TRUE = damageType("true");
 
   private CombatService() {
   }
@@ -75,10 +73,10 @@ public final class CombatService {
       double resolvedAttack,
       CombatRequest request
   ) {
-    double defensiveStat = switch (type) {
+    double defensiveStat = switch (type.mitigation()) {
       case PHYSICAL -> target.getAttributeValue(Attributes.ARMOR);
-      case ARTS -> target.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-      case TRUE -> 0.0;
+      case MAGIC -> target.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+      case NONE -> 0.0;
     };
     return (float) CombatFormulas.damage(type, resolvedAttack, defensiveStat, request);
   }
@@ -92,6 +90,40 @@ public final class CombatService {
   ) {
     float amount = calculateDamage(attacker, target, type, baseAttack, request);
     return amount > 0.0F && target.hurt(damageSource(attacker, type), amount);
+  }
+
+  /**
+   * 按统一伤害描述结算一段伤害。
+   * 固定伤害进入基础攻击力流程；攻击力倍率伤害使用实体当前攻击属性作为已解析攻击力。
+   */
+  public boolean damage(LivingEntity attacker, LivingEntity target, CombatDamageProfile profile) {
+    return switch (profile.basis()) {
+      case FLAT -> damage(attacker, target, profile.type(), profile.amount(), CombatRequest.DEFAULT);
+      case ATTACK_MULTIPLIER -> damageFromResolvedAttack(
+          attacker,
+          target,
+          profile.type(),
+          attacker.getAttributeValue(Attributes.ATTACK_DAMAGE),
+          new CombatRequest(profile.amount(), 0.0, 0.0, 0.0, 1.0)
+      );
+    };
+  }
+
+  /**
+   * 依次结算同一次命中的多段伤害，各段可以使用不同伤害类型。
+   *
+   * @return 任意伤害段成功命中时返回 {@code true}
+   */
+  public boolean damage(
+      LivingEntity attacker,
+      LivingEntity target,
+      List<CombatDamageProfile> profiles
+  ) {
+    boolean damaged = false;
+    for (CombatDamageProfile profile : List.copyOf(profiles)) {
+      damaged = damage(attacker, target, profile) || damaged;
+    }
+    return damaged;
   }
 
   /**
@@ -121,11 +153,7 @@ public final class CombatService {
   }
 
   private DamageSource damageSource(LivingEntity attacker, CombatDamageType type) {
-    ResourceKey<DamageType> key = switch (type) {
-      case PHYSICAL -> PHYSICAL;
-      case ARTS -> ARTS;
-      case TRUE -> TRUE;
-    };
+    ResourceKey<DamageType> key = damageType(type.path());
     var registry = attacker.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE);
     return new DamageSource(registry.getHolderOrThrow(key), attacker);
   }

@@ -2,7 +2,7 @@
 	default_hide_dependency_lines: true
 	default_quest_shape: "circle"
 	filename: "collectibles"
-	icon: { id: "zinecraft:collectible_hot_water_kettle" }
+	icon: { id: "zinecraft:hot_water_kettle" }
 	id: "434F4C4C45435449"
 	order_index: 2
 	progression_mode: "flexible"
@@ -10,7 +10,7 @@
 	quests: [
 		{
 			id: "C100000000000001"
-			icon: { id: "zinecraft:collectible_worn_out_group_photo" }
+			icon: { id: "zinecraft:worn_out_group_photo" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -20,543 +20,543 @@
 		}
 		{
 			id: "C300000000000031"
-			icon: { id: "zinecraft:collectible_worn_out_group_photo" }
+			icon: { id: "zinecraft:worn_out_group_photo" }
 			optional: true
-			tasks: [{ id: "C400000000000031", item: { count: 1, id: "zinecraft:collectible_worn_out_group_photo" }, type: "item" }]
+			tasks: [{ id: "C400000000000031", item: { count: 1, id: "zinecraft:worn_out_group_photo" }, type: "item" }]
 			x: 0.0d
 			y: 0.0d
 		}
 		{
 			id: "C300000000000032"
-			icon: { id: "zinecraft:collectible_writers_tongue" }
+			icon: { id: "zinecraft:writers_tongue" }
 			optional: true
-			tasks: [{ id: "C400000000000032", item: { count: 1, id: "zinecraft:collectible_writers_tongue" }, type: "item" }]
+			tasks: [{ id: "C400000000000032", item: { count: 1, id: "zinecraft:writers_tongue" }, type: "item" }]
 			x: 2.0d
 			y: 0.0d
 		}
 		{
 			id: "C300000000000033"
-			icon: { id: "zinecraft:collectible_rosmontiss_embrace" }
+			icon: { id: "zinecraft:rosmontiss_embrace" }
 			optional: true
-			tasks: [{ id: "C400000000000033", item: { count: 1, id: "zinecraft:collectible_rosmontiss_embrace" }, type: "item" }]
+			tasks: [{ id: "C400000000000033", item: { count: 1, id: "zinecraft:rosmontiss_embrace" }, type: "item" }]
 			x: 4.0d
 			y: 0.0d
 		}
 		{
 			id: "C30000000000003A"
-			icon: { id: "zinecraft:collectible_emperors_favor" }
+			icon: { id: "zinecraft:emperors_favor" }
 			optional: true
-			tasks: [{ id: "C40000000000003A", item: { count: 1, id: "zinecraft:collectible_emperors_favor" }, type: "item" }]
+			tasks: [{ id: "C40000000000003A", item: { count: 1, id: "zinecraft:emperors_favor" }, type: "item" }]
 			x: 6.0d
 			y: 0.0d
 		}
 		{
 			id: "C30000000000003B"
-			icon: { id: "zinecraft:collectible_royal_rapier" }
+			icon: { id: "zinecraft:royal_rapier" }
 			optional: true
-			tasks: [{ id: "C40000000000003B", item: { count: 1, id: "zinecraft:collectible_royal_rapier" }, type: "item" }]
+			tasks: [{ id: "C40000000000003B", item: { count: 1, id: "zinecraft:royal_rapier" }, type: "item" }]
 			x: 8.0d
 			y: 0.0d
 		}
 		{
 			id: "C30000000000003C"
-			icon: { id: "zinecraft:collectible_vieux_vanguards_blade" }
+			icon: { id: "zinecraft:vieux_vanguards_blade" }
 			optional: true
-			tasks: [{ id: "C40000000000003C", item: { count: 1, id: "zinecraft:collectible_vieux_vanguards_blade" }, type: "item" }]
+			tasks: [{ id: "C40000000000003C", item: { count: 1, id: "zinecraft:vieux_vanguards_blade" }, type: "item" }]
 			x: 10.0d
 			y: 0.0d
 		}
 		{
 			id: "C30000000000003D"
-			icon: { id: "zinecraft:collectible_necklace_of_the_presence" }
+			icon: { id: "zinecraft:necklace_of_the_presence" }
 			optional: true
-			tasks: [{ id: "C40000000000003D", item: { count: 1, id: "zinecraft:collectible_necklace_of_the_presence" }, type: "item" }]
+			tasks: [{ id: "C40000000000003D", item: { count: 1, id: "zinecraft:necklace_of_the_presence" }, type: "item" }]
 			x: 12.0d
 			y: 0.0d
 		}
 		{
 			id: "C30000000000003E"
-			icon: { id: "zinecraft:collectible_silver_forks" }
+			icon: { id: "zinecraft:silver_forks" }
 			optional: true
-			tasks: [{ id: "C40000000000003E", item: { count: 1, id: "zinecraft:collectible_silver_forks" }, type: "item" }]
+			tasks: [{ id: "C40000000000003E", item: { count: 1, id: "zinecraft:silver_forks" }, type: "item" }]
 			x: 14.0d
 			y: 0.0d
 		}
 		{
 			id: "C30000000000003F"
-			icon: { id: "zinecraft:collectible_damaged_revolver_cylinder" }
+			icon: { id: "zinecraft:damaged_revolver_cylinder" }
 			optional: true
-			tasks: [{ id: "C40000000000003F", item: { count: 1, id: "zinecraft:collectible_damaged_revolver_cylinder" }, type: "item" }]
+			tasks: [{ id: "C40000000000003F", item: { count: 1, id: "zinecraft:damaged_revolver_cylinder" }, type: "item" }]
 			x: 16.0d
 			y: 0.0d
 		}
 		{
 			id: "C30000000000005E"
-			icon: { id: "zinecraft:collectible_blunt_claws_burst" }
+			icon: { id: "zinecraft:blunt_claws_burst" }
 			optional: true
-			tasks: [{ id: "C40000000000005E", item: { count: 1, id: "zinecraft:collectible_blunt_claws_burst" }, type: "item" }]
+			tasks: [{ id: "C40000000000005E", item: { count: 1, id: "zinecraft:blunt_claws_burst" }, type: "item" }]
 			x: 18.0d
 			y: 0.0d
 		}
 		{
 			id: "C30000000000005F"
-			icon: { id: "zinecraft:collectible_blunt_claws_proficiency" }
+			icon: { id: "zinecraft:blunt_claws_proficiency" }
 			optional: true
-			tasks: [{ id: "C40000000000005F", item: { count: 1, id: "zinecraft:collectible_blunt_claws_proficiency" }, type: "item" }]
+			tasks: [{ id: "C40000000000005F", item: { count: 1, id: "zinecraft:blunt_claws_proficiency" }, type: "item" }]
 			x: 20.0d
 			y: 0.0d
 		}
 		{
 			id: "C300000000000063"
-			icon: { id: "zinecraft:collectible_bend_spears_acuity" }
+			icon: { id: "zinecraft:bend_spears_acuity" }
 			optional: true
-			tasks: [{ id: "C400000000000063", item: { count: 1, id: "zinecraft:collectible_bend_spears_acuity" }, type: "item" }]
+			tasks: [{ id: "C400000000000063", item: { count: 1, id: "zinecraft:bend_spears_acuity" }, type: "item" }]
 			x: 22.0d
 			y: 0.0d
 		}
 		{
 			id: "C300000000000064"
-			icon: { id: "zinecraft:collectible_bend_spears_bloodbath" }
+			icon: { id: "zinecraft:bend_spears_bloodbath" }
 			optional: true
-			tasks: [{ id: "C400000000000064", item: { count: 1, id: "zinecraft:collectible_bend_spears_bloodbath" }, type: "item" }]
+			tasks: [{ id: "C400000000000064", item: { count: 1, id: "zinecraft:bend_spears_bloodbath" }, type: "item" }]
 			x: 0.0d
 			y: 2.0d
 		}
 		{
 			id: "C300000000000066"
-			icon: { id: "zinecraft:collectible_bend_spears_deathmatch" }
+			icon: { id: "zinecraft:bend_spears_deathmatch" }
 			optional: true
-			tasks: [{ id: "C400000000000066", item: { count: 1, id: "zinecraft:collectible_bend_spears_deathmatch" }, type: "item" }]
+			tasks: [{ id: "C400000000000066", item: { count: 1, id: "zinecraft:bend_spears_deathmatch" }, type: "item" }]
 			x: 2.0d
 			y: 2.0d
 		}
 		{
 			id: "C300000000000068"
-			icon: { id: "zinecraft:collectible_iron_guard_invasion" }
+			icon: { id: "zinecraft:iron_guard_invasion" }
 			optional: true
-			tasks: [{ id: "C400000000000068", item: { count: 1, id: "zinecraft:collectible_iron_guard_invasion" }, type: "item" }]
+			tasks: [{ id: "C400000000000068", item: { count: 1, id: "zinecraft:iron_guard_invasion" }, type: "item" }]
 			x: 4.0d
 			y: 2.0d
 		}
 		{
 			id: "C30000000000006A"
-			icon: { id: "zinecraft:collectible_iron_guard_advance" }
+			icon: { id: "zinecraft:iron_guard_advance" }
 			optional: true
-			tasks: [{ id: "C40000000000006A", item: { count: 1, id: "zinecraft:collectible_iron_guard_advance" }, type: "item" }]
+			tasks: [{ id: "C40000000000006A", item: { count: 1, id: "zinecraft:iron_guard_advance" }, type: "item" }]
 			x: 6.0d
 			y: 2.0d
 		}
 		{
 			id: "C30000000000006B"
-			icon: { id: "zinecraft:collectible_iron_guard_impenetrable" }
+			icon: { id: "zinecraft:iron_guard_impenetrable" }
 			optional: true
-			tasks: [{ id: "C40000000000006B", item: { count: 1, id: "zinecraft:collectible_iron_guard_impenetrable" }, type: "item" }]
+			tasks: [{ id: "C40000000000006B", item: { count: 1, id: "zinecraft:iron_guard_impenetrable" }, type: "item" }]
 			x: 8.0d
 			y: 2.0d
 		}
 		{
 			id: "C30000000000006D"
-			icon: { id: "zinecraft:collectible_fatal_bolts_precision" }
+			icon: { id: "zinecraft:fatal_bolts_precision" }
 			optional: true
-			tasks: [{ id: "C40000000000006D", item: { count: 1, id: "zinecraft:collectible_fatal_bolts_precision" }, type: "item" }]
+			tasks: [{ id: "C40000000000006D", item: { count: 1, id: "zinecraft:fatal_bolts_precision" }, type: "item" }]
 			x: 10.0d
 			y: 2.0d
 		}
 		{
 			id: "C30000000000006E"
-			icon: { id: "zinecraft:collectible_fatal_bolts_synergy" }
+			icon: { id: "zinecraft:fatal_bolts_synergy" }
 			optional: true
-			tasks: [{ id: "C40000000000006E", item: { count: 1, id: "zinecraft:collectible_fatal_bolts_synergy" }, type: "item" }]
+			tasks: [{ id: "C40000000000006E", item: { count: 1, id: "zinecraft:fatal_bolts_synergy" }, type: "item" }]
 			x: 12.0d
 			y: 2.0d
 		}
 		{
 			id: "C30000000000006F"
-			icon: { id: "zinecraft:collectible_fatal_bolts_crossfire" }
+			icon: { id: "zinecraft:fatal_bolts_crossfire" }
 			optional: true
-			tasks: [{ id: "C40000000000006F", item: { count: 1, id: "zinecraft:collectible_fatal_bolts_crossfire" }, type: "item" }]
+			tasks: [{ id: "C40000000000006F", item: { count: 1, id: "zinecraft:fatal_bolts_crossfire" }, type: "item" }]
 			x: 14.0d
 			y: 2.0d
 		}
 		{
 			id: "C300000000000070"
-			icon: { id: "zinecraft:collectible_fatal_bolts_divine_speed" }
+			icon: { id: "zinecraft:fatal_bolts_divine_speed" }
 			optional: true
-			tasks: [{ id: "C400000000000070", item: { count: 1, id: "zinecraft:collectible_fatal_bolts_divine_speed" }, type: "item" }]
+			tasks: [{ id: "C400000000000070", item: { count: 1, id: "zinecraft:fatal_bolts_divine_speed" }, type: "item" }]
 			x: 16.0d
 			y: 2.0d
 		}
 		{
 			id: "C300000000000072"
-			icon: { id: "zinecraft:collectible_broken_wand_arts_weaving" }
+			icon: { id: "zinecraft:broken_wand_arts_weaving" }
 			optional: true
-			tasks: [{ id: "C400000000000072", item: { count: 1, id: "zinecraft:collectible_broken_wand_arts_weaving" }, type: "item" }]
+			tasks: [{ id: "C400000000000072", item: { count: 1, id: "zinecraft:broken_wand_arts_weaving" }, type: "item" }]
 			x: 18.0d
 			y: 2.0d
 		}
 		{
 			id: "C300000000000073"
-			icon: { id: "zinecraft:collectible_broken_wand_chanting" }
+			icon: { id: "zinecraft:broken_wand_chanting" }
 			optional: true
-			tasks: [{ id: "C400000000000073", item: { count: 1, id: "zinecraft:collectible_broken_wand_chanting" }, type: "item" }]
+			tasks: [{ id: "C400000000000073", item: { count: 1, id: "zinecraft:broken_wand_chanting" }, type: "item" }]
 			x: 20.0d
 			y: 2.0d
 		}
 		{
 			id: "C300000000000074"
-			icon: { id: "zinecraft:collectible_broken_wand_concentration" }
+			icon: { id: "zinecraft:broken_wand_concentration" }
 			optional: true
-			tasks: [{ id: "C400000000000074", item: { count: 1, id: "zinecraft:collectible_broken_wand_concentration" }, type: "item" }]
+			tasks: [{ id: "C400000000000074", item: { count: 1, id: "zinecraft:broken_wand_concentration" }, type: "item" }]
 			x: 22.0d
 			y: 2.0d
 		}
 		{
 			id: "C300000000000075"
-			icon: { id: "zinecraft:collectible_broken_wand_malediction" }
+			icon: { id: "zinecraft:broken_wand_malediction" }
 			optional: true
-			tasks: [{ id: "C400000000000075", item: { count: 1, id: "zinecraft:collectible_broken_wand_malediction" }, type: "item" }]
+			tasks: [{ id: "C400000000000075", item: { count: 1, id: "zinecraft:broken_wand_malediction" }, type: "item" }]
 			x: 0.0d
 			y: 4.0d
 		}
 		{
 			id: "C300000000000077"
-			icon: { id: "zinecraft:collectible_stalwart_aid_secondary_front" }
+			icon: { id: "zinecraft:stalwart_aid_secondary_front" }
 			optional: true
-			tasks: [{ id: "C400000000000077", item: { count: 1, id: "zinecraft:collectible_stalwart_aid_secondary_front" }, type: "item" }]
+			tasks: [{ id: "C400000000000077", item: { count: 1, id: "zinecraft:stalwart_aid_secondary_front" }, type: "item" }]
 			x: 2.0d
 			y: 4.0d
 		}
 		{
 			id: "C300000000000078"
-			icon: { id: "zinecraft:collectible_stalwart_aid_diligence" }
+			icon: { id: "zinecraft:stalwart_aid_diligence" }
 			optional: true
-			tasks: [{ id: "C400000000000078", item: { count: 1, id: "zinecraft:collectible_stalwart_aid_diligence" }, type: "item" }]
+			tasks: [{ id: "C400000000000078", item: { count: 1, id: "zinecraft:stalwart_aid_diligence" }, type: "item" }]
 			x: 4.0d
 			y: 4.0d
 		}
 		{
 			id: "C30000000000007C"
-			icon: { id: "zinecraft:collectible_healers_path_self_treating" }
+			icon: { id: "zinecraft:healers_path_self_treating" }
 			optional: true
-			tasks: [{ id: "C40000000000007C", item: { count: 1, id: "zinecraft:collectible_healers_path_self_treating" }, type: "item" }]
+			tasks: [{ id: "C40000000000007C", item: { count: 1, id: "zinecraft:healers_path_self_treating" }, type: "item" }]
 			x: 6.0d
 			y: 4.0d
 		}
 		{
 			id: "C30000000000007D"
-			icon: { id: "zinecraft:collectible_healers_path_potency" }
+			icon: { id: "zinecraft:healers_path_potency" }
 			optional: true
-			tasks: [{ id: "C40000000000007D", item: { count: 1, id: "zinecraft:collectible_healers_path_potency" }, type: "item" }]
+			tasks: [{ id: "C40000000000007D", item: { count: 1, id: "zinecraft:healers_path_potency" }, type: "item" }]
 			x: 8.0d
 			y: 4.0d
 		}
 		{
 			id: "C30000000000007E"
-			icon: { id: "zinecraft:collectible_healers_path_keen_hands" }
+			icon: { id: "zinecraft:healers_path_keen_hands" }
 			optional: true
-			tasks: [{ id: "C40000000000007E", item: { count: 1, id: "zinecraft:collectible_healers_path_keen_hands" }, type: "item" }]
+			tasks: [{ id: "C40000000000007E", item: { count: 1, id: "zinecraft:healers_path_keen_hands" }, type: "item" }]
 			x: 10.0d
 			y: 4.0d
 		}
 		{
 			id: "C300000000000081"
-			icon: { id: "zinecraft:collectible_rusted_blade_execution" }
+			icon: { id: "zinecraft:rusted_blade_execution" }
 			optional: true
-			tasks: [{ id: "C400000000000081", item: { count: 1, id: "zinecraft:collectible_rusted_blade_execution" }, type: "item" }]
+			tasks: [{ id: "C400000000000081", item: { count: 1, id: "zinecraft:rusted_blade_execution" }, type: "item" }]
 			x: 12.0d
 			y: 4.0d
 		}
 		{
 			id: "C300000000000085"
-			icon: { id: "zinecraft:collectible_hand_of_spikes" }
+			icon: { id: "zinecraft:hand_of_spikes" }
 			optional: true
-			tasks: [{ id: "C400000000000085", item: { count: 1, id: "zinecraft:collectible_hand_of_spikes" }, type: "item" }]
+			tasks: [{ id: "C400000000000085", item: { count: 1, id: "zinecraft:hand_of_spikes" }, type: "item" }]
 			x: 14.0d
 			y: 4.0d
 		}
 		{
 			id: "C300000000000087"
-			icon: { id: "zinecraft:collectible_hand_of_buckler" }
+			icon: { id: "zinecraft:hand_of_buckler" }
 			optional: true
-			tasks: [{ id: "C400000000000087", item: { count: 1, id: "zinecraft:collectible_hand_of_buckler" }, type: "item" }]
+			tasks: [{ id: "C400000000000087", item: { count: 1, id: "zinecraft:hand_of_buckler" }, type: "item" }]
 			x: 16.0d
 			y: 4.0d
 		}
 		{
 			id: "C300000000000088"
-			icon: { id: "zinecraft:collectible_hand_of_diffusion" }
+			icon: { id: "zinecraft:hand_of_diffusion" }
 			optional: true
-			tasks: [{ id: "C400000000000088", item: { count: 1, id: "zinecraft:collectible_hand_of_diffusion" }, type: "item" }]
+			tasks: [{ id: "C400000000000088", item: { count: 1, id: "zinecraft:hand_of_diffusion" }, type: "item" }]
 			x: 18.0d
 			y: 4.0d
 		}
 		{
 			id: "C30000000000008A"
-			icon: { id: "zinecraft:collectible_hand_of_superspeed" }
+			icon: { id: "zinecraft:hand_of_superspeed" }
 			optional: true
-			tasks: [{ id: "C40000000000008A", item: { count: 1, id: "zinecraft:collectible_hand_of_superspeed" }, type: "item" }]
+			tasks: [{ id: "C40000000000008A", item: { count: 1, id: "zinecraft:hand_of_superspeed" }, type: "item" }]
 			x: 20.0d
 			y: 4.0d
 		}
 		{
 			id: "C300000000000095"
-			icon: { id: "zinecraft:collectible_ancient_gaulish_silver_coin" }
+			icon: { id: "zinecraft:ancient_gaulish_silver_coin" }
 			optional: true
-			tasks: [{ id: "C400000000000095", item: { count: 1, id: "zinecraft:collectible_ancient_gaulish_silver_coin" }, type: "item" }]
+			tasks: [{ id: "C400000000000095", item: { count: 1, id: "zinecraft:ancient_gaulish_silver_coin" }, type: "item" }]
 			x: 22.0d
 			y: 4.0d
 		}
 		{
 			id: "C300000000000096"
-			icon: { id: "zinecraft:collectible_elysee_purse" }
+			icon: { id: "zinecraft:elysee_purse" }
 			optional: true
-			tasks: [{ id: "C400000000000096", item: { count: 1, id: "zinecraft:collectible_elysee_purse" }, type: "item" }]
+			tasks: [{ id: "C400000000000096", item: { count: 1, id: "zinecraft:elysee_purse" }, type: "item" }]
 			x: 0.0d
 			y: 6.0d
 		}
 		{
 			id: "C300000000000097"
-			icon: { id: "zinecraft:collectible_bank_of_gaul_check" }
+			icon: { id: "zinecraft:bank_of_gaul_check" }
 			optional: true
-			tasks: [{ id: "C400000000000097", item: { count: 1, id: "zinecraft:collectible_bank_of_gaul_check" }, type: "item" }]
+			tasks: [{ id: "C400000000000097", item: { count: 1, id: "zinecraft:bank_of_gaul_check" }, type: "item" }]
 			x: 2.0d
 			y: 6.0d
 		}
 		{
 			id: "C300000000000098"
-			icon: { id: "zinecraft:collectible_second_economic_reform_act" }
+			icon: { id: "zinecraft:second_economic_reform_act" }
 			optional: true
-			tasks: [{ id: "C400000000000098", item: { count: 1, id: "zinecraft:collectible_second_economic_reform_act" }, type: "item" }]
+			tasks: [{ id: "C400000000000098", item: { count: 1, id: "zinecraft:second_economic_reform_act" }, type: "item" }]
 			x: 4.0d
 			y: 6.0d
 		}
 		{
 			id: "C300000000000099"
-			icon: { id: "zinecraft:collectible_vanilla_soda" }
+			icon: { id: "zinecraft:vanilla_soda" }
 			optional: true
-			tasks: [{ id: "C400000000000099", item: { count: 1, id: "zinecraft:collectible_vanilla_soda" }, type: "item" }]
+			tasks: [{ id: "C400000000000099", item: { count: 1, id: "zinecraft:vanilla_soda" }, type: "item" }]
 			x: 6.0d
 			y: 6.0d
 		}
 		{
 			id: "C30000000000009A"
-			icon: { id: "zinecraft:collectible_ball_juice" }
+			icon: { id: "zinecraft:ball_juice" }
 			optional: true
-			tasks: [{ id: "C40000000000009A", item: { count: 1, id: "zinecraft:collectible_ball_juice" }, type: "item" }]
+			tasks: [{ id: "C40000000000009A", item: { count: 1, id: "zinecraft:ball_juice" }, type: "item" }]
 			x: 8.0d
 			y: 6.0d
 		}
 		{
 			id: "C30000000000009B"
-			icon: { id: "zinecraft:collectible_fowlbeast_liver_pate" }
+			icon: { id: "zinecraft:fowlbeast_liver_pate" }
 			optional: true
-			tasks: [{ id: "C40000000000009B", item: { count: 1, id: "zinecraft:collectible_fowlbeast_liver_pate" }, type: "item" }]
+			tasks: [{ id: "C40000000000009B", item: { count: 1, id: "zinecraft:fowlbeast_liver_pate" }, type: "item" }]
 			x: 10.0d
 			y: 6.0d
 		}
 		{
 			id: "C30000000000009C"
-			icon: { id: "zinecraft:collectible_dreaming_essence" }
+			icon: { id: "zinecraft:dreaming_essence" }
 			optional: true
-			tasks: [{ id: "C40000000000009C", item: { count: 1, id: "zinecraft:collectible_dreaming_essence" }, type: "item" }]
+			tasks: [{ id: "C40000000000009C", item: { count: 1, id: "zinecraft:dreaming_essence" }, type: "item" }]
 			x: 12.0d
 			y: 6.0d
 		}
 		{
 			id: "C30000000000009D"
-			icon: { id: "zinecraft:collectible_barrens_tequila" }
+			icon: { id: "zinecraft:barrens_tequila" }
 			optional: true
-			tasks: [{ id: "C40000000000009D", item: { count: 1, id: "zinecraft:collectible_barrens_tequila" }, type: "item" }]
+			tasks: [{ id: "C40000000000009D", item: { count: 1, id: "zinecraft:barrens_tequila" }, type: "item" }]
 			x: 14.0d
 			y: 6.0d
 		}
 		{
 			id: "C30000000000009E"
-			icon: { id: "zinecraft:collectible_captain_morgans_wine" }
+			icon: { id: "zinecraft:captain_morgans_wine" }
 			optional: true
-			tasks: [{ id: "C40000000000009E", item: { count: 1, id: "zinecraft:collectible_captain_morgans_wine" }, type: "item" }]
+			tasks: [{ id: "C40000000000009E", item: { count: 1, id: "zinecraft:captain_morgans_wine" }, type: "item" }]
 			x: 16.0d
 			y: 6.0d
 		}
 		{
 			id: "C30000000000009F"
-			icon: { id: "zinecraft:collectible_water_of_life" }
+			icon: { id: "zinecraft:water_of_life" }
 			optional: true
-			tasks: [{ id: "C40000000000009F", item: { count: 1, id: "zinecraft:collectible_water_of_life" }, type: "item" }]
+			tasks: [{ id: "C40000000000009F", item: { count: 1, id: "zinecraft:water_of_life" }, type: "item" }]
 			x: 18.0d
 			y: 6.0d
 		}
 		{
 			id: "C3000000000000A0"
-			icon: { id: "zinecraft:collectible_royal_liqueur" }
+			icon: { id: "zinecraft:royal_liqueur" }
 			optional: true
-			tasks: [{ id: "C4000000000000A0", item: { count: 1, id: "zinecraft:collectible_royal_liqueur" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A0", item: { count: 1, id: "zinecraft:royal_liqueur" }, type: "item" }]
 			x: 20.0d
 			y: 6.0d
 		}
 		{
 			id: "C3000000000000A5"
-			icon: { id: "zinecraft:collectible_coin_operated_toy" }
+			icon: { id: "zinecraft:coin_operated_toy" }
 			optional: true
-			tasks: [{ id: "C4000000000000A5", item: { count: 1, id: "zinecraft:collectible_coin_operated_toy" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A5", item: { count: 1, id: "zinecraft:coin_operated_toy" }, type: "item" }]
 			x: 22.0d
 			y: 6.0d
 		}
 		{
 			id: "C3000000000000A6"
-			icon: { id: "zinecraft:collectible_chivalric_commandments_new_edition" }
+			icon: { id: "zinecraft:chivalric_commandments_new_edition" }
 			optional: true
-			tasks: [{ id: "C4000000000000A6", item: { count: 1, id: "zinecraft:collectible_chivalric_commandments_new_edition" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A6", item: { count: 1, id: "zinecraft:chivalric_commandments_new_edition" }, type: "item" }]
 			x: 0.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000A7"
-			icon: { id: "zinecraft:collectible_golden_chalice" }
+			icon: { id: "zinecraft:golden_chalice" }
 			optional: true
-			tasks: [{ id: "C4000000000000A7", item: { count: 1, id: "zinecraft:collectible_golden_chalice" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A7", item: { count: 1, id: "zinecraft:golden_chalice" }, type: "item" }]
 			x: 2.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000A8"
-			icon: { id: "zinecraft:collectible_spinach_pack" }
+			icon: { id: "zinecraft:spinach_pack" }
 			optional: true
-			tasks: [{ id: "C4000000000000A8", item: { count: 1, id: "zinecraft:collectible_spinach_pack" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A8", item: { count: 1, id: "zinecraft:spinach_pack" }, type: "item" }]
 			x: 4.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000A9"
-			icon: { id: "zinecraft:collectible_no_073_safety_reagent" }
+			icon: { id: "zinecraft:no_073_safety_reagent" }
 			optional: true
-			tasks: [{ id: "C4000000000000A9", item: { count: 1, id: "zinecraft:collectible_no_073_safety_reagent" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A9", item: { count: 1, id: "zinecraft:no_073_safety_reagent" }, type: "item" }]
 			x: 6.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000AA"
-			icon: { id: "zinecraft:collectible_wrath_of_siracusans" }
+			icon: { id: "zinecraft:wrath_of_siracusans" }
 			optional: true
-			tasks: [{ id: "C4000000000000AA", item: { count: 1, id: "zinecraft:collectible_wrath_of_siracusans" }, type: "item" }]
+			tasks: [{ id: "C4000000000000AA", item: { count: 1, id: "zinecraft:wrath_of_siracusans" }, type: "item" }]
 			x: 8.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000AC"
-			icon: { id: "zinecraft:collectible_ribbon_of_honor" }
+			icon: { id: "zinecraft:ribbon_of_honor" }
 			optional: true
-			tasks: [{ id: "C4000000000000AC", item: { count: 1, id: "zinecraft:collectible_ribbon_of_honor" }, type: "item" }]
+			tasks: [{ id: "C4000000000000AC", item: { count: 1, id: "zinecraft:ribbon_of_honor" }, type: "item" }]
 			x: 10.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000C1"
-			icon: { id: "zinecraft:collectible_right_eye_of_the_natator" }
+			icon: { id: "zinecraft:right_eye_of_the_natator" }
 			optional: true
-			tasks: [{ id: "C4000000000000C1", item: { count: 1, id: "zinecraft:collectible_right_eye_of_the_natator" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C1", item: { count: 1, id: "zinecraft:right_eye_of_the_natator" }, type: "item" }]
 			x: 12.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000C2"
-			icon: { id: "zinecraft:collectible_left_eye_of_the_natator" }
+			icon: { id: "zinecraft:left_eye_of_the_natator" }
 			optional: true
-			tasks: [{ id: "C4000000000000C2", item: { count: 1, id: "zinecraft:collectible_left_eye_of_the_natator" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C2", item: { count: 1, id: "zinecraft:left_eye_of_the_natator" }, type: "item" }]
 			x: 14.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000C6"
-			icon: { id: "zinecraft:collectible_familiar_sculpture" }
+			icon: { id: "zinecraft:familiar_sculpture" }
 			optional: true
-			tasks: [{ id: "C4000000000000C6", item: { count: 1, id: "zinecraft:collectible_familiar_sculpture" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C6", item: { count: 1, id: "zinecraft:familiar_sculpture" }, type: "item" }]
 			x: 16.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000CA"
-			icon: { id: "zinecraft:collectible_bladedance" }
+			icon: { id: "zinecraft:bladedance" }
 			optional: true
-			tasks: [{ id: "C4000000000000CA", item: { count: 1, id: "zinecraft:collectible_bladedance" }, type: "item" }]
+			tasks: [{ id: "C4000000000000CA", item: { count: 1, id: "zinecraft:bladedance" }, type: "item" }]
 			x: 18.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000E0"
-			icon: { id: "zinecraft:collectible_old_fan" }
+			icon: { id: "zinecraft:old_fan" }
 			optional: true
-			tasks: [{ id: "C4000000000000E0", item: { count: 1, id: "zinecraft:collectible_old_fan" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E0", item: { count: 1, id: "zinecraft:old_fan" }, type: "item" }]
 			x: 20.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000E5"
-			icon: { id: "zinecraft:collectible_focus" }
+			icon: { id: "zinecraft:focus" }
 			optional: true
-			tasks: [{ id: "C4000000000000E5", item: { count: 1, id: "zinecraft:collectible_focus" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E5", item: { count: 1, id: "zinecraft:focus" }, type: "item" }]
 			x: 22.0d
 			y: 8.0d
 		}
 		{
 			id: "C3000000000000E7"
-			icon: { id: "zinecraft:collectible_assault_co_op_sharp_blade" }
+			icon: { id: "zinecraft:assault_co_op_sharp_blade" }
 			optional: true
-			tasks: [{ id: "C4000000000000E7", item: { count: 1, id: "zinecraft:collectible_assault_co_op_sharp_blade" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E7", item: { count: 1, id: "zinecraft:assault_co_op_sharp_blade" }, type: "item" }]
 			x: 0.0d
 			y: 10.0d
 		}
 		{
 			id: "C3000000000000E9"
-			icon: { id: "zinecraft:collectible_fortification_contract_phalanx" }
+			icon: { id: "zinecraft:fortification_contract_phalanx" }
 			optional: true
-			tasks: [{ id: "C4000000000000E9", item: { count: 1, id: "zinecraft:collectible_fortification_contract_phalanx" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E9", item: { count: 1, id: "zinecraft:fortification_contract_phalanx" }, type: "item" }]
 			x: 2.0d
 			y: 10.0d
 		}
 		{
 			id: "C3000000000000EB"
-			icon: { id: "zinecraft:collectible_long_range_contract_remote_strike" }
+			icon: { id: "zinecraft:long_range_contract_remote_strike" }
 			optional: true
-			tasks: [{ id: "C4000000000000EB", item: { count: 1, id: "zinecraft:collectible_long_range_contract_remote_strike" }, type: "item" }]
+			tasks: [{ id: "C4000000000000EB", item: { count: 1, id: "zinecraft:long_range_contract_remote_strike" }, type: "item" }]
 			x: 4.0d
 			y: 10.0d
 		}
 		{
 			id: "C3000000000000EC"
-			icon: { id: "zinecraft:collectible_long_range_contract_assassination" }
+			icon: { id: "zinecraft:long_range_contract_assassination" }
 			optional: true
-			tasks: [{ id: "C4000000000000EC", item: { count: 1, id: "zinecraft:collectible_long_range_contract_assassination" }, type: "item" }]
+			tasks: [{ id: "C4000000000000EC", item: { count: 1, id: "zinecraft:long_range_contract_assassination" }, type: "item" }]
 			x: 6.0d
 			y: 10.0d
 		}
 		{
 			id: "C3000000000000ED"
-			icon: { id: "zinecraft:collectible_sabotage_co_op_elimination" }
+			icon: { id: "zinecraft:sabotage_co_op_elimination" }
 			optional: true
-			tasks: [{ id: "C4000000000000ED", item: { count: 1, id: "zinecraft:collectible_sabotage_co_op_elimination" }, type: "item" }]
+			tasks: [{ id: "C4000000000000ED", item: { count: 1, id: "zinecraft:sabotage_co_op_elimination" }, type: "item" }]
 			x: 8.0d
 			y: 10.0d
 		}
 		{
 			id: "C3000000000000EE"
-			icon: { id: "zinecraft:collectible_sabotage_co_op_suppression" }
+			icon: { id: "zinecraft:sabotage_co_op_suppression" }
 			optional: true
-			tasks: [{ id: "C4000000000000EE", item: { count: 1, id: "zinecraft:collectible_sabotage_co_op_suppression" }, type: "item" }]
+			tasks: [{ id: "C4000000000000EE", item: { count: 1, id: "zinecraft:sabotage_co_op_suppression" }, type: "item" }]
 			x: 10.0d
 			y: 10.0d
 		}
 		{
 			id: "C3000000000000F5"
-			icon: { id: "zinecraft:collectible_excessiveness" }
+			icon: { id: "zinecraft:excessiveness" }
 			optional: true
-			tasks: [{ id: "C4000000000000F5", item: { count: 1, id: "zinecraft:collectible_excessiveness" }, type: "item" }]
+			tasks: [{ id: "C4000000000000F5", item: { count: 1, id: "zinecraft:excessiveness" }, type: "item" }]
 			x: 12.0d
 			y: 10.0d
 		}
 		{
 			id: "C100000000000002"
-			icon: { id: "zinecraft:collectible_live_rose" }
+			icon: { id: "zinecraft:live_rose" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -566,71 +566,71 @@
 		}
 		{
 			id: "C300000000000049"
-			icon: { id: "zinecraft:collectible_live_rose" }
+			icon: { id: "zinecraft:live_rose" }
 			optional: true
-			tasks: [{ id: "C400000000000049", item: { count: 1, id: "zinecraft:collectible_live_rose" }, type: "item" }]
+			tasks: [{ id: "C400000000000049", item: { count: 1, id: "zinecraft:live_rose" }, type: "item" }]
 			x: 0.0d
 			y: 16.0d
 		}
 		{
 			id: "C30000000000004A"
-			icon: { id: "zinecraft:collectible_white_flower_crown" }
+			icon: { id: "zinecraft:white_flower_crown" }
 			optional: true
-			tasks: [{ id: "C40000000000004A", item: { count: 1, id: "zinecraft:collectible_white_flower_crown" }, type: "item" }]
+			tasks: [{ id: "C40000000000004A", item: { count: 1, id: "zinecraft:white_flower_crown" }, type: "item" }]
 			x: 2.0d
 			y: 16.0d
 		}
 		{
 			id: "C30000000000004B"
-			icon: { id: "zinecraft:collectible_actors_perfume" }
+			icon: { id: "zinecraft:actors_perfume" }
 			optional: true
-			tasks: [{ id: "C40000000000004B", item: { count: 1, id: "zinecraft:collectible_actors_perfume" }, type: "item" }]
+			tasks: [{ id: "C40000000000004B", item: { count: 1, id: "zinecraft:actors_perfume" }, type: "item" }]
 			x: 4.0d
 			y: 16.0d
 		}
 		{
 			id: "C3000000000000AD"
-			icon: { id: "zinecraft:collectible_loyality" }
+			icon: { id: "zinecraft:loyality" }
 			optional: true
-			tasks: [{ id: "C4000000000000AD", item: { count: 1, id: "zinecraft:collectible_loyality" }, type: "item" }]
+			tasks: [{ id: "C4000000000000AD", item: { count: 1, id: "zinecraft:loyality" }, type: "item" }]
 			x: 6.0d
 			y: 16.0d
 		}
 		{
 			id: "C3000000000000CD"
-			icon: { id: "zinecraft:collectible_flowers_of_quinde" }
+			icon: { id: "zinecraft:flowers_of_quinde" }
 			optional: true
-			tasks: [{ id: "C4000000000000CD", item: { count: 1, id: "zinecraft:collectible_flowers_of_quinde" }, type: "item" }]
+			tasks: [{ id: "C4000000000000CD", item: { count: 1, id: "zinecraft:flowers_of_quinde" }, type: "item" }]
 			x: 8.0d
 			y: 16.0d
 		}
 		{
 			id: "C3000000000000D8"
-			icon: { id: "zinecraft:collectible_todays_menu" }
+			icon: { id: "zinecraft:todays_menu" }
 			optional: true
-			tasks: [{ id: "C4000000000000D8", item: { count: 1, id: "zinecraft:collectible_todays_menu" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D8", item: { count: 1, id: "zinecraft:todays_menu" }, type: "item" }]
 			x: 10.0d
 			y: 16.0d
 		}
 		{
 			id: "C3000000000000D9"
-			icon: { id: "zinecraft:collectible_intoxicated_hymnoi" }
+			icon: { id: "zinecraft:intoxicated_hymnoi" }
 			optional: true
-			tasks: [{ id: "C4000000000000D9", item: { count: 1, id: "zinecraft:collectible_intoxicated_hymnoi" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D9", item: { count: 1, id: "zinecraft:intoxicated_hymnoi" }, type: "item" }]
 			x: 12.0d
 			y: 16.0d
 		}
 		{
 			id: "C3000000000000F3"
-			icon: { id: "zinecraft:collectible_surging_feast" }
+			icon: { id: "zinecraft:surging_feast" }
 			optional: true
-			tasks: [{ id: "C4000000000000F3", item: { count: 1, id: "zinecraft:collectible_surging_feast" }, type: "item" }]
+			tasks: [{ id: "C4000000000000F3", item: { count: 1, id: "zinecraft:surging_feast" }, type: "item" }]
 			x: 14.0d
 			y: 16.0d
 		}
 		{
 			id: "C100000000000003"
-			icon: { id: "zinecraft:collectible_silent_squad" }
+			icon: { id: "zinecraft:silent_squad" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -640,239 +640,239 @@
 		}
 		{
 			id: "C30000000000002D"
-			icon: { id: "zinecraft:collectible_silent_squad" }
+			icon: { id: "zinecraft:silent_squad" }
 			optional: true
-			tasks: [{ id: "C40000000000002D", item: { count: 1, id: "zinecraft:collectible_silent_squad" }, type: "item" }]
+			tasks: [{ id: "C40000000000002D", item: { count: 1, id: "zinecraft:silent_squad" }, type: "item" }]
 			x: 0.0d
 			y: 22.0d
 		}
 		{
 			id: "C30000000000002E"
-			icon: { id: "zinecraft:collectible_fissured_restraints" }
+			icon: { id: "zinecraft:fissured_restraints" }
 			optional: true
-			tasks: [{ id: "C40000000000002E", item: { count: 1, id: "zinecraft:collectible_fissured_restraints" }, type: "item" }]
+			tasks: [{ id: "C40000000000002E", item: { count: 1, id: "zinecraft:fissured_restraints" }, type: "item" }]
 			x: 2.0d
 			y: 22.0d
 		}
 		{
 			id: "C30000000000002F"
-			icon: { id: "zinecraft:collectible_abyssal_wyrdmask" }
+			icon: { id: "zinecraft:abyssal_wyrdmask" }
 			optional: true
-			tasks: [{ id: "C40000000000002F", item: { count: 1, id: "zinecraft:collectible_abyssal_wyrdmask" }, type: "item" }]
+			tasks: [{ id: "C40000000000002F", item: { count: 1, id: "zinecraft:abyssal_wyrdmask" }, type: "item" }]
 			x: 4.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000030"
-			icon: { id: "zinecraft:collectible_godmothers_token" }
+			icon: { id: "zinecraft:godmothers_token" }
 			optional: true
-			tasks: [{ id: "C400000000000030", item: { count: 1, id: "zinecraft:collectible_godmothers_token" }, type: "item" }]
+			tasks: [{ id: "C400000000000030", item: { count: 1, id: "zinecraft:godmothers_token" }, type: "item" }]
 			x: 6.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000037"
-			icon: { id: "zinecraft:collectible_oriron_round_shield" }
+			icon: { id: "zinecraft:oriron_round_shield" }
 			optional: true
-			tasks: [{ id: "C400000000000037", item: { count: 1, id: "zinecraft:collectible_oriron_round_shield" }, type: "item" }]
+			tasks: [{ id: "C400000000000037", item: { count: 1, id: "zinecraft:oriron_round_shield" }, type: "item" }]
 			x: 8.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000038"
-			icon: { id: "zinecraft:collectible_military_mirror_armor" }
+			icon: { id: "zinecraft:military_mirror_armor" }
 			optional: true
-			tasks: [{ id: "C400000000000038", item: { count: 1, id: "zinecraft:collectible_military_mirror_armor" }, type: "item" }]
+			tasks: [{ id: "C400000000000038", item: { count: 1, id: "zinecraft:military_mirror_armor" }, type: "item" }]
 			x: 10.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000039"
-			icon: { id: "zinecraft:collectible_old_steam_armor" }
+			icon: { id: "zinecraft:old_steam_armor" }
 			optional: true
-			tasks: [{ id: "C400000000000039", item: { count: 1, id: "zinecraft:collectible_old_steam_armor" }, type: "item" }]
+			tasks: [{ id: "C400000000000039", item: { count: 1, id: "zinecraft:old_steam_armor" }, type: "item" }]
 			x: 12.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000043"
-			icon: { id: "zinecraft:collectible_rusted_razor" }
+			icon: { id: "zinecraft:rusted_razor" }
 			optional: true
-			tasks: [{ id: "C400000000000043", item: { count: 1, id: "zinecraft:collectible_rusted_razor" }, type: "item" }]
+			tasks: [{ id: "C400000000000043", item: { count: 1, id: "zinecraft:rusted_razor" }, type: "item" }]
 			x: 14.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000044"
-			icon: { id: "zinecraft:collectible_carriage_drivers_whip" }
+			icon: { id: "zinecraft:carriage_drivers_whip" }
 			optional: true
-			tasks: [{ id: "C400000000000044", item: { count: 1, id: "zinecraft:collectible_carriage_drivers_whip" }, type: "item" }]
+			tasks: [{ id: "C400000000000044", item: { count: 1, id: "zinecraft:carriage_drivers_whip" }, type: "item" }]
 			x: 16.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000045"
-			icon: { id: "zinecraft:collectible_avenger" }
+			icon: { id: "zinecraft:avenger" }
 			optional: true
-			tasks: [{ id: "C400000000000045", item: { count: 1, id: "zinecraft:collectible_avenger" }, type: "item" }]
+			tasks: [{ id: "C400000000000045", item: { count: 1, id: "zinecraft:avenger" }, type: "item" }]
 			x: 18.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000046"
-			icon: { id: "zinecraft:collectible_standard_anti_riot_instrument" }
+			icon: { id: "zinecraft:standard_anti_riot_instrument" }
 			optional: true
-			tasks: [{ id: "C400000000000046", item: { count: 1, id: "zinecraft:collectible_standard_anti_riot_instrument" }, type: "item" }]
+			tasks: [{ id: "C400000000000046", item: { count: 1, id: "zinecraft:standard_anti_riot_instrument" }, type: "item" }]
 			x: 20.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000047"
-			icon: { id: "zinecraft:collectible_emperors_collection" }
+			icon: { id: "zinecraft:emperors_collection" }
 			optional: true
-			tasks: [{ id: "C400000000000047", item: { count: 1, id: "zinecraft:collectible_emperors_collection" }, type: "item" }]
+			tasks: [{ id: "C400000000000047", item: { count: 1, id: "zinecraft:emperors_collection" }, type: "item" }]
 			x: 22.0d
 			y: 22.0d
 		}
 		{
 			id: "C300000000000048"
-			icon: { id: "zinecraft:collectible_brilliant_lament" }
+			icon: { id: "zinecraft:brilliant_lament" }
 			optional: true
-			tasks: [{ id: "C400000000000048", item: { count: 1, id: "zinecraft:collectible_brilliant_lament" }, type: "item" }]
+			tasks: [{ id: "C400000000000048", item: { count: 1, id: "zinecraft:brilliant_lament" }, type: "item" }]
 			x: 0.0d
 			y: 24.0d
 		}
 		{
 			id: "C300000000000069"
-			icon: { id: "zinecraft:collectible_iron_guard_tranquility" }
+			icon: { id: "zinecraft:iron_guard_tranquility" }
 			optional: true
-			tasks: [{ id: "C400000000000069", item: { count: 1, id: "zinecraft:collectible_iron_guard_tranquility" }, type: "item" }]
+			tasks: [{ id: "C400000000000069", item: { count: 1, id: "zinecraft:iron_guard_tranquility" }, type: "item" }]
 			x: 2.0d
 			y: 24.0d
 		}
 		{
 			id: "C300000000000079"
-			icon: { id: "zinecraft:collectible_stalwart_aid_demoralize" }
+			icon: { id: "zinecraft:stalwart_aid_demoralize" }
 			optional: true
-			tasks: [{ id: "C400000000000079", item: { count: 1, id: "zinecraft:collectible_stalwart_aid_demoralize" }, type: "item" }]
+			tasks: [{ id: "C400000000000079", item: { count: 1, id: "zinecraft:stalwart_aid_demoralize" }, type: "item" }]
 			x: 4.0d
 			y: 24.0d
 		}
 		{
 			id: "C30000000000007F"
-			icon: { id: "zinecraft:collectible_healers_path_restore_sanity" }
+			icon: { id: "zinecraft:healers_path_restore_sanity" }
 			optional: true
-			tasks: [{ id: "C40000000000007F", item: { count: 1, id: "zinecraft:collectible_healers_path_restore_sanity" }, type: "item" }]
+			tasks: [{ id: "C40000000000007F", item: { count: 1, id: "zinecraft:healers_path_restore_sanity" }, type: "item" }]
 			x: 6.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000A2"
-			icon: { id: "zinecraft:collectible_renowned_singer" }
+			icon: { id: "zinecraft:renowned_singer" }
 			optional: true
-			tasks: [{ id: "C4000000000000A2", item: { count: 1, id: "zinecraft:collectible_renowned_singer" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A2", item: { count: 1, id: "zinecraft:renowned_singer" }, type: "item" }]
 			x: 8.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000A3"
-			icon: { id: "zinecraft:collectible_string_puppet" }
+			icon: { id: "zinecraft:string_puppet" }
 			optional: true
-			tasks: [{ id: "C4000000000000A3", item: { count: 1, id: "zinecraft:collectible_string_puppet" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A3", item: { count: 1, id: "zinecraft:string_puppet" }, type: "item" }]
 			x: 10.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000A4"
-			icon: { id: "zinecraft:collectible_childrens_puppet" }
+			icon: { id: "zinecraft:childrens_puppet" }
 			optional: true
-			tasks: [{ id: "C4000000000000A4", item: { count: 1, id: "zinecraft:collectible_childrens_puppet" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A4", item: { count: 1, id: "zinecraft:childrens_puppet" }, type: "item" }]
 			x: 12.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000AB"
-			icon: { id: "zinecraft:collectible_civilight_eterna" }
+			icon: { id: "zinecraft:civilight_eterna" }
 			optional: true
-			tasks: [{ id: "C4000000000000AB", item: { count: 1, id: "zinecraft:collectible_civilight_eterna" }, type: "item" }]
+			tasks: [{ id: "C4000000000000AB", item: { count: 1, id: "zinecraft:civilight_eterna" }, type: "item" }]
 			x: 14.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000AF"
-			icon: { id: "zinecraft:collectible_royal_alliance_treaty" }
+			icon: { id: "zinecraft:royal_alliance_treaty" }
 			optional: true
-			tasks: [{ id: "C4000000000000AF", item: { count: 1, id: "zinecraft:collectible_royal_alliance_treaty" }, type: "item" }]
+			tasks: [{ id: "C4000000000000AF", item: { count: 1, id: "zinecraft:royal_alliance_treaty" }, type: "item" }]
 			x: 16.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000B3"
-			icon: { id: "zinecraft:collectible_victoria_crown" }
+			icon: { id: "zinecraft:victoria_crown" }
 			optional: true
-			tasks: [{ id: "C4000000000000B3", item: { count: 1, id: "zinecraft:collectible_victoria_crown" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B3", item: { count: 1, id: "zinecraft:victoria_crown" }, type: "item" }]
 			x: 18.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000B4"
-			icon: { id: "zinecraft:collectible_victoria_crown_reforged" }
+			icon: { id: "zinecraft:victoria_crown_reforged" }
 			optional: true
-			tasks: [{ id: "C4000000000000B4", item: { count: 1, id: "zinecraft:collectible_victoria_crown_reforged" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B4", item: { count: 1, id: "zinecraft:victoria_crown_reforged" }, type: "item" }]
 			x: 20.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000CE"
-			icon: { id: "zinecraft:collectible_numbness_and_obscenity" }
+			icon: { id: "zinecraft:numbness_and_obscenity" }
 			optional: true
-			tasks: [{ id: "C4000000000000CE", item: { count: 1, id: "zinecraft:collectible_numbness_and_obscenity" }, type: "item" }]
+			tasks: [{ id: "C4000000000000CE", item: { count: 1, id: "zinecraft:numbness_and_obscenity" }, type: "item" }]
 			x: 22.0d
 			y: 24.0d
 		}
 		{
 			id: "C3000000000000DE"
-			icon: { id: "zinecraft:collectible_royal_brooch" }
+			icon: { id: "zinecraft:royal_brooch" }
 			optional: true
-			tasks: [{ id: "C4000000000000DE", item: { count: 1, id: "zinecraft:collectible_royal_brooch" }, type: "item" }]
+			tasks: [{ id: "C4000000000000DE", item: { count: 1, id: "zinecraft:royal_brooch" }, type: "item" }]
 			x: 0.0d
 			y: 26.0d
 		}
 		{
 			id: "C3000000000000E3"
-			icon: { id: "zinecraft:collectible_scouts_scope" }
+			icon: { id: "zinecraft:scouts_scope" }
 			optional: true
-			tasks: [{ id: "C4000000000000E3", item: { count: 1, id: "zinecraft:collectible_scouts_scope" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E3", item: { count: 1, id: "zinecraft:scouts_scope" }, type: "item" }]
 			x: 2.0d
 			y: 26.0d
 		}
 		{
 			id: "C3000000000000E8"
-			icon: { id: "zinecraft:collectible_assault_co_op_skirmish" }
+			icon: { id: "zinecraft:assault_co_op_skirmish" }
 			optional: true
-			tasks: [{ id: "C4000000000000E8", item: { count: 1, id: "zinecraft:collectible_assault_co_op_skirmish" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E8", item: { count: 1, id: "zinecraft:assault_co_op_skirmish" }, type: "item" }]
 			x: 4.0d
 			y: 26.0d
 		}
 		{
 			id: "C3000000000000EA"
-			icon: { id: "zinecraft:collectible_fortification_contract_resolution" }
+			icon: { id: "zinecraft:fortification_contract_resolution" }
 			optional: true
-			tasks: [{ id: "C4000000000000EA", item: { count: 1, id: "zinecraft:collectible_fortification_contract_resolution" }, type: "item" }]
+			tasks: [{ id: "C4000000000000EA", item: { count: 1, id: "zinecraft:fortification_contract_resolution" }, type: "item" }]
 			x: 6.0d
 			y: 26.0d
 		}
 		{
 			id: "C3000000000000F2"
-			icon: { id: "zinecraft:collectible_castles_offspring" }
+			icon: { id: "zinecraft:castles_offspring" }
 			optional: true
-			tasks: [{ id: "C4000000000000F2", item: { count: 1, id: "zinecraft:collectible_castles_offspring" }, type: "item" }]
+			tasks: [{ id: "C4000000000000F2", item: { count: 1, id: "zinecraft:castles_offspring" }, type: "item" }]
 			x: 8.0d
 			y: 26.0d
 		}
 		{
 			id: "C100000000000004"
-			icon: { id: "zinecraft:collectible_hot_water_kettle" }
+			icon: { id: "zinecraft:hot_water_kettle" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -882,119 +882,119 @@
 		}
 		{
 			id: "C300000000000001"
-			icon: { id: "zinecraft:collectible_hot_water_kettle" }
+			icon: { id: "zinecraft:hot_water_kettle" }
 			optional: true
-			tasks: [{ id: "C400000000000001", item: { count: 1, id: "zinecraft:collectible_hot_water_kettle" }, type: "item" }]
+			tasks: [{ id: "C400000000000001", item: { count: 1, id: "zinecraft:hot_water_kettle" }, type: "item" }]
 			x: 0.0d
 			y: 32.0d
 		}
 		{
 			id: "C300000000000002"
-			icon: { id: "zinecraft:collectible_special_suppressor" }
+			icon: { id: "zinecraft:special_suppressor" }
 			optional: true
-			tasks: [{ id: "C400000000000002", item: { count: 1, id: "zinecraft:collectible_special_suppressor" }, type: "item" }]
+			tasks: [{ id: "C400000000000002", item: { count: 1, id: "zinecraft:special_suppressor" }, type: "item" }]
 			x: 2.0d
 			y: 32.0d
 		}
 		{
 			id: "C300000000000003"
-			icon: { id: "zinecraft:collectible_stone_gargoyle" }
+			icon: { id: "zinecraft:stone_gargoyle" }
 			optional: true
-			tasks: [{ id: "C400000000000003", item: { count: 1, id: "zinecraft:collectible_stone_gargoyle" }, type: "item" }]
+			tasks: [{ id: "C400000000000003", item: { count: 1, id: "zinecraft:stone_gargoyle" }, type: "item" }]
 			x: 4.0d
 			y: 32.0d
 		}
 		{
 			id: "C300000000000004"
-			icon: { id: "zinecraft:collectible_vampires_bed" }
+			icon: { id: "zinecraft:vampires_bed" }
 			optional: true
-			tasks: [{ id: "C400000000000004", item: { count: 1, id: "zinecraft:collectible_vampires_bed" }, type: "item" }]
+			tasks: [{ id: "C400000000000004", item: { count: 1, id: "zinecraft:vampires_bed" }, type: "item" }]
 			x: 6.0d
 			y: 32.0d
 		}
 		{
 			id: "C300000000000005"
-			icon: { id: "zinecraft:collectible_proof_of_longevity" }
+			icon: { id: "zinecraft:proof_of_longevity" }
 			optional: true
-			tasks: [{ id: "C400000000000005", item: { count: 1, id: "zinecraft:collectible_proof_of_longevity" }, type: "item" }]
+			tasks: [{ id: "C400000000000005", item: { count: 1, id: "zinecraft:proof_of_longevity" }, type: "item" }]
 			x: 8.0d
 			y: 32.0d
 		}
 		{
 			id: "C30000000000004C"
-			icon: { id: "zinecraft:collectible_designers_ruler" }
+			icon: { id: "zinecraft:designers_ruler" }
 			optional: true
-			tasks: [{ id: "C40000000000004C", item: { count: 1, id: "zinecraft:collectible_designers_ruler" }, type: "item" }]
+			tasks: [{ id: "C40000000000004C", item: { count: 1, id: "zinecraft:designers_ruler" }, type: "item" }]
 			x: 10.0d
 			y: 32.0d
 		}
 		{
 			id: "C30000000000004D"
-			icon: { id: "zinecraft:collectible_arts_killer" }
+			icon: { id: "zinecraft:arts_killer" }
 			optional: true
-			tasks: [{ id: "C40000000000004D", item: { count: 1, id: "zinecraft:collectible_arts_killer" }, type: "item" }]
+			tasks: [{ id: "C40000000000004D", item: { count: 1, id: "zinecraft:arts_killer" }, type: "item" }]
 			x: 12.0d
 			y: 32.0d
 		}
 		{
 			id: "C30000000000004E"
-			icon: { id: "zinecraft:collectible_dancers_bracelets" }
+			icon: { id: "zinecraft:dancers_bracelets" }
 			optional: true
-			tasks: [{ id: "C40000000000004E", item: { count: 1, id: "zinecraft:collectible_dancers_bracelets" }, type: "item" }]
+			tasks: [{ id: "C40000000000004E", item: { count: 1, id: "zinecraft:dancers_bracelets" }, type: "item" }]
 			x: 14.0d
 			y: 32.0d
 		}
 		{
 			id: "C300000000000093"
-			icon: { id: "zinecraft:collectible_durin_overground" }
+			icon: { id: "zinecraft:durin_overground" }
 			optional: true
-			tasks: [{ id: "C400000000000093", item: { count: 1, id: "zinecraft:collectible_durin_overground" }, type: "item" }]
+			tasks: [{ id: "C400000000000093", item: { count: 1, id: "zinecraft:durin_overground" }, type: "item" }]
 			x: 16.0d
 			y: 32.0d
 		}
 		{
 			id: "C300000000000094"
-			icon: { id: "zinecraft:collectible_gaulish_toponym_origins" }
+			icon: { id: "zinecraft:gaulish_toponym_origins" }
 			optional: true
-			tasks: [{ id: "C400000000000094", item: { count: 1, id: "zinecraft:collectible_gaulish_toponym_origins" }, type: "item" }]
+			tasks: [{ id: "C400000000000094", item: { count: 1, id: "zinecraft:gaulish_toponym_origins" }, type: "item" }]
 			x: 18.0d
 			y: 32.0d
 		}
 		{
 			id: "C3000000000000AE"
-			icon: { id: "zinecraft:collectible_end_of_times" }
+			icon: { id: "zinecraft:end_of_times" }
 			optional: true
-			tasks: [{ id: "C4000000000000AE", item: { count: 1, id: "zinecraft:collectible_end_of_times" }, type: "item" }]
+			tasks: [{ id: "C4000000000000AE", item: { count: 1, id: "zinecraft:end_of_times" }, type: "item" }]
 			x: 20.0d
 			y: 32.0d
 		}
 		{
 			id: "C3000000000000B5"
-			icon: { id: "zinecraft:collectible_leithanien_sceptre" }
+			icon: { id: "zinecraft:leithanien_sceptre" }
 			optional: true
-			tasks: [{ id: "C4000000000000B5", item: { count: 1, id: "zinecraft:collectible_leithanien_sceptre" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B5", item: { count: 1, id: "zinecraft:leithanien_sceptre" }, type: "item" }]
 			x: 22.0d
 			y: 32.0d
 		}
 		{
 			id: "C3000000000000CF"
-			icon: { id: "zinecraft:collectible_beauty_and_ugliness_in_the_age_of_terra" }
+			icon: { id: "zinecraft:beauty_and_ugliness_in_the_age_of_terra" }
 			optional: true
-			tasks: [{ id: "C4000000000000CF", item: { count: 1, id: "zinecraft:collectible_beauty_and_ugliness_in_the_age_of_terra" }, type: "item" }]
+			tasks: [{ id: "C4000000000000CF", item: { count: 1, id: "zinecraft:beauty_and_ugliness_in_the_age_of_terra" }, type: "item" }]
 			x: 0.0d
 			y: 34.0d
 		}
 		{
 			id: "C3000000000000DA"
-			icon: { id: "zinecraft:collectible_empresses_wish" }
+			icon: { id: "zinecraft:empresses_wish" }
 			optional: true
-			tasks: [{ id: "C4000000000000DA", item: { count: 1, id: "zinecraft:collectible_empresses_wish" }, type: "item" }]
+			tasks: [{ id: "C4000000000000DA", item: { count: 1, id: "zinecraft:empresses_wish" }, type: "item" }]
 			x: 2.0d
 			y: 34.0d
 		}
 		{
 			id: "C100000000000005"
-			icon: { id: "zinecraft:collectible_blunt_claws_mastery" }
+			icon: { id: "zinecraft:blunt_claws_mastery" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -1004,63 +1004,63 @@
 		}
 		{
 			id: "C300000000000061"
-			icon: { id: "zinecraft:collectible_blunt_claws_mastery" }
+			icon: { id: "zinecraft:blunt_claws_mastery" }
 			optional: true
-			tasks: [{ id: "C400000000000061", item: { count: 1, id: "zinecraft:collectible_blunt_claws_mastery" }, type: "item" }]
+			tasks: [{ id: "C400000000000061", item: { count: 1, id: "zinecraft:blunt_claws_mastery" }, type: "item" }]
 			x: 0.0d
 			y: 40.0d
 		}
 		{
 			id: "C30000000000007A"
-			icon: { id: "zinecraft:collectible_stalwart_aid_counter_arts" }
+			icon: { id: "zinecraft:stalwart_aid_counter_arts" }
 			optional: true
-			tasks: [{ id: "C40000000000007A", item: { count: 1, id: "zinecraft:collectible_stalwart_aid_counter_arts" }, type: "item" }]
+			tasks: [{ id: "C40000000000007A", item: { count: 1, id: "zinecraft:stalwart_aid_counter_arts" }, type: "item" }]
 			x: 2.0d
 			y: 40.0d
 		}
 		{
 			id: "C300000000000082"
-			icon: { id: "zinecraft:collectible_rusted_blade_isolation" }
+			icon: { id: "zinecraft:rusted_blade_isolation" }
 			optional: true
-			tasks: [{ id: "C400000000000082", item: { count: 1, id: "zinecraft:collectible_rusted_blade_isolation" }, type: "item" }]
+			tasks: [{ id: "C400000000000082", item: { count: 1, id: "zinecraft:rusted_blade_isolation" }, type: "item" }]
 			x: 4.0d
 			y: 40.0d
 		}
 		{
 			id: "C3000000000000A1"
-			icon: { id: "zinecraft:collectible_unleashings" }
+			icon: { id: "zinecraft:unleashings" }
 			optional: true
-			tasks: [{ id: "C4000000000000A1", item: { count: 1, id: "zinecraft:collectible_unleashings" }, type: "item" }]
+			tasks: [{ id: "C4000000000000A1", item: { count: 1, id: "zinecraft:unleashings" }, type: "item" }]
 			x: 6.0d
 			y: 40.0d
 		}
 		{
 			id: "C3000000000000B6"
-			icon: { id: "zinecraft:collectible_leithanien_sceptre_reforged" }
+			icon: { id: "zinecraft:leithanien_sceptre_reforged" }
 			optional: true
-			tasks: [{ id: "C4000000000000B6", item: { count: 1, id: "zinecraft:collectible_leithanien_sceptre_reforged" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B6", item: { count: 1, id: "zinecraft:leithanien_sceptre_reforged" }, type: "item" }]
 			x: 8.0d
 			y: 40.0d
 		}
 		{
 			id: "C3000000000000E1"
-			icon: { id: "zinecraft:collectible_nachzehrers_cane" }
+			icon: { id: "zinecraft:nachzehrers_cane" }
 			optional: true
-			tasks: [{ id: "C4000000000000E1", item: { count: 1, id: "zinecraft:collectible_nachzehrers_cane" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E1", item: { count: 1, id: "zinecraft:nachzehrers_cane" }, type: "item" }]
 			x: 10.0d
 			y: 40.0d
 		}
 		{
 			id: "C3000000000000EF"
-			icon: { id: "zinecraft:collectible_kings_new_lance" }
+			icon: { id: "zinecraft:kings_new_lance" }
 			optional: true
-			tasks: [{ id: "C4000000000000EF", item: { count: 1, id: "zinecraft:collectible_kings_new_lance" }, type: "item" }]
+			tasks: [{ id: "C4000000000000EF", item: { count: 1, id: "zinecraft:kings_new_lance" }, type: "item" }]
 			x: 12.0d
 			y: 40.0d
 		}
 		{
 			id: "C100000000000006"
-			icon: { id: "zinecraft:collectible_crimson_troupe_ticket_stub" }
+			icon: { id: "zinecraft:crimson_troupe_ticket_stub" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -1070,95 +1070,95 @@
 		}
 		{
 			id: "C30000000000001D"
-			icon: { id: "zinecraft:collectible_crimson_troupe_ticket_stub" }
+			icon: { id: "zinecraft:crimson_troupe_ticket_stub" }
 			optional: true
-			tasks: [{ id: "C40000000000001D", item: { count: 1, id: "zinecraft:collectible_crimson_troupe_ticket_stub" }, type: "item" }]
+			tasks: [{ id: "C40000000000001D", item: { count: 1, id: "zinecraft:crimson_troupe_ticket_stub" }, type: "item" }]
 			x: 0.0d
 			y: 46.0d
 		}
 		{
 			id: "C30000000000001E"
-			icon: { id: "zinecraft:collectible_lucky_coin" }
+			icon: { id: "zinecraft:lucky_coin" }
 			optional: true
-			tasks: [{ id: "C40000000000001E", item: { count: 1, id: "zinecraft:collectible_lucky_coin" }, type: "item" }]
+			tasks: [{ id: "C40000000000001E", item: { count: 1, id: "zinecraft:lucky_coin" }, type: "item" }]
 			x: 2.0d
 			y: 46.0d
 		}
 		{
 			id: "C30000000000001F"
-			icon: { id: "zinecraft:collectible_masquerade_mask" }
+			icon: { id: "zinecraft:masquerade_mask" }
 			optional: true
-			tasks: [{ id: "C40000000000001F", item: { count: 1, id: "zinecraft:collectible_masquerade_mask" }, type: "item" }]
+			tasks: [{ id: "C40000000000001F", item: { count: 1, id: "zinecraft:masquerade_mask" }, type: "item" }]
 			x: 4.0d
 			y: 46.0d
 		}
 		{
 			id: "C300000000000024"
-			icon: { id: "zinecraft:collectible_four_leaf_clover_fossil" }
+			icon: { id: "zinecraft:four_leaf_clover_fossil" }
 			optional: true
-			tasks: [{ id: "C400000000000024", item: { count: 1, id: "zinecraft:collectible_four_leaf_clover_fossil" }, type: "item" }]
+			tasks: [{ id: "C400000000000024", item: { count: 1, id: "zinecraft:four_leaf_clover_fossil" }, type: "item" }]
 			x: 6.0d
 			y: 46.0d
 		}
 		{
 			id: "C3000000000000BE"
-			icon: { id: "zinecraft:collectible_playwrights_manuscript_ursus" }
+			icon: { id: "zinecraft:playwrights_manuscript_ursus" }
 			optional: true
-			tasks: [{ id: "C4000000000000BE", item: { count: 1, id: "zinecraft:collectible_playwrights_manuscript_ursus" }, type: "item" }]
+			tasks: [{ id: "C4000000000000BE", item: { count: 1, id: "zinecraft:playwrights_manuscript_ursus" }, type: "item" }]
 			x: 8.0d
 			y: 46.0d
 		}
 		{
 			id: "C3000000000000C0"
-			icon: { id: "zinecraft:collectible_playwrights_manuscript_gaul" }
+			icon: { id: "zinecraft:playwrights_manuscript_gaul" }
 			optional: true
-			tasks: [{ id: "C4000000000000C0", item: { count: 1, id: "zinecraft:collectible_playwrights_manuscript_gaul" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C0", item: { count: 1, id: "zinecraft:playwrights_manuscript_gaul" }, type: "item" }]
 			x: 10.0d
 			y: 46.0d
 		}
 		{
 			id: "C3000000000000C3"
-			icon: { id: "zinecraft:collectible_magnificent_visage" }
+			icon: { id: "zinecraft:magnificent_visage" }
 			optional: true
-			tasks: [{ id: "C4000000000000C3", item: { count: 1, id: "zinecraft:collectible_magnificent_visage" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C3", item: { count: 1, id: "zinecraft:magnificent_visage" }, type: "item" }]
 			x: 12.0d
 			y: 46.0d
 		}
 		{
 			id: "C3000000000000D0"
-			icon: { id: "zinecraft:collectible_worn_out_puppet" }
+			icon: { id: "zinecraft:worn_out_puppet" }
 			optional: true
-			tasks: [{ id: "C4000000000000D0", item: { count: 1, id: "zinecraft:collectible_worn_out_puppet" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D0", item: { count: 1, id: "zinecraft:worn_out_puppet" }, type: "item" }]
 			x: 14.0d
 			y: 46.0d
 		}
 		{
 			id: "C3000000000000D5"
-			icon: { id: "zinecraft:collectible_abrupt_realization" }
+			icon: { id: "zinecraft:abrupt_realization" }
 			optional: true
-			tasks: [{ id: "C4000000000000D5", item: { count: 1, id: "zinecraft:collectible_abrupt_realization" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D5", item: { count: 1, id: "zinecraft:abrupt_realization" }, type: "item" }]
 			x: 16.0d
 			y: 46.0d
 		}
 		{
 			id: "C3000000000000D7"
-			icon: { id: "zinecraft:collectible_act_1" }
+			icon: { id: "zinecraft:act_1" }
 			optional: true
-			tasks: [{ id: "C4000000000000D7", item: { count: 1, id: "zinecraft:collectible_act_1" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D7", item: { count: 1, id: "zinecraft:act_1" }, type: "item" }]
 			x: 18.0d
 			y: 46.0d
 		}
 		{
 			id: "C3000000000000E6"
-			icon: { id: "zinecraft:collectible_rhodes_island_tactical_transceiver" }
+			icon: { id: "zinecraft:rhodes_island_tactical_transceiver" }
 			optional: true
-			tasks: [{ id: "C4000000000000E6", item: { count: 1, id: "zinecraft:collectible_rhodes_island_tactical_transceiver" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E6", item: { count: 1, id: "zinecraft:rhodes_island_tactical_transceiver" }, type: "item" }]
 			x: 20.0d
 			y: 46.0d
 		}
 		{
 			id: "C100000000000007"
-			icon: { id: "zinecraft:collectible_pried_open_toolbox" }
+			icon: { id: "zinecraft:pried_open_toolbox" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -1168,655 +1168,655 @@
 		}
 		{
 			id: "C300000000000006"
-			icon: { id: "zinecraft:collectible_pried_open_toolbox" }
+			icon: { id: "zinecraft:pried_open_toolbox" }
 			optional: true
-			tasks: [{ id: "C400000000000006", item: { count: 1, id: "zinecraft:collectible_pried_open_toolbox" }, type: "item" }]
+			tasks: [{ id: "C400000000000006", item: { count: 1, id: "zinecraft:pried_open_toolbox" }, type: "item" }]
 			x: 0.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000007"
-			icon: { id: "zinecraft:collectible_antiquated_sheet_music" }
+			icon: { id: "zinecraft:antiquated_sheet_music" }
 			optional: true
-			tasks: [{ id: "C400000000000007", item: { count: 1, id: "zinecraft:collectible_antiquated_sheet_music" }, type: "item" }]
+			tasks: [{ id: "C400000000000007", item: { count: 1, id: "zinecraft:antiquated_sheet_music" }, type: "item" }]
 			x: 2.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000008"
-			icon: { id: "zinecraft:collectible_letter_of_termination_contract" }
+			icon: { id: "zinecraft:letter_of_termination_contract" }
 			optional: true
-			tasks: [{ id: "C400000000000008", item: { count: 1, id: "zinecraft:collectible_letter_of_termination_contract" }, type: "item" }]
+			tasks: [{ id: "C400000000000008", item: { count: 1, id: "zinecraft:letter_of_termination_contract" }, type: "item" }]
 			x: 4.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000009"
-			icon: { id: "zinecraft:collectible_universal_key" }
+			icon: { id: "zinecraft:universal_key" }
 			optional: true
-			tasks: [{ id: "C400000000000009", item: { count: 1, id: "zinecraft:collectible_universal_key" }, type: "item" }]
+			tasks: [{ id: "C400000000000009", item: { count: 1, id: "zinecraft:universal_key" }, type: "item" }]
 			x: 6.0d
 			y: 52.0d
 		}
 		{
 			id: "C30000000000000A"
-			icon: { id: "zinecraft:collectible_banshees_kiss" }
+			icon: { id: "zinecraft:banshees_kiss" }
 			optional: true
-			tasks: [{ id: "C40000000000000A", item: { count: 1, id: "zinecraft:collectible_banshees_kiss" }, type: "item" }]
+			tasks: [{ id: "C40000000000000A", item: { count: 1, id: "zinecraft:banshees_kiss" }, type: "item" }]
 			x: 8.0d
 			y: 52.0d
 		}
 		{
 			id: "C30000000000000E"
-			icon: { id: "zinecraft:collectible_laughing_joker" }
+			icon: { id: "zinecraft:laughing_joker" }
 			optional: true
-			tasks: [{ id: "C40000000000000E", item: { count: 1, id: "zinecraft:collectible_laughing_joker" }, type: "item" }]
+			tasks: [{ id: "C40000000000000E", item: { count: 1, id: "zinecraft:laughing_joker" }, type: "item" }]
 			x: 10.0d
 			y: 52.0d
 		}
 		{
 			id: "C30000000000000F"
-			icon: { id: "zinecraft:collectible_miss_christine_petting_ticket" }
+			icon: { id: "zinecraft:miss_christine_petting_ticket" }
 			optional: true
-			tasks: [{ id: "C40000000000000F", item: { count: 1, id: "zinecraft:collectible_miss_christine_petting_ticket" }, type: "item" }]
+			tasks: [{ id: "C40000000000000F", item: { count: 1, id: "zinecraft:miss_christine_petting_ticket" }, type: "item" }]
 			x: 12.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000010"
-			icon: { id: "zinecraft:collectible_antique_casting" }
+			icon: { id: "zinecraft:antique_casting" }
 			optional: true
-			tasks: [{ id: "C400000000000010", item: { count: 1, id: "zinecraft:collectible_antique_casting" }, type: "item" }]
+			tasks: [{ id: "C400000000000010", item: { count: 1, id: "zinecraft:antique_casting" }, type: "item" }]
 			x: 14.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000011"
-			icon: { id: "zinecraft:collectible_blunt_claws_training" }
+			icon: { id: "zinecraft:blunt_claws_training" }
 			optional: true
-			tasks: [{ id: "C400000000000011", item: { count: 1, id: "zinecraft:collectible_blunt_claws_training" }, type: "item" }]
+			tasks: [{ id: "C400000000000011", item: { count: 1, id: "zinecraft:blunt_claws_training" }, type: "item" }]
 			x: 16.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000012"
-			icon: { id: "zinecraft:collectible_bend_spears_training" }
+			icon: { id: "zinecraft:bend_spears_training" }
 			optional: true
-			tasks: [{ id: "C400000000000012", item: { count: 1, id: "zinecraft:collectible_bend_spears_training" }, type: "item" }]
+			tasks: [{ id: "C400000000000012", item: { count: 1, id: "zinecraft:bend_spears_training" }, type: "item" }]
 			x: 18.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000013"
-			icon: { id: "zinecraft:collectible_iron_guard_training" }
+			icon: { id: "zinecraft:iron_guard_training" }
 			optional: true
-			tasks: [{ id: "C400000000000013", item: { count: 1, id: "zinecraft:collectible_iron_guard_training" }, type: "item" }]
+			tasks: [{ id: "C400000000000013", item: { count: 1, id: "zinecraft:iron_guard_training" }, type: "item" }]
 			x: 20.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000014"
-			icon: { id: "zinecraft:collectible_fatal_bolts_training" }
+			icon: { id: "zinecraft:fatal_bolts_training" }
 			optional: true
-			tasks: [{ id: "C400000000000014", item: { count: 1, id: "zinecraft:collectible_fatal_bolts_training" }, type: "item" }]
+			tasks: [{ id: "C400000000000014", item: { count: 1, id: "zinecraft:fatal_bolts_training" }, type: "item" }]
 			x: 22.0d
 			y: 52.0d
 		}
 		{
 			id: "C300000000000015"
-			icon: { id: "zinecraft:collectible_broken_wand_training" }
+			icon: { id: "zinecraft:broken_wand_training" }
 			optional: true
-			tasks: [{ id: "C400000000000015", item: { count: 1, id: "zinecraft:collectible_broken_wand_training" }, type: "item" }]
+			tasks: [{ id: "C400000000000015", item: { count: 1, id: "zinecraft:broken_wand_training" }, type: "item" }]
 			x: 0.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000016"
-			icon: { id: "zinecraft:collectible_stalwart_aid_training" }
+			icon: { id: "zinecraft:stalwart_aid_training" }
 			optional: true
-			tasks: [{ id: "C400000000000016", item: { count: 1, id: "zinecraft:collectible_stalwart_aid_training" }, type: "item" }]
+			tasks: [{ id: "C400000000000016", item: { count: 1, id: "zinecraft:stalwart_aid_training" }, type: "item" }]
 			x: 2.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000017"
-			icon: { id: "zinecraft:collectible_healers_path_training" }
+			icon: { id: "zinecraft:healers_path_training" }
 			optional: true
-			tasks: [{ id: "C400000000000017", item: { count: 1, id: "zinecraft:collectible_healers_path_training" }, type: "item" }]
+			tasks: [{ id: "C400000000000017", item: { count: 1, id: "zinecraft:healers_path_training" }, type: "item" }]
 			x: 4.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000018"
-			icon: { id: "zinecraft:collectible_rusted_blade_training" }
+			icon: { id: "zinecraft:rusted_blade_training" }
 			optional: true
-			tasks: [{ id: "C400000000000018", item: { count: 1, id: "zinecraft:collectible_rusted_blade_training" }, type: "item" }]
+			tasks: [{ id: "C400000000000018", item: { count: 1, id: "zinecraft:rusted_blade_training" }, type: "item" }]
 			x: 6.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000019"
-			icon: { id: "zinecraft:collectible_regional_action_plan" }
+			icon: { id: "zinecraft:regional_action_plan" }
 			optional: true
-			tasks: [{ id: "C400000000000019", item: { count: 1, id: "zinecraft:collectible_regional_action_plan" }, type: "item" }]
+			tasks: [{ id: "C400000000000019", item: { count: 1, id: "zinecraft:regional_action_plan" }, type: "item" }]
 			x: 8.0d
 			y: 54.0d
 		}
 		{
 			id: "C30000000000001A"
-			icon: { id: "zinecraft:collectible_comprehensive_operation_file" }
+			icon: { id: "zinecraft:comprehensive_operation_file" }
 			optional: true
-			tasks: [{ id: "C40000000000001A", item: { count: 1, id: "zinecraft:collectible_comprehensive_operation_file" }, type: "item" }]
+			tasks: [{ id: "C40000000000001A", item: { count: 1, id: "zinecraft:comprehensive_operation_file" }, type: "item" }]
 			x: 10.0d
 			y: 54.0d
 		}
 		{
 			id: "C30000000000001B"
-			icon: { id: "zinecraft:collectible_secret_hr_letter" }
+			icon: { id: "zinecraft:secret_hr_letter" }
 			optional: true
-			tasks: [{ id: "C40000000000001B", item: { count: 1, id: "zinecraft:collectible_secret_hr_letter" }, type: "item" }]
+			tasks: [{ id: "C40000000000001B", item: { count: 1, id: "zinecraft:secret_hr_letter" }, type: "item" }]
 			x: 12.0d
 			y: 54.0d
 		}
 		{
 			id: "C30000000000001C"
-			icon: { id: "zinecraft:collectible_draft_of_a_speech" }
+			icon: { id: "zinecraft:draft_of_a_speech" }
 			optional: true
-			tasks: [{ id: "C40000000000001C", item: { count: 1, id: "zinecraft:collectible_draft_of_a_speech" }, type: "item" }]
+			tasks: [{ id: "C40000000000001C", item: { count: 1, id: "zinecraft:draft_of_a_speech" }, type: "item" }]
 			x: 14.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000025"
-			icon: { id: "zinecraft:collectible_assault_co_op_expansion" }
+			icon: { id: "zinecraft:assault_co_op_expansion" }
 			optional: true
-			tasks: [{ id: "C400000000000025", item: { count: 1, id: "zinecraft:collectible_assault_co_op_expansion" }, type: "item" }]
+			tasks: [{ id: "C400000000000025", item: { count: 1, id: "zinecraft:assault_co_op_expansion" }, type: "item" }]
 			x: 16.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000026"
-			icon: { id: "zinecraft:collectible_assault_co_op_reinforcements" }
+			icon: { id: "zinecraft:assault_co_op_reinforcements" }
 			optional: true
-			tasks: [{ id: "C400000000000026", item: { count: 1, id: "zinecraft:collectible_assault_co_op_reinforcements" }, type: "item" }]
+			tasks: [{ id: "C400000000000026", item: { count: 1, id: "zinecraft:assault_co_op_reinforcements" }, type: "item" }]
 			x: 18.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000027"
-			icon: { id: "zinecraft:collectible_fortification_co_op_expansion" }
+			icon: { id: "zinecraft:fortification_co_op_expansion" }
 			optional: true
-			tasks: [{ id: "C400000000000027", item: { count: 1, id: "zinecraft:collectible_fortification_co_op_expansion" }, type: "item" }]
+			tasks: [{ id: "C400000000000027", item: { count: 1, id: "zinecraft:fortification_co_op_expansion" }, type: "item" }]
 			x: 20.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000028"
-			icon: { id: "zinecraft:collectible_fortification_co_op_reinforcements" }
+			icon: { id: "zinecraft:fortification_co_op_reinforcements" }
 			optional: true
-			tasks: [{ id: "C400000000000028", item: { count: 1, id: "zinecraft:collectible_fortification_co_op_reinforcements" }, type: "item" }]
+			tasks: [{ id: "C400000000000028", item: { count: 1, id: "zinecraft:fortification_co_op_reinforcements" }, type: "item" }]
 			x: 22.0d
 			y: 54.0d
 		}
 		{
 			id: "C300000000000029"
-			icon: { id: "zinecraft:collectible_ranged_co_op_expansion" }
+			icon: { id: "zinecraft:ranged_co_op_expansion" }
 			optional: true
-			tasks: [{ id: "C400000000000029", item: { count: 1, id: "zinecraft:collectible_ranged_co_op_expansion" }, type: "item" }]
+			tasks: [{ id: "C400000000000029", item: { count: 1, id: "zinecraft:ranged_co_op_expansion" }, type: "item" }]
 			x: 0.0d
 			y: 56.0d
 		}
 		{
 			id: "C30000000000002A"
-			icon: { id: "zinecraft:collectible_ranged_co_op_reinforcements" }
+			icon: { id: "zinecraft:ranged_co_op_reinforcements" }
 			optional: true
-			tasks: [{ id: "C40000000000002A", item: { count: 1, id: "zinecraft:collectible_ranged_co_op_reinforcements" }, type: "item" }]
+			tasks: [{ id: "C40000000000002A", item: { count: 1, id: "zinecraft:ranged_co_op_reinforcements" }, type: "item" }]
 			x: 2.0d
 			y: 56.0d
 		}
 		{
 			id: "C30000000000002B"
-			icon: { id: "zinecraft:collectible_sabotage_co_op_expansion" }
+			icon: { id: "zinecraft:sabotage_co_op_expansion" }
 			optional: true
-			tasks: [{ id: "C40000000000002B", item: { count: 1, id: "zinecraft:collectible_sabotage_co_op_expansion" }, type: "item" }]
+			tasks: [{ id: "C40000000000002B", item: { count: 1, id: "zinecraft:sabotage_co_op_expansion" }, type: "item" }]
 			x: 4.0d
 			y: 56.0d
 		}
 		{
 			id: "C30000000000002C"
-			icon: { id: "zinecraft:collectible_sabotage_co_op_reinforcements" }
+			icon: { id: "zinecraft:sabotage_co_op_reinforcements" }
 			optional: true
-			tasks: [{ id: "C40000000000002C", item: { count: 1, id: "zinecraft:collectible_sabotage_co_op_reinforcements" }, type: "item" }]
+			tasks: [{ id: "C40000000000002C", item: { count: 1, id: "zinecraft:sabotage_co_op_reinforcements" }, type: "item" }]
 			x: 6.0d
 			y: 56.0d
 		}
 		{
 			id: "C30000000000004F"
-			icon: { id: "zinecraft:collectible_ursus_big_bread" }
+			icon: { id: "zinecraft:ursus_big_bread" }
 			optional: true
-			tasks: [{ id: "C40000000000004F", item: { count: 1, id: "zinecraft:collectible_ursus_big_bread" }, type: "item" }]
+			tasks: [{ id: "C40000000000004F", item: { count: 1, id: "zinecraft:ursus_big_bread" }, type: "item" }]
 			x: 8.0d
 			y: 56.0d
 		}
 		{
 			id: "C300000000000050"
-			icon: { id: "zinecraft:collectible_crucible_cream_puff" }
+			icon: { id: "zinecraft:crucible_cream_puff" }
 			optional: true
-			tasks: [{ id: "C400000000000050", item: { count: 1, id: "zinecraft:collectible_crucible_cream_puff" }, type: "item" }]
+			tasks: [{ id: "C400000000000050", item: { count: 1, id: "zinecraft:crucible_cream_puff" }, type: "item" }]
 			x: 10.0d
 			y: 56.0d
 		}
 		{
 			id: "C300000000000051"
-			icon: { id: "zinecraft:collectible_iron_baguette" }
+			icon: { id: "zinecraft:iron_baguette" }
 			optional: true
-			tasks: [{ id: "C400000000000051", item: { count: 1, id: "zinecraft:collectible_iron_baguette" }, type: "item" }]
+			tasks: [{ id: "C400000000000051", item: { count: 1, id: "zinecraft:iron_baguette" }, type: "item" }]
 			x: 12.0d
 			y: 56.0d
 		}
 		{
 			id: "C300000000000052"
-			icon: { id: "zinecraft:collectible_test_run_chocolate" }
+			icon: { id: "zinecraft:test_run_chocolate" }
 			optional: true
-			tasks: [{ id: "C400000000000052", item: { count: 1, id: "zinecraft:collectible_test_run_chocolate" }, type: "item" }]
+			tasks: [{ id: "C400000000000052", item: { count: 1, id: "zinecraft:test_run_chocolate" }, type: "item" }]
 			x: 14.0d
 			y: 56.0d
 		}
 		{
 			id: "C300000000000053"
-			icon: { id: "zinecraft:collectible_gaulish_macarons" }
+			icon: { id: "zinecraft:gaulish_macarons" }
 			optional: true
-			tasks: [{ id: "C400000000000053", item: { count: 1, id: "zinecraft:collectible_gaulish_macarons" }, type: "item" }]
+			tasks: [{ id: "C400000000000053", item: { count: 1, id: "zinecraft:gaulish_macarons" }, type: "item" }]
 			x: 16.0d
 			y: 56.0d
 		}
 		{
 			id: "C300000000000054"
-			icon: { id: "zinecraft:collectible_victorian_cake" }
+			icon: { id: "zinecraft:victorian_cake" }
 			optional: true
-			tasks: [{ id: "C400000000000054", item: { count: 1, id: "zinecraft:collectible_victorian_cake" }, type: "item" }]
+			tasks: [{ id: "C400000000000054", item: { count: 1, id: "zinecraft:victorian_cake" }, type: "item" }]
 			x: 18.0d
 			y: 56.0d
 		}
 		{
 			id: "C300000000000055"
-			icon: { id: "zinecraft:collectible_route_diagram" }
+			icon: { id: "zinecraft:route_diagram" }
 			optional: true
-			tasks: [{ id: "C400000000000055", item: { count: 1, id: "zinecraft:collectible_route_diagram" }, type: "item" }]
+			tasks: [{ id: "C400000000000055", item: { count: 1, id: "zinecraft:route_diagram" }, type: "item" }]
 			x: 20.0d
 			y: 56.0d
 		}
 		{
 			id: "C300000000000056"
-			icon: { id: "zinecraft:collectible_dim_lantern" }
+			icon: { id: "zinecraft:dim_lantern" }
 			optional: true
-			tasks: [{ id: "C400000000000056", item: { count: 1, id: "zinecraft:collectible_dim_lantern" }, type: "item" }]
+			tasks: [{ id: "C400000000000056", item: { count: 1, id: "zinecraft:dim_lantern" }, type: "item" }]
 			x: 22.0d
 			y: 56.0d
 		}
 		{
 			id: "C300000000000057"
-			icon: { id: "zinecraft:collectible_brass_compass" }
+			icon: { id: "zinecraft:brass_compass" }
 			optional: true
-			tasks: [{ id: "C400000000000057", item: { count: 1, id: "zinecraft:collectible_brass_compass" }, type: "item" }]
+			tasks: [{ id: "C400000000000057", item: { count: 1, id: "zinecraft:brass_compass" }, type: "item" }]
 			x: 0.0d
 			y: 58.0d
 		}
 		{
 			id: "C300000000000058"
-			icon: { id: "zinecraft:collectible_broke_mask" }
+			icon: { id: "zinecraft:broke_mask" }
 			optional: true
-			tasks: [{ id: "C400000000000058", item: { count: 1, id: "zinecraft:collectible_broke_mask" }, type: "item" }]
+			tasks: [{ id: "C400000000000058", item: { count: 1, id: "zinecraft:broke_mask" }, type: "item" }]
 			x: 2.0d
 			y: 58.0d
 		}
 		{
 			id: "C300000000000059"
-			icon: { id: "zinecraft:collectible_blank_business_card" }
+			icon: { id: "zinecraft:blank_business_card" }
 			optional: true
-			tasks: [{ id: "C400000000000059", item: { count: 1, id: "zinecraft:collectible_blank_business_card" }, type: "item" }]
+			tasks: [{ id: "C400000000000059", item: { count: 1, id: "zinecraft:blank_business_card" }, type: "item" }]
 			x: 4.0d
 			y: 58.0d
 		}
 		{
 			id: "C30000000000005A"
-			icon: { id: "zinecraft:collectible_doll_house" }
+			icon: { id: "zinecraft:doll_house" }
 			optional: true
-			tasks: [{ id: "C40000000000005A", item: { count: 1, id: "zinecraft:collectible_doll_house" }, type: "item" }]
+			tasks: [{ id: "C40000000000005A", item: { count: 1, id: "zinecraft:doll_house" }, type: "item" }]
 			x: 6.0d
 			y: 58.0d
 		}
 		{
 			id: "C30000000000005B"
-			icon: { id: "zinecraft:collectible_miniature_stage_model" }
+			icon: { id: "zinecraft:miniature_stage_model" }
 			optional: true
-			tasks: [{ id: "C40000000000005B", item: { count: 1, id: "zinecraft:collectible_miniature_stage_model" }, type: "item" }]
+			tasks: [{ id: "C40000000000005B", item: { count: 1, id: "zinecraft:miniature_stage_model" }, type: "item" }]
 			x: 8.0d
 			y: 58.0d
 		}
 		{
 			id: "C30000000000005C"
-			icon: { id: "zinecraft:collectible_dreambind_castle_model" }
+			icon: { id: "zinecraft:dreambind_castle_model" }
 			optional: true
-			tasks: [{ id: "C40000000000005C", item: { count: 1, id: "zinecraft:collectible_dreambind_castle_model" }, type: "item" }]
+			tasks: [{ id: "C40000000000005C", item: { count: 1, id: "zinecraft:dreambind_castle_model" }, type: "item" }]
 			x: 10.0d
 			y: 58.0d
 		}
 		{
 			id: "C30000000000005D"
-			icon: { id: "zinecraft:collectible_blunt_claws_advancement" }
+			icon: { id: "zinecraft:blunt_claws_advancement" }
 			optional: true
-			tasks: [{ id: "C40000000000005D", item: { count: 1, id: "zinecraft:collectible_blunt_claws_advancement" }, type: "item" }]
+			tasks: [{ id: "C40000000000005D", item: { count: 1, id: "zinecraft:blunt_claws_advancement" }, type: "item" }]
 			x: 12.0d
 			y: 58.0d
 		}
 		{
 			id: "C300000000000060"
-			icon: { id: "zinecraft:collectible_blunt_claws_inspiration" }
+			icon: { id: "zinecraft:blunt_claws_inspiration" }
 			optional: true
-			tasks: [{ id: "C400000000000060", item: { count: 1, id: "zinecraft:collectible_blunt_claws_inspiration" }, type: "item" }]
+			tasks: [{ id: "C400000000000060", item: { count: 1, id: "zinecraft:blunt_claws_inspiration" }, type: "item" }]
 			x: 14.0d
 			y: 58.0d
 		}
 		{
 			id: "C300000000000062"
-			icon: { id: "zinecraft:collectible_bend_spears_advancement" }
+			icon: { id: "zinecraft:bend_spears_advancement" }
 			optional: true
-			tasks: [{ id: "C400000000000062", item: { count: 1, id: "zinecraft:collectible_bend_spears_advancement" }, type: "item" }]
+			tasks: [{ id: "C400000000000062", item: { count: 1, id: "zinecraft:bend_spears_advancement" }, type: "item" }]
 			x: 16.0d
 			y: 58.0d
 		}
 		{
 			id: "C300000000000065"
-			icon: { id: "zinecraft:collectible_bend_spears_army_of_one" }
+			icon: { id: "zinecraft:bend_spears_army_of_one" }
 			optional: true
-			tasks: [{ id: "C400000000000065", item: { count: 1, id: "zinecraft:collectible_bend_spears_army_of_one" }, type: "item" }]
+			tasks: [{ id: "C400000000000065", item: { count: 1, id: "zinecraft:bend_spears_army_of_one" }, type: "item" }]
 			x: 18.0d
 			y: 58.0d
 		}
 		{
 			id: "C300000000000067"
-			icon: { id: "zinecraft:collectible_iron_guard_advancement" }
+			icon: { id: "zinecraft:iron_guard_advancement" }
 			optional: true
-			tasks: [{ id: "C400000000000067", item: { count: 1, id: "zinecraft:collectible_iron_guard_advancement" }, type: "item" }]
+			tasks: [{ id: "C400000000000067", item: { count: 1, id: "zinecraft:iron_guard_advancement" }, type: "item" }]
 			x: 20.0d
 			y: 58.0d
 		}
 		{
 			id: "C30000000000006C"
-			icon: { id: "zinecraft:collectible_fatal_bolts_advancement" }
+			icon: { id: "zinecraft:fatal_bolts_advancement" }
 			optional: true
-			tasks: [{ id: "C40000000000006C", item: { count: 1, id: "zinecraft:collectible_fatal_bolts_advancement" }, type: "item" }]
+			tasks: [{ id: "C40000000000006C", item: { count: 1, id: "zinecraft:fatal_bolts_advancement" }, type: "item" }]
 			x: 22.0d
 			y: 58.0d
 		}
 		{
 			id: "C300000000000071"
-			icon: { id: "zinecraft:collectible_broken_wand_advancement" }
+			icon: { id: "zinecraft:broken_wand_advancement" }
 			optional: true
-			tasks: [{ id: "C400000000000071", item: { count: 1, id: "zinecraft:collectible_broken_wand_advancement" }, type: "item" }]
+			tasks: [{ id: "C400000000000071", item: { count: 1, id: "zinecraft:broken_wand_advancement" }, type: "item" }]
 			x: 0.0d
 			y: 60.0d
 		}
 		{
 			id: "C300000000000076"
-			icon: { id: "zinecraft:collectible_stalwart_aid_advancement" }
+			icon: { id: "zinecraft:stalwart_aid_advancement" }
 			optional: true
-			tasks: [{ id: "C400000000000076", item: { count: 1, id: "zinecraft:collectible_stalwart_aid_advancement" }, type: "item" }]
+			tasks: [{ id: "C400000000000076", item: { count: 1, id: "zinecraft:stalwart_aid_advancement" }, type: "item" }]
 			x: 2.0d
 			y: 60.0d
 		}
 		{
 			id: "C30000000000007B"
-			icon: { id: "zinecraft:collectible_healers_path_advancement" }
+			icon: { id: "zinecraft:healers_path_advancement" }
 			optional: true
-			tasks: [{ id: "C40000000000007B", item: { count: 1, id: "zinecraft:collectible_healers_path_advancement" }, type: "item" }]
+			tasks: [{ id: "C40000000000007B", item: { count: 1, id: "zinecraft:healers_path_advancement" }, type: "item" }]
 			x: 4.0d
 			y: 60.0d
 		}
 		{
 			id: "C300000000000080"
-			icon: { id: "zinecraft:collectible_rusted_blade_advancement" }
+			icon: { id: "zinecraft:rusted_blade_advancement" }
 			optional: true
-			tasks: [{ id: "C400000000000080", item: { count: 1, id: "zinecraft:collectible_rusted_blade_advancement" }, type: "item" }]
+			tasks: [{ id: "C400000000000080", item: { count: 1, id: "zinecraft:rusted_blade_advancement" }, type: "item" }]
 			x: 6.0d
 			y: 60.0d
 		}
 		{
 			id: "C300000000000083"
-			icon: { id: "zinecraft:collectible_rusted_blade_no_mans_land" }
+			icon: { id: "zinecraft:rusted_blade_no_mans_land" }
 			optional: true
-			tasks: [{ id: "C400000000000083", item: { count: 1, id: "zinecraft:collectible_rusted_blade_no_mans_land" }, type: "item" }]
+			tasks: [{ id: "C400000000000083", item: { count: 1, id: "zinecraft:rusted_blade_no_mans_land" }, type: "item" }]
 			x: 8.0d
 			y: 60.0d
 		}
 		{
 			id: "C300000000000084"
-			icon: { id: "zinecraft:collectible_rusted_blade_overwhelm" }
+			icon: { id: "zinecraft:rusted_blade_overwhelm" }
 			optional: true
-			tasks: [{ id: "C400000000000084", item: { count: 1, id: "zinecraft:collectible_rusted_blade_overwhelm" }, type: "item" }]
+			tasks: [{ id: "C400000000000084", item: { count: 1, id: "zinecraft:rusted_blade_overwhelm" }, type: "item" }]
 			x: 10.0d
 			y: 60.0d
 		}
 		{
 			id: "C30000000000008B"
-			icon: { id: "zinecraft:collectible_hand_of_snatcher" }
+			icon: { id: "zinecraft:hand_of_snatcher" }
 			optional: true
-			tasks: [{ id: "C40000000000008B", item: { count: 1, id: "zinecraft:collectible_hand_of_snatcher" }, type: "item" }]
+			tasks: [{ id: "C40000000000008B", item: { count: 1, id: "zinecraft:hand_of_snatcher" }, type: "item" }]
 			x: 12.0d
 			y: 60.0d
 		}
 		{
 			id: "C30000000000008C"
-			icon: { id: "zinecraft:collectible_blue_silk_scarf" }
+			icon: { id: "zinecraft:blue_silk_scarf" }
 			optional: true
-			tasks: [{ id: "C40000000000008C", item: { count: 1, id: "zinecraft:collectible_blue_silk_scarf" }, type: "item" }]
+			tasks: [{ id: "C40000000000008C", item: { count: 1, id: "zinecraft:blue_silk_scarf" }, type: "item" }]
 			x: 14.0d
 			y: 60.0d
 		}
 		{
 			id: "C30000000000008D"
-			icon: { id: "zinecraft:collectible_red_bow_tie" }
+			icon: { id: "zinecraft:red_bow_tie" }
 			optional: true
-			tasks: [{ id: "C40000000000008D", item: { count: 1, id: "zinecraft:collectible_red_bow_tie" }, type: "item" }]
+			tasks: [{ id: "C40000000000008D", item: { count: 1, id: "zinecraft:red_bow_tie" }, type: "item" }]
 			x: 16.0d
 			y: 60.0d
 		}
 		{
 			id: "C30000000000008E"
-			icon: { id: "zinecraft:collectible_weird_flute" }
+			icon: { id: "zinecraft:weird_flute" }
 			optional: true
-			tasks: [{ id: "C40000000000008E", item: { count: 1, id: "zinecraft:collectible_weird_flute" }, type: "item" }]
+			tasks: [{ id: "C40000000000008E", item: { count: 1, id: "zinecraft:weird_flute" }, type: "item" }]
 			x: 18.0d
 			y: 60.0d
 		}
 		{
 			id: "C30000000000008F"
-			icon: { id: "zinecraft:collectible_glass_bird" }
+			icon: { id: "zinecraft:glass_bird" }
 			optional: true
-			tasks: [{ id: "C40000000000008F", item: { count: 1, id: "zinecraft:collectible_glass_bird" }, type: "item" }]
+			tasks: [{ id: "C40000000000008F", item: { count: 1, id: "zinecraft:glass_bird" }, type: "item" }]
 			x: 20.0d
 			y: 60.0d
 		}
 		{
 			id: "C300000000000090"
-			icon: { id: "zinecraft:collectible_solo_music_box" }
+			icon: { id: "zinecraft:solo_music_box" }
 			optional: true
-			tasks: [{ id: "C400000000000090", item: { count: 1, id: "zinecraft:collectible_solo_music_box" }, type: "item" }]
+			tasks: [{ id: "C400000000000090", item: { count: 1, id: "zinecraft:solo_music_box" }, type: "item" }]
 			x: 22.0d
 			y: 60.0d
 		}
 		{
 			id: "C300000000000091"
-			icon: { id: "zinecraft:collectible_originium_iris" }
+			icon: { id: "zinecraft:originium_iris" }
 			optional: true
-			tasks: [{ id: "C400000000000091", item: { count: 1, id: "zinecraft:collectible_originium_iris" }, type: "item" }]
+			tasks: [{ id: "C400000000000091", item: { count: 1, id: "zinecraft:originium_iris" }, type: "item" }]
 			x: 0.0d
 			y: 62.0d
 		}
 		{
 			id: "C300000000000092"
-			icon: { id: "zinecraft:collectible_pure_gold_expedition" }
+			icon: { id: "zinecraft:pure_gold_expedition" }
 			optional: true
-			tasks: [{ id: "C400000000000092", item: { count: 1, id: "zinecraft:collectible_pure_gold_expedition" }, type: "item" }]
+			tasks: [{ id: "C400000000000092", item: { count: 1, id: "zinecraft:pure_gold_expedition" }, type: "item" }]
 			x: 2.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000B0"
-			icon: { id: "zinecraft:collectible_condensed_suppressant" }
+			icon: { id: "zinecraft:condensed_suppressant" }
 			optional: true
-			tasks: [{ id: "C4000000000000B0", item: { count: 1, id: "zinecraft:collectible_condensed_suppressant" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B0", item: { count: 1, id: "zinecraft:condensed_suppressant" }, type: "item" }]
 			x: 4.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000B7"
-			icon: { id: "zinecraft:collectible_gaul_mantle" }
+			icon: { id: "zinecraft:gaul_mantle" }
 			optional: true
-			tasks: [{ id: "C4000000000000B7", item: { count: 1, id: "zinecraft:collectible_gaul_mantle" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B7", item: { count: 1, id: "zinecraft:gaul_mantle" }, type: "item" }]
 			x: 6.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000B8"
-			icon: { id: "zinecraft:collectible_gaul_mantle_reforged" }
+			icon: { id: "zinecraft:gaul_mantle_reforged" }
 			optional: true
-			tasks: [{ id: "C4000000000000B8", item: { count: 1, id: "zinecraft:collectible_gaul_mantle_reforged" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B8", item: { count: 1, id: "zinecraft:gaul_mantle_reforged" }, type: "item" }]
 			x: 8.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000BB"
-			icon: { id: "zinecraft:collectible_sigil_of_tragodia" }
+			icon: { id: "zinecraft:sigil_of_tragodia" }
 			optional: true
-			tasks: [{ id: "C4000000000000BB", item: { count: 1, id: "zinecraft:collectible_sigil_of_tragodia" }, type: "item" }]
+			tasks: [{ id: "C4000000000000BB", item: { count: 1, id: "zinecraft:sigil_of_tragodia" }, type: "item" }]
 			x: 10.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000BC"
-			icon: { id: "zinecraft:collectible_sigil_of_tragodia_reforged" }
+			icon: { id: "zinecraft:sigil_of_tragodia_reforged" }
 			optional: true
-			tasks: [{ id: "C4000000000000BC", item: { count: 1, id: "zinecraft:collectible_sigil_of_tragodia_reforged" }, type: "item" }]
+			tasks: [{ id: "C4000000000000BC", item: { count: 1, id: "zinecraft:sigil_of_tragodia_reforged" }, type: "item" }]
 			x: 12.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000BD"
-			icon: { id: "zinecraft:collectible_playwrights_manuscript_victoria" }
+			icon: { id: "zinecraft:playwrights_manuscript_victoria" }
 			optional: true
-			tasks: [{ id: "C4000000000000BD", item: { count: 1, id: "zinecraft:collectible_playwrights_manuscript_victoria" }, type: "item" }]
+			tasks: [{ id: "C4000000000000BD", item: { count: 1, id: "zinecraft:playwrights_manuscript_victoria" }, type: "item" }]
 			x: 14.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000BF"
-			icon: { id: "zinecraft:collectible_playwrights_manuscript_leithanien" }
+			icon: { id: "zinecraft:playwrights_manuscript_leithanien" }
 			optional: true
-			tasks: [{ id: "C4000000000000BF", item: { count: 1, id: "zinecraft:collectible_playwrights_manuscript_leithanien" }, type: "item" }]
+			tasks: [{ id: "C4000000000000BF", item: { count: 1, id: "zinecraft:playwrights_manuscript_leithanien" }, type: "item" }]
 			x: 16.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000C4"
-			icon: { id: "zinecraft:collectible_blademace" }
+			icon: { id: "zinecraft:blademace" }
 			optional: true
-			tasks: [{ id: "C4000000000000C4", item: { count: 1, id: "zinecraft:collectible_blademace" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C4", item: { count: 1, id: "zinecraft:blademace" }, type: "item" }]
 			x: 18.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000C5"
-			icon: { id: "zinecraft:collectible_brokenblade" }
+			icon: { id: "zinecraft:brokenblade" }
 			optional: true
-			tasks: [{ id: "C4000000000000C5", item: { count: 1, id: "zinecraft:collectible_brokenblade" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C5", item: { count: 1, id: "zinecraft:brokenblade" }, type: "item" }]
 			x: 20.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000C8"
-			icon: { id: "zinecraft:collectible_jet_black_dance_shoes" }
+			icon: { id: "zinecraft:jet_black_dance_shoes" }
 			optional: true
-			tasks: [{ id: "C4000000000000C8", item: { count: 1, id: "zinecraft:collectible_jet_black_dance_shoes" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C8", item: { count: 1, id: "zinecraft:jet_black_dance_shoes" }, type: "item" }]
 			x: 22.0d
 			y: 62.0d
 		}
 		{
 			id: "C3000000000000C9"
-			icon: { id: "zinecraft:collectible_pure_white_dance_shoes" }
+			icon: { id: "zinecraft:pure_white_dance_shoes" }
 			optional: true
-			tasks: [{ id: "C4000000000000C9", item: { count: 1, id: "zinecraft:collectible_pure_white_dance_shoes" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C9", item: { count: 1, id: "zinecraft:pure_white_dance_shoes" }, type: "item" }]
 			x: 0.0d
 			y: 64.0d
 		}
 		{
 			id: "C3000000000000CB"
-			icon: { id: "zinecraft:collectible_whiteflower" }
+			icon: { id: "zinecraft:whiteflower" }
 			optional: true
-			tasks: [{ id: "C4000000000000CB", item: { count: 1, id: "zinecraft:collectible_whiteflower" }, type: "item" }]
+			tasks: [{ id: "C4000000000000CB", item: { count: 1, id: "zinecraft:whiteflower" }, type: "item" }]
 			x: 2.0d
 			y: 64.0d
 		}
 		{
 			id: "C3000000000000CC"
-			icon: { id: "zinecraft:collectible_shadow" }
+			icon: { id: "zinecraft:shadow" }
 			optional: true
-			tasks: [{ id: "C4000000000000CC", item: { count: 1, id: "zinecraft:collectible_shadow" }, type: "item" }]
+			tasks: [{ id: "C4000000000000CC", item: { count: 1, id: "zinecraft:shadow" }, type: "item" }]
 			x: 4.0d
 			y: 64.0d
 		}
 		{
 			id: "C3000000000000D1"
-			icon: { id: "zinecraft:collectible_useless_scissors" }
+			icon: { id: "zinecraft:useless_scissors" }
 			optional: true
-			tasks: [{ id: "C4000000000000D1", item: { count: 1, id: "zinecraft:collectible_useless_scissors" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D1", item: { count: 1, id: "zinecraft:useless_scissors" }, type: "item" }]
 			x: 6.0d
 			y: 64.0d
 		}
 		{
 			id: "C3000000000000D3"
-			icon: { id: "zinecraft:collectible_mantle_of_the_wrongly_condemned" }
+			icon: { id: "zinecraft:mantle_of_the_wrongly_condemned" }
 			optional: true
-			tasks: [{ id: "C4000000000000D3", item: { count: 1, id: "zinecraft:collectible_mantle_of_the_wrongly_condemned" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D3", item: { count: 1, id: "zinecraft:mantle_of_the_wrongly_condemned" }, type: "item" }]
 			x: 8.0d
 			y: 64.0d
 		}
 		{
 			id: "C3000000000000D6"
-			icon: { id: "zinecraft:collectible_dance_of_the_condemned" }
+			icon: { id: "zinecraft:dance_of_the_condemned" }
 			optional: true
-			tasks: [{ id: "C4000000000000D6", item: { count: 1, id: "zinecraft:collectible_dance_of_the_condemned" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D6", item: { count: 1, id: "zinecraft:dance_of_the_condemned" }, type: "item" }]
 			x: 10.0d
 			y: 64.0d
 		}
 		{
 			id: "C3000000000000DF"
-			icon: { id: "zinecraft:collectible_tear_of_the_departed" }
+			icon: { id: "zinecraft:tear_of_the_departed" }
 			optional: true
-			tasks: [{ id: "C4000000000000DF", item: { count: 1, id: "zinecraft:collectible_tear_of_the_departed" }, type: "item" }]
+			tasks: [{ id: "C4000000000000DF", item: { count: 1, id: "zinecraft:tear_of_the_departed" }, type: "item" }]
 			x: 12.0d
 			y: 64.0d
 		}
 		{
 			id: "C3000000000000E4"
-			icon: { id: "zinecraft:collectible_silence" }
+			icon: { id: "zinecraft:silence" }
 			optional: true
-			tasks: [{ id: "C4000000000000E4", item: { count: 1, id: "zinecraft:collectible_silence" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E4", item: { count: 1, id: "zinecraft:silence" }, type: "item" }]
 			x: 14.0d
 			y: 64.0d
 		}
 		{
 			id: "C3000000000000F0"
-			icon: { id: "zinecraft:collectible_guard_cap" }
+			icon: { id: "zinecraft:guard_cap" }
 			optional: true
-			tasks: [{ id: "C4000000000000F0", item: { count: 1, id: "zinecraft:collectible_guard_cap" }, type: "item" }]
+			tasks: [{ id: "C4000000000000F0", item: { count: 1, id: "zinecraft:guard_cap" }, type: "item" }]
 			x: 16.0d
 			y: 64.0d
 		}
 		{
 			id: "C100000000000008"
-			icon: { id: "zinecraft:collectible_antique_coins" }
+			icon: { id: "zinecraft:antique_coins" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -1826,55 +1826,55 @@
 		}
 		{
 			id: "C30000000000000B"
-			icon: { id: "zinecraft:collectible_antique_coins" }
+			icon: { id: "zinecraft:antique_coins" }
 			optional: true
-			tasks: [{ id: "C40000000000000B", item: { count: 1, id: "zinecraft:collectible_antique_coins" }, type: "item" }]
+			tasks: [{ id: "C40000000000000B", item: { count: 1, id: "zinecraft:antique_coins" }, type: "item" }]
 			x: 0.0d
 			y: 70.0d
 		}
 		{
 			id: "C30000000000000C"
-			icon: { id: "zinecraft:collectible_actors_jewelry_box" }
+			icon: { id: "zinecraft:actors_jewelry_box" }
 			optional: true
-			tasks: [{ id: "C40000000000000C", item: { count: 1, id: "zinecraft:collectible_actors_jewelry_box" }, type: "item" }]
+			tasks: [{ id: "C40000000000000C", item: { count: 1, id: "zinecraft:actors_jewelry_box" }, type: "item" }]
 			x: 2.0d
 			y: 70.0d
 		}
 		{
 			id: "C30000000000000D"
-			icon: { id: "zinecraft:collectible_flawless_jadestone" }
+			icon: { id: "zinecraft:flawless_jadestone" }
 			optional: true
-			tasks: [{ id: "C40000000000000D", item: { count: 1, id: "zinecraft:collectible_flawless_jadestone" }, type: "item" }]
+			tasks: [{ id: "C40000000000000D", item: { count: 1, id: "zinecraft:flawless_jadestone" }, type: "item" }]
 			x: 4.0d
 			y: 70.0d
 		}
 		{
 			id: "C300000000000020"
-			icon: { id: "zinecraft:collectible_supreme_ring" }
+			icon: { id: "zinecraft:supreme_ring" }
 			optional: true
-			tasks: [{ id: "C400000000000020", item: { count: 1, id: "zinecraft:collectible_supreme_ring" }, type: "item" }]
+			tasks: [{ id: "C400000000000020", item: { count: 1, id: "zinecraft:supreme_ring" }, type: "item" }]
 			x: 6.0d
 			y: 70.0d
 		}
 		{
 			id: "C300000000000023"
-			icon: { id: "zinecraft:collectible_rusted_iron_hammer" }
+			icon: { id: "zinecraft:rusted_iron_hammer" }
 			optional: true
-			tasks: [{ id: "C400000000000023", item: { count: 1, id: "zinecraft:collectible_rusted_iron_hammer" }, type: "item" }]
+			tasks: [{ id: "C400000000000023", item: { count: 1, id: "zinecraft:rusted_iron_hammer" }, type: "item" }]
 			x: 8.0d
 			y: 70.0d
 		}
 		{
 			id: "C3000000000000C7"
-			icon: { id: "zinecraft:collectible_proof_of_friendship" }
+			icon: { id: "zinecraft:proof_of_friendship" }
 			optional: true
-			tasks: [{ id: "C4000000000000C7", item: { count: 1, id: "zinecraft:collectible_proof_of_friendship" }, type: "item" }]
+			tasks: [{ id: "C4000000000000C7", item: { count: 1, id: "zinecraft:proof_of_friendship" }, type: "item" }]
 			x: 10.0d
 			y: 70.0d
 		}
 		{
 			id: "C100000000000009"
-			icon: { id: "zinecraft:collectible_victorian_scrap_medal" }
+			icon: { id: "zinecraft:victorian_scrap_medal" }
 			optional: true
 			shape: "gear"
 			size: 2.0d
@@ -1884,177 +1884,177 @@
 		}
 		{
 			id: "C300000000000021"
-			icon: { id: "zinecraft:collectible_victorian_scrap_medal" }
+			icon: { id: "zinecraft:victorian_scrap_medal" }
 			optional: true
-			tasks: [{ id: "C400000000000021", item: { count: 1, id: "zinecraft:collectible_victorian_scrap_medal" }, type: "item" }]
+			tasks: [{ id: "C400000000000021", item: { count: 1, id: "zinecraft:victorian_scrap_medal" }, type: "item" }]
 			x: 0.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000022"
-			icon: { id: "zinecraft:collectible_leithanian_medal_of_honor" }
+			icon: { id: "zinecraft:leithanian_medal_of_honor" }
 			optional: true
-			tasks: [{ id: "C400000000000022", item: { count: 1, id: "zinecraft:collectible_leithanian_medal_of_honor" }, type: "item" }]
+			tasks: [{ id: "C400000000000022", item: { count: 1, id: "zinecraft:leithanian_medal_of_honor" }, type: "item" }]
 			x: 2.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000034"
-			icon: { id: "zinecraft:collectible_the_whisperer_in_darknight" }
+			icon: { id: "zinecraft:the_whisperer_in_darknight" }
 			optional: true
-			tasks: [{ id: "C400000000000034", item: { count: 1, id: "zinecraft:collectible_the_whisperer_in_darknight" }, type: "item" }]
+			tasks: [{ id: "C400000000000034", item: { count: 1, id: "zinecraft:the_whisperer_in_darknight" }, type: "item" }]
 			x: 4.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000035"
-			icon: { id: "zinecraft:collectible_gold_plated_die" }
+			icon: { id: "zinecraft:gold_plated_die" }
 			optional: true
-			tasks: [{ id: "C400000000000035", item: { count: 1, id: "zinecraft:collectible_gold_plated_die" }, type: "item" }]
+			tasks: [{ id: "C400000000000035", item: { count: 1, id: "zinecraft:gold_plated_die" }, type: "item" }]
 			x: 6.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000036"
-			icon: { id: "zinecraft:collectible_profound_silence" }
+			icon: { id: "zinecraft:profound_silence" }
 			optional: true
-			tasks: [{ id: "C400000000000036", item: { count: 1, id: "zinecraft:collectible_profound_silence" }, type: "item" }]
+			tasks: [{ id: "C400000000000036", item: { count: 1, id: "zinecraft:profound_silence" }, type: "item" }]
 			x: 8.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000040"
-			icon: { id: "zinecraft:collectible_noxious_hemostatic_agent" }
+			icon: { id: "zinecraft:noxious_hemostatic_agent" }
 			optional: true
-			tasks: [{ id: "C400000000000040", item: { count: 1, id: "zinecraft:collectible_noxious_hemostatic_agent" }, type: "item" }]
+			tasks: [{ id: "C400000000000040", item: { count: 1, id: "zinecraft:noxious_hemostatic_agent" }, type: "item" }]
 			x: 10.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000041"
-			icon: { id: "zinecraft:collectible_first_aid_kit" }
+			icon: { id: "zinecraft:first_aid_kit" }
 			optional: true
-			tasks: [{ id: "C400000000000041", item: { count: 1, id: "zinecraft:collectible_first_aid_kit" }, type: "item" }]
+			tasks: [{ id: "C400000000000041", item: { count: 1, id: "zinecraft:first_aid_kit" }, type: "item" }]
 			x: 12.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000042"
-			icon: { id: "zinecraft:collectible_unknown_instrument" }
+			icon: { id: "zinecraft:unknown_instrument" }
 			optional: true
-			tasks: [{ id: "C400000000000042", item: { count: 1, id: "zinecraft:collectible_unknown_instrument" }, type: "item" }]
+			tasks: [{ id: "C400000000000042", item: { count: 1, id: "zinecraft:unknown_instrument" }, type: "item" }]
 			x: 14.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000086"
-			icon: { id: "zinecraft:collectible_hand_of_choker" }
+			icon: { id: "zinecraft:hand_of_choker" }
 			optional: true
-			tasks: [{ id: "C400000000000086", item: { count: 1, id: "zinecraft:collectible_hand_of_choker" }, type: "item" }]
+			tasks: [{ id: "C400000000000086", item: { count: 1, id: "zinecraft:hand_of_choker" }, type: "item" }]
 			x: 16.0d
 			y: 76.0d
 		}
 		{
 			id: "C300000000000089"
-			icon: { id: "zinecraft:collectible_hand_of_shredder" }
+			icon: { id: "zinecraft:hand_of_shredder" }
 			optional: true
-			tasks: [{ id: "C400000000000089", item: { count: 1, id: "zinecraft:collectible_hand_of_shredder" }, type: "item" }]
+			tasks: [{ id: "C400000000000089", item: { count: 1, id: "zinecraft:hand_of_shredder" }, type: "item" }]
 			x: 18.0d
 			y: 76.0d
 		}
 		{
 			id: "C3000000000000B1"
-			icon: { id: "zinecraft:collectible_ursus_chachek" }
+			icon: { id: "zinecraft:ursus_chachek" }
 			optional: true
-			tasks: [{ id: "C4000000000000B1", item: { count: 1, id: "zinecraft:collectible_ursus_chachek" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B1", item: { count: 1, id: "zinecraft:ursus_chachek" }, type: "item" }]
 			x: 20.0d
 			y: 76.0d
 		}
 		{
 			id: "C3000000000000B2"
-			icon: { id: "zinecraft:collectible_ursus_chachek_reforged" }
+			icon: { id: "zinecraft:ursus_chachek_reforged" }
 			optional: true
-			tasks: [{ id: "C4000000000000B2", item: { count: 1, id: "zinecraft:collectible_ursus_chachek_reforged" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B2", item: { count: 1, id: "zinecraft:ursus_chachek_reforged" }, type: "item" }]
 			x: 22.0d
 			y: 76.0d
 		}
 		{
 			id: "C3000000000000B9"
-			icon: { id: "zinecraft:collectible_half_refined_diamond" }
+			icon: { id: "zinecraft:half_refined_diamond" }
 			optional: true
-			tasks: [{ id: "C4000000000000B9", item: { count: 1, id: "zinecraft:collectible_half_refined_diamond" }, type: "item" }]
+			tasks: [{ id: "C4000000000000B9", item: { count: 1, id: "zinecraft:half_refined_diamond" }, type: "item" }]
 			x: 0.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000BA"
-			icon: { id: "zinecraft:collectible_half_refined_diamond_reforged" }
+			icon: { id: "zinecraft:half_refined_diamond_reforged" }
 			optional: true
-			tasks: [{ id: "C4000000000000BA", item: { count: 1, id: "zinecraft:collectible_half_refined_diamond_reforged" }, type: "item" }]
+			tasks: [{ id: "C4000000000000BA", item: { count: 1, id: "zinecraft:half_refined_diamond_reforged" }, type: "item" }]
 			x: 2.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000D2"
-			icon: { id: "zinecraft:collectible_blank_suicide_note" }
+			icon: { id: "zinecraft:blank_suicide_note" }
 			optional: true
-			tasks: [{ id: "C4000000000000D2", item: { count: 1, id: "zinecraft:collectible_blank_suicide_note" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D2", item: { count: 1, id: "zinecraft:blank_suicide_note" }, type: "item" }]
 			x: 4.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000D4"
-			icon: { id: "zinecraft:collectible_stand_in_actor" }
+			icon: { id: "zinecraft:stand_in_actor" }
 			optional: true
-			tasks: [{ id: "C4000000000000D4", item: { count: 1, id: "zinecraft:collectible_stand_in_actor" }, type: "item" }]
+			tasks: [{ id: "C4000000000000D4", item: { count: 1, id: "zinecraft:stand_in_actor" }, type: "item" }]
 			x: 6.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000DB"
-			icon: { id: "zinecraft:collectible_victory_horn" }
+			icon: { id: "zinecraft:victory_horn" }
 			optional: true
-			tasks: [{ id: "C4000000000000DB", item: { count: 1, id: "zinecraft:collectible_victory_horn" }, type: "item" }]
+			tasks: [{ id: "C4000000000000DB", item: { count: 1, id: "zinecraft:victory_horn" }, type: "item" }]
 			x: 8.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000DC"
-			icon: { id: "zinecraft:collectible_flash_camera" }
+			icon: { id: "zinecraft:flash_camera" }
 			optional: true
-			tasks: [{ id: "C4000000000000DC", item: { count: 1, id: "zinecraft:collectible_flash_camera" }, type: "item" }]
+			tasks: [{ id: "C4000000000000DC", item: { count: 1, id: "zinecraft:flash_camera" }, type: "item" }]
 			x: 10.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000DD"
-			icon: { id: "zinecraft:collectible_therapy_tape" }
+			icon: { id: "zinecraft:therapy_tape" }
 			optional: true
-			tasks: [{ id: "C4000000000000DD", item: { count: 1, id: "zinecraft:collectible_therapy_tape" }, type: "item" }]
+			tasks: [{ id: "C4000000000000DD", item: { count: 1, id: "zinecraft:therapy_tape" }, type: "item" }]
 			x: 12.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000E2"
-			icon: { id: "zinecraft:collectible_angelinas_inspiration" }
+			icon: { id: "zinecraft:angelinas_inspiration" }
 			optional: true
-			tasks: [{ id: "C4000000000000E2", item: { count: 1, id: "zinecraft:collectible_angelinas_inspiration" }, type: "item" }]
+			tasks: [{ id: "C4000000000000E2", item: { count: 1, id: "zinecraft:angelinas_inspiration" }, type: "item" }]
 			x: 14.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000F1"
-			icon: { id: "zinecraft:collectible_painful_happiness" }
+			icon: { id: "zinecraft:painful_happiness" }
 			optional: true
-			tasks: [{ id: "C4000000000000F1", item: { count: 1, id: "zinecraft:collectible_painful_happiness" }, type: "item" }]
+			tasks: [{ id: "C4000000000000F1", item: { count: 1, id: "zinecraft:painful_happiness" }, type: "item" }]
 			x: 16.0d
 			y: 78.0d
 		}
 		{
 			id: "C3000000000000F4"
-			icon: { id: "zinecraft:collectible_eventide_terror" }
+			icon: { id: "zinecraft:eventide_terror" }
 			optional: true
-			tasks: [{ id: "C4000000000000F4", item: { count: 1, id: "zinecraft:collectible_eventide_terror" }, type: "item" }]
+			tasks: [{ id: "C4000000000000F4", item: { count: 1, id: "zinecraft:eventide_terror" }, type: "item" }]
 			x: 18.0d
 			y: 78.0d
 		}

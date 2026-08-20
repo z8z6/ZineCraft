@@ -2,7 +2,6 @@ package com.cxxcxx.zinecraft.core.registry;
 
 import com.cxxcxx.zinecraft.api.registry.builder.CreativeTabBuilder;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.item.ModCollectible;
 
 /**
  * 集中声明 Zinecraft 的全部创造模式页签。

@@ -79,22 +79,22 @@
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:collectible_regional_action_plan",
+          "name": "zinecraft:regional_action_plan",
           "weight": 5
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:collectible_comprehensive_operation_file",
+          "name": "zinecraft:comprehensive_operation_file",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:collectible_route_diagram",
+          "name": "zinecraft:route_diagram",
           "weight": 5
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:collectible_brass_compass",
+          "name": "zinecraft:brass_compass",
           "weight": 3
         }
       ]

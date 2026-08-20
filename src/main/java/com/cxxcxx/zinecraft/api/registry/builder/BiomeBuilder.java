@@ -34,6 +34,8 @@ public final class BiomeBuilder {
   @Nullable
   private ParameterPoint climate;
   @Nullable
+  private ClimateCoordinates climateCoordinates;
+  @Nullable
   private MobSpawnSettings.Builder spawns;
   @Nullable
   private BiomeGenerationSettings.Builder generation;
@@ -121,6 +123,9 @@ public final class BiomeBuilder {
     }
     this.climate = Climate.parameters(
         temperature, humidity, continentalness, erosion, depth, weirdness, 0.0F
+    );
+    this.climateCoordinates = new ClimateCoordinates(
+        temperature, humidity, continentalness, erosion, depth, weirdness
     );
     return this;
   }
@@ -405,6 +410,18 @@ public final class BiomeBuilder {
   }
 
   /**
+   * @return 添加河流生物、水草与基础河床生成后的当前构建器
+   */
+  public BiomeBuilder river() {
+    featuredSpawn(MobCategory.WATER_CREATURE, EntityType.SQUID, 2, 1, 2);
+    featuredSpawn(MobCategory.WATER_AMBIENT, EntityType.SALMON, 15, 1, 5);
+    BiomeDefaultFeatures.caveSpawns(spawns());
+    generationBase(true);
+    BiomeDefaultFeatures.addDefaultSeagrass(generation());
+    return this;
+  }
+
+  /**
    * @return 添加洞穴生物、滴水石与繁茂洞穴植被预设后的当前构建器
    */
   public BiomeBuilder cavern() {
@@ -479,6 +496,23 @@ public final class BiomeBuilder {
    */
   public ParameterPoint climate() {
     return Objects.requireNonNull(climate, "群系尚未配置气候点：" + path);
+  }
+
+  /**
+   * @return 用于国家内部气候选择的未量化六轴坐标
+   */
+  public ClimateCoordinates climateCoordinates() {
+    return Objects.requireNonNull(climateCoordinates, "群系尚未配置气候坐标：" + path);
+  }
+
+  public record ClimateCoordinates(
+      float temperature,
+      float humidity,
+      float continentalness,
+      float erosion,
+      float depth,
+      float weirdness
+  ) {
   }
 
   /**

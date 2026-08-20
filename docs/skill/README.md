@@ -4,21 +4,27 @@
 `SkillDemoTheme` 注册演示。技能物品使用独立创造模式页。
 
 ```java
-SkillEntry volcano = Zinecraft.SKILLS.register(
-    "skill_volcano",
-    "火山", "Volcano",
-    "艾雅法拉", "Eyjafjalla",
-    SkillProfession.CASTER,
-    "自动回复", "Auto Recovery",
-    "手动触发", "Manual",
-    55, 80, 15,
-    "攻击范围扩大并快速向范围内至多六个敌人发射熔岩。",
-    "Expands range and rapidly launches lava at up to six enemies in range.",
-    SkillDemoTheme.VOLCANIC_BURST
-);
+SkillBuilder volcano = new SkillBuilder(Zinecraft.SKILLS, "skill_volcano", "火山")
+    .enUs("Volcano")
+    .operator("艾雅法拉", "Eyjafjalla", SkillProfession.CASTER)
+    .activation("自动回复", "Auto Recovery", "手动触发", "Manual")
+    .stats(55, 80, 15)
+    .damage(2.3, CombatDamageType.ARTS)
+    .description(
+        "攻击范围扩大并快速向范围内至多六个敌人发射熔岩。",
+        "Expands range and rapidly launches lava at up to six enemies in range."
+    )
+    .theme(SkillDemoTheme.VOLCANIC_BURST)
+    .build();
 ```
 
-声明会生成技能物品、名称、干员/职业、回复/触发方式、技力、持续时间、描述和普通扁平模型。`initialSp`、`spCost` 不能为负；非空持续时间必须大于零。
+`SkillBuilder.build()` 会交由目录生成技能物品、名称、干员/职业、回复/触发方式、技力、持续时间、伤害、描述和普通扁平模型。
+`initialSp`、`spCost` 不能为负；非空持续时间必须大于零。
+
+直接造成伤害的技能通过 `damage(attackMultiplier, CombatDamageType)` 追加每一段伤害；例如 `2.3` 表示当前攻击力的 230%。
+同一技能可以多次调用 `damage(...)`，组合物理、魔法、法术、火焰、冰霜、雷电、毒素或真实伤害。辅助、治疗和纯控制技能
+不调用该方法，其 Tooltip 会明确显示“无直接伤害”。技能与武器统一实现 `CombatDamageProvider`，通过不可变的
+`damageProfiles()` 列表公开全部伤害段；`CombatDamageProfile` 负责区分固定基础攻击力和攻击力倍率。
 
 图标放在：
 

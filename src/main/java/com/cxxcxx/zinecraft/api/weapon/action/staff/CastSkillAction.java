@@ -1,5 +1,7 @@
 package com.cxxcxx.zinecraft.api.weapon.action.staff;
 
+import com.cxxcxx.zinecraft.api.combat.CombatDamageProfile;
+import com.cxxcxx.zinecraft.api.combat.CombatDamageProvider;
 import com.cxxcxx.zinecraft.api.combat.CombatService;
 import com.cxxcxx.zinecraft.api.skill.SkillCastContext;
 import com.cxxcxx.zinecraft.api.skill.SkillService;
@@ -7,7 +9,9 @@ import com.cxxcxx.zinecraft.api.weapon.action.*;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public final class CastSkillAction implements WeaponAction {
+import java.util.List;
+
+public final class CastSkillAction implements WeaponAction, CombatDamageProvider {
   @NotNull
   private final ResourceLocation id;
   @NotNull
@@ -37,6 +41,11 @@ public final class CastSkillAction implements WeaponAction {
   @Override
   public ResourceLocation getId() {
     return this.id;
+  }
+
+  @Override
+  public List<CombatDamageProfile> damageProfiles() {
+    return skillService.damageProfiles(skillId);
   }
 
   @Override

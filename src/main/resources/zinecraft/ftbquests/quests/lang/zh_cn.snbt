@@ -2,11 +2,11 @@
 	chapter.5A494E4543524146.title: "Zinecraft：泰拉远征"
 	quest.1000000000000001.title: "远征手册"
 	quest.1000000000000001.quest_subtitle: "维度、国家群系与武器指引"
-	quest.1000000000000001.quest_desc: ["本章会引导你寻找主世界星门、进入泰拉维度、踏访十九个国家群系，并掌握 Zinecraft 的剑、枪械与法杖。\n\n勾选下方任务开始远征。"]
-	quest.1000000000000002.title: "寻找雪原星门"
-	quest.1000000000000002.quest_desc: ["星门遗迹只会自然生成于主世界的雪原群系。找到 minecraft:snowy_plains，随后寻找一座由深色拱石构成、带有厚重扶壁的宏大拱门；未激活时拱内不会出现事件视界。"]
-	quest.1000000000000003.title: "协议激活与穿越"
-	quest.1000000000000003.quest_desc: ["用源石、晶体电子单元和全新装置合成协议源石。手持协议源石，右键宏大拱门外侧基座上的星门协议控制器；认证成功后青色事件视界才会建立，协议源石作为密钥不会被消耗。踏入事件视界即可前往 zinecraft:terra。泰拉侧会自动建立已激活的返程门，避免滞留。"]
+	quest.1000000000000001.quest_desc: ["新玩家会直接出生在泰拉。本章会引导你踏访十九个国家群系、前往萨米唯一星门并进入主世界，随后掌握 Zinecraft 的剑、枪械与法杖。\n\n勾选下方任务开始远征。"]
+	quest.1000000000000002.title: "前往萨米星门"
+	quest.1000000000000002.quest_desc: ["前往 zinecraft:sami_frozen_forest。泰拉唯一一座星门固定坐落在萨米，地图坐标约为 X=-23008、Z=-40000；JourneyMap 会显示萨米的国家边界和名称。"]
+	quest.1000000000000003.title: "激活并前往主世界"
+	quest.1000000000000003.quest_desc: ["用源石、晶体电子单元和全新装置合成协议源石。手持协议源石右键星门协议控制器；认证成功后青色事件视界才会建立，协议源石作为密钥不会被消耗。踏入事件视界即可单向前往 minecraft:overworld 的出生区域。"]
 
 	quest.2000000000000001.title: "阿戈尔深海"
 	quest.2000000000000001.quest_desc: ["深渊岩板海床与耐压墙砖聚居区。这里可见海豚，并分布着阿戈尔主题聚落与地标。"]
@@ -220,257 +220,57 @@
 	quest.6000000000000006.title: "仅开发环境辅助模组"
 	quest.6000000000000006.quest_desc: ["JEI 19.27.0.340、Just Enough Resources 1.6.0.17、AppleSkin 3.0.9、Jade 15.10.5、Just Enough Characters 4.5.22、JourneyMap 6.0.1、Nature's Compass 3.4.0 与 Explorer's Compass 3.4.0。\n\n它们分别用于物品与资源查询、饱食信息、方块信息、拼音搜索、地图调试，以及定位群系和结构，只作为开发运行依赖。"]
 
-	chapter.7A00000000000001.title: "阿戈尔：结构探索"
-	quest.7B01000000000001.title: "阿戈尔海底聚居地"
-	quest.7B01000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B01000000000001.quest_desc: ["前往并进入 zinecraft:aegir_subsea_enclave 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C01000000000001.title: "访问阿戈尔海底聚居地"
-	quest.7B01000000000002.title: "阿戈尔火山信标"
-	quest.7B01000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B01000000000002.quest_desc: ["前往并进入 zinecraft:aegir_volcanic_beacon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C01000000000002.title: "访问阿戈尔火山信标"
-	quest.7B01000000000003.title: "阿戈尔深渊观测站"
-	quest.7B01000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B01000000000003.quest_desc: ["前往并进入 zinecraft:aegir_abyssal_observatory 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C01000000000003.title: "访问阿戈尔深渊观测站"
-	chapter.7A00000000000002.title: "玻利瓦尔：结构探索"
-	quest.7B02000000000001.title: "玻利瓦尔多索雷斯城区"
-	quest.7B02000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B02000000000001.quest_desc: ["前往并进入 zinecraft:bolivar_dossoles_district 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C02000000000001.title: "访问玻利瓦尔多索雷斯城区"
-	quest.7B02000000000002.title: "玻利瓦尔多索雷斯游艇"
-	quest.7B02000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B02000000000002.quest_desc: ["前往并进入 zinecraft:bolivar_dossoles_yacht 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C02000000000002.title: "访问玻利瓦尔多索雷斯游艇"
-	quest.7B02000000000003.title: "玻利瓦尔竞速检查站"
-	quest.7B02000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B02000000000003.quest_desc: ["前往并进入 zinecraft:bolivar_race_checkpoint 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C02000000000003.title: "访问玻利瓦尔竞速检查站"
-	chapter.7A00000000000003.title: "东国：结构探索"
-	quest.7B03000000000001.title: "东国索谷川町"
-	quest.7B03000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B03000000000001.quest_desc: ["前往并进入 zinecraft:higashi_sokogawa_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C03000000000001.title: "访问东国索谷川町"
-	quest.7B03000000000002.title: "东国裂谷神社"
-	quest.7B03000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B03000000000002.quest_desc: ["前往并进入 zinecraft:higashi_rift_shrine 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C03000000000002.title: "访问东国裂谷神社"
-	quest.7B03000000000003.title: "东国索谷川瞭望塔"
-	quest.7B03000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B03000000000003.quest_desc: ["前往并进入 zinecraft:higashi_sokogawa_watchtower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C03000000000003.title: "访问东国索谷川瞭望塔"
-	chapter.7A00000000000004.title: "杜林：结构探索"
-	quest.7B04000000000001.title: "杜林理想城街区"
-	quest.7B04000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B04000000000001.quest_desc: ["前往并进入 zinecraft:durin_ideal_city_block 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C04000000000001.title: "访问杜林理想城街区"
-	quest.7B04000000000002.title: "杜林穹顶车站"
-	quest.7B04000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B04000000000002.quest_desc: ["前往并进入 zinecraft:durin_dome_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C04000000000002.title: "访问杜林穹顶车站"
-	quest.7B04000000000003.title: "杜林水上乐园"
-	quest.7B04000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B04000000000003.quest_desc: ["前往并进入 zinecraft:durin_water_park 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C04000000000003.title: "访问杜林水上乐园"
-	chapter.7A00000000000005.title: "哥伦比亚：结构探索"
-	quest.7B05000000000001.title: "哥伦比亚边疆城镇"
-	quest.7B05000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B05000000000001.quest_desc: ["前往并进入 zinecraft:columbia_frontier_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C05000000000001.title: "访问哥伦比亚边疆城镇"
-	quest.7B05000000000002.title: "哥伦比亚边疆实验室"
-	quest.7B05000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B05000000000002.quest_desc: ["前往并进入 zinecraft:columbia_frontier_lab 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C05000000000002.title: "访问哥伦比亚边疆实验室"
-	quest.7B05000000000003.title: "哥伦比亚监狱哨站"
-	quest.7B05000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B05000000000003.quest_desc: ["前往并进入 zinecraft:columbia_prison_outpost 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C05000000000003.title: "访问哥伦比亚监狱哨站"
-	chapter.7A00000000000006.title: "卡西米尔：结构探索"
-	quest.7B06000000000001.title: "卡西米尔骑士城区"
-	quest.7B06000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B06000000000001.quest_desc: ["前往并进入 zinecraft:kazimierz_knight_borough 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C06000000000001.title: "访问卡西米尔骑士城区"
-	quest.7B06000000000002.title: "卡西米尔竞技场大门"
-	quest.7B06000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B06000000000002.quest_desc: ["前往并进入 zinecraft:kazimierz_arena_gate 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C06000000000002.title: "访问卡西米尔竞技场大门"
-	quest.7B06000000000003.title: "卡西米尔骑士纪念碑"
-	quest.7B06000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B06000000000003.quest_desc: ["前往并进入 zinecraft:kazimierz_knight_monument 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C06000000000003.title: "访问卡西米尔骑士纪念碑"
-	chapter.7A00000000000007.title: "卡兹戴尔：结构探索"
-	quest.7B07000000000001.title: "卡兹戴尔萨卡兹聚落"
-	quest.7B07000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B07000000000001.quest_desc: ["前往并进入 zinecraft:kazdel_sarkaz_settlement 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C07000000000001.title: "访问卡兹戴尔萨卡兹聚落"
-	quest.7B07000000000002.title: "卡兹戴尔巴别塔遗迹"
-	quest.7B07000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B07000000000002.quest_desc: ["前往并进入 zinecraft:kazdel_babel_ruins 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C07000000000002.title: "访问卡兹戴尔巴别塔遗迹"
-	quest.7B07000000000003.title: "卡兹戴尔萨卡兹营地"
-	quest.7B07000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B07000000000003.quest_desc: ["前往并进入 zinecraft:kazdel_sarkaz_camp 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C07000000000003.title: "访问卡兹戴尔萨卡兹营地"
-	chapter.7A00000000000008.title: "拉特兰：结构探索"
-	quest.7B08000000000001.title: "拉特兰修道院城镇"
-	quest.7B08000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B08000000000001.quest_desc: ["前往并进入 zinecraft:laterano_monastery_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C08000000000001.title: "访问拉特兰修道院城镇"
-	quest.7B08000000000002.title: "拉特兰启示石塔"
-	quest.7B08000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B08000000000002.quest_desc: ["前往并进入 zinecraft:laterano_revelation_tower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C08000000000002.title: "访问拉特兰启示石塔"
-	quest.7B08000000000003.title: "拉特兰安布罗修礼拜堂"
-	quest.7B08000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B08000000000003.quest_desc: ["前往并进入 zinecraft:laterano_ambrosius_chapel 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C08000000000003.title: "访问拉特兰安布罗修礼拜堂"
-	quest.7B08000000000004.title: "拉特兰主机"
-	quest.7B08000000000004.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B08000000000004.quest_desc: ["前往并进入 zinecraft:laterano_host 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C08000000000004.title: "访问拉特兰主机"
-	chapter.7A00000000000009.title: "莱塔尼亚：结构探索"
-	quest.7B09000000000001.title: "莱塔尼亚音乐城镇"
-	quest.7B09000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B09000000000001.quest_desc: ["前往并进入 zinecraft:leithanien_music_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C09000000000001.title: "访问莱塔尼亚音乐城镇"
-	quest.7B09000000000002.title: "莱塔尼亚双塔"
-	quest.7B09000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B09000000000002.quest_desc: ["前往并进入 zinecraft:leithanien_twin_spires 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C09000000000002.title: "访问莱塔尼亚双塔"
-	quest.7B09000000000003.title: "莱塔尼亚音乐厅"
-	quest.7B09000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B09000000000003.quest_desc: ["前往并进入 zinecraft:leithanien_concert_hall 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C09000000000003.title: "访问莱塔尼亚音乐厅"
-	chapter.7A0000000000000A.title: "雷姆必拓：结构探索"
-	quest.7B0A000000000001.title: "雷姆必拓采矿营地"
-	quest.7B0A000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0A000000000001.quest_desc: ["前往并进入 zinecraft:rim_billiton_mining_camp 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0A000000000001.title: "访问雷姆必拓采矿营地"
-	quest.7B0A000000000002.title: "雷姆必拓采矿井架"
-	quest.7B0A000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0A000000000002.quest_desc: ["前往并进入 zinecraft:rim_billiton_mining_derrick 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0A000000000002.title: "访问雷姆必拓采矿井架"
-	quest.7B0A000000000003.title: "雷姆必拓铁路货站"
-	quest.7B0A000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0A000000000003.quest_desc: ["前往并进入 zinecraft:rim_billiton_rail_depot 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0A000000000003.title: "访问雷姆必拓铁路货站"
-	chapter.7A0000000000000B.title: "米诺斯：结构探索"
-	quest.7B0B000000000001.title: "米诺斯英雄城邦"
-	quest.7B0B000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0B000000000001.quest_desc: ["前往并进入 zinecraft:minos_heroic_polis 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0B000000000001.title: "访问米诺斯英雄城邦"
-	quest.7B0B000000000002.title: "米诺斯英雄神殿"
-	quest.7B0B000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0B000000000002.quest_desc: ["前往并进入 zinecraft:minos_heroes_temple 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0B000000000002.title: "访问米诺斯英雄神殿"
-	quest.7B0B000000000003.title: "米诺斯英雄广场"
-	quest.7B0B000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0B000000000003.quest_desc: ["前往并进入 zinecraft:minos_heroes_plaza 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0B000000000003.title: "访问米诺斯英雄广场"
-	chapter.7A0000000000000C.title: "萨尔贡：结构探索"
-	quest.7B0C000000000001.title: "萨尔贡绿洲城镇"
-	quest.7B0C000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0C000000000001.quest_desc: ["前往并进入 zinecraft:sargon_oasis_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0C000000000001.title: "访问萨尔贡绿洲城镇"
-	quest.7B0C000000000002.title: "萨尔贡黄金集市"
-	quest.7B0C000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0C000000000002.quest_desc: ["前往并进入 zinecraft:sargon_golden_bazaar 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0C000000000002.title: "访问萨尔贡黄金集市"
-	quest.7B0C000000000003.title: "萨尔贡长泉水井"
-	quest.7B0C000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0C000000000003.quest_desc: ["前往并进入 zinecraft:sargon_long_spring_well 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0C000000000003.title: "访问萨尔贡长泉水井"
-	chapter.7A0000000000000D.title: "萨米：结构探索"
-	quest.7B0D000000000001.title: "萨米雪祀村落"
-	quest.7B0D000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0D000000000001.quest_desc: ["前往并进入 zinecraft:sami_snowpriest_village 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0D000000000001.title: "访问萨米雪祀村落"
-	quest.7B0D000000000002.title: "萨米独眼巨人祭坛"
-	quest.7B0D000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0D000000000002.quest_desc: ["前往并进入 zinecraft:sami_cyclops_altar 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0D000000000002.title: "访问萨米独眼巨人祭坛"
-	quest.7B0D000000000003.title: "萨米雪祀居所"
-	quest.7B0D000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0D000000000003.quest_desc: ["前往并进入 zinecraft:sami_snowpriest_lodge 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0D000000000003.title: "访问萨米雪祀居所"
-	chapter.7A0000000000000E.title: "维多利亚：结构探索"
-	quest.7B0E000000000001.title: "维多利亚工业城区"
-	quest.7B0E000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0E000000000001.quest_desc: ["前往并进入 zinecraft:victoria_industrial_borough 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0E000000000001.title: "访问维多利亚工业城区"
-	quest.7B0E000000000002.title: "维多利亚防御炮台"
-	quest.7B0E000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0E000000000002.quest_desc: ["前往并进入 zinecraft:victoria_defence_cannon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0E000000000002.title: "访问维多利亚防御炮台"
-	quest.7B0E000000000003.title: "维多利亚蒸汽车站"
-	quest.7B0E000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0E000000000003.quest_desc: ["前往并进入 zinecraft:victoria_steam_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0E000000000003.title: "访问维多利亚蒸汽车站"
-	chapter.7A0000000000000F.title: "乌萨斯：结构探索"
-	quest.7B0F000000000001.title: "乌萨斯北方城镇"
-	quest.7B0F000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0F000000000001.quest_desc: ["前往并进入 zinecraft:ursus_northern_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0F000000000001.title: "访问乌萨斯北方城镇"
-	quest.7B0F000000000002.title: "乌萨斯石棺站"
-	quest.7B0F000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0F000000000002.quest_desc: ["前往并进入 zinecraft:ursus_sarcophagus_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0F000000000002.title: "访问乌萨斯石棺站"
-	quest.7B0F000000000003.title: "乌萨斯北方矿塔"
-	quest.7B0F000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B0F000000000003.quest_desc: ["前往并进入 zinecraft:ursus_northern_mine_tower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C0F000000000003.title: "访问乌萨斯北方矿塔"
-	chapter.7A00000000000010.title: "谢拉格：结构探索"
-	quest.7B10000000000001.title: "谢拉格山地村落"
-	quest.7B10000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B10000000000001.quest_desc: ["前往并进入 zinecraft:kjerag_mountain_village 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C10000000000001.title: "访问谢拉格山地村落"
-	quest.7B10000000000002.title: "谢拉格喀兰修道院"
-	quest.7B10000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B10000000000002.quest_desc: ["前往并进入 zinecraft:kjerag_karlan_monastery 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C10000000000002.title: "访问谢拉格喀兰修道院"
-	quest.7B10000000000003.title: "谢拉格圣洁广场"
-	quest.7B10000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B10000000000003.quest_desc: ["前往并进入 zinecraft:kjerag_sacred_plaza 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C10000000000003.title: "访问谢拉格圣洁广场"
-	chapter.7A00000000000011.title: "叙拉古：结构探索"
-	quest.7B11000000000001.title: "叙拉古家族城镇"
-	quest.7B11000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B11000000000001.quest_desc: ["前往并进入 zinecraft:siracusa_family_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C11000000000001.title: "访问叙拉古家族城镇"
-	quest.7B11000000000002.title: "叙拉古家族法庭"
-	quest.7B11000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B11000000000002.quest_desc: ["前往并进入 zinecraft:siracusa_family_court 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C11000000000002.title: "访问叙拉古家族法庭"
-	quest.7B11000000000003.title: "叙拉古家族剧院"
-	quest.7B11000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B11000000000003.quest_desc: ["前往并进入 zinecraft:siracusa_family_theatre 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C11000000000003.title: "访问叙拉古家族剧院"
-	chapter.7A00000000000012.title: "炎国：结构探索"
-	quest.7B12000000000001.title: "炎国尚蜀城镇"
-	quest.7B12000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B12000000000001.quest_desc: ["前往并进入 zinecraft:yan_shangshu_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C12000000000001.title: "访问炎国尚蜀城镇"
-	quest.7B12000000000002.title: "炎国玉门烽台"
-	quest.7B12000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B12000000000002.quest_desc: ["前往并进入 zinecraft:yan_yumen_beacon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C12000000000002.title: "访问炎国玉门烽台"
-	quest.7B12000000000003.title: "炎国尚蜀亭阁"
-	quest.7B12000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B12000000000003.quest_desc: ["前往并进入 zinecraft:yan_shangshu_pavilion 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C12000000000003.title: "访问炎国尚蜀亭阁"
-	chapter.7A00000000000013.title: "伊比利亚：结构探索"
-	quest.7B13000000000001.title: "伊比利亚滨海城镇"
-	quest.7B13000000000001.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B13000000000001.quest_desc: ["前往并进入 zinecraft:iberia_coastal_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C13000000000001.title: "访问伊比利亚滨海城镇"
-	quest.7B13000000000002.title: "伊比利亚之眼灯塔"
-	quest.7B13000000000002.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B13000000000002.quest_desc: ["前往并进入 zinecraft:iberia_eye_lighthouse 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C13000000000002.title: "访问伊比利亚之眼灯塔"
-	quest.7B13000000000003.title: "伊比利亚盐风礼拜堂"
-	quest.7B13000000000003.quest_subtitle: "进入结构范围后自动完成"
-	quest.7B13000000000003.quest_desc: ["前往并进入 zinecraft:iberia_saltwind_chapel 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
-	task.7C13000000000003.title: "访问伊比利亚盐风礼拜堂"
+
+	chapter.534B494C4C534348.title: "干员技能"
+	quest.D100000000000000.title: "干员技能训练"
+	quest.D100000000000000.quest_subtitle: "查看技能资料与 Ponder 演示"
+	quest.D100000000000000.quest_desc: ["本章收录当前已注册的九种干员技能物品。", "将鼠标移到技能物品上并按住 Ponder 键，可以查看对应机制演示。", "演示用于说明 Minecraft 机制化表达，不直接参与服务端伤害结算。"]
+	task.D200000000000000.title: "阅读技能训练说明"
+	quest.D300000000000001.title: "桃金娘：支援号令·β型"
+	quest.D300000000000001.quest_subtitle: "先锋 · 自动回复 · 手动触发"
+	quest.D300000000000001.quest_desc: ["初始技力 13 · 技力消耗 22 · 持续 8 秒", "停止攻击，并在持续时间内逐步回复部署费用。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000001.title: "持有支援号令·β型"
+	task.D500000000000001.title: "确认已查看技能演示"
+	quest.D300000000000002.title: "银灰：真银斩"
+	quest.D300000000000002.quest_subtitle: "近卫 · 自动回复 · 手动触发"
+	quest.D300000000000002.quest_desc: ["初始技力 75 · 技力消耗 90 · 持续 30 秒", "降低自身防御，大幅提高攻击并扩大范围，同时攻击至多六个目标。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000002.title: "持有真银斩"
+	task.D500000000000002.title: "确认已查看技能演示"
+	quest.D300000000000003.title: "能天使：过载模式"
+	quest.D300000000000003.quest_subtitle: "狙击 · 自动回复 · 自动触发"
+	quest.D300000000000003.quest_desc: ["初始技力 20 · 技力消耗 30 · 持续 15 秒", "自动开启，攻击变为五连射并缩短攻击间隔。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000003.title: "持有过载模式"
+	task.D500000000000003.title: "确认已查看技能演示"
+	quest.D300000000000004.title: "维什戴尔：爆裂黎明"
+	quest.D300000000000004.quest_subtitle: "狙击 · 自动回复 · 手动触发"
+	quest.D300000000000004.quest_desc: ["初始技力 40 · 技力消耗 50 · 弹药技能", "立刻在攻击范围内召唤2个魂灵之影（最多存在3个，技能结束后保留），攻击力+180%，攻击间隔大幅增大，攻击时攻击力提升至220%，溅射范围大幅扩大且第一天赋的发动概率提高至100%。攻击装有6发弹药，打完后结束（可随时停止技能）。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000004.title: "持有爆裂黎明"
+	task.D500000000000004.title: "确认已查看技能演示"
+	quest.D300000000000005.title: "艾雅法拉：火山"
+	quest.D300000000000005.quest_subtitle: "术师 · 自动回复 · 手动触发"
+	quest.D300000000000005.quest_desc: ["初始技力 55 · 技力消耗 80 · 持续 15 秒", "攻击范围扩大并快速向范围内至多六个敌人发射熔岩。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000005.title: "持有火山"
+	task.D500000000000005.title: "确认已查看技能演示"
+	quest.D300000000000006.title: "塞雷娅：钙质化"
+	quest.D300000000000006.quest_subtitle: "重装 · 自动回复 · 手动触发"
+	quest.D300000000000006.quest_desc: ["初始技力 70 · 技力消耗 80 · 持续 30 秒", "持续治疗附近友方，同时使附近敌人减速并更易受到法术伤害。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000006.title: "持有钙质化"
+	task.D500000000000006.title: "确认已查看技能演示"
+	quest.D300000000000007.title: "夜莺：圣域"
+	quest.D300000000000007.quest_subtitle: "医疗 · 自动回复 · 手动触发"
+	quest.D300000000000007.quest_desc: ["初始技力 115 · 技力消耗 120 · 持续 60 秒", "扩大治疗范围并强化攻击，使范围内友方获得法术抗性与法术闪避。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000007.title: "持有圣域"
+	task.D500000000000007.title: "确认已查看技能演示"
+	quest.D300000000000008.title: "铃兰：狐火渺然"
+	quest.D300000000000008.quest_subtitle: "辅助 · 自动回复 · 手动触发"
+	quest.D300000000000008.quest_desc: ["初始技力 50 · 技力消耗 70 · 持续 35 秒", "停止攻击，扩大范围，使敌人停顿并持续恢复范围内友方生命。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000008.title: "持有狐火渺然"
+	task.D500000000000008.title: "确认已查看技能演示"
+	quest.D300000000000009.title: "红：狼群"
+	quest.D300000000000009.quest_subtitle: "特种 · 被动 · 部署触发"
+	quest.D300000000000009.quest_desc: ["初始技力 0 · 技力消耗 0 · 无持续时间", "部署后立即伤害周围所有地面敌人，并使命中目标晕眩三秒。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
+	task.D400000000000009.title: "持有狼群"
+	task.D500000000000009.title: "确认已查看技能演示"
 
 	chapter.434F4C4C45435449.title: "藏品图鉴"
 	quest.C100000000000001.title: "攻击类"
@@ -1489,54 +1289,560 @@
 	quest.C3000000000000F4.quest_subtitle: "No.PCS06 · 特殊规则类"
 	quest.C3000000000000F4.quest_desc: ["PRTS 原效果：每次敌人进入保护目标点时，立刻对全场所有敌人造成5秒晕眩", "藏品介绍：总有一个黑暗的日子，连光芒都无法带来救赎。而剧团长早已备好美酒，准备欣赏他人的绝望时刻。", "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"]
 	task.C4000000000000F4.title: "持有“夜骇”"
-	chapter.534B494C4C534348.title: "干员技能"
-	quest.D100000000000000.title: "干员技能训练"
-	quest.D100000000000000.quest_subtitle: "查看技能资料与 Ponder 演示"
-	quest.D100000000000000.quest_desc: ["本章收录当前已注册的九种干员技能物品。", "将鼠标移到技能物品上并按住 Ponder 键，可以查看对应机制演示。", "演示用于说明 Minecraft 机制化表达，不直接参与服务端伤害结算。"]
-	task.D200000000000000.title: "阅读技能训练说明"
-	quest.D300000000000001.title: "桃金娘：支援号令·β型"
-	quest.D300000000000001.quest_subtitle: "先锋 · 自动回复 · 手动触发"
-	quest.D300000000000001.quest_desc: ["初始技力 13 · 技力消耗 22 · 持续 8 秒", "停止攻击，并在持续时间内逐步回复部署费用。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000001.title: "持有支援号令·β型"
-	task.D500000000000001.title: "确认已查看技能演示"
-	quest.D300000000000002.title: "银灰：真银斩"
-	quest.D300000000000002.quest_subtitle: "近卫 · 自动回复 · 手动触发"
-	quest.D300000000000002.quest_desc: ["初始技力 75 · 技力消耗 90 · 持续 30 秒", "降低自身防御，大幅提高攻击并扩大范围，同时攻击至多六个目标。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000002.title: "持有真银斩"
-	task.D500000000000002.title: "确认已查看技能演示"
-	quest.D300000000000003.title: "能天使：过载模式"
-	quest.D300000000000003.quest_subtitle: "狙击 · 自动回复 · 自动触发"
-	quest.D300000000000003.quest_desc: ["初始技力 20 · 技力消耗 30 · 持续 15 秒", "自动开启，攻击变为五连射并缩短攻击间隔。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000003.title: "持有过载模式"
-	task.D500000000000003.title: "确认已查看技能演示"
-	quest.D300000000000004.title: "维什戴尔：爆裂黎明"
-	quest.D300000000000004.quest_subtitle: "狙击 · 自动回复 · 手动触发"
-	quest.D300000000000004.quest_desc: ["初始技力 40 · 技力消耗 50 · 弹药技能", "立刻在攻击范围内召唤2个魂灵之影（最多存在3个，技能结束后保留），攻击力+180%，攻击间隔大幅增大，攻击时攻击力提升至220%，溅射范围大幅扩大且第一天赋的发动概率提高至100%。攻击装有6发弹药，打完后结束（可随时停止技能）。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000004.title: "持有爆裂黎明"
-	task.D500000000000004.title: "确认已查看技能演示"
-	quest.D300000000000005.title: "艾雅法拉：火山"
-	quest.D300000000000005.quest_subtitle: "术师 · 自动回复 · 手动触发"
-	quest.D300000000000005.quest_desc: ["初始技力 55 · 技力消耗 80 · 持续 15 秒", "攻击范围扩大并快速向范围内至多六个敌人发射熔岩。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000005.title: "持有火山"
-	task.D500000000000005.title: "确认已查看技能演示"
-	quest.D300000000000006.title: "塞雷娅：钙质化"
-	quest.D300000000000006.quest_subtitle: "重装 · 自动回复 · 手动触发"
-	quest.D300000000000006.quest_desc: ["初始技力 70 · 技力消耗 80 · 持续 30 秒", "持续治疗附近友方，同时使附近敌人减速并更易受到法术伤害。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000006.title: "持有钙质化"
-	task.D500000000000006.title: "确认已查看技能演示"
-	quest.D300000000000007.title: "夜莺：圣域"
-	quest.D300000000000007.quest_subtitle: "医疗 · 自动回复 · 手动触发"
-	quest.D300000000000007.quest_desc: ["初始技力 115 · 技力消耗 120 · 持续 60 秒", "扩大治疗范围并强化攻击，使范围内友方获得法术抗性与法术闪避。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000007.title: "持有圣域"
-	task.D500000000000007.title: "确认已查看技能演示"
-	quest.D300000000000008.title: "铃兰：狐火渺然"
-	quest.D300000000000008.quest_subtitle: "辅助 · 自动回复 · 手动触发"
-	quest.D300000000000008.quest_desc: ["初始技力 50 · 技力消耗 70 · 持续 35 秒", "停止攻击，扩大范围，使敌人停顿并持续恢复范围内友方生命。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000008.title: "持有狐火渺然"
-	task.D500000000000008.title: "确认已查看技能演示"
-	quest.D300000000000009.title: "红：狼群"
-	quest.D300000000000009.quest_subtitle: "特种 · 被动 · 部署触发"
-	quest.D300000000000009.quest_desc: ["初始技力 0 · 技力消耗 0 · 无持续时间", "部署后立即伤害周围所有地面敌人，并使命中目标晕眩三秒。", "持有技能物品，并查看对应 Ponder 演示后手动确认。"]
-	task.D400000000000009.title: "持有狼群"
-	task.D500000000000009.title: "确认已查看技能演示"
+
+	chapter.7A00000000000001.title: "阿戈尔：国家档案"
+	quest.7D01000000000001.title: "国家设定"
+	quest.7D01000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D01000000000001.quest_desc: ["地处深海、对外相对封锁的国家。国家权力掌握在科学执政官与技术执政官手中，并以深海猎人、海巡队等力量对抗海嗣。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E01000000000001.title: "阅读国家设定"
+	quest.7D01000000000002.title: "城市与聚落"
+	quest.7D01000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D01000000000002.quest_desc: ["城市、聚落与明确城市辖区：弥利亚留姆。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E01000000000002.title: "阅读城市目录"
+	quest.7D01000000000003.title: "重要地区"
+	quest.7D01000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D01000000000003.quest_desc: ["重要地区：现有 PRTS 地理总目录未列出更多可确认地名。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E01000000000003.title: "阅读地区目录"
+	quest.7D01000000000004.title: "建筑与探索"
+	quest.7D01000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D01000000000004.quest_desc: ["本章可探索建筑：阿戈尔海底聚居地、阿戈尔火山信标、阿戈尔深渊观测站。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E01000000000004.title: "阅读建筑目录"
+	quest.7B01000000000001.title: "阿戈尔海底聚居地"
+	quest.7B01000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B01000000000001.quest_desc: ["前往并进入 zinecraft:aegir_subsea_enclave 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C01000000000001.title: "访问阿戈尔海底聚居地"
+	quest.7B01000000000002.title: "阿戈尔火山信标"
+	quest.7B01000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B01000000000002.quest_desc: ["前往并进入 zinecraft:aegir_volcanic_beacon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C01000000000002.title: "访问阿戈尔火山信标"
+	quest.7B01000000000003.title: "阿戈尔深渊观测站"
+	quest.7B01000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B01000000000003.quest_desc: ["前往并进入 zinecraft:aegir_abyssal_observatory 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C01000000000003.title: "访问阿戈尔深渊观测站"
+	chapter.7A00000000000002.title: "玻利瓦尔：国家档案"
+	quest.7D02000000000001.title: "国家设定"
+	quest.7D02000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D02000000000001.quest_desc: ["位于泰拉大陆西北部。结晶时代因矿石开采范围与哥伦比亚重叠而发生冲突，国内长期处于辛嘉斯王朝、联合政府与真正玻利瓦尔人三方内战之中。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E02000000000001.title: "阅读国家设定"
+	quest.7D02000000000002.title: "城市与聚落"
+	quest.7D02000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D02000000000002.quest_desc: ["城市、聚落与明确城市辖区：多索雷斯、拉乌尼达、特科马。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E02000000000002.title: "阅读城市目录"
+	quest.7D02000000000003.title: "重要地区"
+	quest.7D02000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D02000000000003.quest_desc: ["重要地区：黑流树海、内河。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E02000000000003.title: "阅读地区目录"
+	quest.7D02000000000004.title: "建筑与探索"
+	quest.7D02000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D02000000000004.quest_desc: ["本章可探索建筑：玻利瓦尔多索雷斯城区、玻利瓦尔多索雷斯游艇、玻利瓦尔竞速检查站。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E02000000000004.title: "阅读建筑目录"
+	quest.7B02000000000001.title: "玻利瓦尔多索雷斯城区"
+	quest.7B02000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B02000000000001.quest_desc: ["前往并进入 zinecraft:bolivar_dossoles_district 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C02000000000001.title: "访问玻利瓦尔多索雷斯城区"
+	quest.7B02000000000002.title: "玻利瓦尔多索雷斯游艇"
+	quest.7B02000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B02000000000002.quest_desc: ["前往并进入 zinecraft:bolivar_dossoles_yacht 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C02000000000002.title: "访问玻利瓦尔多索雷斯游艇"
+	quest.7B02000000000003.title: "玻利瓦尔竞速检查站"
+	quest.7B02000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B02000000000003.quest_desc: ["前往并进入 zinecraft:bolivar_race_checkpoint 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C02000000000003.title: "访问玻利瓦尔竞速检查站"
+	chapter.7A00000000000003.title: "东国：国家档案"
+	quest.7D03000000000001.title: "国家设定"
+	quest.7D03000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D03000000000001.quest_desc: ["位于泰拉大陆东北角，常年处于南北朝内战状态：北方由光严氏当家，南方由光元氏当家，八大家族掌握全国军权。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E03000000000001.title: "阅读国家设定"
+	quest.7D03000000000002.title: "城市与聚落"
+	quest.7D03000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D03000000000002.quest_desc: ["城市、聚落与明确城市辖区：南院行在御机大社、北院镇守锁川城、姬户城、后川城、二户城、新安芸市、露华村；城市辖区：皇居大社、仁田街、锻冶町、都厅街。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E03000000000002.title: "阅读城市目录"
+	quest.7D03000000000003.title: "重要地区"
+	quest.7D03000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D03000000000003.quest_desc: ["重要地区：常暗裂谷。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E03000000000003.title: "阅读地区目录"
+	quest.7D03000000000004.title: "建筑与探索"
+	quest.7D03000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D03000000000004.quest_desc: ["本章可探索建筑：东国索谷川町、东国裂谷神社、东国索谷川瞭望塔。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E03000000000004.title: "阅读建筑目录"
+	quest.7B03000000000001.title: "东国索谷川町"
+	quest.7B03000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B03000000000001.quest_desc: ["前往并进入 zinecraft:higashi_sokogawa_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C03000000000001.title: "访问东国索谷川町"
+	quest.7B03000000000002.title: "东国裂谷神社"
+	quest.7B03000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B03000000000002.quest_desc: ["前往并进入 zinecraft:higashi_rift_shrine 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C03000000000002.title: "访问东国裂谷神社"
+	quest.7B03000000000003.title: "东国索谷川瞭望塔"
+	quest.7B03000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B03000000000003.quest_desc: ["前往并进入 zinecraft:higashi_sokogawa_watchtower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C03000000000003.title: "访问东国索谷川瞭望塔"
+	chapter.7A00000000000004.title: "杜林：国家档案"
+	quest.7D04000000000001.title: "国家设定"
+	quest.7D04000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D04000000000001.quest_desc: ["杜林人的社会以城市为单位，称为城邦的居住地分布在泰拉各处的地表之下；杜林人拥有先进科技。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E04000000000001.title: "阅读国家设定"
+	quest.7D04000000000002.title: "城市与聚落"
+	quest.7D04000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D04000000000002.quest_desc: ["城市、聚落与明确城市辖区：际崖城、天际城。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E04000000000002.title: "阅读城市目录"
+	quest.7D04000000000003.title: "重要地区"
+	quest.7D04000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D04000000000003.quest_desc: ["重要地区：现有 PRTS 地理总目录未列出更多可确认地名。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E04000000000003.title: "阅读地区目录"
+	quest.7D04000000000004.title: "建筑与探索"
+	quest.7D04000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D04000000000004.quest_desc: ["本章可探索建筑：杜林理想城街区、杜林穹顶车站、杜林水上乐园。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E04000000000004.title: "阅读建筑目录"
+	quest.7B04000000000001.title: "杜林理想城街区"
+	quest.7B04000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B04000000000001.quest_desc: ["前往并进入 zinecraft:durin_ideal_city_block 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C04000000000001.title: "访问杜林理想城街区"
+	quest.7B04000000000002.title: "杜林穹顶车站"
+	quest.7B04000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B04000000000002.quest_desc: ["前往并进入 zinecraft:durin_dome_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C04000000000002.title: "访问杜林穹顶车站"
+	quest.7B04000000000003.title: "杜林水上乐园"
+	quest.7B04000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B04000000000003.quest_desc: ["前往并进入 zinecraft:durin_water_park 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C04000000000003.title: "访问杜林水上乐园"
+	chapter.7A00000000000005.title: "哥伦比亚：国家档案"
+	quest.7D05000000000001.title: "国家设定"
+	quest.7D05000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D05000000000001.quest_desc: ["由维多利亚西北开拓区的城邦联盟发展而来的年轻联邦，独立后迅速成为具有影响力的政治经济实体，并持续寻求更高的国际地位。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E05000000000001.title: "阅读国家设定"
+	quest.7D05000000000002.title: "城市与聚落"
+	quest.7D05000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D05000000000002.quest_desc: ["城市、聚落与明确城市辖区：特里蒙、提卡伦多、堡垒山城、纽莱堡市、圣苏菲城、铸铁城、北诺斯维尔、新曼法斯特、蓝卡坞、吉沃吉亚、铁驮镇、达维镇。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E05000000000002.title: "阅读城市目录"
+	quest.7D05000000000003.title: "重要地区"
+	quest.7D05000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D05000000000003.quest_desc: ["重要地区：麦克斯特区、螺旋桨天堂、加斯帕荒原、骸骨荒原、苏里根湖。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E05000000000003.title: "阅读地区目录"
+	quest.7D05000000000004.title: "建筑与探索"
+	quest.7D05000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D05000000000004.quest_desc: ["本章可探索建筑：哥伦比亚边疆城镇、哥伦比亚边疆实验室、哥伦比亚监狱哨站。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E05000000000004.title: "阅读建筑目录"
+	quest.7B05000000000001.title: "哥伦比亚边疆城镇"
+	quest.7B05000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B05000000000001.quest_desc: ["前往并进入 zinecraft:columbia_frontier_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C05000000000001.title: "访问哥伦比亚边疆城镇"
+	quest.7B05000000000002.title: "哥伦比亚边疆实验室"
+	quest.7B05000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B05000000000002.quest_desc: ["前往并进入 zinecraft:columbia_frontier_lab 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C05000000000002.title: "访问哥伦比亚边疆实验室"
+	quest.7B05000000000003.title: "哥伦比亚监狱哨站"
+	quest.7B05000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B05000000000003.quest_desc: ["前往并进入 zinecraft:columbia_prison_outpost 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C05000000000003.title: "访问哥伦比亚监狱哨站"
+	chapter.7A00000000000006.title: "卡西米尔：国家档案"
+	quest.7D06000000000001.title: "国家设定"
+	quest.7D06000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D06000000000001.quest_desc: ["卡西米尔联合领是骑士与商业之国，举办骑士特别锦标赛；传统骑士精神与利益至上的商业思想正激烈交锋。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E06000000000001.title: "阅读国家设定"
+	quest.7D06000000000002.title: "城市与聚落"
+	quest.7D06000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D06000000000002.quest_desc: ["城市、聚落与明确城市辖区：卡瓦莱利亚基（大骑士领）、茨沃涅克、奥格尼斯科、滴水村、垒石村、沥泉村。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E06000000000002.title: "阅读城市目录"
+	quest.7D06000000000003.title: "重要地区"
+	quest.7D06000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D06000000000003.quest_desc: ["重要地区：黄金平原。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E06000000000003.title: "阅读地区目录"
+	quest.7D06000000000004.title: "建筑与探索"
+	quest.7D06000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D06000000000004.quest_desc: ["本章可探索建筑：卡西米尔骑士城区、卡西米尔竞技场大门、卡西米尔骑士纪念碑。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E06000000000004.title: "阅读建筑目录"
+	quest.7B06000000000001.title: "卡西米尔骑士城区"
+	quest.7B06000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B06000000000001.quest_desc: ["前往并进入 zinecraft:kazimierz_knight_borough 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C06000000000001.title: "访问卡西米尔骑士城区"
+	quest.7B06000000000002.title: "卡西米尔竞技场大门"
+	quest.7B06000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B06000000000002.quest_desc: ["前往并进入 zinecraft:kazimierz_arena_gate 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C06000000000002.title: "访问卡西米尔竞技场大门"
+	quest.7B06000000000003.title: "卡西米尔骑士纪念碑"
+	quest.7B06000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B06000000000003.quest_desc: ["前往并进入 zinecraft:kazimierz_knight_monument 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C06000000000003.title: "访问卡西米尔骑士纪念碑"
+	chapter.7A00000000000007.title: "卡兹戴尔：国家档案"
+	quest.7D07000000000001.title: "国家设定"
+	quest.7D07000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D07000000000001.quest_desc: ["萨卡兹人的国家，常年内战且一度处于无政府状态。卡兹戴尔城由军事委员会直接管理，各部族受对应王庭管辖。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E07000000000001.title: "阅读国家设定"
+	quest.7D07000000000002.title: "城市与聚落"
+	quest.7D07000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D07000000000002.quest_desc: ["城市、聚落与明确城市辖区：贝罗尼村、卡兹戴尔城（今卡兹戴尔）。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E07000000000002.title: "阅读城市目录"
+	quest.7D07000000000003.title: "重要地区"
+	quest.7D07000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D07000000000003.quest_desc: ["重要地区：现有 PRTS 地理总目录未列出更多可确认地名。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E07000000000003.title: "阅读地区目录"
+	quest.7D07000000000004.title: "建筑与探索"
+	quest.7D07000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D07000000000004.quest_desc: ["本章可探索建筑：卡兹戴尔萨卡兹聚落、卡兹戴尔巴别塔遗迹、卡兹戴尔萨卡兹营地。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E07000000000004.title: "阅读建筑目录"
+	quest.7B07000000000001.title: "卡兹戴尔萨卡兹聚落"
+	quest.7B07000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B07000000000001.quest_desc: ["前往并进入 zinecraft:kazdel_sarkaz_settlement 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C07000000000001.title: "访问卡兹戴尔萨卡兹聚落"
+	quest.7B07000000000002.title: "卡兹戴尔巴别塔遗迹"
+	quest.7B07000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B07000000000002.quest_desc: ["前往并进入 zinecraft:kazdel_babel_ruins 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C07000000000002.title: "访问卡兹戴尔巴别塔遗迹"
+	quest.7B07000000000003.title: "卡兹戴尔萨卡兹营地"
+	quest.7B07000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B07000000000003.quest_desc: ["前往并进入 zinecraft:kazdel_sarkaz_camp 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C07000000000003.title: "访问卡兹戴尔萨卡兹营地"
+	chapter.7A00000000000008.title: "拉特兰：国家档案"
+	quest.7D08000000000001.title: "国家设定"
+	quest.7D08000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D08000000000001.quest_desc: ["位于泰拉中部的神权国家。公共权力以践行律法为依据，由教宗与枢机团构成统治核心；长期中立和枢纽位置使其成为重要自由贸易港。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E08000000000001.title: "阅读国家设定"
+	quest.7D08000000000002.title: "城市与聚落"
+	quest.7D08000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D08000000000002.quest_desc: ["城市、聚落与明确城市辖区：司提望区、安布罗修区、法柏尔区、格芬区、米迦莱昂区、圣马尔索区、伊卡莱西亚区。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E08000000000002.title: "阅读城市目录"
+	quest.7D08000000000003.title: "重要地区"
+	quest.7D08000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D08000000000003.quest_desc: ["重要地区：现有 PRTS 地理总目录未列出更多可确认地名。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E08000000000003.title: "阅读地区目录"
+	quest.7D08000000000004.title: "建筑与探索"
+	quest.7D08000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D08000000000004.quest_desc: ["本章可探索建筑：拉特兰修道院城镇、拉特兰启示石塔、拉特兰安布罗修礼拜堂、拉特兰主机。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E08000000000004.title: "阅读建筑目录"
+	quest.7B08000000000001.title: "拉特兰修道院城镇"
+	quest.7B08000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B08000000000001.quest_desc: ["前往并进入 zinecraft:laterano_monastery_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C08000000000001.title: "访问拉特兰修道院城镇"
+	quest.7B08000000000002.title: "拉特兰启示石塔"
+	quest.7B08000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B08000000000002.quest_desc: ["前往并进入 zinecraft:laterano_revelation_tower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C08000000000002.title: "访问拉特兰启示石塔"
+	quest.7B08000000000003.title: "拉特兰安布罗修礼拜堂"
+	quest.7B08000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B08000000000003.quest_desc: ["前往并进入 zinecraft:laterano_ambrosius_chapel 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C08000000000003.title: "访问拉特兰安布罗修礼拜堂"
+	quest.7B08000000000004.title: "拉特兰主机"
+	quest.7B08000000000004.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B08000000000004.quest_desc: ["前往并进入 zinecraft:laterano_host 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C08000000000004.title: "访问拉特兰主机"
+	chapter.7A00000000000009.title: "莱塔尼亚：国家档案"
+	quest.7D09000000000001.title: "国家设定"
+	quest.7D09000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D09000000000001.quest_desc: ["实行选举君主制与邦联制，九个选帝侯大区保有各自政府、法律与军队。源石技艺、音乐和艺术教育深刻影响其政治与社会。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E09000000000001.title: "阅读国家设定"
+	quest.7D09000000000002.title: "城市与聚落"
+	quest.7D09000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D09000000000002.quest_desc: ["城市、聚落与明确城市辖区：崔林特尔梅、沃伦姆德、维谢海姆、格林登；崔林特尔梅辖区：博登区、约瑟夫加滕区、维恩区、卢滕区、双角区、新利奥波德区、巴赫区、精进区；维谢海姆辖区：高庭区、夕照区。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E09000000000002.title: "阅读城市目录"
+	quest.7D09000000000003.title: "重要地区"
+	quest.7D09000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D09000000000003.quest_desc: ["重要地区：海登施威尔大区、瓦瑟领大区、福特冈大区、奥施登海姆大区、凯普拉尼大区、恩瓦德大区、鲁珀坎大区、施彤领大区（费尔斯）、厄登赫尔大区、乌提卡领。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E09000000000003.title: "阅读地区目录"
+	quest.7D09000000000004.title: "建筑与探索"
+	quest.7D09000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D09000000000004.quest_desc: ["本章可探索建筑：莱塔尼亚音乐城镇、莱塔尼亚双塔、莱塔尼亚音乐厅。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E09000000000004.title: "阅读建筑目录"
+	quest.7B09000000000001.title: "莱塔尼亚音乐城镇"
+	quest.7B09000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B09000000000001.quest_desc: ["前往并进入 zinecraft:leithanien_music_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C09000000000001.title: "访问莱塔尼亚音乐城镇"
+	quest.7B09000000000002.title: "莱塔尼亚双塔"
+	quest.7B09000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B09000000000002.quest_desc: ["前往并进入 zinecraft:leithanien_twin_spires 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C09000000000002.title: "访问莱塔尼亚双塔"
+	quest.7B09000000000003.title: "莱塔尼亚音乐厅"
+	quest.7B09000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B09000000000003.quest_desc: ["前往并进入 zinecraft:leithanien_concert_hall 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C09000000000003.title: "访问莱塔尼亚音乐厅"
+	chapter.7A0000000000000A.title: "雷姆必拓：国家档案"
+	quest.7D0A000000000001.title: "国家设定"
+	quest.7D0A000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D0A000000000001.quest_desc: ["以矿业为主要产业，并参与与谢拉格的贸易；历史上曾与维多利亚围绕矿业问题发生冲突。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E0A000000000001.title: "阅读国家设定"
+	quest.7D0A000000000002.title: "城市与聚落"
+	quest.7D0A000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D0A000000000002.quest_desc: ["城市、聚落与明确城市辖区：终极大铁屯、钢铁萝卜城、铁腕城、大涌泉镇、洋蓟村、芜菁镇、太阳谷、红砂镇、锈渣子镇。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E0A000000000002.title: "阅读城市目录"
+	quest.7D0A000000000003.title: "重要地区"
+	quest.7D0A000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D0A000000000003.quest_desc: ["重要地区：格林梅多自治州、比格皮勒自治州、双倍黑尔梅特矿区、零号公路、南境、大风滩、咧嘴谷。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E0A000000000003.title: "阅读地区目录"
+	quest.7D0A000000000004.title: "建筑与探索"
+	quest.7D0A000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D0A000000000004.quest_desc: ["本章可探索建筑：雷姆必拓采矿营地、雷姆必拓采矿井架、雷姆必拓铁路货站。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E0A000000000004.title: "阅读建筑目录"
+	quest.7B0A000000000001.title: "雷姆必拓采矿营地"
+	quest.7B0A000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0A000000000001.quest_desc: ["前往并进入 zinecraft:rim_billiton_mining_camp 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0A000000000001.title: "访问雷姆必拓采矿营地"
+	quest.7B0A000000000002.title: "雷姆必拓采矿井架"
+	quest.7B0A000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0A000000000002.quest_desc: ["前往并进入 zinecraft:rim_billiton_mining_derrick 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0A000000000002.title: "访问雷姆必拓采矿井架"
+	quest.7B0A000000000003.title: "雷姆必拓铁路货站"
+	quest.7B0A000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0A000000000003.quest_desc: ["前往并进入 zinecraft:rim_billiton_rail_depot 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0A000000000003.title: "访问雷姆必拓铁路货站"
+	chapter.7A0000000000000B.title: "米诺斯：国家档案"
+	quest.7D0B000000000001.title: "国家设定"
+	quest.7D0B000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D0B000000000001.quest_desc: ["前身为古阿加门王国。民众曾在十二英雄领导下驱逐萨尔贡军队，英雄信仰在米诺斯广为盛行。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E0B000000000001.title: "阅读国家设定"
+	quest.7D0B000000000002.title: "城市与聚落"
+	quest.7D0B000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D0B000000000002.quest_desc: ["城市、聚落与明确城市辖区：科林尼亚、雅赛努斯、拉刻代蒙、阿克罗蒂村、爱琴。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E0B000000000002.title: "阅读城市目录"
+	quest.7D0B000000000003.title: "重要地区"
+	quest.7D0B000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D0B000000000003.quest_desc: ["重要地区：阿涅斯河、荷谟伊山、特尔斐运河、赫里亚山。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E0B000000000003.title: "阅读地区目录"
+	quest.7D0B000000000004.title: "建筑与探索"
+	quest.7D0B000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D0B000000000004.quest_desc: ["本章可探索建筑：米诺斯英雄城邦、米诺斯英雄神殿、米诺斯英雄广场。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E0B000000000004.title: "阅读建筑目录"
+	quest.7B0B000000000001.title: "米诺斯英雄城邦"
+	quest.7B0B000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0B000000000001.quest_desc: ["前往并进入 zinecraft:minos_heroic_polis 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0B000000000001.title: "访问米诺斯英雄城邦"
+	quest.7B0B000000000002.title: "米诺斯英雄神殿"
+	quest.7B0B000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0B000000000002.quest_desc: ["前往并进入 zinecraft:minos_heroes_temple 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0B000000000002.title: "访问米诺斯英雄神殿"
+	quest.7B0B000000000003.title: "米诺斯英雄广场"
+	quest.7B0B000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0B000000000003.quest_desc: ["前往并进入 zinecraft:minos_heroes_plaza 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0B000000000003.title: "访问米诺斯英雄广场"
+	chapter.7A0000000000000C.title: "萨尔贡：国家档案"
+	quest.7D0C000000000001.title: "国家设定"
+	quest.7D0C000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D0C000000000001.quest_desc: ["位于泰拉大陆西南角的广阔帝国，境内交织着荒漠、绿洲与雨林。土地多由王酋分管，许多居民生活在环境严苛的荒野和密林之中。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E0C000000000001.title: "阅读国家设定"
+	quest.7D0C000000000002.title: "城市与聚落"
+	quest.7D0C000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D0C000000000002.quest_desc: ["城市、聚落与明确城市辖区：长泉镇、费坤城。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E0C000000000002.title: "阅读城市目录"
+	quest.7D0C000000000003.title: "重要地区"
+	quest.7D0C000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D0C000000000003.quest_desc: ["重要地区：阿卡胡拉、伊巴特地区、凯尔图恩谷地；其他已知地名：瓦伊凡、米纳特哈玛仪。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E0C000000000003.title: "阅读地区目录"
+	quest.7D0C000000000004.title: "建筑与探索"
+	quest.7D0C000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D0C000000000004.quest_desc: ["本章可探索建筑：萨尔贡绿洲城镇、萨尔贡黄金集市、萨尔贡长泉水井。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E0C000000000004.title: "阅读建筑目录"
+	quest.7B0C000000000001.title: "萨尔贡绿洲城镇"
+	quest.7B0C000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0C000000000001.quest_desc: ["前往并进入 zinecraft:sargon_oasis_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0C000000000001.title: "访问萨尔贡绿洲城镇"
+	quest.7B0C000000000002.title: "萨尔贡黄金集市"
+	quest.7B0C000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0C000000000002.quest_desc: ["前往并进入 zinecraft:sargon_golden_bazaar 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0C000000000002.title: "访问萨尔贡黄金集市"
+	quest.7B0C000000000003.title: "萨尔贡长泉水井"
+	quest.7B0C000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0C000000000003.quest_desc: ["前往并进入 zinecraft:sargon_long_spring_well 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0C000000000003.title: "访问萨尔贡长泉水井"
+	chapter.7A0000000000000D.title: "萨米：国家档案"
+	quest.7D0D000000000001.title: "国家设定"
+	quest.7D0D000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D0D000000000001.quest_desc: ["位居泰拉北方，由诸多部族构成，拥有独特的人与自然相处模式。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E0D000000000001.title: "阅读国家设定"
+	quest.7D0D000000000002.title: "城市与聚落"
+	quest.7D0D000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D0D000000000002.quest_desc: ["城市、聚落与明确城市辖区：察帕特。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E0D000000000002.title: "阅读城市目录"
+	quest.7D0D000000000003.title: "重要地区"
+	quest.7D0D000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D0D000000000003.quest_desc: ["重要地区：原初之地、冬牙群山。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E0D000000000003.title: "阅读地区目录"
+	quest.7D0D000000000004.title: "建筑与探索"
+	quest.7D0D000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D0D000000000004.quest_desc: ["本章可探索建筑：萨米雪祀村落、萨米独眼巨人祭坛、萨米雪祀居所。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E0D000000000004.title: "阅读建筑目录"
+	quest.7B0D000000000001.title: "萨米雪祀村落"
+	quest.7B0D000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0D000000000001.quest_desc: ["前往并进入 zinecraft:sami_snowpriest_village 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0D000000000001.title: "访问萨米雪祀村落"
+	quest.7B0D000000000002.title: "萨米独眼巨人祭坛"
+	quest.7B0D000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0D000000000002.quest_desc: ["前往并进入 zinecraft:sami_cyclops_altar 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0D000000000002.title: "访问萨米独眼巨人祭坛"
+	quest.7B0D000000000003.title: "萨米雪祀居所"
+	quest.7B0D000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0D000000000003.quest_desc: ["前往并进入 zinecraft:sami_snowpriest_lodge 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0D000000000003.title: "访问萨米雪祀居所"
+	chapter.7A0000000000000E.title: "维多利亚：国家档案"
+	quest.7D0E000000000001.title: "国家设定"
+	quest.7D0E000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D0E000000000001.quest_desc: ["占据泰拉富饶中央谷地的君主制帝国，领土广袤、资源丰富，并拥有多个开拓区与飞地；国家由多层贵族领地构成。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E0E000000000001.title: "阅读国家设定"
+	quest.7D0E000000000002.title: "城市与聚落"
+	quest.7D0E000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D0E000000000002.quest_desc: ["城市、聚落与明确城市辖区：伦蒂尼姆、红脊镇、切特雷镇、布伦特伍德镇、吉布森镇、格瑞威治、丽茵卡登、卡拉顿、博森德尔；伦蒂尼姆辖区：奥特克里格区、萨迪恩区、海布里区、诺伯特区、玛格纳区、卡登区。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E0E000000000002.title: "阅读城市目录"
+	quest.7D0E000000000003.title: "重要地区"
+	quest.7D0E000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D0E000000000003.quest_desc: ["重要地区：多伦郡、小丘郡、阿斯卡拉郡、林顿郡、半岛郡、塞克郡、开夏郡、橡林郡、特伦特郡；石高原野、克拉斯德内海、赤鬃山脉、银石崖、暮辉河。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E0E000000000003.title: "阅读地区目录"
+	quest.7D0E000000000004.title: "建筑与探索"
+	quest.7D0E000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D0E000000000004.quest_desc: ["本章可探索建筑：维多利亚工业城区、维多利亚防御炮台、维多利亚蒸汽车站。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E0E000000000004.title: "阅读建筑目录"
+	quest.7B0E000000000001.title: "维多利亚工业城区"
+	quest.7B0E000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0E000000000001.quest_desc: ["前往并进入 zinecraft:victoria_industrial_borough 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0E000000000001.title: "访问维多利亚工业城区"
+	quest.7B0E000000000002.title: "维多利亚防御炮台"
+	quest.7B0E000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0E000000000002.quest_desc: ["前往并进入 zinecraft:victoria_defence_cannon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0E000000000002.title: "访问维多利亚防御炮台"
+	quest.7B0E000000000003.title: "维多利亚蒸汽车站"
+	quest.7B0E000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0E000000000003.quest_desc: ["前往并进入 zinecraft:victoria_steam_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0E000000000003.title: "访问维多利亚蒸汽车站"
+	chapter.7A0000000000000F.title: "乌萨斯：国家档案"
+	quest.7D0F000000000001.title: "国家设定"
+	quest.7D0F000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D0F000000000001.quest_desc: ["雄踞泰拉大陆北部的君主制帝国，幅员辽阔、自然环境严酷，拥有雄厚军事资本，并长期以军事扩张立国。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E0F000000000001.title: "阅读国家设定"
+	quest.7D0F000000000002.title: "城市与聚落"
+	quest.7D0F000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D0F000000000002.quest_desc: ["城市、聚落与明确城市辖区：圣骏堡、泽尔格勒（卫星城）、切尔诺伯格、图利斯卡亚、新彼得罗夫斯克、塔曼格勒德、维亚特诺、扎莫列斯、彼得达诺尔、布列洁诺伊、维罗比斯科镇；圣骏堡辖区：萨列夫格勒区、卡托加区、奥多耶夫区、涅瓦湖；布列洁诺伊辖区：布列斯克、中心矿区、卫星城矿区、奥洛涅茨矿区、沃尔格勒矿区、乌拉尔矿区、克拉斯矿区、奥涅加矿区。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E0F000000000002.title: "阅读城市目录"
+	quest.7D0F000000000003.title: "重要地区"
+	quest.7D0F000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D0F000000000003.quest_desc: ["重要地区：格里高利省。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E0F000000000003.title: "阅读地区目录"
+	quest.7D0F000000000004.title: "建筑与探索"
+	quest.7D0F000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D0F000000000004.quest_desc: ["本章可探索建筑：乌萨斯北方城镇、乌萨斯石棺站、乌萨斯北方矿塔。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E0F000000000004.title: "阅读建筑目录"
+	quest.7B0F000000000001.title: "乌萨斯北方城镇"
+	quest.7B0F000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0F000000000001.quest_desc: ["前往并进入 zinecraft:ursus_northern_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0F000000000001.title: "访问乌萨斯北方城镇"
+	quest.7B0F000000000002.title: "乌萨斯石棺站"
+	quest.7B0F000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0F000000000002.quest_desc: ["前往并进入 zinecraft:ursus_sarcophagus_station 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0F000000000002.title: "访问乌萨斯石棺站"
+	quest.7B0F000000000003.title: "乌萨斯北方矿塔"
+	quest.7B0F000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B0F000000000003.quest_desc: ["前往并进入 zinecraft:ursus_northern_mine_tower 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C0F000000000003.title: "访问乌萨斯北方矿塔"
+	chapter.7A00000000000010.title: "谢拉格：国家档案"
+	quest.7D10000000000001.title: "国家设定"
+	quest.7D10000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D10000000000001.quest_desc: ["位于泰拉中北部、终年落雪的雪山国家。世俗事务由三大家族组成的三族议会掌控，蔓珠院主持宗教传统，同时国内正经历对外开放与现代化。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E10000000000001.title: "阅读国家设定"
+	quest.7D10000000000002.title: "城市与聚落"
+	quest.7D10000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D10000000000002.quest_desc: ["城市、聚落与明确城市辖区：图里卡姆。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E10000000000002.title: "阅读城市目录"
+	quest.7D10000000000003.title: "重要地区"
+	quest.7D10000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D10000000000003.quest_desc: ["重要地区：少女峰、马特洪峰、喀兰峰、银心湖。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E10000000000003.title: "阅读地区目录"
+	quest.7D10000000000004.title: "建筑与探索"
+	quest.7D10000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D10000000000004.quest_desc: ["本章可探索建筑：谢拉格山地村落、谢拉格喀兰修道院、谢拉格圣洁广场。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E10000000000004.title: "阅读建筑目录"
+	quest.7B10000000000001.title: "谢拉格山地村落"
+	quest.7B10000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B10000000000001.quest_desc: ["前往并进入 zinecraft:kjerag_mountain_village 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C10000000000001.title: "访问谢拉格山地村落"
+	quest.7B10000000000002.title: "谢拉格喀兰修道院"
+	quest.7B10000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B10000000000002.quest_desc: ["前往并进入 zinecraft:kjerag_karlan_monastery 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C10000000000002.title: "访问谢拉格喀兰修道院"
+	quest.7B10000000000003.title: "谢拉格圣洁广场"
+	quest.7B10000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B10000000000003.quest_desc: ["前往并进入 zinecraft:kjerag_sacred_plaza 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C10000000000003.title: "访问谢拉格圣洁广场"
+	chapter.7A00000000000011.title: "叙拉古：国家档案"
+	quest.7D11000000000001.title: "国家设定"
+	quest.7D11000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D11000000000001.quest_desc: ["由移动城邦和家族势力构成的国家。十二家族组成灰厅并遵循铳与秩序，中央行政机关为城邦联合议事会。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E11000000000001.title: "阅读国家设定"
+	quest.7D11000000000002.title: "城市与聚落"
+	quest.7D11000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D11000000000002.quest_desc: ["城市、聚落与明确城市辖区：蒙特卢佩、七丘城、怀特城、拉克玛蒂瓦城、帕勒莫、沃尔西尼、新沃尔西尼。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E11000000000002.title: "阅读城市目录"
+	quest.7D11000000000003.title: "重要地区"
+	quest.7D11000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D11000000000003.quest_desc: ["重要地区：现有 PRTS 地理总目录未列出更多可确认地名。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E11000000000003.title: "阅读地区目录"
+	quest.7D11000000000004.title: "建筑与探索"
+	quest.7D11000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D11000000000004.quest_desc: ["本章可探索建筑：叙拉古家族城镇、叙拉古家族法庭、叙拉古家族剧院。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E11000000000004.title: "阅读建筑目录"
+	quest.7B11000000000001.title: "叙拉古家族城镇"
+	quest.7B11000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B11000000000001.quest_desc: ["前往并进入 zinecraft:siracusa_family_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C11000000000001.title: "访问叙拉古家族城镇"
+	quest.7B11000000000002.title: "叙拉古家族法庭"
+	quest.7B11000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B11000000000002.quest_desc: ["前往并进入 zinecraft:siracusa_family_court 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C11000000000002.title: "访问叙拉古家族法庭"
+	quest.7B11000000000003.title: "叙拉古家族剧院"
+	quest.7B11000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B11000000000003.quest_desc: ["前往并进入 zinecraft:siracusa_family_theatre 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C11000000000003.title: "访问叙拉古家族剧院"
+	chapter.7A00000000000012.title: "炎国：国家档案"
+	quest.7D12000000000001.title: "国家设定"
+	quest.7D12000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D12000000000001.quest_desc: ["位于泰拉大陆最东边、疆土广阔的国家，拥有悠久的东方文明传统，并在北方边境长期承担抵御威胁的职责。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E12000000000001.title: "阅读国家设定"
+	quest.7D12000000000002.title: "城市与聚落"
+	quest.7D12000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D12000000000002.quest_desc: ["城市、聚落与明确城市辖区：百灶、龙门、姜齐城、夕城、黄城、春都、花郡、勾吴城、丹燕城、尚蜀、玉门、大荒城、邙山镇、婆山镇。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E12000000000002.title: "阅读城市目录"
+	quest.7D12000000000003.title: "重要地区"
+	quest.7D12000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D12000000000003.quest_desc: ["重要地区：尚蜀辖区与山地：新峦区、流云区、数舟峰、取江峰（攥江峰）、忘水坪、居奇山、泥泥峰、昏谭峰、别离峰、梓云峰、青銮峰、寻日峰；邙山。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E12000000000003.title: "阅读地区目录"
+	quest.7D12000000000004.title: "建筑与探索"
+	quest.7D12000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D12000000000004.quest_desc: ["本章可探索建筑：炎国尚蜀城镇、炎国玉门烽台、炎国尚蜀亭阁。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E12000000000004.title: "阅读建筑目录"
+	quest.7B12000000000001.title: "炎国尚蜀城镇"
+	quest.7B12000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B12000000000001.quest_desc: ["前往并进入 zinecraft:yan_shangshu_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C12000000000001.title: "访问炎国尚蜀城镇"
+	quest.7B12000000000002.title: "炎国玉门烽台"
+	quest.7B12000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B12000000000002.quest_desc: ["前往并进入 zinecraft:yan_yumen_beacon 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C12000000000002.title: "访问炎国玉门烽台"
+	quest.7B12000000000003.title: "炎国尚蜀亭阁"
+	quest.7B12000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B12000000000003.quest_desc: ["前往并进入 zinecraft:yan_shangshu_pavilion 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C12000000000003.title: "访问炎国尚蜀亭阁"
+	chapter.7A00000000000013.title: "伊比利亚：国家档案"
+	quest.7D13000000000001.title: "国家设定"
+	quest.7D13000000000001.quest_subtitle: "PRTS 国家资料摘要"
+	quest.7D13000000000001.quest_desc: ["位于泰拉大陆南端的沿海国家，曾借助阿戈尔技术成为强盛海洋国家；大静谧后严重衰落，如今受审判庭统治并趋于保守封闭。\n\n资料口径：PRTS 泰拉大典国家条目；本节点不补写未公开设定。"]
+	task.7E13000000000001.title: "阅读国家设定"
+	quest.7D13000000000002.title: "城市与聚落"
+	quest.7D13000000000002.quest_subtitle: "PRTS 已确认地名目录"
+	quest.7D13000000000002.quest_desc: ["城市、聚落与明确城市辖区：佩尔多尼朵拉（佩尔多尼）、盐风城、潮石镇、格兰法洛、颂圣棱堡、港都、雅隆镇。\n\n地图坐标与边界属于 Zinecraft 游戏化布局，不代表官方精确位置。"]
+	task.7E13000000000002.title: "阅读城市目录"
+	quest.7D13000000000003.title: "重要地区"
+	quest.7D13000000000003.quest_subtitle: "行政区与自然地貌"
+	quest.7D13000000000003.quest_desc: ["重要地区：盐漠。\n\n国家、城市和群系是不同数据层；地区边界不会被群系边界替代。"]
+	task.7E13000000000003.title: "阅读地区目录"
+	quest.7D13000000000004.title: "建筑与探索"
+	quest.7D13000000000004.quest_subtitle: "当前可访问的国家结构"
+	quest.7D13000000000004.quest_desc: ["本章可探索建筑：伊比利亚滨海城镇、伊比利亚之眼灯塔、伊比利亚盐风礼拜堂。\n\n这些注册结构是依据资料制作的 Minecraft 表达；每座城市另有独立注册的城市中心、住宅、商店、工坊和公共建筑 Blockout，未知外观不视为官方复原。"]
+	task.7E13000000000004.title: "阅读建筑目录"
+	quest.7B13000000000001.title: "伊比利亚滨海城镇"
+	quest.7B13000000000001.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B13000000000001.quest_desc: ["前往并进入 zinecraft:iberia_coastal_town 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C13000000000001.title: "访问伊比利亚滨海城镇"
+	quest.7B13000000000002.title: "伊比利亚之眼灯塔"
+	quest.7B13000000000002.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B13000000000002.quest_desc: ["前往并进入 zinecraft:iberia_eye_lighthouse 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C13000000000002.title: "访问伊比利亚之眼灯塔"
+	quest.7B13000000000003.title: "伊比利亚盐风礼拜堂"
+	quest.7B13000000000003.quest_subtitle: "进入结构范围后自动完成"
+	quest.7B13000000000003.quest_desc: ["前往并进入 zinecraft:iberia_saltwind_chapel 的有效结构范围。FTB Quests 会在服务器端自动检测访问状态。"]
+	task.7C13000000000003.title: "访问伊比利亚盐风礼拜堂"
 }

@@ -12,12 +12,12 @@ Zinecraft 是一个面向 Minecraft 1.21.1 / NeoForge 的《明日方舟》主�
 ### 当前内容
 
 - 泰拉独立维度、十九国群系、国家地表材料、聚落与唯一地标。
-- 星门往返传送、拉特兰中心区域与固定原点建筑。
+- 首次出生于泰拉、萨米唯一星门单向前往主世界、拉特兰中心区域与固定坐标建筑。
 - Curios 藏品栏、PRTS 集成战略藏品资料及服务端权威效果。
 - 技能物品、Ponder 演示和服务端 Weapon Runtime。
 - TaCZ 1.1.x 外置枪包读取、枪械/弹药状态、资源桥接与服务端命中结算。
 - FTB Quests 泰拉远征、国家档案、关系网和开发模组说明。
-- JEI、JER、Jade、AppleSkin、拼音搜索、旅行地图、自然指南针和探险家罗盘开发环境适配。
+- JourneyMap 十九国边界与名称叠加，以及 JEI、JER、Jade、AppleSkin、拼音搜索、自然指南针和探险家罗盘开发环境适配。
 
 ### 技术基线
 
@@ -83,14 +83,15 @@ weapon runtime, TaCZ gun-pack format compatibility, and an FTB Quests guide.
 
 - A dedicated Terra dimension with nineteen nation biomes, national terrain materials, settlements, and unique
   landmarks.
-- Stargate travel, a fixed Laterano center region, and origin-aligned structures.
+- First spawn in Terra, one-way travel through the sole Sami stargate, a fixed Laterano center, and fixed-coordinate
+  structures.
 - Curios collectible slots, Integrated Strategies collectible records sourced from PRTS, and server-authoritative
   effects.
 - Skill items, Ponder demonstrations, and a server-authoritative Weapon Runtime.
 - TaCZ 1.1.x external gun-pack loading, firearm/ammunition state, resource bridging, and server-side hit resolution.
 - FTB Quests expedition, nation archive, relationship network, and development-mod chapters.
-- Development integrations for JEI, JER, Jade, AppleSkin, search helpers, JourneyMap, Nature's Compass, and Explorer's
-  Compass.
+- JourneyMap overlays for all nineteen national borders and names, plus development integrations for JEI, JER, Jade,
+  AppleSkin, search helpers, Nature's Compass, and Explorer's Compass.
 
 ### Technical baseline
 

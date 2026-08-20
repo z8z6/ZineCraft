@@ -109,7 +109,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "zinecraft:collectible_victorian_cake",
+          "name": "zinecraft:victorian_cake",
           "weight": 2
         }
       ]

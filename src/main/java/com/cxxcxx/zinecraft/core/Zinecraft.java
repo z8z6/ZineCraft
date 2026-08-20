@@ -1,8 +1,6 @@
 package com.cxxcxx.zinecraft.core;
 
-import com.cxxcxx.zinecraft.api.accessory.CollectibleCatalog;
 import com.cxxcxx.zinecraft.api.registry.catalog.*;
-import com.cxxcxx.zinecraft.api.skill.SkillCatalog;
 import com.cxxcxx.zinecraft.api.skill.SkillService;
 import com.cxxcxx.zinecraft.api.weapon.WeaponRegistry;
 import com.cxxcxx.zinecraft.api.weapon.WeaponServerController;
@@ -10,7 +8,9 @@ import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import com.cxxcxx.zinecraft.compat.jer.ZinecraftJerPlugin;
 import com.cxxcxx.zinecraft.core.dimension.TerraMobSpawnPolicy;
-import com.cxxcxx.zinecraft.core.item.ModCollectible;
+import com.cxxcxx.zinecraft.core.dimension.TerraPlayerSpawn;
+import com.cxxcxx.zinecraft.core.dimension.TerraWorldBoundary;
+import com.cxxcxx.zinecraft.core.nation.TerraGeography;
 import com.cxxcxx.zinecraft.core.nation.TerraNationRelations;
 import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
 import com.cxxcxx.zinecraft.core.registry.*;
@@ -69,6 +69,8 @@ public final class Zinecraft {
     NeoForge.EVENT_BUS.addListener(WeaponServerController.INSTANCE::onServerTick);
     NeoForge.EVENT_BUS.addListener(WeaponServerController.INSTANCE::onPlayerLogout);
     NeoForge.EVENT_BUS.addListener(TerraMobSpawnPolicy::onFinalizeSpawn);
+    NeoForge.EVENT_BUS.addListener(TerraPlayerSpawn::onPlayerLoggedIn);
+    NeoForge.EVENT_BUS.addListener(TerraWorldBoundary::onLevelLoad);
     FtbQuestGuideInstaller.INSTANCE.install();
   }
 
@@ -91,6 +93,7 @@ public final class Zinecraft {
     TaczIntegration.bootstrap();
     TerraNationRelations.bootstrap();
     ModDimension.bootstrap();
+    TerraGeography.bootstrap();
     LateranoHostStructure.bootstrap();
     ModWorldFeature.bootstrap();
     ModStructure.bootstrap();

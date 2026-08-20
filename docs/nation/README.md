@@ -56,7 +56,7 @@
 ## 使用
 
 ```java
-NationRelationshipNetwork network = TerraNationRelations.INSTANCE.getNETWORK();
+NationRelationshipNetwork network = TerraNationRelations.NETWORK;
 NationState ursus = network.state(TerraNation.URSUS);
 NationRelation border = network.relation(TerraNation.URSUS, TerraNation.KAZIMIERZ);
 List<NationRelation> allUrsusRelations = network.relationsFrom(TerraNation.URSUS);
@@ -64,3 +64,15 @@ List<NationRelation> allUrsusRelations = network.relationsFrom(TerraNation.URSUS
 
 当前网络是经过校验的初始描述数据，不负责世界存档持久化。后续战争、贸易和玩家声望玩法应复制或包装这些初始值，并由服务端
 `SavedData` 保存动态变化，不能让客户端直接修改外交状态。
+
+## API 约束
+
+- `TerraNation.entries()` 返回声明顺序稳定的不可变十九国目录；`findById` 用于安全解析，`requireById` 用于必须存在的配置。
+- `NationState` 对每项指标分别校验 `0—100`，错误信息包含国家、字段和值。
+- `NationRelationKey` 和 `NationRelation` 都拒绝空国家与自关系；带事实标签的显式关系必须提供 `NationRelationEvidence`。
+- `NationRelationEvidence` 只接受具有主机名的 HTTPS 来源，并对 URL 和摘要做非空规范化。
+- `NationRelationshipNetwork` 在构造时拒绝重复国家状态、缺失国家状态和重复显式有向关系。构造完成后，状态索引、关系索引及查询结果均为不可变快照。
+- `allRelations()` 固定返回 `19 × 18 = 342` 条有向边；`relationsFrom(nation)` 固定返回按目标国家 ID 排序的 18 条边。
+
+旧的 `TerraNation.getEntries()`、`TerraNation.ACCESS.byId()` 和 record 的 `getXxx()` 方法暂时保留，供现有代码兼容；新代码优先使用
+record 原生访问器及上述显式查询 API。

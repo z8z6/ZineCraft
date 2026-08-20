@@ -51,6 +51,7 @@ repositories {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.ORACLE
     }
     withSourcesJar()
 }
@@ -118,6 +119,7 @@ dependencies {
     compileOnly "mezz.jei:jei-${project.minecraft_version}-neoforge-api:${project.jei_version}"
     runtimeOnly "mezz.jei:jei-${project.minecraft_version}-neoforge:${project.jei_version}"
     compileOnly "maven.modrinth:uEfK2CXF:${project.jer_modrinth_version}"
+    compileOnly "info.journeymap:journeymap-api-neoforge:${project.journeymap_api_version}"
     runtimeOnly "maven.modrinth:EsAfCjCV:${project.appleskin_modrinth_version}"
     runtimeOnly "maven.modrinth:uEfK2CXF:${project.jer_modrinth_version}"
     runtimeOnly "maven.modrinth:jade:${project.jade_version}+neoforge"
@@ -126,7 +128,16 @@ dependencies {
     runtimeOnly "maven.modrinth:fPetb5Kh:${project.natures_compass_modrinth_version}"
     runtimeOnly "maven.modrinth:RV1qfVQ8:${project.explorers_compass_modrinth_version}"
     runtimeOnly "maven.modrinth:tooltip-overhaul:${project.tooltip_overhaul_modrinth_version}"
+    // MmmMmmMmmMmm target dummy is available on both client and dedicated server.
+    runtimeOnly "maven.modrinth:twkfQtEc:${project.moonlight_modrinth_version}"
+    runtimeOnly "maven.modrinth:Adega8YN:${project.target_dummy_modrinth_version}"
     clientAdditionalRuntimeClasspath "maven.modrinth:aC3cM3Vq:${project.mouse_tweaks_modrinth_version}"
+    // Sodium declares FMLModType=LIBRARY and is discovered from the client-only legacy classpath.
+    clientAdditionalRuntimeClasspath "maven.modrinth:sodium:${project.sodium_modrinth_version}"
+    // Iris is client-only and requires Sodium; keep it out of server and data-generator runs.
+    clientAdditionalRuntimeClasspath "maven.modrinth:YL57xq9U:${project.iris_modrinth_version}"
+    // Distant Horizons is a regular NeoForge mod and must be on runtimeClasspath for discovery.
+    runtimeOnly "maven.modrinth:distanthorizons:${project.distant_horizons_modrinth_version}"
 
     // TaCZ owns gun items, gun-pack loading, rendering, input and mechanical animations.
     implementation "maven.modrinth:tacz-1.21.1:${project.tacz_version}"
@@ -160,7 +171,8 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
             mod_version             : mod_version,
             tooltip_overhaul_version: tooltip_overhaul_version,
             tacz_version: tacz_version,
-            ysm_version : ysm_version
+            ysm_version             : ysm_version,
+            journeymap_version_range: journeymap_version_range
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -183,12 +195,16 @@ def releaseJarFile = tasks.named('jar', Jar).flatMap { it.archiveFile }
 
 tasks.register('verifyCollectibleJarResources') {
     group = 'verification'
-    description = 'Verifies that every imported collectible has its runtime resources in the JAR.'
+    description = 'Verifies that every Java-registered collectible has its runtime resources in the JAR.'
     dependsOn tasks.named('jar')
 
     doLast {
         def archive = releaseJarFile.get().asFile
         new ZipFile(archive).withCloseable { zip ->
+            def legacyCatalogPath = 'zinecraft/collectibles/phantom_crimson_solitaire.json'
+            if (zip.getEntry(legacyCatalogPath) != null) {
+                throw new GradleException("Legacy runtime collectible catalog must not be packaged: ${legacyCatalogPath}")
+            }
             def readJson = { String path ->
                 def entry = zip.getEntry(path)
                 if (entry == null) throw new GradleException("Missing JAR resource: ${path}")
@@ -196,22 +212,24 @@ tasks.register('verifyCollectibleJarResources') {
                     new JsonSlurper().parse(new InputStreamReader(stream, 'UTF-8'))
                 }
             }
-            def catalog = readJson('zinecraft/collectibles/phantom_crimson_solitaire.json')
-            if (catalog.size() != 245) {
-                throw new GradleException("Expected 245 collectibles in JAR catalog, found ${catalog.size()}")
-            }
-            ['path', 'orderId', 'sourceId', 'iconId'].each { field ->
-                def values = catalog.collect { it[field] }
-                if (values.any { it == null } || values.size() != (values as Set).size()) {
-                    throw new GradleException("Collectible catalog field is missing or duplicated: ${field}")
-                }
-            }
             def zhCn = readJson('assets/zinecraft/lang/zh_cn.json')
             def enUs = readJson('assets/zinecraft/lang/en_us.json')
-            catalog.each { collectible ->
-                def path = collectible.path
-                if (path.startsWith('collectible_is2_')) {
-                    throw new GradleException("Numbered collectible path is forbidden: ${path}")
+            def relicTag = readJson('data/curios/tags/item/relic.json')
+            def paths = relicTag.values.collect { value ->
+                if (!(value instanceof String) || !value.startsWith('zinecraft:')) {
+                    throw new GradleException("Invalid collectible tag entry: ${value}")
+                }
+                value.substring('zinecraft:'.length())
+            }.sort()
+            if (paths.size() != 245) {
+                throw new GradleException("Expected 245 Java-registered collectibles, found ${paths.size()}")
+            }
+            if (paths.size() != paths.toSet().size()) {
+                throw new GradleException('Collectible tag paths must be unique')
+            }
+            paths.each { path ->
+                if (path.startsWith('collectible_')) {
+                    throw new GradleException("Legacy collectible path prefix is forbidden: ${path}")
                 }
                 if (zip.getEntry("assets/zinecraft/textures/item/${path}.png") == null) {
                     throw new GradleException("Missing collectible texture: ${path}")

@@ -92,3 +92,10 @@ type = "required"
 versionRange = "[${ysm_version},)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "journeymap"
+type = "required"
+versionRange = "${journeymap_version_range}"
+ordering = "AFTER"
+side = "CLIENT"

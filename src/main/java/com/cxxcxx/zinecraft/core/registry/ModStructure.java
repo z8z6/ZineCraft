@@ -1,44 +1,29 @@
 package com.cxxcxx.zinecraft.core.registry;
 
+import com.cxxcxx.zinecraft.api.nation.TerraNation;
+import com.cxxcxx.zinecraft.api.registry.builder.BiomeBuilder;
 import com.cxxcxx.zinecraft.api.registry.builder.JigsawBuilder;
 import com.cxxcxx.zinecraft.api.registry.catalog.StructureCatalog;
-import com.cxxcxx.zinecraft.api.util.CollectionSupport;
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public final class ModStructure {
-  public static final JigsawBuilder STARGATE = Zinecraft.STRUCTURES.jigsawBuilding(
-      "stargate",
-      "雪原星门",
-      "Snowfield Stargate",
-      8,
-      4,
-      958853901,
-      1,
-      32,
-      0.0F,
-      Biomes.SNOWY_PLAINS,
-      false,
-      0,
-      Types.WORLD_SURFACE_WG,
-      0,
-      false,
-      false,
-      Decoration.SURFACE_STRUCTURES,
-      TerrainAdjustment.BEARD_THIN,
-      builder -> builder.pool("start", Projection.RIGID, pool -> pool.template("stargate", 1))
-  );
+  public static final JigsawBuilder STARGATE = Zinecraft.STRUCTURES.jigsaw("stargate", "萨米星门")
+      .enUs("Sami Stargate")
+      .fixedAt(ModDimension.SAMI_STARGATE_CHUNK_X, ModDimension.SAMI_STARGATE_CHUNK_Z)
+      .allowedBiomes(ModBiome.NATIONAL_BIOMES.get(TerraNation.SAMI).stream().map(BiomeBuilder::key).toList())
+      .layout(1, 32)
+      .height(Types.WORLD_SURFACE_WG, 0)
+      .generation(Decoration.SURFACE_STRUCTURES, TerrainAdjustment.BEARD_THIN)
+      .pool("start", Projection.RIGID, pool -> pool.template("stargate", 1))
+      .build();
 
   public static final JigsawBuilder AEGIR_VOLCANIC_BEACON = landmark("aegir_volcanic_beacon", "阿戈尔火山信标", ModBiome.AEGIR_ABYSSAL_SEA.key(), 40, Types.OCEAN_FLOOR_WG, 0);
   public static final JigsawBuilder AEGIR_ABYSSAL_OBSERVATORY = landmark("aegir_abyssal_observatory", "阿戈尔深渊观测站", ModBiome.AEGIR_ABYSSAL_SEA.key(), 52, Types.OCEAN_FLOOR_WG, 0);
@@ -405,12 +390,11 @@ public final class ModStructure {
   ) {
     StructureCatalog structures = Zinecraft.STRUCTURES;
     String templateRoot = "nation_settlements/" + path;
-    var templates = CollectionSupport.linkedMapOf(
-        Pair.of(first, 4),
-        Pair.of(second, 3),
-        Pair.of(third, 2),
-        Pair.of(fourth, 2)
-    );
+    var templates = new LinkedHashMap<String, Integer>();
+    putTemplate(templates, first, 4);
+    putTemplate(templates, second, 3);
+    putTemplate(templates, third, 2);
+    putTemplate(templates, fourth, 2);
     JigsawBuilder entry;
     if ("laterano_monastery_town".equals(path)) {
       entry = structures.fixedOriginSettlement(
@@ -428,6 +412,12 @@ public final class ModStructure {
     }
     MUTABLE_SETTLEMENTS.add(entry);
     return entry;
+  }
+
+  private static void putTemplate(Map<String, Integer> templates, String path, int weight) {
+    if (templates.putIfAbsent(path, weight) != null) {
+      throw new IllegalArgumentException("聚落模板不能重复：" + path);
+    }
   }
 
   private static JigsawBuilder landmark(
@@ -466,5 +456,6 @@ public final class ModStructure {
   }
 
   public static void bootstrap() {
+    ModCityStructure.bootstrap();
   }
 }
