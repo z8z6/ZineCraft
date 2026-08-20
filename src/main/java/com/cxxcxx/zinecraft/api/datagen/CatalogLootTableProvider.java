@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.api.datagen;
 
-import com.cxxcxx.zinecraft.api.entity.EntityCatalog;
-import com.cxxcxx.zinecraft.api.registry.BlockCatalog;
+import com.cxxcxx.zinecraft.api.registry.catalog.BlockCatalog;
+import com.cxxcxx.zinecraft.api.registry.catalog.EntityCatalog;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -85,13 +85,13 @@ public final class CatalogLootTableProvider extends LootTableProvider {
                   .add(LootItem.lootTableItem(drop.item()))
           );
         }
-        add(entity.entry.get(), table);
+        add(entity.get(), table);
       }
     }
 
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
-      return entities.mobs.stream().map(entity -> (EntityType<?>) entity.entry.get());
+      return entities.mobs.stream().map(entity -> (EntityType<?>) entity.get());
     }
   }
 }

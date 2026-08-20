@@ -1,6 +1,6 @@
 package com.cxxcxx.zinecraft.core.structure.stargate;
 
-import com.cxxcxx.zinecraft.core.block.ModBlock;
+import com.cxxcxx.zinecraft.core.registry.ModBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.LevelAccessor;

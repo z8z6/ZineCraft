@@ -7,9 +7,9 @@
 
 | 修改内容             | 文件                                                                            |
 |------------------|-------------------------------------------------------------------------------|
-| 维度名称、中心半径、泰拉维度声明 | `src/main/java/com/cxxcxx/zinecraft/core/dimension/ModDimensions.java`        |
+| 维度名称、中心半径、泰拉维度声明 | `src/main/java/com/cxxcxx/zinecraft/core/dimension/ModDimension.java`         |
 | 天空、床、坐标比例、高度等环境  | `src/main/java/com/cxxcxx/zinecraft/api/world/dimension/DimensionHelper.java` |
-| 泰拉使用的群系和分布       | `src/main/java/com/cxxcxx/zinecraft/core/biome/NationBiomePlacements.java`    |
+| 泰拉使用的群系和分布       | `src/main/java/com/cxxcxx/zinecraft/core/biome/ModBiome.java`                 |
 | 星门往返目标           | `src/main/java/com/cxxcxx/zinecraft/core/dimension/StarGateTeleporter.java`   |
 
 以下文件由 `runData` 生成，只用于查看结果：
@@ -23,7 +23,7 @@ src/generated/resources/data/zinecraft/dimension_type/terra.json
 
 ## 1. 修改维度显示名称
 
-打开 `ModDimensions.java`，搜索：
+打开 `ModDimension.java`，搜索：
 
 ```java
 "dimension.zinecraft.terra"
@@ -53,7 +53,7 @@ Zinecraft.TRANSLATIONS.add(
 
 ## 2. 修改拉特兰中心范围
 
-泰拉 `(0, 0)` 周围固定为拉特兰圣田。打开 `ModDimensions.java`，找到：
+泰拉 `(0, 0)` 周围固定为拉特兰圣田。打开 `ModDimension.java`，找到：
 
 ```java
 public static final int LATERANO_CENTER_RADIUS = 1024;
@@ -190,7 +190,7 @@ OptionalLong.of(18000L)
 泰拉外围群系来自：
 
 ```text
-src/main/java/com/cxxcxx/zinecraft/core/biome/NationBiomePlacements.java
+src/main/java/com/cxxcxx/zinecraft/core/biome/ModBiome.java
 ```
 
 要改变群系位置或权重感，应修改这里的气候点。具体步骤见[修改群系](BIOMES.md)。
@@ -199,10 +199,10 @@ src/main/java/com/cxxcxx/zinecraft/core/biome/NationBiomePlacements.java
 
 ### 暂时停用一个外围群系
 
-例如测试时暂时停用天灾区，可以先备份文件，然后从 `ALL` 数组中临时移除：
+例如测试时暂时停用天灾区，可在 `ModDimension` 构建外围群系列表时临时过滤该 Builder：
 
 ```java
-INSTANCE.placement(NationBiomes.INSTANCE.getTERRA_CATASTROPHE_ZONE(), ...)
+builder -> builder != ModBiome.TERRA_CATASTROPHE_ZONE
 ```
 
 运行 `runData` 后，确认 `dimension/terra.json` 的 `biomes` 数组中不再有该 ID。

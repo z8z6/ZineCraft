@@ -5,22 +5,23 @@
 ## Java 示例
 
 ```java
-public final ItemBuilder<Item> orirock = Zinecraft.ITEMS.builder(
-    "orirock", "源岩", "Orirock", () -> new Item(new Item.Properties())
-);
+public final ItemBuilder<Item> orirock = new ItemBuilder<>(
+    Zinecraft.ITEMS, "orirock", "源岩", "Orirock", () -> new Item(new Item.Properties())
+).build();
 ```
 
 自定义物品通过 factory 保留具体类型：
 
 ```java
-public final ItemBuilder<ScannerItem> scanner = Zinecraft.ITEMS.builder(
-    "scanner", "扫描器", "Scanner",
+public final ItemBuilder<ScannerItem> scanner = new ItemBuilder<>(
+    Zinecraft.ITEMS, "scanner", "扫描器", "Scanner",
     () -> new ScannerItem(new Item.Properties().stacksTo(1))
-);
+).build();
 ```
 
-`ItemBuilder` 不提供链式配置；`ItemCatalog.builder(...)` 接收 factory 并立即登记物品。物品属性全部在 factory 的
-`Item.Properties` 中声明。需要 NeoForge 注册对象时调用 `getItem()`；`ItemBuilder` 本身也可直接作为 `ItemLike` 传递。
+构造 `ItemBuilder` 时传入目录和声明参数，再调用 `build()` 登记物品；Catalog 不重复提供 Builder 构造入口。物品属性全部在
+factory
+的 `Item.Properties` 中声明。需要 NeoForge 注册对象时调用 `getItem()`；`ItemBuilder` 本身也可直接作为 `ItemLike` 传递。
 
 ```java
 ItemStack stack = new ItemStack(scanner);
@@ -46,7 +47,7 @@ PRTS 藏品自身的稀有度。
 src/main/resources/assets/zinecraft/textures/item/<path>.png
 ```
 
-特殊模型模板与是否加入主创造栏通过 `builder(...)` 的非链式参数传入。复杂手持、动态或多层模型不能由目录推断，应在资源目录提供
+特殊模型模板与是否加入主创造栏通过 `ItemBuilder` 构造参数传入。复杂手持、动态或多层模型不能由目录推断，应在资源目录提供
 JSON，或扩展 `CatalogModelProvider`。运行 `runData` 后检查生成模型和双语语言文件。
 
 ## 创造模式页
@@ -56,7 +57,8 @@ JSON，或扩展 `CatalogModelProvider`。运行 `runData` 后检查生成模型
 
 ## 国家食物与藏品
 
-- 藏品通过 `Zinecraft.COLLECTIBLES.builder(path, orderId, zhCn)` 链式声明名称、原效果、描述、Minecraft 效果和稀有度；
+- 藏品通过 `new CollectibleCatalog.CollectibleBuilder(Zinecraft.COLLECTIBLES, path, orderId, zhCn)`
+  链式声明名称、原效果、描述、Minecraft 效果和稀有度；
   `build()` 直接返回 `DeferredItem<CollectibleItem>`。
 - 十九国食物的资料、参数和配方见 [NATION_FOODS.md](NATION_FOODS.md)。
 - PRTS 藏品导入、效果与权利记录见 [PRTS_COLLECTIBLES.md](PRTS_COLLECTIBLES.md)。

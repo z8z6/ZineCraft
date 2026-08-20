@@ -2,7 +2,8 @@
 
 ## 泰拉维度
 
-`DimensionCatalog` 创建维度、维度类型、噪声设置和资源键。`zinecraft:terra` 使用自定义 `TerraBiomeSource`，只允许 Zinecraft
+`DimensionCatalog` 通过 `DimensionBuilder` 创建维度、维度类型、噪声设置和资源键。`zinecraft:terra` 使用自定义
+`TerraBiomeSource`，只允许 Zinecraft
 群系，不生成任何原版群系。
 
 世界方块坐标 `(0, 0)` 位于固定拉特兰中心区域；中心半径内全部高度返回 `laterano_holy_fields`

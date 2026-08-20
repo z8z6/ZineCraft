@@ -1,63 +1,36 @@
 package com.cxxcxx.zinecraft.api.world.dimension;
 
+import com.cxxcxx.zinecraft.api.registry.builder.DimensionBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.biome.Climate.ParameterList;
+import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import org.jetbrains.annotations.NotNull;
 
-public final class DimensionBootstrapContext {
-  @NotNull
-  private final DimensionEntry entry;
-  @NotNull
-  private final MultiNoiseBiomeSource biomeSource;
-  @NotNull
-  private final ParameterList<Holder<Biome>> biomeParameters;
-  @NotNull
-  private final HolderGetter<Biome> biomes;
-  @NotNull
-  private final Holder<NoiseGeneratorSettings> noiseSettings;
+import java.util.Objects;
 
-  public DimensionBootstrapContext(
-      @NotNull DimensionEntry entry,
-      @NotNull MultiNoiseBiomeSource biomeSource,
-      @NotNull ParameterList<Holder<Biome>> biomeParameters,
-      @NotNull HolderGetter<Biome> biomes,
-      @NotNull Holder<NoiseGeneratorSettings> noiseSettings
-  ) {
-    super();
-    this.entry = entry;
-    this.biomeSource = biomeSource;
-    this.biomeParameters = biomeParameters;
-    this.biomes = biomes;
-    this.noiseSettings = noiseSettings;
-  }
-
-  @NotNull
-  public final DimensionEntry getEntry() {
-    return this.entry;
-  }
-
-  @NotNull
-  public final MultiNoiseBiomeSource getBiomeSource() {
-    return this.biomeSource;
-  }
-
-  @NotNull
-  public final ParameterList<Holder<Biome>> getBiomeParameters() {
-    return this.biomeParameters;
-  }
-
-  @NotNull
-  public final HolderGetter<Biome> getBiomes() {
-    return this.biomes;
-  }
-
-  @NotNull
-  public final Holder<NoiseGeneratorSettings> getNoiseSettings() {
-    return this.noiseSettings;
+/**
+ * 自定义维度区块生成器工厂可用的动态注册表上下文。
+ *
+ * @param builder         当前维度声明
+ * @param biomeSource     根据维度群系气候点创建的默认群系源
+ * @param biomeParameters 群系 Holder 多噪声参数列表
+ * @param biomes          群系动态注册表查询器
+ * @param noiseSettings   当前噪声设置 Holder
+ */
+public record DimensionBootstrapContext(
+    DimensionBuilder builder,
+    MultiNoiseBiomeSource biomeSource,
+    ParameterList<Holder<Biome>> biomeParameters,
+    HolderGetter<Biome> biomes,
+    Holder<NoiseGeneratorSettings> noiseSettings
+) {
+  public DimensionBootstrapContext {
+    Objects.requireNonNull(builder, "维度 builder 不能为空");
+    Objects.requireNonNull(biomeSource, "群系源不能为空");
+    Objects.requireNonNull(biomeParameters, "群系气候参数不能为空");
+    Objects.requireNonNull(biomes, "群系查询器不能为空");
+    Objects.requireNonNull(noiseSettings, "噪声设置不能为空");
   }
 }
-

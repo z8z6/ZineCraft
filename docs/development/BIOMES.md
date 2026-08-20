@@ -4,12 +4,12 @@
 
 ## 需要使用的文件
 
-| 修改内容                  | 文件                                                                         |
-|-----------------------|----------------------------------------------------------------------------|
-| 名称、天气、温度、颜色、植被类型、特色生物 | `src/main/java/com/cxxcxx/zinecraft/core/biome/NationBiomes.java`          |
-| 群系在泰拉中的分布             | `src/main/java/com/cxxcxx/zinecraft/core/biome/NationBiomePlacements.java` |
-| 地面方块                  | `src/main/java/com/cxxcxx/zinecraft/core/biome/ModSurfaceRule.java`        |
-| 可选的植被组合               | `src/main/java/com/cxxcxx/zinecraft/core/biome/NationBiomePresets.java`    |
+| 修改内容                 | 文件                                                                  |
+|----------------------|---------------------------------------------------------------------|
+| 名称、气候点、天气、颜色、植被和特色生物 | `src/main/java/com/cxxcxx/zinecraft/core/biome/ModBiome.java`       |
+| 群系在泰拉中的分布            | `src/main/java/com/cxxcxx/zinecraft/core/biome/ModBiome.java`       |
+| 地面方块                 | `src/main/java/com/cxxcxx/zinecraft/core/biome/ModSurfaceRule.java` |
+| 可选的植被组合              | `BiomeBuilder` 的 `plains()`、`forest()` 等方法                          |
 
 不要直接修改：
 
@@ -45,17 +45,17 @@ src/generated/resources/data/zinecraft/worldgen/biome/
 | 炎    | `yan_mountain_grove`           |
 | 伊比利亚 | `iberia_salt_delta`            |
 
-在 `NationBiomes.java` 中搜索大写形式。例如修改维多利亚时搜索：
+在 `ModBiome.java` 中搜索大写形式。例如修改维多利亚时搜索：
 
 ```text
-VICTORIA_MISTY_HIGHLANDSHelper0
+VICTORIA_MISTY_HIGHLANDS
 ```
 
 你会找到一个设置温度、雨量、颜色和预设的方法。
 
 ## 2. 修改群系名称
 
-在 `NationBiomes.java` 中搜索：
+在 `ModBiome.java` 中搜索：
 
 ```java
 "biome.zinecraft.victoria_misty_highlands"
@@ -78,19 +78,19 @@ Zinecraft.TRANSLATIONS.add(
 在目标方法中修改：
 
 ```java
-_this_register.setPrecipitation(true);
-_this_register.setTemperature(0.45F);
-_this_register.setDownfall(0.8F);
+builder.precipitation(true);
+builder.temperature(0.45F);
+builder.downfall(0.8F);
 ```
 
 可按下表选择入门值：
 
-| 想要的环境 | `setPrecipitation` | `setTemperature` | `setDownfall` |
-|-------|--------------------|------------------|---------------|
-| 寒冷多雪  | `true`             | `-0.8F`          | `0.6F`        |
-| 温和多雨  | `true`             | `0.5F`           | `0.8F`        |
-| 温和少雨  | `true`             | `0.7F`           | `0.25F`       |
-| 炎热干燥  | `false`            | `1.2F`           | `0.0F`        |
+| 想要的环境 | `precipitation` | `temperature` | `downfall` |
+|-------|-----------------|---------------|------------|
+| 寒冷多雪  | `true`          | `-0.8F`       | `0.6F`     |
+| 温和多雨  | `true`          | `0.5F`        | `0.8F`     |
+| 温和少雨  | `true`          | `0.7F`        | `0.25F`    |
+| 炎热干燥  | `false`         | `1.2F`        | `0.0F`     |
 
 温度和降雨量通常使用 `-1.0F` 到 `1.5F`。极端值可能带来积雪、结冰或颜色变化，修改后一定要在游戏中观察。
 
@@ -99,13 +99,13 @@ _this_register.setDownfall(0.8F);
 找到维多利亚方法中的：
 
 ```java
-_this_register.setDownfall(0.7F);
+builder.downfall(0.7F);
 ```
 
 改为：
 
 ```java
-_this_register.setDownfall(0.9F);
+builder.downfall(0.9F);
 ```
 
 保存并运行 `runData`，然后新建世界测试。
@@ -129,11 +129,11 @@ _this_register.setDownfall(0.9F);
 在群系方法中使用：
 
 ```java
-_this_register.setGrassColor(6322776);
-_this_register.setFoliageColor(5263440);
-_this_register.setWaterColor(4159204);
-_this_register.setWaterFogColor(329011);
-_this_register.setFogColor(12638463);
+builder.grassColor(6322776);
+builder.foliageColor(5263440);
+builder.waterColor(4159204);
+builder.waterFogColor(329011);
+builder.fogColor(12638463);
 ```
 
 只需要修改你希望固定的颜色。没有设置的颜色由游戏根据温度和湿度计算。
@@ -143,7 +143,7 @@ _this_register.setFogColor(12638463);
 目标方法中会有一行预设，例如：
 
 ```java
-NationBiomePresets.INSTANCE.rainyForest(_this_register);
+builder.rainyForest();
 ```
 
 可以替换为项目已有预设：
@@ -167,13 +167,13 @@ NationBiomePresets.INSTANCE.rainyForest(_this_register);
 修改前：
 
 ```java
-NationBiomePresets.INSTANCE.forest(_this_register);
+builder.forest();
 ```
 
 修改后：
 
 ```java
-NationBiomePresets.INSTANCE.rainyForest(_this_register);
+builder.rainyForest();
 ```
 
 不要在同一个群系中连续调用两个完整预设，否则树木、矿物或装饰可能重复添加。
@@ -183,8 +183,7 @@ NationBiomePresets.INSTANCE.rainyForest(_this_register);
 群系方法中可能有：
 
 ```java
-NationBiomePresets.INSTANCE.featuredSpawn(
-    _this_register,
+builder.featuredSpawn(
     MobCategory.CREATURE,
     EntityType.SHEEP,
     12,
@@ -202,8 +201,7 @@ NationBiomePresets.INSTANCE.featuredSpawn(
 例如把羊换成兔子，并减少成群数量：
 
 ```java
-NationBiomePresets.INSTANCE.featuredSpawn(
-    _this_register,
+builder.featuredSpawn(
     MobCategory.CREATURE,
     EntityType.RABBIT,
     8,
@@ -230,19 +228,19 @@ src/main/java/com/cxxcxx/zinecraft/core/biome/ModSurfaceRule.java
 搜索目标群系 getter。例如维多利亚：
 
 ```java
-NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS()
+ModBiome.VICTORIA_MISTY_HIGHLANDS.key()
 ```
 
 它附近的上一行是地面规则：
 
 ```java
-ruleSource1 = this.ecologicalSurface(NationBlocks.INSTANCE.getVICTORIA_MOORLAND_SOIL());
+ecological(ModBiome.VICTORIA_MISTY_HIGHLANDS.key(), ModBlock.VICTORIA_MOORLAND_SOIL)
 ```
 
 改成已有国家方块的示例：
 
 ```java
-ruleSource1 = this.singleBlock(NationBlocks.INSTANCE.getVICTORIA_INDUSTRIAL_BRICK());
+solid(ModBiome.VICTORIA_MISTY_HIGHLANDS.key(), ModBlock.VICTORIA_INDUSTRIAL_BRICK)
 ```
 
 两种常用写法：
@@ -259,14 +257,14 @@ ruleSource1 = this.singleBlock(NationBlocks.INSTANCE.getVICTORIA_INDUSTRIAL_BRIC
 打开：
 
 ```text
-src/main/java/com/cxxcxx/zinecraft/core/biome/NationBiomePlacements.java
+src/main/java/com/cxxcxx/zinecraft/core/biome/ModBiome.java
 ```
 
 每个群系有六个主要数值：
 
 ```java
-INSTANCE.placement(
-    NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(),
+biome(
+    "victoria_misty_highlands", "维多利亚雾岭",
     -0.2F, 0.7F, 0.4F, 0.0F, 0.0F, 0.65F
 )
 ```
@@ -289,8 +287,8 @@ INSTANCE.placement(
 把第二个值从 `0.7F` 改成 `0.85F`：
 
 ```java
-INSTANCE.placement(
-    NationBiomes.INSTANCE.getVICTORIA_MISTY_HIGHLANDS(),
+biome(
+    "victoria_misty_highlands", "维多利亚雾岭",
     -0.2F, 0.85F, 0.4F, 0.0F, 0.0F, 0.65F
 )
 ```

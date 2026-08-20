@@ -79,7 +79,7 @@ docs/architecture/
 9. **Material Pass**：替换为有 `reference_id` 的 Canonical Material；沿用稳定国家方块 ID。
 10. **Detail Pass**：最后加入灯、管线、标识、装饰和道具。
 11. **Canonical Review**：按轮廓 30%、比例 25%、材质 15%、色彩 10%、地标细节 10%、环境 10% 评分。
-12. **Integration**：只有 `FINAL` 资产才接入 `ModLandmark`/`ModSettlement` 并运行数据生成、构建和游戏内验证。
+12. **Integration**：只有 `FINAL` 资产才接入 `ModStructure` 并运行数据生成、构建和游戏内验证。
 
 ## NBT 与模块规则
 

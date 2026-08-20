@@ -1,4 +1,6 @@
-# 十九国居民贴图
+# 已停用的十九国居民贴图素材
+
+> 这些素材不再接入实体或 renderer，仅为保留既有来源与权利记录而留存。当前各国居民由群系直接声明普通友好生物。
 
 十九国居民使用原版宽臂 `PlayerModel` 的 64×64 RGBA 皮肤格式。贴图是依据 PRTS
 国家地理、社会、民族、气候与产业资料制作的原创像素化适配，不直接复制或重新分发官方立绘；《明日方舟》名称、设定与视觉识别归鹰角网络所有。
@@ -36,7 +38,6 @@
 - 实际皮肤正面预览：[nation_resident_skin_preview.png](assets/nation_resident_skin_preview.png)。该图由生成脚本从最终 UV
   图集确定性拼合，用于快速审核。
 - 最终皮肤由 `script/generate_nation_resident_skins.py` 确定性生成；脚本只使用资料映射后的颜色和服装要素，不需要网络。
-- 游戏资源位于 `assets/zinecraft/textures/entity/nation_resident/<nation>.png`。
-- 通用居民 renderer 根据 `NationAffiliated#getNation()` 选择贴图；拉特兰专用实体固定使用同目录的 `laterano.png`。
+- 历史游戏资源位于 `assets/zinecraft/textures/entity/nation_resident/<nation>.png`，当前没有运行时引用。
 
 重新生成后必须运行资源覆盖测试，确保 19 个 `TerraNation` ID 均有一张 64×64、带 Alpha 通道的贴图。

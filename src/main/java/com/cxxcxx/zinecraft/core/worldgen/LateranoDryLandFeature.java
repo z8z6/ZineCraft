@@ -1,8 +1,8 @@
 package com.cxxcxx.zinecraft.core.worldgen;
 
-import com.cxxcxx.zinecraft.core.biome.ModBiome;
-import com.cxxcxx.zinecraft.core.block.ModBlock;
-import com.cxxcxx.zinecraft.core.dimension.ModDimension;
+import com.cxxcxx.zinecraft.core.registry.ModBiome;
+import com.cxxcxx.zinecraft.core.registry.ModBlock;
+import com.cxxcxx.zinecraft.core.registry.ModDimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
@@ -24,7 +24,7 @@ public final class LateranoDryLandFeature extends Feature<NoneFeatureConfigurati
   @Override
   public boolean place(@NotNull FeaturePlaceContext<NoneFeatureConfiguration> context) {
     WorldGenLevel level = context.level();
-    if (!level.getLevel().dimension().equals(ModDimension.TERRA.getLevelKey())) return false;
+    if (!level.getLevel().dimension().equals(ModDimension.TERRA.levelKey())) return false;
 
     ChunkPos chunk = new ChunkPos(context.origin());
     int seaLevel = level.getSeaLevel();
@@ -33,7 +33,7 @@ public final class LateranoDryLandFeature extends Feature<NoneFeatureConfigurati
     for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX(); x++) {
       for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ(); z++) {
         BlockPos biomePos = new BlockPos(x, seaLevel, z);
-        if (!level.getBiome(biomePos).is(ModBiome.LATERANO_HOLY_FIELDS)) continue;
+        if (!level.getBiome(biomePos).is(ModBiome.LATERANO_HOLY_FIELDS.key())) continue;
         int fillStart = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z);
         if (fillStart > seaLevel) continue;
         for (int y = fillStart; y <= seaLevel; y++) {

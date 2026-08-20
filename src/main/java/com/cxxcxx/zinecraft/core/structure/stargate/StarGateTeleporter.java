@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.core.structure.stargate;
 
-import com.cxxcxx.zinecraft.core.block.ModBlock;
-import com.cxxcxx.zinecraft.core.dimension.ModDimension;
+import com.cxxcxx.zinecraft.core.registry.ModBlock;
+import com.cxxcxx.zinecraft.core.registry.ModDimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.resources.ResourceKey;
@@ -28,9 +28,9 @@ public final class StarGateTeleporter {
   @Nullable
   private static ResourceKey<Level> targetDimension(ResourceKey<Level> sourceDimension) {
     if (sourceDimension.equals(Level.OVERWORLD)) {
-      return ModDimension.TERRA.getLevelKey();
+      return ModDimension.TERRA.levelKey();
     }
-    if (sourceDimension.equals(ModDimension.TERRA.getLevelKey())) {
+    if (sourceDimension.equals(ModDimension.TERRA.levelKey())) {
       return Level.OVERWORLD;
     }
     return null;
@@ -88,7 +88,7 @@ public final class StarGateTeleporter {
     BlockPos searchCenter = scaledPosition(source, target, portalPos);
     BlockPos destination = findGate(target, searchCenter);
     if (destination == null) {
-      destination = target.dimension().equals(ModDimension.TERRA.getLevelKey())
+      destination = target.dimension().equals(ModDimension.TERRA.levelKey())
           ? createTerraGate(target, searchCenter)
           : target.getSharedSpawnPos();
     }

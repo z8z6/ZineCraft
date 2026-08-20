@@ -1,40 +1,23 @@
 package com.cxxcxx.zinecraft.core;
 
 import com.cxxcxx.zinecraft.api.accessory.CollectibleCatalog;
-import com.cxxcxx.zinecraft.api.enchantment.EnchantmentCatalog;
-import com.cxxcxx.zinecraft.api.entity.EntityCatalog;
-import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import com.cxxcxx.zinecraft.api.registry.*;
+import com.cxxcxx.zinecraft.api.registry.catalog.*;
 import com.cxxcxx.zinecraft.api.skill.SkillCatalog;
 import com.cxxcxx.zinecraft.api.skill.SkillService;
 import com.cxxcxx.zinecraft.api.weapon.WeaponRegistry;
 import com.cxxcxx.zinecraft.api.weapon.WeaponServerController;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
-import com.cxxcxx.zinecraft.api.world.WorldgenManager;
 import com.cxxcxx.zinecraft.compat.jer.ZinecraftJerPlugin;
-import com.cxxcxx.zinecraft.core.biome.ModBiome;
-import com.cxxcxx.zinecraft.core.biome.ModTerraBlender;
-import com.cxxcxx.zinecraft.core.block.ModBlock;
-import com.cxxcxx.zinecraft.core.datagen.ZinecraftDataGenerator;
-import com.cxxcxx.zinecraft.core.dimension.ModDimension;
 import com.cxxcxx.zinecraft.core.dimension.TerraMobSpawnPolicy;
-import com.cxxcxx.zinecraft.core.entity.ModBlockEntity;
-import com.cxxcxx.zinecraft.core.entity.ModEntity;
 import com.cxxcxx.zinecraft.core.item.ModCollectible;
-import com.cxxcxx.zinecraft.core.item.ModCreativeTab;
-import com.cxxcxx.zinecraft.core.item.ModItem;
 import com.cxxcxx.zinecraft.core.nation.TerraNationRelations;
 import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
+import com.cxxcxx.zinecraft.core.registry.*;
 import com.cxxcxx.zinecraft.core.skill.ModSkills;
-import com.cxxcxx.zinecraft.core.sound.ModSound;
 import com.cxxcxx.zinecraft.core.structure.LateranoHostStructure;
-import com.cxxcxx.zinecraft.core.structure.ModLandmark;
-import com.cxxcxx.zinecraft.core.structure.ModSettlement;
-import com.cxxcxx.zinecraft.core.structure.ModStructure;
-import com.cxxcxx.zinecraft.core.weapon.ModWeapons;
-import com.cxxcxx.zinecraft.core.worldgen.ModWorldFeatures;
 import com.cxxcxx.zinecraft.integration.tacz.TaczIntegration;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
@@ -47,18 +30,20 @@ import org.slf4j.LoggerFactory;
 public final class Zinecraft {
   public static final String MOD_ID = "zinecraft";
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-  public static final ModRegistrar REGISTRAR = new ModRegistrar(MOD_ID);
   public static final TranslationCatalog TRANSLATIONS = new TranslationCatalog();
   public static final ItemCatalog ITEMS = new ItemCatalog(MOD_ID, TRANSLATIONS);
   public static final CollectibleCatalog COLLECTIBLES = new CollectibleCatalog(ITEMS, TRANSLATIONS, MOD_ID);
-  public static final EntityCatalog ENTITIES = new EntityCatalog(REGISTRAR, ITEMS, TRANSLATIONS);
+  public static final EntityCatalog ENTITIES = new EntityCatalog(MOD_ID, ITEMS, TRANSLATIONS);
   public static final SkillCatalog SKILLS = new SkillCatalog(ITEMS, TRANSLATIONS);
   public static final BlockCatalog BLOCKS = new BlockCatalog(MOD_ID, ITEMS, TRANSLATIONS);
-  public static final CreativeTabCatalog CREATIVE_TABS = new CreativeTabCatalog(REGISTRAR, ITEMS, BLOCKS, TRANSLATIONS);
-  public static final BlockEntityCatalog BLOCK_ENTITIES = new BlockEntityCatalog(REGISTRAR);
+  public static final CreativeTabCatalog CREATIVE_TABS = new CreativeTabCatalog(MOD_ID, ITEMS, BLOCKS, TRANSLATIONS);
+  public static final BlockEntityCatalog BLOCK_ENTITIES = new BlockEntityCatalog(MOD_ID);
   public static final SoundCatalog SOUNDS = new SoundCatalog(MOD_ID, TRANSLATIONS);
-  public static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(REGISTRAR, TRANSLATIONS);
-  public static final WorldgenManager WORLDGEN = new WorldgenManager(REGISTRAR, TRANSLATIONS, BLOCKS);
+  public static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(MOD_ID, TRANSLATIONS);
+  public static final BiomeCatalog BIOMES = new BiomeCatalog(MOD_ID, TRANSLATIONS);
+  public static final DimensionCatalog DIMENSIONS = new DimensionCatalog(MOD_ID);
+  public static final FeatureCatalog FEATURES = new FeatureCatalog(MOD_ID);
+  public static final StructureCatalog STRUCTURES = new StructureCatalog(MOD_ID, TRANSLATIONS);
   public static final RecipeCatalog RECIPES = new RecipeCatalog();
   public static final SkillService SKILL_SERVICE = new SkillService();
   public static final WeaponRegistry WEAPONS = new WeaponRegistry();
@@ -68,10 +53,16 @@ public final class Zinecraft {
   public Zinecraft(IEventBus modBus) {
     INSTANCE = this;
     bootstrapContent();
-    ITEMS.registry.register(modBus);
-    BLOCKS.registry.register(modBus);
-    SOUNDS.registry.register(modBus);
-    REGISTRAR.register(modBus);
+    ITEMS.register(modBus);
+    BLOCKS.register(modBus);
+    SOUNDS.register(modBus);
+    ENTITIES.register(modBus);
+    CREATIVE_TABS.register(modBus);
+    BLOCK_ENTITIES.register(modBus);
+    DIMENSIONS.register(modBus);
+    FEATURES.register(modBus);
+    STRUCTURES.register(modBus);
+    WeaponStateComponents.register(modBus);
     modBus.addListener(WeaponPayloadTypes::register);
     modBus.addListener(this::commonSetup);
     modBus.addListener(ZinecraftDataGenerator::gatherData);
@@ -81,6 +72,10 @@ public final class Zinecraft {
     FtbQuestGuideInstaller.INSTANCE.install();
   }
 
+  public static ResourceLocation id(String path) {
+    return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+  }
+
   // 按依赖顺序显式触发静态内容注册，避免依赖单例数组和类加载副作用。
   public static void bootstrapContent() {
     WeaponStateComponents.bootstrap();
@@ -88,18 +83,16 @@ public final class Zinecraft {
     ModItem.bootstrap();
     ModCollectible.bootstrap();
     ModBlock.bootstrap();
+    ModEntity.bootstrap();
     ModBiome.bootstrap();
     ModBlockEntity.bootstrap();
     ModSkills.bootstrap();
     ModWeapons.bootstrap();
     TaczIntegration.bootstrap();
-    ModEntity.bootstrap();
     TerraNationRelations.bootstrap();
     ModDimension.bootstrap();
     LateranoHostStructure.bootstrap();
-    ModLandmark.bootstrap();
-    ModSettlement.bootstrap();
-    ModWorldFeatures.bootstrap();
+    ModWorldFeature.bootstrap();
     ModStructure.bootstrap();
     ModCreativeTab.bootstrap();
   }

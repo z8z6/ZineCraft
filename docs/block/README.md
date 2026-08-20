@@ -3,8 +3,8 @@
 `BlockCatalog` 将方块、可选 `BlockItem`、双语翻译、简单模型和默认掉落合并为一个 Java 声明。
 
 ```java
-public final BlockBuilder<Block> orirockBlock = Zinecraft.BLOCKS
-    .builder("orirock_block", "源岩块",
+public final BlockBuilder<Block> orirockBlock = new BlockBuilder<>(
+        Zinecraft.BLOCKS, "orirock_block", "源岩块",
         () -> new Block(BlockBehaviour.Properties.of()
         .strength(3.0F, 6.0F)
         .sound(SoundType.STONE)))
@@ -25,16 +25,34 @@ src/main/resources/assets/zinecraft/textures/block/<path>.png
 
 ## 方块实体
 
-先注册方块，再用 `BLOCK_ENTITIES` 将 factory 与一个或多个有效方块绑定。方块类继承 `BaseEntityBlock` 并实现
-`newBlockEntity`。保存状态时覆盖 `saveAdditional`/`loadAdditional`，修改持久化数据后调用 `setChanged()`。
+`BlockEntityBuilder<E, B>` 同时包含方块实体类型与其对应的 `EntityBlock`。构造时直接传入一个尚未调用
+`build()` 的 `BlockBuilder<B>`；方块实体 builder 会先注册方块，再将该方块绑定到实体类型。方块类继承
+`BaseEntityBlock` 并实现 `newBlockEntity`。
 
 ```java
+public static final BlockEntityBuilder<MachineBlockEntity, MachineBlock> MACHINE =
+    new BlockEntityBuilder<>(
+        Zinecraft.BLOCK_ENTITIES,
+        "machine",
+        MachineBlockEntity::new,
+        new BlockBuilder<>(
+            Zinecraft.BLOCKS,
+            "machine",
+            "机器",
+            () -> new MachineBlock(BlockBehaviour.Properties.of().strength(4.0F))
+        )
+    ).build();
+
 public final class MachineBlockEntity extends BlockEntity {
   public MachineBlockEntity(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.MACHINE.get(), pos, state);
+    super(ModBlockEntity.MACHINE.get(), pos, state);
   }
 }
 ```
+
+需要方块声明时使用 `MACHINE.entityBlock()`，需要延迟注册类型时使用 `MACHINE.entityType()`；Builder 自身实现
+`Supplier<BlockEntityType<E>>`，需要实体类型实例时可直接调用 `get()`。保存状态时覆盖
+`saveAdditional`/`loadAdditional`，修改持久化数据后调用 `setChanged()`。
 
 方块实体渲染器只放在 `src/client/java`；通用端不能引用客户端类。
 

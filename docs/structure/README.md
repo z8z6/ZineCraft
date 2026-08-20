@@ -6,7 +6,7 @@
 ## 大型 Jigsaw 聚落
 
 ```java
-JigsawBuildingEntry camp = Zinecraft.STRUCTURES.settlement(
+JigsawBuilder camp = Zinecraft.STRUCTURES.settlement(
     "mining_camp",
     "采矿营地",
     "settlements/mining_camp",
@@ -35,7 +35,7 @@ JigsawBuildingEntry camp = Zinecraft.STRUCTURES.settlement(
 ## 唯一地标
 
 ```java
-JigsawBuildingEntry tower = Zinecraft.STRUCTURES.uniqueLandmark(
+JigsawBuilder tower = Zinecraft.STRUCTURES.uniqueLandmark(
     "unique_tower", "唯一高塔", "landmarks/unique_tower",
     ModBiomes.TARGET_BIOME,
     32, 96,
@@ -47,9 +47,9 @@ JigsawBuildingEntry tower = Zinecraft.STRUCTURES.uniqueLandmark(
 唯一地标生成独立模板池、Jigsaw 结构和同心环结构集，并在结构和放置层同时绑定目标群系。地下固定设施使用：
 
 ```java
-JigsawBuildingEntry host = Zinecraft.STRUCTURES.fixedOriginUndergroundLandmark(
+JigsawBuilder host = Zinecraft.STRUCTURES.fixedOriginUndergroundLandmark(
     "laterano_host", "拉特兰主机", "laterano_host/core",
-    NationBiomes.INSTANCE.getLATERANO_HOLY_FIELDS(),
+    ModBiome.LATERANO_HOLY_FIELDS.key(),
     -32, 112
 );
 ```
@@ -59,8 +59,8 @@ JigsawBuildingEntry host = Zinecraft.STRUCTURES.fixedOriginUndergroundLandmark(
 ## 单模板建筑
 
 ```java
-JigsawBuildingEntry ruins = Zinecraft.STRUCTURES.simpleBuilding(
-    "ruins", "ruins/common",
+JigsawBuilder ruins = Zinecraft.STRUCTURES.simpleBuilding(
+    "ruins", "遗迹", "ruins/common",
     36, 30, 958853901,
     80, 0.6F
 );

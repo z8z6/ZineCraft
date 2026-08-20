@@ -3,52 +3,18 @@ package com.cxxcxx.zinecraft.api.world.dimension;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate.ParameterPoint;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public final class DimensionBiome {
-  @NotNull
-  private final ResourceKey<Biome> biome;
-  @NotNull
-  private final ParameterPoint parameters;
+import java.util.Objects;
 
-  public DimensionBiome(@NotNull ResourceKey<Biome> biome, @NotNull ParameterPoint parameters) {
-    super();
-    this.biome = biome;
-    this.parameters = parameters;
-  }
-
-  @NotNull
-  public final ResourceKey<Biome> getBiome() {
-    return this.biome;
-  }
-
-  @NotNull
-  public final ParameterPoint getParameters() {
-    return this.parameters;
-  }
-
-  @Override
-  public int hashCode() {
-    int i = this.biome.hashCode();
-    return i * 31 + this.parameters.hashCode();
-  }
-
-  @Override
-  public boolean equals(@Nullable Object other) {
-    if (this == other) {
-      return true;
-    } else if (!(other instanceof DimensionBiome dimensionBiome)) {
-      return false;
-    } else {
-      return !java.util.Objects.equals(this.biome, dimensionBiome.biome) ? false : java.util.Objects.equals(this.parameters, dimensionBiome.parameters);
-    }
-  }
-
-  @NotNull
-  @Override
-  public String toString() {
-    return "DimensionBiome(biome=" + this.biome + ", parameters=" + this.parameters + ")";
+/**
+ * 维度群系资源键及其多噪声气候点。
+ *
+ * @param biome      群系资源键
+ * @param parameters 多噪声群系源气候点
+ */
+public record DimensionBiome(ResourceKey<Biome> biome, ParameterPoint parameters) {
+  public DimensionBiome {
+    Objects.requireNonNull(biome, "维度群系资源键不能为空");
+    Objects.requireNonNull(parameters, "维度群系气候点不能为空");
   }
 }
-

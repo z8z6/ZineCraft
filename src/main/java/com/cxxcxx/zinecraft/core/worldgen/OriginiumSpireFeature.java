@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.core.worldgen;
 
-import com.cxxcxx.zinecraft.core.block.ModBlock;
-import com.cxxcxx.zinecraft.core.dimension.ModDimension;
+import com.cxxcxx.zinecraft.core.registry.ModBlock;
+import com.cxxcxx.zinecraft.core.registry.ModDimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -39,7 +39,7 @@ public final class OriginiumSpireFeature extends Feature<NoneFeatureConfiguratio
   @Override
   public boolean place(@NotNull FeaturePlaceContext<NoneFeatureConfiguration> context) {
     WorldGenLevel level = context.level();
-    if (!level.getLevel().dimension().equals(ModDimension.TERRA.getLevelKey())) return false;
+    if (!level.getLevel().dimension().equals(ModDimension.TERRA.levelKey())) return false;
 
     RandomSource random = context.random();
     int spikeCount = random.nextIntBetweenInclusive(minSpikes, maxSpikes);
@@ -58,7 +58,7 @@ public final class OriginiumSpireFeature extends Feature<NoneFeatureConfiguratio
   }
 
   private boolean placeSpire(WorldGenLevel level, BlockPos base, int height, double angle, double lean) {
-    BlockState crystal = ModBlock.ORIGINITE_ORE.block().get().defaultBlockState();
+    BlockState crystal = ModBlock.ORIGINITE_ORE.get().defaultBlockState();
     boolean placed = false;
     for (int y = 0; y < height; y++) {
       double progress = y / (double) Math.max(1, height - 1);

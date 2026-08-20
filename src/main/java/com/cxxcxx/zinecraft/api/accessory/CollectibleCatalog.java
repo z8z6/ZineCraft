@@ -1,7 +1,8 @@
 package com.cxxcxx.zinecraft.api.accessory;
 
-import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
-import com.cxxcxx.zinecraft.api.registry.ItemCatalog;
+import com.cxxcxx.zinecraft.api.registry.builder.ItemBuilder;
+import com.cxxcxx.zinecraft.api.registry.catalog.ItemCatalog;
+import com.cxxcxx.zinecraft.api.registry.catalog.TranslationCatalog;
 import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -35,10 +36,6 @@ public final class CollectibleCatalog {
     this.minecraftEffectLabelTranslationKey = "item." + namespace + ".collectible.minecraft_effect";
   }
 
-  public CollectibleBuilder builder(String path, String orderId, String zhCn) {
-    return new CollectibleBuilder(this, path, orderId, zhCn);
-  }
-
   private DeferredItem<CollectibleItem> register(CollectibleBuilder builder) {
     if (mutableEntries.stream().anyMatch(entry -> entry.path.equals(builder.path))) {
       throw new IllegalArgumentException("藏品 ID 重复：" + builder.path);
@@ -62,7 +59,7 @@ public final class CollectibleCatalog {
         originalEffectLines.size(), descriptionLines.size()
     );
 
-    DeferredItem<CollectibleItem> item = items.builder(
+    DeferredItem<CollectibleItem> item = new ItemBuilder<>(items,
             builder.path,
             builder.zhCn,
             builder.enUs,
@@ -75,7 +72,7 @@ public final class CollectibleCatalog {
             ),
             ModelTemplates.FLAT_ITEM,
             false
-        )
+    ).build()
         .getItem();
 
     registerTranslations(registeredSpec, originalEffectLines, descriptionLines);
@@ -125,7 +122,7 @@ public final class CollectibleCatalog {
     public CollectibleSpec spec;
     public DeferredItem<CollectibleItem> item;
 
-    private CollectibleBuilder(CollectibleCatalog catalog, String path, String orderId, String zhCn) {
+    public CollectibleBuilder(CollectibleCatalog catalog, String path, String orderId, String zhCn) {
       this.catalog = catalog;
       this.path = path;
       this.orderId = orderId;

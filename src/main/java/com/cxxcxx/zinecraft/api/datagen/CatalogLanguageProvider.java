@@ -1,6 +1,6 @@
 package com.cxxcxx.zinecraft.api.datagen;
 
-import com.cxxcxx.zinecraft.api.localization.TranslationCatalog;
+import com.cxxcxx.zinecraft.api.registry.catalog.TranslationCatalog;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 

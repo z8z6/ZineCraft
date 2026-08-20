@@ -7,53 +7,23 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public final class MobSpawnRestriction<T extends Mob> {
-  @NotNull
-  private final SpawnPlacementType placement;
-  @NotNull
-  private final Types heightmap;
-  @NotNull
-  private final SpawnPredicate<T> predicate;
+import java.util.Objects;
 
-  public MobSpawnRestriction(@NotNull SpawnPlacementType placement, @NotNull Types heightmap, @NotNull SpawnPredicate<T> predicate) {
-    super();
-    this.placement = placement;
-    this.heightmap = heightmap;
-    this.predicate = predicate;
-  }
-
-  @NotNull
-  public final SpawnPlacementType getPlacement() {
-    return this.placement;
-  }
-
-  @NotNull
-  public final Types getHeightmap() {
-    return this.heightmap;
-  }
-
-  @NotNull
-  public final SpawnPredicate<T> getPredicate() {
-    return this.predicate;
-  }
-
-  @Override
-  public int hashCode() {
-    int i = this.placement.hashCode();
-    i = i * 31 + this.heightmap.hashCode();
-    return i * 31 + this.predicate.hashCode();
-  }
+public record MobSpawnRestriction<T extends Mob>(@NotNull SpawnPlacementType placement, @NotNull Types heightmap,
+                                                 @NotNull SpawnPredicate<T> predicate) {
 
   @Override
   public boolean equals(@Nullable Object other) {
     if (this == other) {
       return true;
-    } else if (!(other instanceof MobSpawnRestriction mobSpawnRestriction)) {
+    } else if (!(other instanceof MobSpawnRestriction(
+        SpawnPlacementType placement1, Types heightmap1, SpawnPredicate predicate1
+    ))) {
       return false;
-    } else if (!java.util.Objects.equals(this.placement, mobSpawnRestriction.placement)) {
+    } else if (!Objects.equals(this.placement, placement1)) {
       return false;
     } else {
-      return this.heightmap != mobSpawnRestriction.heightmap ? false : java.util.Objects.equals(this.predicate, mobSpawnRestriction.predicate);
+      return this.heightmap == heightmap1 && Objects.equals(this.predicate, predicate1);
     }
   }
 

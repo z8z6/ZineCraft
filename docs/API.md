@@ -1,63 +1,93 @@
 # Zinecraft 声明式 API
 
-项目用按领域拆分的 Java 目录统一注册、翻译与数据生成元数据。具体内容优先调用目录，只有目录无法表达的特殊注册表才直接使用
-`ModRegistrar`。
+项目用按领域拆分的 Java 目录统一注册、翻译与数据生成元数据。各 Catalog 持有并接入自身需要的 NeoForge 延迟注册器；动态注册表
+由对应 Catalog 的 bootstrap 直接写入。
 
 ## 目录入口
 
-| `Zinecraft` 入口        | 类型                   | 职责                                            |
-|-----------------------|----------------------|-----------------------------------------------|
-| `TRANSLATIONS`        | `TranslationCatalog` | 双语翻译与可直接创建 `Component` 的消息条目                  |
-| `ITEMS`               | `ItemCatalog`        | 物品、翻译、模型元数据、燃料与堆肥                             |
-| `BLOCKS`              | `BlockCatalog`       | 方块、方块物品、翻译、简单模型与默认掉落                          |
-| `getBLOCK_ENTITIES()` | `BlockEntityCatalog` | 方块实体类型与有效方块绑定                                 |
-| `SOUNDS`              | `SoundCatalog`       | 声音及由 `MusicDiscBuilder` 组合的唱片物品与 Jukebox Song |
-| `getCREATIVE_TABS()`  | `CreativeTabCatalog` | 创造模式页及条目收集                                    |
-| `getENTITIES()`       | `EntityCatalog`      | 实体、Mob、属性、生成限制、生成蛋与自然生成                       |
-| `getENCHANTMENTS()`   | `EnchantmentCatalog` | 1.21.1 动态附魔及数据生成                              |
-| `getSKILLS()`         | `SkillCatalog`       | 技能物品、双语资料与 Ponder 元数据                         |
-| `getWEAPONS()`        | `WeaponRegistry`     | 服务端动作、武器定义与物品解析器                              |
-| `getBIOMES()`         | `BiomeCatalog`       | 群系资源键与 bootstrap                              |
-| `getDIMENSIONS()`     | `DimensionCatalog`   | 维度、维度类型与群系源                                   |
-| `getFEATURES()`       | `FeatureCatalog`     | 配置/放置地物与矿物参数                                  |
-| `getSTRUCTURES()`     | `StructureCatalog`   | 简易建筑、Jigsaw 聚落、唯一地标与结构集                       |
-| `getRECIPES()`        | `RecipeCatalog`      | 配方数据生成回调                                      |
+| `Zinecraft` 入口       | 类型                   | 职责                                            |
+|----------------------|----------------------|-----------------------------------------------|
+| `TRANSLATIONS`       | `TranslationCatalog` | 双语翻译与可直接创建 `Component` 的消息条目                  |
+| `ITEMS`              | `ItemCatalog`        | 物品、翻译、模型元数据、燃料与堆肥                             |
+| `BLOCKS`             | `BlockCatalog`       | 方块、方块物品、翻译、简单模型与默认掉落                          |
+| `BLOCK_ENTITIES`     | `BlockEntityCatalog` | 组合注册方块实体类型及其对应的 `EntityBlock`                 |
+| `SOUNDS`             | `SoundCatalog`       | 声音及由 `MusicDiscBuilder` 组合的唱片物品与 Jukebox Song |
+| `getCREATIVE_TABS()` | `CreativeTabCatalog` | 创造模式页及条目收集                                    |
+| `getENTITIES()`      | `EntityCatalog`      | 实体、Mob、属性、生成限制、生成蛋与自然生成                       |
+| `getENCHANTMENTS()`  | `EnchantmentCatalog` | 1.21.1 动态附魔及数据生成                              |
+| `getSKILLS()`        | `SkillCatalog`       | 技能物品、双语资料与 Ponder 元数据                         |
+| `getWEAPONS()`       | `WeaponRegistry`     | 服务端动作、武器定义与物品解析器                              |
+| `BIOMES`             | `BiomeCatalog`       | 通过 `BiomeBuilder` 声明群系并执行 bootstrap           |
+| `DIMENSIONS`         | `DimensionCatalog`   | 维度、维度类型与群系源                                   |
+| `FEATURES`           | `FeatureCatalog`     | 配置/放置地物与矿物 Builder                            |
+| `STRUCTURES`         | `StructureCatalog`   | 通过 `JigsawBuilder` 声明模板池、结构与结构集               |
+| `getRECIPES()`       | `RecipeCatalog`      | 配方数据生成回调                                      |
 
 ## Java 声明示例
 
 ```java
-ItemBuilder<Item> dust = Zinecraft.ITEMS.builder(
-    "magic_dust", "魔法粉尘", "Magic Dust",
+ItemBuilder<Item> dust = new ItemBuilder<>(
+    Zinecraft.ITEMS, "magic_dust", "魔法粉尘", "Magic Dust",
     () -> new Item(new Item.Properties())
-);
+).build();
 
-MessageBuilder denied = Zinecraft.TRANSLATIONS.message(
-    "message.zinecraft.machine.denied",
+MessageBuilder denied = new MessageBuilder(
+    Zinecraft.TRANSLATIONS, "message.zinecraft.machine.denied",
     "机器拒绝访问",
     "Machine access denied"
 );
 player.displayClientMessage(denied.component(), true);
 
-BlockBuilder<Block> machine = Zinecraft.BLOCKS
-    .builder("machine", "机器", () -> new Block(BlockBehaviour.Properties.of().strength(4.0F)))
+BlockBuilder<Block> machine = new BlockBuilder<>(
+    Zinecraft.BLOCKS, "machine", "机器", () -> new Block(BlockBehaviour.Properties.of().strength(4.0F)))
     .enUs("Machine")
     .build();
 
-OreEntry ore = Zinecraft.FEATURES.ore(
-    "machine_ore", machine,
-    8, 4, 32, 0.0F
-);
+OreBuilder<Block> ore = new OreBuilder<>(Zinecraft.FEATURES, "machine_ore", machine)
+    .vein(8, 4)
+    .maxY(32)
+    .discardChanceOnAirExposure(0.0F)
+    .biomes(BiomeSelection.overworld())
+    .build();
+
+SimpleFeatureBuilder feature = new SimpleFeatureBuilder(
+    Zinecraft.FEATURES, "crystal_spire", crystalSpireFeature
+).placement(List.of(RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), BiomeFilter.biome()))
+    .generationStep(GenerationStep.Decoration.LOCAL_MODIFICATIONS)
+    .biomes(BiomeSelection.overworld())
+    .build();
+
+ResourceKey<Biome> biome = new BiomeBuilder(
+    Zinecraft.BIOMES, "example_grove", "示例林地"
+).climate(0.2F, 0.5F, 0.1F, 0.0F, 0.0F, 0.3F)
+    .configure(builder -> {
+  builder.temperature(0.7F).downfall(0.8F);
+  builder.defaultOverworldGeneration();
+}).build().key();
+
+JigsawBuilder ruins = Zinecraft.STRUCTURES
+    .jigsaw("example_ruins", "示例遗迹")
+    .randomSpread(36, 16, 41002001)
+    .layout(3, 80)
+    .pool("start", pool -> pool.template("ruins/example_start"))
+    .build();
+
+DimensionBuilder dimension = Zinecraft.DIMENSIONS.dimension("example_dimension")
+    .biomes(List.of(new DimensionBiome(biome, Climate.parameters(
+        0.2F, 0.5F, 0.1F, 0.0F, 0.0F, 0.3F, 0.0F
+    ))))
+    .build();
 ```
 
-`BlockCatalog.builder(...).build()` 直接返回 `BlockBuilder<T>`；该对象持有方块与可选方块物品注册结果。
+Builder 构造函数接收所属 Catalog 和声明参数，`build()` 回交 Catalog 校验并注册；Catalog 不重复声明 Builder 的构造签名。
 
 目录构造时注入其真实依赖；内容类通过显式静态字段和初始化入口声明内容，不依赖语言级对象初始化。`Zinecraft` 的 NeoForge
 构造入口创建目录并将延迟注册器接到模组事件总线，`commonSetup` 只处理必须在注册后执行的绑定与可选兼容层。
 
 ## 动态注册表与数据生成
 
-`WorldgenManager` 汇总群系、维度、地物与结构 bootstrap。数据生成入口把 bootstrap 添加到 `RegistrySetBuilder`，然后由
-provider 导出 JSON。新增普通目录条目时通常不必改入口；新增一种动态注册表类型时才需要扩展汇总逻辑。
+需要生成动态注册表的 Catalog 均实现 `RegistryDataContributor`，通过 `contribute(...)` 接入所管理的注册表。目前包括群系、
+维度、地物、结构、附魔和 Jukebox Song；数据生成入口只遍历贡献者，不包含具体的 `Registries.*` 调用。
 
 运行：
 

@@ -46,8 +46,8 @@ src/main/java/com/cxxcxx/zinecraft/core/block/ModBlock.java
 找到其他 `DeferredBlock` 声明。在相同区域加入：
 
 ```java
-private static final DeferredBlock<Block> TEST_STONE_BRICKS = Zinecraft.BLOCKS
-    .builder(
+private static final BlockBuilder<Block> TEST_STONE_BRICKS = new BlockBuilder<>(
+        Zinecraft.BLOCKS,
         "test_stone_bricks",
         "测试石砖",
         () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS))
@@ -62,7 +62,7 @@ private static final DeferredBlock<Block> TEST_STONE_BRICKS = Zinecraft.BLOCKS
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.registries.DeferredBlock;
+import com.cxxcxx.zinecraft.api.registry.builder.BlockBuilder;
 ```
 
 ## 3. 直接使用方块
@@ -175,6 +175,6 @@ builder 默认掉落自身。要改为掉落其他物品，链式调用：
 
 - [ ] ID 全部使用小写下划线。
 - [ ] PNG 与 ID 同名。
-- [ ] 字段保存原生 `DeferredBlock<Block>`。
+- [ ] 字段保存 `BlockBuilder<Block>`。
 - [ ] `test`、`runData`、`build` 全部成功。
 - [ ] `/give`、放置、破坏和掉落都经过游戏内测试。

@@ -1,20 +1,20 @@
 {
-  "ambient.pictures_of_the_past": {
-    "subtitle": "sound.zinecraft.ambient.pictures_of_the_past",
+  "pictures_of_the_past": {
+    "subtitle": "sound.zinecraft.pictures_of_the_past",
     "sounds": [
-      "zinecraft:ambient.pictures_of_the_past"
+      "zinecraft:pictures_of_the_past"
     ]
   },
-  "ambient.random_gods": {
-    "subtitle": "sound.zinecraft.ambient.random_gods",
+  "random_gods": {
+    "subtitle": "sound.zinecraft.random_gods",
     "sounds": [
-      "zinecraft:ambient.random_gods"
+      "zinecraft:random_gods"
     ]
   },
-  "ambient.stranger_think": {
-    "subtitle": "sound.zinecraft.ambient.stranger_think",
+  "stranger_think": {
+    "subtitle": "sound.zinecraft.stranger_think",
     "sounds": [
-      "zinecraft:ambient.stranger_think"
+      "zinecraft:stranger_think"
     ]
   },
   "engine": {

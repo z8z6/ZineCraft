@@ -1,8 +1,8 @@
 package com.cxxcxx.zinecraft.core.structure.stargate;
 
-import com.cxxcxx.zinecraft.api.localization.MessageBuilder;
-import com.cxxcxx.zinecraft.core.block.ModBlock;
-import com.cxxcxx.zinecraft.core.item.ModItem;
+import com.cxxcxx.zinecraft.api.registry.builder.MessageBuilder;
+import com.cxxcxx.zinecraft.core.registry.ModBlock;
+import com.cxxcxx.zinecraft.core.registry.ModItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;

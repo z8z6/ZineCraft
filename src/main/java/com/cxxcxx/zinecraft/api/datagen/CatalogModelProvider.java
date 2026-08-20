@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.api.datagen;
 
-import com.cxxcxx.zinecraft.api.registry.BlockCatalog;
-import com.cxxcxx.zinecraft.api.registry.ItemCatalog;
+import com.cxxcxx.zinecraft.api.registry.catalog.BlockCatalog;
+import com.cxxcxx.zinecraft.api.registry.catalog.ItemCatalog;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.data.CachedOutput;

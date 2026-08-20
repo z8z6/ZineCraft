@@ -1,25 +1,28 @@
 # 添加群系
 
-群系通过 `Zinecraft.BIOMES.register` 声明，并由动态注册表 provider
+群系通过 `BiomeBuilder` 声明并交给 `Zinecraft.BIOMES`，由动态注册表 provider
 导出。十九国设计依据见 [TERRA_NATIONS.md](TERRA_NATIONS.md)。
 
 ```java
-ResourceKey<Biome> example = Zinecraft.BIOMES.register(
-    "example_biome",
-    builder -> {
-      builder.setPrecipitation(false);
-      builder.setTemperature(2.0F);
-      builder.setDownfall(0.0F);
-      BiomeDefaultFeatures.desertSpawns(builder.getSpawns());
+ResourceKey<Biome> example = new BiomeBuilder(
+    Zinecraft.BIOMES, "example_biome", "示例群系"
+).enUs("Example Biome")
+    .climate(0.2F, 0.5F, 0.1F, 0.0F, 0.0F, 0.3F)
+    .configure(builder -> {
+      builder.precipitation(false);
+      builder.temperature(2.0F);
+      builder.downfall(0.0F);
+      BiomeDefaultFeatures.desertSpawns(builder.spawns());
       builder.defaultOverworldGeneration();
-      BiomeDefaultFeatures.addDefaultOres(builder.getGeneration());
-      BiomeDefaultFeatures.addDesertVegetation(builder.getGeneration());
-    }
-);
+      BiomeDefaultFeatures.addDefaultOres(builder.generation());
+      BiomeDefaultFeatures.addDesertVegetation(builder.generation());
+    })
+    .build()
+    .key();
 ```
 
-以 [SimpleBiomeBuilder.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/biome/SimpleBiomeBuilder.java) 的实际
-setter/getter 为准。注册资源键不代表群系会自然出现；还必须把它加入目标维度的群系源。
+以 [BiomeBuilder.java](../../src/main/java/com/cxxcxx/zinecraft/api/registry/builder/BiomeBuilder.java) 的 fluent API
+为准。注册资源键不代表群系会自然出现；还必须把它加入目标维度的群系源。
 
 ## 泰拉维度
 

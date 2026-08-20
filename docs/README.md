@@ -16,7 +16,7 @@
 - [声明式 API 总览](API.md)
 - [物品与国家食物](item/README.md)
 - [方块、方块实体与国家材料](block/README.md)
-- [实体与十九国居民](entity/README.md)
+- [实体与生物生成](entity/README.md)
 - [附魔](enchantment/README.md)
 - [技能与 Ponder](skill/README.md)
 - [Weapon Runtime](weapon/weapon.md)

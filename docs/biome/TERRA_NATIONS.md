@@ -13,44 +13,41 @@ Minecraft 化提炼，不表示整个国家只有这一种地貌，也不直接�
 
 ## 国家与群系
 
-每行的表层方块、特色生物和两座建筑均不与其他国家完全重复。特色生物使用 Minecraft 原版实体表达当地生态或文化意象，
-不是把原版生物直接等同于明日方舟中的种族或生物。十九个群系还各自注册了和平居民；拉特兰使用默认持枪的独立公民实体，
-其余十八国居民以国家专属实体类型和职业手持物区分，方便任务与关系系统可靠识别所属国家。
+每行的表层方块、特色生物和两座建筑均不与其他国家完全重复。居民与特色生物都使用群系注册时直接声明的 Minecraft 普通友好生物，
+不注册国家专属居民实体，也不把原版生物直接等同于明日方舟中的种族或生物。
 
-| 国家   | 群系 ID                          | 独特地表  | 特色生物    | 每世界唯一建筑            | 资料                                       |
-|------|--------------------------------|-------|---------|--------------------|------------------------------------------|
-| 阿戈尔  | `aegir_abyssal_sea`            | 深渊岩板  | 海豚      | 火山能源信标、深海观测穹顶      | [PRTS](https://prts.wiki/w/泰拉大典:地理/阿戈尔)  |
-| 玻利瓦尔 | `bolivar_plain`                | 战蚀土   | 鹦鹉      | 多索雷斯游艇、极限铁人赛检查站    | [PRTS](https://prts.wiki/w/泰拉大典:地理/玻利瓦尔) |
-| 东    | `higashi_shadow_rift`          | 裂谷暗壤  | 狐       | 常暗裂谷神社、锁川边境望楼      | [PRTS](https://prts.wiki/w/泰拉大典:地理/东)    |
-| 杜林   | `durin_underground_garden`     | 花园苔土  | 发光鱿鱼    | 际崖城穹顶车站、大水坑水上乐园    | [PRTS](https://prts.wiki/w/泰拉大典:地理/杜林)   |
-| 哥伦比亚 | `columbia_sandstone_wilds`     | 峡谷砂土  | 犰狳      | 拓荒区科研站、移动监狱补给站     | [PRTS](https://prts.wiki/w/泰拉大典:地理/哥伦比亚) |
-| 卡西米尔 | `kazimierz_knightland`         | 旱原草皮  | 马       | 大骑士竞技场门楼、征战骑士纪念碑   | [PRTS](https://prts.wiki/w/泰拉大典:地理/卡西米尔) |
-| 卡兹戴尔 | `kazdel_scarred_wastes`        | 战痕灰烬  | 洞穴蜘蛛    | 巴别塔遗迹、萨卡兹流动营地      | [PRTS](https://prts.wiki/w/泰拉大典:地理/卡兹戴尔) |
-| 拉特兰  | `laterano_holy_fields`         | 冲积白垩  | 蜜蜂、持铳公民 | 启示石塔、安布罗修礼拜堂       | [PRTS](https://prts.wiki/w/拉特兰)          |
-| 莱塔尼亚 | `leithanien_twilight_forest`   | 暮林腐殖土 | 狼       | 崔林特尔梅双塔、夕照音乐厅      | [PRTS](https://prts.wiki/w/泰拉大典:地理/莱塔尼亚) |
-| 雷姆必拓 | `rim_billiton_mining_badlands` | 矿渣土   | 尸壳      | 源石矿井架、矿石运输铁路站      | [PRTS](https://prts.wiki/w/泰拉大典:地理/雷姆必拓) |
-| 米诺斯  | `minos_sunlit_hills`           | 晒土地   | 山羊      | 十二英雄神殿、科林尼亚英雄广场    | [PRTS](https://prts.wiki/w/泰拉大典:地理/米诺斯)  |
-| 萨尔贡  | `sargon_rocky_desert`          | 岩漠硬壳  | 骆驼      | 黄金之城宝石集市、长泉镇古井     | [PRTS](https://prts.wiki/w/泰拉大典:地理/萨尔贡)  |
-| 萨米   | `sami_frozen_forest`           | 冻原苔土  | 北极熊     | 独眼巨人祭坛、雪祀仪式屋       | [PRTS](https://prts.wiki/w/泰拉大典:地理/萨米)   |
-| 维多利亚 | `victoria_misty_highlands`     | 雾沼土   | 羊       | 伦蒂尼姆城防炮、蒸汽铁路站      | [PRTS](https://prts.wiki/w/泰拉大典:地理/维多利亚) |
-| 乌萨斯  | `ursus_frozen_steppe`          | 永冻土   | 流髑      | 切尔诺伯格石棺站、远北矿区哨塔    | [PRTS](https://prts.wiki/w/泰拉大典:地理/乌萨斯)  |
-| 谢拉格  | `kjerag_snowy_peaks`           | 圣雪岩   | 兔       | 喀兰峰蔓珠院、圣山大典广场      | [PRTS](https://prts.wiki/w/泰拉大典:地理/谢拉格)  |
-| 叙拉古  | `siracusa_rainy_woodland`      | 雨浸土   | 蜘蛛      | 家族联合法院、家族歌剧院       | [PRTS](https://prts.wiki/w/叙拉古)          |
-| 炎    | `yan_mountain_grove`           | 山壤    | 熊猫      | 玉门烽火台、尚蜀山间亭        | [PRTS](https://prts.wiki/w/泰拉大典:地理/炎)    |
-| 伊比利亚 | `iberia_salt_delta`            | 盐壳砾石  | 溺尸      | 伊比利亚之眼灯塔、盐风城审判庭礼拜堂 | [PRTS](https://prts.wiki/w/泰拉大典:地理/伊比利亚) |
+| 国家   | 群系 ID                          | 独特地表  | 特色生物 | 每世界唯一建筑            | 资料                                       |
+|------|--------------------------------|-------|------|--------------------|------------------------------------------|
+| 阿戈尔  | `aegir_abyssal_sea`            | 深渊岩板  | 海豚   | 火山能源信标、深海观测穹顶      | [PRTS](https://prts.wiki/w/泰拉大典:地理/阿戈尔)  |
+| 玻利瓦尔 | `bolivar_plain`                | 战蚀土   | 鹦鹉   | 多索雷斯游艇、极限铁人赛检查站    | [PRTS](https://prts.wiki/w/泰拉大典:地理/玻利瓦尔) |
+| 东    | `higashi_shadow_rift`          | 裂谷暗壤  | 狐    | 常暗裂谷神社、锁川边境望楼      | [PRTS](https://prts.wiki/w/泰拉大典:地理/东)    |
+| 杜林   | `durin_underground_garden`     | 花园苔土  | 发光鱿鱼 | 际崖城穹顶车站、大水坑水上乐园    | [PRTS](https://prts.wiki/w/泰拉大典:地理/杜林)   |
+| 哥伦比亚 | `columbia_sandstone_wilds`     | 峡谷砂土  | 犰狳   | 拓荒区科研站、移动监狱补给站     | [PRTS](https://prts.wiki/w/泰拉大典:地理/哥伦比亚) |
+| 卡西米尔 | `kazimierz_knightland`         | 旱原草皮  | 马    | 大骑士竞技场门楼、征战骑士纪念碑   | [PRTS](https://prts.wiki/w/泰拉大典:地理/卡西米尔) |
+| 卡兹戴尔 | `kazdel_scarred_wastes`        | 战痕灰烬  | 洞穴蜘蛛 | 巴别塔遗迹、萨卡兹流动营地      | [PRTS](https://prts.wiki/w/泰拉大典:地理/卡兹戴尔) |
+| 拉特兰  | `laterano_holy_fields`         | 冲积白垩  | 蜜蜂   | 启示石塔、安布罗修礼拜堂       | [PRTS](https://prts.wiki/w/拉特兰)          |
+| 莱塔尼亚 | `leithanien_twilight_forest`   | 暮林腐殖土 | 狼    | 崔林特尔梅双塔、夕照音乐厅      | [PRTS](https://prts.wiki/w/泰拉大典:地理/莱塔尼亚) |
+| 雷姆必拓 | `rim_billiton_mining_badlands` | 矿渣土   | 尸壳   | 源石矿井架、矿石运输铁路站      | [PRTS](https://prts.wiki/w/泰拉大典:地理/雷姆必拓) |
+| 米诺斯  | `minos_sunlit_hills`           | 晒土地   | 山羊   | 十二英雄神殿、科林尼亚英雄广场    | [PRTS](https://prts.wiki/w/泰拉大典:地理/米诺斯)  |
+| 萨尔贡  | `sargon_rocky_desert`          | 岩漠硬壳  | 骆驼   | 黄金之城宝石集市、长泉镇古井     | [PRTS](https://prts.wiki/w/泰拉大典:地理/萨尔贡)  |
+| 萨米   | `sami_frozen_forest`           | 冻原苔土  | 北极熊  | 独眼巨人祭坛、雪祀仪式屋       | [PRTS](https://prts.wiki/w/泰拉大典:地理/萨米)   |
+| 维多利亚 | `victoria_misty_highlands`     | 雾沼土   | 羊    | 伦蒂尼姆城防炮、蒸汽铁路站      | [PRTS](https://prts.wiki/w/泰拉大典:地理/维多利亚) |
+| 乌萨斯  | `ursus_frozen_steppe`          | 永冻土   | 流髑   | 切尔诺伯格石棺站、远北矿区哨塔    | [PRTS](https://prts.wiki/w/泰拉大典:地理/乌萨斯)  |
+| 谢拉格  | `kjerag_snowy_peaks`           | 圣雪岩   | 兔    | 喀兰峰蔓珠院、圣山大典广场      | [PRTS](https://prts.wiki/w/泰拉大典:地理/谢拉格)  |
+| 叙拉古  | `siracusa_rainy_woodland`      | 雨浸土   | 蜘蛛   | 家族联合法院、家族歌剧院       | [PRTS](https://prts.wiki/w/叙拉古)          |
+| 炎    | `yan_mountain_grove`           | 山壤    | 熊猫   | 玉门烽火台、尚蜀山间亭        | [PRTS](https://prts.wiki/w/泰拉大典:地理/炎)    |
+| 伊比利亚 | `iberia_salt_delta`            | 盐壳砾石  | 溺尸   | 伊比利亚之眼灯塔、盐风城审判庭礼拜堂 | [PRTS](https://prts.wiki/w/泰拉大典:地理/伊比利亚) |
 
 ## 代码布局
 
-- `NationBiomes`：只声明群系气候、颜色和所用预设。
-- `NationBiomePresets`：复用原版刷怪、地下生成和植被组合。
-- `NationBiomePlacements`：为每个群系分配独立的原版多噪声气候点。
-- `ModDimensions`：把气候点接入 `zinecraft:terra`，不会向主世界注入国家群系。
+- `ModBiome`：以 `BiomeBuilder` 同时声明群系气候点、颜色、刷怪规则和植被预设。
+- `BiomeBuilder`：提供多噪声气候点、和平生物、地下生成及植被的 fluent API。
+- `ModDimension`：直接读取 `ModBiome.ALL` 的 Builder 和气候点接入 `zinecraft:terra`，不会向主世界注入国家群系。
 - `TerraBiomeSource`：将原点半径 1024 格固定为拉特兰圣田，外围对其余十八国和天灾区执行多噪声分区，并拒绝非 `zinecraft` 群系。
 - `NationBlocks`：为十九个国家各注册一种地貌方块和一种建筑外墙方块，并提供独立贴图。
 - `ModSurfaceRule`：为十九个国家分配专属主表层，并按生态需要混入少量草方块斑块，不修改原版群系。
-- `ModLandmark`：为每个国家声明两座绑定群系的唯一建筑，并在注册时写入中文名。
-- `ModSettlement`：为每个国家声明一套可重复生成的大型 Jigsaw 城镇、村落或营地，并在注册时写入中文名。
-- `ModEntity`：为每个国家群系限定生成特色生物与所属国家明确的居民实体。
+- `ModStructure`：为每个国家声明两座绑定群系的唯一建筑和一套可重复生成的大型 Jigsaw 城镇、村落或营地，并在注册时写入中文名。
+- `ModBiome`：在每个国家群系声明普通友好生物的类别、权重和群体范围。
 - `TerraNationRelations`：提供十九国状态以及完整的有向国家关系网。
 - `generate_nation_landmarks.py`：确定性生成 38 个不同轮廓和材料的 structure NBT。
 - `generate_nation_settlements.py`：确定性生成 19 套、共 171 个聚落 Jigsaw 模板。

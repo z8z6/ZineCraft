@@ -49,7 +49,9 @@ repositories {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
     withSourcesJar()
 }
 
@@ -129,6 +131,9 @@ dependencies {
     // TaCZ owns gun items, gun-pack loading, rendering, input and mechanical animations.
     implementation "maven.modrinth:tacz-1.21.1:${project.tacz_version}"
 
+    // YSM provides custom player models and animations used by Zinecraft characters.
+    implementation "maven.modrinth:86xjpqqS:${project.ysm_modrinth_version}"
+
     // Development-time VFX authoring and Java integration.
     implementation "com.lowdragmc.ldlib2:ldlib2-neoforge-${project.minecraft_version}:${project.ldlib2_version}:all"
     implementation("com.lowdragmc.photon:photon-neoforge-${project.minecraft_version}:${project.photon_version}") {
@@ -154,7 +159,8 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
             mod_license            : mod_license,
             mod_version             : mod_version,
             tooltip_overhaul_version: tooltip_overhaul_version,
-            tacz_version            : tacz_version
+            tacz_version: tacz_version,
+            ysm_version : ysm_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties

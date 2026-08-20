@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.item;
 
+import com.cxxcxx.zinecraft.api.accessory.CollectibleCatalog;
 import com.cxxcxx.zinecraft.api.accessory.CollectibleItem;
 import com.cxxcxx.zinecraft.api.accessory.CollectiblePower;
 import com.cxxcxx.zinecraft.api.combat.CombatStat;
@@ -168,8 +169,8 @@ public final class ModCollectible {
       effect = new PowerOverride(adaptation.zhCn(), adaptation.enUs(), adaptation.power());
     }
 
-    return Zinecraft.COLLECTIBLES
-        .builder(imported.path(), imported.orderId(), imported.zhCn())
+    return new CollectibleCatalog.CollectibleBuilder(
+        Zinecraft.COLLECTIBLES, imported.path(), imported.orderId(), imported.zhCn())
         .enUs(imported.enUs())
         .originalEffect(imported.originalEffectZhCn(), imported.originalEffectEnUs())
         .description(imported.descriptionZhCn(), imported.descriptionEnUs())

@@ -1,59 +1,47 @@
 package com.cxxcxx.zinecraft.api.world.structure;
 
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * Jigsaw 模板池构建器。
+ */
 public final class JigsawPoolBuilder {
-  @NotNull
   private final String name;
-  @NotNull
   private final Projection projection;
-  @NotNull
-  private final List<JigsawTemplateElement> templates;
+  private final List<JigsawTemplateElement> templates = new ArrayList<>();
 
-  public JigsawPoolBuilder(@NotNull String name, @NotNull Projection projection) {
-    super();
-    this.name = name;
-    this.projection = projection;
-    this.templates = new ArrayList<>();
+  /**
+   * @param name 池名称 @param projection 模板投影方式
+   */
+  public JigsawPoolBuilder(String name, Projection projection) {
+    this.name = Objects.requireNonNull(name, "Jigsaw pool 名称不能为空");
+    this.projection = Objects.requireNonNull(projection, "Jigsaw pool 投影不能为空：" + name);
   }
 
-  public static void templateWithDefaults(JigsawPoolBuilder var0, String var1, int var2, int var3, Object var4) {
-    if ((var3 & 2) != 0) {
-      var2 = 1;
-    }
-
-    var0.template(var1, var2);
+  /**
+   * @param path 模板资源路径 @return 当前构建器
+   */
+  public JigsawPoolBuilder template(String path) {
+    return template(path, 1);
   }
 
-  public final void template(@NotNull String path, int weight) {
-    if (path.isBlank()) {
-      int j = 0;
-      String string1 = "Jigsaw 模板路径不能为空";
-      throw new IllegalArgumentException(string1.toString());
-    }
-
-    if (weight <= 0) {
-      int i = 0;
-      String string = "Jigsaw 模板权重必须大于 0";
-      throw new IllegalArgumentException(string.toString());
-    }
-
-    this.templates.add(new JigsawTemplateElement(path, weight));
+  /**
+   * @param path 模板资源路径 @param weight 正整数选择权重 @return 当前构建器
+   */
+  public JigsawPoolBuilder template(String path, int weight) {
+    templates.add(new JigsawTemplateElement(path, weight));
+    return this;
   }
 
-  @NotNull
-  public final JigsawPoolDefinition build() {
-    if (this.templates.isEmpty()) {
-      int i = 0;
-      String string = "Jigsaw 模板池不能为空: " + this.name;
-      throw new IllegalArgumentException(string.toString());
-    } else {
-      return new JigsawPoolDefinition(this.name, com.cxxcxx.zinecraft.api.util.CollectionSupport.toList(this.templates), this.projection);
-    }
+  /**
+   * @return 完成校验的不可变模板池定义
+   */
+  public JigsawPoolDefinition build() {
+    if (templates.isEmpty()) throw new IllegalArgumentException("Jigsaw 模板池不能为空：" + name);
+    return new JigsawPoolDefinition(name, List.copyOf(templates), projection);
   }
 }
-

@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.entity;
 
+import com.cxxcxx.zinecraft.core.registry.ModBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
