@@ -1,9 +1,9 @@
 # 泰拉城市内部建筑生成逻辑
 
 状态：`DESIGN + COMPILED DOMAIN CONTRACTS`  
-实现阶段：规划模型与建筑选择器已落地；187 个地图地点已接入固定 `BLOCKOUT` 结构。逐城正式 Structure/Piece、道路计划和证据完备资产仍待替换。
+实现阶段：规划模型与建筑选择器已落地；187 个地图地点保留为地理与旅行地图目录。逐城正式 Structure/Piece、道路计划和证据完备资产仍待实现。
 
-当前可运行占位实现见[泰拉移动城市与地区地标 Blockout](TERRA_CITY_BLOCKOUTS.md)。它使用五块四层移动地块表达每座城市，但不把占位体块声明为官方还原。
+旧的批量城市与地区占位结构已经移除，迁移说明见[泰拉城市与地区占位结构（已移除）](TERRA_CITY_BLOCKOUTS.md)。
 
 ## 1. 对 `docs/city.md` 的项目化结论
 
@@ -75,12 +75,9 @@ TerraCityStructure / CityStructurePiece（下一阶段）
 6. 所有 NBT 已通过门、楼梯、净空、照明、容器、战利品和 Jigsaw 接口检查。
 7. 城市没有资料支持时保持 JourneyMap 地点，不自动生成“国家风格通用城市”。
 
-当前 187 个旅行地图地点均有可定位的 Blockout；其中 112 个城市、聚落和城区使用四层移动地块，75
-个地区使用单独地标占位。它们仍不得绕过上述证据门槛迁移为正式 ID；研究充分的大型城市再逐一替换占位结构。
-
-当前逐城 Blockout 输入直接定义在 `ModCityStructure.java` 中，不使用 JSON 或 Python
-配置。即使同一国家暂时采用相同的建筑组合，每座城市也必须保有完整、独立的布局类、地标列表与普通建筑候选目录；生成器只解析这些
-Java 声明，不会读取国家级建筑目录，也不会为漏填城市自动继承默认值。
+当前 187 个地点只作为地理与 JourneyMap 数据存在，不再自动生成通用 Blockout。真实建筑或地标注册时通过
+`JigsawBuilder.city(TerraPlace)` 指定归属；不指定 `city` 的结构默认为通用结构，可由任意城市通过
+`StructureCatalog.structuresFor(TerraPlace)` 选择。没有资料支持和正式资产的地点保持为空，不生成散列 ID 占位结构。
 
 `CityLayout` 是独立的纯数据布局策略。默认 `GridCityLayout` 按棋盘格切分普通建筑用地，避开所有地标保留区，并通过
 `TerrainModel` 剔除不可建或坡度超限的位置。`DefaultCityPlanner`

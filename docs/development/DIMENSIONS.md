@@ -8,7 +8,7 @@
 | 修改内容            | 文件                                                                                      |
 |-----------------|-----------------------------------------------------------------------------------------|
 | 维度名称、地图边长、群系坐标  | `src/main/java/com/cxxcxx/zinecraft/core/registry/ModDimension.java`                    |
-| 天空、床、坐标比例、高度等环境 | `src/main/java/com/cxxcxx/zinecraft/api/world/dimension/DimensionHelper.java`           |
+| 天空、床、坐标比例、高度等环境 | `src/main/java/com/cxxcxx/zinecraft/api/registry/builder/DimensionBuilder.java`         |
 | 泰拉使用的群系内容       | `src/main/java/com/cxxcxx/zinecraft/core/registry/ModBiome.java`                        |
 | 首次玩家出生          | `src/main/java/com/cxxcxx/zinecraft/core/dimension/TerraPlayerSpawn.java`               |
 | 星门单向目标          | `src/main/java/com/cxxcxx/zinecraft/core/structure/stargate/StarGateTeleporter.java`    |
@@ -71,10 +71,10 @@ ID
 打开：
 
 ```text
-src/main/java/com/cxxcxx/zinecraft/api/world/dimension/DimensionHelper.java
+src/main/java/com/cxxcxx/zinecraft/api/registry/builder/DimensionBuilder.java
 ```
 
-找到 `overworldLikeType()` 中的 `new DimensionType(...)`。当前泰拉使用这一组环境设置。
+找到 `createDefaultDimensionType()` 中的 `new DimensionType(...)`。当前泰拉使用这一组环境设置。
 
 常见修改示例：
 
@@ -143,7 +143,7 @@ OptionalLong.of(18000L)
 逻辑高度：384
 ```
 
-这些值在 `DimensionHelper.overworldLikeType()` 中连续出现。
+这些值在 `DimensionBuilder.createDefaultDimensionType()` 中连续出现。
 
 如果确实要调整：
 

@@ -1,8 +1,6 @@
 package com.cxxcxx.zinecraft.core;
 
 import com.cxxcxx.zinecraft.api.registry.catalog.*;
-import com.cxxcxx.zinecraft.api.skill.SkillService;
-import com.cxxcxx.zinecraft.api.weapon.WeaponRegistry;
 import com.cxxcxx.zinecraft.api.weapon.WeaponServerController;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
@@ -14,7 +12,7 @@ import com.cxxcxx.zinecraft.core.nation.TerraGeography;
 import com.cxxcxx.zinecraft.core.nation.TerraNationRelations;
 import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
 import com.cxxcxx.zinecraft.core.registry.*;
-import com.cxxcxx.zinecraft.core.skill.ModSkills;
+import com.cxxcxx.zinecraft.core.skill.ModSkill;
 import com.cxxcxx.zinecraft.core.structure.LateranoHostStructure;
 import com.cxxcxx.zinecraft.integration.tacz.TaczIntegration;
 import net.minecraft.resources.ResourceLocation;
@@ -31,10 +29,13 @@ public final class Zinecraft {
   public static final String MOD_ID = "zinecraft";
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
   public static final TranslationCatalog TRANSLATIONS = new TranslationCatalog();
+  public static final AnimationCatalog ANIMATIONS = new AnimationCatalog(MOD_ID);
+  public static final VfxCatalog VFX = new VfxCatalog(MOD_ID);
   public static final ItemCatalog ITEMS = new ItemCatalog(MOD_ID, TRANSLATIONS);
   public static final CollectibleCatalog COLLECTIBLES = new CollectibleCatalog(ITEMS, TRANSLATIONS, MOD_ID);
   public static final EntityCatalog ENTITIES = new EntityCatalog(MOD_ID, ITEMS, TRANSLATIONS);
   public static final SkillCatalog SKILLS = new SkillCatalog(ITEMS, TRANSLATIONS);
+  public static final SkillEffectCatalog SKILL_EFFECTS = new SkillEffectCatalog(MOD_ID);
   public static final BlockCatalog BLOCKS = new BlockCatalog(MOD_ID, ITEMS, TRANSLATIONS);
   public static final CreativeTabCatalog CREATIVE_TABS = new CreativeTabCatalog(MOD_ID, ITEMS, BLOCKS, TRANSLATIONS);
   public static final BlockEntityCatalog BLOCK_ENTITIES = new BlockEntityCatalog(MOD_ID);
@@ -45,8 +46,7 @@ public final class Zinecraft {
   public static final FeatureCatalog FEATURES = new FeatureCatalog(MOD_ID);
   public static final StructureCatalog STRUCTURES = new StructureCatalog(MOD_ID, TRANSLATIONS);
   public static final RecipeCatalog RECIPES = new RecipeCatalog();
-  public static final SkillService SKILL_SERVICE = new SkillService();
-  public static final WeaponRegistry WEAPONS = new WeaponRegistry();
+  public static final WeaponCatalog WEAPONS = new WeaponCatalog(MOD_ID);
   public static Zinecraft INSTANCE;
 
 
@@ -82,14 +82,16 @@ public final class Zinecraft {
   public static void bootstrapContent() {
     WeaponStateComponents.bootstrap();
     ModSound.bootstrap();
+    ModWeaponPresentation.bootstrap();
     ModItem.bootstrap();
     ModCollectible.bootstrap();
     ModBlock.bootstrap();
     ModEntity.bootstrap();
     ModBiome.bootstrap();
     ModBlockEntity.bootstrap();
-    ModSkills.bootstrap();
-    ModWeapons.bootstrap();
+    ModSkill.bootstrap();
+    ModWeaponSkillEffects.bootstrap();
+    ModWeapon.bootstrap();
     TaczIntegration.bootstrap();
     TerraNationRelations.bootstrap();
     ModDimension.bootstrap();
@@ -102,7 +104,6 @@ public final class Zinecraft {
 
   private void commonSetup(FMLCommonSetupEvent event) {
     event.enqueueWork(() -> {
-      ModWeapons.bindRegisteredItems();
       ModTerraBlender.initialize();
       if (ModList.get().isLoaded("jeresources")) ZinecraftJerPlugin.install();
     });

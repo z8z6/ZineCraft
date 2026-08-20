@@ -11,20 +11,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+import static com.cxxcxx.zinecraft.core.registry.ModWeaponPresentation.*;
+
 public final class VanillaWeaponVfxService implements WeaponPresentationVfxService {
   @NotNull
   public static final VanillaWeaponVfxService INSTANCE = new VanillaWeaponVfxService();
-  private static final ResourceLocation trailId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_sword_trail");
-  private static final ResourceLocation impactId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_sword_impact");
-  private static final ResourceLocation muzzleId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_rifle_muzzle");
-  private static final ResourceLocation rifleImpactId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_rifle_impact");
-  private static final ResourceLocation arcaneCastId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_staff_arcane_cast");
-  private static final ResourceLocation arcaneImpactId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_staff_arcane_impact");
-  private static final ResourceLocation healId = ResourceLocation.fromNamespaceAndPath("zinecraft", "vfx/test_staff_heal");
-  private static final ResourceLocation explosionId = ResourceLocation.fromNamespaceAndPath("zinecraft", "weapon/explosion");
-  private static final ResourceLocation swordSlashId = ResourceLocation.fromNamespaceAndPath("zinecraft", "weapon/sword_slash");
-  private static final ResourceLocation healingId = ResourceLocation.fromNamespaceAndPath("zinecraft", "weapon/healing");
-
   private VanillaWeaponVfxService() {
   }
 
@@ -39,23 +30,22 @@ public final class VanillaWeaponVfxService implements WeaponPresentationVfxServi
 
   @Override
   public void play(@NotNull LivingEntity entity, @NotNull ResourceLocation effect) {
-    ResourceLocation var3 = effect;
-    if (java.util.Objects.equals(var3, trailId) || java.util.Objects.equals(var3, swordSlashId)) {
+    if (effect.equals(TEST_SWORD_TRAIL.getId())) {
       this.trail(entity);
-    } else if (java.util.Objects.equals(var3, impactId)) {
+    } else if (effect.equals(TEST_SWORD_IMPACT.getId())) {
       this.impact(entity);
-    } else if (java.util.Objects.equals(var3, muzzleId)) {
+    } else if (effect.equals(RIFLE_MUZZLE.getId())) {
       muzzleWithDefaults(this, entity, null, 2, null);
-    } else if (java.util.Objects.equals(var3, rifleImpactId) || java.util.Objects.equals(var3, explosionId)) {
+    } else if (effect.equals(RIFLE_IMPACT.getId())) {
       SimpleParticleType var10002 = ParticleTypes.CRIT;
       this.rangedImpact(entity, var10002);
-    } else if (java.util.Objects.equals(var3, arcaneCastId)) {
+    } else if (effect.equals(STAFF_ARCANE_CAST.getId())) {
       SimpleParticleType var4 = ParticleTypes.ENCHANT;
       this.muzzle(entity, var4);
-    } else if (java.util.Objects.equals(var3, arcaneImpactId)) {
+    } else if (effect.equals(STAFF_ARCANE_IMPACT.getId())) {
       SimpleParticleType var5 = ParticleTypes.WITCH;
       this.rangedImpact(entity, var5);
-    } else if (java.util.Objects.equals(var3, healId) || java.util.Objects.equals(var3, healingId)) {
+    } else if (effect.equals(STAFF_HEAL.getId())) {
       this.heal(entity);
     }
   }

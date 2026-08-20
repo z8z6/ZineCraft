@@ -26,6 +26,7 @@ public final class SkillBuilder implements ItemLike, CombatDamageProvider {
   public final String path;
   public final String zhCn;
   private final List<CombatDamageProfile> mutableDamageProfiles = new ArrayList<>();
+  private final List<VfxBuilder> mutableEffects = new ArrayList<>();
   public String enUs;
   public String operatorZhCn;
   public String operatorEnUs;
@@ -134,6 +135,26 @@ public final class SkillBuilder implements ItemLike, CombatDamageProvider {
     ensureMutable();
     this.theme = Objects.requireNonNull(theme, "技能演示主题不能为空：" + path);
     return this;
+  }
+
+  /**
+   * 声明技能激活或生效时使用的客户端特效。
+   */
+  public SkillBuilder effect(VfxBuilder effect) {
+    ensureMutable();
+    Objects.requireNonNull(effect, "技能特效不能为空：" + path);
+    if (mutableEffects.stream().anyMatch(entry -> entry.getId().equals(effect.getId()))) {
+      throw new IllegalArgumentException("技能特效重复：" + path + " / " + effect.getId());
+    }
+    mutableEffects.add(effect);
+    return this;
+  }
+
+  /**
+   * @return 技能声明的全部客户端特效
+   */
+  public List<VfxBuilder> effects() {
+    return List.copyOf(mutableEffects);
   }
 
   /**

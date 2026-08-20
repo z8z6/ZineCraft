@@ -14,12 +14,16 @@ SkillBuilder volcano = new SkillBuilder(Zinecraft.SKILLS, "skill_volcano", "火�
         "攻击范围扩大并快速向范围内至多六个敌人发射熔岩。",
         "Expands range and rapidly launches lava at up to six enemies in range."
     )
+    .effect(new VfxBuilder(Zinecraft.VFX, "skill/volcano").build())
     .theme(SkillDemoTheme.VOLCANIC_BURST)
     .build();
 ```
 
 `SkillBuilder.build()` 会交由目录生成技能物品、名称、干员/职业、回复/触发方式、技力、持续时间、伤害、描述和普通扁平模型。
 `initialSp`、`spCost` 不能为负；非空持续时间必须大于零。
+
+每个技能必须通过 `effect(VfxBuilder)` 声明至少一个客户端特效。特效由 `VfxCatalog` 统一检查 ID 和重复声明；技能只保存表现引用，
+服务端伤害、治疗和状态仍由技能运行时结算。`effects()` 返回不可变的特效列表，供客户端技能播放和 Ponder 演示读取。
 
 直接造成伤害的技能通过 `damage(attackMultiplier, CombatDamageType)` 追加每一段伤害；例如 `2.3` 表示当前攻击力的 230%。
 同一技能可以多次调用 `damage(...)`，组合物理、魔法、法术、火焰、冰霜、雷电、毒素或真实伤害。辅助、治疗和纯控制技能

@@ -1,6 +1,6 @@
 package com.cxxcxx.zinecraft.core.client.weapon;
 
-import com.cxxcxx.zinecraft.api.weapon.WeaponPresentation;
+import com.cxxcxx.zinecraft.api.registry.builder.WeaponPresentationBuilder;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionCancelledPayload;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionStartedPayload;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
@@ -35,9 +35,9 @@ public final class WeaponPresentationController {
   }
 
   private static void start(WeaponActionStartedPayload payload) {
-    var definition = Zinecraft.WEAPONS.definition(payload.getWeaponId());
-    if (definition == null) return;
-    var timeline = definition.presentation(payload.getActionId());
+    var weapon = Zinecraft.WEAPONS.weapon(payload.getWeaponId());
+    if (weapon == null) return;
+    var timeline = weapon.presentation(payload.getActionId());
     if (timeline != null) ACTIVE.put(new Key(payload.getEntityId(), payload.getActionId()),
         new ActivePresentation(payload.getStartGameTick(), timeline));
   }
@@ -58,7 +58,7 @@ public final class WeaponPresentationController {
       var running = entry.getValue();
       var entity = level.getEntity(entry.getKey().entityId()) instanceof LivingEntity living ? living : null;
       long elapsed = level.getGameTime() - running.startGameTick;
-      if (elapsed >= running.timeline.getDurationTicks()) {
+      if (elapsed >= running.timeline.durationTicks()) {
         if (entity != null) stop(entity, running);
         iterator.remove();
         continue;
@@ -66,22 +66,22 @@ public final class WeaponPresentationController {
       if (entity == null || elapsed < 0) continue;
       if (!running.started) {
         ItemStack stack = entity.getMainHandItem();
-        if (running.timeline.getWeaponAnimation() != null)
-          WEAPON_ANIMATIONS.play(entity, stack, running.timeline.getWeaponAnimation());
-        if (running.timeline.getPlayerAnimation() != null)
-          PLAYER_ANIMATIONS.play(entity, running.timeline.getPlayerAnimation());
+        if (running.timeline.weaponAnimation() != null)
+          WEAPON_ANIMATIONS.play(entity, stack, running.timeline.weaponAnimation());
+        if (running.timeline.playerAnimation() != null)
+          PLAYER_ANIMATIONS.play(entity, running.timeline.playerAnimation());
         running.stack = stack;
         running.started = true;
       }
-      for (int i = 0; i < running.timeline.getVfx().size(); i++) {
-        var cue = running.timeline.getVfx().get(i);
+      for (int i = 0; i < running.timeline.vfx().size(); i++) {
+        var cue = running.timeline.vfx().get(i);
         if (!running.playedVfx[i] && elapsed >= cue.getTick()) {
           VFX.play(entity, cue.getId());
           running.playedVfx[i] = true;
         }
       }
-      for (int i = 0; i < running.timeline.getSounds().size(); i++) {
-        var cue = running.timeline.getSounds().get(i);
+      for (int i = 0; i < running.timeline.sounds().size(); i++) {
+        var cue = running.timeline.sounds().get(i);
         if (!running.playedSounds[i] && elapsed >= cue.getTick()) {
           SOUNDS.play(entity, cue.getId());
           running.playedSounds[i] = true;
@@ -103,10 +103,10 @@ public final class WeaponPresentationController {
   private static void stop(LivingEntity entity, ActivePresentation running) {
     if (!running.started) return;
     ItemStack stack = running.stack == null ? entity.getMainHandItem() : running.stack;
-    if (running.timeline.getWeaponAnimation() != null)
-      WEAPON_ANIMATIONS.stop(entity, stack, running.timeline.getWeaponAnimation());
-    if (running.timeline.getPlayerAnimation() != null)
-      PLAYER_ANIMATIONS.stop(entity, running.timeline.getPlayerAnimation());
+    if (running.timeline.weaponAnimation() != null)
+      WEAPON_ANIMATIONS.stop(entity, stack, running.timeline.weaponAnimation());
+    if (running.timeline.playerAnimation() != null)
+      PLAYER_ANIMATIONS.stop(entity, running.timeline.playerAnimation());
   }
 
   private record Key(int entityId, ResourceLocation actionId) {
@@ -114,17 +114,17 @@ public final class WeaponPresentationController {
 
   private static final class ActivePresentation {
     private final long startGameTick;
-    private final WeaponPresentation timeline;
+    private final WeaponPresentationBuilder timeline;
     private final boolean[] playedVfx;
     private final boolean[] playedSounds;
     private boolean started;
     private ItemStack stack;
 
-    private ActivePresentation(long startGameTick, WeaponPresentation timeline) {
+    private ActivePresentation(long startGameTick, WeaponPresentationBuilder timeline) {
       this.startGameTick = startGameTick;
       this.timeline = timeline;
-      this.playedVfx = new boolean[timeline.getVfx().size()];
-      this.playedSounds = new boolean[timeline.getSounds().size()];
+      this.playedVfx = new boolean[timeline.vfx().size()];
+      this.playedSounds = new boolean[timeline.sounds().size()];
     }
   }
 }

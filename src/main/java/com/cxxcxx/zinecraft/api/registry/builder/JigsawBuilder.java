@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.api.registry.builder;
 
+import com.cxxcxx.zinecraft.api.nation.TerraPlace;
 import com.cxxcxx.zinecraft.api.registry.catalog.StructureCatalog;
 import com.cxxcxx.zinecraft.api.registry.catalog.TranslationCatalog;
 import com.cxxcxx.zinecraft.api.world.structure.JigsawPoolBuilder;
@@ -38,6 +39,8 @@ public final class JigsawBuilder {
   private float removeVinesChance;
   @Nullable
   private ResourceKey<Biome> biome;
+  @Nullable
+  private TerraPlace city;
   private List<ResourceKey<Biome>> allowedBiomes = List.of();
   private boolean unique;
   private int ringDistance;
@@ -163,6 +166,19 @@ public final class JigsawBuilder {
    */
   public JigsawBuilder allowedBiomes(List<ResourceKey<Biome>> allowedBiomes) {
     this.allowedBiomes = List.copyOf(Objects.requireNonNull(allowedBiomes, "允许群系不能为空：" + path));
+    return this;
+  }
+
+  /**
+   * 指定该建筑或地标在泰拉地理目录中归属的城市或地区。
+   *
+   * <p>不调用本方法时 {@link #city()} 返回 {@code null}，表示可供任意城市选择。</p>
+   *
+   * @param city {@code TerraGeography} 中声明的城市或地区
+   * @return 当前构建器
+   */
+  public JigsawBuilder city(TerraPlace city) {
+    this.city = Objects.requireNonNull(city, "结构归属城市或地区不能为空：" + path);
     return this;
   }
 
@@ -328,6 +344,25 @@ public final class JigsawBuilder {
    */
   public List<ResourceKey<Biome>> allowedBiomes() {
     return allowedBiomes;
+  }
+
+  /**
+   * @return 建筑或地标限定的泰拉城市/地区；{@code null} 表示可在任意城市中生成
+   */
+  @Nullable
+  public TerraPlace city() {
+    return city;
+  }
+
+  /**
+   * 判断城市内容目录是否可为指定地点选择该结构。
+   *
+   * @param city 正在生成的城市或地区
+   * @return 未限定归属，或归属恰好是指定地点时为 {@code true}
+   */
+  public boolean isAvailableIn(TerraPlace city) {
+    TerraPlace target = Objects.requireNonNull(city, "待匹配城市或地区不能为空");
+    return this.city == null || this.city.equals(target);
   }
 
   /**

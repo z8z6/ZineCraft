@@ -13,13 +13,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import static com.cxxcxx.zinecraft.core.registry.ModWeaponPresentation.*;
+
 /**
  * Original, reusable Photon effects authored through Photon 2.2's Java FX API.
  */
 final class PhotonWeaponEffects {
-  static final ResourceLocation EXPLOSION = id("explosion");
-  static final ResourceLocation SWORD_SLASH = id("sword_slash");
-  static final ResourceLocation HEALING = id("healing");
+  static final ResourceLocation EXPLOSION = RIFLE_IMPACT.getId();
+  static final ResourceLocation SWORD_SLASH = TEST_SWORD_TRAIL.getId();
+  static final ResourceLocation HEALING = STAFF_HEAL.getId();
 
   private static final Map<ResourceLocation, Supplier<FX>> FACTORIES = Map.of(
       EXPLOSION, PhotonWeaponEffects::explosion,
@@ -112,7 +114,4 @@ final class PhotonWeaponEffects {
     return fx;
   }
 
-  private static ResourceLocation id(String path) {
-    return ResourceLocation.fromNamespaceAndPath("zinecraft", "weapon/" + path);
-  }
 }

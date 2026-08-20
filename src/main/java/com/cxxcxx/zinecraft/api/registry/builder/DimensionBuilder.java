@@ -3,19 +3,18 @@ package com.cxxcxx.zinecraft.api.registry.builder;
 import com.cxxcxx.zinecraft.api.registry.catalog.DimensionCatalog;
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionBiome;
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionBootstrapContext;
-import com.cxxcxx.zinecraft.api.world.dimension.DimensionHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -28,7 +27,7 @@ public final class DimensionBuilder {
   private final List<DimensionBiome> mutableBiomes = new ArrayList<>();
   public final List<DimensionBiome> biomes = Collections.unmodifiableList(mutableBiomes);
   private ResourceKey<NoiseGeneratorSettings> noiseSettingsKey = NoiseGeneratorSettings.OVERWORLD;
-  private Supplier<DimensionType> createDimensionType = () -> DimensionHelper.INSTANCE.overworldLikeType();
+  private Supplier<DimensionType> createDimensionType = DimensionBuilder::createDefaultDimensionType;
   @Nullable
   private Function<DimensionBootstrapContext, ChunkGenerator> createGenerator;
   @Nullable
@@ -166,5 +165,25 @@ public final class DimensionBuilder {
    */
   public boolean belongsTo(DimensionCatalog catalog) {
     return this.catalog == catalog;
+  }
+
+  private static DimensionType createDefaultDimensionType() {
+    return new DimensionType(
+        OptionalLong.empty(),
+        true,
+        false,
+        false,
+        true,
+        1.0,
+        true,
+        false,
+        -64,
+        384,
+        384,
+        BlockTags.INFINIBURN_OVERWORLD,
+        BuiltinDimensionTypes.OVERWORLD_EFFECTS,
+        0.0F,
+        new DimensionType.MonsterSettings(false, true, UniformInt.of(0, 7), 0)
+    );
   }
 }

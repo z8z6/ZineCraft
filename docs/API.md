@@ -8,6 +8,7 @@
 | `Zinecraft` 入口       | 类型                   | 职责                                            |
 |----------------------|----------------------|-----------------------------------------------|
 | `TRANSLATIONS`       | `TranslationCatalog` | 双语翻译与可直接创建 `Component` 的消息条目                  |
+| `VFX`                | `VfxCatalog`         | 通过 `VfxBuilder` 声明武器动作与技能复用的客户端特效 ID          |
 | `ITEMS`              | `ItemCatalog`        | 物品、翻译、模型元数据、燃料与堆肥                             |
 | `BLOCKS`             | `BlockCatalog`       | 方块、方块物品、翻译、简单模型与默认掉落                          |
 | `BLOCK_ENTITIES`     | `BlockEntityCatalog` | 组合注册方块实体类型及其对应的 `EntityBlock`                 |
@@ -16,7 +17,7 @@
 | `getENTITIES()`      | `EntityCatalog`      | 实体、Mob、属性、生成限制、生成蛋与自然生成                       |
 | `getENCHANTMENTS()`  | `EnchantmentCatalog` | 1.21.1 动态附魔及数据生成                              |
 | `getSKILLS()`        | `SkillCatalog`       | 技能物品、双语资料与 Ponder 元数据                         |
-| `getWEAPONS()`       | `WeaponRegistry`     | 服务端动作、武器定义与物品解析器                              |
+| `WEAPONS`            | `WeaponCatalog`      | 通过 `WeaponBuilder` 声明服务端动作、武器定义、表现与物品解析       |
 | `BIOMES`             | `BiomeCatalog`       | 通过 `BiomeBuilder` 声明群系并执行 bootstrap           |
 | `DIMENSIONS`         | `DimensionCatalog`   | 维度、维度类型与群系源                                   |
 | `FEATURES`           | `FeatureCatalog`     | 配置/放置地物与矿物 Builder                            |

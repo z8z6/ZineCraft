@@ -6,7 +6,6 @@ package com.cxxcxx.zinecraft.api.nation;
 public enum TerraPlaceType {
   CITY("city", true),
   SETTLEMENT("settlement", true),
-  DISTRICT("district", true),
   REGION("region", false),
   NATURAL_FEATURE("natural_feature", false);
 

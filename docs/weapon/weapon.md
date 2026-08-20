@@ -5,13 +5,17 @@ Zinecraft 的 Weapon Runtime 是服务端权威的 Java 动作系统，支持项
 
 ## 核心模型
 
-- `WeaponDefinition`：武器 ID、输入到动作 ID 的映射、表现和元数据。
 - `WeaponAction`：服务端动作接口；具体实现负责校验、开始、tick、结算和取消。
-- `WeaponRegistry`：动作、武器定义和动态物品解析器。
+- `WeaponActionBuilder`：通过稳定路径和 factory 构建、校验并登记服务端动作。
+- `AnimationCatalog` / `AnimationBuilder`：区分玩家与武器动画并登记稳定的客户端动画 ID。
+- `VfxCatalog` / `VfxBuilder`：登记可由武器动作和技能复用的客户端特效 ID。
+- `SoundCatalog` / `SoundBuilder`：登记声音事件、字幕翻译和武器声音 cue 使用的稳定 ID。
+- `WeaponCatalog`：动作、构建后的武器和物品解析器。
+- `WeaponBuilder`：武器的唯一声明和运行时对象，包含 ID、物品、翻译键、输入、服务端动作和表现映射。
+- `WeaponPresentationBuilder`：构建后直接作为只读表现时间线，包含玩家/武器动画、VFX、声音与持续时间。
 - `WeaponServerController`：处理玩家请求、当前动作状态和网络广播。
 - `TimedWeaponActionRuntime`：用 `TickRange` 描述 wind-up、active、recovery 等时间段。
-- `WeaponPresentation`：玩家/武器动画 ID、VFX、声音与持续时间；只描述表现，不产生玩法状态。
-- `WeaponContext`：服务端玩家、物品栈、手和已解析武器定义。
+- `WeaponContext`：服务端玩家、物品栈、手和已解析的 `WeaponBuilder`。
 
 持久化弹药、瞄准、开火模式和枪机状态使用 Minecraft 1.21.1 Data Components 存在 `ItemStack` 上，不依赖客户端单例或仅内存状态。
 
@@ -28,12 +32,12 @@ Zinecraft 的 Weapon Runtime 是服务端权威的 Java 动作系统，支持项
 1. 为动作选择稳定的 `ResourceLocation`。
 2. 实现 `WeaponAction`，在服务端校验输入与物品状态。
 3. 明确定义动作持续时间和每个结算 tick/range。
-4. 在 `WeaponRegistry` 注册动作。
-5. 在武器定义中绑定 `WeaponInput → actionId`。
-6. 可选地添加 `WeaponPresentation`；无客户端表现时玩法仍必须正确。
+4. 使用 `WeaponActionBuilder` 构建并向 `WeaponCatalog` 登记动作。
+5. 使用 `WeaponBuilder.action` 绑定 `WeaponInput → WeaponActionBuilder`。
+6. 可选地使用 `WeaponBuilder.presentation` 配置表现时间线，并通过 `VfxBuilder` 引用特效；无客户端表现时玩法仍必须正确。
 
-近战命中使用服务端 hitbox/raycast，并避免重复叠加武器基础伤害。枪械命中使用服务端 hitscan；法杖技能调用 `SkillService`
-或明确的服务端效果接口。
+近战命中使用服务端 hitbox/raycast，并避免重复叠加武器基础伤害。枪械命中使用服务端 hitscan；法杖技能通过
+`SkillEffectBuilder` 引用 `SkillEffectCatalog` 中已登记的服务端效果。
 
 所有原生武器伤害和治疗必须进入 `CombatService`，由统一攻击力、物理/法术/真实伤害、穿透和治疗公式结算；不得直接调用实体
 `hurt` 绕开藏品修正。详细公式与新增武器约束见
@@ -42,24 +46,39 @@ Zinecraft 的 Weapon Runtime 是服务端权威的 Java 动作系统，支持项
 ## 新增静态武器
 
 ```java
-ResourceLocation actionId = Zinecraft.id("example_attack");
-WeaponAction action = new MeleeAttackAction(
-    actionId, 7, 20,
-    CombatDamageProfile.flat(7.0, CombatDamageType.PHYSICAL),
-    3.25, 100.0
-);
-Zinecraft.WEAPONS.registerAction(action);
-
-WeaponDefinition definition = new WeaponDefinition(
-    Zinecraft.id("example_sword"),
-    Map.of(WeaponInput.PRIMARY, actionId),
-    Map.of(),
-    new WeaponMetadata("item.zinecraft.example_sword")
-);
+AnimationBuilder playerAttack = new AnimationBuilder(
+    Zinecraft.ANIMATIONS, AnimationBuilder.Target.PLAYER, "example_attack"
+).build();
+VfxBuilder slash = new VfxBuilder(Zinecraft.VFX, "weapon/example_slash").build();
+SoundBuilder swing = new SoundBuilder(
+    Zinecraft.SOUNDS, "weapon/example_swing", "示例武器挥动"
+).enUs("Example Weapon Swing").build();
+WeaponActionBuilder<MeleeAttackAction> action = new WeaponActionBuilder<>(
+    Zinecraft.WEAPONS,
+    "example_attack",
+    id -> new MeleeAttackAction(
+        id, 7, 20,
+        CombatDamageProfile.flat(7.0, CombatDamageType.PHYSICAL),
+        3.25, 100.0
+    )
+).build();
+WeaponBuilder weapon = new WeaponBuilder(
+    Zinecraft.WEAPONS, "example_sword", EXAMPLE_SWORD_ITEM
+).action(WeaponInput.PRIMARY, action)
+    .presentation(action, presentation -> presentation
+        .duration(20)
+        .playerAnimation(playerAttack)
+        .vfx(slash, 7)
+        .sound(swing, 7))
+    .build();
 ```
 
-项目原生物品必须通过静态绑定或解析器返回该定义。TaCZ 物品、枪械身份和枪包数据由 TaCZ 管理，不注册为 Zinecraft
-`WeaponDefinition`。
+`WeaponPresentationBuilder` 只接受已构建的 `AnimationBuilder`、`VfxBuilder` 和 `SoundBuilder`，不接受裸
+`ResourceLocation`。项目内置武器的这些声明集中在 `ModWeaponPresentation`，武器和客户端播放后端共同引用同一注册项。
+
+`WeaponCatalog` 会从构建后的条目解析物品，不需要在 common setup 二次绑定；特殊外部物品使用
+`registerResolver` 返回一个已构建的 `WeaponBuilder`。TaCZ 物品、枪械身份和枪包数据由 TaCZ 管理，不注册为 Zinecraft
+武器。
 
 ## 客户端边界
 

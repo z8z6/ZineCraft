@@ -51,6 +51,7 @@ public final class SkillCatalog {
     requireText(builder.descriptionZhCn, "技能中文描述不能为空：" + builder.path);
     requireText(builder.descriptionEnUs, "技能英文描述不能为空：" + builder.path);
     Objects.requireNonNull(builder.theme, "技能演示主题不能为空：" + builder.path);
+    if (builder.effects().isEmpty()) throw new IllegalArgumentException("技能至少需要声明一个特效：" + builder.path);
   }
 
   private static void requireText(String value, String message) {

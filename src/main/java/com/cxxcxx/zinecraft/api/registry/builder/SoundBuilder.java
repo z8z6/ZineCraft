@@ -16,6 +16,7 @@ public class SoundBuilder {
   public String enUs;
 
   public Holder<SoundEvent> sound;
+  private boolean built;
 
   /**
    * 创建声音事件声明。
@@ -61,12 +62,27 @@ public class SoundBuilder {
   }
 
   /**
+   * @return 已登记声音事件的资源位置
+   */
+  public ResourceLocation getId() {
+    if (!built) throw new IllegalStateException("声音尚未 build：" + path);
+    return resourceKey();
+  }
+
+  /**
    * 将声明登记到声音目录。
    *
    * @return 当前构建器
    */
   public SoundBuilder build() {
-    catalog.register(this);
-    return this;
+    if (built) throw new IllegalStateException("声音 builder 不能重复 build：" + path);
+    built = true;
+    try {
+      catalog.register(this);
+      return this;
+    } catch (RuntimeException exception) {
+      built = false;
+      throw exception;
+    }
   }
 }

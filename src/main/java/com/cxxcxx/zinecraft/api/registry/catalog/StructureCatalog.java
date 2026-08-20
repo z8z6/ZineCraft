@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.api.registry.catalog;
 
 import com.cxxcxx.zinecraft.api.datagen.RegistryDataContributor;
+import com.cxxcxx.zinecraft.api.nation.TerraPlace;
 import com.cxxcxx.zinecraft.api.registry.builder.JigsawBuilder;
 import com.cxxcxx.zinecraft.api.world.structure.ConcentricRingBounds;
 import com.cxxcxx.zinecraft.api.world.structure.FixedOriginStructurePlacement;
@@ -132,6 +133,14 @@ public final class StructureCatalog implements RegistryDataContributor {
   }
 
   /**
+   * 返回可供指定城市或地区生成的结构；未声明 {@code city} 的通用结构会自动包含在内。
+   */
+  public List<JigsawBuilder> structuresFor(TerraPlace city) {
+    Objects.requireNonNull(city, "待查询城市或地区不能为空");
+    return buildings.stream().filter(structure -> structure.isAvailableIn(city)).toList();
+  }
+
+  /**
    * @param path 结构注册路径 @param zhCn 结构中文名 @return 尚未登记的通用 Jigsaw Builder
    */
   public JigsawBuilder jigsaw(String path, String zhCn) {
@@ -175,6 +184,26 @@ public final class StructureCatalog implements RegistryDataContributor {
   ) {
     return jigsaw(path, zhCn)
         .enUs(enUs)
+        .embedded()
+        .layout(1, maxDistanceFromCenter)
+        .pool("start", pool -> pool.template(template))
+        .build();
+  }
+
+  /**
+   * 注册归属于指定泰拉城市或地区的内嵌建筑。
+   */
+  public JigsawBuilder embeddedBuilding(
+      String path,
+      String zhCn,
+      String enUs,
+      String template,
+      int maxDistanceFromCenter,
+      TerraPlace place
+  ) {
+    return jigsaw(path, zhCn)
+        .enUs(enUs)
+        .city(place)
         .embedded()
         .layout(1, maxDistanceFromCenter)
         .pool("start", pool -> pool.template(template))

@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.api.weapon;
 
+import com.cxxcxx.zinecraft.api.registry.builder.WeaponBuilder;
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponActionRuntime;
 import com.cxxcxx.zinecraft.api.weapon.action.WeaponContext;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponActionCancelledPayload;
@@ -32,10 +33,6 @@ public final class WeaponServerController {
   private WeaponServerController() {
   }
 
-  public static void requestWithDefaults(WeaponServerController self, ServerPlayer player, WeaponInput input, InteractionHand hand, int mask, Object marker) {
-    self.request(player, input, (mask & 4) != 0 ? InteractionHand.MAIN_HAND : hand);
-  }
-
   public void handleRequest(WeaponActionRequestPayload payload, IPayloadContext context) {
     if (context.player() instanceof ServerPlayer player) {
       request(player, payload.getInput(), InteractionHand.MAIN_HAND);
@@ -52,14 +49,14 @@ public final class WeaponServerController {
 
   public void request(ServerPlayer player, WeaponInput input, InteractionHand hand) {
     ItemStack stack = player.getItemInHand(hand);
-    WeaponDefinition definition = Zinecraft.WEAPONS.definition(stack);
-    if (definition == null) return;
-    ResourceLocation actionId = definition.action(input);
+    WeaponBuilder weapon = Zinecraft.WEAPONS.weapon(stack);
+    if (weapon == null) return;
+    ResourceLocation actionId = weapon.action(input);
     if (actionId == null) return;
     var action = Zinecraft.WEAPONS.action(actionId);
     if (action == null) return;
 
-    var weaponContext = new WeaponContext(player, stack, hand, definition);
+    var weaponContext = new WeaponContext(player, stack, hand, weapon);
     if (!action.canStart(weaponContext)) return;
 
     ActiveAction running = activeActions.get(player.getUUID());
@@ -71,10 +68,10 @@ public final class WeaponServerController {
 
     player.resetAttackStrengthTicker();
     activeActions.put(player.getUUID(), new ActiveAction(
-        definition, actionId, hand, stack, action.createRuntime(weaponContext)
+        weapon, actionId, hand, stack, action.createRuntime(weaponContext)
     ));
     broadcast(player, new WeaponActionStartedPayload(
-        player.getId(), definition.getId(), actionId, player.serverLevel().getGameTime()
+        player.getId(), weapon.resourceKey(), actionId, player.serverLevel().getGameTime()
     ));
   }
 
@@ -113,8 +110,8 @@ public final class WeaponServerController {
   private boolean isStillValid(ServerPlayer player, ActiveAction active) {
     if (!player.isAlive() || player.isSpectator() || player.getItemInHand(active.hand()) != active.stack())
       return false;
-    var definition = Zinecraft.WEAPONS.definition(player.getItemInHand(active.hand()));
-    return definition != null && definition.getId().equals(active.weapon().getId());
+    var weapon = Zinecraft.WEAPONS.weapon(player.getItemInHand(active.hand()));
+    return weapon != null && weapon.resourceKey().equals(active.weapon().resourceKey());
   }
 
   private void broadcast(ServerPlayer player, CustomPacketPayload payload) {
@@ -122,7 +119,7 @@ public final class WeaponServerController {
   }
 
   private record ActiveAction(
-      WeaponDefinition weapon,
+      WeaponBuilder weapon,
       ResourceLocation actionId,
       InteractionHand hand,
       ItemStack stack,

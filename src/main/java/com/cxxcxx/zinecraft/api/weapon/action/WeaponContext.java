@@ -1,6 +1,6 @@
 package com.cxxcxx.zinecraft.api.weapon.action;
 
-import com.cxxcxx.zinecraft.api.weapon.WeaponDefinition;
+import com.cxxcxx.zinecraft.api.registry.builder.WeaponBuilder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -16,14 +16,14 @@ public final class WeaponContext {
   @NotNull
   private final InteractionHand hand;
   @NotNull
-  private final WeaponDefinition definition;
+  private final WeaponBuilder weapon;
 
-  public WeaponContext(@NotNull ServerPlayer player, @NotNull ItemStack stack, @NotNull InteractionHand hand, @NotNull WeaponDefinition definition) {
+  public WeaponContext(@NotNull ServerPlayer player, @NotNull ItemStack stack, @NotNull InteractionHand hand, @NotNull WeaponBuilder weapon) {
     super();
     this.player = player;
     this.stack = stack;
     this.hand = hand;
-    this.definition = definition;
+    this.weapon = weapon;
   }
 
   @NotNull
@@ -42,8 +42,8 @@ public final class WeaponContext {
   }
 
   @NotNull
-  public final WeaponDefinition getDefinition() {
-    return this.definition;
+  public final WeaponBuilder getWeapon() {
+    return this.weapon;
   }
 
   @NotNull
@@ -57,7 +57,7 @@ public final class WeaponContext {
     int i = this.player.hashCode();
     i = i * 31 + this.stack.hashCode();
     i = i * 31 + this.hand.hashCode();
-    return i * 31 + this.definition.hashCode();
+    return i * 31 + this.weapon.hashCode();
   }
 
   @Override
@@ -71,14 +71,14 @@ public final class WeaponContext {
     } else if (!java.util.Objects.equals(this.stack, weaponContext.stack)) {
       return false;
     } else {
-      return this.hand != weaponContext.hand ? false : java.util.Objects.equals(this.definition, weaponContext.definition);
+      return this.hand == weaponContext.hand && java.util.Objects.equals(this.weapon, weaponContext.weapon);
     }
   }
 
   @NotNull
   @Override
   public String toString() {
-    return "WeaponContext(player=" + this.player + ", stack=" + this.stack + ", hand=" + this.hand + ", definition=" + this.definition + ")";
+    return "WeaponContext(player=" + this.player + ", stack=" + this.stack + ", hand=" + this.hand + ", weapon=" + this.weapon + ")";
   }
 }
 

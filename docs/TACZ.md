@@ -1,346 +1,400 @@
-目标：在现有 Minecraft NeoForge 1.21.1 Java 项目中集成 MUKSC/TACZ-1.21.1，但 TaCZ 只能作为枪械后端，不得成为项目武器系统的核心抽象。
+• 目前武器与技能采用“Catalog 管理、Builder 声明、Runtime 执行”的结构。最重要的是：技能现在分为“技能资料/物品”和“真正可执行的技能效果”两层，它们暂时没有自动绑定。
 
-## 参考源码
+## 总体调用关系
 
-优先阅读并以以下源码为唯一 TaCZ API 事实来源：
+客户端输入
+↓
+WeaponInput + C2S Payload
+↓
+WeaponServerController
+↓
+WeaponCatalog → WeaponBuilder
+↓
+WeaponActionBuilder → WeaponAction → WeaponActionRuntime
+├─ 近战 / 枪械：直接调用 CombatService
+└─ 法杖：CastSkillAction → SkillEffectBuilder → SkillEffect
+↓
+S2C started/cancelled Payload
+↓
+WeaponPresentationController
+↓
+动画 / VFX / 声音
 
-* MUKSC/TACZ-1.21.1
-* branch: `neoforge/1.21.1`
+## 一、武器结构
 
-禁止根据 Forge 1.20.1 TaCZ API 猜测接口。
-禁止因为旧 Wiki 示例而使用当前源码中不存在的方法。
+### WeaponCatalog
 
-在编码前重点检查：
+src/main/java/com/cxxcxx/zinecraft/api/registry/catalog/WeaponCatalog.java:22
 
-* `com.tacz.guns.api`
-* `com.tacz.guns.api.item`
-* `com.tacz.guns.api.item.gun`
-* `com.tacz.guns.api.event.common`
-* `com.tacz.guns.api.client.animation`
-* `com.tacz.guns.resource`
-* `com.tacz.guns.item`
+武器系统的总目录，负责：
 
-确认当前版本真实存在的 API、Event 和数据结构后再实现。
+- 注册所有 WeaponBuilder
+- 注册所有 WeaponActionBuilder
+- 检查重复武器 ID、重复动作 ID
+- 检查武器是否引用未注册动作
+- 根据 ResourceLocation 查找武器或动作
+- 根据玩家手中的 ItemStack 查找对应武器
 
-## 架构目标
+全局实例是：
 
-建立独立模块：
+Zinecraft.WEAPONS
 
-```text
-integration/tacz/
-```
+### WeaponBuilder
 
-TaCZ 类型不得泄漏到：
+src/main/java/com/cxxcxx/zinecraft/api/registry/builder/WeaponBuilder.java:18
 
-```text
-skill/
-combat/
-operator/
-vfx/
-```
+现在它既是武器声明 Builder，也是构建后的武器运行时对象，替代了原来的 WeaponDefinition。
 
-业务层只能依赖项目自身定义的武器抽象。
+它保存：
 
-推荐结构：
+- 武器 ID
+- 对应物品
+- 翻译键
+- WeaponInput → WeaponActionBuilder
+- Action ID → WeaponPresentationBuilder
 
-```text
-weapon/
-├── api/
-│   ├── WeaponBackend
-│   ├── RangedWeaponBackend
-│   ├── WeaponContext
-│   └── WeaponShotContext
-└── event/
-    └── WeaponShotEvent
+例如：
 
-integration/tacz/
-├── TaczIntegration
-├── TaczWeaponBackend
-├── TaczGunResolver
-├── TaczGunEvents
-├── TaczAnimationBridge
-└── TaczVfxBridge
-```
+new WeaponBuilder(Zinecraft.WEAPONS, "test_sword", item)
+.action(WeaponInput.PRIMARY, LIGHT_ATTACK)
+.presentation(LIGHT_ATTACK, presentation -> ...)
+.build();
 
-## 第一阶段仅实现 MVP
+构建以后可以通过：
 
-### 1. TaCZ 枪械识别
+weapon.action(WeaponInput.PRIMARY);
+weapon.presentation(actionId);
+weapon.asItem();
 
-实现可靠的 TaCZ gun detection。
+获取运行时数据。
 
-不要硬编码具体枪械 ID。
+### WeaponActionBuilder
 
-不要为每把枪创建 Java subclass。
+src/main/java/com/cxxcxx/zinecraft/api/registry/builder/WeaponActionBuilder.java:11
 
-### 2. Event Adapter
+负责创建并注册服务端动作。
 
-研究当前源码中的：
+new WeaponActionBuilder<>(
+Zinecraft.WEAPONS,
+"light_attack",
+id -> new MeleeAttackAction(...)
+).build();
 
-```text
-GunShootEvent
-GunFireEvent
-```
+它主要保证：
 
-确认二者真实语义后，选择正确事件作为射击事件来源。
+- 动作拥有稳定 ID
+- factory 生成的动作 ID 正确
+- 动作不会重复注册
+- 构建后才能被武器引用
 
-将其转换为项目内部：
+### WeaponAction
 
-```java
-WeaponShotEvent
-```
+src/main/java/com/cxxcxx/zinecraft/api/weapon/action/WeaponAction.java
 
-业务层不得直接订阅 TaCZ event。
+描述一种服务端动作，主要有三个职责：
 
-数据转换至少考虑：
+ResourceLocation getId();
+boolean canStart(WeaponContext context);
+WeaponActionRuntime createRuntime(WeaponContext context);
 
-```text
-shooter
-weapon ItemStack
-position
-direction
-gun identity
-```
+目前的具体动作包括：
 
-只有当前 TaCZ API 可以可靠获取的数据才能进入 context。
+- MeleeAttackAction：服务端近战判定
+- FirearmFireAction：服务端射击
+- FirearmReloadAction：换弹
+- ToggleAimAction：切换瞄准状态
+- CastSkillAction：执行技能效果
 
-不要为了补齐字段访问 private implementation detail。
+### WeaponActionRuntime
 
-### 3. WeaponBackend
+src/main/java/com/cxxcxx/zinecraft/api/weapon/action/WeaponActionRuntime.java
 
-建立：
+表示某次正在执行的动作实例。
 
-```java
-interface RangedWeaponBackend
-```
+WeaponAction 是动作定义；WeaponActionRuntime 是某个玩家本次攻击、换弹或施法的运行状态。
 
-TaCZ 实现：
+它保存或提供：
 
-```java
-final class TaczWeaponBackend
-        implements RangedWeaponBackend
-```
+- 当前 tick
+- 当前阶段
+- 是否结束
+- 每 tick 执行
+- 是否允许被新输入中断
 
-接口保持小型。
+### TimedWeaponActionRuntime
 
-不要试图在第一阶段抽象 TaCZ 所有功能。
+src/main/java/com/cxxcxx/zinecraft/api/weapon/action/TimedWeaponActionRuntime.java
 
-### 4. Skill Integration
+标准的定时动作实现，把动作分成：
 
-Skill System 只能监听：
+STARTUP → ACTIVE → RECOVERY → FINISHED
 
-```text
-WeaponShotEvent
-```
+近战命中、开火、施法等实际结算只能发生在服务端指定 tick，而不是由客户端动画关键帧决定。
 
-而不能监听：
+### WeaponContext
 
-```text
-GunShootEvent
-```
+src/main/java/com/cxxcxx/zinecraft/api/weapon/action/WeaponContext.java:11
 
-实现一个测试 Skill：
+一次动作的服务端上下文，包含：
 
-```text
-TestRapidFireSkill
-```
+- ServerPlayer
+- 当前 ItemStack
+- 使用的手
+- 当前 WeaponBuilder
+- ServerLevel
 
-用于验证：
+动作通过它读取可信的服务端状态。
 
-```text
-TaCZ shot
-→ adapter
-→ WeaponShotEvent
-→ SkillRuntime
-```
+### WeaponServerController
 
-### 5. VFX Hook
+src/main/java/com/cxxcxx/zinecraft/api/weapon/WeaponServerController.java:29
 
-为未来 Photon 集成保留：
+武器运行时的总调度器，负责：
 
-```java
-WeaponVfxService
-```
+1. 接收客户端输入请求。
+2. 重新读取玩家手中物品。
+3. 从 WeaponCatalog 找到 WeaponBuilder。
+4. 根据 WeaponInput 找到动作。
+5. 调用 canStart。
+6. 创建并保存 WeaponActionRuntime。
+7. 每个服务端 tick 推进动作。
+8. 切换物品、死亡或退出时取消动作。
+9. 广播动作开始与取消 payload。
 
-当前只需要：
+因此客户端不能直接决定伤害、弹药或命中结果。
 
-```text
-onShot(...)
-```
+## 二、武器表现结构
 
-事件触发时可以调用测试实现。
+### WeaponPresentationBuilder
 
-禁止把 Photon 类直接写入 Skill。
+src/main/java/com/cxxcxx/zinecraft/api/registry/builder/WeaponPresentationBuilder.java:13
 
-最终目标：
+描述一个动作对应的客户端表现时间线：
 
-```text
-Skill
- ↓
-WeaponVfxService
- ↓
-Photon implementation
-```
+- 持续时间
+- 玩家动画
+- 武器动画
+- 指定 tick 播放的 VFX
+- 指定 tick 播放的声音
 
-### 6. Client / Server Boundary
+它只接受已注册资源：
 
-明确标记：
+.playerAnimation(AnimationBuilder)
+.weaponAnimation(AnimationBuilder)
+.vfx(VfxBuilder, tick)
+.sound(SoundBuilder, tick)
 
-```text
-server authoritative gameplay
-client presentation
-```
+不能传裸 ResourceLocation。
 
-不得因为播放 muzzle flash 或技能 VFX 修改服务端战斗逻辑。
+它不处理伤害、治疗、弹药或技能结算。
 
-不要每个粒子发送一个 packet。
+### 表现资源 Builder/Catalog
 
-未来 VFX 应同步高层事件：
+分别是：
 
-```text
-effect id
-entity
-position
-direction
-seed
-```
+- AnimationCatalog / AnimationBuilder
+- VfxCatalog / VfxBuilder
+- SoundCatalog / SoundBuilder
 
-客户端自行播放效果。
+全局目录位于：
 
-## 暂时不要实现
+Zinecraft.ANIMATIONS
+Zinecraft.VFX
+Zinecraft.SOUNDS
 
-第一阶段禁止实现：
+所有内置武器表现资源集中声明在：
 
-* 自定义 ADS
-* 自定义 recoil
-* 自定义 gun renderer
-* 自定义 reload animation
-* 大型 attachment framework
-* Photon 完整接入
-* GeckoLib 与 TaCZ 枪械动画混合
-* 修改 TaCZ 源码
-* Mixin TaCZ internal classes
+src/main/java/com/cxxcxx/zinecraft/core/registry/ModWeaponPresentation.java:9
 
-除非发现没有 public API 可以完成 MVP，否则不要使用 Mixin。
+这样 ModWeapon、Vanilla 回退后端和 Photon 后端引用的是同一注册项，不重复拼路径。
 
-如果 public API 缺失：
+### WeaponPresentationController
 
-1. 记录缺失能力；
-2. 指出需要访问的 internal implementation；
-3. 暂停该功能；
-4. 不要自行创建复杂 workaround。
+src/client/java/com/cxxcxx/zinecraft/core/client/weapon/WeaponPresentationController.java:23
 
-## TaCZ 动画
+仅存在于客户端。
 
-阅读：
+收到服务端的动作开始 payload 后，它：
 
-```text
-api/client/animation/
-├── gltf
-├── statemachine
-├── AnimationController
-├── AnimationListener
-├── AnimationPlan
-└── ObjectAnimation
-```
+- 找到对应 WeaponBuilder
+- 找到动作的 WeaponPresentationBuilder
+- 按时间线播放动画
+- 在指定 tick 播放声音和 VFX
+- 动作取消或结束时停止动画
 
-第一阶段只整理动画扩展点，不实现复杂技能动画。
+## 三、技能结构
 
-枪械机械动画优先继续由 TaCZ 控制。
+当前技能分成两套概念。
 
-未来：
+### 1. SkillBuilder：技能资料与物品
 
-```text
-Player body animation
-```
+src/main/java/com/cxxcxx/zinecraft/api/registry/builder/SkillBuilder.java:24
 
-与：
+用于声明明日方舟技能资料，包括：
 
-```text
-TaCZ gun animation
-```
+- 技能名称
+- 干员与职业
+- 技力回复类型
+- 触发方式
+- 初始技力和消耗
+- 持续时间
+- 技能描述
+- 伤害倍率和伤害类型
+- Ponder 演示主题
+- 客户端 VFX
 
-应保持职责分离。
+其中：
 
-## 数据驱动
+SkillBuilder.effect(VfxBuilder)
 
-研究：
+这里的 effect 指客户端特效，不是服务端玩法效果。
 
-```text
-GunPackLoader
-CommonAssetsManager
-resource/manager
-resource/pojo
-resource/serialize
-```
+### SkillCatalog
 
-枪械定义、模型、材质、动画尽可能使用 TaCZ gun pack/data-driven workflow。
+src/main/java/com/cxxcxx/zinecraft/api/registry/catalog/SkillCatalog.java:17
 
-禁止：
+负责：
 
-```java
-ExusiaiGun extends ...
-AshGun extends ...
-FiammettaGun extends ...
-```
+- 校验技能资料完整性
+- 注册对应 SkillItem
+- 生成技能名称和 tooltip 翻译
+- 提供 Ponder 展示数据
+- 校验技能至少有一个 VFX
 
-这种每个内容创建 Java 类型的设计。
+全局实例：
 
-## 代码质量要求
+Zinecraft.SKILLS
 
-保持实现最小化。
+### SkillItem
 
-不要为了“未来扩展”创建十几个空接口。
+src/main/java/com/cxxcxx/zinecraft/api/skill/SkillItem.java
 
-只抽象目前存在明确边界的部分：
+是技能资料对应的 Minecraft 物品。
 
-```text
-WeaponBackend
-WeaponShotEvent
-TaCZ Adapter
-VFX Service
-```
+目前主要用于：
 
-不要修改无关系统。
+- 展示技能资料
+- tooltip
+- 创造模式内容
+- Ponder 教程入口
 
-不要重构整个项目。
+它目前不会自动执行 SkillEffect。
 
-每完成一个阶段立即编译。
+### ModSkill
 
-如果 TaCZ API 与预期不同，以源码为准，并更新设计。
+src/main/java/com/cxxcxx/zinecraft/core/skill/ModSkill.java:10
 
-## 最终验收
+集中声明正式技能资料，例如：
 
-需要证明以下流程可以工作：
+- 真银斩
+- 火山
+- 钙质化
+- 圣域
+- 狐火渺然
+- 狼群
 
-```text
-玩家使用 TaCZ 枪械射击
-        ↓
-TaCZ event
-        ↓
-TaczGunEvents
-        ↓
-WeaponShotEvent
-        ↓
-SkillRuntime
-        ↓
-TestRapidFireSkill
-        ↓
-WeaponVfxService
-```
+这些当前属于资料、物品和演示层。
 
-同时保证：
+## 四、可执行技能效果
 
-```text
-SkillRuntime
-```
+### SkillEffect
 
-完全不知道 TaCZ 的存在。
+src/main/java/com/cxxcxx/zinecraft/api/skill/SkillEffect.java:9
 
-最后输出：
+服务端玩法效果接口：
 
-1. 实际使用到的 TaCZ public APIs；
-2. 实际订阅的 TaCZ events；
-3. 新增文件列表；
-4. 模块依赖关系；
-5. 当前发现的 TaCZ 1.21.1 Port API 风险；
-6. 下一阶段建议，但不要直接实施下一阶段。
+boolean canCast(SkillCastContext context);
+void cast(SkillCastContext context);
+List<CombatDamageProfile> damageProfiles();
+
+它负责真正的：
+
+- 施法条件
+- 伤害
+- 治疗
+- 命中查询
+- 服务端状态修改
+
+### SkillEffectBuilder
+
+src/main/java/com/cxxcxx/zinecraft/api/registry/builder/SkillEffectBuilder.java:15
+
+负责创建和注册 SkillEffect。
+
+它自动生成：
+
+zinecraft:skill/<path>
+
+并提供：
+
+effect.getId();
+effect.canCast(context);
+effect.cast(context);
+effect.damageProfiles();
+
+cast 会再次调用 canCast，所以动作开始和真正结算时都会校验服务端状态。
+
+### SkillEffectCatalog
+
+src/main/java/com/cxxcxx/zinecraft/api/registry/catalog/SkillEffectCatalog.java:17
+
+负责：
+
+- 校验技能效果 ID
+- 防止重复注册
+- 保存构建后的效果
+- 根据 ID 查询效果
+
+全局实例：
+
+Zinecraft.SKILL_EFFECTS
+
+### ModWeaponSkillEffects
+
+src/main/java/com/cxxcxx/zinecraft/core/registry/ModWeaponSkillEffects.java:19
+
+集中声明武器使用的可执行技能效果：
+
+- ARCANE_BOLT：服务端 hitscan，造成 8 点法术伤害
+- MENDING_LIGHT：为施法者恢复生命
+
+这里保存的是 SkillEffectBuilder，不再保存裸 ID。
+
+### CastSkillAction
+
+src/main/java/com/cxxcxx/zinecraft/api/weapon/action/staff/CastSkillAction.java:15
+
+连接武器动作和技能效果：
+
+法杖输入
+→ CastSkillAction
+→ 到达施法 tick
+→ SkillEffectBuilder.cast
+→ SkillEffect
+→ CombatService
+
+它让技能效果遵循武器动作的前摇、结算 tick 和后摇。
+
+## 五、目前需要特别注意的边界
+
+SkillBuilder 和 SkillEffectBuilder 不是同一个东西：
+
+类型 用途 是否执行玩法                                                                                           
+━━━━━━━━━━━━━━━━━━━━━━━━━━━ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ━━━━━━━━━━━━━━
+SkillBuilder 技能资料、物品、翻译、Ponder、VFX 否
+─────────────────────────── ─────────────────────────────────── ──────────────
+SkillEffectBuilder 服务端伤害、治疗、控制等实际效果 是
+─────────────────────────── ─────────────────────────────────── ──────────────
+WeaponPresentationBuilder 动画、声音、VFX 时间线 否
+─────────────────────────── ─────────────────────────────────── ──────────────
+WeaponActionBuilder 服务端武器动作 是
+
+此外，src/main/java/com/cxxcxx/zinecraft/core/skill/SkillRuntime.java 和 TestRapidFireSkill 是一条独立的射击事件实验路径，目前没有接入
+SkillCatalog 或
+SkillEffectCatalog。
+
+─ Worked for 1m 03s
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+› Ask Codex to do anything
+ 
