@@ -1,4 +1,0 @@
-interface:
-  display_name: "泰拉结构建造"
-  short_description: "依据官方证据设计、生成、注册并验证泰拉国家建筑结构"
-  default_prompt: "Use $terra-structure-builder to design and implement an evidence-backed Terra structure for Zinecraft."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zinecraft 内容与世界系统开发"
-  short_description: "实现世界、居民、国家关系、任务与服务端武器系统"
-  default_prompt: "使用 $zinecraft-content 为 Zinecraft 实现完整的内容、国家关系或服务端权威武器功能，并运行数据生成与构建验证。"
