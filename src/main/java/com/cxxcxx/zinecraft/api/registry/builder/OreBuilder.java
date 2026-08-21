@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.api.registry.builder;
 
+import com.cxxcxx.zinecraft.api.nation.TerraPlace;
 import com.cxxcxx.zinecraft.api.registry.catalog.FeatureCatalog;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
 import net.minecraft.resources.ResourceKey;
@@ -26,6 +27,8 @@ public final class OreBuilder<T extends Block> implements Supplier<T>, ItemLike 
   public int maxY;
   public float discardChanceOnAirExposure;
   public BiomeSelection biomes;
+  @Nullable
+  private TerraPlace place;
   @Nullable
   public ItemLike cookingResult;
   @Nullable
@@ -91,6 +94,19 @@ public final class OreBuilder<T extends Block> implements Supplier<T>, ItemLike 
    */
   public OreBuilder<T> biomes(BiomeSelection biomes) {
     this.biomes = Objects.requireNonNull(biomes, "矿石生成群系不能为空：" + path);
+    return this;
+  }
+
+  /**
+   * 指定该矿石地物所属的泰拉城市或城区。
+   *
+   * <p>不调用本方法时 {@link #place()} 返回 {@code null}，表示不属于任何城市。</p>
+   *
+   * @param place {@code ModCity} 或 {@code ModCityRegion} 中声明的城市或城区
+   * @return 当前构建器
+   */
+  public OreBuilder<T> place(TerraPlace place) {
+    this.place = Objects.requireNonNull(place, "矿石地物归属地点不能为空：" + path);
     return this;
   }
 
@@ -166,6 +182,14 @@ public final class OreBuilder<T extends Block> implements Supplier<T>, ItemLike 
    */
   public ResourceKey<PlacedFeature> placedKey() {
     return Objects.requireNonNull(placedKey, "矿石尚未 build：" + path);
+  }
+
+  /**
+   * @return 矿石地物所属的泰拉城市或城区；{@code null} 表示不属于任何城市
+   */
+  @Nullable
+  public TerraPlace place() {
+    return place;
   }
 
   /**

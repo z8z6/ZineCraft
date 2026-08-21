@@ -1,12 +1,14 @@
 package com.cxxcxx.zinecraft.api.nation;
 
+import com.cxxcxx.zinecraft.api.registry.builder.NationBuilder;
+
 import java.util.Objects;
 
 /**
  * 一国的玩法初始状态；所有指标均使用 0—100 的闭区间。
  */
 public record NationState(
-    TerraNation nation,
+    NationBuilder nation,
     int prosperity,
     int stability,
     int militaryStrength,
@@ -22,13 +24,13 @@ public record NationState(
     requirePercentage(aggression, "进攻倾向", nation);
   }
 
-  private static void requirePercentage(int value, String field, TerraNation nation) {
+  private static void requirePercentage(int value, String field, NationBuilder nation) {
     if (value < 0 || value > 100) {
       throw new IllegalArgumentException(field + "必须在 0—100：" + nation.getId() + "=" + value);
     }
   }
 
-  public TerraNation getNation() {
+  public NationBuilder getNation() {
     return nation;
   }
 

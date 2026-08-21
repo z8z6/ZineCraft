@@ -35,9 +35,6 @@ Zinecraft 是一个面向 Minecraft 1.21.1 / NeoForge 的《明日方舟》主�
 安装 JDK 21 后，在仓库根目录运行：
 
 ```powershell
-# 编译并运行 Java 测试
-.\gradlew.bat test
-
 # 生成语言、模型、配方、战利品表和动态注册表数据
 .\gradlew.bat runData
 
@@ -59,7 +56,6 @@ src/client/java/     渲染、输入、Ponder 与客户端资源桥接
 src/main/resources/  发布资源、结构 NBT、任务模板和手写数据
 docs/                开发和内容文档
 .agents/skills/      面向仓库维护代理的领域工作流
-script/              资源与结构生成脚本
 ```
 
 详细开发入口见 [项目文档](docs/README.md) 与 [声明式 API](docs/API.md)

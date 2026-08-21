@@ -1,9 +1,7 @@
 package com.cxxcxx.zinecraft.api.registry.catalog;
 
 import com.cxxcxx.zinecraft.api.datagen.RegistryDataContributor;
-import com.cxxcxx.zinecraft.api.nation.TerraPlace;
 import com.cxxcxx.zinecraft.api.registry.builder.JigsawBuilder;
-import com.cxxcxx.zinecraft.api.world.structure.ConcentricRingBounds;
 import com.cxxcxx.zinecraft.api.world.structure.FixedOriginStructurePlacement;
 import com.cxxcxx.zinecraft.api.world.structure.JigsawPoolDefinition;
 import com.mojang.datafixers.util.Pair;
@@ -18,14 +16,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.Structure.StructureSettings;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
-import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.placement.*;
 import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
@@ -35,7 +30,6 @@ import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -133,14 +127,6 @@ public final class StructureCatalog implements RegistryDataContributor {
   }
 
   /**
-   * 返回可供指定城市或地区生成的结构；未声明 {@code city} 的通用结构会自动包含在内。
-   */
-  public List<JigsawBuilder> structuresFor(TerraPlace city) {
-    Objects.requireNonNull(city, "待查询城市或地区不能为空");
-    return buildings.stream().filter(structure -> structure.isAvailableIn(city)).toList();
-  }
-
-  /**
    * @param path 结构注册路径 @param zhCn 结构中文名 @return 尚未登记的通用 Jigsaw Builder
    */
   public JigsawBuilder jigsaw(String path, String zhCn) {
@@ -178,260 +164,13 @@ public final class StructureCatalog implements RegistryDataContributor {
   public JigsawBuilder embeddedBuilding(
       String path,
       String zhCn,
-      String enUs,
-      String template,
       int maxDistanceFromCenter
   ) {
     return jigsaw(path, zhCn)
-        .enUs(enUs)
         .embedded()
         .layout(1, maxDistanceFromCenter)
-        .pool("start", pool -> pool.template(template))
+        .pool("start", pool -> pool.template(path))
         .build();
-  }
-
-  /**
-   * 注册归属于指定泰拉城市或地区的内嵌建筑。
-   */
-  public JigsawBuilder embeddedBuilding(
-      String path,
-      String zhCn,
-      String enUs,
-      String template,
-      int maxDistanceFromCenter,
-      TerraPlace place
-  ) {
-    return jigsaw(path, zhCn)
-        .enUs(enUs)
-        .city(place)
-        .embedded()
-        .layout(1, maxDistanceFromCenter)
-        .pool("start", pool -> pool.template(template))
-        .build();
-  }
-
-  /**
-   * 注册在偏好群系附近按同心环放置一次的地标。
-   *
-   * @param path                  结构注册路径
-   * @param zhCn                  结构中文名
-   * @param template              起始结构模板路径
-   * @param biome                 放置搜索使用的偏好群系
-   * @param ringDistance          同心环距离参数（区块）
-   * @param maxDistanceFromCenter Jigsaw 距起点的最大方块距离
-   * @param heightmap             起始高度图；为 {@code null} 时采用固定高度
-   * @param startHeight           起始高度或相对高度图偏移
-   * @param removeVinesChance     模板中藤蔓被移除的概率
-   * @return 已登记的结构构建器
-   */
-  public JigsawBuilder uniqueLandmark(
-      String path, String zhCn, String template, ResourceKey<Biome> biome,
-      int ringDistance, int maxDistanceFromCenter, @Nullable Types heightmap,
-      int startHeight, float removeVinesChance
-  ) {
-    return jigsaw(path, zhCn)
-        .unique(ringDistance)
-        .biome(biome)
-        .layout(1, maxDistanceFromCenter)
-        .height(heightmap, startHeight)
-        .removeVinesChance(removeVinesChance)
-        .pool("start", pool -> pool.template(template))
-        .build();
-  }
-
-  /**
-   * 注册固定在原点区块、使用绝对地下高度的地标。
-   *
-   * @param path                  结构注册路径
-   * @param zhCn                  结构中文名
-   * @param template              起始结构模板路径
-   * @param biome                 结构允许生成的群系
-   * @param startHeight           绝对起始高度
-   * @param maxDistanceFromCenter Jigsaw 距起点的最大方块距离
-   * @return 已登记的结构构建器
-   */
-  public JigsawBuilder fixedOriginUndergroundLandmark(
-      String path, String zhCn, String template, ResourceKey<Biome> biome,
-      int startHeight, int maxDistanceFromCenter
-  ) {
-    return jigsaw(path, zhCn)
-        .fixedOrigin()
-        .biome(biome)
-        .layout(1, maxDistanceFromCenter)
-        .height(null, startHeight)
-        .generation(Decoration.UNDERGROUND_STRUCTURES, TerrainAdjustment.ENCAPSULATE)
-        .pool("start", pool -> pool.template(template))
-        .build();
-  }
-
-  /**
-   * 注册由中心、道路和功能建筑池组成的可重复聚落。
-   *
-   * @param path                  聚落注册路径
-   * @param zhCn                  聚落中文名
-   * @param templateRoot          所有聚落模板的根路径
-   * @param biome                 聚落限定群系
-   * @param salt                  随机放置盐值
-   * @param buildingTemplates     功能建筑模板名到权重的映射
-   * @param spacing               平均区块间距
-   * @param separation            最小区块间距
-   * @param size                  Jigsaw 展开深度
-   * @param maxDistanceFromCenter 距中心最大方块距离
-   * @param heightmap             起始高度图；为 {@code null} 时采用固定高度
-   * @param startHeight           起始高度或相对高度图偏移
-   * @param removeVinesChance     模板中藤蔓被移除的概率
-   * @return 已登记的聚落构建器
-   */
-  public JigsawBuilder settlement(
-      String path, String zhCn, String templateRoot, ResourceKey<Biome> biome, int salt,
-      Map<String, Integer> buildingTemplates, int spacing, int separation, int size,
-      int maxDistanceFromCenter, @Nullable Types heightmap, int startHeight, float removeVinesChance
-  ) {
-    return settlementBuilder(
-        path, zhCn, templateRoot, biome, salt, buildingTemplates, size,
-        maxDistanceFromCenter, heightmap, startHeight, removeVinesChance
-    ).randomSpread(spacing, separation, salt).build();
-  }
-
-  /**
-   * 注册固定在原点区块的聚落。
-   *
-   * @param path                  聚落注册路径
-   * @param zhCn                  聚落中文名
-   * @param templateRoot          所有聚落模板的根路径
-   * @param biome                 聚落限定群系
-   * @param salt                  保留的结构放置盐值
-   * @param buildingTemplates     功能建筑模板名到权重的映射
-   * @param size                  Jigsaw 展开深度
-   * @param maxDistanceFromCenter 距中心最大方块距离
-   * @param heightmap             起始高度图；为 {@code null} 时采用固定高度
-   * @param startHeight           起始高度或相对高度图偏移
-   * @param removeVinesChance     模板中藤蔓被移除的概率
-   * @return 已登记的聚落构建器
-   */
-  public JigsawBuilder fixedOriginSettlement(
-      String path, String zhCn, String templateRoot, ResourceKey<Biome> biome, int salt,
-      Map<String, Integer> buildingTemplates, int size, int maxDistanceFromCenter,
-      @Nullable Types heightmap, int startHeight, float removeVinesChance
-  ) {
-    return settlementBuilder(
-        path, zhCn, templateRoot, biome, salt, buildingTemplates, size,
-        maxDistanceFromCenter, heightmap, startHeight, removeVinesChance
-    ).fixedOrigin().build();
-  }
-
-  private JigsawBuilder settlementBuilder(
-      String path, String zhCn, String templateRoot, ResourceKey<Biome> biome, int salt,
-      Map<String, Integer> buildingTemplates, int size, int maxDistanceFromCenter,
-      @Nullable Types heightmap, int startHeight, float removeVinesChance
-  ) {
-    if (buildingTemplates.size() < 4) throw new IllegalArgumentException("大型聚落至少需要四种功能建筑模板：" + path);
-    return jigsaw(path, zhCn)
-        .biome(biome)
-        .layout(size, maxDistanceFromCenter)
-        .height(heightmap, startHeight)
-        .expansionHack(true)
-        .removeVinesChance(removeVinesChance)
-        .generation(Decoration.SURFACE_STRUCTURES, TerrainAdjustment.BEARD_THIN)
-        .startPool("center")
-        .pool("center", pool -> pool.template(templateRoot + "/center"))
-        .pool("streets", Projection.TERRAIN_MATCHING, pool -> pool
-            .template(templateRoot + "/street_straight", 5)
-            .template(templateRoot + "/street_corner", 3)
-            .template(templateRoot + "/street_cross", 2)
-            .template(templateRoot + "/street_end", 2))
-        .pool("buildings", pool -> buildingTemplates.forEach(
-            (template, weight) -> pool.template(templateRoot + "/" + template, weight)
-        ));
-  }
-
-  /**
-   * 使用完整参数和模板池回调注册通用 Jigsaw 结构。
-   *
-   * @param path                  结构注册路径
-   * @param zhCn                  结构中文名
-   * @param enUs                  结构英文名
-   * @param spacing               随机散布平均区块间距
-   * @param separation            随机散布最小区块间距
-   * @param salt                  随机放置盐值
-   * @param size                  Jigsaw 展开深度
-   * @param maxDistanceFromCenter 距中心最大方块距离
-   * @param removeVinesChance     模板中藤蔓被移除的概率
-   * @param biome                 限定群系；为 {@code null} 时使用主世界群系标签
-   * @param unique                是否使用同心环唯一放置
-   * @param ringDistance          唯一放置的同心环距离
-   * @param heightmap             起始高度图；为 {@code null} 时采用固定高度
-   * @param startHeight           起始高度或相对高度图偏移
-   * @param useExpansionHack      是否启用原版 Jigsaw 扩展修正
-   * @param fixedOrigin           是否固定在原点区块
-   * @param generationStep        结构参与的群系生成阶段
-   * @param terrainAdjustment     结构地形适配方式
-   * @param configure             模板池配置回调
-   * @return 已登记的结构构建器
-   */
-  public JigsawBuilder jigsawBuilding(
-      String path, String zhCn, String enUs,
-      int spacing, int separation, int salt, int size, int maxDistanceFromCenter,
-      float removeVinesChance, @Nullable ResourceKey<Biome> biome, boolean unique,
-      int ringDistance, @Nullable Types heightmap, int startHeight,
-      boolean useExpansionHack, boolean fixedOrigin, Decoration generationStep,
-      TerrainAdjustment terrainAdjustment, Consumer<? super JigsawBuilder> configure
-  ) {
-    JigsawBuilder builder = jigsaw(path, zhCn)
-        .enUs(enUs)
-        .randomSpread(spacing, separation, salt)
-        .layout(size, maxDistanceFromCenter)
-        .removeVinesChance(removeVinesChance)
-        .biome(biome)
-        .height(heightmap, startHeight)
-        .expansionHack(useExpansionHack)
-        .generation(generationStep, terrainAdjustment);
-    if (unique) builder.unique(ringDistance);
-    if (fixedOrigin) builder.fixedOrigin();
-    configure.accept(builder);
-    return builder.build();
-  }
-
-  /**
-   * 注册搜索半径受约束、允许跨多个群系展开的唯一地标。
-   *
-   * @param path                  结构注册路径
-   * @param zhCn                  结构中文名
-   * @param ringDistance          同心环距离参数（区块）
-   * @param salt                  保留的随机盐值
-   * @param size                  Jigsaw 展开深度
-   * @param maxDistanceFromCenter 距中心最大方块距离
-   * @param removeVinesChance     模板中藤蔓被移除的概率
-   * @param preferredBiome        同心环选址偏好群系
-   * @param allowedBiomes         结构本体允许生成和展开的群系
-   * @param heightmap             起始高度图；为 {@code null} 时采用固定高度
-   * @param startHeight           起始高度或相对高度图偏移
-   * @param generationStep        结构参与的群系生成阶段
-   * @param terrainAdjustment     结构地形适配方式
-   * @param configure             模板池配置回调
-   * @return 已登记的唯一地标构建器
-   */
-  public JigsawBuilder guaranteedLandmark(
-      String path, String zhCn, int ringDistance, int salt, int size,
-      int maxDistanceFromCenter, float removeVinesChance,
-      ResourceKey<Biome> preferredBiome, List<ResourceKey<Biome>> allowedBiomes,
-      @Nullable Types heightmap, int startHeight, Decoration generationStep,
-      TerrainAdjustment terrainAdjustment, Consumer<? super JigsawBuilder> configure
-  ) {
-    int maximumRadius = ConcentricRingBounds.maximumRadiusBlocks(ringDistance);
-    if (maximumRadius > ConcentricRingBounds.GUARANTEED_LANDMARK_RADIUS_BLOCKS) {
-      throw new IllegalArgumentException("保证生成的地标超出半径上界：" + path + " (" + maximumRadius + ")");
-    }
-    JigsawBuilder builder = jigsaw(path, zhCn)
-        .unique(ringDistance)
-        .biome(preferredBiome)
-        .allowedBiomes(allowedBiomes)
-        .layout(size, maxDistanceFromCenter)
-        .removeVinesChance(removeVinesChance)
-        .height(heightmap, startHeight)
-        .generation(generationStep, terrainAdjustment);
-    configure.accept(builder);
-    return builder.build();
   }
 
   /**

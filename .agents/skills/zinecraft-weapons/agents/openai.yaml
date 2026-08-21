@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Weapons"
+  short_description: "Add authoritative weapons, actions, state, and presentation"
+  default_prompt: "Use $zinecraft-weapons to implement a sourced Zinecraft weapon safely."

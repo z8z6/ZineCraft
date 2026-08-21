@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Dimensions"
+  short_description: "Add complete dimensions with biomes, codecs, and travel rules"
+  default_prompt: "Use $zinecraft-dimensions to add a complete Zinecraft dimension."

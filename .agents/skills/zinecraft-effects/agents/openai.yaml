@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Effects"
+  short_description: "Add reusable VFX, animation, sound, and presentation timelines"
+  default_prompt: "Use $zinecraft-effects to add a reusable client-side presentation effect."

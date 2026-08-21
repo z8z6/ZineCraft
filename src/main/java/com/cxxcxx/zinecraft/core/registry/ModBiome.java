@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.core.registry;
 
-import com.cxxcxx.zinecraft.api.nation.TerraNation;
 import com.cxxcxx.zinecraft.api.registry.builder.BiomeBuilder;
+import com.cxxcxx.zinecraft.api.registry.builder.NationBuilder;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
@@ -282,6 +282,14 @@ public final class ModBiome {
         builder.wetland();
       }
   );
+  public static final BiomeBuilder SIESTA_VOLCANIC_COAST = biome(
+      "siesta_volcanic_coast",
+      "汐斯塔火山海岸",
+      0.75F, -0.2F, 0.2F, -0.65F, 0.0F, 0.75F,
+      builder -> builder.precipitation(false).temperature(1.25F).downfall(0.2F)
+          .waterColor(0x2F7692).waterFogColor(0x17404F).fogColor(0xB9C7C9)
+          .grassColor(0x8B9258).foliageColor(0x747E4C).badlands()
+  );
 
   /*
    * 国家范围与自然群系分离后的第二组气候群系。名称描述自然环境，不代表新增官方行政区；
@@ -402,6 +410,13 @@ public final class ModBiome {
           .waterColor(0x2D657A).waterFogColor(0x163B49).fogColor(0xA9B8BE)
           .grassColor(0x718074).foliageColor(0x5D7165).mountain()
   );
+  public static final BiomeBuilder SIESTA_RESORT_SHORE = biome(
+      "siesta_resort_shore", "汐斯塔度假海岸",
+      0.65F, 0.55F, -0.2F, 0.55F, 0.0F, -0.45F,
+      builder -> builder.temperature(1.15F).downfall(0.55F)
+          .waterColor(0x2F83A3).waterFogColor(0x185069).fogColor(0xBFD4D7)
+          .grassColor(0x91A65A).foliageColor(0x728C4E).plains()
+  );
   public static final BiomeBuilder TERRA_RIVER = biome(
       "terra_river",
       "泰拉河流",
@@ -427,23 +442,8 @@ public final class ModBiome {
         builder.ocean();
       }
   );
-  public static final BiomeBuilder TERRA_CATASTROPHE_ZONE = biome(
-      "terra_catastrophe_zone",
-      "泰拉天灾区",
-      0.8F, -0.8F, 0.5F, -0.5F, 0.0F, 0.2F,
-      builder -> {
-        builder.precipitation(false);
-        builder.temperature(1.2F);
-        builder.downfall(0.0F);
-        builder.fogColor(0x51405F);
-        builder.grassColor(0x5B514B);
-        builder.foliageColor(0x51453F);
-        builder.badlands();
-      }
-  );
-
   /**
-   * 泰拉群系目录注册的全部 Builder，其中包含非国家群系“天灾区”。
+   * 泰拉群系目录注册的全部 Builder。
    */
   public static final List<BiomeBuilder> ALL = List.copyOf(Zinecraft.BIOMES.entries);
 
@@ -463,26 +463,27 @@ public final class ModBiome {
   /**
    * 国家是地图区域；群系是该区域内由气候噪声选择的自然环境。
    */
-  public static final Map<TerraNation, List<BiomeBuilder>> NATIONAL_BIOMES = Map.ofEntries(
-      Map.entry(TerraNation.AEGIR, List.of(AEGIR_ABYSSAL_SEA, AEGIR_PELAGIC_DEPTHS)),
-      Map.entry(TerraNation.BOLIVAR, List.of(BOLIVAR_PLAIN, BOLIVAR_BLACKFLOW_FOREST)),
-      Map.entry(TerraNation.HIGASHI, List.of(HIGASHI_SHADOW_RIFT, HIGASHI_MOUNTAIN_FOREST)),
-      Map.entry(TerraNation.DURIN, List.of(DURIN_UNDERGROUND_GARDEN, DURIN_CAVERN_LAKE)),
-      Map.entry(TerraNation.COLUMBIA, List.of(COLUMBIA_SANDSTONE_WILDS, COLUMBIA_EASTERN_PRAIRIE)),
-      Map.entry(TerraNation.KAZIMIERZ, List.of(KAZIMIERZ_KNIGHTLAND, KAZIMIERZ_FORESTED_HILLS)),
-      Map.entry(TerraNation.KAZDEL, List.of(KAZDEL_SCARRED_WASTES, KAZDEL_RUINED_HIGHLANDS)),
-      Map.entry(TerraNation.LATERANO, List.of(LATERANO_HOLY_FIELDS, LATERANO_HIGHLAND_PLATEAU)),
-      Map.entry(TerraNation.LEITHANIEN, List.of(LEITHANIEN_TWILIGHT_FOREST, LEITHANIEN_ALPINE_VALLEY)),
-      Map.entry(TerraNation.RIM_BILLITON, List.of(RIM_BILLITON_MINING_BADLANDS, RIM_BILLITON_ARID_MESA)),
-      Map.entry(TerraNation.MINOS, List.of(MINOS_SUNLIT_HILLS, MINOS_RIVER_VALLEY)),
-      Map.entry(TerraNation.SARGON, List.of(SARGON_ROCKY_DESERT, SARGON_TROPICAL_RAINFOREST)),
-      Map.entry(TerraNation.SAMI, List.of(SAMI_FROZEN_FOREST, SAMI_GLACIAL_MOUNTAINS)),
-      Map.entry(TerraNation.VICTORIA, List.of(VICTORIA_MISTY_HIGHLANDS, VICTORIA_CENTRAL_LOWLANDS)),
-      Map.entry(TerraNation.URSUS, List.of(URSUS_FROZEN_STEPPE, URSUS_EASTERN_HIGHLANDS)),
-      Map.entry(TerraNation.KJERAG, List.of(KJERAG_SNOWY_PEAKS, KJERAG_ALPINE_FOREST)),
-      Map.entry(TerraNation.SIRACUSA, List.of(SIRACUSA_RAINY_WOODLAND, SIRACUSA_LOWLAND_FOREST)),
-      Map.entry(TerraNation.YAN, List.of(YAN_MOUNTAIN_GROVE, YAN_RIVER_PLAINS)),
-      Map.entry(TerraNation.IBERIA, List.of(IBERIA_SALT_DELTA, IBERIA_COASTAL_CLIFFS))
+  public static final Map<NationBuilder, List<BiomeBuilder>> NATIONAL_BIOMES = Map.ofEntries(
+      Map.entry(ModNation.AEGIR, List.of(AEGIR_ABYSSAL_SEA, AEGIR_PELAGIC_DEPTHS)),
+      Map.entry(ModNation.BOLIVAR, List.of(BOLIVAR_PLAIN, BOLIVAR_BLACKFLOW_FOREST)),
+      Map.entry(ModNation.HIGASHI, List.of(HIGASHI_SHADOW_RIFT, HIGASHI_MOUNTAIN_FOREST)),
+      Map.entry(ModNation.DURIN, List.of(DURIN_UNDERGROUND_GARDEN, DURIN_CAVERN_LAKE)),
+      Map.entry(ModNation.COLUMBIA, List.of(COLUMBIA_SANDSTONE_WILDS, COLUMBIA_EASTERN_PRAIRIE)),
+      Map.entry(ModNation.KAZIMIERZ, List.of(KAZIMIERZ_KNIGHTLAND, KAZIMIERZ_FORESTED_HILLS)),
+      Map.entry(ModNation.KAZDEL, List.of(KAZDEL_SCARRED_WASTES, KAZDEL_RUINED_HIGHLANDS)),
+      Map.entry(ModNation.LATERANO, List.of(LATERANO_HOLY_FIELDS, LATERANO_HIGHLAND_PLATEAU)),
+      Map.entry(ModNation.LEITHANIEN, List.of(LEITHANIEN_TWILIGHT_FOREST, LEITHANIEN_ALPINE_VALLEY)),
+      Map.entry(ModNation.RIM_BILLITON, List.of(RIM_BILLITON_MINING_BADLANDS, RIM_BILLITON_ARID_MESA)),
+      Map.entry(ModNation.MINOS, List.of(MINOS_SUNLIT_HILLS, MINOS_RIVER_VALLEY)),
+      Map.entry(ModNation.SARGON, List.of(SARGON_ROCKY_DESERT, SARGON_TROPICAL_RAINFOREST)),
+      Map.entry(ModNation.SAMI, List.of(SAMI_FROZEN_FOREST, SAMI_GLACIAL_MOUNTAINS)),
+      Map.entry(ModNation.VICTORIA, List.of(VICTORIA_MISTY_HIGHLANDS, VICTORIA_CENTRAL_LOWLANDS)),
+      Map.entry(ModNation.URSUS, List.of(URSUS_FROZEN_STEPPE, URSUS_EASTERN_HIGHLANDS)),
+      Map.entry(ModNation.KJERAG, List.of(KJERAG_SNOWY_PEAKS, KJERAG_ALPINE_FOREST)),
+      Map.entry(ModNation.SIRACUSA, List.of(SIRACUSA_RAINY_WOODLAND, SIRACUSA_LOWLAND_FOREST)),
+      Map.entry(ModNation.SIESTA, List.of(SIESTA_VOLCANIC_COAST, SIESTA_RESORT_SHORE)),
+      Map.entry(ModNation.YAN, List.of(YAN_MOUNTAIN_GROVE, YAN_RIVER_PLAINS)),
+      Map.entry(ModNation.IBERIA, List.of(IBERIA_SALT_DELTA, IBERIA_COASTAL_CLIFFS))
   );
 
   private ModBiome() {

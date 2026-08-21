@@ -1,5 +1,7 @@
 package com.cxxcxx.zinecraft.api.nation;
 
+import com.cxxcxx.zinecraft.api.registry.builder.NationBuilder;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -10,8 +12,8 @@ import java.util.Set;
  * 一条有向国家关系；没有资料支持的默认中性边允许 {@code evidence} 为空。
  */
 public record NationRelation(
-    TerraNation from,
-    TerraNation to,
+    NationBuilder from,
+    NationBuilder to,
     int favor,
     int warDesire,
     int tradeAffinity,
@@ -55,11 +57,11 @@ public record NationRelation(
     return Optional.ofNullable(evidence);
   }
 
-  public TerraNation getFrom() {
+  public NationBuilder getFrom() {
     return from;
   }
 
-  public TerraNation getTo() {
+  public NationBuilder getTo() {
     return to;
   }
 

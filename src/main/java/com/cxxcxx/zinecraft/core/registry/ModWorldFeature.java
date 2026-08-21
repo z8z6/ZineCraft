@@ -60,12 +60,6 @@ public final class ModWorldFeature {
   private static final SimpleFeatureBuilder ORIGINIUM_SPIRE_LARGE = originiumSpire(
       "originium_spire_large", ORIGINIUM_SPIRE_LARGE_FEATURE, 220, TERRA_BIOMES
   );
-  private static final SimpleFeatureBuilder CATASTROPHE_ORIGINIUM_SPIRE_SMALL = denseOriginiumSpire(
-      "catastrophe_originium_spire_small", ORIGINIUM_SPIRE_SMALL_FEATURE, 5
-  );
-  private static final SimpleFeatureBuilder CATASTROPHE_ORIGINIUM_SPIRE_MEDIUM = denseOriginiumSpire(
-      "catastrophe_originium_spire_medium", ORIGINIUM_SPIRE_MEDIUM_FEATURE, 2
-  );
   private static final LateranoDryLandFeature LATERANO_DRY_LAND_FEATURE = Zinecraft.FEATURES.register(
       "laterano_dry_land", new LateranoDryLandFeature()
   );
@@ -76,10 +70,6 @@ public final class ModWorldFeature {
       .generationStep(GenerationStep.Decoration.TOP_LAYER_MODIFICATION)
       .biomes(BiomeSelection.of(ModBiome.LATERANO_HOLY_FIELDS.key()))
       .build();
-  private static final SimpleFeatureBuilder CATASTROPHE_ORIGINIUM_SPIRE_LARGE = originiumSpire(
-      "catastrophe_originium_spire_large", ORIGINIUM_SPIRE_LARGE_FEATURE, 6,
-      BiomeSelection.of(ModBiome.TERRA_CATASTROPHE_ZONE.key())
-  );
 
   private ModWorldFeature() {
   }
@@ -93,14 +83,6 @@ public final class ModWorldFeature {
         ))
         .generationStep(GenerationStep.Decoration.LOCAL_MODIFICATIONS)
         .biomes(biomes)
-        .build();
-  }
-
-  private static SimpleFeatureBuilder denseOriginiumSpire(String path, OriginiumSpireFeature feature, int count) {
-    return new SimpleFeatureBuilder(Zinecraft.FEATURES, path, feature)
-        .placement(List.of(CountPlacement.of(count), InSquarePlacement.spread(), BiomeFilter.biome()))
-        .generationStep(GenerationStep.Decoration.LOCAL_MODIFICATIONS)
-        .biomes(BiomeSelection.of(ModBiome.TERRA_CATASTROPHE_ZONE.key()))
         .build();
   }
 

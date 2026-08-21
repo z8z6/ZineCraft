@@ -5,15 +5,14 @@ import com.cxxcxx.zinecraft.api.weapon.WeaponServerController;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
 import com.cxxcxx.zinecraft.api.weapon.state.WeaponStateComponents;
 import com.cxxcxx.zinecraft.compat.jer.ZinecraftJerPlugin;
+import com.cxxcxx.zinecraft.core.datagen.ZinecraftDataGenerator;
 import com.cxxcxx.zinecraft.core.dimension.TerraMobSpawnPolicy;
 import com.cxxcxx.zinecraft.core.dimension.TerraPlayerSpawn;
 import com.cxxcxx.zinecraft.core.dimension.TerraWorldBoundary;
-import com.cxxcxx.zinecraft.core.nation.TerraGeography;
 import com.cxxcxx.zinecraft.core.nation.TerraNationRelations;
 import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
 import com.cxxcxx.zinecraft.core.registry.*;
 import com.cxxcxx.zinecraft.core.skill.ModSkill;
-import com.cxxcxx.zinecraft.core.structure.LateranoHostStructure;
 import com.cxxcxx.zinecraft.integration.tacz.TaczIntegration;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -29,6 +28,10 @@ public final class Zinecraft {
   public static final String MOD_ID = "zinecraft";
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
   public static final TranslationCatalog TRANSLATIONS = new TranslationCatalog();
+  public static final NationCatalog NATIONS = new NationCatalog(TRANSLATIONS);
+  public static final StructureCatalog STRUCTURES = new StructureCatalog(MOD_ID, TRANSLATIONS);
+  public static final TerraCityRegionCatalog CITY_REGIONS = new TerraCityRegionCatalog(NATIONS, STRUCTURES, TRANSLATIONS);
+  public static final TerraCityCatalog CITIES = new TerraCityCatalog(NATIONS, TRANSLATIONS);
   public static final AnimationCatalog ANIMATIONS = new AnimationCatalog(MOD_ID);
   public static final VfxCatalog VFX = new VfxCatalog(MOD_ID);
   public static final ItemCatalog ITEMS = new ItemCatalog(MOD_ID, TRANSLATIONS);
@@ -44,7 +47,6 @@ public final class Zinecraft {
   public static final BiomeCatalog BIOMES = new BiomeCatalog(MOD_ID, TRANSLATIONS);
   public static final DimensionCatalog DIMENSIONS = new DimensionCatalog(MOD_ID);
   public static final FeatureCatalog FEATURES = new FeatureCatalog(MOD_ID);
-  public static final StructureCatalog STRUCTURES = new StructureCatalog(MOD_ID, TRANSLATIONS);
   public static final RecipeCatalog RECIPES = new RecipeCatalog();
   public static final WeaponCatalog WEAPONS = new WeaponCatalog(MOD_ID);
   public static Zinecraft INSTANCE;
@@ -80,6 +82,7 @@ public final class Zinecraft {
 
   // 按依赖顺序显式触发静态内容注册，避免依赖单例数组和类加载副作用。
   public static void bootstrapContent() {
+    ModNation.bootstrap();
     WeaponStateComponents.bootstrap();
     ModSound.bootstrap();
     ModWeaponPresentation.bootstrap();
@@ -95,10 +98,10 @@ public final class Zinecraft {
     TaczIntegration.bootstrap();
     TerraNationRelations.bootstrap();
     ModDimension.bootstrap();
-    TerraGeography.bootstrap();
-    LateranoHostStructure.bootstrap();
-    ModWorldFeature.bootstrap();
     ModStructure.bootstrap();
+    ModCityRegion.bootstrap();
+    ModCity.bootstrap();
+    ModWorldFeature.bootstrap();
     ModCreativeTab.bootstrap();
   }
 

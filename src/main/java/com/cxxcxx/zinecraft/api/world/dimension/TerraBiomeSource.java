@@ -25,7 +25,9 @@ public final class TerraBiomeSource extends BiomeSource {
       Region.CODEC.listOf().fieldOf("regions").forGetter(source -> source.regions),
       Biome.CODEC.fieldOf("outer_ocean_biome").forGetter(source -> source.outerOceanBiome),
       Codec.intRange(MIN_MAP_SIZE, MAX_MAP_SIZE).fieldOf("map_size").forGetter(source -> source.mapSize),
-      Codec.intRange(1, MAX_MAP_SIZE / 2).fieldOf("ocean_ring_width").forGetter(source -> source.oceanRingWidth)
+      Codec.intRange(1, MAX_MAP_SIZE / 2).fieldOf("ocean_ring_width").forGetter(source -> source.oceanRingWidth),
+      Codec.intRange(MIN_MAP_SIZE, MAX_MAP_SIZE).fieldOf("core_size_x").forGetter(source -> source.coreSizeX),
+      Codec.intRange(MIN_MAP_SIZE, MAX_MAP_SIZE).fieldOf("core_size_z").forGetter(source -> source.coreSizeZ)
   ).apply(instance, TerraBiomeSource::new));
   public static final Access ACCESS = new Access();
 
@@ -33,8 +35,17 @@ public final class TerraBiomeSource extends BiomeSource {
   private final Holder<Biome> outerOceanBiome;
   private final int mapSize;
   private final int oceanRingWidth;
+  private final int coreSizeX;
+  private final int coreSizeZ;
 
-  public TerraBiomeSource(List<Region> regions, Holder<Biome> outerOceanBiome, int mapSize, int oceanRingWidth) {
+  public TerraBiomeSource(
+      List<Region> regions,
+      Holder<Biome> outerOceanBiome,
+      int mapSize,
+      int oceanRingWidth,
+      int coreSizeX,
+      int coreSizeZ
+  ) {
     if (mapSize < MIN_MAP_SIZE || mapSize > MAX_MAP_SIZE || (mapSize & 1) != 0) {
       throw new IllegalArgumentException(
           "泰拉地图边长必须是 " + MIN_MAP_SIZE + " 到 " + MAX_MAP_SIZE + " 之间的偶数格"
@@ -43,10 +54,15 @@ public final class TerraBiomeSource extends BiomeSource {
     if (oceanRingWidth <= 0 || oceanRingWidth >= mapSize / 2) {
       throw new IllegalArgumentException("泰拉外海环宽度必须大于 0 且小于地图半径");
     }
+    if (coreSizeX <= 0 || coreSizeZ <= 0 || coreSizeX > mapSize || coreSizeZ > mapSize
+        || (coreSizeX & 1) != 0 || (coreSizeZ & 1) != 0) {
+      throw new IllegalArgumentException("泰拉核心矩形边长必须是未超过地图边长的正偶数");
+    }
     if (regions.isEmpty()) throw new IllegalArgumentException("泰拉地图至少需要一个国家区域");
 
     requireTerraBiome(outerOceanBiome);
-    int landHalfSize = mapSize / 2 - oceanRingWidth;
+    int coreHalfSizeX = coreSizeX / 2;
+    int coreHalfSizeZ = coreSizeZ / 2;
     var regionIds = new HashSet<String>();
     var biomeKeys = new HashSet<>();
     var anchors = new HashSet<Long>();
@@ -67,18 +83,25 @@ public final class TerraBiomeSource extends BiomeSource {
           throw new IllegalArgumentException("外海辅助群系不能放入国家群系池：" + region.id());
         }
       }
-      if (Math.abs(region.x()) >= landHalfSize || Math.abs(region.z()) >= landHalfSize) {
-        throw new IllegalArgumentException("泰拉国家锚点必须位于外海环以内：" + region.id());
+      if (region.points().isEmpty()) {
+        throw new IllegalArgumentException("泰拉国家至少需要一个折线顶点：" + region.id());
       }
-      long packedAnchor = ((long) region.x() << 32) ^ (region.z() & 0xFFFFFFFFL);
-      if (!anchors.add(packedAnchor)) {
-        throw new IllegalArgumentException("泰拉国家锚点坐标重复：(" + region.x() + ", " + region.z() + ")");
+      for (MapPoint point : region.points()) {
+        if (Math.abs(point.x()) >= coreHalfSizeX || Math.abs(point.z()) >= coreHalfSizeZ) {
+          throw new IllegalArgumentException("泰拉国家折线顶点必须位于核心矩形以内：" + region.id());
+        }
+        long packedAnchor = ((long) point.x() << 32) ^ (point.z() & 0xFFFFFFFFL);
+        if (!anchors.add(packedAnchor)) {
+          throw new IllegalArgumentException("泰拉国家折线顶点坐标重复：(" + point.x() + ", " + point.z() + ")");
+        }
       }
     }
     this.regions = List.copyOf(regions);
     this.outerOceanBiome = outerOceanBiome;
     this.mapSize = mapSize;
     this.oceanRingWidth = oceanRingWidth;
+    this.coreSizeX = coreSizeX;
+    this.coreSizeZ = coreSizeZ;
   }
 
   private static void requireTerraBiome(Holder<Biome> biome) {
@@ -117,10 +140,37 @@ public final class TerraBiomeSource extends BiomeSource {
     return nearest.biome();
   }
 
-  private static long distanceSquared(Region region, long x, long z) {
-    long deltaX = x - region.x();
-    long deltaZ = z - region.z();
-    return deltaX * deltaX + deltaZ * deltaZ;
+  private static double distanceSquared(Region region, double x, double z) {
+    if (region.points().size() == 1) {
+      MapPoint point = region.points().getFirst();
+      return square(x - point.x()) + square(z - point.z());
+    }
+    double nearest = Double.POSITIVE_INFINITY;
+    for (int index = 1; index < region.points().size(); index++) {
+      nearest = Math.min(nearest, distanceSquaredToSegment(
+          x, z, region.points().get(index - 1), region.points().get(index)
+      ));
+    }
+    return nearest;
+  }
+
+  private static double distanceSquaredToSegment(double x, double z, MapPoint start, MapPoint end) {
+    double edgeX = end.x() - start.x();
+    double edgeZ = end.z() - start.z();
+    double lengthSquared = edgeX * edgeX + edgeZ * edgeZ;
+    if (lengthSquared == 0.0) return square(x - start.x()) + square(z - start.z());
+    double position = Math.clamp(
+        ((x - start.x()) * edgeX + (z - start.z()) * edgeZ) / lengthSquared,
+        0.0,
+        1.0
+    );
+    double nearestX = start.x() + edgeX * position;
+    double nearestZ = start.z() + edgeZ * position;
+    return square(x - nearestX) + square(z - nearestZ);
+  }
+
+  private static double square(double value) {
+    return value * value;
   }
 
   @Override
@@ -145,13 +195,13 @@ public final class TerraBiomeSource extends BiomeSource {
    */
   public Region regionAtBlock(long blockX, long blockZ) {
     long halfSize = mapSize / 2L;
-    long x = Math.max(-halfSize, Math.min(halfSize - 1L, blockX));
-    long z = Math.max(-halfSize, Math.min(halfSize - 1L, blockZ));
+    long x = Math.clamp(blockX, -halfSize, halfSize - 1L);
+    long z = Math.clamp(blockZ, -halfSize, halfSize - 1L);
     Region nearest = regions.getFirst();
-    long nearestDistance = distanceSquared(nearest, x, z);
+    double nearestDistance = distanceSquared(nearest, x, z);
     for (int index = 1; index < regions.size(); index++) {
       Region candidate = regions.get(index);
-      long distance = distanceSquared(candidate, x, z);
+      double distance = distanceSquared(candidate, x, z);
       if (distance < nearestDistance) {
         nearest = candidate;
         nearestDistance = distance;
@@ -161,6 +211,7 @@ public final class TerraBiomeSource extends BiomeSource {
   }
 
   private boolean isOuterOcean(long blockX, long blockZ) {
+    if (Math.abs(blockX) >= coreSizeX / 2L || Math.abs(blockZ) >= coreSizeZ / 2L) return true;
     long oceanStart = mapSize / 2L - oceanRingWidth;
     return Math.abs(blockX) >= oceanStart || Math.abs(blockZ) >= oceanStart;
   }
@@ -205,12 +256,18 @@ public final class TerraBiomeSource extends BiomeSource {
     }
   }
 
-  public record Region(String id, List<BiomeEntry> biomes, int x, int z) {
+  public record MapPoint(int x, int z) {
+    public static final Codec<MapPoint> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        Codec.intRange(-MAX_MAP_SIZE / 2, MAX_MAP_SIZE / 2).fieldOf("x").forGetter(MapPoint::x),
+        Codec.intRange(-MAX_MAP_SIZE / 2, MAX_MAP_SIZE / 2).fieldOf("z").forGetter(MapPoint::z)
+    ).apply(instance, MapPoint::new));
+  }
+
+  public record Region(String id, List<BiomeEntry> biomes, List<MapPoint> points) {
     public static final Codec<Region> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.fieldOf("id").forGetter(Region::id),
         BiomeEntry.CODEC.listOf().fieldOf("biomes").forGetter(Region::biomes),
-        Codec.intRange(-MAX_MAP_SIZE / 2, MAX_MAP_SIZE / 2).fieldOf("x").forGetter(Region::x),
-        Codec.intRange(-MAX_MAP_SIZE / 2, MAX_MAP_SIZE / 2).fieldOf("z").forGetter(Region::z)
+        MapPoint.CODEC.listOf().fieldOf("points").forGetter(Region::points)
     ).apply(instance, Region::new));
   }
 

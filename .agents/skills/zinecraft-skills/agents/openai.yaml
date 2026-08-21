@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Skills"
+  short_description: "Add sourced operator skill data, runtime effects, and demos"
+  default_prompt: "Use $zinecraft-skills to implement a sourced operator skill."

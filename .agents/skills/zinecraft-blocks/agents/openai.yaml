@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Blocks"
+  short_description: "Add blocks with models, loot, items, and block entities"
+  default_prompt: "Use $zinecraft-blocks to add a complete Zinecraft block implementation."

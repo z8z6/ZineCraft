@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Structures"
+  short_description: "Add Jigsaw structures, landmarks, placements, and NBT"
+  default_prompt: "Use $zinecraft-structures to add a complete generated Zinecraft structure."

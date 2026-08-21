@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Items"
+  short_description: "Add ordinary catalog-backed items and generated resources"
+  default_prompt: "Use $zinecraft-items to add a sourced ordinary item to Zinecraft."

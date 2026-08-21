@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.api.registry.builder;
 
+import com.cxxcxx.zinecraft.api.nation.TerraPlace;
 import com.cxxcxx.zinecraft.api.registry.catalog.FeatureCatalog;
 import com.cxxcxx.zinecraft.api.world.biome.BiomeSelection;
 import net.minecraft.resources.ResourceKey;
@@ -24,6 +25,8 @@ public final class SimpleFeatureBuilder {
   public List<PlacementModifier> placement = List.of();
   public GenerationStep.Decoration generationStep;
   public BiomeSelection biomes;
+  @Nullable
+  private TerraPlace place;
   @Nullable
   private ResourceKey<ConfiguredFeature<?, ?>> configuredKey;
   @Nullable
@@ -80,6 +83,19 @@ public final class SimpleFeatureBuilder {
   }
 
   /**
+   * 指定该地物所属的泰拉城市或城区。
+   *
+   * <p>不调用本方法时 {@link #place()} 返回 {@code null}，表示不属于任何城市。</p>
+   *
+   * @param place {@code ModCity} 或 {@code ModCityRegion} 中声明的城市或城区
+   * @return 当前构建器
+   */
+  public SimpleFeatureBuilder place(TerraPlace place) {
+    this.place = Objects.requireNonNull(place, "地物归属地点不能为空：" + path);
+    return this;
+  }
+
+  /**
    * 校验并将声明登记到所属地物目录。
    *
    * @return 当前构建器
@@ -117,6 +133,14 @@ public final class SimpleFeatureBuilder {
    */
   public ResourceKey<PlacedFeature> placedKey() {
     return Objects.requireNonNull(placedKey, "地物尚未 build：" + path);
+  }
+
+  /**
+   * @return 地物所属的泰拉城市或城区；{@code null} 表示不属于任何城市
+   */
+  @Nullable
+  public TerraPlace place() {
+    return place;
   }
 
   /**

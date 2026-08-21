@@ -19,6 +19,7 @@ base {
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     maven { url 'https://maven.minecraftforge.net/' }
     maven { url 'https://maven.createmod.net/' }
     maven { url 'https://maven.ithundxr.dev/snapshots' }
@@ -63,6 +64,10 @@ sourceSets {
     }
 }
 
+def terraLayoutValidationDir = layout.buildDirectory.dir('reports/terra-layout')
+def terraLayoutValidationJson = terraLayoutValidationDir.map { it.file('terra_layout.json') }
+def terraLayoutValidationMap = terraLayoutValidationDir.map { it.file('terra_layout_map.svg') }
+
 neoForge {
     version = project.neo_version
 
@@ -83,6 +88,7 @@ neoForge {
         }
         data {
             data()
+            systemProperty 'zinecraft.terraLayoutReport', terraLayoutValidationJson.get().asFile.absolutePath
             programArguments.addAll '--mod', project.mod_id, '--all', '--output',
                     file('src/generated/resources/').absolutePath, '--existing',
                     file('src/main/resources/').absolutePath
@@ -100,7 +106,23 @@ neoForge {
     }
 }
 
+tasks.register('generateTerraLayoutValidation', Exec) {
+    group = 'verification'
+    description = 'Exports the Terra Nation/City/Region layout JSON and renders its SVG validation map.'
+    dependsOn tasks.named('runData')
+    workingDir projectDir
+    commandLine 'python', 'script/plot_terra_layout.py',
+            '--input', terraLayoutValidationJson.get().asFile.absolutePath,
+            '--output', terraLayoutValidationMap.get().asFile.absolutePath
+    inputs.file(terraLayoutValidationJson)
+    inputs.file('script/plot_terra_layout.py')
+    outputs.file(terraLayoutValidationMap)
+}
+
 dependencies {
+    // Segment-site Voronoi topology for Nation polyline skeletons. Pinned for reproducible geometry.
+    compileOnly 'com.github.micycle1.jOpenVoronoi:jopenvoronoi-core:2f6d4ca'
+    compileOnly 'org.locationtech.jts:jts-core:1.20.0'
     implementation "com.github.glitchfiend:TerraBlender-neoforge:${project.terra_blender_version}"
     implementation("com.simibubi.create:create-${project.minecraft_version}:${project.create_version}:slim") {
         transitive = false
@@ -151,6 +173,44 @@ dependencies {
         transitive = false
     }
 
+}
+
+def generateTerraLayoutData = tasks.register('generateTerraLayoutData', JavaExec) {
+    group = 'data generation'
+    description = 'Calculates Terra boundaries outside the NeoForge module layer and exports JSON.'
+    dependsOn tasks.named('compileJava')
+    def generatorWorkingDir = layout.buildDirectory.dir('terra-layout-generator')
+    workingDir generatorWorkingDir
+    doFirst {
+        generatorWorkingDir.get().asFile.mkdirs()
+    }
+    classpath = files(
+            sourceSets.main.output.classesDirs,
+            sourceSets.main.compileClasspath,
+            fileTree(layout.buildDirectory.dir('moddev/artifacts')) {
+                include '*client-extra*.jar'
+            }
+    )
+    mainClass = 'com.cxxcxx.zinecraft.core.datagen.TerraLayoutDataExporter'
+    args file('src/generated/resources/data/zinecraft/terra_layout.json').absolutePath,
+            terraLayoutValidationJson.get().asFile.absolutePath
+    inputs.files(sourceSets.main.allJava)
+    outputs.files(
+            file('src/generated/resources/data/zinecraft/terra_layout.json'),
+            terraLayoutValidationJson
+    )
+}
+
+tasks.named('processResources') {
+    dependsOn generateTerraLayoutData
+}
+
+tasks.named('sourcesJar') {
+    dependsOn generateTerraLayoutData
+}
+
+tasks.named('runData') {
+    dependsOn generateTerraLayoutData
 }
 
 tasks.withType(JavaCompile).configureEach {

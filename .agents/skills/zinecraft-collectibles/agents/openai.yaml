@@ -1,4 +1,4 @@
 interface:
   display_name: "Zinecraft Collectibles"
-  short_description: "Import PRTS collectibles as playable Zinecraft accessories"
-  default_prompt: "Use $zinecraft-collectibles to add more PRTS Integrated Strategies collectibles to Zinecraft."
+  short_description: "Import sourced PRTS collectibles with authoritative effects"
+  default_prompt: "Use $zinecraft-collectibles to add a sourced PRTS collectible to Zinecraft."

@@ -53,8 +53,7 @@ public final class ModSurfaceRule {
       ecological(ModBiome.YAN_MOUNTAIN_GROVE.key(), ModBlock.YAN_MOUNTAIN_SOIL),
       ecological(ModBiome.YAN_RIVER_PLAINS.key(), ModBlock.YAN_MOUNTAIN_SOIL),
       solid(ModBiome.IBERIA_SALT_DELTA.key(), ModBlock.IBERIA_SALT_CRUSTED_GRAVEL),
-      solid(ModBiome.IBERIA_COASTAL_CLIFFS.key(), ModBlock.IBERIA_SALT_CRUSTED_GRAVEL),
-      solid(ModBiome.TERRA_CATASTROPHE_ZONE.key(), ModBlock.KAZDEL_SCARRED_ASH)
+      solid(ModBiome.IBERIA_COASTAL_CLIFFS.key(), ModBlock.IBERIA_SALT_CRUSTED_GRAVEL)
   );
 
   private ModSurfaceRule() {

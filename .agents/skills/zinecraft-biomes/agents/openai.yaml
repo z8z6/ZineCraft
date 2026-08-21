@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Biomes"
+  short_description: "Add Terra biomes with climate, surfaces, features, and spawns"
+  default_prompt: "Use $zinecraft-biomes to add and place a sourced Terra biome."

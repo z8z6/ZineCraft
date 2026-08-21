@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Entities"
+  short_description: "Add mobs with AI, spawning, loot, models, and renderers"
+  default_prompt: "Use $zinecraft-entities to add a fully integrated Terra creature."

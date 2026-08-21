@@ -1,13 +1,18 @@
 package com.cxxcxx.zinecraft.core.nation;
 
 import com.cxxcxx.zinecraft.api.nation.*;
+import com.cxxcxx.zinecraft.api.registry.builder.NationBuilder;
+import com.cxxcxx.zinecraft.core.Zinecraft;
+import com.cxxcxx.zinecraft.core.registry.ModNation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public final class TerraNationRelations {
-  public static final NationRelationshipNetwork NETWORK = new NationRelationshipNetwork(states(), relations());
+  public static final NationRelationshipNetwork NETWORK = new NationRelationshipNetwork(
+      Zinecraft.NATIONS.entries(), states(), relations()
+  );
 
   private TerraNationRelations() {
   }
@@ -17,25 +22,26 @@ public final class TerraNationRelations {
 
   private static List<NationState> states() {
     return List.of(
-        state(TerraNation.AEGIR, 72, 50, 80, 10, 15),
-        state(TerraNation.BOLIVAR, 35, 20, 45, 55, 55),
-        state(TerraNation.HIGASHI, 62, 40, 60, 45, 40),
-        state(TerraNation.DURIN, 82, 80, 35, 55, 15),
-        state(TerraNation.COLUMBIA, 88, 72, 85, 90, 65),
-        state(TerraNation.KAZIMIERZ, 78, 65, 72, 75, 45),
-        state(TerraNation.KAZDEL, 30, 30, 88, 35, 70),
-        state(TerraNation.LATERANO, 85, 88, 78, 82, 12),
-        state(TerraNation.LEITHANIEN, 80, 70, 82, 65, 35),
-        state(TerraNation.RIM_BILLITON, 72, 75, 45, 85, 20),
-        state(TerraNation.MINOS, 60, 68, 62, 55, 30),
-        state(TerraNation.SARGON, 65, 60, 70, 70, 40),
-        state(TerraNation.SAMI, 38, 70, 75, 25, 15),
-        state(TerraNation.VICTORIA, 76, 40, 90, 72, 55),
-        state(TerraNation.URSUS, 55, 38, 92, 30, 85),
-        state(TerraNation.KJERAG, 58, 72, 48, 52, 20),
-        state(TerraNation.SIRACUSA, 70, 55, 65, 72, 45),
-        state(TerraNation.YAN, 88, 88, 90, 60, 20),
-        state(TerraNation.IBERIA, 32, 52, 65, 15, 25)
+        state(ModNation.AEGIR, 72, 50, 80, 10, 15),
+        state(ModNation.BOLIVAR, 35, 20, 45, 55, 55),
+        state(ModNation.HIGASHI, 62, 40, 60, 45, 40),
+        state(ModNation.DURIN, 82, 80, 35, 55, 15),
+        state(ModNation.COLUMBIA, 88, 72, 85, 90, 65),
+        state(ModNation.KAZIMIERZ, 78, 65, 72, 75, 45),
+        state(ModNation.KAZDEL, 30, 30, 88, 35, 70),
+        state(ModNation.LATERANO, 85, 88, 78, 82, 12),
+        state(ModNation.LEITHANIEN, 80, 70, 82, 65, 35),
+        state(ModNation.RIM_BILLITON, 72, 75, 45, 85, 20),
+        state(ModNation.MINOS, 60, 68, 62, 55, 30),
+        state(ModNation.SARGON, 65, 60, 70, 70, 40),
+        state(ModNation.SAMI, 38, 70, 75, 25, 15),
+        state(ModNation.VICTORIA, 76, 40, 90, 72, 55),
+        state(ModNation.URSUS, 55, 38, 92, 30, 85),
+        state(ModNation.KJERAG, 58, 72, 48, 52, 20),
+        state(ModNation.SIRACUSA, 70, 55, 65, 72, 45),
+        state(ModNation.SIESTA, 50, 50, 50, 50, 50),
+        state(ModNation.YAN, 88, 88, 90, 60, 20),
+        state(ModNation.IBERIA, 32, 52, 65, 15, 25)
     );
   }
 
@@ -47,17 +53,17 @@ public final class TerraNationRelations {
         "玻利瓦尔处于哥伦比亚与莱塔尼亚支持的政权长期割据之中。"
     );
     relations.addAll(mutual(
-        TerraNation.COLUMBIA, TerraNation.BOLIVAR,
+        ModNation.COLUMBIA, ModNation.BOLIVAR,
         -55, 72, 25, 85, -65, bolivar,
         NationRelationTag.ACTIVE_CONFLICT, NationRelationTag.PROXY_CONFLICT
     ));
     relations.addAll(mutual(
-        TerraNation.LEITHANIEN, TerraNation.BOLIVAR,
+        ModNation.LEITHANIEN, ModNation.BOLIVAR,
         25, 22, 55, 55, 15, bolivar,
         NationRelationTag.INVESTMENT, NationRelationTag.PROXY_CONFLICT
     ));
     relations.addAll(mutual(
-        TerraNation.COLUMBIA, TerraNation.LEITHANIEN,
+        ModNation.COLUMBIA, ModNation.LEITHANIEN,
         -40, 52, 35, 72, -45, bolivar,
         NationRelationTag.PROXY_CONFLICT
     ));
@@ -67,17 +73,17 @@ public final class TerraNationRelations {
         "乌萨斯长期向卡西米尔和萨米扩张，并在血峰战役中进攻东国。"
     );
     relations.addAll(mutual(
-        TerraNation.URSUS, TerraNation.KAZIMIERZ,
+        ModNation.URSUS, ModNation.KAZIMIERZ,
         -65, 78, 12, 85, -72, ursus,
         NationRelationTag.HISTORIC_WAR, NationRelationTag.BORDER_TENSION
     ));
     relations.addAll(mutual(
-        TerraNation.URSUS, TerraNation.SAMI,
+        ModNation.URSUS, ModNation.SAMI,
         -58, 72, 8, 80, -68, ursus,
         NationRelationTag.HISTORIC_WAR, NationRelationTag.BORDER_TENSION
     ));
     relations.addAll(mutual(
-        TerraNation.URSUS, TerraNation.HIGASHI,
+        ModNation.URSUS, ModNation.HIGASHI,
         -60, 68, 12, 82, -70, ursus,
         NationRelationTag.HISTORIC_WAR, NationRelationTag.BORDER_TENSION
     ));
@@ -87,7 +93,7 @@ public final class TerraNationRelations {
         "卡兹戴尔军事委员会进驻伦蒂尼姆并与维多利亚各方爆发战争；战后其残余势力撤离。"
     );
     relations.addAll(mutual(
-        TerraNation.VICTORIA, TerraNation.KAZDEL,
+        ModNation.VICTORIA, ModNation.KAZDEL,
         -65, 48, 8, 72, -78, victoria,
         NationRelationTag.HISTORIC_WAR, NationRelationTag.OCCUPATION
     ));
@@ -97,12 +103,12 @@ public final class TerraNationRelations {
         "阿戈尔技术曾推动伊比利亚繁荣；大静谧后伊比利亚严格限制并打击岛民。"
     );
     relations.add(relation(
-        TerraNation.IBERIA, TerraNation.AEGIR,
+        ModNation.IBERIA, ModNation.AEGIR,
         -48, 24, 12, 68, -62, iberia,
         NationRelationTag.TECHNOLOGY_TRANSFER, NationRelationTag.DIPLOMATIC_EXCLUSION
     ));
     relations.add(relation(
-        TerraNation.AEGIR, TerraNation.IBERIA,
+        ModNation.AEGIR, ModNation.IBERIA,
         -25, 10, 18, 52, -45, iberia,
         NationRelationTag.TECHNOLOGY_TRANSFER
     ));
@@ -112,7 +118,7 @@ public final class TerraNationRelations {
         "拉特兰长期保持中立并充当国际见证与调解方，其宗教也影响伊比利亚。"
     );
     relations.addAll(mutual(
-        TerraNation.LATERANO, TerraNation.IBERIA,
+        ModNation.LATERANO, ModNation.IBERIA,
         20, 4, 42, 22, 18, laterano,
         NationRelationTag.RELIGIOUS_TIES, NationRelationTag.MEDIATION
     ));
@@ -122,7 +128,7 @@ public final class TerraNationRelations {
         "拉特兰现行制度禁止萨卡兹入境。"
     );
     relations.add(relation(
-        TerraNation.LATERANO, TerraNation.KAZDEL,
+        ModNation.LATERANO, ModNation.KAZDEL,
         -72, 18, 2, 75, -80, lateranoKazdel,
         NationRelationTag.DIPLOMATIC_EXCLUSION
     ));
@@ -132,22 +138,22 @@ public final class TerraNationRelations {
         "维多利亚贵族曾支持谢拉格改革派；哥伦比亚、莱塔尼亚和雷姆必拓商人参与对谢拉格投资。"
     );
     relations.addAll(mutual(
-        TerraNation.KJERAG, TerraNation.VICTORIA,
+        ModNation.KJERAG, ModNation.VICTORIA,
         38, 6, 62, 16, 32, kjerag,
         NationRelationTag.INVESTMENT, NationRelationTag.TRADE
     ));
     relations.addAll(mutual(
-        TerraNation.KJERAG, TerraNation.COLUMBIA,
+        ModNation.KJERAG, ModNation.COLUMBIA,
         32, 8, 72, 20, 25, kjerag,
         NationRelationTag.INVESTMENT, NationRelationTag.TRADE
     ));
     relations.addAll(mutual(
-        TerraNation.KJERAG, TerraNation.LEITHANIEN,
+        ModNation.KJERAG, ModNation.LEITHANIEN,
         28, 6, 65, 16, 24, kjerag,
         NationRelationTag.INVESTMENT, NationRelationTag.TRADE
     ));
     relations.addAll(mutual(
-        TerraNation.KJERAG, TerraNation.RIM_BILLITON,
+        ModNation.KJERAG, ModNation.RIM_BILLITON,
         42, 4, 80, 12, 38, kjerag,
         NationRelationTag.INVESTMENT, NationRelationTag.TRADE
     ));
@@ -157,7 +163,7 @@ public final class TerraNationRelations {
         "哥伦比亚独立自维多利亚开拓区，双方在开拓区财产与军事存在问题上关系紧张。"
     );
     relations.addAll(mutual(
-        TerraNation.COLUMBIA, TerraNation.VICTORIA,
+        ModNation.COLUMBIA, ModNation.VICTORIA,
         -28, 28, 62, 58, -30, columbia,
         NationRelationTag.TRADE, NationRelationTag.BORDER_TENSION
     ));
@@ -166,7 +172,7 @@ public final class TerraNationRelations {
   }
 
   private static NationState state(
-      TerraNation nation,
+      NationBuilder nation,
       int prosperity,
       int stability,
       int military,
@@ -181,8 +187,8 @@ public final class TerraNationRelations {
   }
 
   private static List<NationRelation> mutual(
-      TerraNation first,
-      TerraNation second,
+      NationBuilder first,
+      NationBuilder second,
       int favor,
       int warDesire,
       int trade,
@@ -198,8 +204,8 @@ public final class TerraNationRelations {
   }
 
   private static NationRelation relation(
-      TerraNation from,
-      TerraNation to,
+      NationBuilder from,
+      NationBuilder to,
       int favor,
       int warDesire,
       int trade,

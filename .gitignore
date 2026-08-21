@@ -32,7 +32,14 @@ bin/
 
 run/
 src/main/generated/
-src/generated/
+src/generated/*
+!src/generated/resources/
+src/generated/resources/*
+!src/generated/resources/data/
+src/generated/resources/data/*
+!src/generated/resources/data/zinecraft/
+src/generated/resources/data/zinecraft/*
+!src/generated/resources/data/zinecraft/terra_layout.json
 
 # java
 
