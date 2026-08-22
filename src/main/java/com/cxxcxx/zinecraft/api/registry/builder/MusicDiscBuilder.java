@@ -72,8 +72,8 @@ public class MusicDiscBuilder {
         .build();
     item = new ItemBuilder<>(items,
         path,
-        song.zhCn,
-        song.enUs,
+        "音乐唱片",
+        "Music Disc",
         () -> new Item(new Item.Properties()
             .stacksTo(1)
             .rarity(Rarity.RARE)

@@ -147,16 +147,23 @@ public final class CollectibleItem extends Item implements ICurioItem {
     tooltip.add(Component.translatable(seriesTranslationKey, collectible.orderId).withStyle(ChatFormatting.DARK_AQUA));
     for (int index = 0; index < collectible.originalEffectLineCount; index++) {
       var line = Component.translatable(getDescriptionId() + ".original_effect." + index);
+      if (isTooltipPadding(line)) continue;
       tooltip.add(index == 0
           ? Component.translatable(originalEffectLabelTranslationKey, line).withStyle(ChatFormatting.GOLD)
           : line.withStyle(ChatFormatting.GOLD));
     }
     for (int index = 0; index < collectible.descriptionLineCount; index++) {
-      tooltip.add(Component.translatable(getDescriptionId() + ".description." + index).withStyle(ChatFormatting.GRAY));
+      var line = Component.translatable(getDescriptionId() + ".description." + index);
+      if (!isTooltipPadding(line)) tooltip.add(line.withStyle(ChatFormatting.GRAY));
     }
     tooltip.add(Component.translatable(
         minecraftEffectLabelTranslationKey,
         Component.translatable(getDescriptionId() + ".minecraft_effect")
     ).withStyle(ChatFormatting.GREEN));
+  }
+
+  private static boolean isTooltipPadding(Component line) {
+    String text = line.getString();
+    return text.isEmpty() || text.codePoints().allMatch(codePoint -> codePoint == 0x200B);
   }
 }

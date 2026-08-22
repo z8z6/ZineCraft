@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * A peaceful Sankta resident represented by the bundled formal YSM model.
+ * A peaceful Sankta resident rendered with Minecraft's built-in humanoid animations.
  */
 public final class SanktaFormalResidentEntity extends PathfinderMob {
   public SanktaFormalResidentEntity(EntityType<? extends PathfinderMob> type, Level level) {

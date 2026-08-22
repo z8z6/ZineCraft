@@ -114,8 +114,23 @@ public final class DimensionCatalog implements RegistryDataContributor {
    */
   @Override
   public void contribute(RegistrySetBuilder registryBuilder) {
+    if (entries.stream().anyMatch(builder -> builder.noiseSettingsFactory() != null)) {
+      registryBuilder.add(Registries.NOISE_SETTINGS, this::bootstrapNoiseSettings);
+    }
     registryBuilder.add(Registries.DIMENSION_TYPE, this::bootstrapDimensionTypes);
     registryBuilder.add(Registries.LEVEL_STEM, this::bootstrapLevelStems);
+  }
+
+  /**
+   * @param context 专用噪声设置动态注册上下文
+   */
+  public void bootstrapNoiseSettings(BootstrapContext<NoiseGeneratorSettings> context) {
+    for (DimensionBuilder builder : entries) {
+      var factory = builder.noiseSettingsFactory();
+      if (factory != null) {
+        context.register(builder.noiseSettingsKey(), factory.apply(context));
+      }
+    }
   }
 
   /**

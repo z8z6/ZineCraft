@@ -1,5 +1,8 @@
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
+import java.security.MessageDigest
+import java.util.jar.Manifest
 import java.util.zip.ZipFile
 
 plugins {
@@ -52,7 +55,7 @@ repositories {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
-        vendor = JvmVendorSpec.ORACLE
+        vendor = JvmVendorSpec.MICROSOFT
     }
     withSourcesJar()
 }
@@ -67,6 +70,10 @@ sourceSets {
 def terraLayoutValidationDir = layout.buildDirectory.dir('reports/terra-layout')
 def terraLayoutValidationJson = terraLayoutValidationDir.map { it.file('terra_layout.json') }
 def terraLayoutValidationMap = terraLayoutValidationDir.map { it.file('terra_layout_map.svg') }
+def terraTerrainHeightmapFile = layout.buildDirectory.file('reports/terra-terrain/heightmap.json')
+def terraTerrainDatagenDirectory = layout.buildDirectory.dir('terra-terrain-datagen')
+def terraTerrainSeed = providers.gradleProperty('terraTerrainSeed').orElse('-8732947949389768645')
+def terraTerrainSpacing = providers.gradleProperty('terraTerrainSpacing').orElse('1024')
 
 neoForge {
     version = project.neo_version
@@ -93,6 +100,16 @@ neoForge {
                     file('src/generated/resources/').absolutePath, '--existing',
                     file('src/main/resources/').absolutePath
         }
+        terrainHeightData {
+            data()
+            systemProperty 'zinecraft.terraLayoutReport', terraLayoutValidationJson.get().asFile.absolutePath
+            systemProperty 'zinecraft.terraTerrainHeightmap', terraTerrainHeightmapFile.get().asFile.absolutePath
+            systemProperty 'zinecraft.terraTerrainSeed', terraTerrainSeed.get()
+            systemProperty 'zinecraft.terraTerrainSpacing', terraTerrainSpacing.get()
+            programArguments.addAll '--mod', project.mod_id, '--server', '--output',
+                    terraTerrainDatagenDirectory.get().asFile.absolutePath, '--existing',
+                    file('src/main/resources/').absolutePath
+        }
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.INFO
@@ -104,6 +121,18 @@ neoForge {
             sourceSet sourceSets.main
         }
     }
+}
+
+tasks.named('runTerrainHeightData') {
+    inputs.property 'terraTerrainSeed', terraTerrainSeed
+    inputs.property 'terraTerrainSpacing', terraTerrainSpacing
+    outputs.file terraTerrainHeightmapFile
+}
+
+tasks.register('generateTerraTerrainHeightmap') {
+    group = 'data generation'
+    description = 'Samples Terra terrain height at fixed-seed grid centers; not part of runData.'
+    dependsOn tasks.named('runTerrainHeightData')
 }
 
 tasks.register('generateTerraLayoutValidation', Exec) {
@@ -158,14 +187,8 @@ dependencies {
     clientAdditionalRuntimeClasspath "maven.modrinth:sodium:${project.sodium_modrinth_version}"
     // Iris is client-only and requires Sodium; keep it out of server and data-generator runs.
     clientAdditionalRuntimeClasspath "maven.modrinth:YL57xq9U:${project.iris_modrinth_version}"
-    // Distant Horizons is a regular NeoForge mod and must be on runtimeClasspath for discovery.
-    runtimeOnly "maven.modrinth:distanthorizons:${project.distant_horizons_modrinth_version}"
-
     // TaCZ owns gun items, gun-pack loading, rendering, input and mechanical animations.
     implementation "maven.modrinth:tacz-1.21.1:${project.tacz_version}"
-
-    // YSM provides custom player models and animations used by Zinecraft characters.
-    implementation "maven.modrinth:86xjpqqS:${project.ysm_modrinth_version}"
 
     // Development-time VFX authoring and Java integration.
     implementation "com.lowdragmc.ldlib2:ldlib2-neoforge-${project.minecraft_version}:${project.ldlib2_version}:all"
@@ -231,7 +254,6 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
             mod_version             : mod_version,
             tooltip_overhaul_version: tooltip_overhaul_version,
             tacz_version: tacz_version,
-            ysm_version             : ysm_version,
             journeymap_version_range: journeymap_version_range
     ]
     inputs.properties replaceProperties
@@ -310,8 +332,210 @@ tasks.register('verifyCollectibleJarResources') {
     }
 }
 
+tasks.register('verifyMusicDiscJarResources') {
+    group = 'verification'
+    description = 'Verifies that every registered music disc model and texture is present in the JAR.'
+    dependsOn tasks.named('jar')
+
+    doLast {
+        def archive = releaseJarFile.get().asFile
+        new ZipFile(archive).withCloseable { zip ->
+            ['pictures_of_the_past', 'random_gods', 'stranger_think'].each { path ->
+                def modelPath = "assets/zinecraft/models/item/${path}.json"
+                def texturePath = "assets/zinecraft/textures/item/${path}.png"
+                if (zip.getEntry(modelPath) == null) {
+                    throw new GradleException("Missing music disc model: ${modelPath}")
+                }
+                if (zip.getEntry(texturePath) == null) {
+                    throw new GradleException("Missing music disc texture: ${texturePath}")
+                }
+            }
+        }
+    }
+}
+
 tasks.named('check') {
     dependsOn tasks.named('verifyCollectibleJarResources')
+    dependsOn tasks.named('verifyMusicDiscJarResources')
+}
+
+def pclStageDirectory = layout.buildDirectory.dir("pcl/Zinecraft-PCL-${project.mod_version}")
+def pclArchive = layout.buildDirectory.file("distributions/Zinecraft-PCL-${project.mod_version}.zip")
+
+tasks.register('preparePclPackage') {
+    group = 'distribution'
+    description = 'Stages a PCL-compatible pack with the current client configs and key bindings.'
+    dependsOn tasks.named('build')
+    outputs.dir(pclStageDirectory)
+    // Packaging is also a snapshot operation: always pick up the latest local
+    // key bindings, mod configs and JourneyMap UI settings from run/.
+    outputs.upToDateWhen { false }
+
+    doLast {
+        def stage = pclStageDirectory.get().asFile
+        delete stage
+        def overrides = new File(stage, 'overrides')
+        def modsDirectory = new File(overrides, 'mods')
+        modsDirectory.mkdirs()
+
+        def isDistributableMod = { File candidate ->
+            if (!candidate.isFile() || !candidate.name.toLowerCase(Locale.ROOT).endsWith('.jar')) return false
+            def lowerName = candidate.name.toLowerCase(Locale.ROOT)
+            if (lowerName.startsWith('neoforge-')
+                    || lowerName.contains('client-extra')
+                    || lowerName.startsWith('minecraft-')
+                    || lowerName.startsWith('devlaunch-')) return false
+            def accepted = false
+            try {
+                new ZipFile(candidate).withCloseable { zip ->
+                    accepted = zip.getEntry('META-INF/neoforge.mods.toml') != null
+                            || zip.getEntry('META-INF/mods.toml') != null
+                    if (!accepted) {
+                        def manifestEntry = zip.getEntry('META-INF/MANIFEST.MF')
+                        if (manifestEntry != null) {
+                            zip.getInputStream(manifestEntry).withCloseable { stream ->
+                                def type = new Manifest(stream).mainAttributes.getValue('FMLModType')
+                                accepted = type in ['GAMELIBRARY', 'LIBRARY']
+                            }
+                        }
+                    }
+                }
+            } catch (Exception ignored) {
+                accepted = false
+            }
+            return accepted
+        }
+
+        def runtimeFiles = [
+                configurations.runtimeClasspath,
+                configurations.clientAdditionalRuntimeClasspath
+        ].collectMany { configuration -> configuration.resolve() as List<File> }
+        def modFiles = runtimeFiles
+                .findAll(isDistributableMod)
+                .unique { it.canonicalPath }
+                .sort { left, right -> left.name <=> right.name }
+        def names = new HashSet<String>()
+        modFiles.each { source ->
+            if (!names.add(source.name)) {
+                throw new GradleException("Duplicate runtime mod file name: ${source.name}")
+            }
+            copy {
+                from source
+                into modsDirectory
+            }
+        }
+        copy {
+            from releaseJarFile
+            into modsDirectory
+        }
+
+        if (file('run/options.txt').isFile()) {
+            copy {
+                from 'run/options.txt'
+                into overrides
+            }
+        }
+        if (file('run/config').isDirectory()) {
+            copy {
+                from 'run/config'
+                into new File(overrides, 'config')
+            }
+        }
+        if (file('run/journeymap/config').isDirectory()) {
+            copy {
+                from 'run/journeymap/config'
+                into new File(overrides, 'journeymap/config')
+            }
+        }
+
+        copy {
+            from 'src/main/resources/assets/zinecraft/icon.png'
+            into new File(overrides, 'PCL')
+            rename { 'Logo.png' }
+        }
+        new File(overrides, 'PCL/Setup.ini').setText(
+                'Logo=PCL\\Logo.png\r\nLogoCustom=True\r\n', 'UTF-8')
+        new File(overrides, 'README-Zinecraft.txt').setText(
+                'Zinecraft requires Java 21. Allocate at least 6 GB of memory.\r\n'
+                        + 'This pack preserves the project client options, key bindings, mod configs, '
+                        + 'and JourneyMap display settings captured at packaging time.\r\n', 'UTF-8')
+
+        def manifest = [
+                minecraft      : [
+                        version   : project.minecraft_version,
+                        modLoaders: [[id: "neoforge-${project.neo_version}", primary: true]]
+                ],
+                manifestType   : 'minecraftModpack',
+                manifestVersion: 1,
+                name           : "Zinecraft ${project.mod_version}",
+                version        : project.mod_version,
+                author         : 'z8z6z8z6, Ye_xingchen',
+                files          : [],
+                overrides      : 'overrides'
+        ]
+        new File(stage, 'manifest.json').setText(
+                JsonOutput.prettyPrint(JsonOutput.toJson(manifest)) + System.lineSeparator(), 'UTF-8')
+        if (file('LICENSE').isFile()) {
+            copy {
+                from 'LICENSE'
+                into stage
+                rename { 'LICENSE-Zinecraft.txt' }
+            }
+        }
+        new File(stage, 'THIRD_PARTY_MODS.md').setText(
+                '# Bundled runtime mods\n\n'
+                        + 'The following files are redistributed runtime dependencies. '
+                        + 'Their respective authors and licenses remain authoritative.\n\n'
+                        + modFiles.collect { "- ${it.name}" }.join('\n')
+                        + '\n', 'UTF-8')
+    }
+}
+
+tasks.register('packagePcl', Zip) {
+    group = 'distribution'
+    description = 'Builds a PCL-importable Zinecraft pack and snapshots current client configuration.'
+    dependsOn tasks.named('preparePclPackage')
+    archiveFileName = pclArchive.map { it.asFile.name }
+    destinationDirectory = pclArchive.map { it.asFile.parentFile }
+    from pclStageDirectory
+    doFirst {
+        def output = archiveFile.get().asFile
+        if (output.exists() && !providers.gradleProperty('overwritePcl').isPresent()) {
+            throw new GradleException(
+                    "PCL archive already exists: ${output}. Delete it or pass -PoverwritePcl=true.")
+        }
+    }
+}
+
+tasks.register('verifyPclPackage') {
+    group = 'verification'
+    description = 'Validates the PCL archive layout, required config snapshots, and ZIP integrity.'
+    dependsOn tasks.named('packagePcl')
+
+    doLast {
+        def archive = tasks.named('packagePcl', Zip).get().archiveFile.get().asFile
+        new ZipFile(archive).withCloseable { zip ->
+            [
+                    'manifest.json',
+                    'overrides/options.txt',
+                    'overrides/journeymap/config/6.0/journeymap.fullmap.config',
+                    'overrides/journeymap/config/6.0/journeymap.minimap.config',
+                    "overrides/mods/zinecraft-${project.mod_version}.jar"
+            ].each { path ->
+                if (zip.getEntry(path) == null) throw new GradleException("Missing PCL entry: ${path}")
+            }
+            zip.entries().each { entry ->
+                if (!entry.directory && entry.size != 0) {
+                    zip.getInputStream(entry).withCloseable { stream ->
+                        stream.transferTo(OutputStream.nullOutputStream())
+                    }
+                }
+            }
+        }
+        def digest = MessageDigest.getInstance('SHA-256').digest(archive.bytes).encodeHex().toString()
+        logger.lifecycle("PCL archive: ${archive.absolutePath}")
+        logger.lifecycle("PCL SHA-256: ${digest}")
+    }
 }
 
 publishing {

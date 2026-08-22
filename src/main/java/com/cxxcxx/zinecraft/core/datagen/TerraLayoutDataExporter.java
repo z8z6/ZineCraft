@@ -1,10 +1,13 @@
 package com.cxxcxx.zinecraft.core.datagen;
 
 import com.cxxcxx.zinecraft.api.world.city.CityLayoutPlan;
+import com.cxxcxx.zinecraft.api.world.city.CityRegionBuildingSlot;
+import com.cxxcxx.zinecraft.api.world.city.CityRegionConnection;
 import com.cxxcxx.zinecraft.api.world.city.CityRegionCell;
 import com.cxxcxx.zinecraft.api.world.city.NationLayoutPlan;
 import com.cxxcxx.zinecraft.api.world.city.TerraLayoutPlan;
 import com.cxxcxx.zinecraft.api.world.layout.PlanarPoint;
+import com.cxxcxx.zinecraft.api.world.layout.PlanarRectangle;
 import com.cxxcxx.zinecraft.core.nation.TerraLayoutCalculator;
 import com.cxxcxx.zinecraft.core.registry.ModDimension;
 import com.cxxcxx.zinecraft.core.registry.ModNation;
@@ -62,7 +65,7 @@ public final class TerraLayoutDataExporter {
 
   private static JsonObject serialize(TerraLayoutPlan plan) {
     JsonObject root = new JsonObject();
-    root.addProperty("schema_version", 5);
+    root.addProperty("schema_version", 9);
     root.addProperty("coordinate_unit", "minecraft_block");
     root.addProperty("core_size_x", ModDimension.TERRA_CORE_SIZE_X);
     root.addProperty("core_size_z", ModDimension.TERRA_CORE_SIZE_Z);
@@ -75,6 +78,7 @@ public final class TerraLayoutDataExporter {
 
   private static JsonObject nation(NationLayoutPlan plan) {
     JsonObject json = place(plan.nation().id(), plan.nation().zhCn(), plan.center(), plan.boundary());
+    json.add("neighboring_nation_ids", strings(plan.neighboringNationIds()));
     json.addProperty("underground", plan.nation().isUnderground());
     json.addProperty("size", plan.nation().size());
     JsonArray points = new JsonArray();
@@ -94,6 +98,7 @@ public final class TerraLayoutDataExporter {
 
   private static JsonObject city(CityLayoutPlan plan) {
     JsonObject json = place(plan.city().id(), plan.city().zhCn(), plan.center(), plan.boundary());
+    json.add("neighboring_city_ids", strings(plan.neighboringCityIds()));
     json.addProperty("rotation_degrees", plan.city().rotationDegrees());
     JsonArray regions = new JsonArray();
     for (CityRegionCell region : plan.regions()) regions.add(region(region));
@@ -104,6 +109,28 @@ public final class TerraLayoutDataExporter {
   private static JsonObject region(CityRegionCell cell) {
     JsonObject json = place(cell.region().id(), cell.region().zhCn(), cell.center(), cell.boundary());
     json.addProperty("slot_index", cell.slot().index());
+    JsonArray connections = new JsonArray();
+    for (CityRegionConnection connection : cell.connections()) {
+      JsonObject connectionJson = new JsonObject();
+      connectionJson.addProperty("neighboring_slot_index", connection.neighboringSlotIndex());
+      connectionJson.add("point", point(connection.point()));
+      connections.add(connectionJson);
+    }
+    json.add("connections", connections);
+    json.add("mobile_plot", rectangle(cell.mobilePlotBounds()));
+    json.addProperty("building_layout", cell.region().buildingLayout().id());
+    JsonArray buildingSlots = new JsonArray();
+    for (CityRegionBuildingSlot buildingSlot : cell.buildingSlots()) {
+      JsonObject buildingSlotJson = new JsonObject();
+      buildingSlotJson.addProperty("slot_index", buildingSlot.slot().index());
+      buildingSlotJson.addProperty("building_id", buildingSlot.building().path);
+      buildingSlotJson.add("center", point(buildingSlot.center()));
+      buildingSlotJson.add("normalized_slot", point(new PlanarPoint(
+          buildingSlot.slot().x(), buildingSlot.slot().z()
+      )));
+      buildingSlots.add(buildingSlotJson);
+    }
+    json.add("building_slots", buildingSlots);
     json.add("normalized_slot", point(new PlanarPoint(cell.slot().x(), cell.slot().z())));
     return json;
   }
@@ -132,6 +159,23 @@ public final class TerraLayoutDataExporter {
     JsonObject json = new JsonObject();
     json.addProperty("x", point.x());
     json.addProperty("z", point.z());
+    return json;
+  }
+
+  private static JsonObject rectangle(PlanarRectangle rectangle) {
+    JsonObject json = new JsonObject();
+    json.add("center", point(rectangle.center()));
+    json.addProperty("half_size_x", rectangle.halfSizeX());
+    json.addProperty("half_size_z", rectangle.halfSizeZ());
+    json.addProperty("rotation_degrees", rectangle.rotationDegrees());
+    json.addProperty("area", rectangle.area());
+    json.add("corners", polygon(rectangle.corners()));
+    return json;
+  }
+
+  private static JsonArray strings(List<String> values) {
+    JsonArray json = new JsonArray();
+    for (String value : values) json.add(value);
     return json;
   }
 }

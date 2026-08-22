@@ -97,6 +97,17 @@ public final class BiomeBuilder {
   }
 
   /**
+   * 复用另一个群系的生态、颜色、生成步骤和刷怪配置。
+   *
+   * @param template 配置模板群系
+   * @return 当前构建器
+   */
+  public BiomeBuilder configurationFrom(BiomeBuilder template) {
+    this.configure = Objects.requireNonNull(template, "群系配置模板不能为空：" + path).configure;
+    return this;
+  }
+
+  /**
    * 设置群系在多噪声群系源中的气候点。
    *
    * @param temperature     气候温度轴

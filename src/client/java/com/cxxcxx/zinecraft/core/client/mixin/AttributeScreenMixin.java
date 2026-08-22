@@ -22,13 +22,6 @@ public abstract class AttributeScreenMixin extends Screen {
   private static final int MAX_PANEL_WIDTH = 230;
   private static final int LINE_HEIGHT = 10;
 
-  @Shadow
-  public int imageWidth;
-  @Shadow
-  public int leftPos;
-  @Shadow
-  public int topPos;
-
   protected AttributeScreenMixin(Component title) {
     super(title);
   }
@@ -52,9 +45,11 @@ public abstract class AttributeScreenMixin extends Screen {
     int contentWidth = Math.max(font.width(heading), lines.stream().mapToInt(font::width).max().orElse(0));
     int panelWidth = Math.clamp(contentWidth + 12, MIN_PANEL_WIDTH, MAX_PANEL_WIDTH);
     int panelHeight = 19 + lines.size() * LINE_HEIGHT;
-    int x = leftPos + imageWidth + 6;
-    if (x + panelWidth > width - 4) x = Math.max(4, leftPos - panelWidth - 6);
-    int y = Math.max(4, Math.min(topPos, height - panelHeight - 4));
+    BaseTextScreenAccessor screen = (BaseTextScreenAccessor) (Object) this;
+    int guiLeft = screen.zinecraft_getLeftPos();
+    int x = guiLeft + screen.zinecraft_getImageWidth() + 6;
+    if (x + panelWidth > width - 4) x = Math.max(4, guiLeft - panelWidth - 6);
+    int y = Math.max(4, Math.min(screen.zinecraft_getTopPos(), height - panelHeight - 4));
 
     graphics.fill(x, y, x + panelWidth, y + panelHeight, 0xD0101010);
     graphics.fill(x, y, x + panelWidth, y + 1, 0xFF4A778E);

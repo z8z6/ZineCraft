@@ -331,8 +331,32 @@ public final class PolylineVoronoiDiagram {
   }
 
   private static List<PlanarPoint> simplify(List<PlanarPoint> polygon) {
-    ArrayList<PlanarPoint> result = new ArrayList<>();
+    ArrayList<PlanarPoint> compact = new ArrayList<>();
     for (PlanarPoint point : polygon) {
+      if (compact.isEmpty() || !samePoint(compact.getLast(), point)) compact.add(point);
+    }
+    if (compact.size() > 1 && samePoint(compact.getFirst(), compact.getLast())) compact.removeLast();
+    boolean changed;
+    do {
+      changed = false;
+      for (int index = 0; index < compact.size() && compact.size() >= 3; index++) {
+        PlanarPoint previous = compact.get(Math.floorMod(index - 1, compact.size()));
+        PlanarPoint next = compact.get((index + 1) % compact.size());
+        if (!samePoint(previous, next)) continue;
+        compact.remove(index);
+        if (index < compact.size() && samePoint(
+            compact.get(Math.floorMod(index - 1, compact.size())),
+            compact.get(index % compact.size())
+        )) {
+          compact.remove(index % compact.size());
+        }
+        changed = true;
+        break;
+      }
+    } while (changed);
+
+    ArrayList<PlanarPoint> result = new ArrayList<>();
+    for (PlanarPoint point : compact) {
       while (result.size() >= 2 && collinear(result.get(result.size() - 2), result.getLast(), point)) {
         result.removeLast();
       }
@@ -344,7 +368,12 @@ public final class PolylineVoronoiDiagram {
     while (result.size() >= 3 && collinear(result.get(result.size() - 2), result.getLast(), result.getFirst())) {
       result.removeLast();
     }
+    if (result.size() > 1 && samePoint(result.getFirst(), result.getLast())) result.removeLast();
     return List.copyOf(result);
+  }
+
+  private static boolean samePoint(PlanarPoint first, PlanarPoint second) {
+    return Math.hypot(first.x() - second.x(), first.z() - second.z()) <= EPSILON;
   }
 
   private static boolean collinear(PlanarPoint first, PlanarPoint second, PlanarPoint third) {

@@ -1,7 +1,7 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "idle": {
+    "animation.feline_victorian_resident.idle": {
       "loop": true,
       "animation_length": 3.0,
       "bones": {
@@ -195,7 +195,7 @@
         }
       }
     },
-    "forward": {
+    "animation.feline_victorian_resident.walk": {
       "loop": true,
       "animation_length": 1.0,
       "bones": {
@@ -382,7 +382,7 @@
         }
       }
     },
-    "attack": {
+    "animation.feline_victorian_resident.attack": {
       "loop": false,
       "animation_length": 0.8,
       "bones": {

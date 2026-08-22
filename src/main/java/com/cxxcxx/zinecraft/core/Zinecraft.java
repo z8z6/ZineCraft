@@ -10,6 +10,7 @@ import com.cxxcxx.zinecraft.core.dimension.TerraMobSpawnPolicy;
 import com.cxxcxx.zinecraft.core.dimension.TerraPlayerSpawn;
 import com.cxxcxx.zinecraft.core.dimension.TerraWorldBoundary;
 import com.cxxcxx.zinecraft.core.nation.TerraNationRelations;
+import com.cxxcxx.zinecraft.core.nation.TerraBuildingLocateCommand;
 import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
 import com.cxxcxx.zinecraft.core.registry.*;
 import com.cxxcxx.zinecraft.core.skill.ModSkill;
@@ -45,6 +46,7 @@ public final class Zinecraft {
   public static final SoundCatalog SOUNDS = new SoundCatalog(MOD_ID, TRANSLATIONS);
   public static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(MOD_ID, TRANSLATIONS);
   public static final BiomeCatalog BIOMES = new BiomeCatalog(MOD_ID, TRANSLATIONS);
+  public static final DensityFunctionCatalog DENSITY_FUNCTIONS = new DensityFunctionCatalog(MOD_ID);
   public static final DimensionCatalog DIMENSIONS = new DimensionCatalog(MOD_ID);
   public static final FeatureCatalog FEATURES = new FeatureCatalog(MOD_ID);
   public static final RecipeCatalog RECIPES = new RecipeCatalog();
@@ -61,6 +63,7 @@ public final class Zinecraft {
     ENTITIES.register(modBus);
     CREATIVE_TABS.register(modBus);
     BLOCK_ENTITIES.register(modBus);
+    DENSITY_FUNCTIONS.register(modBus);
     DIMENSIONS.register(modBus);
     FEATURES.register(modBus);
     STRUCTURES.register(modBus);
@@ -73,6 +76,7 @@ public final class Zinecraft {
     NeoForge.EVENT_BUS.addListener(TerraMobSpawnPolicy::onFinalizeSpawn);
     NeoForge.EVENT_BUS.addListener(TerraPlayerSpawn::onPlayerLoggedIn);
     NeoForge.EVENT_BUS.addListener(TerraWorldBoundary::onLevelLoad);
+    NeoForge.EVENT_BUS.addListener(TerraBuildingLocateCommand::register);
     FtbQuestGuideInstaller.INSTANCE.install();
   }
 
@@ -97,6 +101,7 @@ public final class Zinecraft {
     ModWeapon.bootstrap();
     TaczIntegration.bootstrap();
     TerraNationRelations.bootstrap();
+    ModDensityFunction.bootstrap();
     ModDimension.bootstrap();
     ModStructure.bootstrap();
     ModCityRegion.bootstrap();

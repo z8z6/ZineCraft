@@ -31,6 +31,9 @@ public final class TerraCityCatalog {
   public TerraCityBuilder register(TerraCityBuilder builder) {
     Objects.requireNonNull(builder, "城市 builder 不能为空");
     if (!builder.belongsTo(this)) throw new IllegalArgumentException("城市 builder 不属于当前目录：" + builder.zhCn);
+    if (builder.declaredId == null || !builder.declaredId.matches("[a-z0-9]+(?:_[a-z0-9]+)*")) {
+      throw new IllegalArgumentException("城市 ID 必须是英文 snake_case：" + builder.zhCn);
+    }
     if (builder.enUs == null || builder.enUs.isBlank())
       throw new IllegalArgumentException("城市英文名不能为空：" + builder.zhCn);
     if (builder.regions == null) throw new IllegalArgumentException("城市城区清单不能为空：" + builder.zhCn);
@@ -38,7 +41,7 @@ public final class TerraCityCatalog {
         || Math.abs(builder.relativeX) >= 1.0 || Math.abs(builder.relativeZ) >= 1.0) {
       throw new IllegalArgumentException("城市归一化坐标必须位于所属国家边界内：" + builder.zhCn);
     }
-    String id = "city_" + Integer.toUnsignedString(builder.zhCn.hashCode(), 36);
+    String id = builder.declaredId;
     builder.bindId(id);
     if (byId.putIfAbsent(id, builder) != null) throw new IllegalArgumentException("泰拉城市 ID 重复：" + id);
     mutableEntries.add(builder);
@@ -104,8 +107,11 @@ public final class TerraCityCatalog {
       throw new IllegalStateException("存在未由国家声明的城市");
     if (!assignedRegions.equals(new LinkedHashSet<>(regions.entries())))
       throw new IllegalStateException("存在未由城市声明的城区");
-    if (!legalBuildings.equals(new LinkedHashSet<>(structures.buildings))) {
-      LinkedHashSet<JigsawBuilder> missing = new LinkedHashSet<>(structures.buildings);
+    LinkedHashSet<JigsawBuilder> registeredCityBuildings = structures.buildings.stream()
+        .filter(JigsawBuilder::cityBuilding)
+        .collect(java.util.stream.Collectors.toCollection(LinkedHashSet::new));
+    if (!legalBuildings.equals(registeredCityBuildings)) {
+      LinkedHashSet<JigsawBuilder> missing = new LinkedHashSet<>(registeredCityBuildings);
       missing.removeAll(legalBuildings);
       throw new IllegalStateException("存在未由城区声明的合法建筑：" + missing.stream().map(entry -> entry.path).toList());
     }

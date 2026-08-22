@@ -1,8 +1,8 @@
 {
   "spec": 2,
   "metadata": {
-    "name": "菲林维多利亚居民",
-    "tips": "猫耳、长尾与维多利亚式长裙的菲林居民模型",
+    "name": "萨科塔礼服居民",
+    "tips": "带独立光环与双翼骨骼的红黑礼服萨科塔人物模型",
     "license": {
       "type": "All Rights Reserved"
     },
@@ -16,7 +16,9 @@
   "properties": {
     "height_scale": 1.0,
     "width_scale": 1.0,
-    "extra_animation": {},
+    "extra_animation": {
+      "extra0": ""
+    },
     "extra_animation_buttons": [],
     "extra_animation_classify": [],
     "preview_animation": "idle",
@@ -33,9 +35,9 @@
         "arm": ""
       },
       "animation": {
-        "main": "animations/entity.animation.json",
+        "main": "animations/main.animation.json",
         "arm": "",
-        "extra": "",
+        "extra": "animations/extra.animation.json",
         "tac": "",
         "carryon": "",
         "parcool": "",
@@ -50,16 +52,7 @@
       ]
     },
     "projectiles": [],
-    "vehicles": [
-      {
-        "match": [
-          "zinecraft:feline_victorian_resident"
-        ],
-        "model": "models/main.json",
-        "animation": "animations/entity.animation.json",
-        "texture": "textures/default.png"
-      }
-    ],
+    "vehicles": [],
     "sound_path": "sounds",
     "function_path": "functions"
   }

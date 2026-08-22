@@ -11,6 +11,9 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.
 import org.jetbrains.annotations.Nullable;
 
 public final class ModStructure {
+  public static final JigsawBuilder MOBILE_PLOT_POWER_LAYER = Zinecraft.STRUCTURES
+      .embeddedInfrastructure("mobile_plot_power_layer", "移动地块动力层", 32);
+
   public static final JigsawBuilder STARGATE = Zinecraft.STRUCTURES.jigsaw("stargate", "萨米星门")
       .enUs("Sami Stargate")
       .biome(ModBiome.SAMI_FROZEN_FOREST.key())
@@ -113,5 +116,6 @@ public final class ModStructure {
   }
 
   public static void bootstrap() {
+    Zinecraft.STRUCTURES.enableMobilePlots(MOBILE_PLOT_POWER_LAYER, ModBiome.ALL_TERRA_BIOMES);
   }
 }

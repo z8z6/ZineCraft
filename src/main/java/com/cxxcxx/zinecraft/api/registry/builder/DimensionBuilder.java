@@ -3,6 +3,7 @@ package com.cxxcxx.zinecraft.api.registry.builder;
 import com.cxxcxx.zinecraft.api.registry.catalog.DimensionCatalog;
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionBiome;
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionBootstrapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.NoiseSettings;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -27,7 +29,13 @@ public final class DimensionBuilder {
   private final List<DimensionBiome> mutableBiomes = new ArrayList<>();
   public final List<DimensionBiome> biomes = Collections.unmodifiableList(mutableBiomes);
   private ResourceKey<NoiseGeneratorSettings> noiseSettingsKey = NoiseGeneratorSettings.OVERWORLD;
-  private Supplier<DimensionType> createDimensionType = DimensionBuilder::createDefaultDimensionType;
+  private int minY = -64;
+  private int height = 384;
+  private int logicalHeight = 384;
+  @Nullable
+  private Function<BootstrapContext<NoiseGeneratorSettings>, NoiseGeneratorSettings> createNoiseSettings;
+  @Nullable
+  private Supplier<DimensionType> createDimensionType;
   @Nullable
   private Function<DimensionBootstrapContext, ChunkGenerator> createGenerator;
   @Nullable
@@ -70,6 +78,39 @@ public final class DimensionBuilder {
    */
   public DimensionBuilder noiseSettings(ResourceKey<NoiseGeneratorSettings> noiseSettingsKey) {
     this.noiseSettingsKey = Objects.requireNonNull(noiseSettingsKey, "噪声设置不能为空：" + path);
+    this.createNoiseSettings = null;
+    return this;
+  }
+
+  /**
+   * 设置并动态生成维度专用的噪声设置。
+   *
+   * @param noiseSettingsKey   专用噪声设置资源键
+   * @param createNoiseSettings 噪声设置工厂
+   * @return 当前构建器
+   */
+  public DimensionBuilder noiseSettings(
+      ResourceKey<NoiseGeneratorSettings> noiseSettingsKey,
+      Function<? super BootstrapContext<NoiseGeneratorSettings>, ? extends NoiseGeneratorSettings> createNoiseSettings
+  ) {
+    this.noiseSettingsKey = Objects.requireNonNull(noiseSettingsKey, "噪声设置不能为空：" + path);
+    Objects.requireNonNull(createNoiseSettings, "噪声设置工厂不能为空：" + path);
+    this.createNoiseSettings = context -> createNoiseSettings.apply(context);
+    return this;
+  }
+
+  /**
+   * 同时设置维度类型与噪声区块生成器的垂直范围。
+   *
+   * @param minY   最低可建造 Y 坐标
+   * @param height 总高度，必须是 16 的倍数
+   * @return 当前构建器
+   */
+  public DimensionBuilder heightRange(int minY, int height) {
+    NoiseSettings.create(minY, height, 1, 2);
+    this.minY = minY;
+    this.height = height;
+    this.logicalHeight = height;
     return this;
   }
 
@@ -149,7 +190,17 @@ public final class DimensionBuilder {
    * @return 新建维度类型值
    */
   public DimensionType createDimensionType() {
-    return createDimensionType.get();
+    return createDimensionType == null
+        ? createDefaultDimensionType(minY, height, logicalHeight)
+        : createDimensionType.get();
+  }
+
+  /**
+   * @return 自定义噪声设置工厂；使用已有资源键时为 {@code null}
+   */
+  @Nullable
+  public Function<BootstrapContext<NoiseGeneratorSettings>, NoiseGeneratorSettings> noiseSettingsFactory() {
+    return createNoiseSettings;
   }
 
   /**
@@ -167,7 +218,7 @@ public final class DimensionBuilder {
     return this.catalog == catalog;
   }
 
-  private static DimensionType createDefaultDimensionType() {
+  private static DimensionType createDefaultDimensionType(int minY, int height, int logicalHeight) {
     return new DimensionType(
         OptionalLong.empty(),
         true,
@@ -177,9 +228,9 @@ public final class DimensionBuilder {
         1.0,
         true,
         false,
-        -64,
-        384,
-        384,
+        minY,
+        height,
+        logicalHeight,
         BlockTags.INFINIBURN_OVERWORLD,
         BuiltinDimensionTypes.OVERWORLD_EFFECTS,
         0.0F,

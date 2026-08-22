@@ -21,7 +21,7 @@ public final class GridLayout implements Layout {
   }
 
   private static double normalize(double position, int size) {
-    return size == 1 ? 0.0 : position * 2.0 / (size - 1) - 1.0;
+    return (position + 0.5) * 2.0 / size - 1.0;
   }
 
   @Override

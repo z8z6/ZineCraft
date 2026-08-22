@@ -3,6 +3,8 @@ package com.cxxcxx.zinecraft.api.registry.builder;
 import com.cxxcxx.zinecraft.api.nation.TerraCityRegionBuilding;
 import com.cxxcxx.zinecraft.api.nation.TerraPlace;
 import com.cxxcxx.zinecraft.api.registry.catalog.TerraCityRegionCatalog;
+import com.cxxcxx.zinecraft.api.world.layout.GridLayout;
+import com.cxxcxx.zinecraft.api.world.layout.Layout;
 import com.cxxcxx.zinecraft.api.world.layout.LayoutSlotCount;
 import com.cxxcxx.zinecraft.api.world.layout.WeightedLayoutElement;
 
@@ -23,6 +25,7 @@ public final class TerraCityRegionBuilder implements TerraPlace, WeightedLayoutE
   public int weight = 1;
   public boolean unique;
   public List<TerraCityRegionBuilding> buildings = List.of();
+  public Layout buildingLayout = GridLayout.INSTANCE;
   public LayoutSlotCount slotCount = LayoutSlotCount.SLOTS_100;
   private boolean built;
 
@@ -46,6 +49,11 @@ public final class TerraCityRegionBuilder implements TerraPlace, WeightedLayoutE
 
   public TerraCityRegionBuilder slotCount(LayoutSlotCount slotCount) {
     this.slotCount = Objects.requireNonNull(slotCount, "城区槽位数量不能为空：" + zhCn);
+    return this;
+  }
+
+  public TerraCityRegionBuilder buildingLayout(Layout buildingLayout) {
+    this.buildingLayout = Objects.requireNonNull(buildingLayout, "城区建筑布局不能为空：" + zhCn);
     return this;
   }
 
@@ -132,5 +140,9 @@ public final class TerraCityRegionBuilder implements TerraPlace, WeightedLayoutE
 
   public LayoutSlotCount slotCount() {
     return slotCount;
+  }
+
+  public Layout buildingLayout() {
+    return buildingLayout;
   }
 }

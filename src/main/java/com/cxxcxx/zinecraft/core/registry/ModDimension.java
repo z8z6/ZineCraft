@@ -5,11 +5,15 @@ import com.cxxcxx.zinecraft.api.registry.builder.DimensionBuilder;
 import com.cxxcxx.zinecraft.api.registry.builder.NationBuilder;
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionBiome;
 import com.cxxcxx.zinecraft.api.world.dimension.DimensionBootstrapContext;
+import com.cxxcxx.zinecraft.api.world.dimension.OverworldNoiseSettingsFactory;
 import com.cxxcxx.zinecraft.api.world.dimension.TerraBiomeSource;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +26,16 @@ public final class ModDimension {
    * 泰拉世界边界的完整边长，坐标范围为 [-50000, 50000)。
    */
   public static final int TERRA_MAP_SIZE = 100_000;
+  /**
+   * 泰拉的垂直建造与区块生成范围为 [-256, 767]。
+   */
+  public static final int TERRA_MIN_Y = -256;
+  public static final int TERRA_HEIGHT = 1024;
+  public static final int TERRA_MAX_Y = TERRA_MIN_Y + TERRA_HEIGHT - 1;
+  public static final ResourceKey<NoiseGeneratorSettings> TERRA_NOISE_SETTINGS = ResourceKey.create(
+      Registries.NOISE_SETTINGS,
+      Zinecraft.id("terra")
+  );
   /**
    * 国家 Voronoi 只在以原点为中心的八万格乘五万格泰拉核心矩形内计算。
    */
@@ -40,6 +54,16 @@ public final class ModDimension {
   public static final int OUTER_OCEAN_RING_WIDTH = 1_000;
 
   public static final DimensionBuilder TERRA = Zinecraft.DIMENSIONS.dimension("terra")
+      .heightRange(TERRA_MIN_Y, TERRA_HEIGHT)
+      .noiseSettings(
+          TERRA_NOISE_SETTINGS,
+          context -> OverworldNoiseSettingsFactory.create(
+              context,
+              TERRA_MIN_Y,
+              TERRA_HEIGHT,
+              ModDensityFunction.TERRA_FINAL_DENSITY.key()
+          )
+      )
       .biomes(validateMap().stream()
           .map(builder -> new DimensionBiome(builder.key(), builder.climate()))
           .toList())

@@ -40,7 +40,7 @@ public final class TerraCityRegionCatalog {
       Objects.requireNonNull(declaration, "城区合法建筑清单不能包含 null：" + builder.zhCn);
       JigsawBuilder building = declaration.building();
       Objects.requireNonNull(building, "城区合法建筑清单不能包含 null：" + builder.zhCn);
-      if (!structures.buildings.contains(building))
+      if (!structures.buildings.contains(building) || !building.cityBuilding())
         throw new IllegalArgumentException("城区引用了尚未注册的建筑：" + building.path);
       if (!declaredBuildings.add(building)) throw new IllegalArgumentException("城区重复声明合法建筑：" + building.path);
       legalBuildings.add(declaration);

@@ -16,15 +16,22 @@ public final class TerraLayoutCalculator {
   private final PolylineVoronoiDiagram nationVoronoiDiagram;
   private final CityLayoutCalculator cityLayoutCalculator;
   private final NormalizedVoronoiCalculator normalizedVoronoiCalculator;
+  private final PolygonAdjacencyCalculator adjacencyCalculator;
 
   public TerraLayoutCalculator() {
-    this(new PolylineVoronoiDiagram(), new CityLayoutCalculator(), new NormalizedVoronoiCalculator());
+    this(
+        new PolylineVoronoiDiagram(),
+        new CityLayoutCalculator(),
+        new NormalizedVoronoiCalculator(),
+        new PolygonAdjacencyCalculator()
+    );
   }
 
   public TerraLayoutCalculator(
       PolylineVoronoiDiagram nationVoronoiDiagram,
       CityLayoutCalculator cityLayoutCalculator,
-      NormalizedVoronoiCalculator normalizedVoronoiCalculator
+      NormalizedVoronoiCalculator normalizedVoronoiCalculator,
+      PolygonAdjacencyCalculator adjacencyCalculator
   ) {
     this.nationVoronoiDiagram = Objects.requireNonNull(nationVoronoiDiagram, "国家 Voronoi 计算器不能为空");
     this.cityLayoutCalculator = Objects.requireNonNull(cityLayoutCalculator, "城市布局计算器不能为空");
@@ -32,6 +39,7 @@ public final class TerraLayoutCalculator {
         normalizedVoronoiCalculator,
         "归一化 Voronoi 计算器不能为空"
     );
+    this.adjacencyCalculator = Objects.requireNonNull(adjacencyCalculator, "多边形邻接计算器不能为空");
   }
 
   private static List<PlanarPoint> absolutePoints(
@@ -99,7 +107,19 @@ public final class TerraLayoutCalculator {
       if (nationCell == null) throw new IllegalStateException("地表国家缺少 Voronoi 单元：" + nation.id());
       plans.add(calculateNation(nation, nationCell.site().point(), nationCell.boundary()));
     }
-    return new TerraLayoutPlan(terraBoundary, plans);
+    List<List<Integer>> adjacency = adjacencyCalculator.calculate(plans, NationLayoutPlan::boundary);
+    List<NationLayoutPlan> connectedPlans = java.util.stream.IntStream.range(0, plans.size())
+        .mapToObj(index -> {
+          NationLayoutPlan plan = plans.get(index);
+          List<String> neighboringNationIds = adjacency.get(index).stream()
+              .map(neighborIndex -> plans.get(neighborIndex).nation().id())
+              .toList();
+          return new NationLayoutPlan(
+              plan.nation(), plan.center(), plan.boundary(), plan.cities(), neighboringNationIds
+          );
+        })
+        .toList();
+    return new TerraLayoutPlan(terraBoundary, connectedPlans);
   }
 
   private NationLayoutPlan calculateNation(
@@ -124,6 +144,22 @@ public final class TerraLayoutCalculator {
             new Random(Integer.toUnsignedLong(cell.site().element().id().hashCode()))
         ))
         .toList();
-    return new NationLayoutPlan(nation, nationCenter, nationBoundary, cities);
+    List<List<Integer>> adjacency = adjacencyCalculator.calculateVoronoi(
+        cities,
+        CityLayoutPlan::boundary,
+        CityLayoutPlan::center
+    );
+    List<CityLayoutPlan> connectedCities = java.util.stream.IntStream.range(0, cities.size())
+        .mapToObj(index -> {
+          CityLayoutPlan city = cities.get(index);
+          List<String> neighboringCityIds = adjacency.get(index).stream()
+              .map(neighborIndex -> cities.get(neighborIndex).city().id())
+              .toList();
+          return new CityLayoutPlan(
+              city.nation(), city.city(), city.center(), city.boundary(), city.regions(), neighboringCityIds
+          );
+        })
+        .toList();
+    return new NationLayoutPlan(nation, nationCenter, nationBoundary, connectedCities, List.of());
   }
 }

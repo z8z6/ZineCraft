@@ -144,18 +144,28 @@ public final class CollectibleCatalog {
       List<LocalizedTooltipLine> descriptionLines
   ) {
     String key = "item." + namespace + "." + builder.path;
-    translations.add(key + ".original_effect", builder.originalEffectZhCn, builder.originalEffectEnUs);
+    translations.add(key + ".original_effect",
+        literalTranslation(builder.originalEffectZhCn), literalTranslation(builder.originalEffectEnUs));
     for (int index = 0; index < originalEffectLines.size(); index++) {
       LocalizedTooltipLine line = originalEffectLines.get(index);
-      translations.add(key + ".original_effect." + index, line.getZhCn(), line.getEnUs());
+      translations.add(key + ".original_effect." + index,
+          literalTranslation(line.getZhCn()), literalTranslation(line.getEnUs()));
     }
 
-    translations.add(key + ".description", builder.descriptionZhCn, builder.descriptionEnUs);
+    translations.add(key + ".description",
+        literalTranslation(builder.descriptionZhCn), literalTranslation(builder.descriptionEnUs));
     for (int index = 0; index < descriptionLines.size(); index++) {
       LocalizedTooltipLine line = descriptionLines.get(index);
-      translations.add(key + ".description." + index, line.getZhCn(), line.getEnUs());
+      translations.add(key + ".description." + index,
+          literalTranslation(line.getZhCn()), literalTranslation(line.getEnUs()));
     }
-    translations.add(key + ".minecraft_effect", builder.minecraftEffectZhCn, builder.minecraftEffectEnUs);
+    translations.add(key + ".minecraft_effect",
+        literalTranslation(builder.minecraftEffectZhCn), literalTranslation(builder.minecraftEffectEnUs));
+  }
+
+  /** Escapes percentages that are content, not Component.translatable placeholders. */
+  private static String literalTranslation(String value) {
+    return value.replace("%", "%%");
   }
 
 }

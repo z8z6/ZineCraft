@@ -1,8 +1,8 @@
 package com.cxxcxx.zinecraft.core.client;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
-import com.cxxcxx.zinecraft.core.client.entity.FelineYsmModelBridge;
-import com.cxxcxx.zinecraft.core.client.entity.SanktaYsmModelBridge;
+import com.cxxcxx.zinecraft.core.client.entity.BlockbenchResidentModel;
+import com.cxxcxx.zinecraft.core.client.entity.ResidentHumanoidRenderer;
 import com.cxxcxx.zinecraft.core.client.entity.TerraCreatureModel;
 import com.cxxcxx.zinecraft.core.client.entity.TerraCreatureRenderer;
 import com.cxxcxx.zinecraft.core.client.ponder.ZinecraftPonderPlugin;
@@ -11,16 +11,21 @@ import com.cxxcxx.zinecraft.core.registry.ModEntity;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.NoopRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.common.NeoForge;
 
 @EventBusSubscriber(modid = Zinecraft.MOD_ID, value = Dist.CLIENT)
 public final class ZinecraftCoreClient {
+  private static final ResourceLocation SANKTA_RESIDENT_TEXTURE =
+      Zinecraft.id("textures/entity/sankta_formal_resident.png");
+  private static final ResourceLocation FELINE_RESIDENT_TEXTURE =
+      Zinecraft.id("textures/entity/feline_victorian_resident.png");
+  public static final ModelLayerLocation SANKTA_RESIDENT_LAYER = layer("sankta_formal_resident");
+  public static final ModelLayerLocation FELINE_RESIDENT_LAYER = layer("feline_victorian_resident");
   public static final ModelLayerLocation SANDBEAST_LAYER = layer("sandbeast");
   public static final ModelLayerLocation RIVENBEAST_LAYER = layer("rivenbeast");
   public static final ModelLayerLocation CLAMPBEAST_LAYER = layer("clampbeast");
@@ -32,8 +37,10 @@ public final class ZinecraftCoreClient {
   @SubscribeEvent
   public static void setup(FMLClientSetupEvent event) {
     event.enqueueWork(() -> {
-      EntityRenderers.register(ModEntity.SANKTA_FORMAL_RESIDENT.get(), NoopRenderer::new);
-      EntityRenderers.register(ModEntity.FELINE_VICTORIAN_RESIDENT.get(), NoopRenderer::new);
+      EntityRenderers.register(ModEntity.SANKTA_FORMAL_RESIDENT.get(),
+          context -> new ResidentHumanoidRenderer<>(context, SANKTA_RESIDENT_LAYER, SANKTA_RESIDENT_TEXTURE));
+      EntityRenderers.register(ModEntity.FELINE_VICTORIAN_RESIDENT.get(),
+          context -> new ResidentHumanoidRenderer<>(context, FELINE_RESIDENT_LAYER, FELINE_RESIDENT_TEXTURE));
       EntityRenderers.register(ModEntity.SANDBEAST.get(), context -> new TerraCreatureRenderer(
           context, SANDBEAST_LAYER, Zinecraft.id("textures/entity/sandbeast.png"), 0.7F));
       EntityRenderers.register(ModEntity.RIVENBEAST.get(), context -> new TerraCreatureRenderer(
@@ -42,8 +49,6 @@ public final class ZinecraftCoreClient {
           context, CLAMPBEAST_LAYER, Zinecraft.id("textures/entity/clampbeast.png"), 0.6F));
       EntityRenderers.register(ModEntity.PACKBEAST.get(), context -> new TerraCreatureRenderer(
           context, PACKBEAST_LAYER, Zinecraft.id("textures/entity/packbeast.png"), 0.8F));
-      NeoForge.EVENT_BUS.addListener(SanktaYsmModelBridge::onEntityJoin);
-      NeoForge.EVENT_BUS.addListener(FelineYsmModelBridge::onEntityJoin);
       PonderIndex.addPlugin(ZinecraftPonderPlugin.INSTANCE);
       WeaponPresentationController.initialize();
     });
@@ -51,6 +56,10 @@ public final class ZinecraftCoreClient {
 
   @SubscribeEvent
   public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+    event.registerLayerDefinition(SANKTA_RESIDENT_LAYER,
+        () -> BlockbenchResidentModel.layer("sankta_formal_resident"));
+    event.registerLayerDefinition(FELINE_RESIDENT_LAYER,
+        () -> BlockbenchResidentModel.layer("feline_victorian_resident"));
     event.registerLayerDefinition(SANDBEAST_LAYER, TerraCreatureModel::sandbeastLayer);
     event.registerLayerDefinition(RIVENBEAST_LAYER, TerraCreatureModel::rivenbeastLayer);
     event.registerLayerDefinition(CLAMPBEAST_LAYER, TerraCreatureModel::clampbeastLayer);

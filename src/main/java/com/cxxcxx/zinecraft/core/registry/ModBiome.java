@@ -417,6 +417,91 @@ public final class ModBiome {
           .waterColor(0x2F83A3).waterFogColor(0x185069).fogColor(0xBFD4D7)
           .grassColor(0x91A65A).foliageColor(0x728C4E).plains()
   );
+
+  /*
+   * 国家城市群系沿用本国首个自然群系的生态配置，气候点位于本国两个自然群系之间。
+   */
+  public static final BiomeBuilder AEGIR_CITY = new BiomeBuilder(Zinecraft.BIOMES, "aegir_city", "阿戈尔城市")
+      .climate(-0.5F, 0.775F, -1.125F, 0.125F, 0.175F, -0.15F)
+      .configurationFrom(AEGIR_ABYSSAL_SEA)
+      .build();
+  public static final BiomeBuilder BOLIVAR_CITY = new BiomeBuilder(Zinecraft.BIOMES, "bolivar_city", "玻利瓦尔城市")
+      .climate(0.6F, 0.4F, 0.125F, 0.1F, 0.0F, 0.175F)
+      .configurationFrom(BOLIVAR_PLAIN)
+      .build();
+  public static final BiomeBuilder HIGASHI_CITY = new BiomeBuilder(Zinecraft.BIOMES, "higashi_city", "东国城市")
+      .climate(-0.35F, 0.5F, 0.45F, -0.675F, 0.0F, -0.1F)
+      .configurationFrom(HIGASHI_SHADOW_RIFT)
+      .build();
+  public static final BiomeBuilder DURIN_CITY = new BiomeBuilder(Zinecraft.BIOMES, "durin_city", "杜林城市")
+      .climate(0.25F, 0.775F, 0.15F, -0.1F, 1.0F, -0.2F)
+      .configurationFrom(DURIN_UNDERGROUND_GARDEN)
+      .build();
+  public static final BiomeBuilder COLUMBIA_CITY = new BiomeBuilder(Zinecraft.BIOMES, "columbia_city", "哥伦比亚城市")
+      .climate(0.675F, -0.425F, 0.625F, 0.1F, 0.0F, 0.225F)
+      .configurationFrom(COLUMBIA_SANDSTONE_WILDS)
+      .build();
+  public static final BiomeBuilder KAZIMIERZ_CITY = new BiomeBuilder(Zinecraft.BIOMES, "kazimierz_city", "卡西米尔城市")
+      .climate(-0.075F, 0.1F, 0.45F, 0.2F, 0.0F, 0.125F)
+      .configurationFrom(KAZIMIERZ_KNIGHTLAND)
+      .build();
+  public static final BiomeBuilder KAZDEL_CITY = new BiomeBuilder(Zinecraft.BIOMES, "kazdel_city", "卡兹戴尔城市")
+      .climate(-0.1F, -0.75F, 0.825F, -0.725F, 0.0F, 0.05F)
+      .configurationFrom(KAZDEL_SCARRED_WASTES)
+      .build();
+  public static final BiomeBuilder LATERANO_CITY = new BiomeBuilder(Zinecraft.BIOMES, "laterano_city", "拉特兰城市")
+      .climate(0.3F, 0.1F, 0.375F, 0.1F, 0.0F, 0.475F)
+      .configurationFrom(LATERANO_HOLY_FIELDS)
+      .build();
+  public static final BiomeBuilder LEITHANIEN_CITY = new BiomeBuilder(Zinecraft.BIOMES, "leithanien_city", "莱塔尼亚城市")
+      .climate(-0.425F, 0.5F, 0.5F, -0.075F, 0.0F, 0.2F)
+      .configurationFrom(LEITHANIEN_TWILIGHT_FOREST)
+      .build();
+  public static final BiomeBuilder RIM_BILLITON_CITY = new BiomeBuilder(Zinecraft.BIOMES, "rim_billiton_city", "雷姆必拓城市")
+      .climate(0.8F, -0.6F, 0.8F, -0.55F, 0.0F, 0.675F)
+      .configurationFrom(RIM_BILLITON_MINING_BADLANDS)
+      .build();
+  public static final BiomeBuilder MINOS_CITY = new BiomeBuilder(Zinecraft.BIOMES, "minos_city", "米诺斯城市")
+      .climate(0.4F, 0.125F, 0.05F, 0.175F, 0.0F, 0.15F)
+      .configurationFrom(MINOS_SUNLIT_HILLS)
+      .build();
+  public static final BiomeBuilder SARGON_CITY = new BiomeBuilder(Zinecraft.BIOMES, "sargon_city", "萨尔贡城市")
+      .climate(0.95F, 0.025F, 0.425F, -0.2F, 0.0F, 0.075F)
+      .configurationFrom(SARGON_ROCKY_DESERT)
+      .build();
+  public static final BiomeBuilder SAMI_CITY = new BiomeBuilder(Zinecraft.BIOMES, "sami_city", "萨米城市")
+      .climate(-0.925F, 0.325F, 0.9F, -0.65F, 0.0F, 0.375F)
+      .configurationFrom(SAMI_FROZEN_FOREST)
+      .build();
+  public static final BiomeBuilder VICTORIA_CITY = new BiomeBuilder(Zinecraft.BIOMES, "victoria_city", "维多利亚城市")
+      .climate(-0.125F, 0.725F, 0.225F, 0.3F, 0.0F, 0.15F)
+      .configurationFrom(VICTORIA_MISTY_HIGHLANDS)
+      .build();
+  public static final BiomeBuilder URSUS_CITY = new BiomeBuilder(Zinecraft.BIOMES, "ursus_city", "乌萨斯城市")
+      .climate(-0.825F, -0.2F, 0.775F, -0.075F, 0.0F, 0.15F)
+      .configurationFrom(URSUS_FROZEN_STEPPE)
+      .build();
+  public static final BiomeBuilder KJERAG_CITY = new BiomeBuilder(Zinecraft.BIOMES, "kjerag_city", "谢拉格城市")
+      .climate(-0.85F, 0.525F, 0.775F, -0.55F, 0.0F, 0.6F)
+      .configurationFrom(KJERAG_SNOWY_PEAKS)
+      .build();
+  public static final BiomeBuilder SIRACUSA_CITY = new BiomeBuilder(Zinecraft.BIOMES, "siracusa_city", "叙拉古城市")
+      .climate(0.125F, 0.825F, 0.05F, 0.5F, 0.0F, -0.25F)
+      .configurationFrom(SIRACUSA_RAINY_WOODLAND)
+      .build();
+  public static final BiomeBuilder SIESTA_CITY = new BiomeBuilder(Zinecraft.BIOMES, "siesta_city", "汐斯塔城市")
+      .climate(0.7F, 0.175F, 0.0F, -0.05F, 0.0F, 0.15F)
+      .configurationFrom(SIESTA_VOLCANIC_COAST)
+      .build();
+  public static final BiomeBuilder YAN_CITY = new BiomeBuilder(Zinecraft.BIOMES, "yan_city", "炎城市")
+      .climate(0.2F, 0.575F, 0.225F, 0.225F, 0.0F, 0.325F)
+      .configurationFrom(YAN_MOUNTAIN_GROVE)
+      .build();
+  public static final BiomeBuilder IBERIA_CITY = new BiomeBuilder(Zinecraft.BIOMES, "iberia_city", "伊比利亚城市")
+      .climate(0.375F, 0.7F, 0.075F, 0.075F, 0.0F, -0.025F)
+      .configurationFrom(IBERIA_SALT_DELTA)
+      .build();
+
   public static final BiomeBuilder TERRA_RIVER = biome(
       "terra_river",
       "泰拉河流",
@@ -464,26 +549,26 @@ public final class ModBiome {
    * 国家是地图区域；群系是该区域内由气候噪声选择的自然环境。
    */
   public static final Map<NationBuilder, List<BiomeBuilder>> NATIONAL_BIOMES = Map.ofEntries(
-      Map.entry(ModNation.AEGIR, List.of(AEGIR_ABYSSAL_SEA, AEGIR_PELAGIC_DEPTHS)),
-      Map.entry(ModNation.BOLIVAR, List.of(BOLIVAR_PLAIN, BOLIVAR_BLACKFLOW_FOREST)),
-      Map.entry(ModNation.HIGASHI, List.of(HIGASHI_SHADOW_RIFT, HIGASHI_MOUNTAIN_FOREST)),
-      Map.entry(ModNation.DURIN, List.of(DURIN_UNDERGROUND_GARDEN, DURIN_CAVERN_LAKE)),
-      Map.entry(ModNation.COLUMBIA, List.of(COLUMBIA_SANDSTONE_WILDS, COLUMBIA_EASTERN_PRAIRIE)),
-      Map.entry(ModNation.KAZIMIERZ, List.of(KAZIMIERZ_KNIGHTLAND, KAZIMIERZ_FORESTED_HILLS)),
-      Map.entry(ModNation.KAZDEL, List.of(KAZDEL_SCARRED_WASTES, KAZDEL_RUINED_HIGHLANDS)),
-      Map.entry(ModNation.LATERANO, List.of(LATERANO_HOLY_FIELDS, LATERANO_HIGHLAND_PLATEAU)),
-      Map.entry(ModNation.LEITHANIEN, List.of(LEITHANIEN_TWILIGHT_FOREST, LEITHANIEN_ALPINE_VALLEY)),
-      Map.entry(ModNation.RIM_BILLITON, List.of(RIM_BILLITON_MINING_BADLANDS, RIM_BILLITON_ARID_MESA)),
-      Map.entry(ModNation.MINOS, List.of(MINOS_SUNLIT_HILLS, MINOS_RIVER_VALLEY)),
-      Map.entry(ModNation.SARGON, List.of(SARGON_ROCKY_DESERT, SARGON_TROPICAL_RAINFOREST)),
-      Map.entry(ModNation.SAMI, List.of(SAMI_FROZEN_FOREST, SAMI_GLACIAL_MOUNTAINS)),
-      Map.entry(ModNation.VICTORIA, List.of(VICTORIA_MISTY_HIGHLANDS, VICTORIA_CENTRAL_LOWLANDS)),
-      Map.entry(ModNation.URSUS, List.of(URSUS_FROZEN_STEPPE, URSUS_EASTERN_HIGHLANDS)),
-      Map.entry(ModNation.KJERAG, List.of(KJERAG_SNOWY_PEAKS, KJERAG_ALPINE_FOREST)),
-      Map.entry(ModNation.SIRACUSA, List.of(SIRACUSA_RAINY_WOODLAND, SIRACUSA_LOWLAND_FOREST)),
-      Map.entry(ModNation.SIESTA, List.of(SIESTA_VOLCANIC_COAST, SIESTA_RESORT_SHORE)),
-      Map.entry(ModNation.YAN, List.of(YAN_MOUNTAIN_GROVE, YAN_RIVER_PLAINS)),
-      Map.entry(ModNation.IBERIA, List.of(IBERIA_SALT_DELTA, IBERIA_COASTAL_CLIFFS))
+      Map.entry(ModNation.AEGIR, List.of(AEGIR_ABYSSAL_SEA, AEGIR_PELAGIC_DEPTHS, AEGIR_CITY)),
+      Map.entry(ModNation.BOLIVAR, List.of(BOLIVAR_PLAIN, BOLIVAR_BLACKFLOW_FOREST, BOLIVAR_CITY)),
+      Map.entry(ModNation.HIGASHI, List.of(HIGASHI_SHADOW_RIFT, HIGASHI_MOUNTAIN_FOREST, HIGASHI_CITY)),
+      Map.entry(ModNation.DURIN, List.of(DURIN_UNDERGROUND_GARDEN, DURIN_CAVERN_LAKE, DURIN_CITY)),
+      Map.entry(ModNation.COLUMBIA, List.of(COLUMBIA_SANDSTONE_WILDS, COLUMBIA_EASTERN_PRAIRIE, COLUMBIA_CITY)),
+      Map.entry(ModNation.KAZIMIERZ, List.of(KAZIMIERZ_KNIGHTLAND, KAZIMIERZ_FORESTED_HILLS, KAZIMIERZ_CITY)),
+      Map.entry(ModNation.KAZDEL, List.of(KAZDEL_SCARRED_WASTES, KAZDEL_RUINED_HIGHLANDS, KAZDEL_CITY)),
+      Map.entry(ModNation.LATERANO, List.of(LATERANO_HOLY_FIELDS, LATERANO_HIGHLAND_PLATEAU, LATERANO_CITY)),
+      Map.entry(ModNation.LEITHANIEN, List.of(LEITHANIEN_TWILIGHT_FOREST, LEITHANIEN_ALPINE_VALLEY, LEITHANIEN_CITY)),
+      Map.entry(ModNation.RIM_BILLITON, List.of(RIM_BILLITON_MINING_BADLANDS, RIM_BILLITON_ARID_MESA, RIM_BILLITON_CITY)),
+      Map.entry(ModNation.MINOS, List.of(MINOS_SUNLIT_HILLS, MINOS_RIVER_VALLEY, MINOS_CITY)),
+      Map.entry(ModNation.SARGON, List.of(SARGON_ROCKY_DESERT, SARGON_TROPICAL_RAINFOREST, SARGON_CITY)),
+      Map.entry(ModNation.SAMI, List.of(SAMI_FROZEN_FOREST, SAMI_GLACIAL_MOUNTAINS, SAMI_CITY)),
+      Map.entry(ModNation.VICTORIA, List.of(VICTORIA_MISTY_HIGHLANDS, VICTORIA_CENTRAL_LOWLANDS, VICTORIA_CITY)),
+      Map.entry(ModNation.URSUS, List.of(URSUS_FROZEN_STEPPE, URSUS_EASTERN_HIGHLANDS, URSUS_CITY)),
+      Map.entry(ModNation.KJERAG, List.of(KJERAG_SNOWY_PEAKS, KJERAG_ALPINE_FOREST, KJERAG_CITY)),
+      Map.entry(ModNation.SIRACUSA, List.of(SIRACUSA_RAINY_WOODLAND, SIRACUSA_LOWLAND_FOREST, SIRACUSA_CITY)),
+      Map.entry(ModNation.SIESTA, List.of(SIESTA_VOLCANIC_COAST, SIESTA_RESORT_SHORE, SIESTA_CITY)),
+      Map.entry(ModNation.YAN, List.of(YAN_MOUNTAIN_GROVE, YAN_RIVER_PLAINS, YAN_CITY)),
+      Map.entry(ModNation.IBERIA, List.of(IBERIA_SALT_DELTA, IBERIA_COASTAL_CLIFFS, IBERIA_CITY))
   );
 
   private ModBiome() {

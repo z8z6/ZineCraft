@@ -4,6 +4,8 @@ import com.cxxcxx.zinecraft.api.datagen.RegistryDataContributor;
 import com.cxxcxx.zinecraft.api.registry.builder.JigsawBuilder;
 import com.cxxcxx.zinecraft.api.world.structure.FixedOriginStructurePlacement;
 import com.cxxcxx.zinecraft.api.world.structure.JigsawPoolDefinition;
+import com.cxxcxx.zinecraft.api.world.structure.MobilePlotStructure;
+import com.cxxcxx.zinecraft.api.world.structure.MobilePlotStructurePlacement;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.*;
@@ -21,6 +23,7 @@ import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.Structure.StructureSettings;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.placement.*;
 import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
@@ -43,17 +46,26 @@ public final class StructureCatalog implements RegistryDataContributor {
   private final String namespace;
   private final TranslationCatalog translations;
   private final DeferredRegister<StructurePlacementType<?>> structurePlacements;
+  private final DeferredRegister<StructureType<?>> structureTypes;
   private final List<JigsawBuilder> mutableBuildings = new ArrayList<>();
   public final List<JigsawBuilder> buildings = Collections.unmodifiableList(mutableBuildings);
   private final List<Consumer<BootstrapContext<Structure>>> structureGenerators = new ArrayList<>();
   private final List<Consumer<BootstrapContext<StructureSet>>> structureSetGenerators = new ArrayList<>();
+  private boolean mobilePlotsEnabled;
 
   public StructureCatalog(String namespace, TranslationCatalog translations) {
     this.namespace = Objects.requireNonNull(namespace, "namespace");
     this.translations = Objects.requireNonNull(translations, "translations");
     this.structurePlacements = DeferredRegister.create(BuiltInRegistries.STRUCTURE_PLACEMENT.key(), namespace);
+    this.structureTypes = DeferredRegister.create(BuiltInRegistries.STRUCTURE_TYPE.key(), namespace);
     FixedOriginStructurePlacement.ACCESS.bind(registerPlacement(
         "fixed_origin", FixedOriginStructurePlacement.ACCESS.getCODEC()
+    ));
+    MobilePlotStructurePlacement.ACCESS.bind(registerPlacement(
+        "mobile_plot", MobilePlotStructurePlacement.ACCESS.getCODEC()
+    ));
+    MobilePlotStructure.ACCESS.bind(registerStructureType(
+        "mobile_plot", MobilePlotStructure.ACCESS.getCODEC()
     ));
   }
 
@@ -62,6 +74,7 @@ public final class StructureCatalog implements RegistryDataContributor {
    */
   public void register(IEventBus modBus) {
     structurePlacements.register(modBus);
+    structureTypes.register(modBus);
   }
 
   @SuppressWarnings({"unchecked", "rawtypes"})
@@ -71,6 +84,15 @@ public final class StructureCatalog implements RegistryDataContributor {
   ) {
     StructurePlacementType<S> type = () -> codec;
     return (Supplier) structurePlacements.register(path, () -> type);
+  }
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  private <S extends Structure> Supplier<StructureType<S>> registerStructureType(
+      String path,
+      MapCodec<S> codec
+  ) {
+    StructureType<S> type = () -> codec;
+    return (Supplier) structureTypes.register(path, () -> type);
   }
 
   /**
@@ -171,6 +193,72 @@ public final class StructureCatalog implements RegistryDataContributor {
         .layout(1, maxDistanceFromCenter)
         .pool("start", pool -> pool.template(path))
         .build();
+  }
+
+  /** 注册供程序化城市消费者引用、但不参与 Region 建筑候选分配的基础设施结构。 */
+  public JigsawBuilder embeddedInfrastructure(
+      String path,
+      String zhCn,
+      int maxDistanceFromCenter
+  ) {
+    return jigsaw(path, zhCn)
+        .embedded()
+        .infrastructure()
+        .layout(1, maxDistanceFromCenter)
+        .pool("start", pool -> pool.template(path))
+        .build();
+  }
+
+  /**
+   * 注册移动地块运行时结构：动力层在矩形内逐区块铺设，Region 的候选建筑在 slot
+   * 所属区块从动力层顶面展开。
+   */
+  public void enableMobilePlots(
+      JigsawBuilder powerLayer,
+      Collection<ResourceKey<Biome>> allowedBiomes
+  ) {
+    Objects.requireNonNull(powerLayer, "移动地块动力层不能为空");
+    List<ResourceKey<Biome>> mobilePlotBiomes = List.copyOf(
+        Objects.requireNonNull(allowedBiomes, "移动地块允许群系不能为空")
+    );
+    if (!powerLayer.belongsTo(this)) throw new IllegalArgumentException("动力层不属于当前结构目录");
+    if (mobilePlotBiomes.isEmpty()) throw new IllegalArgumentException("移动地块至少需要一个允许群系");
+    if (mobilePlotsEnabled) return;
+    mobilePlotsEnabled = true;
+    ResourceKey<Structure> structureKey = key(Registries.STRUCTURE, "mobile_plot");
+    ResourceKey<StructureSet> setKey = key(Registries.STRUCTURE_SET, "mobile_plot");
+
+    structures(context -> {
+      HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
+      HolderGetter<StructureTemplatePool> pools = context.lookup(Registries.TEMPLATE_POOL);
+      List<MobilePlotStructure.BuildingDefinition> candidates = buildings.stream()
+          .filter(JigsawBuilder::cityBuilding)
+          .map(building -> new MobilePlotStructure.BuildingDefinition(
+              building.path,
+              pools.getOrThrow(requiredPoolKey(building, building.startPool())),
+              building.size(),
+              building.useExpansionHack(),
+              building.maxDistanceFromCenter()
+          ))
+          .toList();
+      context.register(structureKey, new MobilePlotStructure(
+          new StructureSettings(
+              HolderSet.direct(mobilePlotBiomes.stream().map(biomes::getOrThrow).toList()),
+              Map.of(),
+              net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
+              net.minecraft.world.level.levelgen.structure.TerrainAdjustment.NONE
+          ),
+          pools.getOrThrow(requiredPoolKey(powerLayer, powerLayer.startPool())),
+          candidates
+      ));
+    });
+    structureSets(context -> context.register(
+        setKey,
+        new StructureSet(
+            context.lookup(Registries.STRUCTURE).getOrThrow(structureKey),
+            MobilePlotStructurePlacement.ACCESS.create()
+        )
+    ));
   }
 
   /**

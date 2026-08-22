@@ -33,6 +33,7 @@ public final class ZinecraftDataGenerator {
       List<RegistryDataContributor> contributors = List.of(
           Zinecraft.BIOMES,
           Zinecraft.FEATURES,
+          Zinecraft.DENSITY_FUNCTIONS,
           Zinecraft.DIMENSIONS,
           Zinecraft.STRUCTURES,
           Zinecraft.ENCHANTMENTS,
@@ -40,6 +41,11 @@ public final class ZinecraftDataGenerator {
       );
       contributors.forEach(contributor -> contributor.contribute(registryBuilder));
       event.createDatapackRegistryObjects(registryBuilder);
+
+      String terrainHeightmapOutput = System.getProperty(TerraTerrainHeightmapProvider.OUTPUT_PROPERTY);
+      if (terrainHeightmapOutput != null && !terrainHeightmapOutput.isBlank()) {
+        event.addProvider(new TerraTerrainHeightmapProvider(event.getLookupProvider()));
+      }
 
       event.addProvider(new CatalogLootTableProvider(output, lookup, Zinecraft.BLOCKS, Zinecraft.ENTITIES));
       event.addProvider(new ModRecipeProvider(output, lookup));

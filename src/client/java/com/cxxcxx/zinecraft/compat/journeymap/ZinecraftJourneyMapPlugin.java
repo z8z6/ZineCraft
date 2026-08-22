@@ -28,6 +28,7 @@ import java.util.List;
  */
 @JourneyMapPlugin(apiVersion = "2.0.0")
 public final class ZinecraftJourneyMapPlugin implements IClientPlugin {
+  private static final int REGION_LABEL_MIN_ZOOM = 512;
   private static final int[] COLORS = {
       0x3973AC, 0xC98D3A, 0x6A4C93, 0x43AA8B, 0xE76F51,
       0x577590, 0xD4A373, 0xF2C14E, 0x8E5572, 0x2A9D8F,
@@ -102,7 +103,7 @@ public final class ZinecraftJourneyMapPlugin implements IClientPlugin {
           PolygonOverlay overlay = overlay(
               regionCell.boundary(),
               shape(color, 1.0F, 0.07F),
-              text(0.8F),
+              text(0.8F).setMinZoom(REGION_LABEL_MIN_ZOOM),
               group,
               name,
               420

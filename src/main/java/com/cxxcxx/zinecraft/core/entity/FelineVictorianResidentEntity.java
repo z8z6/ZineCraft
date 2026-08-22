@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * A peaceful Feline resident represented by the bundled Victorian YSM model.
+ * A peaceful Feline resident rendered with Minecraft's built-in humanoid animations.
  */
 public final class FelineVictorianResidentEntity extends PathfinderMob {
   public FelineVictorianResidentEntity(EntityType<? extends PathfinderMob> type, net.minecraft.world.level.Level level) {

@@ -19,6 +19,7 @@ public final class TerraCityBuilder implements TerraPlace {
   public double relativeX;
   public final String zhCn;
   private final TerraCityCatalog catalog;
+  public String declaredId;
   public String enUs;
   public double relativeZ;
   public int rotationDegrees;
@@ -36,6 +37,12 @@ public final class TerraCityBuilder implements TerraPlace {
 
   public TerraCityBuilder enUs(String enUs) {
     this.enUs = Objects.requireNonNull(enUs, "城市英文名不能为空");
+    return this;
+  }
+
+  /** 声明使用城市英文名转换成的稳定 snake_case ID。 */
+  public TerraCityBuilder id(String id) {
+    this.declaredId = Objects.requireNonNull(id, "城市 ID 不能为空");
     return this;
   }
 

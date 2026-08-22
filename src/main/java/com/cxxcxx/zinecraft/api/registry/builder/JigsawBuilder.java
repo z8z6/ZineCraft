@@ -47,6 +47,7 @@ public final class JigsawBuilder {
   private boolean useExpansionHack;
   private boolean fixedOrigin;
   private boolean naturalPlacement = true;
+  private boolean cityBuilding = true;
   private int fixedChunkX = -1;
   private int fixedChunkZ = -1;
   private Decoration generationStep = Decoration.SURFACE_STRUCTURES;
@@ -209,6 +210,12 @@ public final class JigsawBuilder {
     this.naturalPlacement = false;
     this.unique = false;
     this.fixedOrigin = false;
+    return this;
+  }
+
+  /** 将结构标记为城市基础设施，不要求由某个 Region 声明为合法建筑。 */
+  public JigsawBuilder infrastructure() {
+    this.cityBuilding = false;
     return this;
   }
 
@@ -375,6 +382,10 @@ public final class JigsawBuilder {
 
   public boolean naturalPlacement() {
     return naturalPlacement;
+  }
+
+  public boolean cityBuilding() {
+    return cityBuilding;
   }
 
   public int fixedChunkX() {
