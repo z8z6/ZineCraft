@@ -1,0 +1,6 @@
+{
+  "type": "tipsmod:simple",
+  "title": { "text": "阿米娅" },
+  "text": { "text": "博士，您还有许多事情需要处理。现在还不能休息哦(*^▽^*)" },
+  "cycle_time": 10000
+}

@@ -39,7 +39,12 @@ src/generated/resources/*
 src/generated/resources/data/*
 !src/generated/resources/data/zinecraft/
 src/generated/resources/data/zinecraft/*
-!src/generated/resources/data/zinecraft/terra_layout.json
+!src/generated/resources/data/zinecraft/terra_layout/
+src/generated/resources/data/zinecraft/terra_layout/*
+!src/generated/resources/data/zinecraft/terra_layout/index.json.gz
+!src/generated/resources/data/zinecraft/terra_layout/nations/
+src/generated/resources/data/zinecraft/terra_layout/nations/*
+!src/generated/resources/data/zinecraft/terra_layout/nations/*.json.gz
 
 # java
 
