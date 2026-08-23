@@ -122,6 +122,10 @@ public final class StructureCatalog implements RegistryDataContributor {
     if (builder.removeVinesChance() < 0 || builder.removeVinesChance() > 1) {
       throw new IllegalArgumentException("藤蔓移除概率必须在 0 到 1 之间：" + builder.path);
     }
+    if (builder.cityBuilding()
+        && (builder.footprintChunksX() <= 0 || builder.footprintChunksZ() <= 0)) {
+      throw new IllegalArgumentException("城市建筑必须声明 X/Z Chunk 占地：" + builder.path);
+    }
     if (builder.unique() && (builder.ringDistance() <= 0 || builder.biome() == null)) {
       throw new IllegalArgumentException("唯一地标必须声明正环距离和偏好群系：" + builder.path);
     }
@@ -186,10 +190,13 @@ public final class StructureCatalog implements RegistryDataContributor {
   public JigsawBuilder embeddedBuilding(
       String path,
       String zhCn,
+      int footprintChunksX,
+      int footprintChunksZ,
       int maxDistanceFromCenter
   ) {
     return jigsaw(path, zhCn)
         .embedded()
+        .footprint(footprintChunksX, footprintChunksZ)
         .layout(1, maxDistanceFromCenter)
         .pool("start", pool -> pool.template(path))
         .build();
@@ -204,24 +211,35 @@ public final class StructureCatalog implements RegistryDataContributor {
     return jigsaw(path, zhCn)
         .embedded()
         .infrastructure()
+        .footprint(1, 1)
         .layout(1, maxDistanceFromCenter)
         .pool("start", pool -> pool.template(path))
         .build();
   }
 
   /**
-   * 注册移动地块运行时结构：动力层在矩形内逐区块铺设，Region 的候选建筑在 slot
-   * 所属区块从动力层顶面展开。
+   * 注册移动地块运行时结构：动力、支持、生活三层在矩形内逐区块铺设，Region 的道路与建筑在顶面展开。
    */
   public void enableMobilePlots(
-      JigsawBuilder powerLayer,
+      List<JigsawBuilder> layerTiles,
+      List<JigsawBuilder> roadTiles,
       Collection<ResourceKey<Biome>> allowedBiomes
   ) {
-    Objects.requireNonNull(powerLayer, "移动地块动力层不能为空");
+    List<JigsawBuilder> declaredLayers = List.copyOf(Objects.requireNonNull(
+        layerTiles, "移动地块分层构件不能为空"
+    ));
+    List<JigsawBuilder> declaredRoadTiles = List.copyOf(Objects.requireNonNull(
+        roadTiles, "移动地块道路构件不能为空"
+    ));
     List<ResourceKey<Biome>> mobilePlotBiomes = List.copyOf(
         Objects.requireNonNull(allowedBiomes, "移动地块允许群系不能为空")
     );
-    if (!powerLayer.belongsTo(this)) throw new IllegalArgumentException("动力层不属于当前结构目录");
+    if (declaredLayers.size() != 3 || declaredLayers.stream().anyMatch(layer -> !layer.belongsTo(this))) {
+      throw new IllegalArgumentException("移动地块必须声明属于当前目录的三层构件");
+    }
+    if (declaredRoadTiles.size() != 6 || declaredRoadTiles.stream().anyMatch(tile -> !tile.belongsTo(this))) {
+      throw new IllegalArgumentException("移动地块必须声明属于当前目录的六类道路构件");
+    }
     if (mobilePlotBiomes.isEmpty()) throw new IllegalArgumentException("移动地块至少需要一个允许群系");
     if (mobilePlotsEnabled) return;
     mobilePlotsEnabled = true;
@@ -238,7 +256,9 @@ public final class StructureCatalog implements RegistryDataContributor {
               pools.getOrThrow(requiredPoolKey(building, building.startPool())),
               building.size(),
               building.useExpansionHack(),
-              building.maxDistanceFromCenter()
+              building.maxDistanceFromCenter(),
+              building.footprintChunksX(),
+              building.footprintChunksZ()
           ))
           .toList();
       context.register(structureKey, new MobilePlotStructure(
@@ -248,7 +268,17 @@ public final class StructureCatalog implements RegistryDataContributor {
               net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
               net.minecraft.world.level.levelgen.structure.TerrainAdjustment.NONE
           ),
-          pools.getOrThrow(requiredPoolKey(powerLayer, powerLayer.startPool())),
+          java.util.stream.IntStream.range(0, declaredLayers.size()).mapToObj(index -> {
+            JigsawBuilder layer = declaredLayers.get(index);
+            String id = List.of("power", "support", "life").get(index);
+            return new MobilePlotStructure.LayerDefinition(
+                id, pools.getOrThrow(requiredPoolKey(layer, layer.startPool())), index * 16
+            );
+          }).toList(),
+          declaredRoadTiles.stream().map(tile -> new MobilePlotStructure.RoadDefinition(
+              tile.path.substring(tile.path.lastIndexOf('/') + 1),
+              pools.getOrThrow(requiredPoolKey(tile, tile.startPool()))
+          )).toList(),
           candidates
       ));
     });

@@ -1,7 +1,9 @@
 package com.cxxcxx.zinecraft.core.datagen;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
+import com.cxxcxx.zinecraft.core.nation.TerraLayoutResource;
 import com.cxxcxx.zinecraft.core.registry.ModBiome;
+import com.cxxcxx.zinecraft.core.registry.ModDensityFunction;
 import com.cxxcxx.zinecraft.core.registry.ModDimension;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -12,6 +14,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.RandomState;
 
@@ -80,6 +83,9 @@ public final class TerraTerrainHeightmapProvider implements DataProvider {
     int minimum = Integer.MAX_VALUE;
     int maximum = Integer.MIN_VALUE;
     long sum = 0L;
+    int emergencyCeilingSurfaceY = (ModDensityFunction.TERRAIN_CEILING_FADE_START_Y
+        + ModDensityFunction.TERRAIN_CEILING_FADE_END_Y) / 2 - 1;
+    long emergencyCeilingHitCount = 0L;
 
     for (int gridZ = 0; gridZ < depth; gridZ++) {
       JsonArray row = new JsonArray(width);
@@ -97,6 +103,7 @@ public final class TerraTerrainHeightmapProvider implements DataProvider {
         minimum = Math.min(minimum, surfaceY);
         maximum = Math.max(maximum, surfaceY);
         sum += surfaceY;
+        if (surfaceY == emergencyCeilingSurfaceY) emergencyCeilingHitCount++;
       }
       rows.add(row);
       int completedRows = gridZ + 1;
@@ -138,9 +145,102 @@ public final class TerraTerrainHeightmapProvider implements DataProvider {
     statistics.addProperty("minimum_y", minimum);
     statistics.addProperty("maximum_y", maximum);
     statistics.addProperty("average_y", (double) sum / ((long) width * depth));
+    statistics.addProperty("configured_city_maximum_surface_y",
+        ModDensityFunction.MAXIMUM_CITY_SURFACE_Y);
+    statistics.addProperty("emergency_ceiling_surface_y", emergencyCeilingSurfaceY);
+    statistics.addProperty("emergency_ceiling_hit_count", emergencyCeilingHitCount);
     root.add("statistics", statistics);
+    root.add("region_validation", sampleRegions(generator, heightAccessor, randomState));
     root.add("heights", rows);
     return root;
+  }
+
+  private JsonObject sampleRegions(
+      NoiseBasedChunkGenerator generator,
+      LevelHeightAccessor heightAccessor,
+      RandomState randomState
+  ) {
+    JsonArray mismatches = new JsonArray();
+    int sampledCities = 0;
+    int sampledColumns = 0;
+    int mismatchCount = 0;
+    DensityFunction finalDensity = randomState.router().finalDensity();
+    for (var nation : TerraLayoutResource.load().nations()) {
+      if (nation.nation().isUnderground()) continue;
+      for (var city : nation.cities()) {
+        if (city.regions().isEmpty()) continue;
+        var region = city.regions().getFirst();
+        var bounds = region.mobilePlotBounds();
+        int minX = (int) Math.floor(bounds.center().x() - bounds.halfSizeX()) + 4;
+        int maxX = (int) Math.ceil(bounds.center().x() + bounds.halfSizeX()) - 5;
+        int minZ = (int) Math.floor(bounds.center().z() - bounds.halfSizeZ()) + 4;
+        int maxZ = (int) Math.ceil(bounds.center().z() + bounds.halfSizeZ()) - 5;
+        int centerX = (int) Math.floor(bounds.center().x());
+        int centerZ = (int) Math.floor(bounds.center().z());
+        int[][] positions = {
+            {centerX, centerZ},
+            {minX, minZ},
+            {minX, maxZ},
+            {maxX, minZ},
+            {maxX, maxZ}
+        };
+        for (int[] position : positions) {
+          int surfaceY = sampleSurfaceY(
+              generator, position[0], position[1], heightAccessor, randomState
+          );
+          sampledColumns++;
+          if (surfaceY == city.terrainProfile().groundY()) continue;
+          mismatchCount++;
+          if (mismatches.size() < 64) {
+            JsonObject mismatch = new JsonObject();
+            mismatch.addProperty("city", city.city().id());
+            mismatch.addProperty("region", region.region().id());
+            mismatch.addProperty("x", position[0]);
+            mismatch.addProperty("z", position[1]);
+            mismatch.addProperty("expected_y", city.terrainProfile().groundY());
+            mismatch.addProperty("actual_y", surfaceY);
+            mismatch.addProperty("density_at_expected_y", finalDensity.compute(new PointContext(
+                position[0], city.terrainProfile().groundY(), position[1]
+            )));
+            mismatch.addProperty("density_at_expected_y_plus_one", finalDensity.compute(new PointContext(
+                position[0], city.terrainProfile().groundY() + 1, position[1]
+            )));
+            mismatch.addProperty("density_at_actual_y", finalDensity.compute(new PointContext(
+                position[0], surfaceY, position[1]
+            )));
+            mismatches.add(mismatch);
+          }
+        }
+        sampledCities++;
+      }
+    }
+    JsonObject validation = new JsonObject();
+    validation.addProperty("sample_strategy", "first_region_center_and_four_inset_corners_per_surface_city");
+    validation.addProperty("sampled_cities", sampledCities);
+    validation.addProperty("sampled_columns", sampledColumns);
+    validation.addProperty("mismatch_count", mismatchCount);
+    validation.add("mismatches", mismatches);
+    return validation;
+  }
+
+  private static int sampleSurfaceY(
+      NoiseBasedChunkGenerator generator,
+      int x,
+      int z,
+      LevelHeightAccessor heightAccessor,
+      RandomState randomState
+  ) {
+    return generator.getBaseHeight(
+        x,
+        z,
+        Heightmap.Types.OCEAN_FLOOR_WG,
+        heightAccessor,
+        randomState
+    ) - 1;
+  }
+
+  private record PointContext(int blockX, int blockY, int blockZ)
+      implements DensityFunction.FunctionContext {
   }
 
   private int cellCenter(int origin, int mapSize, int gridIndex) {

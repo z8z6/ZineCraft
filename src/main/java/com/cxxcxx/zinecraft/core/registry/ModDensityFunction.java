@@ -16,13 +16,20 @@ import java.util.Map;
 
 /** 泰拉国家与城市 Region 地形密度函数注册入口。 */
 public final class ModDensityFunction {
-  public static final int SURFACE_CITY_GROUND_Y = 80;
-  public static final int UNDERGROUND_CITY_GROUND_Y = -64;
   public static final double NATION_BORDER_BLEND_WIDTH = 512.0;
-  public static final double REGION_HILL_NOISE_SCALE = 0.006;
-  public static final double REGION_HILL_BASE_OFFSET = 0.0125;
-  public static final double REGION_HILL_AMPLITUDE = 0.035;
-  public static final double MOBILE_PLOT_TRANSITION_WIDTH = 256.0;
+  public static final double CITY_MOUNTAIN_MASK_NOISE_SCALE = 0.010;
+  public static final double CITY_RIDGE_NOISE_SCALE = 0.025;
+  public static final double CITY_DETAIL_NOISE_SCALE = 0.080;
+  public static final int REGION_PROXIMITY_NEIGHBOR_RANK = 4;
+  public static final double DENSE_REGION_DISTANCE = 256.0;
+  public static final double SPARSE_REGION_DISTANCE = 1024.0;
+  public static final double DENSE_HILL_HEIGHT = 32.0;
+  public static final double SPARSE_VALLEY_HEIGHT = 16.0;
+  public static final double SPARSE_MOUNTAIN_HEIGHT = 144.0;
+  public static final double MOUNTAIN_MASK_START = -0.20;
+  public static final double MOUNTAIN_MASK_FULL = 0.45;
+  public static final double MOUNTAIN_RIDGE_THRESHOLD = 0.65;
+  public static final int MAXIMUM_CITY_SURFACE_Y = 224;
   public static final int TERRAIN_CEILING_FADE_START_Y = 256;
   public static final int TERRAIN_CEILING_FADE_END_Y = 384;
 
@@ -153,38 +160,58 @@ public final class ModDensityFunction {
       ), NATION_BORDER_BLEND_WIDTH))
       .build();
 
-  /** City Region 的移动地块之外使用低频噪声抬升为连绵山丘。 */
-  public static final DensityFunctionBuilder TERRA_REGION_HILLS = Zinecraft.DENSITY_FUNCTIONS
-      .densityFunction("terra/region_hills")
-      .function(context -> DensityFunctions.add(
-          reference(context, TERRA_NATION_TERRAIN),
-          DensityFunctions.add(
-              DensityFunctions.constant(REGION_HILL_BASE_OFFSET),
-              DensityFunctions.mul(
-                  DensityFunctions.constant(REGION_HILL_AMPLITUDE),
-                  DensityFunctions.noise(
-                      context.lookup(Registries.NOISE).getOrThrow(Noises.SURFACE_SECONDARY),
-                      REGION_HILL_NOISE_SCALE,
-                      0.0
-                  )
-              )
-          )
+  /** 决定山体出现的二维中尺度遮罩；低值区保留为分隔山系的谷地。 */
+  public static final DensityFunctionBuilder TERRA_CITY_RELIEF_MASK = Zinecraft.DENSITY_FUNCTIONS
+      .densityFunction("terra/city_relief_mask")
+      .function(context -> DensityFunctions.noise(
+          context.lookup(Registries.NOISE).getOrThrow(Noises.SURFACE_SECONDARY),
+          CITY_MOUNTAIN_MASK_NOISE_SCALE,
+          0.0
       ))
       .build();
 
-  /** 移动地块内使用平地，City Region 的其余位置使用山丘地形。 */
+  /** 把山体遮罩切成山脊和鞍部，避免整块自然区域保持同一高程。 */
+  public static final DensityFunctionBuilder TERRA_CITY_RELIEF_RIDGES = Zinecraft.DENSITY_FUNCTIONS
+      .densityFunction("terra/city_relief_ridges")
+      .function(context -> DensityFunctions.noise(
+          context.lookup(Registries.NOISE).getOrThrow(Noises.RIDGE),
+          CITY_RIDGE_NOISE_SCALE,
+          0.0
+      ))
+      .build();
+
+  /** 为密集区小丘和稀疏区谷底提供更短尺度的局部起伏。 */
+  public static final DensityFunctionBuilder TERRA_CITY_RELIEF_DETAIL = Zinecraft.DENSITY_FUNCTIONS
+      .densityFunction("terra/city_relief_detail")
+      .function(context -> DensityFunctions.noise(
+          context.lookup(Registries.NOISE).getOrThrow(Noises.SURFACE),
+          CITY_DETAIL_NOISE_SCALE,
+          0.0
+      ))
+      .build();
+
+  /** Region 内使用硬平面，Region 外按邻域稀疏度生成有界丘陵或高山。 */
   public static final DensityFunctionBuilder TERRA_CITY_REGION_TERRAIN = Zinecraft.DENSITY_FUNCTIONS
       .densityFunction("terra/city_region_terrain")
       .function(context -> new TerraCityRegionDensityFunction(
           reference(context, TERRA_NATION_TERRAIN),
-          reference(context, TERRA_REGION_HILLS),
-          flatTerrain(SURFACE_CITY_GROUND_Y),
-          flatTerrain(UNDERGROUND_CITY_GROUND_Y),
-          MOBILE_PLOT_TRANSITION_WIDTH
+          reference(context, TERRA_CITY_RELIEF_MASK),
+          reference(context, TERRA_CITY_RELIEF_RIDGES),
+          reference(context, TERRA_CITY_RELIEF_DETAIL),
+          REGION_PROXIMITY_NEIGHBOR_RANK,
+          DENSE_REGION_DISTANCE,
+          SPARSE_REGION_DISTANCE,
+          DENSE_HILL_HEIGHT,
+          SPARSE_VALLEY_HEIGHT,
+          SPARSE_MOUNTAIN_HEIGHT,
+          MOUNTAIN_MASK_START,
+          MOUNTAIN_MASK_FULL,
+          MOUNTAIN_RIDGE_THRESHOLD,
+          MAXIMUM_CITY_SURFACE_Y
       ))
       .build();
 
-  /** 高空逐步强制为空气，避免附加偏移抵消原版高空负密度并形成通天石柱。 */
+  /** 仅作为紧急高空安全层；正常城市目标地表最高 Y224，不应触发本层截顶。 */
   public static final DensityFunctionBuilder TERRA_FINAL_DENSITY = Zinecraft.DENSITY_FUNCTIONS
       .densityFunction("terra/final_density")
       .function(context -> DensityFunctions.min(
@@ -224,10 +251,6 @@ public final class ModDensityFunction {
     return new DensityFunctions.HolderHolder(
         context.lookup(Registries.DENSITY_FUNCTION).getOrThrow(builder.key())
     );
-  }
-
-  private static DensityFunction flatTerrain(int groundY) {
-    return DensityFunctions.yClampedGradient(groundY, groundY + 1, 1.0, -1.0);
   }
 
   /** 每个国家在 Builder 声明中显式传入的地形参数。 */

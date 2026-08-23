@@ -163,12 +163,63 @@ def render(
                 f'data-focus-x="{city_center["x"]:.3f}" data-focus-y="{city_center["z"]:.3f}">'
                 f'<title>{title(city)}</title></path>'
             )
-            for region in city["regions"]:
+            for road in city.get("roads", []):
                 region_shapes.append(
-                    f'<path d="{path_data(region["boundary"])}" fill="none" stroke="#334155" '
-                    f'stroke-width="7" stroke-opacity="0.55"><title>{title(region)}</title></path>'
+                    f'<path d="{path_data(road["block_area"]["corners"])}" '
+                    f'fill="#94a3b8" fill-opacity="0.85" stroke="#64748b" '
+                    f'stroke-width="2"><title>Road '
+                    f'{road["from_plot_id"]} → {road["to_plot_id"]}</title></path>'
                 )
+            for region in city["regions"]:
+                is_core = str(region["zh_cn_name"]).endswith("核心区")
+                fill = "#f59e0b" if is_core else "#e2e8f0"
+                region_shapes.append(
+                    f'<path d="{path_data(region["mobile_plot"]["corners"])}" '
+                    f'fill="{fill}" fill-opacity="0.58" stroke="#334155" '
+                    f'stroke-width="5" stroke-opacity="0.8"><title>{title(region)}</title></path>'
+                )
+                for road_edge in region.get("region_layout", {}).get("road_graph", {}).get("edges", []):
+                    area = road_edge["chunk_area"]
+                    min_x = area["min_chunk_x"] * 16
+                    min_z = area["min_chunk_z"] * 16
+                    max_x = min_x + area["width_chunks"] * 16
+                    max_z = min_z + area["length_chunks"] * 16
+                    road_boundary = [
+                        {"x": min_x, "z": min_z}, {"x": max_x, "z": min_z},
+                        {"x": max_x, "z": max_z}, {"x": min_x, "z": max_z},
+                    ]
+                    road_class = str(road_edge["road_class"])
+                    road_fill = "#334155" if road_class == "primary" else "#64748b"
+                    region_shapes.append(
+                        f'<path d="{path_data(road_boundary)}" fill="{road_fill}" '
+                        f'fill-opacity="0.82" stroke="none"><title>{road_class} road</title></path>'
+                    )
+                for building_slot in region.get("building_slots", []):
+                    chunk_area = building_slot["chunk_area"]
+                    min_x = chunk_area["min_chunk_x"] * 16
+                    min_z = chunk_area["min_chunk_z"] * 16
+                    max_x = min_x + chunk_area["width_chunks"] * 16
+                    max_z = min_z + chunk_area["length_chunks"] * 16
+                    building_boundary = [
+                        {"x": min_x, "z": min_z},
+                        {"x": max_x, "z": min_z},
+                        {"x": max_x, "z": max_z},
+                        {"x": min_x, "z": max_z},
+                    ]
+                    region_shapes.append(
+                        f'<path d="{path_data(building_boundary)}" fill="#334155" '
+                        f'fill-opacity="0.42" stroke="#0f172a" stroke-width="2">'
+                        f'<title>{html.escape(str(building_slot["building_id"]))} '
+                        f'{chunk_area["width_chunks"]}x{chunk_area["length_chunks"]} chunks, '
+                        f'facing {html.escape(str(building_slot["rotation"]))}</title></path>'
+                    )
                 region_labels.append(text(region, 210, "#334155", "region-label", 500))
+            core_x, core_y = svg_point(city["city_core"])
+            region_shapes.append(
+                f'<circle cx="{core_x:.3f}" cy="{core_y:.3f}" r="12" '
+                f'fill="#dc2626" stroke="#ffffff" stroke-width="3">'
+                f'<title>{html.escape(str(city["zh_cn_name"]))} city core</title></circle>'
+            )
             city_labels.append(text(city, 340, color, "city-label", 600))
         nation_labels.append(text(nation, 520, "#000000", "nation-label", 700))
 

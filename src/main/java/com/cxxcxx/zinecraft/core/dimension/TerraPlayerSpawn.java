@@ -1,6 +1,8 @@
 package com.cxxcxx.zinecraft.core.dimension;
 
 import com.cxxcxx.zinecraft.core.registry.ModDimension;
+import com.cxxcxx.zinecraft.core.registry.ModCityRegion;
+import com.cxxcxx.zinecraft.core.nation.TerraLayoutResource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,7 +35,14 @@ public final class TerraPlayerSpawn {
       return;
     }
 
-    BlockPos column = new BlockPos(ModDimension.TERRA_SPAWN_X, 0, ModDimension.TERRA_SPAWN_Z);
+    var coreRegion = TerraLayoutResource.findRegion(ModCityRegion.ZWILLINGSTURME_CORE);
+    if (coreRegion.isEmpty()) return;
+    var localCenter = coreRegion.get().regionLayout().localCenter();
+    BlockPos column = new BlockPos(
+        localCenter.chunkX() * 16 + 8,
+        0,
+        localCenter.chunkZ() * 16 + 8
+    );
     terra.getChunkAt(column);
     BlockPos spawn = terra.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, column);
     player.setRespawnPosition(terra.dimension(), spawn, 0.0F, true, false);

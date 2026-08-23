@@ -10,7 +10,7 @@ import com.cxxcxx.zinecraft.api.world.layout.*;
 import java.util.*;
 
 /**
- * 计算泰拉 Nation、City、Region 三级 Voronoi 边界。
+ * 计算泰拉 Nation/City Voronoi 边界及 City 内部正交 Region 地块。
  */
 public final class TerraLayoutCalculator {
   private final PolylineVoronoiDiagram nationVoronoiDiagram;
@@ -156,7 +156,9 @@ public final class TerraLayoutCalculator {
               .map(neighborIndex -> cities.get(neighborIndex).city().id())
               .toList();
           return new CityLayoutPlan(
-              city.nation(), city.city(), city.center(), city.boundary(), city.regions(), neighboringCityIds
+              city.nation(), city.city(), city.center(), city.boundary(),
+              city.cityCore(), city.usableChunkArea(), city.terrainProfile(), city.regions(), city.roads(),
+              city.plotCoverage(), neighboringCityIds
           );
         })
         .toList();

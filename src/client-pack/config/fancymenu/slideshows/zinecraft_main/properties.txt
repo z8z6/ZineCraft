@@ -1,0 +1,12 @@
+type = slideshow
+
+slideshow-meta {
+  name = zinecraft_main
+  width = 1600
+  height = 900
+  x = 0
+  y = 0
+  duration = 5.0
+  fadespeed = 2.5
+  randomize = true
+}

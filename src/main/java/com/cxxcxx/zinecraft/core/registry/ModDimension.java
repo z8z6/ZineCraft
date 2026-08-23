@@ -27,11 +27,11 @@ public final class ModDimension {
    */
   public static final int TERRA_MAP_SIZE = 100_000;
   /**
-   * 泰拉的垂直建造与区块生成范围为 [-256, 767]。
+   * 泰拉的垂直建造与区块生成范围为 [-64, 767]。
    */
-  public static final int TERRA_MIN_Y = -256;
-  public static final int TERRA_HEIGHT = 1024;
-  public static final int TERRA_MAX_Y = TERRA_MIN_Y + TERRA_HEIGHT - 1;
+  public static final int TERRA_MIN_Y = -64;
+  public static final int TERRA_MAX_Y = 767;
+  public static final int TERRA_HEIGHT = TERRA_MAX_Y - TERRA_MIN_Y + 1;
   public static final ResourceKey<NoiseGeneratorSettings> TERRA_NOISE_SETTINGS = ResourceKey.create(
       Registries.NOISE_SETTINGS,
       Zinecraft.id("terra")

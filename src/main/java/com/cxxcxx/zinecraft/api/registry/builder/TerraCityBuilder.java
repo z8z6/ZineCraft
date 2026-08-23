@@ -26,6 +26,11 @@ public final class TerraCityBuilder implements TerraPlace {
   public Supplier<? extends Collection<TerraCityRegionBuilder>> regions;
   public Layout regionLayout = GridLayout.INSTANCE;
   public LayoutSlotCount slotCount = LayoutSlotCount.SLOTS_5;
+  public int minPlotCount = 10;
+  public int maxPlotCount = 100;
+  public double maxPlotCoverage = 0.45;
+  public int roadWidthChunks = 1;
+  public int candidateCount = 16;
   private String id;
   private boolean built;
 
@@ -67,6 +72,42 @@ public final class TerraCityBuilder implements TerraPlace {
 
   public TerraCityBuilder slotCount(LayoutSlotCount slotCount) {
     this.slotCount = Objects.requireNonNull(slotCount, "城市槽位数量不能为空：" + zhCn);
+    return this;
+  }
+
+  /** 保留旧 API；新布局请使用 {@link #plotCountRange(int, int)}。 */
+  public TerraCityBuilder maxPlotCount(LayoutSlotCount maxPlotCount) {
+    this.maxPlotCount = Objects.requireNonNull(maxPlotCount, "移动地块总数不能为空").count();
+    if (minPlotCount > this.maxPlotCount) minPlotCount = this.maxPlotCount;
+    return this;
+  }
+
+  public TerraCityBuilder plotCountRange(int minPlotCount, int maxPlotCount) {
+    if (minPlotCount < 1 || maxPlotCount < minPlotCount) {
+      throw new IllegalArgumentException("城市移动地块数量范围无效：" + zhCn);
+    }
+    this.minPlotCount = minPlotCount;
+    this.maxPlotCount = maxPlotCount;
+    return this;
+  }
+
+  public TerraCityBuilder maxPlotCoverage(double maxPlotCoverage) {
+    if (!Double.isFinite(maxPlotCoverage) || maxPlotCoverage <= 0.0 || maxPlotCoverage > 1.0) {
+      throw new IllegalArgumentException("移动地块覆盖率必须位于 (0, 1]：" + zhCn);
+    }
+    this.maxPlotCoverage = maxPlotCoverage;
+    return this;
+  }
+
+  public TerraCityBuilder roadWidthChunks(int roadWidthChunks) {
+    if (roadWidthChunks <= 0) throw new IllegalArgumentException("道路宽度必须为正数：" + zhCn);
+    this.roadWidthChunks = roadWidthChunks;
+    return this;
+  }
+
+  public TerraCityBuilder candidateCount(int candidateCount) {
+    if (candidateCount <= 0) throw new IllegalArgumentException("候选数量必须为正数：" + zhCn);
+    this.candidateCount = candidateCount;
     return this;
   }
 
@@ -138,5 +179,25 @@ public final class TerraCityBuilder implements TerraPlace {
 
   public LayoutSlotCount slotCount() {
     return slotCount;
+  }
+
+  public int minPlotCount() {
+    return minPlotCount;
+  }
+
+  public int maxPlotCount() {
+    return maxPlotCount;
+  }
+
+  public double maxPlotCoverage() {
+    return maxPlotCoverage;
+  }
+
+  public int roadWidthChunks() {
+    return roadWidthChunks;
+  }
+
+  public int candidateCount() {
+    return candidateCount;
   }
 }

@@ -48,6 +48,8 @@ public final class JigsawBuilder {
   private boolean fixedOrigin;
   private boolean naturalPlacement = true;
   private boolean cityBuilding = true;
+  private int footprintChunksX;
+  private int footprintChunksZ;
   private int fixedChunkX = -1;
   private int fixedChunkZ = -1;
   private Decoration generationStep = Decoration.SURFACE_STRUCTURES;
@@ -220,6 +222,18 @@ public final class JigsawBuilder {
   }
 
   /**
+   * 声明建筑在默认朝南（模板本地 +Z 对齐世界 +Z）时占用的 Chunk 矩形。
+   */
+  public JigsawBuilder footprint(int chunksX, int chunksZ) {
+    if (chunksX <= 0 || chunksZ <= 0) {
+      throw new IllegalArgumentException("建筑 Chunk 占地长宽必须为正数：" + path);
+    }
+    this.footprintChunksX = chunksX;
+    this.footprintChunksZ = chunksZ;
+    return this;
+  }
+
+  /**
    * @param heightmap 起始位置采用的高度图；为 {@code null} 时使用固定高度 @param startHeight 起始高度偏移 @return 当前构建器
    */
   public JigsawBuilder height(@Nullable Types heightmap, int startHeight) {
@@ -386,6 +400,14 @@ public final class JigsawBuilder {
 
   public boolean cityBuilding() {
     return cityBuilding;
+  }
+
+  public int footprintChunksX() {
+    return footprintChunksX;
+  }
+
+  public int footprintChunksZ() {
+    return footprintChunksZ;
   }
 
   public int fixedChunkX() {

@@ -1,0 +1,6 @@
+{
+  "type": "tipsmod:simple",
+  "title": { "text": "斯卡蒂" },
+  "text": { "text": "我们活下来了。" },
+  "cycle_time": 10000
+}

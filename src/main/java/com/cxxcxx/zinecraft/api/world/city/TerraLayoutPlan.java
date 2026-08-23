@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 泰拉 Nation、City、Region 三级 Voronoi 边界计划。
+ * 泰拉 Nation/City 边界与城市内部正交 Region 地块计划。
  */
 public record TerraLayoutPlan(
     List<PlanarPoint> boundary,

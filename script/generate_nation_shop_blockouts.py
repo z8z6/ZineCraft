@@ -6,6 +6,8 @@ import gzip
 import struct
 from pathlib import Path
 
+from generate_city_building_matchboxes import write_matchbox
+
 
 ROOT = Path(__file__).resolve().parents[1]
 STRUCTURE_ROOT = ROOT / "src/main/resources/data/zinecraft/structure"
@@ -67,27 +69,8 @@ def block_entry(x: int, y: int, z: int, state: int) -> bytes:
 
 
 def write_shop(nation: str) -> Path:
-    width, height, depth = 11, 6, 9
-    blocks = []
-    for x in range(width):
-        for y in range(height):
-            for z in range(depth):
-                boundary = x in {0, width - 1} or y in {0, height - 1} or z in {0, depth - 1}
-                doorway = x == width // 2 and z == 0 and y in {1, 2}
-                blocks.append(block_entry(x, y, z, 0 if boundary and not doorway else 1))
-    root = compound([
-        named(3, "DataVersion", integer(DATA_VERSION)),
-        named(9, "size", list_payload(3, [integer(width), integer(height), integer(depth)])),
-        named(9, "palette", list_payload(10, [
-            palette_entry("minecraft:stone_bricks"),
-            palette_entry("minecraft:air"),
-        ])),
-        named(9, "blocks", list_payload(10, blocks)),
-        named(9, "entities", list_payload(10, [])),
-    ])
     target = STRUCTURE_ROOT / f"{nation}_shop.nbt"
-    with gzip.GzipFile(filename=str(target), mode="wb", mtime=0) as stream:
-        stream.write(bytes([10]) + utf("") + root)
+    write_matchbox(target, 1, 1)
     return target
 
 

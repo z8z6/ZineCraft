@@ -1,0 +1,6 @@
+{
+  "type": "tipsmod:simple",
+  "title": { "text": "凯尔希" },
+  "text": { "text": "越是强大越是脆弱，这就是万物的道理。" },
+  "cycle_time": 10000
+}

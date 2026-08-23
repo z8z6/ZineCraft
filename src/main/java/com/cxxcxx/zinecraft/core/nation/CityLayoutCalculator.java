@@ -1,52 +1,31 @@
 package com.cxxcxx.zinecraft.core.nation;
 
 import com.cxxcxx.zinecraft.api.nation.TerraCityRegionBuilding;
+import com.cxxcxx.zinecraft.api.registry.builder.JigsawBuilder;
 import com.cxxcxx.zinecraft.api.registry.builder.NationBuilder;
 import com.cxxcxx.zinecraft.api.registry.builder.TerraCityBuilder;
 import com.cxxcxx.zinecraft.api.registry.builder.TerraCityRegionBuilder;
-import com.cxxcxx.zinecraft.api.world.city.CityLayoutPlan;
-import com.cxxcxx.zinecraft.api.world.city.CityRegionBuildingSlot;
-import com.cxxcxx.zinecraft.api.world.city.CityRegionConnection;
-import com.cxxcxx.zinecraft.api.world.city.CityRegionCell;
-import com.cxxcxx.zinecraft.api.world.layout.*;
+import com.cxxcxx.zinecraft.api.world.city.*;
+import com.cxxcxx.zinecraft.api.world.layout.LayoutSlot;
+import com.cxxcxx.zinecraft.api.world.layout.PlanarPoint;
+import com.cxxcxx.zinecraft.api.world.layout.PlanarRectangle;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.random.RandomGenerator;
 
-/**
- * 在已计算的 City Voronoi 边界内分配 Region slot，并计算 Region Voronoi 边界。
- */
+/** 在 City 边界内生成 Chunk 对齐、道路连通的移动 Region 地块。 */
 public final class CityLayoutCalculator {
-  private static final double BUILDING_SLOT_INSET = 0.9;
-  private final LayoutPlanner layoutPlanner;
-  private final NormalizedVoronoiCalculator normalizedVoronoiCalculator;
-  private final PolygonAdjacencyCalculator adjacencyCalculator;
-  private final AxisAlignedRectangleCalculator rectangleCalculator;
+  private final MobileCityLayoutGenerator layoutGenerator;
+  private final RegionLayoutGenerator regionLayoutGenerator;
 
   public CityLayoutCalculator() {
-    this(
-        new LayoutPlanner(),
-        new NormalizedVoronoiCalculator(),
-        new PolygonAdjacencyCalculator(),
-        new AxisAlignedRectangleCalculator()
-    );
-  }
-
-  public CityLayoutCalculator(
-      LayoutPlanner layoutPlanner,
-      NormalizedVoronoiCalculator normalizedVoronoiCalculator,
-      PolygonAdjacencyCalculator adjacencyCalculator,
-      AxisAlignedRectangleCalculator rectangleCalculator
-  ) {
-    this.layoutPlanner = Objects.requireNonNull(layoutPlanner, "布局规划器不能为空");
-    this.normalizedVoronoiCalculator = Objects.requireNonNull(
-        normalizedVoronoiCalculator,
-        "归一化 Voronoi 计算器不能为空"
-    );
-    this.adjacencyCalculator = Objects.requireNonNull(adjacencyCalculator, "多边形邻接计算器不能为空");
-    this.rectangleCalculator = Objects.requireNonNull(rectangleCalculator, "中心矩形计算器不能为空");
+    this.layoutGenerator = new MobileCityLayoutGenerator();
+    this.regionLayoutGenerator = new RegionLayoutGenerator();
   }
 
   public CityLayoutPlan calculate(
@@ -64,108 +43,145 @@ public final class CityLayoutCalculator {
     if (!nation.cities().contains(city)) {
       throw new IllegalArgumentException("国家没有声明该城市：" + nation.id() + "/" + city.id());
     }
+    for (TerraCityRegionBuilder region : city.regions()) {
+      if (region.nation() != nation) {
+        throw new IllegalArgumentException("城市引用了其他国家的 Region：" + region.id());
+      }
+    }
 
-    List<LayoutAssignment<TerraCityRegionBuilder>> assignments = layoutPlanner.plan(
-        city.regionLayout(),
-        city.slotCount().count(),
-        city.regions(),
-        random
+    LayoutGenerationResult result = layoutGenerator.generate(city, boundary, random);
+    if (!result.success()) {
+      throw new IllegalArgumentException(
+          "城市移动地块生成失败 [" + result.failureReason() + "]：" + result.message()
+      );
+    }
+    MobileCityLayout mobileLayout = result.layout();
+    ArrayList<ArrayList<CityRegionConnection>> connections = new ArrayList<>(mobileLayout.plots().size());
+    for (int index = 0; index < mobileLayout.plots().size(); index++) connections.add(new ArrayList<>());
+    for (UrbanRoad road : mobileLayout.roads()) {
+      PlanarPoint point = road.chunkArea().centerBlocks();
+      connections.get(road.fromPlotId()).add(new CityRegionConnection(road.toPlotId(), point));
+      connections.get(road.toPlotId()).add(new CityRegionConnection(road.fromPlotId(), point));
+    }
+
+    double halfWidth = boundary.stream().mapToDouble(point -> Math.abs(point.x() - cityCenter.x()))
+        .max().orElse(1.0);
+    double halfLength = boundary.stream().mapToDouble(point -> Math.abs(point.z() - cityCenter.z()))
+        .max().orElse(1.0);
+    long regionSeedBase = random.nextLong();
+    List<CityRegionCell> regions = mobileLayout.plots().stream().map(plot -> {
+      PlanarRectangle bounds = plot.chunkArea().toBlockRectangle();
+      PlanarPoint center = bounds.center();
+      LayoutSlot slot = new LayoutSlot(
+          plot.id(),
+          (center.x() - cityCenter.x()) / Math.max(1.0, halfWidth),
+          (center.z() - cityCenter.z()) / Math.max(1.0, halfLength)
+      );
+      long regionSeed = mixSeed(regionSeedBase, city.id(), plot.type().id(), plot.id());
+      Random regionRandom = new Random(regionSeed);
+      RegionLayout regionLayout = regionLayoutGenerator.generate(
+          plot.chunkArea(), plot.type(), connections.get(plot.id()), regionSeed
+      );
+      List<CityRegionBuildingSlot> buildingSlots = buildingSlots(
+          plot.type(), bounds, regionLayout, regionRandom
+      );
+      int buildingArea = buildingSlots.stream().mapToInt(candidate -> candidate.chunkArea().areaChunks()).sum();
+      regionLayout = regionLayout.withBuildingCoverage(buildingArea / (double) plot.chunkArea().areaChunks());
+      RegionLayoutValidator.validateBuildings(plot.chunkArea(), regionLayout, buildingSlots);
+      return new CityRegionCell(
+          slot,
+          plot.type(),
+          center,
+          bounds.corners(),
+          connections.get(plot.id()),
+          bounds,
+          regionLayout,
+          buildingSlots
+      );
+    }).toList();
+    return new CityLayoutPlan(
+        nation,
+        city,
+        cityCenter,
+        boundary,
+        mobileLayout.cityCore(),
+        mobileLayout.usableChunkArea(),
+        nation.isUnderground() ? CityTerrainProfile.UNDERGROUND : CityTerrainProfile.SURFACE,
+        regions,
+        mobileLayout.roads(),
+        mobileLayout.coverage(),
+        List.of()
     );
-    for (LayoutAssignment<TerraCityRegionBuilder> assignment : assignments) {
-      if (assignment.element().nation() != nation) {
-        throw new IllegalArgumentException("城市引用了其他国家的 Region：" + assignment.element().id());
-      }
-    }
-
-    List<VoronoiCell<LayoutAssignment<TerraCityRegionBuilder>>> voronoiCells =
-        normalizedVoronoiCalculator.calculate(
-            boundary,
-            cityCenter,
-            assignments,
-            assignment -> assignment.slot().x(),
-            assignment -> assignment.slot().z(),
-            city.rotationDegrees()
-        );
-    List<List<Integer>> adjacency = adjacencyCalculator.calculate(voronoiCells, VoronoiCell::boundary);
-    ArrayList<ArrayList<CityRegionConnection>> connections = new ArrayList<>(voronoiCells.size());
-    for (int index = 0; index < voronoiCells.size(); index++) connections.add(new ArrayList<>());
-    for (int first = 0; first < voronoiCells.size(); first++) {
-      for (int second : adjacency.get(first)) {
-        if (second <= first) continue;
-        java.util.Optional<PlanarPoint> connection = adjacencyCalculator.sharedBoundaryMidpoint(
-            voronoiCells.get(first).boundary(),
-            voronoiCells.get(second).boundary()
-        );
-        if (connection.isEmpty()) {
-          throw new IllegalStateException(
-              "相邻 Region 缺少共享边界：" + voronoiCells.get(first).site().element().slot().index()
-                  + "/" + voronoiCells.get(second).site().element().slot().index()
-          );
-        }
-        PlanarPoint connectionPoint = connection.get();
-        connections.get(first).add(new CityRegionConnection(
-            voronoiCells.get(second).site().element().slot().index(), connectionPoint
-        ));
-        connections.get(second).add(new CityRegionConnection(
-            voronoiCells.get(first).site().element().slot().index(), connectionPoint
-        ));
-      }
-    }
-    List<CityRegionCell> connectedRegions = java.util.stream.IntStream.range(0, voronoiCells.size())
-        .mapToObj(index -> {
-          VoronoiCell<LayoutAssignment<TerraCityRegionBuilder>> cell = voronoiCells.get(index);
-          PlanarRectangle mobilePlotBounds;
-          try {
-            mobilePlotBounds = rectangleCalculator.calculate(cell.boundary());
-          } catch (IllegalArgumentException exception) {
-            throw new IllegalArgumentException(
-                "无法计算 Region 移动地块：" + city.id() + "/" + cell.site().element().slot().index(),
-                exception
-            );
-          }
-          List<CityRegionBuildingSlot> buildingSlots = buildingSlots(
-              cell.site().element().element(), mobilePlotBounds, random
-          );
-          return new CityRegionCell(
-              cell.site().element().slot(),
-              cell.site().element().element(),
-              cell.site().point(),
-              cell.boundary(),
-              connections.get(index),
-              mobilePlotBounds,
-              buildingSlots
-          );
-        })
-        .toList();
-    return new CityLayoutPlan(nation, city, cityCenter, boundary, connectedRegions, List.of());
   }
 
   private List<CityRegionBuildingSlot> buildingSlots(
       TerraCityRegionBuilder region,
       PlanarRectangle bounds,
+      RegionLayout regionLayout,
       RandomGenerator random
   ) {
-    List<LayoutAssignment<TerraCityRegionBuilding>> assignments = layoutPlanner.plan(
-        region.buildingLayout(), region.slotCount().count(), region.buildings(), random
-    );
-    return assignments.stream().map(assignment -> {
-      LayoutSlot declaredSlot = assignment.slot();
-      if (Math.abs(declaredSlot.x()) > 1.0 || Math.abs(declaredSlot.z()) > 1.0) {
-        throw new IllegalStateException(
-            "Region 建筑布局槽位超出归一化范围：" + region.id() + "/" + declaredSlot.index()
-        );
+    ArrayList<CityRegionBuildingSlot> placed = new ArrayList<>(regionLayout.parcels().size());
+    java.util.HashSet<JigsawBuilder> usedUniqueBuildings = new java.util.HashSet<>();
+    for (RegionLayout.BuildingParcel parcel : regionLayout.parcels()) {
+      Rotation rotation = CityRegionBuildingSlot.rotationForFacing(parcel.roadFacing());
+      List<TerraCityRegionBuilding> compatible = region.buildings().stream()
+          .filter(candidate -> !candidate.unique() || !usedUniqueBuildings.contains(candidate.building()))
+          .filter(candidate -> fitsExactly(candidate.building(), parcel.area(), rotation))
+          .toList();
+      if (compatible.isEmpty()) {
+        throw new IllegalArgumentException("Region 没有与 Parcel 尺寸匹配的建筑："
+            + region.id() + "/" + parcel.area());
       }
-      LayoutSlot insetSlot = new LayoutSlot(
-          declaredSlot.index(),
-          declaredSlot.x() * BUILDING_SLOT_INSET,
-          declaredSlot.z() * BUILDING_SLOT_INSET
+      TerraCityRegionBuilding selected = select(compatible, random);
+      JigsawBuilder building = selected.building();
+      if (selected.unique()) usedUniqueBuildings.add(building);
+      ChunkRectangle area = parcel.area();
+      PlanarPoint center = area.centerBlocks();
+      LayoutSlot actualSlot = new LayoutSlot(
+          parcel.id(),
+          (center.x() - bounds.center().x()) / bounds.halfSizeX(),
+          (center.z() - bounds.center().z()) / bounds.halfSizeZ()
       );
-      return new CityRegionBuildingSlot(
-          insetSlot,
-          bounds.pointAt(insetSlot.x(), insetSlot.z()),
-          assignment.element().building()
-      );
-    }).toList();
+      Direction facing = parcel.roadFacing();
+      placed.add(new CityRegionBuildingSlot(
+          actualSlot, center, area, parcel.id(), parcel.adjacentRoadId(), facing, rotation, building
+      ));
+    }
+    return List.copyOf(placed);
   }
 
+  private static boolean fitsExactly(
+      JigsawBuilder building,
+      ChunkRectangle area,
+      Rotation rotation
+  ) {
+    boolean quarterTurn = rotation == Rotation.CLOCKWISE_90
+        || rotation == Rotation.COUNTERCLOCKWISE_90;
+    int width = quarterTurn ? building.footprintChunksZ() : building.footprintChunksX();
+    int length = quarterTurn ? building.footprintChunksX() : building.footprintChunksZ();
+    return width == area.widthChunks() && length == area.lengthChunks();
+  }
+
+  private static TerraCityRegionBuilding select(
+      List<TerraCityRegionBuilding> candidates,
+      RandomGenerator random
+  ) {
+    int totalWeight = candidates.stream().mapToInt(TerraCityRegionBuilding::weight).sum();
+    int cursor = random.nextInt(totalWeight);
+    for (TerraCityRegionBuilding candidate : candidates) {
+      if (cursor < candidate.weight()) return candidate;
+      cursor -= candidate.weight();
+    }
+    throw new IllegalStateException("建筑权重选择未命中");
+  }
+
+  private static long mixSeed(long base, String cityId, String regionId, int slotIndex) {
+    long value = base ^ Integer.toUnsignedLong(cityId.hashCode()) * 0x9E3779B97F4A7C15L;
+    value ^= Integer.toUnsignedLong(regionId.hashCode()) * 0xC2B2AE3D27D4EB4FL;
+    value ^= Integer.toUnsignedLong(slotIndex) * 0x165667B19E3779F9L;
+    value ^= value >>> 33;
+    value *= 0xff51afd7ed558ccdl;
+    value ^= value >>> 33;
+    return value;
+  }
 }

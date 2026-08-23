@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 一个 Region slot 的世界坐标及其 Voronoi 边界。
+ * 一个 Chunk 对齐移动 Region 地块及其世界坐标。
  */
 public record CityRegionCell(
     LayoutSlot slot,
@@ -18,6 +18,7 @@ public record CityRegionCell(
     List<PlanarPoint> boundary,
     List<CityRegionConnection> connections,
     PlanarRectangle mobilePlotBounds,
+    RegionLayout regionLayout,
     List<CityRegionBuildingSlot> buildingSlots
 ) {
   public CityRegionCell {
@@ -27,6 +28,7 @@ public record CityRegionCell(
     boundary = List.copyOf(Objects.requireNonNull(boundary, "Region 边界不能为空"));
     connections = List.copyOf(Objects.requireNonNull(connections, "Region 连通点清单不能为空"));
     Objects.requireNonNull(mobilePlotBounds, "移动地块范围不能为空");
+    Objects.requireNonNull(regionLayout, "Region 内部布局不能为空");
     buildingSlots = List.copyOf(Objects.requireNonNull(buildingSlots, "建筑 slot 清单不能为空"));
     if (boundary.size() < 3) throw new IllegalArgumentException("Region 边界至少需要三个点");
     if (mobilePlotBounds.rotationDegrees() != 0.0) {
@@ -48,8 +50,8 @@ public record CityRegionCell(
         != connections.size()) {
       throw new IllegalArgumentException("Region 相邻槽位索引不能重复：" + slot.index());
     }
-    if (buildingSlots.size() != region.slotCount().count()) {
-      throw new IllegalArgumentException("建筑 slot 数量与 Region 声明不一致：" + slot.index());
+    if (buildingSlots.size() != regionLayout.parcels().size()) {
+      throw new IllegalArgumentException("每个建筑 Parcel 必须恰好生成一个建筑：" + slot.index());
     }
     if (buildingSlots.stream().map(buildingSlot -> buildingSlot.slot().index()).distinct().count()
         != buildingSlots.size()) {
@@ -63,13 +65,38 @@ public record CityRegionCell(
       if (!allowedBuildings.contains(buildingSlot.building())) {
         throw new IllegalArgumentException("建筑 slot 引用了 Region 未声明的建筑：" + buildingSlot.building().path);
       }
+      RegionLayout.BuildingParcel parcel = regionLayout.parcels().stream()
+          .filter(candidate -> candidate.id() == buildingSlot.parcelId())
+          .findFirst().orElseThrow(() -> new IllegalArgumentException(
+              "建筑 slot 引用了未知 Parcel：" + buildingSlot.parcelId()
+          ));
+      if (parcel.adjacentRoadId() != buildingSlot.adjacentRoadId()
+          || parcel.roadFacing() != buildingSlot.facing()) {
+        throw new IllegalArgumentException("建筑 slot 与 Parcel 临路信息不一致：" + slot.index());
+      }
       if (!mobilePlotBounds.contains(buildingSlot.center())) {
         throw new IllegalArgumentException("建筑 slot 超出移动地块范围：" + slot.index()
             + "/" + buildingSlot.slot().index());
       }
+      PlanarRectangle buildingBounds = buildingSlot.chunkArea().toBlockRectangle();
+      for (PlanarPoint corner : buildingBounds.corners()) {
+        if (!mobilePlotBounds.contains(corner)) {
+          throw new IllegalArgumentException("建筑占地超出移动地块范围：" + slot.index()
+              + "/" + buildingSlot.slot().index());
+        }
+      }
       if (Math.abs(buildingSlot.slot().x()) >= 1.0 || Math.abs(buildingSlot.slot().z()) >= 1.0) {
         throw new IllegalArgumentException("建筑 slot 必须严格位于移动地块内部：" + slot.index()
             + "/" + buildingSlot.slot().index());
+      }
+    }
+    for (int first = 0; first < buildingSlots.size(); first++) {
+      for (int second = first + 1; second < buildingSlots.size(); second++) {
+        if (buildingSlots.get(first).chunkArea().intersects(buildingSlots.get(second).chunkArea())) {
+          throw new IllegalArgumentException("Region 建筑占地不能重叠：" + slot.index()
+              + "/" + buildingSlots.get(first).slot().index()
+              + "/" + buildingSlots.get(second).slot().index());
+        }
       }
     }
   }

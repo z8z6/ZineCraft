@@ -11,9 +11,11 @@ import com.cxxcxx.zinecraft.core.dimension.TerraPlayerSpawn;
 import com.cxxcxx.zinecraft.core.dimension.TerraWorldBoundary;
 import com.cxxcxx.zinecraft.core.nation.TerraNationRelations;
 import com.cxxcxx.zinecraft.core.nation.TerraBuildingLocateCommand;
+import com.cxxcxx.zinecraft.core.nation.TerraLayoutResource;
 import com.cxxcxx.zinecraft.core.quest.FtbQuestGuideInstaller;
 import com.cxxcxx.zinecraft.core.registry.*;
 import com.cxxcxx.zinecraft.core.skill.ModSkill;
+import com.cxxcxx.zinecraft.core.worldgen.density.TerraTerrainLookup;
 import com.cxxcxx.zinecraft.integration.tacz.TaczIntegration;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -112,6 +114,10 @@ public final class Zinecraft {
 
   private void commonSetup(FMLCommonSetupEvent event) {
     event.enqueueWork(() -> {
+      // 布局包含全部国家、城市、Region、道路和建筑槽位，首次解析开销较大。
+      // 在进入主菜单前完成读取，避免创建/进入世界时阻塞服务器线程和渲染线程。
+      TerraLayoutResource.preload();
+      TerraTerrainLookup.preload();
       ModTerraBlender.initialize();
       if (ModList.get().isLoaded("jeresources")) ZinecraftJerPlugin.install();
     });

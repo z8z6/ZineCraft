@@ -65,6 +65,17 @@ sourceSets {
         java.srcDirs = ['src/main/java', 'src/client/java']
         resources.srcDirs = ['src/main/resources', 'src/client/resources', 'src/generated/resources']
     }
+    // ModDev puts *AdditionalRuntimeClasspath dependencies on NeoForge's legacy
+    // library classpath. Regular mod jars on that classpath are not discovered as
+    // mods, so the client run needs its own normal runtime classpath instead.
+    clientRuntime {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+    test {
+        compileClasspath += sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
 }
 
 def terraLayoutValidationDir = layout.buildDirectory.dir('reports/terra-layout')
@@ -73,7 +84,7 @@ def terraLayoutValidationMap = terraLayoutValidationDir.map { it.file('terra_lay
 def terraTerrainHeightmapFile = layout.buildDirectory.file('reports/terra-terrain/heightmap.json')
 def terraTerrainDatagenDirectory = layout.buildDirectory.dir('terra-terrain-datagen')
 def terraTerrainSeed = providers.gradleProperty('terraTerrainSeed').orElse('-8732947949389768645')
-def terraTerrainSpacing = providers.gradleProperty('terraTerrainSpacing').orElse('1024')
+def terraTerrainSpacing = providers.gradleProperty('terraTerrainSpacing').orElse('2048')
 
 neoForge {
     version = project.neo_version
@@ -86,6 +97,7 @@ neoForge {
     runs {
         client {
             client()
+            sourceSet = sourceSets.clientRuntime
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
         server {
@@ -149,6 +161,9 @@ tasks.register('generateTerraLayoutValidation', Exec) {
 }
 
 dependencies {
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     // Segment-site Voronoi topology for Nation polyline skeletons. Pinned for reproducible geometry.
     compileOnly 'com.github.micycle1.jOpenVoronoi:jopenvoronoi-core:2f6d4ca'
     compileOnly 'org.locationtech.jts:jts-core:1.20.0'
@@ -187,6 +202,13 @@ dependencies {
     clientAdditionalRuntimeClasspath "maven.modrinth:sodium:${project.sodium_modrinth_version}"
     // Iris is client-only and requires Sodium; keep it out of server and data-generator runs.
     clientAdditionalRuntimeClasspath "maven.modrinth:YL57xq9U:${project.iris_modrinth_version}"
+    // Client menu customization and world-loading tips, including their required libraries.
+    clientRuntimeRuntimeOnly "maven.modrinth:fancymenu:" + project.fancymenu_modrinth_version
+    clientRuntimeRuntimeOnly "maven.modrinth:melody:" + project.melody_modrinth_version
+    clientRuntimeRuntimeOnly "maven.modrinth:konkrete:" + project.konkrete_modrinth_version
+    clientRuntimeRuntimeOnly "maven.modrinth:tips:" + project.tips_modrinth_version
+    clientRuntimeRuntimeOnly "maven.modrinth:bookshelf-lib:" + project.bookshelf_modrinth_version
+    clientRuntimeRuntimeOnly "maven.modrinth:prickle:" + project.prickle_modrinth_version
     // TaCZ owns gun items, gun-pack loading, rendering, input and mechanical animations.
     implementation "maven.modrinth:tacz-1.21.1:${project.tacz_version}"
 
@@ -215,25 +237,50 @@ def generateTerraLayoutData = tasks.register('generateTerraLayoutData', JavaExec
             }
     )
     mainClass = 'com.cxxcxx.zinecraft.core.datagen.TerraLayoutDataExporter'
-    args file('src/generated/resources/data/zinecraft/terra_layout.json').absolutePath,
+    args file('src/generated/resources/data/zinecraft/terra_layout').absolutePath,
             terraLayoutValidationJson.get().asFile.absolutePath
     inputs.files(sourceSets.main.allJava)
-    outputs.files(
-            file('src/generated/resources/data/zinecraft/terra_layout.json'),
-            terraLayoutValidationJson
-    )
+    outputs.dir file('src/generated/resources/data/zinecraft/terra_layout')
+    outputs.file terraLayoutValidationJson
 }
 
 tasks.named('processResources') {
     dependsOn generateTerraLayoutData
+    exclude 'data/zinecraft/terra_layout.json'
 }
 
 tasks.named('sourcesJar') {
     dependsOn generateTerraLayoutData
+    exclude 'data/zinecraft/terra_layout.json'
+}
+
+def restoreTerraLayoutData = tasks.register('restoreTerraLayoutData', JavaExec) {
+    group = 'data generation'
+    description = 'Restores compressed Terra layout resources removed by the NeoForge data HashCache.'
+    dependsOn tasks.named('compileJava')
+    def generatorWorkingDir = layout.buildDirectory.dir('terra-layout-generator')
+    workingDir generatorWorkingDir
+    doFirst {
+        generatorWorkingDir.get().asFile.mkdirs()
+    }
+    classpath = files(
+            sourceSets.main.output.classesDirs,
+            sourceSets.main.compileClasspath,
+            fileTree(layout.buildDirectory.dir('moddev/artifacts')) {
+                include '*client-extra*.jar'
+            }
+    )
+    mainClass = 'com.cxxcxx.zinecraft.core.datagen.TerraLayoutDataExporter'
+    args file('src/generated/resources/data/zinecraft/terra_layout').absolutePath,
+            terraLayoutValidationJson.get().asFile.absolutePath
 }
 
 tasks.named('runData') {
     dependsOn generateTerraLayoutData
+    // NeoForge HashCache removes files in the shared generated-resource directory
+    // that are not emitted by one of its providers. Recreate the independently
+    // generated compressed Terra layout after vanilla/NeoForge data generation.
+    finalizedBy restoreTerraLayoutData
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -241,6 +288,10 @@ tasks.withType(JavaCompile).configureEach {
     options.release = 21
     options.compilerArgs.add('-Xmaxerrs')
     options.compilerArgs.add('1000')
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
 }
 
 def generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
@@ -361,6 +412,18 @@ tasks.named('check') {
 
 def pclStageDirectory = layout.buildDirectory.dir("pcl/Zinecraft-PCL-${project.mod_version}")
 def pclArchive = layout.buildDirectory.file("distributions/Zinecraft-PCL-${project.mod_version}.zip")
+def clientPackConfigDirectory = layout.projectDirectory.dir('src/client-pack/config')
+
+tasks.register('installClientPackConfig', Copy) {
+    group = 'distribution'
+    description = 'Installs source-controlled client pack configuration into the development run directory.'
+    from clientPackConfigDirectory
+    into layout.projectDirectory.dir('run/config')
+}
+
+tasks.named('prepareClientRun') {
+    dependsOn tasks.named('installClientPackConfig')
+}
 
 tasks.register('preparePclPackage') {
     group = 'distribution'
@@ -408,7 +471,8 @@ tasks.register('preparePclPackage') {
 
         def runtimeFiles = [
                 configurations.runtimeClasspath,
-                configurations.clientAdditionalRuntimeClasspath
+                configurations.clientRuntimeRuntimeClasspath,
+                configurations.clientLegacyClasspath
         ].collectMany { configuration -> configuration.resolve() as List<File> }
         def modFiles = runtimeFiles
                 .findAll(isDistributableMod)
@@ -438,6 +502,12 @@ tasks.register('preparePclPackage') {
         if (file('run/config').isDirectory()) {
             copy {
                 from 'run/config'
+                into new File(overrides, 'config')
+            }
+        }
+        if (clientPackConfigDirectory.asFile.isDirectory()) {
+            copy {
+                from clientPackConfigDirectory
                 into new File(overrides, 'config')
             }
         }
@@ -486,6 +556,14 @@ tasks.register('preparePclPackage') {
                 '# Bundled runtime mods\n\n'
                         + 'The following files are redistributed runtime dependencies. '
                         + 'Their respective authors and licenses remain authoritative.\n\n'
+                        + '## Client menu and loading tips\n\n'
+                        + '- FancyMenu 3.9.7 — DSMSLv3.1 — https://modrinth.com/mod/fancymenu\n'
+                        + '- Melody 1.0.10 — MIT — https://modrinth.com/mod/melody\n'
+                        + '- Konkrete 1.9.9 — Apache-2.0 — https://modrinth.com/mod/konkrete\n'
+                        + '- Tips 21.1.3 — LGPL-2.1-only — https://modrinth.com/mod/tips\n'
+                        + '- Bookshelf 21.1.81 — LGPL-2.1-only — https://modrinth.com/mod/bookshelf-lib\n'
+                        + '- Prickle 21.1.11 — LGPL-2.1-only — https://modrinth.com/mod/prickle\n\n'
+                        + '## Packaged files\n\n'
                         + modFiles.collect { "- ${it.name}" }.join('\n')
                         + '\n', 'UTF-8')
     }

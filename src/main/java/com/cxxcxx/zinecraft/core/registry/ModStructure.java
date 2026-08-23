@@ -13,9 +13,20 @@ import org.jetbrains.annotations.Nullable;
 public final class ModStructure {
   public static final JigsawBuilder MOBILE_PLOT_POWER_LAYER = Zinecraft.STRUCTURES
       .embeddedInfrastructure("mobile_plot_power_layer", "移动地块动力层", 32);
+  public static final JigsawBuilder MOBILE_PLOT_SUPPORT_LAYER = Zinecraft.STRUCTURES
+      .embeddedInfrastructure("mobile_plot_support_layer", "移动地块支持层", 32);
+  public static final JigsawBuilder MOBILE_PLOT_LIFE_LAYER = Zinecraft.STRUCTURES
+      .embeddedInfrastructure("mobile_plot_life_layer", "移动地块生活层", 32);
+  public static final JigsawBuilder MOBILE_PLOT_ROAD_ISOLATED = road("isolated", "孤立道路");
+  public static final JigsawBuilder MOBILE_PLOT_ROAD_END = road("end", "道路端头");
+  public static final JigsawBuilder MOBILE_PLOT_ROAD_STRAIGHT = road("straight", "直道");
+  public static final JigsawBuilder MOBILE_PLOT_ROAD_CORNER = road("corner", "道路拐角");
+  public static final JigsawBuilder MOBILE_PLOT_ROAD_TEE = road("tee", "T 字道路");
+  public static final JigsawBuilder MOBILE_PLOT_ROAD_CROSS = road("cross", "十字道路");
 
   public static final JigsawBuilder STARGATE = Zinecraft.STRUCTURES.jigsaw("stargate", "萨米星门")
       .enUs("Sami Stargate")
+      .footprint(2, 2)
       .biome(ModBiome.SAMI_FROZEN_FOREST.key())
       .layout(1, 32)
       .height(Types.WORLD_SURFACE_WG, 0)
@@ -23,26 +34,47 @@ public final class ModStructure {
       .pool("start", Projection.RIGID, pool -> pool.template("stargate", 1))
       .build();
 
-  public static final JigsawBuilder AEGIR_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("aegir_shop", "阿戈尔商铺", 32);
-  public static final JigsawBuilder BOLIVAR_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("bolivar_shop", "玻利瓦尔商铺", 32);
-  public static final JigsawBuilder HIGASHI_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("higashi_shop", "东国商铺", 32);
-  public static final JigsawBuilder DURIN_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("durin_shop", "杜林商铺", 32);
-  public static final JigsawBuilder COLUMBIA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("columbia_shop", "哥伦比亚商铺", 32);
-  public static final JigsawBuilder KAZIMIERZ_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("kazimierz_shop", "卡西米尔商铺", 32);
-  public static final JigsawBuilder KAZDEL_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("kazdel_shop", "卡兹戴尔商铺", 32);
-  public static final JigsawBuilder LATERANO_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("laterano_shop", "拉特兰商铺", 32);
-  public static final JigsawBuilder LEITHANIEN_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("leithanien_shop", "莱塔尼亚商铺", 32);
-  public static final JigsawBuilder RIM_BILLITON_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("rim_billiton_shop", "雷姆必拓商铺", 32);
-  public static final JigsawBuilder MINOS_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("minos_shop", "米诺斯商铺", 32);
-  public static final JigsawBuilder SARGON_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("sargon_shop", "萨尔贡商铺", 32);
-  public static final JigsawBuilder SAMI_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("sami_shop", "萨米商铺", 32);
-  public static final JigsawBuilder VICTORIA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("victoria_shop", "维多利亚商铺", 32);
-  public static final JigsawBuilder URSUS_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("ursus_shop", "乌萨斯商铺", 32);
-  public static final JigsawBuilder KJERAG_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("kjerag_shop", "谢拉格商铺", 32);
-  public static final JigsawBuilder SIRACUSA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("siracusa_shop", "叙拉古商铺", 32);
-  public static final JigsawBuilder SIESTA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("siesta_shop", "汐斯塔商铺", 32);
-  public static final JigsawBuilder YAN_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("yan_shop", "炎商铺", 32);
-  public static final JigsawBuilder IBERIA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("iberia_shop", "伊比利亚商铺", 32);
+  public static final JigsawBuilder AEGIR_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("aegir_shop", "阿戈尔商铺", 1, 1, 32);
+  public static final JigsawBuilder BOLIVAR_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("bolivar_shop", "玻利瓦尔商铺", 1, 1, 32);
+  public static final JigsawBuilder HIGASHI_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("higashi_shop", "东国商铺", 1, 1, 32);
+  public static final JigsawBuilder DURIN_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("durin_shop", "杜林商铺", 1, 1, 32);
+  public static final JigsawBuilder COLUMBIA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("columbia_shop", "哥伦比亚商铺", 1, 1, 32);
+  public static final JigsawBuilder KAZIMIERZ_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("kazimierz_shop", "卡西米尔商铺", 1, 1, 32);
+  public static final JigsawBuilder KAZDEL_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("kazdel_shop", "卡兹戴尔商铺", 1, 1, 32);
+  public static final JigsawBuilder LATERANO_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("laterano_shop", "拉特兰商铺", 1, 1, 32);
+  public static final JigsawBuilder LEITHANIEN_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("leithanien_shop", "莱塔尼亚商铺", 1, 1, 32);
+  public static final JigsawBuilder RIM_BILLITON_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("rim_billiton_shop", "雷姆必拓商铺", 1, 1, 32);
+  public static final JigsawBuilder MINOS_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("minos_shop", "米诺斯商铺", 1, 1, 32);
+  public static final JigsawBuilder SARGON_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("sargon_shop", "萨尔贡商铺", 1, 1, 32);
+  public static final JigsawBuilder SAMI_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("sami_shop", "萨米商铺", 1, 1, 32);
+  public static final JigsawBuilder VICTORIA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("victoria_shop", "维多利亚商铺", 1, 1, 32);
+  public static final JigsawBuilder URSUS_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("ursus_shop", "乌萨斯商铺", 1, 1, 32);
+  public static final JigsawBuilder KJERAG_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("kjerag_shop", "谢拉格商铺", 1, 1, 32);
+  public static final JigsawBuilder SIRACUSA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("siracusa_shop", "叙拉古商铺", 1, 1, 32);
+  public static final JigsawBuilder SIESTA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("siesta_shop", "汐斯塔商铺", 1, 1, 32);
+  public static final JigsawBuilder YAN_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("yan_shop", "炎商铺", 1, 1, 32);
+  public static final JigsawBuilder IBERIA_SHOP = Zinecraft.STRUCTURES.embeddedBuilding("iberia_shop", "伊比利亚商铺", 1, 1, 32);
+
+  public static final JigsawBuilder AEGIR_MEDIUM_SHOP = mediumShop("aegir", "阿戈尔");
+  public static final JigsawBuilder BOLIVAR_MEDIUM_SHOP = mediumShop("bolivar", "玻利瓦尔");
+  public static final JigsawBuilder HIGASHI_MEDIUM_SHOP = mediumShop("higashi", "东国");
+  public static final JigsawBuilder DURIN_MEDIUM_SHOP = mediumShop("durin", "杜林");
+  public static final JigsawBuilder COLUMBIA_MEDIUM_SHOP = mediumShop("columbia", "哥伦比亚");
+  public static final JigsawBuilder KAZIMIERZ_MEDIUM_SHOP = mediumShop("kazimierz", "卡西米尔");
+  public static final JigsawBuilder KAZDEL_MEDIUM_SHOP = mediumShop("kazdel", "卡兹戴尔");
+  public static final JigsawBuilder LATERANO_MEDIUM_SHOP = mediumShop("laterano", "拉特兰");
+  public static final JigsawBuilder LEITHANIEN_MEDIUM_SHOP = mediumShop("leithanien", "莱塔尼亚");
+  public static final JigsawBuilder RIM_BILLITON_MEDIUM_SHOP = mediumShop("rim_billiton", "雷姆必拓");
+  public static final JigsawBuilder MINOS_MEDIUM_SHOP = mediumShop("minos", "米诺斯");
+  public static final JigsawBuilder SARGON_MEDIUM_SHOP = mediumShop("sargon", "萨尔贡");
+  public static final JigsawBuilder SAMI_MEDIUM_SHOP = mediumShop("sami", "萨米");
+  public static final JigsawBuilder VICTORIA_MEDIUM_SHOP = mediumShop("victoria", "维多利亚");
+  public static final JigsawBuilder URSUS_MEDIUM_SHOP = mediumShop("ursus", "乌萨斯");
+  public static final JigsawBuilder KJERAG_MEDIUM_SHOP = mediumShop("kjerag", "谢拉格");
+  public static final JigsawBuilder SIRACUSA_MEDIUM_SHOP = mediumShop("siracusa", "叙拉古");
+  public static final JigsawBuilder SIESTA_MEDIUM_SHOP = mediumShop("siesta", "汐斯塔");
+  public static final JigsawBuilder YAN_MEDIUM_SHOP = mediumShop("yan", "炎");
+  public static final JigsawBuilder IBERIA_MEDIUM_SHOP = mediumShop("iberia", "伊比利亚");
 
   public static final JigsawBuilder AEGIR_VOLCANIC_BEACON = building("aegir_volcanic_beacon", "阿戈尔火山信标", ModBiome.AEGIR_ABYSSAL_SEA.key(), Types.OCEAN_FLOOR_WG, 0);
   public static final JigsawBuilder AEGIR_ABYSSAL_OBSERVATORY = building("aegir_abyssal_observatory", "阿戈尔深渊观测站", ModBiome.AEGIR_ABYSSAL_SEA.key(), Types.OCEAN_FLOOR_WG, 0);
@@ -61,6 +93,7 @@ public final class ModStructure {
   public static final JigsawBuilder LATERANO_REVELATION_TOWER = building("laterano_revelation_tower", "拉特兰启示石塔", ModBiome.LATERANO_HOLY_FIELDS.key(), null, 0);
   public static final JigsawBuilder LATERANO_AMBROSIUS_CHAPEL = building("laterano_ambrosius_chapel", "拉特兰安布罗修礼拜堂", ModBiome.LATERANO_HOLY_FIELDS.key(), null, 0);
   public static final JigsawBuilder LATERANO_HOST = Zinecraft.STRUCTURES.jigsaw("laterano_host", "拉特兰主机")
+      .footprint(2, 2)
       .biome(ModBiome.LATERANO_HOLY_FIELDS.key())
       .layout(1, 32)
       .height(Types.WORLD_SURFACE_WG, 0)
@@ -93,6 +126,70 @@ public final class ModStructure {
   private ModStructure() {
   }
 
+  private static JigsawBuilder road(String type, String zhCn) {
+    return Zinecraft.STRUCTURES.embeddedInfrastructure(
+        "mobile_plot_road/" + type, zhCn, 16
+    );
+  }
+
+  private static JigsawBuilder mediumShop(String nation, String nationName) {
+    return Zinecraft.STRUCTURES.embeddedBuilding(
+        nation + "_medium_shop", nationName + "中型商铺", 1, 2, 48
+    );
+  }
+
+  public static JigsawBuilder mediumShopFor(JigsawBuilder smallShop) {
+    return switch (smallShop.path) {
+      case "aegir_shop" -> AEGIR_MEDIUM_SHOP;
+      case "bolivar_shop" -> BOLIVAR_MEDIUM_SHOP;
+      case "higashi_shop" -> HIGASHI_MEDIUM_SHOP;
+      case "durin_shop" -> DURIN_MEDIUM_SHOP;
+      case "columbia_shop" -> COLUMBIA_MEDIUM_SHOP;
+      case "kazimierz_shop" -> KAZIMIERZ_MEDIUM_SHOP;
+      case "kazdel_shop" -> KAZDEL_MEDIUM_SHOP;
+      case "laterano_shop" -> LATERANO_MEDIUM_SHOP;
+      case "leithanien_shop" -> LEITHANIEN_MEDIUM_SHOP;
+      case "rim_billiton_shop" -> RIM_BILLITON_MEDIUM_SHOP;
+      case "minos_shop" -> MINOS_MEDIUM_SHOP;
+      case "sargon_shop" -> SARGON_MEDIUM_SHOP;
+      case "sami_shop" -> SAMI_MEDIUM_SHOP;
+      case "victoria_shop" -> VICTORIA_MEDIUM_SHOP;
+      case "ursus_shop" -> URSUS_MEDIUM_SHOP;
+      case "kjerag_shop" -> KJERAG_MEDIUM_SHOP;
+      case "siracusa_shop" -> SIRACUSA_MEDIUM_SHOP;
+      case "siesta_shop" -> SIESTA_MEDIUM_SHOP;
+      case "yan_shop" -> YAN_MEDIUM_SHOP;
+      case "iberia_shop" -> IBERIA_MEDIUM_SHOP;
+      default -> throw new IllegalArgumentException("不是已注册的国家普通商店：" + smallShop.path);
+    };
+  }
+
+  public static JigsawBuilder shopFor(String nationId) {
+    return switch (nationId) {
+      case "aegir" -> AEGIR_SHOP;
+      case "bolivar" -> BOLIVAR_SHOP;
+      case "higashi" -> HIGASHI_SHOP;
+      case "durin" -> DURIN_SHOP;
+      case "columbia" -> COLUMBIA_SHOP;
+      case "kazimierz" -> KAZIMIERZ_SHOP;
+      case "kazdel" -> KAZDEL_SHOP;
+      case "laterano" -> LATERANO_SHOP;
+      case "leithanien" -> LEITHANIEN_SHOP;
+      case "rim_billiton" -> RIM_BILLITON_SHOP;
+      case "minos" -> MINOS_SHOP;
+      case "sargon" -> SARGON_SHOP;
+      case "sami" -> SAMI_SHOP;
+      case "victoria" -> VICTORIA_SHOP;
+      case "ursus" -> URSUS_SHOP;
+      case "kjerag" -> KJERAG_SHOP;
+      case "siracusa" -> SIRACUSA_SHOP;
+      case "siesta" -> SIESTA_SHOP;
+      case "yan" -> YAN_SHOP;
+      case "iberia" -> IBERIA_SHOP;
+      default -> throw new IllegalArgumentException("国家没有注册商店：" + nationId);
+    };
+  }
+
   private static JigsawBuilder building(
       String path,
       String zhCn,
@@ -101,6 +198,7 @@ public final class ModStructure {
       int startHeight
   ) {
     return Zinecraft.STRUCTURES.jigsaw(path, zhCn)
+        .footprint(2, 2)
         .biome(biome)
         .layout(7, 112)
         .height(heightmap == null ? Types.WORLD_SURFACE_WG : heightmap, startHeight)
@@ -116,6 +214,13 @@ public final class ModStructure {
   }
 
   public static void bootstrap() {
-    Zinecraft.STRUCTURES.enableMobilePlots(MOBILE_PLOT_POWER_LAYER, ModBiome.ALL_TERRA_BIOMES);
+    Zinecraft.STRUCTURES.enableMobilePlots(
+        java.util.List.of(MOBILE_PLOT_POWER_LAYER, MOBILE_PLOT_SUPPORT_LAYER, MOBILE_PLOT_LIFE_LAYER),
+        java.util.List.of(
+            MOBILE_PLOT_ROAD_ISOLATED, MOBILE_PLOT_ROAD_END, MOBILE_PLOT_ROAD_STRAIGHT,
+            MOBILE_PLOT_ROAD_CORNER, MOBILE_PLOT_ROAD_TEE, MOBILE_PLOT_ROAD_CROSS
+        ),
+        ModBiome.ALL_TERRA_BIOMES
+    );
   }
 }

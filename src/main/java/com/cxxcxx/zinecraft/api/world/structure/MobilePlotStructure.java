@@ -8,11 +8,9 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -20,7 +18,6 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
 import net.minecraft.world.level.levelgen.structure.pools.EmptyPoolElement;
-import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
@@ -35,33 +32,63 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * 消费 {@code terra_layout.json}：每区块铺设一份动力层，并在本区块持有的 slot 上展开建筑。
+ * 消费分国压缩布局资源：逐区块铺设动力、支持、生活三层，再在顶部展开道路和建筑。
  */
 public final class MobilePlotStructure extends Structure {
-  public static final int POWER_LAYER_HEIGHT = 31;
+  public static final int LAYER_HEIGHT = 16;
+  public static final int MOBILE_PLOT_HEIGHT = LAYER_HEIGHT * 3;
   @NotNull
   public static final Access ACCESS = new Access();
   @NotNull
   private static final MapCodec<MobilePlotStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
       settingsCodec(instance),
-      StructureTemplatePool.CODEC.fieldOf("power_layer_pool")
-          .forGetter(structure -> structure.powerLayerPool),
+      LayerDefinition.CODEC.listOf().fieldOf("layer_tiles")
+          .forGetter(structure -> structure.layerTiles),
+      RoadDefinition.CODEC.listOf().fieldOf("road_tiles")
+          .forGetter(structure -> structure.roadTiles),
       BuildingDefinition.CODEC.listOf().fieldOf("buildings")
           .forGetter(structure -> structure.buildings)
   ).apply(instance, MobilePlotStructure::new));
   private static Supplier<StructureType<MobilePlotStructure>> type;
 
-  private final Holder<StructureTemplatePool> powerLayerPool;
+  private final List<LayerDefinition> layerTiles;
+  private final List<RoadDefinition> roadTiles;
+  private final Map<String, RoadDefinition> roadTilesById;
   private final List<BuildingDefinition> buildings;
   private final Map<String, BuildingDefinition> buildingsById;
 
   public MobilePlotStructure(
       StructureSettings settings,
-      Holder<StructureTemplatePool> powerLayerPool,
+      List<LayerDefinition> layerTiles,
+      List<RoadDefinition> roadTiles,
       List<BuildingDefinition> buildings
   ) {
     super(settings);
-    this.powerLayerPool = Objects.requireNonNull(powerLayerPool, "动力层模板池不能为空");
+    this.layerTiles = List.copyOf(Objects.requireNonNull(layerTiles, "移动地块分层模板池不能为空"));
+    LinkedHashMap<String, LayerDefinition> layersById = new LinkedHashMap<>();
+    for (LayerDefinition layer : this.layerTiles) {
+      if (layersById.putIfAbsent(layer.id(), layer) != null) {
+        throw new IllegalArgumentException("移动地块层级 ID 重复：" + layer.id());
+      }
+    }
+    Map<String, Integer> requiredLayers = Map.of("power", 0, "support", 16, "life", 32);
+    for (var required : requiredLayers.entrySet()) {
+      LayerDefinition layer = layersById.get(required.getKey());
+      if (layer == null || layer.yOffset() != required.getValue()) {
+        throw new IllegalArgumentException("移动地块缺少层级或高度错误：" + required.getKey());
+      }
+    }
+    this.roadTiles = List.copyOf(Objects.requireNonNull(roadTiles, "道路构件模板池不能为空"));
+    LinkedHashMap<String, RoadDefinition> roadById = new LinkedHashMap<>();
+    for (RoadDefinition roadTile : roadTiles) {
+      if (roadById.putIfAbsent(roadTile.id(), roadTile) != null) {
+        throw new IllegalArgumentException("道路构件 ID 重复：" + roadTile.id());
+      }
+    }
+    for (String required : List.of("isolated", "end", "straight", "corner", "tee", "cross")) {
+      if (!roadById.containsKey(required)) throw new IllegalArgumentException("缺少道路构件：" + required);
+    }
+    this.roadTilesById = Map.copyOf(roadById);
     this.buildings = List.copyOf(Objects.requireNonNull(buildings, "候选建筑定义不能为空"));
     LinkedHashMap<String, BuildingDefinition> byId = new LinkedHashMap<>();
     for (BuildingDefinition building : buildings) {
@@ -75,49 +102,109 @@ public final class MobilePlotStructure extends Structure {
   @Override
   protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
     ChunkPos chunk = context.chunkPos();
-    Optional<CityRegionCell> optionalRegion = TerraLayoutResource.mobilePlotRegion(chunk.x, chunk.z);
-    if (optionalRegion.isEmpty()) return Optional.empty();
+    Optional<TerraLayoutResource.MobilePlotTerrain> optionalTerrain =
+        TerraLayoutResource.mobilePlotTerrain(chunk.x, chunk.z);
+    if (optionalTerrain.isEmpty()) return Optional.empty();
 
-    CityRegionCell region = optionalRegion.get();
-    int centerX = chunk.getMiddleBlockX();
-    int centerZ = chunk.getMiddleBlockZ();
-    int baseY = context.chunkGenerator().getFirstFreeHeight(
-        centerX,
-        centerZ,
-        Heightmap.Types.WORLD_SURFACE_WG,
-        context.heightAccessor(),
-        context.randomState()
-    );
-    BlockPos powerOrigin = new BlockPos(chunk.getMinBlockX(), baseY, chunk.getMinBlockZ());
-    StructurePoolElement powerElement = powerLayerPool.value().getRandomTemplate(context.random());
-    if (powerElement == EmptyPoolElement.INSTANCE) return Optional.empty();
-
-    BoundingBox powerBox = powerElement.getBoundingBox(
-        context.structureTemplateManager(), powerOrigin, Rotation.NONE
-    );
-    PoolElementStructurePiece powerPiece = new PoolElementStructurePiece(
-        context.structureTemplateManager(),
-        powerElement,
-        powerOrigin,
-        powerElement.getGroundLevelDelta(),
-        Rotation.NONE,
-        powerBox,
-        LiquidSettings.IGNORE_WATERLOGGING
-    );
+    TerraLayoutResource.MobilePlotTerrain terrain = optionalTerrain.get();
+    CityRegionCell region = terrain.region();
+    int baseY = terrain.profile().groundY() + 1;
+    java.util.ArrayList<PoolElementStructurePiece> layerPieces = new java.util.ArrayList<>(3);
+    for (LayerDefinition layer : layerTiles) {
+      BlockPos origin = new BlockPos(chunk.getMinBlockX(), baseY + layer.yOffset(), chunk.getMinBlockZ());
+      StructurePoolElement element = layer.pool().value().getRandomTemplate(context.random());
+      if (element == EmptyPoolElement.INSTANCE) return Optional.empty();
+      BoundingBox box = element.getBoundingBox(context.structureTemplateManager(), origin, Rotation.NONE);
+      layerPieces.add(new PoolElementStructurePiece(
+          context.structureTemplateManager(), element, origin, element.getGroundLevelDelta(),
+          Rotation.NONE, box, LiquidSettings.IGNORE_WATERLOGGING
+      ));
+    }
     List<CityRegionBuildingSlot> chunkSlots = region.buildingSlots().stream()
-        .filter(slot -> SectionPos.blockToSectionCoord(Mth.floor(slot.center().x())) == chunk.x
-            && SectionPos.blockToSectionCoord(Mth.floor(slot.center().z())) == chunk.z)
+        .filter(slot -> slot.chunkArea().minChunkX() == chunk.x
+            && slot.chunkArea().minChunkZ() == chunk.z)
         .toList();
 
     return Optional.of(new GenerationStub(
         new BlockPos(chunk.getMiddleBlockX(), baseY, chunk.getMiddleBlockZ()),
         pieces -> {
-          pieces.addPiece(powerPiece);
+          layerPieces.forEach(pieces::addPiece);
+          if (region.regionLayout().isRoad(chunk.x, chunk.z)) {
+            addRoadSurface(context, pieces, region, chunk, baseY + MOBILE_PLOT_HEIGHT);
+          }
           for (CityRegionBuildingSlot slot : chunkSlots) {
-            addBuilding(context, pieces, slot, baseY + POWER_LAYER_HEIGHT);
+            addBuilding(context, pieces, slot, baseY + MOBILE_PLOT_HEIGHT);
           }
         }
     ));
+  }
+
+  private void addRoadSurface(
+      GenerationContext context,
+      StructurePiecesBuilder pieces,
+      CityRegionCell region,
+      ChunkPos chunk,
+      int surfaceY
+  ) {
+    RoadTileSelection selection = roadTile(region, chunk.x, chunk.z);
+    RoadDefinition definition = Objects.requireNonNull(roadTilesById.get(selection.id()));
+    StructurePoolElement element = definition.pool().value().getRandomTemplate(context.random());
+    if (element == EmptyPoolElement.INSTANCE) return;
+    BlockPos origin = rotatedOrigin(
+        new com.cxxcxx.zinecraft.api.world.city.ChunkRectangle(chunk.x, chunk.z, 1, 1),
+        surfaceY,
+        selection.rotation()
+    );
+    BoundingBox box = element.getBoundingBox(context.structureTemplateManager(), origin, selection.rotation());
+    pieces.addPiece(new PoolElementStructurePiece(
+        context.structureTemplateManager(), element, origin, element.getGroundLevelDelta(),
+        selection.rotation(), box, LiquidSettings.IGNORE_WATERLOGGING
+    ));
+  }
+
+  private static RoadTileSelection roadTile(CityRegionCell region, int chunkX, int chunkZ) {
+    boolean north = connected(region, chunkX, chunkZ, net.minecraft.core.Direction.NORTH);
+    boolean east = connected(region, chunkX, chunkZ, net.minecraft.core.Direction.EAST);
+    boolean south = connected(region, chunkX, chunkZ, net.minecraft.core.Direction.SOUTH);
+    boolean west = connected(region, chunkX, chunkZ, net.minecraft.core.Direction.WEST);
+    int count = (north ? 1 : 0) + (east ? 1 : 0) + (south ? 1 : 0) + (west ? 1 : 0);
+    if (count == 0) return new RoadTileSelection("isolated", Rotation.NONE);
+    if (count == 1) {
+      Rotation rotation = north ? Rotation.NONE : east ? Rotation.CLOCKWISE_90
+          : south ? Rotation.CLOCKWISE_180 : Rotation.COUNTERCLOCKWISE_90;
+      return new RoadTileSelection("end", rotation);
+    }
+    if (count == 2 && north && south) return new RoadTileSelection("straight", Rotation.NONE);
+    if (count == 2 && east && west) return new RoadTileSelection("straight", Rotation.CLOCKWISE_90);
+    if (count == 2) {
+      Rotation rotation = north && east ? Rotation.NONE : east && south ? Rotation.CLOCKWISE_90
+          : south && west ? Rotation.CLOCKWISE_180 : Rotation.COUNTERCLOCKWISE_90;
+      return new RoadTileSelection("corner", rotation);
+    }
+    if (count == 3) {
+      Rotation rotation = !south ? Rotation.NONE : !west ? Rotation.CLOCKWISE_90
+          : !north ? Rotation.CLOCKWISE_180 : Rotation.COUNTERCLOCKWISE_90;
+      return new RoadTileSelection("tee", rotation);
+    }
+    return new RoadTileSelection("cross", Rotation.NONE);
+  }
+
+  private static boolean connected(
+      CityRegionCell region,
+      int chunkX,
+      int chunkZ,
+      net.minecraft.core.Direction direction
+  ) {
+    int neighborX = chunkX + direction.getStepX();
+    int neighborZ = chunkZ + direction.getStepZ();
+    if (region.regionLayout().isRoad(neighborX, neighborZ)) return true;
+    return region.regionLayout().entrances().stream().anyMatch(entrance ->
+        entrance.point().chunkX() == chunkX && entrance.point().chunkZ() == chunkZ
+            && entrance.side() == direction
+    );
+  }
+
+  private record RoadTileSelection(String id, Rotation rotation) {
   }
 
   private void addBuilding(
@@ -130,24 +217,61 @@ public final class MobilePlotStructure extends Structure {
     if (definition == null) {
       throw new IllegalStateException("移动地块缺少候选建筑定义：" + slot.building().path);
     }
-    BlockPos origin = new BlockPos(
-        Mth.floor(slot.center().x()),
-        buildingY,
-        Mth.floor(slot.center().z())
+    int expectedChunksX = CityRegionBuildingSlot.rotatedFootprintChunksX(
+        definition.footprintChunksX(), definition.footprintChunksZ(), slot.rotation()
     );
-    JigsawPlacement.addPieces(
-        context,
-        definition.startPool(),
-        Optional.empty(),
-        definition.size(),
+    int expectedChunksZ = CityRegionBuildingSlot.rotatedFootprintChunksZ(
+        definition.footprintChunksX(), definition.footprintChunksZ(), slot.rotation()
+    );
+    if (expectedChunksX != slot.chunkArea().widthChunks()
+        || expectedChunksZ != slot.chunkArea().lengthChunks()) {
+      throw new IllegalStateException(
+          "建筑运行时尺寸与布局注册不一致：" + definition.id()
+              + "，注册=" + definition.footprintChunksX() + "x" + definition.footprintChunksZ()
+              + "，旋转=" + slot.rotation()
+              + "，世界占地=" + slot.chunkArea().widthChunks() + "x" + slot.chunkArea().lengthChunks()
+      );
+    }
+    BlockPos origin = rotatedOrigin(slot.chunkArea(), buildingY, slot.rotation());
+    StructurePoolElement element = definition.startPool().value().getRandomTemplate(context.random());
+    if (element == EmptyPoolElement.INSTANCE) return;
+    BoundingBox box = element.getBoundingBox(
+        context.structureTemplateManager(), origin, slot.rotation()
+    );
+    int maxXExclusive = slot.chunkArea().maxChunkXExclusive() * 16;
+    int maxZExclusive = slot.chunkArea().maxChunkZExclusive() * 16;
+    int minX = slot.chunkArea().minChunkX() * 16;
+    int minZ = slot.chunkArea().minChunkZ() * 16;
+    if (box.minX() < minX || box.maxX() >= maxXExclusive
+        || box.minZ() < minZ || box.maxZ() >= maxZExclusive) {
+      throw new IllegalStateException("建筑模板越出注册 Chunk 占地：" + definition.id());
+    }
+    pieces.addPiece(new PoolElementStructurePiece(
+        context.structureTemplateManager(),
+        element,
         origin,
-        definition.useExpansionHack(),
-        Optional.empty(),
-        definition.maxDistanceFromCenter(),
-        PoolAliasLookup.EMPTY,
-        DimensionPadding.ZERO,
+        element.getGroundLevelDelta(),
+        slot.rotation(),
+        box,
         LiquidSettings.IGNORE_WATERLOGGING
-    ).ifPresent(stub -> stub.getPiecesBuilder().build().pieces().forEach(pieces::addPiece));
+    ));
+  }
+
+  private static BlockPos rotatedOrigin(
+      com.cxxcxx.zinecraft.api.world.city.ChunkRectangle area,
+      int y,
+      Rotation rotation
+  ) {
+    int minX = area.minChunkX() * 16;
+    int minZ = area.minChunkZ() * 16;
+    int maxX = area.maxChunkXExclusive() * 16 - 1;
+    int maxZ = area.maxChunkZExclusive() * 16 - 1;
+    return switch (rotation) {
+      case NONE -> new BlockPos(minX, y, minZ);
+      case CLOCKWISE_90 -> new BlockPos(maxX, y, minZ);
+      case CLOCKWISE_180 -> new BlockPos(maxX, y, maxZ);
+      case COUNTERCLOCKWISE_90 -> new BlockPos(minX, y, maxZ);
+    };
   }
 
   @Override
@@ -157,12 +281,41 @@ public final class MobilePlotStructure extends Structure {
   }
 
   /** Jigsaw 候选建筑展开所需的最小运行时参数。 */
+  public record LayerDefinition(String id, Holder<StructureTemplatePool> pool, int yOffset) {
+    public static final Codec<LayerDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        Codec.STRING.fieldOf("id").forGetter(LayerDefinition::id),
+        StructureTemplatePool.CODEC.fieldOf("pool").forGetter(LayerDefinition::pool),
+        Codec.intRange(0, 32).fieldOf("y_offset").forGetter(LayerDefinition::yOffset)
+    ).apply(instance, LayerDefinition::new));
+
+    public LayerDefinition {
+      Objects.requireNonNull(id, "移动地块层级 ID 不能为空");
+      Objects.requireNonNull(pool, "移动地块层级模板池不能为空：" + id);
+    }
+  }
+
+  /** 道路模板及其连接类型。 */
+  public record RoadDefinition(String id, Holder<StructureTemplatePool> pool) {
+    public static final Codec<RoadDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        Codec.STRING.fieldOf("id").forGetter(RoadDefinition::id),
+        StructureTemplatePool.CODEC.fieldOf("pool").forGetter(RoadDefinition::pool)
+    ).apply(instance, RoadDefinition::new));
+
+    public RoadDefinition {
+      Objects.requireNonNull(id, "道路构件 ID 不能为空");
+      Objects.requireNonNull(pool, "道路构件模板池不能为空：" + id);
+    }
+  }
+
+  /** Jigsaw 候选建筑展开所需的最小运行时参数。 */
   public record BuildingDefinition(
       String id,
       Holder<StructureTemplatePool> startPool,
       int size,
       boolean useExpansionHack,
-      int maxDistanceFromCenter
+      int maxDistanceFromCenter,
+      int footprintChunksX,
+      int footprintChunksZ
   ) {
     public static final Codec<BuildingDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.fieldOf("id").forGetter(BuildingDefinition::id),
@@ -170,7 +323,11 @@ public final class MobilePlotStructure extends Structure {
         Codec.intRange(0, 20).fieldOf("size").forGetter(BuildingDefinition::size),
         Codec.BOOL.fieldOf("use_expansion_hack").forGetter(BuildingDefinition::useExpansionHack),
         Codec.intRange(1, 112).fieldOf("max_distance_from_center")
-            .forGetter(BuildingDefinition::maxDistanceFromCenter)
+            .forGetter(BuildingDefinition::maxDistanceFromCenter),
+        Codec.intRange(1, 64).fieldOf("footprint_chunks_x")
+            .forGetter(BuildingDefinition::footprintChunksX),
+        Codec.intRange(1, 64).fieldOf("footprint_chunks_z")
+            .forGetter(BuildingDefinition::footprintChunksZ)
     ).apply(instance, BuildingDefinition::new));
 
     public BuildingDefinition {

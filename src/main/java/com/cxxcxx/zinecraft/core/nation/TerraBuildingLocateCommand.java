@@ -16,7 +16,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import java.util.Comparator;
 import java.util.Optional;
 
-/** 定位 schema v9 中作为 mobile_plot 内部 Piece 生成的建筑 slot。 */
+/** 定位当前布局 schema 中作为 mobile_plot 内部 Piece 生成的建筑 slot。 */
 public final class TerraBuildingLocateCommand {
   private TerraBuildingLocateCommand() {
   }

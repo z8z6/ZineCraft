@@ -49,7 +49,6 @@ public final class ZinecraftDataGenerator {
 
       event.addProvider(new CatalogLootTableProvider(output, lookup, Zinecraft.BLOCKS, Zinecraft.ENTITIES));
       event.addProvider(new ModRecipeProvider(output, lookup));
-      event.addProvider(new TerraLayoutValidationProvider(output));
     }
   }
 }
