@@ -38,4 +38,8 @@ src/client-pack/config/fancymenu/
 
 `installClientPack` 会在准备开发客户端时将整个 `src/client-pack/` 实例镜像安装到 `run/`；PCL 打包也会将该目录整体复制到 `overrides/`。主界面配置文件为 `customization/zinecraft_title_screen.txt`，轮播定义和图片位于 `slideshows/zinecraft_main/`。
 
+标题界面隐藏原版 Minecraft Logo 与闪烁语，改为左侧的 `ZINECRAFT` 文字标题。主要原版按钮以 `mid-left` 为锚点，在左侧按 24 像素间距纵向排列，统一尺寸为 180×20；语言与辅助功能图标保留原版位置。
+
+主界面关闭原版菜单音乐，仅播放用户提供的 `assets/music/lifeflow.ogg`；曲目通过 FancyMenu 全局菜单音乐配置加载。
+
 五张图片来自用户提供的项目素材：罗德岛、泰拉主视图、莱塔尼亚双塔、炎国百灶和萨米星门。原图统一为 16:9，使用 JPEG 质量 84 压缩；其中泰拉主视图与双塔图仅进行居中横向裁切，不拉伸画面。

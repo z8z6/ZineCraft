@@ -18,22 +18,43 @@ public final class RegionLayoutValidator {
     Map<RegionLayout.MobileLayer, String> expectedLayers = Map.of(
         RegionLayout.MobileLayer.POWER, "mobile_plot_power_layer",
         RegionLayout.MobileLayer.SUPPORT, "mobile_plot_support_layer",
-        RegionLayout.MobileLayer.LIFE, "mobile_plot_life_layer"
+        RegionLayout.MobileLayer.LIFE, "mobile_plot_life_layer",
+        RegionLayout.MobileLayer.SURFACE, "surface_buildings"
     );
+    List<ChunkPoint> stairs = layout.mobileLayers().getFirst().stairChunks();
     for (RegionLayout.MobileLayerPlan layer : layout.mobileLayers()) {
       if (!region.equals(layer.chunkArea()) || !expectedLayers.get(layer.layer()).equals(layer.buildingId())) {
-        throw new IllegalArgumentException("移动地块分层规划必须以唯一建筑覆盖整个 Region：" + layer.layer());
+        throw new IllegalArgumentException("移动地块分层规划无效：" + layer.layer());
+      }
+      if (!stairs.equals(layer.stairChunks())) throw new IllegalArgumentException("四层楼梯必须垂直对齐");
+      validateLayer(region, layer, layer.layer() == RegionLayout.MobileLayer.SURFACE
+          ? layout.entrances() : List.of());
+    }
+    if (!layout.roadGraph().equals(layout.layer(RegionLayout.MobileLayer.SURFACE).roadGraph())
+        || !layout.parcels().equals(layout.layer(RegionLayout.MobileLayer.SURFACE).parcels())) {
+      throw new IllegalArgumentException("Region 顶层兼容视图必须与 SURFACE 层一致");
+    }
+  }
+
+  private static void validateLayer(
+      ChunkRectangle region,
+      RegionLayout.MobileLayerPlan layer,
+      List<RegionLayout.RegionEntrance> entrances
+  ) {
+    HashSet<Long> roadCells = roadCells(region, layer.roadGraph());
+    if (roadCells.isEmpty()) throw new IllegalArgumentException("Region 分层道路不能为空：" + layer.layer());
+    for (ChunkPoint stair : layer.stairChunks()) {
+      if (!roadCells.contains(key(stair))) {
+        throw new IllegalArgumentException("楼梯建筑必须接入本层道路：" + layer.layer());
       }
     }
-    HashSet<Long> roadCells = roadCells(region, layout);
-    if (roadCells.isEmpty()) throw new IllegalArgumentException("Region 内部道路不能为空");
-    for (RegionLayout.RegionEntrance entrance : layout.entrances()) {
+    for (RegionLayout.RegionEntrance entrance : entrances) {
       if (!roadCells.contains(key(entrance.point()))) {
         throw new IllegalArgumentException("Region 入口未接入内部道路：" + entrance.connectedRegionId());
       }
     }
     ensureRoadsConnected(roadCells);
-    for (RegionLayout.BuildingParcel parcel : layout.parcels()) {
+    for (RegionLayout.BuildingParcel parcel : layer.parcels()) {
       requireInside(region, parcel.area(), "BuildingParcel");
       requireInside(parcel.area(), parcel.buildableArea(), "buildableArea");
       for (int z = parcel.area().minChunkZ(); z < parcel.area().maxChunkZExclusive(); z++) {
@@ -41,9 +62,20 @@ public final class RegionLayoutValidator {
           if (roadCells.contains(key(x, z))) throw new IllegalArgumentException("BuildingParcel 与道路重叠");
         }
       }
+      for (RegionLayout.BuildingRoadConnection connection : parcel.roadConnections()) {
+        RoadEdge edge = layer.roadGraph().edges().stream()
+            .filter(candidate -> candidate.id() == connection.roadId()).findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("建筑连通面引用未知道路"));
+        if (edge.roadClass() != connection.roadClass()) {
+          throw new IllegalArgumentException("建筑连通面道路等级与 RoadGraph 不一致");
+        }
+        if (!touches(parcel.area(), edge.chunkArea(), connection.face())) {
+          throw new IllegalArgumentException("建筑连通面没有真实接壤道路：" + parcel.id());
+        }
+      }
     }
     HashSet<Long> assigned = new HashSet<>(roadCells);
-    for (RegionLayout.BuildingParcel parcel : layout.parcels()) {
+    for (RegionLayout.BuildingParcel parcel : layer.parcels()) {
       for (int z = parcel.area().minChunkZ(); z < parcel.area().maxChunkZExclusive(); z++) {
         for (int x = parcel.area().minChunkX(); x < parcel.area().maxChunkXExclusive(); x++) {
           if (!assigned.add(key(x, z))) throw new IllegalArgumentException("Region Chunk 被重复分配");
@@ -51,8 +83,7 @@ public final class RegionLayoutValidator {
       }
     }
     if (assigned.size() != region.areaChunks()) {
-      throw new IllegalArgumentException("Region 中每个 Chunk 必须是道路或建筑 Parcel：已分配="
-          + assigned.size() + "，总面积=" + region.areaChunks());
+      throw new IllegalArgumentException("Region 每层的 Chunk 必须是道路或建筑 Parcel：" + layer.layer());
     }
   }
 
@@ -75,7 +106,8 @@ public final class RegionLayoutValidator {
           .filter(candidate -> candidate.id() == building.parcelId())
           .findFirst().orElseThrow(() -> new IllegalArgumentException("建筑引用未知 Parcel"));
       if (parcel.adjacentRoadId() != building.adjacentRoadId()
-          || parcel.roadFacing() != building.facing()) {
+          || parcel.roadFacing() != building.facing()
+          || !parcel.roadConnections().containsAll(building.roadConnections())) {
         throw new IllegalArgumentException("建筑朝向或道路引用与 Parcel 不一致");
       }
     }
@@ -90,8 +122,12 @@ public final class RegionLayoutValidator {
   }
 
   private static HashSet<Long> roadCells(ChunkRectangle region, RegionLayout layout) {
+    return roadCells(region, layout.roadGraph());
+  }
+
+  private static HashSet<Long> roadCells(ChunkRectangle region, RegionLayout.RoadGraph graph) {
     HashSet<Long> cells = new HashSet<>();
-    for (RoadEdge edge : layout.roadGraph().edges()) {
+    for (RoadEdge edge : graph.edges()) {
       requireInside(region, edge.chunkArea(), "道路");
       for (int z = edge.chunkArea().minChunkZ(); z < edge.chunkArea().maxChunkZExclusive(); z++) {
         for (int x = edge.chunkArea().minChunkX(); x < edge.chunkArea().maxChunkXExclusive(); x++) {
@@ -100,6 +136,24 @@ public final class RegionLayoutValidator {
       }
     }
     return cells;
+  }
+
+  private static boolean touches(ChunkRectangle parcel, ChunkRectangle road, Direction face) {
+    return switch (face) {
+      case NORTH -> overlaps(parcel.minChunkX(), parcel.maxChunkXExclusive(),
+          road.minChunkX(), road.maxChunkXExclusive()) && road.maxChunkZExclusive() == parcel.minChunkZ();
+      case SOUTH -> overlaps(parcel.minChunkX(), parcel.maxChunkXExclusive(),
+          road.minChunkX(), road.maxChunkXExclusive()) && road.minChunkZ() == parcel.maxChunkZExclusive();
+      case WEST -> overlaps(parcel.minChunkZ(), parcel.maxChunkZExclusive(),
+          road.minChunkZ(), road.maxChunkZExclusive()) && road.maxChunkXExclusive() == parcel.minChunkX();
+      case EAST -> overlaps(parcel.minChunkZ(), parcel.maxChunkZExclusive(),
+          road.minChunkZ(), road.maxChunkZExclusive()) && road.minChunkX() == parcel.maxChunkXExclusive();
+      default -> false;
+    };
+  }
+
+  private static boolean overlaps(int minA, int maxA, int minB, int maxB) {
+    return minA < maxB && minB < maxA;
   }
 
   private static void ensureRoadsConnected(Set<Long> roads) {

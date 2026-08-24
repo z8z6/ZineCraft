@@ -22,3 +22,124 @@ customization {
   action = backgroundoptions
   keepaspectratio = true
 }
+
+customization {
+  identifier = %id=button_compatibility_id:minecraft_logo_widget%
+  action = hidebutton
+}
+
+customization {
+  identifier = %id=button_compatibility_id:minecraft_splash_widget%
+  action = hidebutton
+}
+
+element {
+  source = ZINECRAFT
+  source_mode = direct
+  shadow = true
+  case_mode = upper
+  scale = 3.0
+  alignment = left
+  text_border = 0
+  line_spacing = 1
+  enable_scrolling = false
+  element_type = fancymenu_customization_item_text
+  instance_identifier = zinecraft_title_text
+  appearance_delay = no_delay
+  appearance_delay_seconds = 0.0
+  fade_in = false
+  fade_in_speed = 1.0
+  anchor_point = mid-left
+  x = 32
+  y = -116
+  width = 220
+  height = 32
+  stretch_x = false
+  stretch_y = false
+  stay_on_screen = true
+}
+
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_singleplayer_button%
+  orientation = mid-left
+  x = 32
+  y = -72
+  action = movebutton
+}
+
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_singleplayer_button%
+  width = 180
+  height = 20
+  action = resizebutton
+}
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_multiplayer_button%
+  orientation = mid-left
+  x = 32
+  y = -48
+  action = movebutton
+}
+
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_multiplayer_button%
+  width = 180
+  height = 20
+  action = resizebutton
+}
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_realms_button%
+  orientation = mid-left
+  x = 32
+  y = -24
+  action = movebutton
+}
+
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_realms_button%
+  width = 180
+  height = 20
+  action = resizebutton
+}
+customization {
+  identifier = %id=button_compatibility_id:forge_titlescreen_mods_button%
+  orientation = mid-left
+  x = 32
+  y = 0
+  action = movebutton
+}
+
+customization {
+  identifier = %id=button_compatibility_id:forge_titlescreen_mods_button%
+  width = 180
+  height = 20
+  action = resizebutton
+}
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_options_button%
+  orientation = mid-left
+  x = 32
+  y = 24
+  action = movebutton
+}
+
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_options_button%
+  width = 180
+  height = 20
+  action = resizebutton
+}
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_quit_button%
+  orientation = mid-left
+  x = 32
+  y = 48
+  action = movebutton
+}
+
+customization {
+  identifier = %id=button_compatibility_id:mc_titlescreen_quit_button%
+  width = 180
+  height = 20
+  action = resizebutton
+}

@@ -1,7 +1,7 @@
 package com.cxxcxx.zinecraft.core.client.collection;
 
 import com.cxxcxx.zinecraft.api.collection.CollectibleExplorationEffects;
-import com.cxxcxx.zinecraft.api.collection.CollectiblePower;
+import com.cxxcxx.zinecraft.api.combat.CombatStat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -22,13 +22,12 @@ public final class CollectibleEffectDisplay {
   }
 
   public static List<Component> lines(LivingEntity entity) {
-    CollectiblePower.Exploration effect = CollectibleExplorationEffects.equipped(entity);
-    if (effect.isEmpty()) return List.of(Component.translatable(PREFIX + "none").withStyle(ChatFormatting.GRAY));
+    CombatStat effect = CollectibleExplorationEffects.equipped(entity);
+    if (effect.hasNoExplorationProperties()) return List.of(Component.translatable(PREFIX + "none").withStyle(ChatFormatting.GRAY));
 
     List<Component> result = new ArrayList<>();
     addValue(result, "hope", effect.hope());
-    addValue(result, "objective_life", effect.objectiveLife());
-    addValue(result, "temporary_objective_life", effect.temporaryObjectiveLife());
+
     addValue(result, "originium_ingots", effect.originiumIngots());
     addValue(result, "squad_capacity", effect.squadCapacity());
     addValue(result, "deployment_limit", effect.deploymentLimit());

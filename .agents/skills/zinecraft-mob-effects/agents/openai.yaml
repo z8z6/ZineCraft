@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Mob Effects"
+  short_description: "Add server-authoritative combat statuses with MobEffect catalogs"
+  default_prompt: "Use $zinecraft-mob-effects to add a server-authoritative combat status to Zinecraft."

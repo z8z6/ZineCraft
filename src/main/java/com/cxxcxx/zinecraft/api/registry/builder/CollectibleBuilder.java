@@ -10,6 +10,7 @@ import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,6 +29,7 @@ public final class CollectibleBuilder implements ItemLike {
   public String minecraftEffectZhCn;
   public String minecraftEffectEnUs;
   public CollectiblePower power;
+  public List<String> sourceRules = List.of();
   public Rarity rarity = Rarity.COMMON;
   public int originalEffectLineCount;
   public int descriptionLineCount;
@@ -92,6 +94,13 @@ public final class CollectibleBuilder implements ItemLike {
   /**
    * 设置物品稀有度。
    */
+  /** 记录尚未由运行时消费的原作规则。 */
+  public CollectibleBuilder sourceRules(List<String> sourceRules) {
+    ensureMutable();
+    this.sourceRules = List.copyOf(sourceRules);
+    return this;
+  }
+
   public CollectibleBuilder rarity(Rarity rarity) {
     ensureMutable();
     this.rarity = Objects.requireNonNull(rarity, "藏品稀有度不能为空：" + path);

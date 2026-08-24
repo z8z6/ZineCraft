@@ -38,10 +38,8 @@ public final class SkillCatalog {
     requireText(builder.operatorZhCn, "干员中文名不能为空：" + builder.path);
     requireText(builder.operatorEnUs, "干员英文名不能为空：" + builder.path);
     Objects.requireNonNull(builder.profession, "技能职业不能为空：" + builder.path);
-    requireText(builder.recoveryZhCn, "中文技力回复类型不能为空：" + builder.path);
-    requireText(builder.recoveryEnUs, "英文技力回复类型不能为空：" + builder.path);
-    requireText(builder.triggerZhCn, "中文触发方式不能为空：" + builder.path);
-    requireText(builder.triggerEnUs, "英文触发方式不能为空：" + builder.path);
+    Objects.requireNonNull(builder.recoveryType, "技力回复类型不能为空：" + builder.path);
+    Objects.requireNonNull(builder.triggerType, "技能触发方式不能为空：" + builder.path);
     if (!builder.statsConfigured) throw new IllegalArgumentException("技能数值尚未设置：" + builder.path);
     if (builder.initialSp < 0) throw new IllegalArgumentException("初始技力不能为负数：" + builder.path);
     if (builder.spCost < 0) throw new IllegalArgumentException("技力消耗不能为负数：" + builder.path);
@@ -129,8 +127,8 @@ public final class SkillCatalog {
     );
     translations.add(
         tooltipKey + ".activation",
-        skill.recoveryZhCn + " · " + skill.triggerZhCn,
-        skill.recoveryEnUs + " · " + skill.triggerEnUs
+        skill.recoveryType.getZhCn() + " · " + skill.triggerType.getZhCn(),
+        skill.recoveryType.getEnUs() + " · " + skill.triggerType.getEnUs()
     );
 
     String durationZhCn = skill.durationSeconds == null ? "" : " · 持续 " + skill.durationSeconds + "秒";
@@ -158,8 +156,8 @@ public final class SkillCatalog {
     );
     translations.add(
         ponderKey + ".text_2",
-        skill.recoveryZhCn + " · " + skill.triggerZhCn,
-        skill.recoveryEnUs + " · " + skill.triggerEnUs
+        skill.recoveryType.getZhCn() + " · " + skill.triggerType.getZhCn(),
+        skill.recoveryType.getEnUs() + " · " + skill.triggerType.getEnUs()
     );
     translations.add(ponderKey + ".text_3", statsZhCn, statsEnUs);
     translations.add(

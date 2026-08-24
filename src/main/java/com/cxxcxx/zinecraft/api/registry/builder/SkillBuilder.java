@@ -8,6 +8,8 @@ import com.cxxcxx.zinecraft.api.registry.catalog.TranslationCatalog;
 import com.cxxcxx.zinecraft.api.skill.SkillDemoTheme;
 import com.cxxcxx.zinecraft.api.skill.SkillItem;
 import com.cxxcxx.zinecraft.api.skill.SkillProfession;
+import com.cxxcxx.zinecraft.api.skill.SkillSpRecoveryType;
+import com.cxxcxx.zinecraft.api.skill.SkillTriggerType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -22,27 +24,62 @@ import java.util.Objects;
  * 技能注册条目，集中保存技能资料、Ponder 主题与对应物品的注册结果。
  */
 public final class SkillBuilder implements ItemLike, CombatDamageProvider {
+  /** 接收并最终登记当前技能声明的技能目录。 */
   public final SkillCatalog catalog;
+
+  /** 技能与对应物品共用的注册路径，不包含命名空间。 */
   public final String path;
+
+  /** 技能的简体中文显示名称。 */
   public final String zhCn;
+
+  /** 尚未 build 的直接伤害段；对外只通过 damageProfiles() 暴露不可变副本。 */
   private final List<CombatDamageProfile> mutableDamageProfiles = new ArrayList<>();
+
+  /** 尚未 build 的客户端特效声明；对外只通过 effects() 暴露不可变副本。 */
   private final List<VfxBuilder> mutableEffects = new ArrayList<>();
+
+  /** 技能的英文显示名称；构造时默认由 path 转换得到。 */
   public String enUs;
+
+  /** 使用该技能的干员简体中文名称。 */
   public String operatorZhCn;
+
+  /** 使用该技能的干员英文名称。 */
   public String operatorEnUs;
+
+  /** 干员所属职业，用于 Tooltip 与 Ponder 展示。 */
   public SkillProfession profession;
-  public String recoveryZhCn;
-  public String recoveryEnUs;
-  public String triggerZhCn;
-  public String triggerEnUs;
+
+  /** 技能的技力回复类型，用于统一产生双语显示文本。 */
+  public SkillSpRecoveryType recoveryType;
+
+  /** 技能的触发方式，用于统一产生双语显示文本。 */
+  public SkillTriggerType triggerType;
+
+  /** 技能资料中的初始技力；当前不代表运行时已经实现 SP 状态。 */
   public int initialSp;
+
+  /** 技能资料中的技力消耗；当前不代表施放时会自动扣除 SP。 */
   public int spCost;
+
+  /** 技能资料中的持续秒数；瞬时或弹药技能为 {@code null}。 */
   @Nullable
   public Integer durationSeconds;
+
+  /** 技能效果说明的简体中文文本。 */
   public String descriptionZhCn;
+
+  /** 技能效果说明的英文文本。 */
   public String descriptionEnUs;
+
+  /** 客户端 Ponder 演示所采用的预设主题。 */
   public SkillDemoTheme theme;
+
+  /** 是否显式调用过 stats(...)，用于区分合法的全零数值与尚未配置。 */
   public boolean statsConfigured;
+
+  /** build 后由 SkillCatalog 绑定的 NeoForge 延迟物品句柄；build 前为 null。 */
   public DeferredItem<SkillItem> item;
 
   /**
@@ -83,16 +120,12 @@ public final class SkillBuilder implements ItemLike, CombatDamageProvider {
    * 设置技力回复类型与触发方式。
    */
   public SkillBuilder activation(
-      String recoveryZhCn,
-      String recoveryEnUs,
-      String triggerZhCn,
-      String triggerEnUs
+      SkillSpRecoveryType recoveryType,
+      SkillTriggerType triggerType
   ) {
     ensureMutable();
-    this.recoveryZhCn = Objects.requireNonNull(recoveryZhCn, "中文技力回复类型不能为空：" + path);
-    this.recoveryEnUs = Objects.requireNonNull(recoveryEnUs, "英文技力回复类型不能为空：" + path);
-    this.triggerZhCn = Objects.requireNonNull(triggerZhCn, "中文触发方式不能为空：" + path);
-    this.triggerEnUs = Objects.requireNonNull(triggerEnUs, "英文触发方式不能为空：" + path);
+    this.recoveryType = Objects.requireNonNull(recoveryType, "技力回复类型不能为空：" + path);
+    this.triggerType = Objects.requireNonNull(triggerType, "技能触发方式不能为空：" + path);
     return this;
   }
 

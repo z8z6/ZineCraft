@@ -222,6 +222,7 @@ public final class StructureCatalog implements RegistryDataContributor {
    */
   public void enableMobilePlots(
       List<JigsawBuilder> layerTiles,
+      JigsawBuilder stairTile,
       List<JigsawBuilder> roadTiles,
       Collection<ResourceKey<Biome>> allowedBiomes
   ) {
@@ -231,12 +232,14 @@ public final class StructureCatalog implements RegistryDataContributor {
     List<JigsawBuilder> declaredRoadTiles = List.copyOf(Objects.requireNonNull(
         roadTiles, "移动地块道路构件不能为空"
     ));
+    Objects.requireNonNull(stairTile, "移动地块楼梯构件不能为空");
     List<ResourceKey<Biome>> mobilePlotBiomes = List.copyOf(
         Objects.requireNonNull(allowedBiomes, "移动地块允许群系不能为空")
     );
     if (declaredLayers.size() != 3 || declaredLayers.stream().anyMatch(layer -> !layer.belongsTo(this))) {
       throw new IllegalArgumentException("移动地块必须声明属于当前目录的三层构件");
     }
+    if (!stairTile.belongsTo(this)) throw new IllegalArgumentException("移动地块楼梯必须属于当前目录");
     if (declaredRoadTiles.size() != 6 || declaredRoadTiles.stream().anyMatch(tile -> !tile.belongsTo(this))) {
       throw new IllegalArgumentException("移动地块必须声明属于当前目录的六类道路构件");
     }
@@ -275,6 +278,9 @@ public final class StructureCatalog implements RegistryDataContributor {
                 id, pools.getOrThrow(requiredPoolKey(layer, layer.startPool())), index * 16
             );
           }).toList(),
+          new MobilePlotStructure.LayerDefinition(
+              "stair", pools.getOrThrow(requiredPoolKey(stairTile, stairTile.startPool())), 0
+          ),
           declaredRoadTiles.stream().map(tile -> new MobilePlotStructure.RoadDefinition(
               tile.path.substring(tile.path.lastIndexOf('/') + 1),
               pools.getOrThrow(requiredPoolKey(tile, tile.startPool()))

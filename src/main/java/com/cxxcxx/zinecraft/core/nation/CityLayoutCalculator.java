@@ -143,8 +143,18 @@ public final class CityLayoutCalculator {
           (center.z() - bounds.center().z()) / bounds.halfSizeZ()
       );
       Direction facing = parcel.roadFacing();
+      java.util.Set<Direction> supportedFaces = building.connectionFaces().stream()
+          .map(rotation::rotate)
+          .collect(java.util.stream.Collectors.toUnmodifiableSet());
+      List<RegionLayout.BuildingRoadConnection> roadConnections = parcel.roadConnections().stream()
+          .filter(connection -> supportedFaces.contains(connection.face()))
+          .toList();
+      if (roadConnections.isEmpty()) {
+        throw new IllegalArgumentException("建筑模板没有朝向道路的真实入口：" + building.path);
+      }
       placed.add(new CityRegionBuildingSlot(
-          actualSlot, center, area, parcel.id(), parcel.adjacentRoadId(), facing, rotation, building
+          actualSlot, center, area, parcel.id(), parcel.adjacentRoadId(), facing, rotation, building,
+          roadConnections
       ));
     }
     return List.copyOf(placed);

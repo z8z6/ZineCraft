@@ -14,6 +14,7 @@ import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import net.minecraft.core.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -50,6 +51,7 @@ public final class JigsawBuilder {
   private boolean cityBuilding = true;
   private int footprintChunksX;
   private int footprintChunksZ;
+  private Set<Direction> connectionFaces = Set.of(Direction.SOUTH);
   private int fixedChunkX = -1;
   private int fixedChunkZ = -1;
   private Decoration generationStep = Decoration.SURFACE_STRUCTURES;
@@ -233,6 +235,22 @@ public final class JigsawBuilder {
     return this;
   }
 
+  /** 声明模板默认朝南时真实存在的水平入口面；布局旋转后会转换到世界方向。 */
+  public JigsawBuilder connectionFaces(Direction... faces) {
+    EnumSet<Direction> declared = EnumSet.noneOf(Direction.class);
+    for (Direction face : Objects.requireNonNull(faces, "建筑连通面不能为空：" + path)) {
+      if (face == null || !face.getAxis().isHorizontal()) {
+        throw new IllegalArgumentException("建筑连通面只能是水平面：" + path);
+      }
+      declared.add(face);
+    }
+    if (!declared.contains(Direction.SOUTH)) {
+      throw new IllegalArgumentException("建筑连通面必须保留默认正面 SOUTH：" + path);
+    }
+    this.connectionFaces = Collections.unmodifiableSet(declared);
+    return this;
+  }
+
   /**
    * @param heightmap 起始位置采用的高度图；为 {@code null} 时使用固定高度 @param startHeight 起始高度偏移 @return 当前构建器
    */
@@ -408,6 +426,10 @@ public final class JigsawBuilder {
 
   public int footprintChunksZ() {
     return footprintChunksZ;
+  }
+
+  public Set<Direction> connectionFaces() {
+    return connectionFaces;
   }
 
   public int fixedChunkX() {

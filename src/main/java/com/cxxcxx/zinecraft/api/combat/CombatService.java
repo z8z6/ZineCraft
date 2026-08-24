@@ -24,34 +24,35 @@ public final class CombatService {
     return ResourceKey.create(Registries.DAMAGE_TYPE, Zinecraft.id(path));
   }
 
-  /**
-   * Resolves an outgoing base attack through equipped collectible-rune modifiers.
-   */
+  /** Resolves an outgoing base attack through all equipped collectible functions. */
   public double attack(LivingEntity entity, double baseAttack) {
-    return CombatStatFormula.resolve(
-        CombatStat.ATTACK,
-        baseAttack,
-        CollectibleCombatStats.modifiers(entity, CombatStat.ATTACK)
-    );
+    CombatStat base = CombatStat.EMPTY.withAttack(requireBase(baseAttack));
+    return CollectibleCombatStats.apply(entity, base).limited().attack();
   }
 
-  /**
-   * Resolves attack speed around Arknights' neutral value of 100.
-   */
+  /** Resolves attack speed around Arknights' neutral value of 100. */
   public double attackSpeed(LivingEntity entity, double baseAttackSpeed) {
-    return CombatStatFormula.resolve(
-        CombatStat.ATTACK_SPEED,
-        baseAttackSpeed,
-        CollectibleCombatStats.modifiers(entity, CombatStat.ATTACK_SPEED)
-    );
+    CombatStat base = CombatStat.EMPTY.withAttackSpeed(requireBase(baseAttackSpeed));
+    return CollectibleCombatStats.apply(entity, base).limited().attackSpeed();
   }
-
   public double attackIntervalSeconds(LivingEntity entity, double theoreticalIntervalSeconds, double baseAttackSpeed) {
     return CombatFormulas.attackInterval(theoreticalIntervalSeconds, attackSpeed(entity, baseAttackSpeed));
   }
 
   public CombatActionTiming actionTiming(LivingEntity entity, int baseEffectTick, int baseDurationTicks) {
     return CombatActionTiming.scale(baseEffectTick, baseDurationTicks, attackSpeed(entity, 100.0));
+  }
+
+  /** 聚合施加者藏品后，计算作用于敌方的一次性异常状态持续时间。 */
+  public int enemyStatusDurationTicks(LivingEntity source, int baseDurationTicks) {
+    return CollectibleCombatStats.apply(source, CombatStat.EMPTY)
+        .enemyStatusDurationTicks(baseDurationTicks);
+  }
+
+  /** 聚合承受者藏品后，计算我方承受的一次性异常状态持续时间。 */
+  public int friendlyStatusDurationTicks(LivingEntity target, int baseDurationTicks) {
+    return CollectibleCombatStats.apply(target, CombatStat.EMPTY)
+        .friendlyStatusDurationTicks(baseDurationTicks);
   }
 
   public float calculateDamage(
@@ -61,7 +62,12 @@ public final class CombatService {
       double baseAttack,
       CombatRequest request
   ) {
-    return calculateDamageFromResolvedAttack(target, type, attack(attacker, baseAttack), request);
+    return calculateDamageFromResolvedAttack(
+        target,
+        type,
+        attack(attacker, baseAttack),
+        withCollectibleDamageModifiers(attacker, type, request)
+    );
   }
 
   /**
@@ -136,7 +142,12 @@ public final class CombatService {
       double resolvedAttack,
       CombatRequest request
   ) {
-    float amount = calculateDamageFromResolvedAttack(target, type, resolvedAttack, request);
+    float amount = calculateDamageFromResolvedAttack(
+        target,
+        type,
+        resolvedAttack,
+        withCollectibleDamageModifiers(attacker, type, request)
+    );
     return amount > 0.0F && target.hurt(damageSource(attacker, type), amount);
   }
 
@@ -152,6 +163,36 @@ public final class CombatService {
     return amount;
   }
 
+  /** 将所有藏品的防御无视与对应伤害加成聚合后，一次性并入伤害请求。 */
+  private static CombatRequest withCollectibleDamageModifiers(
+      LivingEntity attacker,
+      CombatDamageType type,
+      CombatRequest request
+  ) {
+    boolean physical = type.mitigation() == CombatMitigationType.PHYSICAL;
+    if (!physical && type != CombatDamageType.TRUE) return request;
+    CombatStat stats = CollectibleCombatStats.apply(attacker, CombatStat.EMPTY).limited();
+    double combined = physical
+        ? Math.clamp(request.percentPenetration() + stats.defenseIgnore(), 0.0, 1.0)
+        : request.percentPenetration();
+    double finalMultiplier = type == CombatDamageType.TRUE
+        ? request.finalMultiplier() * (1.0 + stats.trueDamageBonus())
+        : request.finalMultiplier();
+    return new CombatRequest(
+        request.attackMultiplier(),
+        request.additionalAttack(),
+        combined,
+        request.flatPenetration(),
+        finalMultiplier
+    );
+  }
+
+  private static double requireBase(double value) {
+    if (!Double.isFinite(value) || value < 0.0) {
+      throw new IllegalArgumentException("Base stat must be finite and non-negative");
+    }
+    return value;
+  }
   private DamageSource damageSource(LivingEntity attacker, CombatDamageType type) {
     ResourceKey<DamageType> key = damageType(type.path());
     var registry = attacker.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE);

@@ -12,11 +12,21 @@ import org.jetbrains.annotations.Nullable;
 
 public final class ModStructure {
   public static final JigsawBuilder MOBILE_PLOT_POWER_LAYER = Zinecraft.STRUCTURES
-      .embeddedInfrastructure("mobile_plot_power_layer", "移动地块动力层", 32);
+      .embeddedInfrastructure("mobile_plot_power_layer", "移动地块动力层", 32)
+      .connectionFaces(net.minecraft.core.Direction.NORTH, net.minecraft.core.Direction.EAST,
+          net.minecraft.core.Direction.SOUTH, net.minecraft.core.Direction.WEST);
   public static final JigsawBuilder MOBILE_PLOT_SUPPORT_LAYER = Zinecraft.STRUCTURES
-      .embeddedInfrastructure("mobile_plot_support_layer", "移动地块支持层", 32);
+      .embeddedInfrastructure("mobile_plot_support_layer", "移动地块支持层", 32)
+      .connectionFaces(net.minecraft.core.Direction.NORTH, net.minecraft.core.Direction.EAST,
+          net.minecraft.core.Direction.SOUTH, net.minecraft.core.Direction.WEST);
   public static final JigsawBuilder MOBILE_PLOT_LIFE_LAYER = Zinecraft.STRUCTURES
-      .embeddedInfrastructure("mobile_plot_life_layer", "移动地块生活层", 32);
+      .embeddedInfrastructure("mobile_plot_life_layer", "移动地块生活层", 32)
+      .connectionFaces(net.minecraft.core.Direction.NORTH, net.minecraft.core.Direction.EAST,
+          net.minecraft.core.Direction.SOUTH, net.minecraft.core.Direction.WEST);
+  public static final JigsawBuilder MOBILE_PLOT_STAIR = Zinecraft.STRUCTURES
+      .embeddedInfrastructure("mobile_plot_stair", "移动地块层间楼梯", 32)
+      .connectionFaces(net.minecraft.core.Direction.NORTH, net.minecraft.core.Direction.EAST,
+          net.minecraft.core.Direction.SOUTH, net.minecraft.core.Direction.WEST);
   public static final JigsawBuilder MOBILE_PLOT_ROAD_ISOLATED = road("isolated", "孤立道路");
   public static final JigsawBuilder MOBILE_PLOT_ROAD_END = road("end", "道路端头");
   public static final JigsawBuilder MOBILE_PLOT_ROAD_STRAIGHT = road("straight", "直道");
@@ -216,6 +226,7 @@ public final class ModStructure {
   public static void bootstrap() {
     Zinecraft.STRUCTURES.enableMobilePlots(
         java.util.List.of(MOBILE_PLOT_POWER_LAYER, MOBILE_PLOT_SUPPORT_LAYER, MOBILE_PLOT_LIFE_LAYER),
+        MOBILE_PLOT_STAIR,
         java.util.List.of(
             MOBILE_PLOT_ROAD_ISOLATED, MOBILE_PLOT_ROAD_END, MOBILE_PLOT_ROAD_STRAIGHT,
             MOBILE_PLOT_ROAD_CORNER, MOBILE_PLOT_ROAD_TEE, MOBILE_PLOT_ROAD_CROSS

@@ -46,6 +46,7 @@ public final class Zinecraft {
   public static final CreativeTabCatalog CREATIVE_TABS = new CreativeTabCatalog(MOD_ID, ITEMS, BLOCKS, TRANSLATIONS);
   public static final BlockEntityCatalog BLOCK_ENTITIES = new BlockEntityCatalog(MOD_ID);
   public static final SoundCatalog SOUNDS = new SoundCatalog(MOD_ID, TRANSLATIONS);
+  public static final MobEffectCatalog MOB_EFFECTS = new MobEffectCatalog(MOD_ID, TRANSLATIONS);
   public static final EnchantmentCatalog ENCHANTMENTS = new EnchantmentCatalog(MOD_ID, TRANSLATIONS);
   public static final BiomeCatalog BIOMES = new BiomeCatalog(MOD_ID, TRANSLATIONS);
   public static final DensityFunctionCatalog DENSITY_FUNCTIONS = new DensityFunctionCatalog(MOD_ID);
@@ -62,6 +63,7 @@ public final class Zinecraft {
     ITEMS.register(modBus);
     BLOCKS.register(modBus);
     SOUNDS.register(modBus);
+    MOB_EFFECTS.register(modBus);
     ENTITIES.register(modBus);
     CREATIVE_TABS.register(modBus);
     BLOCK_ENTITIES.register(modBus);
@@ -91,6 +93,7 @@ public final class Zinecraft {
     ModNation.bootstrap();
     WeaponStateComponents.bootstrap();
     ModSound.bootstrap();
+    ModMobEffect.bootstrap();
     ModWeaponPresentation.bootstrap();
     ModItem.bootstrap();
     ModCollectible.bootstrap();

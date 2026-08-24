@@ -2,13 +2,12 @@ package com.cxxcxx.zinecraft.core.registry;
 
 import com.cxxcxx.zinecraft.api.collection.CollectiblePower;
 import com.cxxcxx.zinecraft.api.combat.CombatStat;
-import com.cxxcxx.zinecraft.api.combat.CombatStatModifier;
 import com.cxxcxx.zinecraft.api.registry.builder.CollectibleBuilder;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.world.item.Rarity;
 
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.BiFunction;
 
 /**
  * 直接以 Java Builder 声明并注册《傀影与猩红孤钻》的全部 245 件藏品。
@@ -24,7 +23,7 @@ public final class ModCollectible {
       "Immediately gain +2 Life Points and +1 Hope",
       "罗德岛办公室里的同款热水壶，有人经常大半夜用热水壶煮速食面吃，这种生活习惯不是很健康......",
       "Some people often use the hot water kettle in the Rhodes Island Office to cook instant noodles in the middle of the night. That's not a very healthy lifestyle...",
-      explorationRule("立即获得目标生命+2，希望+1", power -> power.objectiveLife(2).hope(1)),
+      explorationRule("立即获得目标生命+2，希望+1", power -> power.addMaxHealth(2).hope(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder SPECIAL_SUPPRESSOR = collectible(
@@ -35,7 +34,7 @@ public final class ModCollectible {
       "Immediately gain +6 Life Points.",
       "罗德岛改良款抑制器，能够有效遏制感染造成的源石技艺失控。",
       "An enhanced suppressor developed by Rhodes Island that can better keep the infected from losing control of their Originium Arts.",
-      explorationRule("立即获得目标生命+6", power -> power.objectiveLife(6)),
+      explorationRule("立即获得目标生命+6", power -> power.addMaxHealth(6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder STONE_GARGOYLE = collectible(
@@ -46,7 +45,7 @@ public final class ModCollectible {
       "Immediately gain +6 Life Points.",
       "一个手掌大小的雕像，听说是石像鬼们表示友好的造物。",
       "A palm-sized sculpture. Supposedly they are handmade gifts given out by the Gargoyles as a sign of friendship.",
-      explorationRule("立即获得目标生命+6", power -> power.objectiveLife(6)),
+      explorationRule("立即获得目标生命+6", power -> power.addMaxHealth(6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder VAMPIRES_BED = collectible(
@@ -57,7 +56,7 @@ public final class ModCollectible {
       "Immediately gain +8 Life Points.",
       "一副奢华的棺木，和古堡十分般配，华法琳说这就是刻板印象。",
       "A lavish-looking coffin that matches the castle's aesthetics well. However, Warfarin says this is merely a stereotype.",
-      explorationRule("立即获得目标生命+8", power -> power.objectiveLife(8)),
+      explorationRule("立即获得目标生命+8", power -> power.addMaxHealth(8)),
       Rarity.RARE
   );
   public static final CollectibleBuilder PROOF_OF_LONGEVITY = collectible(
@@ -68,7 +67,7 @@ public final class ModCollectible {
       "Immediately gain +10 Life Points.",
       "一段树枝，枯荣一体；\n从枯萎处生长，从繁盛处枯萎。",
       "A tree branch that has withered and flourished. \nWhen it is withered, it grows anew. When it is thriving in its fullest, it fades away yet again.",
-      explorationRule("立即获得目标生命+10", power -> power.objectiveLife(10)),
+      explorationRule("立即获得目标生命+10", power -> power.addMaxHealth(10)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder PRIED_OPEN_TOOLBOX = collectible(
@@ -508,7 +507,7 @@ public final class ModCollectible {
       "All friendly units have +35% ATK, +35% DEF, and +45% Max HP",
       "由罗德岛工程部统一操控的探索用无人机，更高效，更安全，为外勤干员们提供全方位的支援与保障。",
       "A set of exploration drones remotely controlled by the Rhodes Island Engineering Department. More efficient and safer than ever, they provide operators on field missions the omnidirectional support and defense they need.",
-      runtime(statSet(percent(CombatStat.ATTACK, 0.35), percent(CombatStat.DEFENSE, 0.35), percent(CombatStat.MAX_HEALTH, 0.45))),
+      runtime(statSet(percent(CombatStat::multiplyAttack, 0.35), percent(CombatStat::multiplyDefense, 0.35), percent(CombatStat::multiplyMaxHealth, 0.45))),
       Rarity.EPIC
   );
   public static final CollectibleBuilder FISSURED_RESTRAINTS = collectible(
@@ -519,7 +518,7 @@ public final class ModCollectible {
       "All enemy units have -7% ATK.",
       "这根坚固的带子似乎绑过什么恐怖的东西......救命......",
       "It seems this sturdy band was once used to restrain something terrifying... Help...",
-      sourceRule("所有敌方单位的攻击力-7%"),
+      statFlat("伤害减免+7%", "+7% damage reduction", CombatStat::addDamageReduction, 0.07),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder ABYSSAL_WYRDMASK = collectible(
@@ -530,7 +529,7 @@ public final class ModCollectible {
       "All enemy units have -12% ATK.",
       "不属于所知的任何一个文化的古怪面具，会让人丧失战意......并不自觉地陷入长久的沉思。",
       "An eldritch mask not belonging to any culture you're familiar with that is capable of making people lose their will to fight... and unconsciously fall into a state of deep contemplation.",
-      sourceRule("所有敌方单位的攻击力-12%"),
+      statFlat("伤害减免+12%", "+12% damage reduction", CombatStat::addDamageReduction, 0.12),
       Rarity.RARE
   );
   public static final CollectibleBuilder GODMOTHERS_TOKEN = collectible(
@@ -541,7 +540,7 @@ public final class ModCollectible {
       "All enemy units have -17% ATK.",
       "骨质的桂冠，西西里夫人的信物。秩序的象征将铲平起伏的欲望，斗争不被允许。无论真假，跪下。",
       "A laurel of bones, the token of a Sicilian noblewoman. This symbol of order will smooth the turbulance of all desires, for conflict is not allowed. Genuine or counterfeit, it still demands you to kneel.",
-      sourceRule("所有敌方单位的攻击力-17%"),
+      statFlat("伤害减免+17%", "+17% damage reduction", CombatStat::addDamageReduction, 0.17),
       Rarity.EPIC
   );
   public static final CollectibleBuilder WORN_OUT_GROUP_PHOTO = collectible(
@@ -552,7 +551,7 @@ public final class ModCollectible {
       "All enemy units have -12% DEF.",
       "里面有你认识的人吗？",
       "Do you know someone in the photo?",
-      sourceRule("所有敌方单位的防御力-12%"),
+      statFlat("无视防御+12%", "+12% DEF ignore", CombatStat::addDefenseIgnore, 0.12),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder WRITERS_TONGUE = collectible(
@@ -563,7 +562,7 @@ public final class ModCollectible {
       "All enemy units have -21% DEF.",
       "剧作家用笔蘸着自己的血创作。他为自己设计了丧身火海的最后一幕。",
       "The playwright penned his creations with a quill and his own blood, and for himself he devised an ending in which he perishes in a sea of flames.",
-      sourceRule("所有敌方单位的防御力-21%"),
+      statFlat("无视防御+21%", "+21% DEF ignore", CombatStat::addDefenseIgnore, 0.21),
       Rarity.RARE
   );
   public static final CollectibleBuilder ROSMONTISS_EMBRACE = collectible(
@@ -574,7 +573,7 @@ public final class ModCollectible {
       "All enemy units have -30% DEF.",
       "“谁来审判？”",
       "'Who will be the judge?'",
-      sourceRule("所有敌方单位的防御力-30%"),
+      statFlat("无视防御+30%", "+30% DEF ignore", CombatStat::addDefenseIgnore, 0.30),
       Rarity.EPIC
   );
   public static final CollectibleBuilder THE_WHISPERER_IN_DARKNIGHT = collectible(
@@ -585,7 +584,7 @@ public final class ModCollectible {
       "All enemy units have -10% HP.",
       "一张黑色唱片。不。准。碰。它。",
       "A black vinyl. DO. NOT. TOUCH. IT.",
-      sourceRule("所有敌方单位的生命-10%"),
+      enemySpawnStat("敌方生成时最大生命-10%", "-10% enemy maximum HP on spawn", (enemy, stats) -> stats.multiplyMaxHealth(-0.10)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder GOLD_PLATED_DIE = collectible(
@@ -596,7 +595,7 @@ public final class ModCollectible {
       "All enemy units have -15% HP.",
       "镶金的骨骰只有一面刻着代表生存的印记，至于其他十九面......",
       "The gold-plated die has one side representing life. As for the other nineteen sides...",
-      sourceRule("所有敌方单位的生命-15%"),
+      enemySpawnStat("敌方生成时最大生命-15%", "-15% enemy maximum HP on spawn", (enemy, stats) -> stats.multiplyMaxHealth(-0.15)),
       Rarity.RARE
   );
   public static final CollectibleBuilder PROFOUND_SILENCE = collectible(
@@ -607,7 +606,7 @@ public final class ModCollectible {
       "All enemy units have -20% HP.",
       "描绘伊比利亚史上最大灾难的画作，笔触毫无意义，色彩毫无意义，意象毫无意义。“阿戈尔知道，阿戈尔知道，阿戈尔知道。”",
       "A painting that depicts the greatest disaster in Iberian history. Its brushstrokes, colors, and images are all meaningless. 'The Ægir know. The Ægir know. The Ægir know.'",
-      sourceRule("所有敌方单位的生命-20%"),
+      enemySpawnStat("敌方生成时最大生命-20%", "-20% enemy maximum HP on spawn", (enemy, stats) -> stats.multiplyMaxHealth(-0.20)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder ORIRON_ROUND_SHIELD = collectible(
@@ -618,7 +617,7 @@ public final class ModCollectible {
       "All friendly units have +15% DEF.",
       "在异铁被广泛应用于现代工业领域前，这种材料时常被用来制造军用制式武器。",
       "Before the use of Oriron became widespread in today's industrial sector, the material was frequently used to forge military weapons like this one.",
-      statPercent("防御力+15%", "+15% DEF", CombatStat.DEFENSE, 0.15),
+      statPercent("防御力+15%", "+15% DEF", CombatStat::multiplyDefense, 0.15),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder MILITARY_MIRROR_ARMOR = collectible(
@@ -629,7 +628,7 @@ public final class ModCollectible {
       "All friendly units have +25% DEF.",
       "这种甲片曾经能够防护住针对心脏的致命伤害，但随着高卢没落，护心镜这种过时的护甲样式也退出了历史舞台。",
       "This mirror armor used to be able to withstand most attacks on the chest, but with the fall of Gaul, such archaic forms of armor have become museum pieces.",
-      statPercent("防御力+25%", "+25% DEF", CombatStat.DEFENSE, 0.25),
+      statPercent("防御力+25%", "+25% DEF", CombatStat::multiplyDefense, 0.25),
       Rarity.RARE
   );
   public static final CollectibleBuilder OLD_STEAM_ARMOR = collectible(
@@ -640,7 +639,7 @@ public final class ModCollectible {
       "All friendly units have +35% DEF.",
       "哪怕是这种旧型号的蒸汽甲胄，也仿佛承载着维多利亚君主们照耀着半片大地的荣耀辉光。",
       "Even this old, outdated steam armor seems to carry with it the resplendence of when the Victorian monarchs cast their glory across half the world.",
-      statPercent("防御力+35%", "+35% DEF", CombatStat.DEFENSE, 0.35),
+      statPercent("防御力+35%", "+35% DEF", CombatStat::multiplyDefense, 0.35),
       Rarity.EPIC
   );
   public static final CollectibleBuilder EMPERORS_FAVOR = collectible(
@@ -651,7 +650,7 @@ public final class ModCollectible {
       "All friendly melee units have +15% ATK.",
       "十分锋利的拆信刀。前任乌萨斯皇帝喜爱的日用品。大多数时候并不用来拆信。",
       "A very sharp letter opener. It was one of the favorite possessions of the last Ursus emperor, and as such it was very rarely used to actually open letters.",
-      statPercent("攻击力+15%", "+15% ATK", CombatStat.ATTACK, 0.15),
+      statPercent("攻击力+15%", "+15% ATK", CombatStat::multiplyAttack, 0.15),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder ROYAL_RAPIER = collectible(
@@ -662,7 +661,7 @@ public final class ModCollectible {
       "All friendly melee units have +25% ATK.",
       "装饰性强的贵族刺剑。高卢贵族首先使用，作为军事武器还是太脆了。",
       "A highly decorative rapier for nobles. Used by Gaulish nobles first and foremost, though perhaps a little fragile for a military weapon.",
-      statPercent("攻击力+25%", "+25% ATK", CombatStat.ATTACK, 0.25),
+      statPercent("攻击力+25%", "+25% ATK", CombatStat::multiplyAttack, 0.25),
       Rarity.RARE
   );
   public static final CollectibleBuilder VIEUX_VANGUARDS_BLADE = collectible(
@@ -673,7 +672,7 @@ public final class ModCollectible {
       "All friendly melee units have +35% ATK.",
       "高卢将见证老近卫军的牺牲，随后才迎来自己的覆灭。",
       "Prior to its downfall, Gaul first witnessed the sacrifices of its Vieux Vanguards.",
-      statPercent("攻击力+35%", "+35% ATK", CombatStat.ATTACK, 0.35),
+      statPercent("攻击力+35%", "+35% ATK", CombatStat::multiplyAttack, 0.35),
       Rarity.EPIC
   );
   public static final CollectibleBuilder NECKLACE_OF_THE_PRESENCE = collectible(
@@ -684,7 +683,7 @@ public final class ModCollectible {
       "All friendly ranged units have +15% ATK.",
       "信仰悬在你的心口上方十公分处，语言流入你的血液，子弹滑进你的弹仓。",
       "Faith hangs ten centimeters above your heart, spoken words flow into your blood, and bullets slide into your magazine.",
-      runtime(percent(CombatStat.ATTACK, 0.15)),
+      runtime(percent(CombatStat::multiplyAttack, 0.15)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder SILVER_FORKS = collectible(
@@ -695,7 +694,7 @@ public final class ModCollectible {
       "All friendly ranged units have +25% ATK.",
       "一把用来处理失败的演员，一把用来收拾蹩脚的剧作者，还有一把留给有需要的人。厨师长不能容忍任何人在餐桌上出错。",
       "One for dealing with actors who botch their performances, one for dealing with incompetent playwrights, and one for anyone who needs it. The Chief will not tolerate any mistakes on the table.",
-      runtime(percent(CombatStat.ATTACK, 0.25)),
+      runtime(percent(CombatStat::multiplyAttack, 0.25)),
       Rarity.RARE
   );
   public static final CollectibleBuilder DAMAGED_REVOLVER_CYLINDER = collectible(
@@ -706,7 +705,7 @@ public final class ModCollectible {
       "All friendly ranged units have +35% ATK.",
       "她行过刀山火海也不曾有一刻向奸邪低头，她枪口火舌焦灼好似怒阳，她头顶光芒炽烈几胜白昼。此处安葬着Outcast，我们的朋友。",
       "She never capitulated, even after enduring countless trials and tribulations. Her muzzle belched tongues of flame that burned like an angry sun, and the glow above her head was brighter than the daylight itself. Buried here is Outcast, our friend.",
-      runtime(percent(CombatStat.ATTACK, 0.35)),
+      runtime(percent(CombatStat::multiplyAttack, 0.35)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder NOXIOUS_HEMOSTATIC_AGENT = collectible(
@@ -717,7 +716,7 @@ public final class ModCollectible {
       "All friendly units have +20% HP.",
       "“这种源石虫的体液经过发酵处理之后可以用于止血”——《罗德岛野外生存指南》",
       "'After fermentation, the body fluids of this Originium slug can be used to stop bleeding.' —'Rhodes Island Wilderness Survival Guide'",
-      statPercent("最大生命值+20%", "+20% maximum HP", CombatStat.MAX_HEALTH, 0.2),
+      statPercent("最大生命值+20%", "+20% maximum HP", CombatStat::multiplyMaxHealth, 0.2),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder FIRST_AID_KIT = collectible(
@@ -728,7 +727,7 @@ public final class ModCollectible {
       "All friendly units have +35% HP.",
       "“…抗生素与乙醇添加物，请在专业人士指导下使用…”——雷姆必拓安全生产指南",
       "'...Please use antibiotics and ethanol additives under the supervision of professionals...' —Rim Billiton Production Safety Manual",
-      statPercent("最大生命值+35%", "+35% maximum HP", CombatStat.MAX_HEALTH, 0.35),
+      statPercent("最大生命值+35%", "+35% maximum HP", CombatStat::multiplyMaxHealth, 0.35),
       Rarity.RARE
   );
   public static final CollectibleBuilder UNKNOWN_INSTRUMENT = collectible(
@@ -739,7 +738,7 @@ public final class ModCollectible {
       "All friendly units have +50% HP.",
       "不要问。就当为了你自己好。",
       "Don't ask. It's for your own good.",
-      statPercent("最大生命值+50%", "+50% maximum HP", CombatStat.MAX_HEALTH, 0.5),
+      statPercent("最大生命值+50%", "+50% maximum HP", CombatStat::multiplyMaxHealth, 0.5),
       Rarity.EPIC
   );
   public static final CollectibleBuilder RUSTED_RAZOR = collectible(
@@ -816,7 +815,7 @@ public final class ModCollectible {
       "All friendly units have +20% healing effectiveness",
       "是你滋养她，还是她守护你？",
       "Is it you who nourish her, or is it her who protects you?",
-      sourceRule("所有我方单位受到的治疗和生命回复效果+20%"),
+      statFlat("受到的治疗与生命回复效果+20%", "+20% healing and health regeneration received", CombatStat::addHealingAndHealthRegenerationBonus, 0.20),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder WHITE_FLOWER_CROWN = collectible(
@@ -827,7 +826,7 @@ public final class ModCollectible {
       "All friendly units have +30% healing effectiveness",
       "血魔仪式使用的花冠头纱，曾经鲜红的生命被吮吸殆尽，现在只余苍白。",
       "A floral veil used in Vampire rituals. Its once vibrant redness has been sucked empty, leaving nothing only a pale white color.",
-      sourceRule("所有我方单位受到的治疗和生命回复效果+30%"),
+      statFlat("受到的治疗与生命回复效果+30%", "+30% healing and health regeneration received", CombatStat::addHealingAndHealthRegenerationBonus, 0.30),
       Rarity.RARE
   );
   public static final CollectibleBuilder ACTORS_PERFUME = collectible(
@@ -839,7 +838,7 @@ public final class ModCollectible {
       "剧团演员们上台前会喷一些在身上，这种稳定且芬芳的香气能为演员持续舒缓压力，至少，表面上，看上去是这样的。",
       "Troupe actors put this on before going onstage. Stable yet aromatic fragrances like this can help them ease pressure. That's how it seems on the surface, at least.",
       effect("每秒回复1%的最大生命值", "Recover 1% of maximum HP every second",
-          regeneration(CollectiblePower.Regeneration.percentage(0.01F, 20))),
+          regenerationPercentage(0.01)),
       Rarity.RARE
   );
   public static final CollectibleBuilder DESIGNERS_RULER = collectible(
@@ -850,7 +849,7 @@ public final class ModCollectible {
       "All friendly units have +15% Physical Dodge",
       "在数据、经验以及精确测量下，身着铠甲的人多了几分幸运。",
       "Carefully measured with data and experience, those who wear this armor are known to be several magnitudes luckier.",
-      sourceRule("所有我方单位获得15%物理闪避"),
+      statFlat("物理伤害闪避率+15%", "+15% Physical damage evasion", CombatStat::addPhysicalDamageEvasionRate, 0.15),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder ARTS_KILLER = collectible(
@@ -861,7 +860,7 @@ public final class ModCollectible {
       "All friendly units have +15% Arts Dodge",
       "由于莱塔尼亚人的源石技艺与音乐息息相关，有人竟想出了用噪音对抗法术的蠢主意。",
       "Considering how Originium Arts and music go hand in hand in Leithanien, it's quite amazing someone came up with the bright idea of combating Arts with noise like this.",
-      sourceRule("所有我方单位获得15%法术闪避"),
+      statFlat("法术伤害闪避率+15%", "+15% Arts damage evasion", CombatStat::addMagicDamageEvasionRate, 0.15),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder DANCERS_BRACELETS = collectible(
@@ -872,7 +871,7 @@ public final class ModCollectible {
       "All friendly units have +10% Physical and Arts Dodge",
       "训练有素的舞者在舞台上翩翩起舞躲过陷阱，观众们鼓掌喝彩，全然不知有人刚刚与死亡擦肩而过。",
       "The audience breaks into applause as the well-trained dancers waltz around the traps on stage. None of them are aware of the brushes with death the performers have just been through.",
-      sourceRule("所有我方单位获得10%物理与法术闪避"),
+      effect("物理与法术伤害闪避率+10%", "+10% Physical and Arts damage evasion", statSet(flat(CombatStat::addPhysicalDamageEvasionRate, 0.10), flat(CombatStat::addMagicDamageEvasionRate, 0.10))),
       Rarity.RARE
   );
   public static final CollectibleBuilder URSUS_BIG_BREAD = collectible(
@@ -1037,7 +1036,7 @@ public final class ModCollectible {
       "Vanguard Operators have -2 DP Cost and +60% Max HP",
       "在波涛中插下顽石，分割巨浪，破开迷雾。",
       "Plant a great stone within the waters. Split the waves and part the fog.",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.6)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder BLUNT_CLAWS_BURST = collectible(
@@ -1081,7 +1080,7 @@ public final class ModCollectible {
       "Vanguard Operators have +50% ATK and DEF",
       "“当黑漆漆的敌人向我涌来时，我脑海里只想到四个字——它们完了。”",
       "'When the darkly-clad enemies rushed towards me, there were only four words on my mind — they are done for.'",
-      effect("攻击力+50%，防御力+50%", "+50% ATK and +50% DEF", statSet(percent(CombatStat.ATTACK, 0.5), percent(CombatStat.DEFENSE, 0.5))),
+      effect("攻击力+50%，防御力+50%", "+50% ATK and +50% DEF", statSet(percent(CombatStat::multiplyAttack, 0.5), percent(CombatStat::multiplyDefense, 0.5))),
       Rarity.EPIC
   );
   public static final CollectibleBuilder BEND_SPEARS_ADVANCEMENT = collectible(
@@ -1092,7 +1091,7 @@ public final class ModCollectible {
       "Guard Operators have -3 DP Cost and +40% Max HP",
       "战士走入战场，战士拔出战刃，战士迎接战斗。",
       "The soldiers stepped onto the battlefield, drew their blades, and met in battle.",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.4)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.4)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder BEND_SPEARS_ACUITY = collectible(
@@ -1103,7 +1102,7 @@ public final class ModCollectible {
       "Guard Operators have +25% ATK.",
       "“这是你这个月砍坏的第七把刀了。”“但是我这个月砍了八个敌人。”",
       "'This is the 7th blade you've broken this month.' 'But I cut down eight enemies this month.'",
-      statPercent("攻击力+25%", "+25% ATK", CombatStat.ATTACK, 0.25),
+      statPercent("攻击力+25%", "+25% ATK", CombatStat::multiplyAttack, 0.25),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder BEND_SPEARS_BLOODBATH = collectible(
@@ -1136,7 +1135,7 @@ public final class ModCollectible {
       "Guard Operators have -40% DEF, but gain +40% ATK and +30 ASPD.",
       "不太建议向煌学习那些技巧。",
       "I wouldn't really recommend learning those skills from Blaze.",
-      effect("防御力-40%，攻击力+40%，攻击速度+30", "-40% DEF, +40% ATK and +30 ASPD", statSet(percent(CombatStat.DEFENSE, -0.4), percent(CombatStat.ATTACK, 0.4), flat(CombatStat.ATTACK_SPEED, 30))),
+      effect("防御力-40%，攻击力+40%，攻击速度+30", "-40% DEF, +40% ATK and +30 ASPD", statSet(percent(CombatStat::multiplyDefense, -0.4), percent(CombatStat::multiplyAttack, 0.4), flat(CombatStat::addAttackSpeed, 30))),
       Rarity.EPIC
   );
   public static final CollectibleBuilder IRON_GUARD_ADVANCEMENT = collectible(
@@ -1147,7 +1146,7 @@ public final class ModCollectible {
       "Defender Operators have -3 DP Cost and +40% Max HP",
       "持盾者连成山脉，连成土地，他们对抗的不是血肉之敌，他们对抗命运，对抗不公。",
       "The shieldbearers formed a mountain range and became the earth. What they fight against are not enemies of flesh and blood. They fight against fate and injustice.",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.4)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.4)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder IRON_GUARD_INVASION = collectible(
@@ -1158,7 +1157,7 @@ public final class ModCollectible {
       "Defender Operators have +60% ATK.",
       "对队友和战略目的的保护行动往往会让人忽视他们原本的侵略性。",
       "Defensive actions for the sake of teammates or strategic purposes often make people forget about their original aggressiveness.",
-      statPercent("攻击力+60%", "+60% ATK", CombatStat.ATTACK, 0.6),
+      statPercent("攻击力+60%", "+60% ATK", CombatStat::multiplyAttack, 0.6),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder IRON_GUARD_TRANQUILITY = collectible(
@@ -1169,7 +1168,7 @@ public final class ModCollectible {
       "Defender Operators have +25% DEF and +50% Max HP",
       "“真有人能在那种规模的轰炸下一动不动？”“谁说一动不动的，他还往前挪了几步。”",
       "'Is there anyone who can remain in formation under a bombing of that scale?' 'Standing in formation? He moved a few steps forward.'",
-      effect("防御力+25%，最大生命值+50%", "+25% DEF and +50% maximum HP", statSet(percent(CombatStat.DEFENSE, 0.25), percent(CombatStat.MAX_HEALTH, 0.5))),
+      effect("防御力+25%，最大生命值+50%", "+25% DEF and +50% maximum HP", statSet(percent(CombatStat::multiplyDefense, 0.25), percent(CombatStat::multiplyMaxHealth, 0.5))),
       Rarity.RARE
   );
   public static final CollectibleBuilder IRON_GUARD_ADVANCE = collectible(
@@ -1202,7 +1201,7 @@ public final class ModCollectible {
       "Sniper Operators have -2 DP Cost and +60% Max HP",
       "上膛，瞄准，开火，毁灭如期而至。",
       "Load, aim, and fire. Destruction arrives as scheduled.",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.6)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder FATAL_BOLTS_PRECISION = collectible(
@@ -1213,7 +1212,7 @@ public final class ModCollectible {
       "Sniper Operators have +20% ATK.",
       "在源石技艺尚不如今天发达的时代，炎国曾以“百步穿杨”的典故来称赞他人箭术高超。",
       "In an era when Originium Arts were not as robust as they are now, Yan had a saying, 'a pierced willow leaf from a hundred paces,' to praise others for their mastery of archery.",
-      runtime(percent(CombatStat.ATTACK, 0.2)),
+      runtime(percent(CombatStat::multiplyAttack, 0.2)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder FATAL_BOLTS_SYNERGY = collectible(
@@ -1224,7 +1223,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Sniper Operators by +0.5/s",
       "和武器越发亲密的狙击手，越不容易遭到武器的背叛。",
       "The more intimate a sniper is with her weapon, the less likely she is to be betrayed by it.",
-      sourceRule("所有【狙击】干员的自然技力恢复+0.5/秒"),
+      statFlat("自然回复技能技力+0.5/秒", "+0.5 SP/s for Auto Recovery skills", CombatStat::addNaturalSkillPointRegeneration, 0.5),
       Rarity.RARE
   );
   public static final CollectibleBuilder FATAL_BOLTS_CROSSFIRE = collectible(
@@ -1235,7 +1234,7 @@ public final class ModCollectible {
       "Sniper Operators have -40% HP, but gain +40% ATK.",
       "密集的火力网布置同时让狙击干员们暴露在危险之中，接下来是一场关于准星的博弈。",
       "The dense crossfire also exposes snipers to great danger. The next battle boils down to a game of vision.",
-      runtime(statSet(percent(CombatStat.ATTACK, 0.4), percent(CombatStat.MAX_HEALTH, -0.4))),
+      runtime(statSet(percent(CombatStat::multiplyAttack, 0.4), percent(CombatStat::multiplyMaxHealth, -0.4))),
       Rarity.RARE
   );
   public static final CollectibleBuilder FATAL_BOLTS_DIVINE_SPEED = collectible(
@@ -1246,7 +1245,7 @@ public final class ModCollectible {
       "Sniper Operators have +70 ASPD.",
       "据说古维多利亚的传奇弓手可以让箭矢几乎连成一线。",
       "It is said that the legendary archer of ancient Victoria can almost shoot a continuous stream of arrows.",
-      statFlat("攻击速度+70", "+70 ASPD", CombatStat.ATTACK_SPEED, 70),
+      statFlat("攻击速度+70", "+70 ASPD", CombatStat::addAttackSpeed, 70),
       Rarity.EPIC
   );
   public static final CollectibleBuilder BROKEN_WAND_ADVANCEMENT = collectible(
@@ -1257,7 +1256,7 @@ public final class ModCollectible {
       "Caster Operators have -3 DP Cost and +60% Max HP",
       "让技艺在指尖起舞，呼风唤雨，搅乱现实，达成你宏伟的目的。",
       "Let Arts dance around your fingertips. Call the wind and rain, unravel reality, and achieve your grand goals.",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.6)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder BROKEN_WAND_ARTS_WEAVING = collectible(
@@ -1268,7 +1267,7 @@ public final class ModCollectible {
       "Caster Operators have +25% ATK.",
       "在莱塔尼亚仰望高塔的时候经常会看见一些奇怪的现象......甚至是天象。",
       "Those who gaze up at the great spires in Leithanien often see some strange or even celestial phenomena.",
-      runtime(percent(CombatStat.ATTACK, 0.25)),
+      runtime(percent(CombatStat::multiplyAttack, 0.25)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder BROKEN_WAND_CHANTING = collectible(
@@ -1279,7 +1278,7 @@ public final class ModCollectible {
       "Caster Operators have +40 ASPD.",
       "虽然音乐与法术有着奇妙的联系，呃，但这不是某些人五音不全的借口。",
       "Though the relationship between music and Arts is marvelous indeed, umm, this is not an excuse for some peoples' tone-deafness.",
-      statFlat("攻击速度+40", "+40 ASPD", CombatStat.ATTACK_SPEED, 40),
+      statFlat("攻击速度+40", "+40 ASPD", CombatStat::addAttackSpeed, 40),
       Rarity.RARE
   );
   public static final CollectibleBuilder BROKEN_WAND_CONCENTRATION = collectible(
@@ -1290,7 +1289,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Caster Operators by +0.4/s",
       "“当一个术师打算全力以赴，哪怕是天火小姐那种坏脾气术师，也会展露出截然不同的气质。”",
       "'When a caster intends to go all out, they will display a completely different temperament — even if we're talking about something like Miss Skyfire's grumpiness.'",
-      sourceRule("所有【术师】干员的技力恢复+0.4/秒"),
+      statFlat("自然回复技能技力+0.4/秒", "+0.4 SP/s for Auto Recovery skills", CombatStat::addNaturalSkillPointRegeneration, 0.4),
       Rarity.RARE
   );
   public static final CollectibleBuilder BROKEN_WAND_MALEDICTION = collectible(
@@ -1301,7 +1300,7 @@ public final class ModCollectible {
       "Caster Operators have -40% HP, but deal +70% Arts damage",
       "萨卡兹接触源石的起源几乎无从考证，古老法术的起点早已脱离物质现实与逻辑常理。",
       "It is virtually impossible to identify when the Sarkaz first encountered Originium, and the origins of these ancient Arts have long been separated from actual reality and common sense.",
-      runtime(percent(CombatStat.MAX_HEALTH, -0.4)),
+      runtime(percent(CombatStat::multiplyMaxHealth, -0.4)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder STALWART_AID_ADVANCEMENT = collectible(
@@ -1312,7 +1311,7 @@ public final class ModCollectible {
       "Supporter Operators have -2 DP Cost and +60% Max HP",
       "当“差一点完成任务”的时候，你需要的正是那个帮你补上“差一点”的人。",
       "Whenever you're 'almost done' with a task, what you need at that moment is someone to help you with the 'almost' part.",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.6)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder STALWART_AID_SECONDARY_FRONT = collectible(
@@ -1323,7 +1322,7 @@ public final class ModCollectible {
       "Units summoned by Supporter Operators have +50% ATK.",
       "“呃，机械和源石技艺衍生物我尚且能理解，但是不是有些别的......”",
       "'Um, I can understand the derivatives of combining mechanics with Originium Arts, but there might be something else...'",
-      runtime(percent(CombatStat.ATTACK, 0.5)),
+      runtime(percent(CombatStat::multiplyAttack, 0.5)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder STALWART_AID_DILIGENCE = collectible(
@@ -1367,7 +1366,7 @@ public final class ModCollectible {
       "Medic Operators have -2 DP Cost and +60% Max HP",
       "拯救是人类必须赞许的美德，是这一切得以存续的仰仗。",
       "The desire to save lives is a virtue that mankind must applaud, for that is the support that keeps us alive.",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.6)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder HEALERS_PATH_SELF_TREATING = collectible(
@@ -1378,7 +1377,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Medic Operators by +0.3/s",
       "谁说医者不能自医，他们只是选择给自己来一片提神药然后继续帮助别人而已。",
       "Who says healers can't heal themselves? They simply pop some pills before continuing to help others.",
-      sourceRule("所有【医疗】干员的技力恢复+0.3/秒"),
+      statFlat("自然回复技能技力+0.3/秒", "+0.3 SP/s for Auto Recovery skills", CombatStat::addNaturalSkillPointRegeneration, 0.3),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder HEALERS_PATH_POTENCY = collectible(
@@ -1389,7 +1388,7 @@ public final class ModCollectible {
       "Medic Operators have +40% ATK.",
       "除了华法琳，没人敢采取这么激进的医疗手段，不过她从没失误过一次。",
       "Nobody else dared to attempt such a radical treatment — except Warfarin. She never made a single mistake.",
-      runtime(percent(CombatStat.ATTACK, 0.4)),
+      runtime(percent(CombatStat::multiplyAttack, 0.4)),
       Rarity.RARE
   );
   public static final CollectibleBuilder HEALERS_PATH_KEEN_HANDS = collectible(
@@ -1400,7 +1399,7 @@ public final class ModCollectible {
       "Medic Operators have +50 ASPD.",
       "比起从死亡手里多抢回一条命的伟业，事后昏睡个三天算什么？",
       "Compared to the feat of snatching a life from the grip of death, what is three days of coma afterwards?",
-      runtime(flat(CombatStat.ATTACK_SPEED, 50)),
+      runtime(flat(CombatStat::addAttackSpeed, 50)),
       Rarity.RARE
   );
   public static final CollectibleBuilder HEALERS_PATH_RESTORE_SANITY = collectible(
@@ -1411,7 +1410,7 @@ public final class ModCollectible {
       "Allied units within the attack range of Medic Operators gain Resistance.",
       "加固你的思维，让你脑中帝国疆域上的每株杂草都无懈可击。",
       "Reinforce your thinking. In the domain of your mind, make even every weed impregnable.",
-      sourceRule("所有【医疗】干员攻击范围内的我方单位获得抵抗"),
+      statFlat("异常状态持续时间-50%", "-50% negative status duration", CombatStat::addFriendlyStatusDurationReduction, 0.50),
       Rarity.EPIC
   );
   public static final CollectibleBuilder RUSTED_BLADE_ADVANCEMENT = collectible(
@@ -1422,7 +1421,7 @@ public final class ModCollectible {
       "Specialist Operators have -2 DP Cost and +60% Max HP",
       "手段有很多，结局却只有一种。",
       "There may be many means, but only one end.",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.6)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder RUSTED_BLADE_EXECUTION = collectible(
@@ -1433,7 +1432,7 @@ public final class ModCollectible {
       "Specialist Operators have +30 ASPD.",
       "红有一把小刀。她有一把小刀。",
       "Projekt Red has a knife. She has a knife.",
-      runtime(flat(CombatStat.ATTACK_SPEED, 30)),
+      runtime(flat(CombatStat::addAttackSpeed, 30)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder RUSTED_BLADE_ISOLATION = collectible(
@@ -1444,7 +1443,7 @@ public final class ModCollectible {
       "Specialist Operators have +40% ATK and DEF",
       "S.W.E.E.P.的总管没有任何任务参与记录。*没有*。",
       "The director of S.W.E.E.P. does not have any mission participation records. *None*.",
-      effect("攻击力+40%，防御力+40%", "+40% ATK and +40% DEF", statSet(percent(CombatStat.ATTACK, 0.4), percent(CombatStat.DEFENSE, 0.4))),
+      effect("攻击力+40%，防御力+40%", "+40% ATK and +40% DEF", statSet(percent(CombatStat::multiplyAttack, 0.4), percent(CombatStat::multiplyDefense, 0.4))),
       Rarity.RARE
   );
   public static final CollectibleBuilder RUSTED_BLADE_NO_MANS_LAND = collectible(
@@ -1631,7 +1630,7 @@ public final class ModCollectible {
       "Gain 1 Temporary Life Point at the beginning of each battle.",
       "从这本游记中，我们可以一窥地底人对于地表人的奇异见解。",
       "In this expedition account, we get a glimpse of how those who live underground see those who live on the surface.",
-      explorationRule("每场战斗获得1点临时目标生命值", power -> power.temporaryObjectiveLife(1)),
+      explorationRule("每场战斗获得1点临时目标生命值", power -> power.addMaxHealth(1)),
       Rarity.RARE
   );
   public static final CollectibleBuilder GAULISH_TOPONYM_ORIGINS = collectible(
@@ -1642,7 +1641,7 @@ public final class ModCollectible {
       "Gain 2 Temporary Life Points at the beginning of each battle.",
       "薄绿从博士办公室里翻出来的古地名历史书，里面记载有克莱布拉松。",
       "A book of historical place names that Mint dug out of the Doctor's office. Calais-Blason is mentioned in the book.",
-      explorationRule("每场战斗获得2点临时目标生命值", power -> power.temporaryObjectiveLife(2)),
+      explorationRule("每场战斗获得2点临时目标生命值", power -> power.addMaxHealth(2)),
       Rarity.RARE
   );
   public static final CollectibleBuilder ANCIENT_GAULISH_SILVER_COIN = collectible(
@@ -1697,7 +1696,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Auto Recovery skills by +0.2/s",
       "玻利瓦尔本地的廉价饮料，拥有上百年历史，混合多种香料，特点是不好喝。",
       "Bolívar's cheap specialty drink dates back hundreds of years. It is mixed with a variety of spices, and is known for not being very good.",
-      sourceRule("所有自然回复技能的技力恢复+0.2/秒"),
+      statFlat("自然回复技能技力+0.2/秒", "+0.2 SP/s for Auto Recovery skills", CombatStat::addNaturalSkillPointRegeneration, 0.2),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder BALL_JUICE = collectible(
@@ -1708,7 +1707,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Auto Recovery skills by +0.25/s",
       "说是果汁其实是酒，瓶身上标注未成年禁止饮用。原产地曾在高卢版图内，现属于维多利亚。",
       "They call it fruit juice, but it's actually alcohol. The bottle itself states that minors are forbidden from drinking it. Its Victorian place of origin once fell within Gaul's territory.",
-      sourceRule("所有自然回复技能的技力恢复+0.25/秒"),
+      statFlat("自然回复技能技力+0.25/秒", "+0.25 SP/s for Auto Recovery skills", CombatStat::addNaturalSkillPointRegeneration, 0.25),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder FOWLBEAST_LIVER_PATE = collectible(
@@ -1719,7 +1718,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Auto Recovery skills by +0.35/s",
       "小瓶高档羽兽肝酱，颜色鲜艳，贵族特供。",
       "A small jar of fowlbeast liver pâté. Bright and vividly colorful, it is eaten only by nobles.",
-      sourceRule("所有自然回复技能的技力恢复+0.35/秒"),
+      statFlat("自然回复技能技力+0.35/秒", "+0.35 SP/s for Auto Recovery skills", CombatStat::addNaturalSkillPointRegeneration, 0.35),
       Rarity.RARE
   );
   public static final CollectibleBuilder DREAMING_ESSENCE = collectible(
@@ -1730,7 +1729,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Auto Recovery skills by +0.5/s",
       "据说女妖们制作的香氛只会送给心上之人，只需一滴，就能令人如痴如醉，而艺术家们的灵感与创意也随之而来。",
       "Supposedly the Banshees make their aromatics only for their beloved. A single drop is enough to enchant just about anyone, bringing out any artist's inspiration and creativity.",
-      sourceRule("所有自然回复技能的技力恢复+0.5/秒"),
+      statFlat("自然回复技能技力+0.5/秒", "+0.5 SP/s for Auto Recovery skills", CombatStat::addNaturalSkillPointRegeneration, 0.5),
       Rarity.EPIC
   );
   public static final CollectibleBuilder BARRENS_TEQUILA = collectible(
@@ -1741,7 +1740,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 3.5s.",
       "原产自玻利瓦尔的廉价蒸馏酒，味道很冲，广受哥伦比亚拓荒者的好评。",
       "A cheap distilled spirit originally produced in Bolívar. It has a strong taste and is widely praised by Columbia's explorers.",
-      sourceRule("所有攻击和受击回复的技能每3.5秒回复1点技力"),
+      statFlat("攻击与受击回复技能每3.5秒回复1点技力", "+1 SP per 3.5s for Offensive and Defensive Recovery skills", CombatStat::addOffensiveDefensiveSkillPointRegeneration, 1.0 / 3.5),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder CAPTAIN_MORGANS_WINE = collectible(
@@ -1752,7 +1751,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 3s.",
       "一种产自伊比利亚地区的酒，在维多利亚中部城市大受欢迎，现已停产。",
       "A wine produced in the Iberian region. Despite having gained popularity in the heart of Victoria's bustling cities, it is now discontinued.",
-      sourceRule("所有攻击和受击回复的技能每3秒回复1点技力"),
+      statFlat("攻击与受击回复技能每3秒回复1点技力", "+1 SP per 3s for Offensive and Defensive Recovery skills", CombatStat::addOffensiveDefensiveSkillPointRegeneration, 1.0 / 3.0),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder WATER_OF_LIFE = collectible(
@@ -1763,7 +1762,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 2.5s.",
       "度数奇高的乌萨斯烈酒，上头，据说一个健康的乌萨斯人能干掉好几瓶。",
       "The strongest Ursine liquors go straight to one's head, but it's said that the healthy Ursine adult can down several bottles.",
-      sourceRule("所有攻击和受击回复的技能每2.5秒回复1点技力"),
+      statFlat("攻击与受击回复技能每2.5秒回复1点技力", "+1 SP per 2.5s for Offensive and Defensive Recovery skills", CombatStat::addOffensiveDefensiveSkillPointRegeneration, 1.0 / 2.5),
       Rarity.RARE
   );
   public static final CollectibleBuilder ROYAL_LIQUEUR = collectible(
@@ -1774,7 +1773,7 @@ public final class ModCollectible {
       "Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 1.5s.",
       "已灭亡国家“高卢”的好酒，现在成为了收藏家手中的珍惜奇货，价格不菲。产地现处莱塔尼亚境内，工艺则已经失传。",
       "The fine wines of the extinct country, Gaul, have now become expensive, prime treasures for collectors. The place of production is now a part of Leithanien, but the technique has been lost.",
-      sourceRule("所有攻击和受击回复的技能每1.5秒回复1点技力"),
+      statFlat("攻击与受击回复技能每1.5秒回复1点技力", "+1 SP per 1.5s for Offensive and Defensive Recovery skills", CombatStat::addOffensiveDefensiveSkillPointRegeneration, 1.0 / 1.5),
       Rarity.EPIC
   );
   public static final CollectibleBuilder UNLEASHINGS = collectible(
@@ -1895,7 +1894,7 @@ public final class ModCollectible {
       "All enemies take +150% True damage.",
       "小小的黑色王冠。",
       "A small, black crown.",
-      sourceRule("所有敌方单位受到的真实伤害+150%"),
+      statFlat("造成的真实伤害+150%", "+150% True damage dealt", CombatStat::addTrueDamageBonus, 1.50),
       Rarity.EPIC
   );
   public static final CollectibleBuilder RIBBON_OF_HONOR = collectible(
@@ -2138,7 +2137,7 @@ public final class ModCollectible {
       "Guard and Sniper Operators have +15% ATK, but Supporter and Caster Operators have -5% ATK",
       "高卢皇后冠冕的一部分，现存于伦蒂尼姆皇家博物馆。在得知皇帝逝世的消息后，这位皇后决定同敌人战至最后一刻——为了国家，也为了她离世的爱人。",
       "One half of the Gaulish empress's crown is now housed in the Royal Museum of Londinium. When she learned of the death of the emperor, the empress consort was determined to fight her enemies to the end—for her country, and for her departed beloved.",
-      runtime(percent(CombatStat.ATTACK, 0.15)),
+      runtime(percent(CombatStat::multiplyAttack, 0.15)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder LEFT_EYE_OF_THE_NATATOR = collectible(
@@ -2149,7 +2148,7 @@ public final class ModCollectible {
       "Supporter and Caster Operators have +15% ATK, but Guard and Sniper Operators have -5% ATK",
       "高卢皇后冠冕的一部分，现存于莱塔尼亚女皇图书馆。皇后遣走所有侍从，宽恕一切罪犯，随后独自坐在曾属于丈夫的宝座上，等待着入侵者的到来——她决心死于源石结晶，而非敌人的剑刃。",
       "One half of the Gaulish empress's crown is now stored housed in the Leithanian Queen Library. The empress dismissed all her attendants, granted clemency to all criminals, and sat solemnly alone on the throne that was once her husband's, awaiting the invaders—She was determined to die not by at hands of her enemies, but under the effects of Originium crystals.",
-      runtime(percent(CombatStat.ATTACK, 0.15)),
+      runtime(percent(CombatStat::multiplyAttack, 0.15)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder MAGNIFICENT_VISAGE = collectible(
@@ -2171,7 +2170,7 @@ public final class ModCollectible {
       "All Operators have +5 DP Cost, but gain +10% ATK, DEF, and Max HP",
       "插在巨大石头上的剑，到底是谁这么无聊啊。",
       "A sword lodged in a stone. Was someone bored enough to do this?",
-      runtime(percent(CombatStat.MAX_HEALTH, 0.1)),
+      runtime(percent(CombatStat::multiplyMaxHealth, 0.1)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder BROKENBLADE = collectible(
@@ -2193,7 +2192,7 @@ public final class ModCollectible {
       "All enemy units have -15 ASPD.",
       "容貌相近，气质相异，你或许见过这个人？",
       "A familiar face but a different vibe. Perhaps you have met this person?",
-      sourceRule("所有敌方单位的攻击速度-15"),
+      enemySpawnStat("敌方生成时攻击速度-15", "-15 enemy ASPD on spawn", (enemy, stats) -> stats.addAttackSpeed(-15.0)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder PROOF_OF_FRIENDSHIP = collectible(
@@ -2270,7 +2269,7 @@ public final class ModCollectible {
       "All friendly units recover 10 HP every second",
       "雕刻在石板上的叙事诗，是八百年前高卢一位著名的诗人留下的巨作。尽管后世的文学家对这首诗有着相当高的评价，但是依据历史记载，这位诗人却因为自己身形的臃肿与长相的丑陋而被人嘲笑。",
       "An epic narrative poem etched on a stone tablet. It was written eight hundred years ago by a famous Gaulish poet, but although modern literary scholars hold the poem in extremely high regard, historical records show that he was often ridiculed by his contemporaries for his obese figure and unattractive facial features.",
-      runtime(regeneration(CollectiblePower.Regeneration.flat(10F, 20))),
+      runtime(regenerationFlat(10.0)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder NUMBNESS_AND_OBSCENITY = collectible(
@@ -2281,7 +2280,7 @@ public final class ModCollectible {
       "All friendly units have +5 RES",
       "一件著名的艺术品，两百年前莱塔尼亚疯狂雕塑家的遗作。这位雕塑家以才华横溢与参与多起残忍的命案而为人所知。但是依据历史记载，他生前并没有多少人关注他的作品，而是因为自己秀美的长相而被人追捧。",
       "A famous art piece and the final piece created by an insane Leithanian sculptor two hundred years ago. The sculptor was known for his extraordinary talent and his participation in multiple cruel homicides. However, historical records show that few people took notice of his work. He was instead known for his features and beauty.",
-      runtime(flat(CombatStat.RESISTANCE, 5)),
+      runtime(flat(CombatStat::addResistance, 5)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder BEAUTY_AND_UGLINESS_IN_THE_AGE_OF_TERRA = collectible(
@@ -2348,7 +2347,7 @@ public final class ModCollectible {
       "All friendly units have +3% ATK, DEF, and Max HP",
       "剧作家始终未认可由他揭幕的这几场戏。但是没关系，报幕人并不气馁，他的手中从不缺少替补演员。",
       "The playwright never approved of his inauguration of these shows. No matter, though. The master of ceremonies is not discouraged. He has as many understudies at his disposal.",
-      runtime(statSet(percent(CombatStat.ATTACK, 0.03), percent(CombatStat.DEFENSE, 0.03), percent(CombatStat.MAX_HEALTH, 0.03))),
+      runtime(statSet(percent(CombatStat::multiplyAttack, 0.03), percent(CombatStat::multiplyDefense, 0.03), percent(CombatStat::multiplyMaxHealth, 0.03))),
       Rarity.EPIC
   );
   public static final CollectibleBuilder ABRUPT_REALIZATION = collectible(
@@ -2359,7 +2358,7 @@ public final class ModCollectible {
       "All friendly units have -3 DP Cost and gain +5% ATK, DEF, and Max HP. The adventure will head towards a different ending",
       "巫王曾经的追随者已向艺术献出其全部。血肉、骨骼、信仰、心灵。",
       "The Witch King's followers have given everything for the arts. Their flesh, their blood, their beliefs, and their souls.",
-      runtime(statSet(percent(CombatStat.ATTACK, 0.05), percent(CombatStat.DEFENSE, 0.05), percent(CombatStat.MAX_HEALTH, 0.05))),
+      runtime(statSet(percent(CombatStat::multiplyAttack, 0.05), percent(CombatStat::multiplyDefense, 0.05), percent(CombatStat::multiplyMaxHealth, 0.05))),
       Rarity.EPIC
   );
   public static final CollectibleBuilder DANCE_OF_THE_CONDEMNED = collectible(
@@ -2392,7 +2391,7 @@ public final class ModCollectible {
       "All allied units have +40% healing effectiveness",
       "剧团厨师长每顿都做不同的菜品，所有人被剧团长严令不准打听食物来源。",
       "The troupe's chef never serves the same dish twice. The members of the troupe have been warned to never ask where the ingredients came from.",
-      sourceRule("所有我方单位受到的治疗和生命回复效果+40%"),
+      statFlat("受到的治疗与生命回复效果+40%", "+40% healing and health regeneration received", CombatStat::addHealingAndHealthRegenerationBonus, 0.40),
       Rarity.EPIC
   );
   public static final CollectibleBuilder INTOXICATED_HYMNOI = collectible(
@@ -2403,7 +2402,7 @@ public final class ModCollectible {
       "All allied units recover 2% of Max HP per second",
       "只要闻到一点，帕拉斯的眼角便会湿润，也不知道莱娜在香水里加了什么魔法......",
       "One sniff brings tears to Pallas's eyes. What spell has Lena cast on this perfume?",
-      runtime(regeneration(CollectiblePower.Regeneration.percentage(0.02F, 20))),
+      runtime(regenerationPercentage(0.02)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder EMPRESSES_WISH = collectible(
@@ -2414,7 +2413,7 @@ public final class ModCollectible {
       "All allied units have +15% Physical and Arts Dodge",
       "两位女皇如同朝夜悬于高塔之上，当晨昏相通，意见一致，莱塔尼亚便再无异议。",
       "The Twin Empresses tower above. When dawn and dusk are one, there shall be no more dissent in Leithanien.",
-      sourceRule("所有我方单位获得15%物理与法术闪避"),
+      effect("物理与法术伤害闪避率+15%", "+15% Physical and Arts damage evasion", statSet(flat(CombatStat::addPhysicalDamageEvasionRate, 0.15), flat(CombatStat::addMagicDamageEvasionRate, 0.15))),
       Rarity.EPIC
   );
   public static final CollectibleBuilder VICTORY_HORN = collectible(
@@ -2425,7 +2424,7 @@ public final class ModCollectible {
       "Duration of single instance status effects such as stun, cold or freeze is increased by 100%",
       "吹响我们的号角，唤起我们的呼号，让敌人在震天咆哮中落荒而逃！",
       "Blow the horn, cry out, and scatter our foes with its roar!",
-      sourceRule("敌人受到的一次性晕眩、寒冷、冰冻等异常效果影响时间提高100%"),
+      statFlat("对敌方施加的异常状态持续时间+100%", "+100% negative status duration applied to enemies", CombatStat::addEnemyStatusDurationBonus, 1.00),
       Rarity.RARE
   );
   public static final CollectibleBuilder FLASH_CAMERA = collectible(
@@ -2436,7 +2435,7 @@ public final class ModCollectible {
       "Duration of single instance status effects such as stun, cold or freeze is increased by 110%",
       "用这部相机拍摄的照片冲洗出来后基本上只有一片花白，隐约能够看到受害者扭曲的表情。",
       "Every photo shot by this camera is washed out in white, with only the victim's twisted expression faintly visible.",
-      sourceRule("敌人受到的一次性晕眩、寒冷、冰冻等异常效果影响时间提高110%"),
+      statFlat("对敌方施加的异常状态持续时间+110%", "+110% negative status duration applied to enemies", CombatStat::addEnemyStatusDurationBonus, 1.10),
       Rarity.RARE
   );
   public static final CollectibleBuilder THERAPY_TAPE = collectible(
@@ -2447,7 +2446,7 @@ public final class ModCollectible {
       "Duration of single instance status effects such as stun, cold or freeze is increased by 150%",
       "这是他曾经多次阻止你听的，他说这很危险，他说你不该逗留——现在你明白了吗？你在听他唱歌。",
       "He tried to stop you from listening. He said it was dangerous. He said you should not stay. Do you understand now? You are listening to his song.",
-      sourceRule("敌人受到的一次性晕眩、寒冷、冰冻等异常效果影响时间提高150%"),
+      statFlat("对敌方施加的异常状态持续时间+150%", "+150% negative status duration applied to enemies", CombatStat::addEnemyStatusDurationBonus, 1.50),
       Rarity.EPIC
   );
   public static final CollectibleBuilder ROYAL_BROOCH = collectible(
@@ -2502,7 +2501,7 @@ public final class ModCollectible {
       "All enemy units have Movement Speed -15%, and their weight is reduced by one rank",
       "少女并不介意分享自己的源石技艺，她相信你会将之用在正确的地方。",
       "The girl has no qualms about sharing her Originium Arts. She believes that you will use it for the right reasons.",
-      sourceRule("所有敌方单位移动速度-15%，且重量下降一个等级"),
+      effect("敌方移动速度-15%，推拉结算时忽略1级重量", "Enemy Movement Speed -15%; ignore 1 weight rank for push/pull", stats -> stats.addEnemyMovementSpeedReduction(0.15).addEnemyWeightIgnore(1)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder SCOUTS_SCOPE = collectible(
@@ -2645,7 +2644,7 @@ public final class ModCollectible {
       "When Life Point is 1, all friendly units have +50 ASPD",
       "绝境下的美好祈愿能带给人希望，即使那并不是真相。",
       "Beautiful wishes made in dire straits can bring hope, even if they are not necessarily the truth.",
-      sourceRule("目标生命值为1时，所有我方单位的攻击速度+50"),
+      effect("每秒判断目标生命；为1时攻击速度+50", "Check Life Points every second; +50 ASPD while at 1", stats -> stats.addPerSecondConditionalEffect(current -> Double.compare(current.maxHealth(), 1.0) == 0 ? current.addAttackSpeed(50.0) : current)),
       Rarity.RARE
   );
   public static final CollectibleBuilder GUARD_CAP = collectible(
@@ -2667,7 +2666,7 @@ public final class ModCollectible {
       "All enemy units have -15% HP and Movement Speed",
       "矿石病在剧团内蔓延，有人倒下，有人哭泣，有人乐不可支，有人一心书写。年轻人在这时收到他的成年礼物，他即将唱响身为演员的最后一支歌。",
       "Oripathy is spreading among the troupe members. Some collapsed, some broke out crying, some were overjoyed, and some turned their attention to writing. It was at such a time that the young man received his coming-of-age present. He will sing his very last song as an actor.",
-      sourceRule("所有敌方单位的生命-15%，移动速度-15%"),
+      enemySpawnStat("敌方生成时最大生命-15%；移动速度规则尚未实现", "-15% enemy maximum HP on spawn; movement speed rule pending", (enemy, stats) -> stats.multiplyMaxHealth(-0.15), "所有敌方单位移动速度-15%"),
       Rarity.EPIC
   );
   public static final CollectibleBuilder CASTLES_OFFSPRING = collectible(
@@ -2689,7 +2688,7 @@ public final class ModCollectible {
       "All friendly units have +30% healing effects and receive -30% Elemental Injury",
       "我们生来便学会摄取。别违抗欲求，顺从它。",
       "We've known how to indulge since birth. Do not resist your desires. Submit to them instead.",
-      sourceRule("所有我方单位受到的治疗和生命回复效果+30%，且受到的元素损伤-30%"),
+      effect("受到的治疗与生命回复效果+30%，元素损伤减免30%", "+30% healing and health regeneration received and 30% Elemental Injury reduction", statSet(flat(CombatStat::addHealingAndHealthRegenerationBonus, 0.30), flat(CombatStat::addElementalDamageReduction, 0.30))),
       Rarity.EPIC
   );
   public static final CollectibleBuilder EVENTIDE_TERROR = collectible(
@@ -2745,16 +2744,27 @@ public final class ModCollectible {
         .originalEffect(originalEffectZhCn, originalEffectEnUs)
         .description(descriptionZhCn, descriptionEnUs)
         .minecraftEffect(effect.zhCn(), effect.enUs(), effect.power())
+        .sourceRules(effect.sourceRules())
         .rarity(rarity)
         .build();
   }
 
-  private static PowerDefinition statPercent(String zhCn, String enUs, CombatStat stat, double amount) {
-    return effect(zhCn, enUs, statSet(percent(stat, amount)));
+  private static PowerDefinition statPercent(
+      String zhCn,
+      String enUs,
+      BiFunction<CombatStat, Double, CombatStat> field,
+      double amount
+  ) {
+    return effect(zhCn, enUs, percent(field, amount));
   }
 
-  private static PowerDefinition statFlat(String zhCn, String enUs, CombatStat stat, double amount) {
-    return effect(zhCn, enUs, statSet(flat(stat, amount)));
+  private static PowerDefinition statFlat(
+      String zhCn,
+      String enUs,
+      BiFunction<CombatStat, Double, CombatStat> field,
+      double amount
+  ) {
+    return effect(zhCn, enUs, flat(field, amount));
   }
 
   private static PowerDefinition runtime(CollectiblePower power) {
@@ -2765,54 +2775,87 @@ public final class ModCollectible {
     );
   }
 
-  private static PowerDefinition runtime(CombatStatModifier modifier) {
-    return runtime(statSet(modifier));
+  private static PowerDefinition enemySpawnStat(
+      String zhCn,
+      String enUs,
+      CombatStat.EnemySpawnStatEffect effect
+  ) {
+    return effect(zhCn, enUs, stats -> stats.addEnemySpawnStatEffect(effect));
+  }
+
+  private static PowerDefinition enemySpawnStat(
+      String zhCn,
+      String enUs,
+      CombatStat.EnemySpawnStatEffect effect,
+      String pendingSourceRule
+  ) {
+    return effect(
+        zhCn,
+        enUs,
+        stats -> stats.addEnemySpawnStatEffect(effect),
+        List.of(pendingSourceRule)
+    );
   }
 
   private static PowerDefinition sourceRule(String originalRule) {
     return effect(
         "已登记原始探索规则；等待对应的节点、招募或部署系统触发",
         "Original exploration rule registered; requires its matching node, recruitment or deployment system",
-        CollectiblePower.builder().sourceRule(originalRule).build()
+        CollectiblePower.NONE,
+        List.of(originalRule)
     );
   }
 
-  private static PowerDefinition explorationRule(
-      String originalRule,
-      Consumer<CollectiblePower.Builder> configuration
-  ) {
-    CollectiblePower.Builder builder = CollectiblePower.builder().sourceRule(originalRule);
-    configuration.accept(builder);
+  private static PowerDefinition explorationRule(String originalRule, CollectiblePower power) {
     return effect(
         "已登记集成战略资源效果；由探索运行时消费",
         "Integrated Strategies resource effect registered for the exploration runtime",
-        builder.build()
+        power,
+        List.of(originalRule)
     );
   }
 
   private static PowerDefinition effect(String zhCn, String enUs, CollectiblePower power) {
-    return new PowerDefinition(zhCn, enUs, power);
+    return effect(zhCn, enUs, power, List.of());
   }
 
-  private static CollectiblePower statSet(CombatStatModifier... modifiers) {
-    CollectiblePower.Builder builder = CollectiblePower.builder();
-    for (CombatStatModifier modifier : modifiers) builder.combatStat(modifier);
-    return builder.build();
+  private static PowerDefinition effect(
+      String zhCn,
+      String enUs,
+      CollectiblePower power,
+      List<String> sourceRules
+  ) {
+    return new PowerDefinition(zhCn, enUs, power, List.copyOf(sourceRules));
   }
 
-  private static CombatStatModifier percent(CombatStat stat, double amount) {
-    return CombatStatModifier.collectibleMultiplier(stat, amount);
+  private static CollectiblePower statSet(CollectiblePower... effects) {
+    return CollectiblePower.combine(effects);
   }
 
-  private static CombatStatModifier flat(CombatStat stat, double amount) {
-    return CombatStatModifier.collectibleAddition(stat, amount);
+  private static CollectiblePower percent(
+      BiFunction<CombatStat, Double, CombatStat> field,
+      double amount
+  ) {
+    return stats -> field.apply(stats, amount);
   }
 
-  private static CollectiblePower regeneration(CollectiblePower.Regeneration regeneration) {
-    return CollectiblePower.builder().regeneration(regeneration).build();
+  private static CollectiblePower flat(
+      BiFunction<CombatStat, Double, CombatStat> field,
+      double amount
+  ) {
+    return stats -> field.apply(stats, amount);
   }
 
-  private record PowerDefinition(String zhCn, String enUs, CollectiblePower power) {
+  private static CollectiblePower regenerationFlat(double healthPerSecond) {
+    return stats -> stats.addPerSecondEffect(entity -> entity.heal((float) healthPerSecond));
+  }
+
+  private static CollectiblePower regenerationPercentage(double fractionPerSecond) {
+    return stats -> stats.addPerSecondEffect(
+        entity -> entity.heal((float) (entity.getMaxHealth() * fractionPerSecond))
+    );
+  }
+  private record PowerDefinition(String zhCn, String enUs, CollectiblePower power, List<String> sourceRules) {
   }
 
   public static void bootstrap() {

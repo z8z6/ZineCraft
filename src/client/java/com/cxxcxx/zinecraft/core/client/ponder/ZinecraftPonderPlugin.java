@@ -57,7 +57,7 @@ public final class ZinecraftPonderPlugin implements PonderPlugin {
     scene.overlay()
         .showText(40)
         .colored(PonderPalette.BLUE)
-        .text(skill.recoveryEnUs + " · " + skill.triggerEnUs)
+        .text(skill.recoveryType.getEnUs() + " · " + skill.triggerType.getEnUs())
         .pointAt(textAnchor);
     scene.idle(45);
     scene.overlay()

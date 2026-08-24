@@ -2,6 +2,7 @@ package com.cxxcxx.zinecraft.api.world.structure;
 
 import com.cxxcxx.zinecraft.api.world.city.CityRegionBuildingSlot;
 import com.cxxcxx.zinecraft.api.world.city.CityRegionCell;
+import com.cxxcxx.zinecraft.api.world.city.RegionLayout;
 import com.cxxcxx.zinecraft.core.nation.TerraLayoutResource;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -32,11 +33,12 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * 消费分国压缩布局资源：逐区块铺设动力、支持、生活三层，再在顶部展开道路和建筑。
+ * 消费分国压缩布局资源：逐层展开道路、建筑，并用同坐标楼梯贯通四层。
  */
 public final class MobilePlotStructure extends Structure {
   public static final int LAYER_HEIGHT = 16;
   public static final int MOBILE_PLOT_HEIGHT = LAYER_HEIGHT * 3;
+  public static final int FLOOR_COUNT = 4;
   @NotNull
   public static final Access ACCESS = new Access();
   @NotNull
@@ -44,6 +46,8 @@ public final class MobilePlotStructure extends Structure {
       settingsCodec(instance),
       LayerDefinition.CODEC.listOf().fieldOf("layer_tiles")
           .forGetter(structure -> structure.layerTiles),
+      LayerDefinition.CODEC.fieldOf("stair_tile")
+          .forGetter(structure -> structure.stairTile),
       RoadDefinition.CODEC.listOf().fieldOf("road_tiles")
           .forGetter(structure -> structure.roadTiles),
       BuildingDefinition.CODEC.listOf().fieldOf("buildings")
@@ -52,6 +56,8 @@ public final class MobilePlotStructure extends Structure {
   private static Supplier<StructureType<MobilePlotStructure>> type;
 
   private final List<LayerDefinition> layerTiles;
+  private final LayerDefinition stairTile;
+  private final Map<String, LayerDefinition> layerTilesById;
   private final List<RoadDefinition> roadTiles;
   private final Map<String, RoadDefinition> roadTilesById;
   private final List<BuildingDefinition> buildings;
@@ -60,6 +66,7 @@ public final class MobilePlotStructure extends Structure {
   public MobilePlotStructure(
       StructureSettings settings,
       List<LayerDefinition> layerTiles,
+      LayerDefinition stairTile,
       List<RoadDefinition> roadTiles,
       List<BuildingDefinition> buildings
   ) {
@@ -78,6 +85,8 @@ public final class MobilePlotStructure extends Structure {
         throw new IllegalArgumentException("移动地块缺少层级或高度错误：" + required.getKey());
       }
     }
+    this.layerTilesById = Map.copyOf(layersById);
+    this.stairTile = Objects.requireNonNull(stairTile, "移动地块楼梯模板池不能为空");
     this.roadTiles = List.copyOf(Objects.requireNonNull(roadTiles, "道路构件模板池不能为空"));
     LinkedHashMap<String, RoadDefinition> roadById = new LinkedHashMap<>();
     for (RoadDefinition roadTile : roadTiles) {
@@ -109,17 +118,6 @@ public final class MobilePlotStructure extends Structure {
     TerraLayoutResource.MobilePlotTerrain terrain = optionalTerrain.get();
     CityRegionCell region = terrain.region();
     int baseY = terrain.profile().groundY() + 1;
-    java.util.ArrayList<PoolElementStructurePiece> layerPieces = new java.util.ArrayList<>(3);
-    for (LayerDefinition layer : layerTiles) {
-      BlockPos origin = new BlockPos(chunk.getMinBlockX(), baseY + layer.yOffset(), chunk.getMinBlockZ());
-      StructurePoolElement element = layer.pool().value().getRandomTemplate(context.random());
-      if (element == EmptyPoolElement.INSTANCE) return Optional.empty();
-      BoundingBox box = element.getBoundingBox(context.structureTemplateManager(), origin, Rotation.NONE);
-      layerPieces.add(new PoolElementStructurePiece(
-          context.structureTemplateManager(), element, origin, element.getGroundLevelDelta(),
-          Rotation.NONE, box, LiquidSettings.IGNORE_WATERLOGGING
-      ));
-    }
     List<CityRegionBuildingSlot> chunkSlots = region.buildingSlots().stream()
         .filter(slot -> slot.chunkArea().minChunkX() == chunk.x
             && slot.chunkArea().minChunkZ() == chunk.z)
@@ -128,9 +126,19 @@ public final class MobilePlotStructure extends Structure {
     return Optional.of(new GenerationStub(
         new BlockPos(chunk.getMiddleBlockX(), baseY, chunk.getMiddleBlockZ()),
         pieces -> {
-          layerPieces.forEach(pieces::addPiece);
-          if (region.regionLayout().isRoad(chunk.x, chunk.z)) {
-            addRoadSurface(context, pieces, region, chunk, baseY + MOBILE_PLOT_HEIGHT);
+          for (RegionLayout.MobileLayerPlan layer : region.regionLayout().mobileLayers()) {
+            int layerY = baseY + layer.layer().ordinal() * LAYER_HEIGHT;
+            if (layer.stairChunks().stream().anyMatch(stair ->
+                stair.chunkX() == chunk.x && stair.chunkZ() == chunk.z)) {
+              addTile(context, pieces, stairTile.pool(), chunk, layerY, Rotation.NONE);
+            } else if (region.regionLayout().isRoad(layer.layer(), chunk.x, chunk.z)) {
+              addRoadSurface(context, pieces, region, layer.layer(), chunk, layerY);
+            } else if (layer.layer() != RegionLayout.MobileLayer.SURFACE) {
+              LayerDefinition definition = Objects.requireNonNull(
+                  layerTilesById.get(layer.layer().name().toLowerCase(java.util.Locale.ROOT))
+              );
+              addTile(context, pieces, definition.pool(), chunk, layerY, Rotation.NONE);
+            }
           }
           for (CityRegionBuildingSlot slot : chunkSlots) {
             addBuilding(context, pieces, slot, baseY + MOBILE_PLOT_HEIGHT);
@@ -143,11 +151,12 @@ public final class MobilePlotStructure extends Structure {
       GenerationContext context,
       StructurePiecesBuilder pieces,
       CityRegionCell region,
+      RegionLayout.MobileLayer layer,
       ChunkPos chunk,
       int surfaceY
   ) {
-    RoadTileSelection selection = roadTile(region, chunk.x, chunk.z);
-    RoadDefinition definition = Objects.requireNonNull(roadTilesById.get(selection.id()));
+    RegionLayout.RoadTilePlan selection = region.regionLayout().roadTile(layer, chunk.x, chunk.z);
+    RoadDefinition definition = Objects.requireNonNull(roadTilesById.get(selection.type().id()));
     StructurePoolElement element = definition.pool().value().getRandomTemplate(context.random());
     if (element == EmptyPoolElement.INSTANCE) return;
     BlockPos origin = rotatedOrigin(
@@ -162,49 +171,22 @@ public final class MobilePlotStructure extends Structure {
     ));
   }
 
-  private static RoadTileSelection roadTile(CityRegionCell region, int chunkX, int chunkZ) {
-    boolean north = connected(region, chunkX, chunkZ, net.minecraft.core.Direction.NORTH);
-    boolean east = connected(region, chunkX, chunkZ, net.minecraft.core.Direction.EAST);
-    boolean south = connected(region, chunkX, chunkZ, net.minecraft.core.Direction.SOUTH);
-    boolean west = connected(region, chunkX, chunkZ, net.minecraft.core.Direction.WEST);
-    int count = (north ? 1 : 0) + (east ? 1 : 0) + (south ? 1 : 0) + (west ? 1 : 0);
-    if (count == 0) return new RoadTileSelection("isolated", Rotation.NONE);
-    if (count == 1) {
-      Rotation rotation = north ? Rotation.NONE : east ? Rotation.CLOCKWISE_90
-          : south ? Rotation.CLOCKWISE_180 : Rotation.COUNTERCLOCKWISE_90;
-      return new RoadTileSelection("end", rotation);
-    }
-    if (count == 2 && north && south) return new RoadTileSelection("straight", Rotation.NONE);
-    if (count == 2 && east && west) return new RoadTileSelection("straight", Rotation.CLOCKWISE_90);
-    if (count == 2) {
-      Rotation rotation = north && east ? Rotation.NONE : east && south ? Rotation.CLOCKWISE_90
-          : south && west ? Rotation.CLOCKWISE_180 : Rotation.COUNTERCLOCKWISE_90;
-      return new RoadTileSelection("corner", rotation);
-    }
-    if (count == 3) {
-      Rotation rotation = !south ? Rotation.NONE : !west ? Rotation.CLOCKWISE_90
-          : !north ? Rotation.CLOCKWISE_180 : Rotation.COUNTERCLOCKWISE_90;
-      return new RoadTileSelection("tee", rotation);
-    }
-    return new RoadTileSelection("cross", Rotation.NONE);
-  }
-
-  private static boolean connected(
-      CityRegionCell region,
-      int chunkX,
-      int chunkZ,
-      net.minecraft.core.Direction direction
+  private static void addTile(
+      GenerationContext context,
+      StructurePiecesBuilder pieces,
+      Holder<StructureTemplatePool> pool,
+      ChunkPos chunk,
+      int y,
+      Rotation rotation
   ) {
-    int neighborX = chunkX + direction.getStepX();
-    int neighborZ = chunkZ + direction.getStepZ();
-    if (region.regionLayout().isRoad(neighborX, neighborZ)) return true;
-    return region.regionLayout().entrances().stream().anyMatch(entrance ->
-        entrance.point().chunkX() == chunkX && entrance.point().chunkZ() == chunkZ
-            && entrance.side() == direction
-    );
-  }
-
-  private record RoadTileSelection(String id, Rotation rotation) {
+    StructurePoolElement element = pool.value().getRandomTemplate(context.random());
+    if (element == EmptyPoolElement.INSTANCE) return;
+    BlockPos origin = new BlockPos(chunk.getMinBlockX(), y, chunk.getMinBlockZ());
+    BoundingBox box = element.getBoundingBox(context.structureTemplateManager(), origin, rotation);
+    pieces.addPiece(new PoolElementStructurePiece(
+        context.structureTemplateManager(), element, origin, element.getGroundLevelDelta(),
+        rotation, box, LiquidSettings.IGNORE_WATERLOGGING
+    ));
   }
 
   private void addBuilding(
@@ -285,7 +267,7 @@ public final class MobilePlotStructure extends Structure {
     public static final Codec<LayerDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.fieldOf("id").forGetter(LayerDefinition::id),
         StructureTemplatePool.CODEC.fieldOf("pool").forGetter(LayerDefinition::pool),
-        Codec.intRange(0, 32).fieldOf("y_offset").forGetter(LayerDefinition::yOffset)
+        Codec.intRange(0, 48).fieldOf("y_offset").forGetter(LayerDefinition::yOffset)
     ).apply(instance, LayerDefinition::new));
 
     public LayerDefinition {

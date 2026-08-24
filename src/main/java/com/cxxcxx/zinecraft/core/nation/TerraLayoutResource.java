@@ -98,14 +98,14 @@ public final class TerraLayoutResource {
     long startedAt = System.nanoTime();
     try {
       JsonObject index = readCompressed(INDEX_PATH);
-      if (index.get("schema_version").getAsInt() != 14) {
+      if (index.get("schema_version").getAsInt() != 16) {
         throw new IllegalStateException("不支持的泰拉布局 schema_version");
       }
       ArrayList<NationLayoutPlan> nations = new ArrayList<>();
       for (JsonElement element : index.getAsJsonArray("nation_ids")) {
         String nationId = element.getAsString();
         JsonObject nationFile = readCompressed(DIRECTORY + "nations/" + nationId + ".json.gz");
-        if (nationFile.get("schema_version").getAsInt() != 14) {
+        if (nationFile.get("schema_version").getAsInt() != 16) {
           throw new IllegalStateException("国家布局 schema_version 不一致：" + nationId);
         }
         nations.add(nation(nationFile.getAsJsonObject("nation")));
@@ -263,7 +263,8 @@ public final class TerraLayoutResource {
           net.minecraft.world.level.block.Rotation.valueOf(
               slot.get("rotation").getAsString().toUpperCase(java.util.Locale.ROOT)
           ),
-          building
+          building,
+          roadConnections(slot.getAsJsonArray("road_connections"))
       ));
     }
     return List.copyOf(slots);
@@ -289,13 +290,32 @@ public final class TerraLayoutResource {
       JsonObject item = element.getAsJsonObject();
       mobileLayers.add(new RegionLayout.MobileLayerPlan(
           enumValue(RegionLayout.MobileLayer.class, item.get("layer").getAsString()),
+          enumValue(RegionLayout.RegionLayoutType.class, item.get("layout_type").getAsString()),
           item.get("building_id").getAsString(),
-          chunkRectangle(item.getAsJsonObject("chunk_area"))
+          chunkRectangle(item.getAsJsonObject("chunk_area")),
+          roadGraph(item.getAsJsonObject("road_graph")),
+          urbanBlocks(item.getAsJsonArray("urban_blocks")),
+          parcels(item.getAsJsonArray("parcels")),
+          openSpaces(item.getAsJsonArray("open_spaces")),
+          item.get("road_coverage").getAsDouble(),
+          item.get("building_coverage").getAsDouble(),
+          chunkPoints(item.getAsJsonArray("stair_chunks"))
       ));
     }
-    JsonObject graphJson = json.getAsJsonObject("road_graph");
+    RegionLayout.MobileLayerPlan surface = mobileLayers.stream()
+        .filter(layer -> layer.layer() == RegionLayout.MobileLayer.SURFACE)
+        .findFirst().orElseThrow(() -> new IllegalStateException("Region 缺少地表层"));
+    return new RegionLayout(
+        layoutType, chunkPoint(json.getAsJsonObject("local_center")), entrances,
+        surface.roadGraph(), mobileLayers, surface.urbanBlocks(), surface.parcels(), surface.openSpaces(),
+        surface.roadCoverage(), surface.buildingCoverage(),
+        strings(json.getAsJsonArray("debug_stages"))
+    );
+  }
+
+  private static RegionLayout.RoadGraph roadGraph(JsonObject json) {
     ArrayList<RegionLayout.RoadNode> nodes = new ArrayList<>();
-    for (JsonElement element : graphJson.getAsJsonArray("nodes")) {
+    for (JsonElement element : json.getAsJsonArray("nodes")) {
       JsonObject item = element.getAsJsonObject();
       nodes.add(new RegionLayout.RoadNode(
           item.get("id").getAsInt(), chunkPoint(item.getAsJsonObject("point")),
@@ -303,7 +323,7 @@ public final class TerraLayoutResource {
       ));
     }
     ArrayList<RegionLayout.RoadEdge> edges = new ArrayList<>();
-    for (JsonElement element : graphJson.getAsJsonArray("edges")) {
+    for (JsonElement element : json.getAsJsonArray("edges")) {
       JsonObject item = element.getAsJsonObject();
       edges.add(new RegionLayout.RoadEdge(
           item.get("id").getAsInt(), item.get("from_node_id").getAsInt(),
@@ -312,40 +332,60 @@ public final class TerraLayoutResource {
           item.get("width_chunks").getAsInt(), chunkRectangle(item.getAsJsonObject("chunk_area"))
       ));
     }
-    ArrayList<RegionLayout.UrbanBlock> blocks = new ArrayList<>();
-    for (JsonElement element : json.getAsJsonArray("urban_blocks")) {
+    return new RegionLayout.RoadGraph(nodes, edges);
+  }
+
+  private static List<RegionLayout.UrbanBlock> urbanBlocks(JsonArray json) {
+    ArrayList<RegionLayout.UrbanBlock> result = new ArrayList<>();
+    for (JsonElement element : json) {
       JsonObject item = element.getAsJsonObject();
-      blocks.add(new RegionLayout.UrbanBlock(
+      result.add(new RegionLayout.UrbanBlock(
           item.get("id").getAsInt(), item.get("cell_count").getAsInt(),
           chunkRectangle(item.getAsJsonObject("bounds"))
       ));
     }
-    ArrayList<RegionLayout.BuildingParcel> parcels = new ArrayList<>();
-    for (JsonElement element : json.getAsJsonArray("parcels")) {
+    return List.copyOf(result);
+  }
+
+  private static List<RegionLayout.BuildingParcel> parcels(JsonArray json) {
+    ArrayList<RegionLayout.BuildingParcel> result = new ArrayList<>();
+    for (JsonElement element : json) {
       JsonObject item = element.getAsJsonObject();
-      parcels.add(new RegionLayout.BuildingParcel(
+      result.add(new RegionLayout.BuildingParcel(
           item.get("id").getAsInt(), item.get("urban_block_id").getAsInt(),
           chunkRectangle(item.getAsJsonObject("area")),
           chunkRectangle(item.getAsJsonObject("buildable_area")),
           requireDirection(item.get("road_facing").getAsString()),
           item.get("adjacent_road_id").getAsInt(),
-          enumValue(RegionLayout.RoadClass.class, item.get("adjacent_road_class").getAsString())
+          enumValue(RegionLayout.RoadClass.class, item.get("adjacent_road_class").getAsString()),
+          roadConnections(item.getAsJsonArray("road_connections"))
       ));
     }
-    ArrayList<RegionLayout.OpenSpace> openSpaces = new ArrayList<>();
-    for (JsonElement element : json.getAsJsonArray("open_spaces")) {
+    return List.copyOf(result);
+  }
+
+  private static List<RegionLayout.OpenSpace> openSpaces(JsonArray json) {
+    ArrayList<RegionLayout.OpenSpace> result = new ArrayList<>();
+    for (JsonElement element : json) {
       JsonObject item = element.getAsJsonObject();
-      openSpaces.add(new RegionLayout.OpenSpace(
+      result.add(new RegionLayout.OpenSpace(
           item.get("id").getAsInt(), chunkRectangle(item.getAsJsonObject("area")),
           enumValue(RegionLayout.OpenSpaceType.class, item.get("type").getAsString())
       ));
     }
-    return new RegionLayout(
-        layoutType, chunkPoint(json.getAsJsonObject("local_center")), entrances,
-        new RegionLayout.RoadGraph(nodes, edges), mobileLayers, blocks, parcels, openSpaces,
-        json.get("road_coverage").getAsDouble(), json.get("building_coverage").getAsDouble(),
-        strings(json.getAsJsonArray("debug_stages"))
-    );
+    return List.copyOf(result);
+  }
+
+  private static List<RegionLayout.BuildingRoadConnection> roadConnections(JsonArray json) {
+    ArrayList<RegionLayout.BuildingRoadConnection> result = new ArrayList<>();
+    for (JsonElement element : json) {
+      JsonObject item = element.getAsJsonObject();
+      result.add(new RegionLayout.BuildingRoadConnection(
+          requireDirection(item.get("face").getAsString()), item.get("road_id").getAsInt(),
+          enumValue(RegionLayout.RoadClass.class, item.get("road_class").getAsString())
+      ));
+    }
+    return List.copyOf(result);
   }
 
   private static ChunkRectangle chunkRectangle(JsonObject area) {
@@ -357,6 +397,14 @@ public final class TerraLayoutResource {
 
   private static RegionLayout.ChunkPoint chunkPoint(JsonObject json) {
     return new RegionLayout.ChunkPoint(json.get("chunk_x").getAsInt(), json.get("chunk_z").getAsInt());
+  }
+
+  private static List<RegionLayout.ChunkPoint> chunkPoints(JsonArray json) {
+    ArrayList<RegionLayout.ChunkPoint> result = new ArrayList<>(json.size());
+    for (JsonElement element : json) {
+      result.add(chunkPoint(element.getAsJsonObject()));
+    }
+    return List.copyOf(result);
   }
 
   private static net.minecraft.core.Direction requireDirection(String name) {

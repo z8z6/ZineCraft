@@ -1,4 +1,4 @@
-"""生成三个独立的 16×16×16 移动地块层级模板和道路模板。"""
+"""生成三个独立层级建筑、四层贯通楼梯和道路模板。"""
 
 from __future__ import annotations
 
@@ -14,6 +14,7 @@ LAYER_OUTPUTS = {
     "life": ROOT / "src/main/resources/data/zinecraft/structure/mobile_plot_life_layer.nbt",
 }
 ROAD_OUTPUT_DIR = ROOT / "src/main/resources/data/zinecraft/structure/mobile_plot_road"
+STAIR_OUTPUT = ROOT / "src/main/resources/data/zinecraft/structure/mobile_plot_stair.nbt"
 DATA_VERSION = 3955
 SIZE = 16
 LAYER_HEIGHT = 16
@@ -48,6 +49,14 @@ def compound_payload(tags: list[bytes]) -> bytes:
 
 def palette_entry(name: str) -> bytes:
     return compound_payload([named(8, "Name", string_payload(name))])
+
+
+def palette_entry_with_properties(name: str, properties: dict[str, str]) -> bytes:
+    property_tags = [named(8, key, string_payload(value)) for key, value in properties.items()]
+    return compound_payload([
+        named(8, "Name", string_payload(name)),
+        named(10, "Properties", compound_payload(property_tags)),
+    ])
 
 
 def block_entry(position: tuple[int, int, int], state: int) -> bytes:
@@ -117,6 +126,47 @@ def build_road_surface(connections: frozenset[str]) -> bytes:
     return bytes([10]) + utf("") + root
 
 
+def build_stair() -> bytes:
+    palette = [
+        palette_entry("minecraft:smooth_stone"),
+        palette_entry_with_properties("minecraft:stone_brick_stairs", {
+            "facing": "east", "half": "bottom", "shape": "straight", "waterlogged": "false",
+        }),
+        palette_entry_with_properties("minecraft:stone_brick_stairs", {
+            "facing": "south", "half": "bottom", "shape": "straight", "waterlogged": "false",
+        }),
+        palette_entry_with_properties("minecraft:stone_brick_stairs", {
+            "facing": "west", "half": "bottom", "shape": "straight", "waterlogged": "false",
+        }),
+        palette_entry_with_properties("minecraft:stone_brick_stairs", {
+            "facing": "north", "half": "bottom", "shape": "straight", "waterlogged": "false",
+        }),
+    ]
+    # 5×5 环形楼梯恰有 16 个位置；重复堆叠后最后一级与下一层第一级相邻。
+    ring = (
+        [(x, 5, 1) for x in range(5, 10)]
+        + [(9, z, 2) for z in range(6, 10)]
+        + [(x, 9, 3) for x in range(8, 4, -1)]
+        + [(5, z, 4) for z in range(8, 5, -1)]
+    )
+    blocks: list[bytes] = []
+    ring_cells = {(x, z) for x, z, _ in ring}
+    for x in range(SIZE):
+        for z in range(SIZE):
+            if (x, z) not in ring_cells:
+                blocks.append(block_entry((x, 0, z), 0))
+    for y, (x, z, state) in enumerate(ring):
+        blocks.append(block_entry((x, y, z), state))
+    root = compound_payload([
+        named(3, "DataVersion", int_payload(DATA_VERSION)),
+        named(9, "size", list_payload(3, [int_payload(SIZE), int_payload(LAYER_HEIGHT), int_payload(SIZE)])),
+        named(9, "palette", list_payload(10, palette)),
+        named(9, "blocks", list_payload(10, blocks)),
+        named(9, "entities", list_payload(10, [])),
+    ])
+    return bytes([10]) + utf("") + root
+
+
 def main() -> None:
     layer_data = build_layer()
     for output in LAYER_OUTPUTS.values():
@@ -136,8 +186,11 @@ def main() -> None:
         target = ROAD_OUTPUT_DIR / f"{name}.nbt"
         with gzip.GzipFile(filename=str(target), mode="wb", mtime=0) as stream:
             stream.write(build_road_surface(connections))
+    with gzip.GzipFile(filename=str(STAIR_OUTPUT), mode="wb", mtime=0) as stream:
+        stream.write(build_stair())
     print(f"Generated {len(LAYER_OUTPUTS)} independent 16x16x16 mobile-plot layer NBT templates")
     print(f"Generated {len(road_templates)} road NBT templates in {ROAD_OUTPUT_DIR}")
+    print(f"Generated four-layer stair NBT template at {STAIR_OUTPUT}")
 
 
 if __name__ == "__main__":

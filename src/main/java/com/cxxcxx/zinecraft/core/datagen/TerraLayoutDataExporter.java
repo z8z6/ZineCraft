@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.core.datagen;
 
 import com.cxxcxx.zinecraft.api.world.city.CityLayoutPlan;
+import com.cxxcxx.zinecraft.api.world.city.ChunkRectangle;
 import com.cxxcxx.zinecraft.api.world.city.CityRegionBuildingSlot;
 import com.cxxcxx.zinecraft.api.world.city.CityRegionConnection;
 import com.cxxcxx.zinecraft.api.world.city.CityRegionCell;
@@ -16,8 +17,10 @@ import com.cxxcxx.zinecraft.core.registry.ModNation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.SharedConstants;
+import net.minecraft.core.Direction;
 import net.minecraft.server.Bootstrap;
 import net.neoforged.fml.loading.LoadingModList;
 
@@ -56,7 +59,7 @@ public final class TerraLayoutDataExporter {
     );
     printSummary(plan);
     writeRuntime(Path.of(args[0]), plan);
-    write(Path.of(args[1]), GSON.toJson(serialize(plan)));
+    write(Path.of(args[1]), serialize(plan));
   }
 
   private static void printSummary(TerraLayoutPlan plan) {
@@ -74,10 +77,12 @@ public final class TerraLayoutDataExporter {
     );
   }
 
-  private static void write(Path path, String json) throws IOException {
+  private static void write(Path path, JsonElement json) throws IOException {
     Path normalized = path.toAbsolutePath().normalize();
     Files.createDirectories(normalized.getParent());
-    Files.writeString(normalized, json, StandardCharsets.UTF_8);
+    try (var writer = Files.newBufferedWriter(normalized, StandardCharsets.UTF_8)) {
+      GSON.toJson(json, writer);
+    }
   }
 
   private static void writeRuntime(Path directory, TerraLayoutPlan plan) throws IOException {
@@ -95,7 +100,7 @@ public final class TerraLayoutDataExporter {
       }
     }
     JsonObject index = new JsonObject();
-    index.addProperty("schema_version", 14);
+    index.addProperty("schema_version", 16);
     index.addProperty("coordinate_unit", "minecraft_block");
     index.addProperty("core_size_x", ModDimension.TERRA_CORE_SIZE_X);
     index.addProperty("core_size_z", ModDimension.TERRA_CORE_SIZE_Z);
@@ -105,8 +110,8 @@ public final class TerraLayoutDataExporter {
     for (NationLayoutPlan nation : plan.nations()) {
       nationIds.add(nation.nation().id());
       JsonObject nationFile = new JsonObject();
-      nationFile.addProperty("schema_version", 14);
-      nationFile.add("nation", nation(nation));
+      nationFile.addProperty("schema_version", 16);
+      nationFile.add("nation", nation(nation, true));
       writeGzip(nationsDirectory.resolve(nation.nation().id() + ".json.gz"), GSON.toJson(nationFile));
     }
     index.add("nation_ids", nationIds);
@@ -122,19 +127,19 @@ public final class TerraLayoutDataExporter {
 
   private static JsonObject serialize(TerraLayoutPlan plan) {
     JsonObject root = new JsonObject();
-    root.addProperty("schema_version", 14);
+    root.addProperty("schema_version", 16);
     root.addProperty("coordinate_unit", "minecraft_block");
     root.addProperty("core_size_x", ModDimension.TERRA_CORE_SIZE_X);
     root.addProperty("core_size_z", ModDimension.TERRA_CORE_SIZE_Z);
     root.add("boundary", polygon(plan.boundary()));
     root.add("building_types", buildingTypes(plan));
     JsonArray nations = new JsonArray();
-    for (NationLayoutPlan nation : plan.nations()) nations.add(nation(nation));
+    for (NationLayoutPlan nation : plan.nations()) nations.add(nation(nation, false));
     root.add("nations", nations);
     return root;
   }
 
-  private static JsonObject nation(NationLayoutPlan plan) {
+  private static JsonObject nation(NationLayoutPlan plan, boolean includeAllLayers) {
     JsonObject json = place(plan.nation().id(), plan.nation().zhCn(), plan.center(), plan.boundary());
     json.add("neighboring_nation_ids", strings(plan.neighboringNationIds()));
     json.addProperty("underground", plan.nation().isUnderground());
@@ -149,12 +154,12 @@ public final class TerraLayoutDataExporter {
         ))
         .toList()));
     JsonArray cities = new JsonArray();
-    for (CityLayoutPlan city : plan.cities()) cities.add(city(city));
+    for (CityLayoutPlan city : plan.cities()) cities.add(city(city, includeAllLayers));
     json.add("cities", cities);
     return json;
   }
 
-  private static JsonObject city(CityLayoutPlan plan) {
+  private static JsonObject city(CityLayoutPlan plan, boolean includeAllLayers) {
     JsonObject json = place(plan.city().id(), plan.city().zhCn(), plan.center(), plan.boundary());
     json.add("neighboring_city_ids", strings(plan.neighboringCityIds()));
     json.addProperty("rotation_degrees", plan.city().rotationDegrees());
@@ -167,7 +172,7 @@ public final class TerraLayoutDataExporter {
     json.addProperty("plot_coverage", plan.plotCoverage());
     json.addProperty("road_width_chunks", plan.city().roadWidthChunks());
     JsonArray regions = new JsonArray();
-    for (CityRegionCell region : plan.regions()) regions.add(region(region));
+    for (CityRegionCell region : plan.regions()) regions.add(region(region, includeAllLayers));
     json.add("regions", regions);
     JsonArray roads = new JsonArray();
     for (com.cxxcxx.zinecraft.api.world.city.UrbanRoad road : plan.roads()) {
@@ -197,7 +202,7 @@ public final class TerraLayoutDataExporter {
     return json;
   }
 
-  private static JsonObject region(CityRegionCell cell) {
+  private static JsonObject region(CityRegionCell cell, boolean includeAllLayers) {
     JsonObject json = place(cell.region().id(), cell.region().zhCn(), cell.center(), cell.boundary());
     json.addProperty("slot_index", cell.slot().index());
     JsonArray connections = new JsonArray();
@@ -209,7 +214,7 @@ public final class TerraLayoutDataExporter {
     }
     json.add("connections", connections);
     json.add("mobile_plot", rectangle(cell.mobilePlotBounds()));
-    json.add("region_layout", regionLayout(cell.regionLayout()));
+    json.add("region_layout", regionLayout(cell.regionLayout(), includeAllLayers));
     json.addProperty("building_layout", cell.region().buildingLayout().id());
     JsonArray buildingSlots = new JsonArray();
     for (CityRegionBuildingSlot buildingSlot : cell.buildingSlots()) {
@@ -224,6 +229,7 @@ public final class TerraLayoutDataExporter {
       buildingSlotJson.addProperty("adjacent_road_id", buildingSlot.adjacentRoadId());
       buildingSlotJson.addProperty("facing", buildingSlot.facing().getName());
       buildingSlotJson.addProperty("rotation", buildingSlot.rotation().name().toLowerCase(java.util.Locale.ROOT));
+      buildingSlotJson.add("road_connections", roadConnections(buildingSlot.roadConnections()));
       buildingSlotJson.add("normalized_slot", point(new PlanarPoint(
           buildingSlot.slot().x(), buildingSlot.slot().z()
       )));
@@ -254,7 +260,7 @@ public final class TerraLayoutDataExporter {
     return json;
   }
 
-  private static JsonObject regionLayout(RegionLayout layout) {
+  private static JsonObject regionLayout(RegionLayout layout, boolean includeAllLayers) {
     JsonObject json = new JsonObject();
     json.addProperty("layout_type", layout.layoutType().name().toLowerCase(java.util.Locale.ROOT));
     json.add("local_center", chunkPoint(layout.localCenter()));
@@ -273,14 +279,35 @@ public final class TerraLayoutDataExporter {
     for (RegionLayout.MobileLayerPlan layer : layout.mobileLayers()) {
       JsonObject item = new JsonObject();
       item.addProperty("layer", layer.layer().name().toLowerCase(java.util.Locale.ROOT));
+      item.addProperty("layout_type", layer.layoutType().name().toLowerCase(java.util.Locale.ROOT));
       item.addProperty("building_id", layer.buildingId());
       item.add("chunk_area", chunkRectangle(layer.chunkArea()));
+      JsonArray stairChunks = new JsonArray();
+      for (RegionLayout.ChunkPoint stair : layer.stairChunks()) {
+        stairChunks.add(chunkPoint(stair));
+      }
+      item.add("stair_chunks", stairChunks);
+      item.addProperty("road_coverage", layer.roadCoverage());
+      item.addProperty("building_coverage", layer.buildingCoverage());
+      item.add("road_tile_counts", roadTileCounts(layout, layer.layer()));
+      if (includeAllLayers) {
+        item.add("road_graph", roadGraph(layer.roadGraph()));
+        item.add("road_junctions", roadJunctions(layout, layer.layer()));
+        item.add("urban_blocks", urbanBlocks(layer.urbanBlocks()));
+        item.add("parcels", parcels(layer.parcels()));
+        item.add("open_spaces", openSpaces(layer.openSpaces()));
+      }
       mobileLayers.add(item);
     }
     json.add("mobile_layers", mobileLayers);
+    json.add("debug_stages", strings(layout.debugStages()));
+    return json;
+  }
+
+  private static JsonObject roadGraph(RegionLayout.RoadGraph value) {
     JsonObject graph = new JsonObject();
     JsonArray nodes = new JsonArray();
-    for (RegionLayout.RoadNode node : layout.roadGraph().nodes()) {
+    for (RegionLayout.RoadNode node : value.nodes()) {
       JsonObject item = new JsonObject();
       item.addProperty("id", node.id());
       item.add("point", chunkPoint(node.point()));
@@ -289,7 +316,7 @@ public final class TerraLayoutDataExporter {
     }
     graph.add("nodes", nodes);
     JsonArray edges = new JsonArray();
-    for (RegionLayout.RoadEdge edge : layout.roadGraph().edges()) {
+    for (RegionLayout.RoadEdge edge : value.edges()) {
       JsonObject item = new JsonObject();
       item.addProperty("id", edge.id());
       item.addProperty("from_node_id", edge.fromNodeId());
@@ -300,18 +327,78 @@ public final class TerraLayoutDataExporter {
       edges.add(item);
     }
     graph.add("edges", edges);
-    json.add("road_graph", graph);
-    JsonArray blocks = new JsonArray();
-    for (RegionLayout.UrbanBlock block : layout.urbanBlocks()) {
+    return graph;
+  }
+
+  private static JsonArray roadJunctions(RegionLayout layout, RegionLayout.MobileLayer layer) {
+    JsonArray result = new JsonArray();
+    ChunkRectangle area = layout.layer(layer).chunkArea();
+    for (int z = area.minChunkZ(); z < area.maxChunkZExclusive(); z++) {
+      for (int x = area.minChunkX(); x < area.maxChunkXExclusive(); x++) {
+        if (!layout.isRoad(layer, x, z)) continue;
+        RegionLayout.RoadTilePlan tile = layout.roadTile(layer, x, z);
+        if (tile.type() != RegionLayout.RoadTileType.CORNER
+            && tile.type() != RegionLayout.RoadTileType.TEE
+            && tile.type() != RegionLayout.RoadTileType.CROSS) continue;
+        JsonObject item = new JsonObject();
+        item.addProperty("chunk_x", tile.point().chunkX());
+        item.addProperty("chunk_z", tile.point().chunkZ());
+        item.addProperty("type", tile.type().id());
+        item.addProperty("rotation", tile.rotation().name().toLowerCase(java.util.Locale.ROOT));
+        item.addProperty("connection_mask", connectionMask(tile.connections()));
+        item.addProperty("stair", layout.layer(layer).stairChunks().contains(tile.point()));
+        result.add(item);
+      }
+    }
+    return result;
+  }
+
+  private static int connectionMask(List<Direction> connections) {
+    int mask = 0;
+    for (Direction direction : connections) {
+      mask |= switch (direction) {
+        case NORTH -> 1;
+        case EAST -> 2;
+        case SOUTH -> 4;
+        case WEST -> 8;
+        default -> 0;
+      };
+    }
+    return mask;
+  }
+
+  private static JsonObject roadTileCounts(RegionLayout layout, RegionLayout.MobileLayer layer) {
+    java.util.EnumMap<RegionLayout.RoadTileType, Integer> counts =
+        new java.util.EnumMap<>(RegionLayout.RoadTileType.class);
+    ChunkRectangle area = layout.layer(layer).chunkArea();
+    for (int z = area.minChunkZ(); z < area.maxChunkZExclusive(); z++) {
+      for (int x = area.minChunkX(); x < area.maxChunkXExclusive(); x++) {
+        if (!layout.isRoad(layer, x, z)) continue;
+        counts.merge(layout.roadTile(layer, x, z).type(), 1, Integer::sum);
+      }
+    }
+    JsonObject result = new JsonObject();
+    for (RegionLayout.RoadTileType type : RegionLayout.RoadTileType.values()) {
+      result.addProperty(type.id(), counts.getOrDefault(type, 0));
+    }
+    return result;
+  }
+
+  private static JsonArray urbanBlocks(List<RegionLayout.UrbanBlock> values) {
+    JsonArray result = new JsonArray();
+    for (RegionLayout.UrbanBlock block : values) {
       JsonObject item = new JsonObject();
       item.addProperty("id", block.id());
       item.addProperty("cell_count", block.cellCount());
       item.add("bounds", chunkRectangle(block.bounds()));
-      blocks.add(item);
+      result.add(item);
     }
-    json.add("urban_blocks", blocks);
-    JsonArray parcels = new JsonArray();
-    for (RegionLayout.BuildingParcel parcel : layout.parcels()) {
+    return result;
+  }
+
+  private static JsonArray parcels(List<RegionLayout.BuildingParcel> values) {
+    JsonArray result = new JsonArray();
+    for (RegionLayout.BuildingParcel parcel : values) {
       JsonObject item = new JsonObject();
       item.addProperty("id", parcel.id());
       item.addProperty("urban_block_id", parcel.urbanBlockId());
@@ -320,22 +407,34 @@ public final class TerraLayoutDataExporter {
       item.addProperty("road_facing", parcel.roadFacing().getName());
       item.addProperty("adjacent_road_id", parcel.adjacentRoadId());
       item.addProperty("adjacent_road_class", parcel.adjacentRoadClass().name().toLowerCase(java.util.Locale.ROOT));
-      parcels.add(item);
+      item.add("road_connections", roadConnections(parcel.roadConnections()));
+      result.add(item);
     }
-    json.add("parcels", parcels);
-    JsonArray openSpaces = new JsonArray();
-    for (RegionLayout.OpenSpace openSpace : layout.openSpaces()) {
+    return result;
+  }
+
+  private static JsonArray openSpaces(List<RegionLayout.OpenSpace> values) {
+    JsonArray result = new JsonArray();
+    for (RegionLayout.OpenSpace openSpace : values) {
       JsonObject item = new JsonObject();
       item.addProperty("id", openSpace.id());
       item.add("area", chunkRectangle(openSpace.area()));
       item.addProperty("type", openSpace.type().name().toLowerCase(java.util.Locale.ROOT));
-      openSpaces.add(item);
+      result.add(item);
     }
-    json.add("open_spaces", openSpaces);
-    json.addProperty("road_coverage", layout.roadCoverage());
-    json.addProperty("building_coverage", layout.buildingCoverage());
-    json.add("debug_stages", strings(layout.debugStages()));
-    return json;
+    return result;
+  }
+
+  private static JsonArray roadConnections(List<RegionLayout.BuildingRoadConnection> values) {
+    JsonArray result = new JsonArray();
+    for (RegionLayout.BuildingRoadConnection connection : values) {
+      JsonObject item = new JsonObject();
+      item.addProperty("face", connection.face().getName());
+      item.addProperty("road_id", connection.roadId());
+      item.addProperty("road_class", connection.roadClass().name().toLowerCase(java.util.Locale.ROOT));
+      result.add(item);
+    }
+    return result;
   }
 
   private static JsonObject chunkPoint(RegionLayout.ChunkPoint point) {

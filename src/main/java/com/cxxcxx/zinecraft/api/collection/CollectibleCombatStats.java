@@ -1,50 +1,45 @@
 package com.cxxcxx.zinecraft.api.collection;
 
 import com.cxxcxx.zinecraft.api.combat.CombatStat;
-import com.cxxcxx.zinecraft.api.combat.CombatStatModifier;
 import net.minecraft.world.entity.LivingEntity;
 import top.theillusivec4.curios.api.CuriosApi;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
-/**
- * 从实体已装备的所有 Curios 槽位读取藏品，并向战斗系统提供对应的属性修饰。
- */
+/** 从实体已装备的全部 Curios 藏品依次应用函数式属性效果。 */
 public final class CollectibleCombatStats {
-  /**
-   * 工具类不允许实例化。
-   */
   private CollectibleCombatStats() {
   }
 
   /**
-   * 收集实体已装备藏品中作用于指定战斗属性的全部修饰器。
-   *
-   * @param entity 要检查 Curios 装备的实体
-   * @param stat 要筛选的战斗属性
-   * @return 不可变的属性修饰器列表；未装备相应藏品时为空列表
+   * 将所有已装备藏品的 {@code CombatStat -> CombatStat} 效果应用到基础快照。
    */
-  public static List<CombatStatModifier> modifiers(LivingEntity entity, CombatStat stat) {
-    List<CombatStatModifier> result = new ArrayList<>();
+  public static CombatStat apply(LivingEntity entity, CombatStat base) {
+    Objects.requireNonNull(entity, "entity");
+    CombatStat[] result = {Objects.requireNonNull(base, "base")};
     CuriosApi.getCuriosInventory(entity).ifPresent(handler -> handler.findCurios(
         stack -> stack.getItem() instanceof CollectibleItem
     ).forEach(slot -> {
-      if (slot.stack().getItem() instanceof CollectibleItem item) add(item.collectible().power, stat, result);
+      if (slot.stack().getItem() instanceof CollectibleItem item) {
+        result[0] = Objects.requireNonNull(
+            item.collectible().power.apply(result[0]),
+            "藏品效果不能返回 null：" + item.collectible().path
+        );
+      }
     }));
-    return List.copyOf(result);
+    return result[0];
   }
 
-  /**
-   * 将一项藏品效果中匹配指定属性的修饰器追加到结果列表。
-   *
-   * @param power 藏品的运行时效果
-   * @param stat 要筛选的战斗属性
-   * @param result 接收匹配修饰器的可变列表
-   */
-  private static void add(CollectiblePower power, CombatStat stat, List<CombatStatModifier> result) {
-    power.combatStats().stream()
-        .filter(modifier -> modifier.stat() == stat)
-        .forEach(result::add);
+  /** 按迭代顺序汇总多个实体装备的藏品效果。 */
+  public static CombatStat applyAll(Iterable<? extends LivingEntity> entities, CombatStat base) {
+    CombatStat result = Objects.requireNonNull(base, "base");
+    for (LivingEntity entity : entities) result = apply(entity, result);
+    return result;
+  }
+
+  /** 执行击杀者当前装备藏品注册的全部击杀能力。 */
+  public static void triggerKillEffects(LivingEntity killer, LivingEntity killed) {
+    Objects.requireNonNull(killed, "killed");
+    apply(killer, CombatStat.EMPTY).triggerKillEffects(killer, killed);
   }
 }
