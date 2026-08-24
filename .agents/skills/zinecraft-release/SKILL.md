@@ -1,75 +1,45 @@
 ---
 name: zinecraft-release
-description: Build, validate, and package Zinecraft releases and PCL-compatible modpacks for Minecraft 1.21.1 and NeoForge. Use when producing release JARs, preparing distributable ZIPs, including runtime helper mods or TaCZ gun packs, generating PCL-readable CurseForge manifests, calculating checksums, or diagnosing packaging failures.
+description: Build and validate Zinecraft release JARs or the repository's PCL-compatible modpack for Minecraft 1.21.1 and NeoForge. Use for release artifacts, package diagnostics, staged runtime mods, manifests, and checksums.
 ---
 
-# Zinecraft 发布与 PCL 整合包
+# Zinecraft 发布
 
-从当前 Git 工作树构建可发布的 Zinecraft，并生成可由 PCL 直接导入的整合包。以仓库配置和本次实际解析结果为准，不复用无法证明来自当前源码的旧产物。
+以当前工作树和 build.gradle 中的发布任务为准，不复用旧产物，也不手工重建已经自动化的打包流程。
 
-## 建立发布上下文
+## 发布上下文
 
-1. 阅读根目录 `AGENTS.md`、`gradle.properties`、`build.gradle`、模组元数据模板和 `git status --short`。
-2. 保留用户修改，不更改 `gradle/wrapper/gradle-wrapper.properties` 的腾讯镜像地址。
-3. 从 `gradle.properties` 读取 Minecraft、NeoForge 和模组版本；不要在发布命令中重复维护版本。
-4. 确认用户需要独立 JAR、PCL 整合包或两者。PCL 格式细节和目录示例见 `references/pcl-pack.md`。
+1. 读取 AGENTS.md、gradle.properties、build.gradle、模组元数据模板和 git status --short；保留用户修改，不更改 Gradle wrapper 的腾讯镜像。
+2. 版本从 gradle.properties 读取。先确认交付独立 JAR、PCL 包或两者；当前包结构与任务保证见 references/pcl-pack.md。
+3. `src/client-pack/` 是受版本控制的客户端实例镜像；开发启动将其整体安装到 `run/`，PCL 打包将其整体复制到 `overrides/`。`verifyPclPackage` 当前硬性要求 options.txt 与两份 JourneyMap 6.0 配置；缺失时先报告，不从本地运行目录伪造或补取配置。
 
-## 构建发布 JAR
+## 独立 JAR
 
-1. 若仓库提供 FTB Quests 校验脚本，先运行 `.agents/skills/zinecraft-content/scripts/validate_ftbquests.ps1`。
-2. 依次单独执行：
+依次单独运行：
 
-   ```powershell
-   ./gradlew.bat test --no-configuration-cache --console=plain
-   ./gradlew.bat runData --no-configuration-cache --console=plain
-   ./gradlew.bat build --no-configuration-cache --console=plain
-   ```
+  ./gradlew.bat runData --no-configuration-cache --console=plain
+  ./gradlew.bat build --no-configuration-cache --console=plain
 
-3. 不把 `runData` 和 `build` 合并为一次 Gradle 调用。`runData` 生成 `src/generated/resources/`，随后 `build` 将其打入 JAR。
-4. 选择 `build/libs/zinecraft-<version>.jar`；排除 `-sources.jar`。运行时改动在可行时再验证 `runClient`。
-5. 记录 JAR 大小、修改时间和 SHA-256。
+选择 build/libs/zinecraft-<version>.jar，排除 sources JAR；记录大小、修改时间和 SHA-256。runData 会生成动态资源并恢复压缩 Terra layout，随后 build 打入 JAR。
 
-## 收集整合包依赖
+## PCL 整合包
 
-1. 用 `./gradlew.bat dependencies --configuration runtimeClasspath` 获取当前依赖树；以实际解析版本为准。
-2. 包含 Zinecraft 的必需前置，以及用户要求随包提供的 `runtimeOnly` 辅助模组。
-3. 不把 Minecraft、NeoForge、DevLaunch、普通 Maven 库、`-sources.jar` 或 `-api.jar` 放入 `mods/`。Minecraft 与 NeoForge 由
-   PCL 根据清单安装。
-4. 优先使用正式运行时 JAR。若 Create 当前只解析到已验证的 `slim` 产物，同时加入 Ponder、Flywheel 和 Registrate。
-5. 打开每个候选 JAR，要求存在 `META-INF/neoforge.mods.toml`；允许 Manifest 中声明 `FMLModType: GAMELIBRARY` 的游戏库，例如
-   Registrate。
-6. 给从 Maven 缓存取得的 Modrinth 文件恢复可读的原始文件名，并在 `THIRD_PARTY_MODS.md` 记录项目、版本和许可证归属。
+1. 先单独运行 ./gradlew.bat runData --no-configuration-cache --console=plain，再运行 ./gradlew.bat verifyPclPackage --no-configuration-cache --console=plain。verifyPclPackage 依赖 packagePcl → preparePclPackage → build，但该链路本身不运行 runData；它会自动解析运行时 classpath、筛选模组 JAR、复制配置、生成 manifest/图标/说明/第三方清单、打 ZIP，并读取非空 ZIP entry。
+2. 默认 `bundleRuntimeMods=true`，输出 `build/distributions/Zinecraft-PCL-<version>.zip` 并携带依赖 JAR。使用 `-PbundleRuntimeMods=false` 输出 `Zinecraft-PCL-<version>-thin.zip`，只携带 Zinecraft JAR，并在 `runtime-dependencies.json` 与 `THIRD_PARTY_MODS.md` 中列出依赖；精简包不会自动下载依赖。目标存在时任务默认拒绝覆盖，只有用户明确允许替换时才使用 `-PoverwritePcl=true`。
+3. Gradle 任务会把 TaCZ 模组依赖作为运行时模组处理，但当前不会复制 run/tacz/ 下的外置枪包。用户要求枪包时，必须扩展 build.gradle 的 preparePclPackage 与 verifyPclPackage，或建立独立且完整的打包/验证流程；人工预填 staging 会被 preparePclPackage 删除。没有清晰许可证和来源时不分发。
+4. 任务生成的 THIRD_PARTY_MODS.md 只对部分菜单/提示模组写出许可证，其余主要列文件名。交付前审计 staged mods 的项目、版本、许可证和允许再分发性，不把该文件视为完整许可证明。
 
-## 包含 TaCZ 枪包
+## 补充验证
 
-仅在用户要求时将外置枪包加入发布物：
+Gradle 任务通过后仍检查：
 
-1. 从 `run/tacz/<pack>/` 读取 `gunpack.meta.json`、`assets/tacz/gunpack_info.json` 和说明文件。
-2. 不修改枪包素材；原样复制到 `overrides/tacz/<pack>/`。
-3. 在第三方声明中记录版本、作者、许可证和来源 URL。许可证不清楚时停止分发并请求确认。
-4. 比较源目录和包内目录的文件数；必要时追加逐文件哈希校验。
-
-## 生成 PCL 整合包
-
-1. 使用 PCL 可识别的 CurseForge 结构：根目录 `manifest.json`，实例内容位于 `overrides/`。
-2. 在清单中声明精确的 Minecraft 与 `neoforge-<version>`，`files` 可为空；本地构建和已获准分发的依赖放入 `overrides/mods/`。
-3. 可把项目图标复制为 `overrides/PCL/Logo.png`，并通过 `overrides/PCL/Setup.ini` 设置自定义图标。
-4. 在实例根目录放置简短的安装说明；提醒使用 Java 21，并建议至少 6 GB 游戏内存。
-5. 输出到版本化路径 `build/distributions/Zinecraft-PCL-<version>.zip`。目标已存在时不要静默覆盖。
-
-## 验证发布物
-
-完成前全部检查：
-
-- `manifest.json` 能解析，Minecraft、NeoForge、`overrides` 字段正确。
-- 包内 Zinecraft JAR 与 `build/libs` 产物 SHA-256 相同。
-- `mods/` 中没有源码/API JAR，所有条目都是 NeoForge 模组或明确的 `GAMELIBRARY`。
-- ZIP 根目录直接包含 `manifest.json`，没有多套一层目录。
-- ZIP 包含 Zinecraft JAR、PCL 图标配置，以及用户要求的 TaCZ 元数据。
-- 打开 ZIP 并读取每个非空条目，让 CRC 或损坏问题在交付前失败。
-- 生成整合包 SHA-256；若无法实际启动 PCL，明确说明只完成了格式和内容校验。
+- manifest 可解析，Minecraft/NeoForge/overrides 与 gradle.properties 一致。
+- ZIP 根直接包含 manifest.json，PCL 图标配置存在。
+- 包内 Zinecraft JAR 与 build/libs 产物 SHA-256 相同。
+- mods 中没有 sources/API/devlaunch/Minecraft/NeoForge 安装器；候选是 NeoForge mod 或明确的 library。
+- 重新读取全部 ZIP entry，并记录最终 ZIP SHA-256。
+- 只有实际用 PCL 导入并启动后才声称完成 GUI/客户端验证。
 
 ## 完成报告
 
-提供独立 JAR、PCL ZIP 和校验文件的绝对路径，报告版本、大小、模组数量、TaCZ 文件数量、SHA-256、实际通过的 Gradle 任务及未执行的
-GUI 启动验证。
+提供产物绝对路径、版本、大小、模组数量、SHA-256、通过的 Gradle 任务、工作树状态、是否包含外置枪包，以及未执行的 PCL/客户端验证。不要声称生成了不存在的 checksum 文件。

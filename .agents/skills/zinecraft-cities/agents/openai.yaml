@@ -1,4 +1,4 @@
 interface:
   display_name: "Zinecraft Cities"
-  short_description: "Build deterministic city plans and nation settlement sets"
-  default_prompt: "Use $zinecraft-cities to design and integrate a sourced Terra settlement."
+  short_description: "Build Terra cities, regions, roads, and mobile plots"
+  default_prompt: "Use $zinecraft-cities to add or revise a sourced Terra city layout."

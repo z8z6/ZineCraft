@@ -1,40 +1,30 @@
 ---
 name: zinecraft-cities
-description: Design or revise Zinecraft cities and settlements using the city-planning API, nation building sets, road layouts, and generated structure templates. Use for multi-building urban layouts; use the structure skill for a single landmark or final worldgen registration.
+description: Add or revise Zinecraft Terra cities, city regions, mobile-plot layouts, roads, and their structure-backed buildings. Use for multi-region urban layout; use the structure skill for a standalone building.
 ---
 
-# Zinecraft 城市与聚落
+# Zinecraft 城市
 
-先区分地图地点、现有国家聚落和尚未打通的程序化城市链路，不能把纯数据规划 API 描述成已经可生成城市。
+城市使用“国家边界 → 城市 → 城区 → 移动地块 → 世界结构”的确定性生成链路。
 
-## 建立上下文
+## 当前入口
 
-阅读 `AGENTS.md`、工作树和：
+- 注册：core/registry/ModNation.java、ModCity.java、ModCityRegion.java
+- 构建器：TerraCityBuilder、TerraCityRegionBuilder
+- 布局：api/world/layout/、api/world/city/ 与 core/nation/
+- 落地：MobilePlotStructure、MobilePlotStructurePlacement、ModStructure.enableMobilePlots(...)
+- 数据：TerraLayoutDataExporter、TerraLayoutResource
+- 设计约束：docs/layout.md、docs/terra-layout-schema-v14.md、docs/mobile-plot-structure-replacement.md、docs/road.md
 
-- `api/world/city/` 的 `CityDefinition`、`CityPlanner`、`CityLayout`、地块/建筑/道路/分区类型
-- `core/worldgen/city/DefaultCityPlanner.java`、`GridCityLayout.java`、`CityBuildingSelector.java`、
-  `CityPlanningSeeds.java`
-- `script/generate_terra_city_blockouts.py`、`generate_nation_settlements.py`
-- `script/nation_settlements/` 与 `src/main/resources/data/zinecraft/structure/nation_settlements/`
-- `core/registry/ModStructure.java` 中已有十九国 settlement 声明
+## 修改流程
 
-## 实现
-
-1. 用官方/PRTS资料确定国家、地点、城市性质、代表建筑和视觉语言；不要凭空补写设定。项目坐标、半径和街区细节属于 Minecraft
-   布局适配，不能称为官方坐标。
-2. 仅新增地图地点时，在 `TerraGeography` 通过 `registerPlace(...)` 声明，并满足国家前缀、最小半径、锚点归属、同国名称唯一和
-   `REGION_COUNTS` 等冻结校验。
-3. 新增现有国家聚落时，在 `script/nation_settlements/<nation>.py` 维护建筑集合、尺寸、连接与材料；公共规则放 `common.py`
-   。center、四种 street 和功能建筑必须形成可终止的 Jigsaw 池，最终通过 `$zinecraft-structures` 注册。
-4. 真正的程序化城市仍是开发工作：当前仓库没有 `CityDefinition` 实例，也没有消费 `CityPlan` 放置 NBT 的 Structure
-   Piece。实现时用纯二维/2.5D `TerrainModel`，不得加载远端区块；以 `CityPlanningSeeds` 保持确定性，并校验边界、保留区、道路端口、地块重叠和建筑候选。
-5. `GridCityLayout` 的道路宽度要求正偶数，而 `CityPlan.RoadPath` 要求正奇数，两者语义不同。完成规划后必须新增真实放置消费者、结构注册、模板/资产和保存边界，不能只提交
-   API 对象。
-6. `script/generate_terra_city_blockouts.py` 当前引用不存在的 `ModCityStructure` 和旧 `TerraGeography` API，且不写
-   manifest；修复前将其视为已知失败，不作为正常生成/验收命令。
+1. 城市名、所属国家和相对位置以资料为依据；position(...) 是项目归一化布局坐标，不是官方世界坐标。
+2. 在 ModCity 用 TerraCityBuilder 声明 ID、位置、旋转并绑定现有 ModCityRegion；只有需求偏离默认值时才配置 region layout、地块数量、覆盖率、道路宽度和候选数。
+3. 在 ModCityRegion 用 TerraCityRegionBuilder 配置权重、region/building layout、RoadConfig、允许的 PlotSize、数量/唯一性和 JigsawBuilder 建筑。当前 builder 只接受已实现的 region layout 类型。
+4. 布局总链路是 TerraLayoutCalculator → CityLayoutCalculator。后者分别调用 MobileCityLayoutGenerator 生成城市内移动地块，并调用 RegionLayoutGenerator 生成城区入口、道路、parcel 与 open space；两条结果都需通过对应 validator。
+5. 当前城市结构 NBT 均位于 src/main/resources/data/zinecraft/structure/：商店、中型商店、三层和道路使用单个 <id>.nbt，大型建筑使用 <id>/{foundation,core,facade,roof,annex,surrounding}.nbt。仅在确需再生时运行对应脚本，先确认其覆盖范围和工作树状态。
+6. 不手改 src/generated/resources/data/zinecraft/terra_layout/ 下的 index.json.gz 与 nations/*.json.gz。它们由 generateTerraLayoutData 生成，runData 结束后会自动恢复。
 
 ## 验证
 
-聚落任务先确认生成器将要重写的精确目录和其中的用户改动，再运行 `python script/generate_nation_settlements.py`；程序化城市需为
-planner 与实际 Structure Piece 增加确定性测试。随后运行 `./gradlew.bat runData`、`./gradlew.bat test`、
-`./gradlew.bat build`，并用多个固定种子检查道路连通、边界、建筑多样性、终止性和可达入口。
+运行 ./gradlew.bat test、./gradlew.bat runData、./gradlew.bat generateTerraLayoutValidation 和 ./gradlew.bat build。检查 SVG/JSON 报告、schema v14 压缩资源、布局确定性、地块/道路约束、结构引用和 JAR 内容；再用固定种子验证实际落地。

@@ -1,87 +1,56 @@
-# PCL 整合包格式
+# 当前 PCL 包契约
 
-## 官方行为依据
+本参考描述 build.gradle 的实际输出；任务实现变化时先更新代码，再同步本文件。
 
-PCL 的 `ModModpack.vb` 会在 ZIP 根目录或一级目录寻找 `manifest.json`，没有 `addons` 字段时按 CurseForge 整合包处理。它读取
-`minecraft.version` 和 `minecraft.modLoaders`，识别 `neoforge-` 前缀，并把清单指定的 `overrides` 目录复制到新实例。
+## 主任务
 
-官方实现：<https://github.com/Meloong-Git/PCL/blob/main/Plain%20Craft%20Launcher%202/Modules/Minecraft/ModModpack.vb>
+- preparePclPackage：构建 staging，解析 runtimeClasspath、clientRuntimeRuntimeClasspath 与 clientLegacyClasspath，筛选可分发 JAR，并按 bundleRuntimeMods 选择携带 JAR 或只写依赖清单。
+- build：组装模组产物；发布流程不包含 check。
+- packagePcl：把 staging 压成版本化 ZIP；默认拒绝覆盖，显式属性为 -PoverwritePcl=true。
+- verifyPclPackage：依赖前两项，检查关键 entry，读取所有非空 entry，并打印 ZIP SHA-256。
 
-## 最小清单
+## 目录
 
-```json
-{
-  "minecraft": {
-    "version": "1.21.1",
-    "modLoaders": [
-      {
-        "id": "neoforge-21.1.244",
-        "primary": true
-      }
-    ]
-  },
-  "manifestType": "minecraftModpack",
-  "manifestVersion": 1,
-  "name": "Zinecraft 1.0.0",
-  "version": "1.0.0",
-  "author": "z8z6, YeXingChenAWA",
-  "files": [],
-  "overrides": "overrides"
-}
-```
+  Zinecraft-PCL-<version>[-thin].zip
+  ├── manifest.json
+  ├── runtime-dependencies.json
+  ├── LICENSE-Zinecraft.txt
+  ├── THIRD_PARTY_MODS.md
+  └── overrides/
+      ├── README-Zinecraft.txt
+      ├── options.txt
+      ├── config/
+      ├── journeymap/config/
+      ├── mods/
+      │   └── zinecraft-<version>.jar
+      └── PCL/
+          ├── Logo.png
+          └── Setup.ini
 
-始终用 `gradle.properties` 的当前值替换示例版本。
+manifest 的 Minecraft、NeoForge、模组版本和作者由 build.gradle / gradle.properties 生成，不手抄示例值。实例使用 Java 21，并在说明中建议至少 6 GB 内存。
 
-## 目录结构
+`src/client-pack/` 直接镜像 `overrides/` 与开发实例根目录；发布配置只从该受版本控制目录取得，不从 `run/` 快照。
 
-```text
-Zinecraft-PCL-<version>.zip
-├── manifest.json
-├── LICENSE-Zinecraft.txt
-├── THIRD_PARTY_MODS.md
-└── overrides/
-    ├── README-Zinecraft.txt
-    ├── mods/
-    │   ├── zinecraft-<version>.jar
-    │   └── <runtime dependencies>.jar
-    ├── PCL/
-    │   ├── Logo.png
-    │   └── Setup.ini
-    └── tacz/
-        └── <gun pack>/
-```
+## 当前自动保证
 
-`Setup.ini` 的最小图标配置：
+verifyPclPackage 要求：
 
-```ini
-Logo=PCL\Logo.png
-LogoCustom=True
-```
+- manifest.json
+- runtime-dependencies.json 与打包模式、mods 内容一致
+- overrides/options.txt
+- JourneyMap 6.0 fullmap 与 minimap 配置
+- overrides/mods/zinecraft-<version>.jar
 
-## 当前依赖分类
+它还会读取所有非空 ZIP entry 并输出 SHA-256。它目前不会解析 manifest、比较内外 Zinecraft JAR 摘要、检查 PCL 图标、逐个复验 staged mod 类型或写 checksum 文件；这些属于 skill 中的补充只读验证。
 
-实际版本读取 `gradle.properties` 和 Gradle 解析结果。当前发布通常包括：
+## 运行时模组与许可
 
-- 必需：TerraBlender、Create、Ponder、Flywheel、Registrate、FTB Quests、FTB Library、FTB Teams、Architectury、Cloth Config、Curios。
-- 辅助：JEI、AppleSkin、Just Enough Resources、Jade、Just Enough Characters、JourneyMap、Nature's Compass、Explorer's Compass。
-- 不放入 `mods/`：Minecraft、NeoForge、DevLaunch、JUnit、sources/API 分类器。
+不要维护静态依赖列表。以 build.gradle 的依赖配置、Gradle 实际解析结果和 staging 内容为准。preparePclPackage 接受带 NeoForge mods metadata 的 JAR，以及 Manifest 声明 GAMELIBRARY/LIBRARY 的库，并排除已知加载器、Minecraft、DevLaunch 和 client-extra 产物。
 
-如果依赖树发生变化，更新发布列表，不把本表当作锁文件。
+THIRD_PARTY_MODS.md 当前只完整声明部分客户端菜单/提示依赖，其余文件仍需发布前许可审计。
 
-## TaCZ 分发检查
+默认模式将依赖 JAR 放入 `overrides/mods/`；`-PbundleRuntimeMods=false` 生成 `-thin.zip`，仅保留 Zinecraft JAR。两种模式都写出含组件坐标、文件名和 bundled 状态的 `runtime-dependencies.json`。
 
-当前默认枪包的 `gunpack_info.json` 声明作者、版本、许可证和 URL。复制前再次读取这些字段，不根据历史发布结果推断。保持目录和文件内容不变，确保包内路径是
-`overrides/tacz/<namespace>/`。
+## TaCZ
 
-## 压缩包检查
-
-使用 `System.IO.Compression.ZipFile.CreateFromDirectory(staging, output, Optimal, false)` 可保证暂存目录本身不会多套一层。创建后重新打开
-ZIP：
-
-1. 查找 `manifest.json`。
-2. 查找 `overrides/mods/zinecraft-<version>.jar`。
-3. 要求枪包发布时存在 `overrides/tacz/<pack>/gunpack.meta.json`。
-4. 读取每个非空 Entry 到 `Stream.Null`，触发解压和 CRC 校验。
-5. 对最终 ZIP 运行 `Get-FileHash -Algorithm SHA256`。
-
-PCL GUI 不可用时，不声称完成了实际导入或客户端启动；报告已完成格式、内容和压缩完整性校验。
+TaCZ 模组本身来自 runtime classpath；外置 gun pack 不在当前 staging 逻辑中，ZIP 默认没有 overrides/tacz。只有用户要求、来源与许可证允许且打包任务已增加相应复制/校验时，才把枪包列为发布内容。

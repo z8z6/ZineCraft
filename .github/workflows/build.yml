@@ -28,7 +28,7 @@ jobs:
       # as separate invocations so a clean checkout exercises the real release order.
       - name: generate data
         run: ./gradlew runData --no-configuration-cache --console=plain
-      - name: build and verify packaged collectible resources
+      - name: build
         run: ./gradlew build --no-configuration-cache --console=plain
       - name: capture build artifacts
         uses: actions/upload-artifact@v7

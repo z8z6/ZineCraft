@@ -41,8 +41,14 @@ Zinecraft 是一个面向 Minecraft 1.21.1 / NeoForge 的《明日方舟》主�
 # 启动开发客户端
 .\gradlew.bat runClient
 
-# 完整发布构建
+# 发布构建
 .\gradlew.bat build
+
+# PCL 完整包：包含运行时依赖 JAR
+.\gradlew.bat verifyPclPackage
+
+# PCL 精简包：只包含本模组 JAR 和依赖清单
+.\gradlew.bat verifyPclPackage -PbundleRuntimeMods=false
 ```
 
 Linux/macOS 将 `.\gradlew.bat` 替换为 `./gradlew`。构建产物位于 `build/libs/`。数据生成输出位于 `src/generated/resources/`
@@ -109,6 +115,8 @@ Install JDK 21, then run from the repository root:
 .\gradlew.bat runData
 .\gradlew.bat runClient
 .\gradlew.bat build
+.\gradlew.bat verifyPclPackage
+.\gradlew.bat verifyPclPackage -PbundleRuntimeMods=false
 ```
 
 On Linux or macOS, replace `.\gradlew.bat` with `./gradlew`. Artifacts are written to `build/libs/`. Generated data is

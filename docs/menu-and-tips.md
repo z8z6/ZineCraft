@@ -10,6 +10,8 @@ src/client/resources/assets/zinecraft/tips/
 
 每条语录使用一个 Tips 21.1.3 的 `tipsmod:simple` JSON，标题为角色名，正文为游戏中文语音原文，默认展示 10 秒。
 
+客户端整合包配置在 `src/client-pack/config/tipsmod.json` 中忽略 `tipsmod` 命名空间，因此只显示 `zinecraft` 新增提示，不显示 Tips 自带的原版提示。
+
 当前语录均核对自 PRTS Wiki 的角色语音记录：
 
 - [阿米娅](https://prts.wiki/w/阿米娅/语音记录)
@@ -34,6 +36,6 @@ FancyMenu 3.9.7 支持多张图片轮播。其编辑器中的背景类型名为 
 src/client-pack/config/fancymenu/
 ```
 
-`installClientPackConfig` 会在准备开发客户端时将其安装到 `run/config/fancymenu/`；PCL 打包也会直接收集源码配置。主界面配置文件为 `customization/zinecraft_title_screen.txt`，轮播定义和图片位于 `slideshows/zinecraft_main/`。
+`installClientPack` 会在准备开发客户端时将整个 `src/client-pack/` 实例镜像安装到 `run/`；PCL 打包也会将该目录整体复制到 `overrides/`。主界面配置文件为 `customization/zinecraft_title_screen.txt`，轮播定义和图片位于 `slideshows/zinecraft_main/`。
 
 五张图片来自用户提供的项目素材：罗德岛、泰拉主视图、莱塔尼亚双塔、炎国百灶和萨米星门。原图统一为 16:9，使用 JPEG 质量 84 压缩；其中泰拉主视图与双塔图仅进行居中横向裁切，不拉伸画面。

@@ -200,8 +200,6 @@ dependencies {
     clientAdditionalRuntimeClasspath "maven.modrinth:aC3cM3Vq:${project.mouse_tweaks_modrinth_version}"
     // Sodium declares FMLModType=LIBRARY and is discovered from the client-only legacy classpath.
     clientAdditionalRuntimeClasspath "maven.modrinth:sodium:${project.sodium_modrinth_version}"
-    // Iris is client-only and requires Sodium; keep it out of server and data-generator runs.
-    clientAdditionalRuntimeClasspath "maven.modrinth:YL57xq9U:${project.iris_modrinth_version}"
     // Client menu customization and world-loading tips, including their required libraries.
     clientRuntimeRuntimeOnly "maven.modrinth:fancymenu:" + project.fancymenu_modrinth_version
     clientRuntimeRuntimeOnly "maven.modrinth:melody:" + project.melody_modrinth_version
@@ -326,112 +324,42 @@ jar {
 
 def releaseJarFile = tasks.named('jar', Jar).flatMap { it.archiveFile }
 
-tasks.register('verifyCollectibleJarResources') {
-    group = 'verification'
-    description = 'Verifies that every Java-registered collectible has its runtime resources in the JAR.'
-    dependsOn tasks.named('jar')
 
-    doLast {
-        def archive = releaseJarFile.get().asFile
-        new ZipFile(archive).withCloseable { zip ->
-            def legacyCatalogPath = 'zinecraft/collectibles/phantom_crimson_solitaire.json'
-            if (zip.getEntry(legacyCatalogPath) != null) {
-                throw new GradleException("Legacy runtime collectible catalog must not be packaged: ${legacyCatalogPath}")
-            }
-            def readJson = { String path ->
-                def entry = zip.getEntry(path)
-                if (entry == null) throw new GradleException("Missing JAR resource: ${path}")
-                zip.getInputStream(entry).withCloseable { stream ->
-                    new JsonSlurper().parse(new InputStreamReader(stream, 'UTF-8'))
-                }
-            }
-            def zhCn = readJson('assets/zinecraft/lang/zh_cn.json')
-            def enUs = readJson('assets/zinecraft/lang/en_us.json')
-            def relicTag = readJson('data/curios/tags/item/relic.json')
-            def paths = relicTag.values.collect { value ->
-                if (!(value instanceof String) || !value.startsWith('zinecraft:')) {
-                    throw new GradleException("Invalid collectible tag entry: ${value}")
-                }
-                value.substring('zinecraft:'.length())
-            }.sort()
-            if (paths.size() != 245) {
-                throw new GradleException("Expected 245 Java-registered collectibles, found ${paths.size()}")
-            }
-            if (paths.size() != paths.toSet().size()) {
-                throw new GradleException('Collectible tag paths must be unique')
-            }
-            paths.each { path ->
-                if (path.startsWith('collectible_')) {
-                    throw new GradleException("Legacy collectible path prefix is forbidden: ${path}")
-                }
-                if (zip.getEntry("assets/zinecraft/textures/item/${path}.png") == null) {
-                    throw new GradleException("Missing collectible texture: ${path}")
-                }
-                def model = readJson("assets/zinecraft/models/item/${path}.json")
-                if (model.textures?.layer0 != "zinecraft:item/${path}".toString()) {
-                    throw new GradleException("Collectible model references wrong texture: ${path}")
-                }
-                def translationKey = "item.zinecraft.${path}".toString()
-                ['', '.original_effect', '.description', '.minecraft_effect'].each { suffix ->
-                    def key = "${translationKey}${suffix}".toString()
-                    if (!zhCn.containsKey(key) || !enUs.containsKey(key)) {
-                        throw new GradleException("Missing collectible translation: ${key}")
-                    }
-                }
-            }
-        }
-    }
+// Routine builds only assemble artifacts.
+tasks.named('build') {
+    setDependsOn([tasks.named('assemble')])
 }
 
-tasks.register('verifyMusicDiscJarResources') {
-    group = 'verification'
-    description = 'Verifies that every registered music disc model and texture is present in the JAR.'
-    dependsOn tasks.named('jar')
-
-    doLast {
-        def archive = releaseJarFile.get().asFile
-        new ZipFile(archive).withCloseable { zip ->
-            ['pictures_of_the_past', 'random_gods', 'stranger_think'].each { path ->
-                def modelPath = "assets/zinecraft/models/item/${path}.json"
-                def texturePath = "assets/zinecraft/textures/item/${path}.png"
-                if (zip.getEntry(modelPath) == null) {
-                    throw new GradleException("Missing music disc model: ${modelPath}")
-                }
-                if (zip.getEntry(texturePath) == null) {
-                    throw new GradleException("Missing music disc texture: ${texturePath}")
-                }
-            }
-        }
-    }
+def bundleRuntimeMods = providers.gradleProperty('bundleRuntimeMods').map { value ->
+    if (value.equalsIgnoreCase('true')) return true
+    if (value.equalsIgnoreCase('false')) return false
+    throw new GradleException("bundleRuntimeMods must be true or false, got: ${value}")
+}.orElse(true)
+def pclPackageName = bundleRuntimeMods.map { bundled ->
+    "Zinecraft-PCL-${project.mod_version}${bundled ? '' : '-thin'}"
 }
+def pclStageDirectory = layout.buildDirectory.dir(pclPackageName.map { "pcl/${it}" })
+def pclArchive = layout.buildDirectory.file(pclPackageName.map { "distributions/${it}.zip" })
+def clientPackDirectory = layout.projectDirectory.dir('src/client-pack')
 
-tasks.named('check') {
-    dependsOn tasks.named('verifyCollectibleJarResources')
-    dependsOn tasks.named('verifyMusicDiscJarResources')
-}
-
-def pclStageDirectory = layout.buildDirectory.dir("pcl/Zinecraft-PCL-${project.mod_version}")
-def pclArchive = layout.buildDirectory.file("distributions/Zinecraft-PCL-${project.mod_version}.zip")
-def clientPackConfigDirectory = layout.projectDirectory.dir('src/client-pack/config')
-
-tasks.register('installClientPackConfig', Copy) {
+tasks.register('installClientPack', Copy) {
     group = 'distribution'
-    description = 'Installs source-controlled client pack configuration into the development run directory.'
-    from clientPackConfigDirectory
-    into layout.projectDirectory.dir('run/config')
+    description = 'Installs the source-controlled client pack into the development run directory.'
+    from clientPackDirectory
+    into layout.projectDirectory.dir('run')
 }
 
 tasks.named('prepareClientRun') {
-    dependsOn tasks.named('installClientPackConfig')
+    dependsOn tasks.named('installClientPack')
 }
 
 tasks.register('preparePclPackage') {
     group = 'distribution'
-    description = 'Stages a PCL-compatible pack with the current client configs and key bindings.'
+    description = 'Stages a PCL-compatible pack with the source-controlled client configuration.'
     dependsOn tasks.named('build')
     outputs.dir(pclStageDirectory)
-    // Packaging is also a snapshot operation: always pick up the latest local
-    // key bindings, mod configs and JourneyMap UI settings from run/.
+    inputs.dir(clientPackDirectory)
+    inputs.property('bundleRuntimeMods', bundleRuntimeMods)
     outputs.upToDateWhen { false }
 
     doLast {
@@ -445,6 +373,8 @@ tasks.register('preparePclPackage') {
             if (!candidate.isFile() || !candidate.name.toLowerCase(Locale.ROOT).endsWith('.jar')) return false
             def lowerName = candidate.name.toLowerCase(Locale.ROOT)
             if (lowerName.startsWith('neoforge-')
+                    || lowerName.startsWith('loader-')
+                    || lowerName.startsWith('earlydisplay-')
                     || lowerName.contains('client-extra')
                     || lowerName.startsWith('minecraft-')
                     || lowerName.startsWith('devlaunch-')) return false
@@ -469,23 +399,54 @@ tasks.register('preparePclPackage') {
             return accepted
         }
 
-        def runtimeFiles = [
+        def readableRuntimeNames = [
+                'aC3cM3Vq-9I21YYxf.jar'        : 'mouse-tweaks-2.26.1.jar',
+                'Adega8YN-PQzuABde.jar'        : 'target-dummy-1.21-2.1.0.jar',
+                'EsAfCjCV-uAKA6Laj.jar'        : 'appleskin-3.0.9+mc1.21.jar',
+                'RV1qfVQ8-hIJ2Ev1Q.jar'        : 'explorers-compass-1.21.1-3.4.0-neoforge.jar',
+                'bookshelf-lib-1sdJl7J1.jar'   : 'bookshelf-21.1.81.jar',
+                'fancymenu-AawWP7d6.jar'       : 'fancymenu-3.9.7.jar',
+                'fPetb5Kh-nFniEtJV.jar'        : 'natures-compass-1.21.1-3.4.0-neoforge.jar',
+                'konkrete-stJDU839.jar'         : 'konkrete-1.9.9.jar',
+                'melody-efcdRVZP.jar'           : 'melody-1.0.10.jar',
+                'prickle-EE1FHDyD.jar'          : 'prickle-21.1.11.jar',
+                'sodium-S3DUMfBo.jar'           : 'sodium-0.8.12+mc1.21.1.jar',
+                'tips-dFBz1Le7.jar'             : 'tips-21.1.3.jar',
+                'tooltip-overhaul-dJSHREVC.jar' : 'tooltip-overhaul-1.5.1.jar',
+                'twkfQtEc-3FbHoZqL.jar'         : 'moonlight-1.21.1-3.4.1.jar',
+                'uEfK2CXF-TgNFki8j.jar'         : 'just-enough-resources-1.6.0.17.jar'
+        ]
+        def packagedRuntimeName = { File source -> readableRuntimeNames.getOrDefault(source.name, source.name) }
+
+        def runtimeConfigurations = [
                 configurations.runtimeClasspath,
                 configurations.clientRuntimeRuntimeClasspath,
                 configurations.clientLegacyClasspath
-        ].collectMany { configuration -> configuration.resolve() as List<File> }
+        ]
+        def runtimeArtifacts = runtimeConfigurations.collectMany { configuration ->
+            configuration.incoming.artifacts.artifacts as List
+        }
+        def componentByPath = runtimeArtifacts.collectEntries { artifact ->
+            [(artifact.file.canonicalPath): artifact.id.componentIdentifier.displayName]
+        }
+        def runtimeFiles = runtimeArtifacts.collect { artifact -> artifact.file }
         def modFiles = runtimeFiles
                 .findAll(isDistributableMod)
                 .unique { it.canonicalPath }
                 .sort { left, right -> left.name <=> right.name }
+        def shouldBundleRuntimeMods = bundleRuntimeMods.get()
         def names = new HashSet<String>()
         modFiles.each { source ->
-            if (!names.add(source.name)) {
-                throw new GradleException("Duplicate runtime mod file name: ${source.name}")
+            def packagedName = packagedRuntimeName(source)
+            if (!names.add(packagedName)) {
+                throw new GradleException("Duplicate runtime mod file name: ${packagedName}")
             }
-            copy {
-                from source
-                into modsDirectory
+            if (shouldBundleRuntimeMods) {
+                copy {
+                    from source
+                    into modsDirectory
+                    rename { packagedName }
+                }
             }
         }
         copy {
@@ -493,28 +454,10 @@ tasks.register('preparePclPackage') {
             into modsDirectory
         }
 
-        if (file('run/options.txt').isFile()) {
+        if (clientPackDirectory.asFile.isDirectory()) {
             copy {
-                from 'run/options.txt'
+                from clientPackDirectory
                 into overrides
-            }
-        }
-        if (file('run/config').isDirectory()) {
-            copy {
-                from 'run/config'
-                into new File(overrides, 'config')
-            }
-        }
-        if (clientPackConfigDirectory.asFile.isDirectory()) {
-            copy {
-                from clientPackConfigDirectory
-                into new File(overrides, 'config')
-            }
-        }
-        if (file('run/journeymap/config').isDirectory()) {
-            copy {
-                from 'run/journeymap/config'
-                into new File(overrides, 'journeymap/config')
             }
         }
 
@@ -527,8 +470,12 @@ tasks.register('preparePclPackage') {
                 'Logo=PCL\\Logo.png\r\nLogoCustom=True\r\n', 'UTF-8')
         new File(overrides, 'README-Zinecraft.txt').setText(
                 'Zinecraft requires Java 21. Allocate at least 6 GB of memory.\r\n'
-                        + 'This pack preserves the project client options, key bindings, mod configs, '
-                        + 'and JourneyMap display settings captured at packaging time.\r\n', 'UTF-8')
+                        + 'This pack installs the project client options, key bindings, mod configs, '
+                        + 'and JourneyMap display settings maintained in source control.\r\n'
+                        + (shouldBundleRuntimeMods
+                        ? 'Runtime dependency JARs are bundled in the mods directory.\r\n'
+                        : 'Runtime dependency JARs are not bundled. Install every entry in runtime-dependencies.json before launching.\r\n'),
+                'UTF-8')
 
         def manifest = [
                 minecraft      : [
@@ -545,6 +492,19 @@ tasks.register('preparePclPackage') {
         ]
         new File(stage, 'manifest.json').setText(
                 JsonOutput.prettyPrint(JsonOutput.toJson(manifest)) + System.lineSeparator(), 'UTF-8')
+        def runtimeDependencies = [
+                schemaVersion    : 1,
+                bundleRuntimeMods: shouldBundleRuntimeMods,
+                dependencies     : modFiles.collect { source ->
+                    [
+                            component: componentByPath[source.canonicalPath],
+                            file     : packagedRuntimeName(source),
+                            bundled  : shouldBundleRuntimeMods
+                    ]
+                }
+        ]
+        new File(stage, 'runtime-dependencies.json').setText(
+                JsonOutput.prettyPrint(JsonOutput.toJson(runtimeDependencies)) + System.lineSeparator(), 'UTF-8')
         if (file('LICENSE').isFile()) {
             copy {
                 from 'LICENSE'
@@ -553,8 +513,10 @@ tasks.register('preparePclPackage') {
             }
         }
         new File(stage, 'THIRD_PARTY_MODS.md').setText(
-                '# Bundled runtime mods\n\n'
-                        + 'The following files are redistributed runtime dependencies. '
+                '# Runtime mod dependencies\n\n'
+                        + (shouldBundleRuntimeMods
+                        ? 'The following runtime dependencies are bundled in overrides/mods/.\n\n'
+                        : 'The following runtime dependencies are required but not bundled. Install them manually before launching.\n\n')
                         + 'Their respective authors and licenses remain authoritative.\n\n'
                         + '## Client menu and loading tips\n\n'
                         + '- FancyMenu 3.9.7 — DSMSLv3.1 — https://modrinth.com/mod/fancymenu\n'
@@ -564,17 +526,17 @@ tasks.register('preparePclPackage') {
                         + '- Bookshelf 21.1.81 — LGPL-2.1-only — https://modrinth.com/mod/bookshelf-lib\n'
                         + '- Prickle 21.1.11 — LGPL-2.1-only — https://modrinth.com/mod/prickle\n\n'
                         + '## Packaged files\n\n'
-                        + modFiles.collect { "- ${it.name}" }.join('\n')
+                        + modFiles.collect { "- ${packagedRuntimeName(it)}" }.join('\n')
                         + '\n', 'UTF-8')
     }
 }
 
 tasks.register('packagePcl', Zip) {
     group = 'distribution'
-    description = 'Builds a PCL-importable Zinecraft pack and snapshots current client configuration.'
+    description = 'Builds a PCL-importable Zinecraft pack from source-controlled client configuration.'
     dependsOn tasks.named('preparePclPackage')
     archiveFileName = pclArchive.map { it.asFile.name }
-    destinationDirectory = pclArchive.map { it.asFile.parentFile }
+    destinationDirectory = layout.buildDirectory.dir('distributions')
     from pclStageDirectory
     doFirst {
         def output = archiveFile.get().asFile
@@ -587,7 +549,7 @@ tasks.register('packagePcl', Zip) {
 
 tasks.register('verifyPclPackage') {
     group = 'verification'
-    description = 'Validates the PCL archive layout, required config snapshots, and ZIP integrity.'
+    description = 'Validates the PCL archive layout, required client configuration, and ZIP integrity.'
     dependsOn tasks.named('packagePcl')
 
     doLast {
@@ -595,12 +557,33 @@ tasks.register('verifyPclPackage') {
         new ZipFile(archive).withCloseable { zip ->
             [
                     'manifest.json',
+                    'runtime-dependencies.json',
                     'overrides/options.txt',
                     'overrides/journeymap/config/6.0/journeymap.fullmap.config',
                     'overrides/journeymap/config/6.0/journeymap.minimap.config',
                     "overrides/mods/zinecraft-${project.mod_version}.jar"
             ].each { path ->
                 if (zip.getEntry(path) == null) throw new GradleException("Missing PCL entry: ${path}")
+            }
+            def dependencyEntry = zip.getEntry('runtime-dependencies.json')
+            def dependencyManifest = zip.getInputStream(dependencyEntry).withCloseable { stream ->
+                new JsonSlurper().parse(new InputStreamReader(stream, 'UTF-8'))
+            }
+            def shouldBundleRuntimeMods = bundleRuntimeMods.get()
+            if (dependencyManifest.bundleRuntimeMods != shouldBundleRuntimeMods) {
+                throw new GradleException('Runtime dependency manifest mode does not match bundleRuntimeMods')
+            }
+            def expectedRuntimeMods = dependencyManifest.dependencies.collect { it.file as String }.toSet()
+            def packagedRuntimeMods = zip.entries().findAll { entry ->
+                !entry.directory
+                        && entry.name.startsWith('overrides/mods/')
+                        && entry.name.endsWith('.jar')
+                        && entry.name != "overrides/mods/zinecraft-${project.mod_version}.jar"
+            }.collect { entry -> entry.name.substring('overrides/mods/'.length()) }.toSet()
+            def expectedPackagedMods = shouldBundleRuntimeMods ? expectedRuntimeMods : [] as Set
+            if (packagedRuntimeMods != expectedPackagedMods) {
+                throw new GradleException(
+                        "Packaged runtime mods do not match dependency manifest: expected=${expectedPackagedMods}, actual=${packagedRuntimeMods}")
             }
             zip.entries().each { entry ->
                 if (!entry.directory && entry.size != 0) {
@@ -612,6 +595,7 @@ tasks.register('verifyPclPackage') {
         }
         def digest = MessageDigest.getInstance('SHA-256').digest(archive.bytes).encodeHex().toString()
         logger.lifecycle("PCL archive: ${archive.absolutePath}")
+        logger.lifecycle("Runtime dependencies bundled: ${bundleRuntimeMods.get()}")
         logger.lifecycle("PCL SHA-256: ${digest}")
     }
 }

@@ -1,0 +1,166 @@
+[general]
+	#Enables multi-threaded generation for dynamic assets (if supported). This could improve performance on systems with more cores available.
+	multi_threaded_generation = true
+	#ONLY for debugging purpose. Turns one some debug functionality like more logging or blocktypes_debug.txt, the file can be found in ~/.minecraft/debug/dynamic_registry_dump...
+	extra_debug = false
+	#Enable this will list each BlockTypes' Children. The List of BlockTypes' children will be also in the same file via EXTRA_DEBUG. NOTE: To enable this, EXTRA_DEBUG must be enabled, too.
+	extra_children_debug = false
+	#Makes the dynamic assets cache use a tree structure for indexing, drastically speeds up query time but could cost some ram.
+	faster_cache_search = true
+	#Global datapack folder. A folder where you can store and load datapacks for all your worlds automatically. Set to empty string to disable
+	global_datapacks_folder = "moonlight-global-datapacks"
+
+	[general.test_category]
+		#A boolean feature, drawn as a check/cross toggle with its icon next to the symbol
+		test_bool = true
+		#A plain boolean, drawn as an ON/OFF button
+		test_plain_bool = true
+		#A value that needs a world reload (shows a globe icon)
+		test_world_reload = true
+		#A value that needs a game restart (shows a power icon)
+		test_game_restart = true
+		#An integer, edited as a text field
+		# Default: 5
+		# Range: 0 ~ 100
+		test_int = 5
+		#An integer, edited as a slider
+		# Default: 50
+		# Range: 0 ~ 100
+		test_int_slider = 50
+		#A double, edited as a text field
+		# Default: 2.0
+		# Range: 0.0 ~ 22.0
+		test_double = 2.0
+		#A double, edited as a slider
+		# Default: 0.5
+		# Range: 0.0 ~ 1.0
+		test_double_slider = 0.5
+		#A percentage, edited as a slider showing %
+		# Default: 0.5
+		# Range: 0.0 ~ 1.0
+		test_percent = 0.5
+		#An item picked from the registry, with icon
+		test_item = "minecraft:diamond"
+		#A block picked from the registry, with icon
+		test_block = "minecraft:stone"
+		#An enum, edited as a cycle button
+		#Allowed Values: DOWN, UP, NORTH, SOUTH, WEST, EAST
+		test_enum = "NORTH"
+		#A value picked from a dropdown list
+		test_dropdown = "medium"
+		#A string field
+		test_string = "hello"
+		#A regex pattern with live syntax highlighting
+		test_regex = "\\d+(foo|bar)?"
+		#An ARGB color, edited as a hex field
+		test_color = "#FFFF5555"
+		#An RGB color with no alpha channel
+		test_color_no_alpha = "#2A77EA"
+		test_after_comment = false
+		#A free-text string list, edited on a sub page
+		test_list = ["a", "b", "c"]
+		#A string list whose entries are each picked from a dropdown
+		test_dropdown_list = ["medium"]
+		#An item list, each entry picked from an item dropdown with icons
+		test_item_list = ["minecraft:diamond", "minecraft:emerald"]
+		#A raw JSON value, edited in a text box with syntax highlighting
+		test_json = "{'example':42,'enabled':true}"
+
+		[general.test_category.test_range]
+			# Default: 2.0
+			# Range: 0.0 ~ 10.0
+			min = 2.0
+			# Default: 8.0
+			# Range: 0.0 ~ 10.0
+			max = 8.0
+
+		[general.test_category.test_vec3]
+			# Default: 0.5
+			# Range: -10.0 ~ 10.0
+			x = 0.5
+			# Default: 1.0
+			# Range: -10.0 ~ 10.0
+			y = 1.0
+			# Default: -0.5
+			# Range: -10.0 ~ 10.0
+			z = -0.5
+
+		[general.test_category.test_vec3i]
+			# Default: 1
+			# Range: -16 ~ 16
+			x = 1
+			# Default: 2
+			# Range: -16 ~ 16
+			y = 2
+			# Default: 3
+			# Range: -16 ~ 16
+			z = 3
+
+		[general.test_category.test_bean]
+			name = "hello"
+			# Default: 3
+			# Range: > -2147483648
+			count = 3
+			flag = true
+
+		[general.test_category.test_record_bean]
+			label = "world"
+			# Default: 7
+			# Range: > -2147483648
+			amount = 7
+
+		#A codec object with a declared CodecUI schema, edited via a generated form: records and lists become navigable sub pages, ids and tags get registry dropdowns, and the map falls back to the JSON editor
+		[general.test_category.test_schema]
+			item = "minecraft:diamond"
+			color = -43691
+			level = 5
+			name = "hello"
+			facing = "north"
+			tag = "minecraft:logs"
+			enabled = true
+			tags = ["alpha", "beta"]
+
+			[general.test_category.test_schema.extra]
+				first = "one"
+				second = "two"
+
+			[general.test_category.test_schema.nested]
+				x = 1
+				weight = 0.5
+				speed = 1.0
+
+			[[general.test_category.test_schema.entries]]
+				x = 2
+				weight = 0.25
+				speed = 2.0
+			[[general.test_category.test_schema.entries]]
+				x = 3
+				weight = 0.75
+				speed = 4.0
+
+		[general.test_category.nested]
+			#A float value living in a nested sub category
+			# Default: 0.5
+			# Range: 0.0 ~ 1.0
+			nested_float = 0.5
+
+		[general.test_category.test_feature]
+			enabled = true
+			#Only meaningful while the feature is on
+			# Default: 1.0
+			# Range: 0.0 ~ 10.0
+			feature_speed = 1.0
+
+			[general.test_category.test_feature.test_sub_feature]
+				enabled = true
+				#This feature reads false whenever the parent feature is off
+				# Default: 3
+				# Range: 0 ~ 9
+				sub_power = 3
+
+		#This is a list. Add more entries with syntax [[...]]
+		#A codec object LIST: the config's own page is the list, so entries are added and removed right there
+		[[general.test_category.test_schema_list]]
+			x = 4
+			weight = 0.5
+			speed = 1.0

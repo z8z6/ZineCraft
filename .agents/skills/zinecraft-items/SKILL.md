@@ -1,35 +1,26 @@
 ---
 name: zinecraft-items
-description: Add or revise ordinary Zinecraft items through the project catalogs and data generation. Use for materials, food, components, music discs, or other standalone items; use the dedicated weapon, skill, or collectible skill for those systems.
+description: Add or revise ordinary Zinecraft catalog-backed items and their generated resources. Use for materials, food, and components; use the weapon, skill, collectible, or sound workflow for specialized items and music discs.
 ---
 
 # Zinecraft 普通物品
 
-通过项目的声明式目录新增普通物品，并让翻译、模型、创造模式页和配方保持一致。
+通过 ItemCatalog 新增普通物品，并保持翻译、模型、创造页、配方与手工数据一致。
 
-## 开始前
+## 当前入口
 
-完整阅读根目录 `AGENTS.md`，检查 `git status --short` 并保留用户改动。以当前源码为准，重点阅读：
+- ItemBuilder、ItemCatalog
+- ModItem、ModCreativeTab、ModRecipeProvider
+- core/Zinecraft.java、core/datagen/ZinecraftDataGenerator.java
 
-- `api/registry/builder/ItemBuilder.java` 与 `api/registry/catalog/ItemCatalog.java`
-- `core/registry/ModItem.java`、`ModCreativeTab.java`、`ModRecipeProvider.java`
-- `core/Zinecraft.java` 与 `core/ZinecraftDataGenerator.java`
+## 修改流程
 
-以上 Java 路径均相对于 `src/main/java/com/cxxcxx/zinecraft/`。
-
-## 实现
-
-1. 先从明日方舟官网、PRTS 或 ArknightsGameData 核实名称、说明和图像；不要补写未经来源支持的设定。只有找不到合适资源时才制作符合现有风格的资产，并记录来源状态。
-2. 在 `ModItem` 用 `ItemBuilder` 声明稳定的 `snake_case` ID、中文名、必要的明确英文名、工厂、模型模板与创造页选项。普通材料沿用现有
-   `item(...)`，食物沿用 `food(...)`；真正需要行为时才新增 `Item` 子类。
-3. 默认模型由 `CatalogModelProvider` 生成，纹理放在 `src/main/resources/assets/zinecraft/textures/item/<id>.png`
-   。自定义或手持模型应显式选择模板或维护手写模型，不要同时维护可由 `runData` 生成的副本。
-4. 配方在 `ModRecipeProvider` 声明。若物品属于标签、任务、战利品或兼容层，同时更新对应数据；不要只做到创造模式可取。
-5. 保持 `Zinecraft.bootstrapContent()` 的显式加载方式；新增独立注册类时才把其 `bootstrap()` 放在依赖已就绪、消费者之前。
-
-武器物品、技能物品、Curios 藏品分别交给 `$zinecraft-weapons`、`$zinecraft-skills`、`$zinecraft-collectibles`。
+1. 在 ModItem 用 ItemBuilder 声明稳定 snake_case ID、双语名、factory、模型模板与创造页选项；普通材料参考 item(...)，食物参考 food(...)，真正需要行为时才新增 Item 子类。
+2. 默认模型由 CatalogModelProvider 生成，纹理放 assets/zinecraft/textures/item/<id>.png。model 为 null 表示不生成模型，此时必须维护手写模型；inCreativeTab=false 会从主物品页排除。
+3. 当前普通配方在 ModRecipeProvider 声明。需要标签、任务、战利品或兼容层时维护对应 src/main/resources/data/...；runData 不会自动推断这些接入。
+4. 保持 Zinecraft.bootstrapContent() 的显式加载顺序；只有新增独立注册类时才补 bootstrap。
+5. 音乐唱片不走 ModItem 普通流程，使用 MusicDiscBuilder、ModSound 与 SoundCatalog；手工补齐 OGG 与 sounds.json，并确认 runData 生成 jukebox song 和唱片模型。其他专用物品分别路由到对应 skill。
 
 ## 验证
 
-运行 `./gradlew.bat test`、`./gradlew.bat runData` 和 `./gradlew.bat build`。检查双语翻译、生成模型、纹理路径、配方/标签、创造页可见性、JAR
-内容及 `git diff --check`；若行为依赖客户端，补做 `runClient` 手测并如实报告未执行项。
+运行 ./gradlew.bat test、./gradlew.bat runData 和 ./gradlew.bat build。检查双语翻译、模型、纹理、配方/标签、创造页、任务/loot 引用和 JAR；唱片还应通过 verifyMusicDiscJarResources 并在客户端试听。

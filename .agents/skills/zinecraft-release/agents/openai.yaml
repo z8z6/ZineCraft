@@ -1,4 +1,4 @@
 interface:
   display_name: "Zinecraft 发布与 PCL 整合包"
-  short_description: "构建当前模组、校验发布物并生成可由 PCL 导入的完整整合包"
-  default_prompt: "使用 $zinecraft-release 构建当前 Zinecraft，并生成经过校验的 PCL 整合包。"
+  short_description: "用仓库 Gradle 任务构建并校验 JAR 或 PCL 整合包"
+  default_prompt: "使用 $zinecraft-release 构建当前 Zinecraft，并按现有 Gradle 任务校验发布物。"
