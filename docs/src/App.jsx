@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import 'katex/dist/katex.min.css'
 import catalog from './data/catalog.json'
 
 const guideModules = import.meta.glob('../guides/**/*.md', {
@@ -519,7 +522,9 @@ function DocsIndex({ initialCategory }) {
 function DocumentPage({ document }) {
   const [copied, setCopied] = useState('')
   const headings = useMemo(() => [...document.content.matchAll(/^(#{2,3})\s+(.+)$/gm)].map((match) => ({ level: match[1].length, text: match[2] })), [document])
-  useEffect(() => window.scrollTo(0, 0), [document.slug])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [document.slug])
 
   const copyCode = async (value) => {
     await navigator.clipboard.writeText(value)
@@ -557,7 +562,8 @@ function DocumentPage({ document }) {
       <article className="markdown-shell">
         <div className="markdown-meta"><span>{categoryMeta[document.category].code}</span><span>{document.path}</span></div>
         <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
+          remarkPlugins={[remarkGfm, remarkMath]}
+          rehypePlugins={[rehypeKatex]}
           components={{
             h2: ({ children }) => <h2 id={headingId(children)}>{children}</h2>,
             h3: ({ children }) => <h3 id={headingId(children)}>{children}</h3>,

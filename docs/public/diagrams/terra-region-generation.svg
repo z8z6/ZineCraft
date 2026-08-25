@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1080" viewBox="0 0 1500 1080" role="img" aria-labelledby="title desc">
+  <title id="title">城市 Region 与 Region 四层内部生成流程</title>
+  <desc id="desc">上半部分展示城市中的 Region 候选循环，下半部分展示每个 Region 四层道路、楼梯、Parcel 和建筑生成流程。</desc>
+  <defs>
+    <linearGradient id="bgR" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111820"/><stop offset="1" stop-color="#25313a"/></linearGradient>
+    <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#f0b429"/></marker>
+    <style>
+      .h1{font:700 30px ''Microsoft YaHei'',sans-serif;fill:#f7f1e7}.h2{font:700 19px ''Microsoft YaHei'',sans-serif;fill:#f0b429}
+      .body{font:15px ''Microsoft YaHei'',sans-serif;fill:#e0e5e8}.small{font:13px ''Microsoft YaHei'',sans-serif;fill:#afbac2}.code{font:13px Consolas,monospace;fill:#f5d67b}
+      .box{fill:#182129;stroke:#4d5a64;stroke-width:2}.decision{fill:#2b3134;stroke:#f0b429;stroke-width:2}.flow{fill:none;stroke:#f0b429;stroke-width:3;marker-end:url(#arrowR)}
+      .loop{fill:none;stroke:#7ebdd8;stroke-width:3;marker-end:url(#arrowR)}.lane{fill:#151e25;stroke:#394650;stroke-width:2}
+    </style>
+  </defs>
+  <rect width="1500" height="1080" rx="18" fill="url(#bgR)"/><rect width="12" height="1080" fill="#f0b429"/>
+  <text x="50" y="54" class="h1">两层生成循环：城市先放 Region，Region 再规划四层</text>
+  <text x="50" y="84" class="body">黄色箭头是主流程；蓝色箭头是“继续尝试/继续补路”的收敛循环；任何硬约束失败都会终止 runData。</text>
+
+  <g transform="translate(50 120)">
+    <rect class="lane" width="1400" height="375" rx="14"/><text x="22" y="35" class="h2">A. MobileCityLayoutGenerator：在城市可用 Chunk 中放置 Region 实例</text>
+    <g transform="translate(25 65)"><rect class="box" width="190" height="105" rx="9"/><text x="16" y="30" class="body">城市多边形栅格化</text><text x="16" y="58" class="small">仅四角+中心均在边界内</text><text x="16" y="82" class="code">CellState.EMPTY</text></g>
+    <path class="flow" d="M227 118H267"/>
+    <g transform="translate(280 65)"><rect class="box" width="190" height="105" rx="9"/><text x="16" y="30" class="body">寻找城市核心</text><text x="16" y="58" class="small">枚举 Chunk 中心</text><text x="16" y="82" class="small">取距边界最大者</text></g>
+    <path class="flow" d="M482 118H522"/>
+    <g transform="translate(535 65)"><rect class="box" width="205" height="105" rx="9"/><text x="16" y="30" class="body">放置必选类型</text><text x="16" y="58" class="small">按 weight 降序</text><text x="16" y="82" class="code">重复 minCount 次</text></g>
+    <path class="flow" d="M752 118H792"/>
+    <g transform="translate(805 65)"><polygon class="decision" points="100,0 200,52 100,104 0,52"/><text x="48" y="48" class="body">仍可选且</text><text x="43" y="70" class="body">未到 max?</text></g>
+    <path class="flow" d="M1017 118H1057"/>
+    <g transform="translate(1070 65)"><rect class="box" width="285" height="105" rx="9"/><text x="16" y="30" class="body">加权类型顺序 → 候选搜索</text><text x="16" y="58" class="small">采样、过滤、打乱后截断 K 个</text><text x="16" y="82" class="small">选 score 最大候选并占用</text></g>
+    <path class="loop" d="M1212 182V226H905V182"/><text x="1030" y="248" class="small">接受候选后回到循环判断</text>
+    <path class="flow" d="M905 182V282H780"/>
+    <g transform="translate(515 260)"><polygon class="decision" points="130,0 260,52 130,104 0,52"/><text x="47" y="48" class="body">plots ≥ minPlotCount</text><text x="86" y="70" class="body">且校验通过?</text></g>
+    <path class="flow" d="M503 312H420"/><text x="435" y="300" class="small">否：失败</text>
+    <g transform="translate(210 260)"><rect class="box" width="190" height="105" rx="9"/><text x="16" y="34" class="body">LayoutFailureReason</text><text x="16" y="62" class="small">runData 停止</text><text x="16" y="86" class="small">不生成残缺城市</text></g>
+    <path class="flow" d="M775 312H850"/><text x="788" y="300" class="small">是</text>
+    <g transform="translate(865 260)"><rect class="box" width="250" height="105" rx="9"/><text x="16" y="34" class="body">为每个 Region 实例</text><text x="16" y="62" class="small">派生稳定 regionSeed</text><text x="16" y="86" class="small">进入下方四层规划</text></g>
+  </g>
+
+  <g transform="translate(50 535)">
+    <rect class="lane" width="1400" height="495" rx="14"/><text x="22" y="35" class="h2">B. RegionLayoutGenerator：同一 Region 的四层分别生成、共同校验</text>
+    <g transform="translate(25 65)"><rect class="box" width="205" height="105" rx="9"/><text x="16" y="30" class="body">确定共享几何</text><text x="16" y="58" class="small">Entrance / center</text><text x="16" y="82" class="small">四象限 stairChunks</text></g>
+    <path class="flow" d="M242 118H282"/>
+    <g transform="translate(295 65)"><rect class="box" width="245" height="105" rx="9"/><text x="16" y="30" class="body">为每层混合独立 seed</text><text x="16" y="58" class="small">surface 用注册布局</text><text x="16" y="82" class="small">下三层随机三种已实现布局</text></g>
+    <path class="flow" d="M552 118H592"/>
+    <g transform="translate(605 65)"><rect class="box" width="210" height="105" rx="9"/><text x="16" y="30" class="body">主路和布局骨架</text><text x="16" y="58" class="small">Entrance → hub → center</text><text x="16" y="82" class="small">GRID / 环路 / 放射网格</text></g>
+    <path class="flow" d="M827 118H867"/>
+    <g transform="translate(880 65)"><rect class="box" width="215" height="105" rx="9"/><text x="16" y="30" class="body">接入全部楼梯</text><text x="16" y="58" class="small">多源 BFS 距离场</text><text x="16" y="82" class="small">沿距离递减路径接路</text></g>
+    <path class="flow" d="M1107 118H1147"/>
+    <g transform="translate(1160 65)"><rect class="box" width="195" height="105" rx="9"/><text x="16" y="30" class="body">补可达支路</text><text x="16" y="58" class="small">若 maxDistance &gt; 1</text><text x="16" y="82" class="small">从最远格补 service 路</text></g>
+    <path class="loop" d="M1257 182V220H1010V182"/><text x="1075" y="242" class="small">直到每个非道路格都临路</text>
+
+    <g transform="translate(25 285)"><rect class="box" width="235" height="105" rx="9"/><text x="16" y="30" class="body">安全清理 2×2 道路</text><text x="16" y="58" class="small">不删 Entrance / stair</text><text x="16" y="82" class="small">连通和临路性必须保持</text></g>
+    <path class="flow" d="M272 338H312"/>
+    <g transform="translate(325 285)"><rect class="box" width="220" height="105" rx="9"/><text x="16" y="30" class="body">重建 RoadGraph</text><text x="16" y="58" class="small">横纵连续格压成边</text><text x="16" y="82" class="small">保留最高 RoadClass</text></g>
+    <path class="flow" d="M557 338H597"/>
+    <g transform="translate(610 285)"><rect class="box" width="220" height="105" rx="9"/><text x="16" y="30" class="body">提取 UrbanBlock</text><text x="16" y="58" class="small">对非道路格做四邻域 BFS</text><text x="16" y="82" class="small">每个连通分量一个 block</text></g>
+    <path class="flow" d="M842 338H882"/>
+    <g transform="translate(895 285)"><rect class="box" width="220" height="105" rx="9"/><text x="16" y="30" class="body">切 Parcel / 选建筑</text><text x="16" y="58" class="small">2×2 → 1×2 → 1×1</text><text x="16" y="82" class="small">精确 footprint + 真实入口</text></g>
+    <path class="flow" d="M1127 338H1167"/>
+    <g transform="translate(1180 285)"><rect class="box" width="175" height="105" rx="9"/><text x="16" y="30" class="body">硬约束校验</text><text x="16" y="58" class="small">四层、道路、楼梯</text><text x="16" y="82" class="small">Parcel、建筑全覆盖</text></g>
+    <text x="25" y="455" class="body">四层输出：每个 Chunk 必须且只能属于道路或 Parcel；楼梯占用道路 Chunk，并在运行时优先替换道路模板。</text>
+  </g>
+</svg>

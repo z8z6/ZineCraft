@@ -244,6 +244,7 @@ h1,h2,h3,.brand strong,.pixel-button,.mc-wordmark { font-family: "Minecraft Ten"
 .markdown-shell blockquote { margin: 25px 0; padding: 14px 22px; background: #ebe7dc; border-left: 5px solid var(--lime); }
 .markdown-shell blockquote p { margin: 0; }
 .markdown-shell :not(pre) > code { padding: 2px 6px; color: #9d3d1a; background: #e6e0d4; font: 12px ui-monospace,monospace; }
+.markdown-shell .katex-display { margin: 24px 0; padding: 12px 0; overflow-x: auto; overflow-y: hidden; }
 .code-frame { position: relative; margin: 24px 0; background: #20231f; border: 1px solid #0f100f; box-shadow: 5px 5px 0 #cbc5b8; }
 .code-frame button { position: absolute; top: 8px; right: 8px; padding: 6px 10px; color: #d0d6cc; background: #343934; border: 1px solid #5e655c; font: 400 11px "Minecraft Ten",sans-serif; cursor: pointer; }
 .code-frame pre { margin: 0; padding: 24px; overflow: auto; color: #d9ded5; font: 12px/1.7 ui-monospace,Consolas,monospace; }

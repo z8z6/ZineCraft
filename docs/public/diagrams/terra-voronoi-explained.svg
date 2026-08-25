@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">Voronoi 术语、几何含义与 Zinecraft 实现</title>
+  <desc id="desc">比较点站点与折线站点 Voronoi，并展示从归一化、建图、裁剪、合并到映回世界坐标的实现流程。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111820"/><stop offset="1" stop-color="#25313a"/></linearGradient>
+    <marker id="arrowV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#f0b429"/></marker>
+    <style>
+      .h1{font:700 30px ''Microsoft YaHei'',sans-serif;fill:#f7f1e7}.h2{font:700 19px ''Microsoft YaHei'',sans-serif;fill:#f0b429}
+      .body{font:15px ''Microsoft YaHei'',sans-serif;fill:#d6dde2}.small{font:13px ''Microsoft YaHei'',sans-serif;fill:#aeb9c2}.math{font:15px Consolas,monospace;fill:#f5d67b}
+      .panel{fill:#182129;stroke:#4c5963;stroke-width:2}.space{fill:#202c34;stroke:#aeb9c2;stroke-width:2}.bisector{fill:none;stroke:#f0b429;stroke-width:3;stroke-dasharray:9 7}
+      .siteA{fill:none;stroke:#ef7654;stroke-width:6}.siteB{fill:none;stroke:#6dbce3;stroke-width:6}.flow{fill:none;stroke:#f0b429;stroke-width:3;marker-end:url(#arrowV)}
+    </style>
+  </defs>
+  <rect width="1400" height="820" rx="18" fill="url(#bg)"/><rect width="12" height="820" fill="#f0b429"/>
+  <text x="50" y="55" class="h1">Voronoi：按“离哪个站点最近”划分空间</text>
+  <text x="50" y="84" class="body">Ω 是裁剪边界；site 是距离参照物；cell 是某个 site 获得的区域；bisector 是两个 site 等距的分界。</text>
+
+  <g transform="translate(50 120)">
+    <rect class="panel" width="625" height="380" rx="12"/><text x="22" y="36" class="h2">点站点：城市边界</text>
+    <rect x="32" y="66" width="330" height="245" class="space"/>
+    <path d="M197 66V311" class="bisector"/><rect x="34" y="68" width="161" height="241" fill="#4f3430" opacity=".65"/><rect x="199" y="68" width="161" height="241" fill="#274b5a" opacity=".65"/>
+    <circle cx="112" cy="190" r="9" fill="#ef7654"/><circle cx="282" cy="190" r="9" fill="#6dbce3"/>
+    <text x="92" y="220" class="small">s₁</text><text x="291" y="220" class="small">s₂</text><text x="203" y="92" class="small">等距平分线</text>
+    <text x="389" y="85" class="math">Vᵢ = Ω ∩ ⋂ Hᵢⱼ</text>
+    <text x="389" y="120" class="small">Vᵢ：站点 i 的单元</text><text x="389" y="146" class="small">Hᵢⱼ：更靠近 i 的半平面</text>
+    <text x="389" y="190" class="math">‖p-sᵢ‖ ≤ ‖p-sⱼ‖</text>
+    <text x="389" y="232" class="math">(sⱼ-sᵢ)·p ≤</text><text x="389" y="257" class="math">(‖sⱼ‖²-‖sᵢ‖²)/2</text>
+    <text x="32" y="345" class="body">实现：从 Ω 出发，依次用每个 Hᵢⱼ 裁剪当前多边形。</text>
+  </g>
+
+  <g transform="translate(725 120)">
+    <rect class="panel" width="625" height="380" rx="12"/><text x="22" y="36" class="h2">折线站点：国家边界</text>
+    <rect x="32" y="66" width="330" height="245" class="space"/>
+    <polyline points="72,246 130,170 170,210" class="siteA"/><polyline points="242,112 286,168 326,104" class="siteB"/>
+    <path d="M185 75C165 130 220 155 192 210C177 240 210 270 206 305" class="bisector"/>
+    <circle cx="222" cy="230" r="7" fill="#f7f1e7"/><line x1="222" y1="230" x2="170" y2="210" stroke="#ef7654" stroke-width="2"/><line x1="222" y1="230" x2="271" y2="149" stroke="#6dbce3" stroke-width="2"/>
+    <text x="229" y="251" class="small">p</text><text x="389" y="85" class="math">d(p,L)² = min d(p,[a,b])²</text>
+    <text x="389" y="128" class="math">t = clamp(((p-a)·(b-a))</text><text x="389" y="153" class="math">          / ‖b-a‖², 0, 1)</text>
+    <text x="389" y="196" class="math">d² = ‖p-(a+t(b-a))‖²</text>
+    <text x="389" y="240" class="small">折线的每条线段共同构成一个 site。</text><text x="389" y="267" class="small">分界通常是直线与抛物线段的组合。</text>
+    <text x="32" y="345" class="body">实现：点与线段先产生 primitive faces，再按国家 owner 合并。</text>
+  </g>
+
+  <g transform="translate(50 545)">
+    <text x="0" y="28" class="h2">PolylineVoronoiDiagram 实现流水线</text>
+    <g transform="translate(0 55)"><rect class="panel" width="200" height="115" rx="10"/><text x="18" y="32" class="body">1. 归一化</text><text x="18" y="60" class="small">最长边缩放为 1</text><text x="18" y="84" class="small">降低数值尺度差异</text></g>
+    <path class="flow" d="M212 112H255"/>
+    <g transform="translate(270 55)"><rect class="panel" width="200" height="115" rx="10"/><text x="18" y="32" class="body">2. 插入 primitive</text><text x="18" y="60" class="small">全部顶点：point site</text><text x="18" y="84" class="small">相邻顶点：line site</text></g>
+    <path class="flow" d="M482 112H525"/>
+    <g transform="translate(540 55)"><rect class="panel" width="200" height="115" rx="10"/><text x="18" y="32" class="body">3. 生成 faces</text><text x="18" y="60" class="small">jOpenVoronoi 建图</text><text x="18" y="84" class="small">曲线保留端点/极值</text></g>
+    <path class="flow" d="M752 112H795"/>
+    <g transform="translate(810 55)"><rect class="panel" width="200" height="115" rx="10"/><text x="18" y="32" class="body">4. 裁剪与归属</text><text x="18" y="60" class="small">裁到泰拉核心矩形</text><text x="18" y="84" class="small">判定 primitive owner</text></g>
+    <path class="flow" d="M1022 112H1065"/>
+    <g transform="translate(1080 55)"><rect class="panel" width="270" height="115" rx="10"/><text x="18" y="32" class="body">5. 合并并映回世界</text><text x="18" y="60" class="small">JTS union 同国 faces</text><text x="18" y="84" class="small">去重/共线简化 → 方块坐标</text></g>
+  </g>
+</svg>
