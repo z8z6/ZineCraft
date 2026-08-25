@@ -21,21 +21,18 @@ import java.util.List;
 public final class CollectibleItem extends Item implements ICurioItem {
   private final CollectibleBuilder collectible;
   private final String namespace;
-  private final String seriesTranslationKey;
   private final String originalEffectLabelTranslationKey;
   private final String minecraftEffectLabelTranslationKey;
 
   public CollectibleItem(
       CollectibleBuilder collectible,
       String namespace,
-      String seriesTranslationKey,
       String originalEffectLabelTranslationKey,
       String minecraftEffectLabelTranslationKey
   ) {
     super(new Item.Properties().stacksTo(1).rarity(collectible.rarity));
     this.collectible = collectible;
     this.namespace = namespace;
-    this.seriesTranslationKey = seriesTranslationKey;
     this.originalEffectLabelTranslationKey = originalEffectLabelTranslationKey;
     this.minecraftEffectLabelTranslationKey = minecraftEffectLabelTranslationKey;
   }
@@ -51,7 +48,9 @@ public final class CollectibleItem extends Item implements ICurioItem {
     if (entity.level().isClientSide || entity.tickCount % 20 != 0) {
       return;
     }
-    collectible.power.apply(CombatStat.EMPTY).triggerPerSecondEffects(entity);
+    collectible.power.apply(CombatStat.EMPTY.withCollectibleEffectTier(
+        CollectibleSpecialCondition.tier(entity)
+    )).triggerPerSecondEffects(entity);
   }
 
   @Override
@@ -69,7 +68,11 @@ public final class CollectibleItem extends Item implements ICurioItem {
     ResourceLocation modifierId = ResourceLocation.fromNamespaceAndPath(
         namespace, "collectible/" + collectible.path
     );
-    return CombatStat.toVanillaModifiers(collectible.power, modifierId);
+    return CombatStat.toVanillaModifiers(
+        collectible.power,
+        modifierId,
+        CollectibleSpecialCondition.tier(slotContext.entity())
+    );
   }
 
   @Override
@@ -80,7 +83,6 @@ public final class CollectibleItem extends Item implements ICurioItem {
   @Override
   public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
     super.appendHoverText(stack, context, tooltip, flag);
-    tooltip.add(Component.translatable(seriesTranslationKey, collectible.orderId).withStyle(ChatFormatting.DARK_AQUA));
     for (int index = 0; index < collectible.originalEffectLineCount; index++) {
       var line = Component.translatable(getDescriptionId() + ".original_effect." + index);
       if (isTooltipPadding(line)) continue;

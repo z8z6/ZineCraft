@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.core.collection;
 
 import com.cxxcxx.zinecraft.api.collection.CollectibleCombatStats;
+import com.cxxcxx.zinecraft.api.combat.CombatMitigationType;
 import com.cxxcxx.zinecraft.api.combat.CombatStat;
 import com.cxxcxx.zinecraft.api.combat.CombatStatusService;
 import com.cxxcxx.zinecraft.core.Zinecraft;
@@ -27,7 +28,7 @@ public final class CollectibleEffectRuntime {
   private CollectibleEffectRuntime() {
   }
 
-  /** 首次加入世界的敌方实体只在生成时固化一次生命与攻速藏品效果。 */
+  /** 首次加入世界的敌方实体只在生成时固化一次可转换基础属性藏品效果。 */
   @SubscribeEvent
   public static void onEntityJoin(EntityJoinLevelEvent event) {
     if (event.loadedFromDisk()
@@ -39,7 +40,7 @@ public final class CollectibleEffectRuntime {
     EnemySpawnStatService.apply(level, enemy);
   }
 
-  /** 所有藏品先累加到同一 CombatStat，再统一判定闪避并计算减伤与无视防御。 */
+  /** 所有藏品先累加到同一 CombatStat，再统一判定闪避并计算减伤、敌方受伤乘区与无视防御。 */
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void onIncomingDamage(LivingIncomingDamageEvent event) {
     if (event.getEntity().level().isClientSide) return;
@@ -64,9 +65,13 @@ public final class CollectibleEffectRuntime {
 
     if (event.getEntity() instanceof Enemy
         && event.getSource().getEntity() instanceof LivingEntity attacker) {
-      double defenseIgnore = CollectibleCombatStats.apply(attacker, CombatStat.EMPTY)
-          .limited()
-          .defenseIgnore();
+      CombatStat attackerStats = CollectibleCombatStats.apply(attacker, CombatStat.EMPTY).limited();
+      double damageTakenMultiplier = enemyDamageTakenMultiplier(event.getSource(), attackerStats);
+      if (Double.compare(damageTakenMultiplier, 1.0) != 0) {
+        event.setAmount((float) (event.getAmount() * damageTakenMultiplier));
+      }
+
+      double defenseIgnore = attackerStats.defenseIgnore();
       if (defenseIgnore > 0.0) {
         event.addReductionModifier(
             DamageContainer.Reduction.ARMOR,
@@ -74,6 +79,24 @@ public final class CollectibleEffectRuntime {
         );
       }
     }
+  }
+
+  private static double enemyDamageTakenMultiplier(DamageSource source, CombatStat stats) {
+    if (source.is(damageType("true"))) return 1.0;
+    if (source.is(damageType("physical"))) {
+      return stats.enemyDamageTakenMultiplier(CombatMitigationType.PHYSICAL);
+    }
+    if (source.is(damageType("magic"))
+        || source.is(damageType("arts"))
+        || source.is(damageType("fire"))
+        || source.is(damageType("ice"))
+        || source.is(damageType("lightning"))
+        || source.is(damageType("poison"))) {
+      return stats.enemyDamageTakenMultiplier(CombatMitigationType.MAGIC);
+    }
+    return source.is(DamageTypeTags.BYPASSES_ARMOR)
+        ? stats.enemyDamageTakenMultiplier(CombatMitigationType.MAGIC)
+        : stats.enemyDamageTakenMultiplier(CombatMitigationType.PHYSICAL);
   }
 
   private static double evasionRate(DamageSource source, CombatStat stats) {

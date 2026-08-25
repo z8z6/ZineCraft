@@ -14,4 +14,9 @@ public final class CollectibleExplorationEffects {
   public static CombatStat equipped(LivingEntity entity) {
     return CollectibleCombatStats.apply(entity, CombatStat.EMPTY);
   }
+
+  /** 按集成战略运行时给出的特殊条件档位汇总探索效果。 */
+  public static CombatStat equipped(LivingEntity entity, int collectibleEffectTier) {
+    return CollectibleCombatStats.apply(entity, CombatStat.EMPTY, collectibleEffectTier);
+  }
 }

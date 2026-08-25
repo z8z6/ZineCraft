@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.api.combat;
 
 import com.cxxcxx.zinecraft.api.collection.CollectibleCombatStats;
+import com.cxxcxx.zinecraft.api.skill.SkillProfession;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -30,17 +31,130 @@ public final class CombatService {
     return CollectibleCombatStats.apply(entity, base).limited().attack();
   }
 
+  /** 使用技能声明的职业解析职业限定藏品后计算攻击力。 */
+  public double attack(LivingEntity entity, SkillProfession profession, double baseAttack) {
+    CombatStat base = CombatStat.EMPTY.withAttack(requireBase(baseAttack));
+    return CollectibleCombatStats.apply(entity, base, profession).limited().attack();
+  }
+
   /** Resolves attack speed around Arknights' neutral value of 100. */
   public double attackSpeed(LivingEntity entity, double baseAttackSpeed) {
     CombatStat base = CombatStat.EMPTY.withAttackSpeed(requireBase(baseAttackSpeed));
-    return CollectibleCombatStats.apply(entity, base).limited().attackSpeed();
+    return CollectibleCombatStats.apply(entity, base)
+        .withOriginiumIngots(0)
+        .evaluatePerSecondConditionalEffects()
+        .limited()
+        .attackSpeed();
+  }
+
+  /** 使用探索运行时提供的当前源石锭总数结算条件攻击速度。 */
+  public double attackSpeed(
+      LivingEntity entity,
+      double baseAttackSpeed,
+      int currentOriginiumIngots
+  ) {
+    CombatStat base = CombatStat.EMPTY.withAttackSpeed(requireBase(baseAttackSpeed));
+    return CollectibleCombatStats.apply(entity, base)
+        .withOriginiumIngots(currentOriginiumIngots)
+        .evaluatePerSecondConditionalEffects()
+        .limited()
+        .attackSpeed();
+  }
+
+  /** 使用技能声明的职业解析职业限定藏品后计算攻击速度。 */
+  public double attackSpeed(LivingEntity entity, SkillProfession profession, double baseAttackSpeed) {
+    CombatStat base = CombatStat.EMPTY.withAttackSpeed(requireBase(baseAttackSpeed));
+    return CollectibleCombatStats.apply(entity, base, profession)
+        .withOriginiumIngots(0)
+        .evaluatePerSecondConditionalEffects()
+        .limited()
+        .attackSpeed();
+  }
+
+  /** 使用技能职业和当前源石锭总数结算条件攻击速度。 */
+  public double attackSpeed(
+      LivingEntity entity,
+      SkillProfession profession,
+      double baseAttackSpeed,
+      int currentOriginiumIngots
+  ) {
+    CombatStat base = CombatStat.EMPTY.withAttackSpeed(requireBase(baseAttackSpeed));
+    return CollectibleCombatStats.apply(entity, base, profession)
+        .withOriginiumIngots(currentOriginiumIngots)
+        .evaluatePerSecondConditionalEffects()
+        .limited()
+        .attackSpeed();
   }
   public double attackIntervalSeconds(LivingEntity entity, double theoreticalIntervalSeconds, double baseAttackSpeed) {
     return CombatFormulas.attackInterval(theoreticalIntervalSeconds, attackSpeed(entity, baseAttackSpeed));
   }
 
+  public double attackIntervalSeconds(
+      LivingEntity entity,
+      double theoreticalIntervalSeconds,
+      double baseAttackSpeed,
+      int currentOriginiumIngots
+  ) {
+    return CombatFormulas.attackInterval(
+        theoreticalIntervalSeconds,
+        attackSpeed(entity, baseAttackSpeed, currentOriginiumIngots)
+    );
+  }
+
+  public double attackIntervalSeconds(
+      LivingEntity entity,
+      SkillProfession profession,
+      double theoreticalIntervalSeconds,
+      double baseAttackSpeed
+  ) {
+    return CombatFormulas.attackInterval(
+        theoreticalIntervalSeconds,
+        attackSpeed(entity, profession, baseAttackSpeed)
+    );
+  }
+
+  public double attackIntervalSeconds(
+      LivingEntity entity,
+      SkillProfession profession,
+      double theoreticalIntervalSeconds,
+      double baseAttackSpeed,
+      int currentOriginiumIngots
+  ) {
+    return CombatFormulas.attackInterval(
+        theoreticalIntervalSeconds,
+        attackSpeed(entity, profession, baseAttackSpeed, currentOriginiumIngots)
+    );
+  }
+
   public CombatActionTiming actionTiming(LivingEntity entity, int baseEffectTick, int baseDurationTicks) {
     return CombatActionTiming.scale(baseEffectTick, baseDurationTicks, attackSpeed(entity, 100.0));
+  }
+
+  public CombatActionTiming actionTiming(
+      LivingEntity entity,
+      int baseEffectTick,
+      int baseDurationTicks,
+      int currentOriginiumIngots
+  ) {
+    return CombatActionTiming.scale(
+        baseEffectTick,
+        baseDurationTicks,
+        attackSpeed(entity, 100.0, currentOriginiumIngots)
+    );
+  }
+
+  public CombatActionTiming actionTiming(
+      LivingEntity entity,
+      SkillProfession profession,
+      int baseEffectTick,
+      int baseDurationTicks,
+      int currentOriginiumIngots
+  ) {
+    return CombatActionTiming.scale(
+        baseEffectTick,
+        baseDurationTicks,
+        attackSpeed(entity, profession, 100.0, currentOriginiumIngots)
+    );
   }
 
   /** 聚合施加者藏品后，计算作用于敌方的一次性异常状态持续时间。 */
@@ -52,6 +166,15 @@ public final class CombatService {
   /** 聚合承受者藏品后，计算我方承受的一次性异常状态持续时间。 */
   public int friendlyStatusDurationTicks(LivingEntity target, int baseDurationTicks) {
     return CollectibleCombatStats.apply(target, CombatStat.EMPTY)
+        .friendlyStatusDurationTicks(baseDurationTicks);
+  }
+
+  public int friendlyStatusDurationTicks(
+      LivingEntity target,
+      SkillProfession profession,
+      int baseDurationTicks
+  ) {
+    return CollectibleCombatStats.apply(target, CombatStat.EMPTY, profession)
         .friendlyStatusDurationTicks(baseDurationTicks);
   }
 
@@ -67,6 +190,23 @@ public final class CombatService {
         type,
         attack(attacker, baseAttack),
         withCollectibleDamageModifiers(attacker, type, request)
+    );
+  }
+
+  /** 按技能职业解析职业限定藏品并计算伤害。 */
+  public float calculateDamage(
+      LivingEntity attacker,
+      SkillProfession profession,
+      LivingEntity target,
+      CombatDamageType type,
+      double baseAttack,
+      CombatRequest request
+  ) {
+    return calculateDamageFromResolvedAttack(
+        target,
+        type,
+        attack(attacker, profession, baseAttack),
+        withCollectibleDamageModifiers(attacker, profession, type, request)
     );
   }
 
@@ -98,6 +238,19 @@ public final class CombatService {
     return amount > 0.0F && target.hurt(damageSource(attacker, type), amount);
   }
 
+  /** 使用技能职业上下文结算并施加伤害。 */
+  public boolean damage(
+      LivingEntity attacker,
+      SkillProfession profession,
+      LivingEntity target,
+      CombatDamageType type,
+      double baseAttack,
+      CombatRequest request
+  ) {
+    float amount = calculateDamage(attacker, profession, target, type, baseAttack, request);
+    return amount > 0.0F && target.hurt(damageSource(attacker, type), amount);
+  }
+
   /**
    * 按统一伤害描述结算一段伤害。
    * 固定伤害进入基础攻击力流程；攻击力倍率伤害使用实体当前攻击属性作为已解析攻击力。
@@ -107,6 +260,33 @@ public final class CombatService {
       case FLAT -> damage(attacker, target, profile.type(), profile.amount(), CombatRequest.DEFAULT);
       case ATTACK_MULTIPLIER -> damageFromResolvedAttack(
           attacker,
+          target,
+          profile.type(),
+          attacker.getAttributeValue(Attributes.ATTACK_DAMAGE),
+          new CombatRequest(profile.amount(), 0.0, 0.0, 0.0, 1.0)
+      );
+    };
+  }
+
+  /** 使用技能声明的职业结算一段伤害。 */
+  public boolean damage(
+      LivingEntity attacker,
+      SkillProfession profession,
+      LivingEntity target,
+      CombatDamageProfile profile
+  ) {
+    return switch (profile.basis()) {
+      case FLAT -> damage(
+          attacker,
+          profession,
+          target,
+          profile.type(),
+          profile.amount(),
+          CombatRequest.DEFAULT
+      );
+      case ATTACK_MULTIPLIER -> damageFromResolvedAttack(
+          attacker,
+          profession,
           target,
           profile.type(),
           attacker.getAttributeValue(Attributes.ATTACK_DAMAGE),
@@ -132,6 +312,20 @@ public final class CombatService {
     return damaged;
   }
 
+  /** 使用技能声明的职业依次结算同一次命中的多段伤害。 */
+  public boolean damage(
+      LivingEntity attacker,
+      SkillProfession profession,
+      LivingEntity target,
+      List<CombatDamageProfile> profiles
+  ) {
+    boolean damaged = false;
+    for (CombatDamageProfile profile : List.copyOf(profiles)) {
+      damaged = damage(attacker, profession, target, profile) || damaged;
+    }
+    return damaged;
+  }
+
   /**
    * Applies damage when the caller already read the final Minecraft attack attribute.
    */
@@ -147,6 +341,28 @@ public final class CombatService {
         type,
         resolvedAttack,
         withCollectibleDamageModifiers(attacker, type, request)
+    );
+    return amount > 0.0F && target.hurt(damageSource(attacker, type), amount);
+  }
+
+  /** 对已经读取的实体攻击属性应用技能职业藏品后结算伤害。 */
+  public boolean damageFromResolvedAttack(
+      LivingEntity attacker,
+      SkillProfession profession,
+      LivingEntity target,
+      CombatDamageType type,
+      double resolvedAttack,
+      CombatRequest request
+  ) {
+    float amount = calculateDamageFromResolvedAttack(
+        target,
+        type,
+        CollectibleCombatStats.applyProfession(
+            attacker,
+            CombatStat.EMPTY.withAttack(requireBase(resolvedAttack)),
+            profession
+        ).limited().attack(),
+        withCollectibleDamageModifiers(attacker, profession, type, request)
     );
     return amount > 0.0F && target.hurt(damageSource(attacker, type), amount);
   }
@@ -172,6 +388,30 @@ public final class CombatService {
     boolean physical = type.mitigation() == CombatMitigationType.PHYSICAL;
     if (!physical && type != CombatDamageType.TRUE) return request;
     CombatStat stats = CollectibleCombatStats.apply(attacker, CombatStat.EMPTY).limited();
+    double combined = physical
+        ? Math.clamp(request.percentPenetration() + stats.defenseIgnore(), 0.0, 1.0)
+        : request.percentPenetration();
+    double finalMultiplier = type == CombatDamageType.TRUE
+        ? request.finalMultiplier() * (1.0 + stats.trueDamageBonus())
+        : request.finalMultiplier();
+    return new CombatRequest(
+        request.attackMultiplier(),
+        request.additionalAttack(),
+        combined,
+        request.flatPenetration(),
+        finalMultiplier
+    );
+  }
+
+  private static CombatRequest withCollectibleDamageModifiers(
+      LivingEntity attacker,
+      SkillProfession profession,
+      CombatDamageType type,
+      CombatRequest request
+  ) {
+    boolean physical = type.mitigation() == CombatMitigationType.PHYSICAL;
+    if (!physical && type != CombatDamageType.TRUE) return request;
+    CombatStat stats = CollectibleCombatStats.apply(attacker, CombatStat.EMPTY, profession).limited();
     double combined = physical
         ? Math.clamp(request.percentPenetration() + stats.defenseIgnore(), 0.0, 1.0)
         : request.percentPenetration();

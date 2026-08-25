@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-/** 在敌方第一次生成时固化当前队伍藏品提供的生命与攻速快照。 */
+/** 在敌方第一次生成时固化当前队伍藏品提供的可转换基础属性快照。 */
 public final class EnemySpawnStatService {
   private static final String APPLIED_TAG = "ZinecraftEnemySpawnStatsApplied";
 

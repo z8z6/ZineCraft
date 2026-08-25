@@ -19,7 +19,6 @@ import java.util.Objects;
 public final class CollectibleBuilder implements ItemLike {
   public final CollectibleCatalog catalog;
   public final String path;
-  public final String orderId;
   public final String zhCn;
   public String enUs;
   public String originalEffectZhCn;
@@ -40,13 +39,11 @@ public final class CollectibleBuilder implements ItemLike {
    *
    * @param catalog 接收藏品的目录
    * @param path    藏品物品的命名空间内路径
-   * @param orderId 原作藏品编号
    * @param zhCn    藏品简体中文名称
    */
-  public CollectibleBuilder(CollectibleCatalog catalog, String path, String orderId, String zhCn) {
+  public CollectibleBuilder(CollectibleCatalog catalog, String path, String zhCn) {
     this.catalog = Objects.requireNonNull(catalog, "藏品目录不能为空");
     this.path = Objects.requireNonNull(path, "藏品 ID 不能为空");
-    this.orderId = Objects.requireNonNull(orderId, "藏品编号不能为空：" + path);
     this.zhCn = Objects.requireNonNull(zhCn, "藏品中文名不能为空：" + path);
     this.enUs = TranslationCatalog.toDisplayName(path);
   }

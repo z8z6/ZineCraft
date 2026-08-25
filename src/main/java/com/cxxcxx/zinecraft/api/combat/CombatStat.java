@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.api.combat;
 
+import com.cxxcxx.zinecraft.api.skill.SkillProfession;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Holder;
@@ -38,6 +39,10 @@ public record CombatStat(
     double damageReduction,
     /** 所有藏品累计提供的物理防御无视比例，在结算时统一限制到 0～1。 */
     double defenseIgnore,
+    /** 敌方受到物理伤害的加成比例，作为防御结算后的独立最终乘区。 */
+    double enemyPhysicalDamageTakenBonus,
+    /** 敌方受到法术伤害的加成比例，作为法抗结算后的独立最终乘区。 */
+    double enemyMagicDamageTakenBonus,
     /** 受到的治疗与生命回复效果加成比例；0.2 表示最终回复量增加 20%。 */
     double healingAndHealthRegenerationBonus,
     /** 攻击回复与受击回复技能额外获得的技力，单位为每秒技力值。 */
@@ -63,10 +68,39 @@ public record CombatStat(
     /** 推拉结算时忽略的敌方重量等级；1 表示按低一个重量等级处理。 */
     int enemyWeightIgnore,
 
+    /** 仅在先锋技能结算时应用的藏品战斗效果。 */
+    List<ProfessionEffect> vanguardEffects,
+    /** 仅在近卫技能结算时应用的藏品战斗效果。 */
+    List<ProfessionEffect> guardEffects,
+    /** 仅在狙击技能结算时应用的藏品战斗效果。 */
+    List<ProfessionEffect> sniperEffects,
+    /** 仅在术师技能结算时应用的藏品战斗效果。 */
+    List<ProfessionEffect> casterEffects,
+    /** 仅在重装技能结算时应用的藏品战斗效果。 */
+    List<ProfessionEffect> defenderEffects,
+    /** 仅在医疗技能结算时应用的藏品战斗效果。 */
+    List<ProfessionEffect> medicEffects,
+    /** 仅在辅助技能结算时应用的藏品战斗效果。 */
+    List<ProfessionEffect> supporterEffects,
+    /** 仅在特种技能结算时应用的藏品战斗效果。 */
+    List<ProfessionEffect> specialistEffects,
+
     /** 希望 */
     int hope,
     /** 源石锭 */
     int originiumIngots,
+    /** 探索行动力的直接增量。 */
+    int actionPoints,
+    /** 抗干扰指数的直接增量。 */
+    int antiInterferenceIndex,
+    /** 坍缩值的直接增量。 */
+    int collapseValue,
+    /** 负荷临界点的直接增量。 */
+    int mentalBurdenLimit,
+    /** 思绪数量的直接增量。 */
+    int thoughts,
+    /** 烛火数量的直接增量。 */
+    int candles,
     /** 编队可容纳干员数量的增量。 */
     int squadCapacity,
     /** 战斗中可同时部署单位数量的增量。 */
@@ -96,13 +130,18 @@ public record CombatStat(
     /** 击杀生物时执行的能力函数，接收击杀者和被击杀实体。 */
     List<KillEffect> killEffects,
     /** 仅在敌方第一次生成时应用的属性快照函数。 */
-    List<EnemySpawnStatEffect> enemySpawnStatEffects
+    List<EnemySpawnStatEffect> enemySpawnStatEffects,
+    /** 当前集成战略特殊条件档位；0 为基础档，数值越大启用越高档分支。 */
+    int collectibleEffectTier
 ) {
   public static final CombatStat EMPTY = new CombatStat(
       0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0.0, 0.0,
+      0,
+      List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       1.0, 0, 0, 1.0, 0,
-      List.of(), List.of(), List.of(), List.of()
+      List.of(), List.of(), List.of(), List.of(), 0
   );
 
   /** 每秒对装备者执行一次的能力函数。 */
@@ -129,6 +168,12 @@ public record CombatStat(
     CombatStat apply(LivingEntity enemy, CombatStat enemyStats);
   }
 
+  /** 将一项职业限定藏品效果应用到技能战斗快照。 */
+  @FunctionalInterface
+  public interface ProfessionEffect {
+    CombatStat apply(CombatStat stats);
+  }
+
   public CombatStat {
     requireFinite(maxHealth, "maxHealth");
     requireFinite(attack, "attack");
@@ -137,6 +182,8 @@ public record CombatStat(
     requireFinite(attackSpeed, "attackSpeed");
     requireFinite(damageReduction, "damageReduction");
     requireFinite(defenseIgnore, "defenseIgnore");
+    requireFinite(enemyPhysicalDamageTakenBonus, "enemyPhysicalDamageTakenBonus");
+    requireFinite(enemyMagicDamageTakenBonus, "enemyMagicDamageTakenBonus");
     requireFinite(healingAndHealthRegenerationBonus, "healingAndHealthRegenerationBonus");
     requireFinite(offensiveDefensiveSkillPointRegeneration, "offensiveDefensiveSkillPointRegeneration");
     requireFinite(naturalSkillPointRegeneration, "naturalSkillPointRegeneration");
@@ -148,12 +195,23 @@ public record CombatStat(
     requireFinite(enemyStatusDurationBonus, "enemyStatusDurationBonus");
     requireFinite(friendlyStatusDurationReduction, "friendlyStatusDurationReduction");
     requireFinite(enemyMovementSpeedReduction, "enemyMovementSpeedReduction");
+    vanguardEffects = checkedFunctions(vanguardEffects, "vanguardEffect");
+    guardEffects = checkedFunctions(guardEffects, "guardEffect");
+    sniperEffects = checkedFunctions(sniperEffects, "sniperEffect");
+    casterEffects = checkedFunctions(casterEffects, "casterEffect");
+    defenderEffects = checkedFunctions(defenderEffects, "defenderEffect");
+    medicEffects = checkedFunctions(medicEffects, "medicEffect");
+    supporterEffects = checkedFunctions(supporterEffects, "supporterEffect");
+    specialistEffects = checkedFunctions(specialistEffects, "specialistEffect");
     requirePositive(commandExperienceMultiplier, "commandExperienceMultiplier");
     requirePositive(battleOriginiumIngotMultiplier, "battleOriginiumIngotMultiplier");
     perSecondEffects = checkedFunctions(perSecondEffects, "perSecondEffect");
     perSecondConditionalEffects = checkedFunctions(perSecondConditionalEffects, "perSecondConditionalEffect");
     killEffects = checkedFunctions(killEffects, "killEffect");
     enemySpawnStatEffects = checkedFunctions(enemySpawnStatEffects, "enemySpawnStatEffect");
+    if (collectibleEffectTier < 0) {
+      throw new IllegalArgumentException("collectibleEffectTier 不能为负数");
+    }
   }
 
   /** 从实体当前的 Minecraft 属性创建战斗属性快照。 */
@@ -181,6 +239,8 @@ public record CombatStat(
       values.attackSpeed = Math.clamp(values.attackSpeed, 20.0, 600.0);
       values.damageReduction = Math.clamp(values.damageReduction, 0.0, 1.0);
       values.defenseIgnore = Math.clamp(values.defenseIgnore, 0.0, 1.0);
+      values.enemyPhysicalDamageTakenBonus = Math.max(0.0, values.enemyPhysicalDamageTakenBonus);
+      values.enemyMagicDamageTakenBonus = Math.max(0.0, values.enemyMagicDamageTakenBonus);
       values.healingAndHealthRegenerationBonus = Math.max(0.0, values.healingAndHealthRegenerationBonus);
       values.offensiveDefensiveSkillPointRegeneration = Math.max(0.0,
           values.offensiveDefensiveSkillPointRegeneration);
@@ -267,6 +327,25 @@ public record CombatStat(
     return change(values -> values.defenseIgnore += value);
   }
 
+  /** 累加敌方受到的物理伤害加成，作为独立最终乘区统一结算。 */
+  public CombatStat addEnemyPhysicalDamageTakenBonus(double value) {
+    return change(values -> values.enemyPhysicalDamageTakenBonus += value);
+  }
+
+  /** 累加敌方受到的法术伤害加成，作为独立最终乘区统一结算。 */
+  public CombatStat addEnemyMagicDamageTakenBonus(double value) {
+    return change(values -> values.enemyMagicDamageTakenBonus += value);
+  }
+
+  /** 返回敌方受伤独立最终乘区；真实伤害不使用物理或法术受伤加成。 */
+  public double enemyDamageTakenMultiplier(CombatMitigationType mitigation) {
+    return switch (Objects.requireNonNull(mitigation, "mitigation")) {
+      case PHYSICAL -> 1.0 + limited().enemyPhysicalDamageTakenBonus;
+      case MAGIC -> 1.0 + limited().enemyMagicDamageTakenBonus;
+      case NONE -> 1.0;
+    };
+  }
+
   /** 累加受到的治疗与生命回复效果加成，结算前不提前截断。 */
   public CombatStat addHealingAndHealthRegenerationBonus(double value) {
     return change(values -> values.healingAndHealthRegenerationBonus += value);
@@ -325,6 +404,44 @@ public record CombatStat(
   /** 累加推拉结算时忽略的敌方重量等级。 */
   public CombatStat addEnemyWeightIgnore(int value) {
     return change(values -> values.enemyWeightIgnore += value);
+  }
+
+  /** 登记一项只对指定技能职业生效的藏品战斗效果。 */
+  public CombatStat addProfessionEffect(SkillProfession profession, ProfessionEffect effect) {
+    Objects.requireNonNull(profession, "profession");
+    Objects.requireNonNull(effect, "effect");
+    return change(values -> values.professionEffects(profession).add(effect));
+  }
+
+  /** 应用指定技能职业的全部藏品效果，并清空职业效果列表，防止重复解析。 */
+  public CombatStat resolveProfession(SkillProfession profession) {
+    Objects.requireNonNull(profession, "profession");
+    CombatStat result = change(Builder::clearProfessionEffects);
+    return resolveProfession(profession, result);
+  }
+
+  /** 只把当前快照登记的指定职业效果应用到另一份基础快照。 */
+  public CombatStat resolveProfession(SkillProfession profession, CombatStat base) {
+    Objects.requireNonNull(profession, "profession");
+    CombatStat result = Objects.requireNonNull(base, "base")
+        .change(Builder::clearProfessionEffects);
+    for (ProfessionEffect effect : professionEffects(profession)) {
+      result = Objects.requireNonNull(effect.apply(result), "职业藏品效果不能返回 null");
+    }
+    return result;
+  }
+
+  private List<ProfessionEffect> professionEffects(SkillProfession profession) {
+    return switch (profession) {
+      case VANGUARD -> vanguardEffects;
+      case GUARD -> guardEffects;
+      case SNIPER -> sniperEffects;
+      case CASTER -> casterEffects;
+      case DEFENDER -> defenderEffects;
+      case MEDIC -> medicEffects;
+      case SUPPORTER -> supporterEffects;
+      case SPECIALIST -> specialistEffects;
+    };
   }
 
   /** 根据聚合后的敌方异常状态延长比例换算最终持续 tick。 */
@@ -400,6 +517,42 @@ public record CombatStat(
     return change(values -> values.originiumIngots += value);
   }
 
+  public CombatStat actionPoints(int value) {
+    return change(values -> values.actionPoints += value);
+  }
+
+  public CombatStat antiInterferenceIndex(int value) {
+    return change(values -> values.antiInterferenceIndex += value);
+  }
+
+  public CombatStat collapseValue(int value) {
+    return change(values -> values.collapseValue += value);
+  }
+
+  public CombatStat mentalBurdenLimit(int value) {
+    return change(values -> values.mentalBurdenLimit += value);
+  }
+
+  public CombatStat thoughts(int value) {
+    return change(values -> values.thoughts += value);
+  }
+
+  public CombatStat candles(int value) {
+    return change(values -> values.candles += value);
+  }
+
+  /** 以探索运行时提供的当前源石锭总数覆盖快照中的资源值。 */
+  public CombatStat withOriginiumIngots(int value) {
+    if (value < 0) throw new IllegalArgumentException("当前源石锭不能为负数");
+    return change(values -> values.originiumIngots = value);
+  }
+
+  /** 由集成战略运行时写入当前特殊条件档位。 */
+  public CombatStat withCollectibleEffectTier(int value) {
+    if (value < 0) throw new IllegalArgumentException("藏品特殊条件档位不能为负数");
+    return change(values -> values.collectibleEffectTier = value);
+  }
+
   public CombatStat squadCapacity(int value) {
     return change(values -> values.squadCapacity += value);
   }
@@ -448,6 +601,12 @@ public record CombatStat(
   public boolean hasNoExplorationProperties() {
     return hope == 0
         && originiumIngots == 0
+        && actionPoints == 0
+        && antiInterferenceIndex == 0
+        && collapseValue == 0
+        && mentalBurdenLimit == 0
+        && thoughts == 0
+        && candles == 0
         && squadCapacity == 0
         && deploymentLimit == 0
         && initialDeploymentPoints == 0
@@ -465,8 +624,22 @@ public record CombatStat(
     return perSecondEffects.isEmpty()
         && perSecondConditionalEffects.isEmpty()
         && killEffects.isEmpty()
+        && vanguardEffects.isEmpty()
+        && guardEffects.isEmpty()
+        && sniperEffects.isEmpty()
+        && casterEffects.isEmpty()
+        && defenderEffects.isEmpty()
+        && medicEffects.isEmpty()
+        && supporterEffects.isEmpty()
+        && specialistEffects.isEmpty()
         && hope == 0
         && originiumIngots == 0
+        && actionPoints == 0
+        && antiInterferenceIndex == 0
+        && collapseValue == 0
+        && mentalBurdenLimit == 0
+        && thoughts == 0
+        && candles == 0
         && squadCapacity == 0
         && deploymentLimit == 0
         && initialDeploymentPoints == 0
@@ -488,18 +661,33 @@ public record CombatStat(
       UnaryOperator<CombatStat> effect,
       ResourceLocation baseId
   ) {
+    return toVanillaModifiers(effect, baseId, 0);
+  }
+
+  /** 按指定特殊条件档位生成 Curios 属性修饰器。 */
+  public static Multimap<Holder<Attribute>, AttributeModifier> toVanillaModifiers(
+      UnaryOperator<CombatStat> effect,
+      ResourceLocation baseId,
+      int collectibleEffectTier
+  ) {
     Objects.requireNonNull(effect, "effect");
     Objects.requireNonNull(baseId, "baseId");
+    if (collectibleEffectTier < 0) {
+      throw new IllegalArgumentException("藏品特殊条件档位不能为负数");
+    }
+    UnaryOperator<CombatStat> tieredEffect = value -> effect.apply(
+        value.withCollectibleEffectTier(collectibleEffectTier)
+    );
     var result = ArrayListMultimap.<Holder<Attribute>, AttributeModifier>create();
-    addAffineModifiers(result, effect, baseId, "max_health", Attributes.MAX_HEALTH,
+    addAffineModifiers(result, tieredEffect, baseId, "max_health", Attributes.MAX_HEALTH,
         CombatStat::maxHealth, CombatStat::withMaxHealth);
-    addAffineModifiers(result, effect, baseId, "attack", Attributes.ATTACK_DAMAGE,
+    addAffineModifiers(result, tieredEffect, baseId, "attack", Attributes.ATTACK_DAMAGE,
         CombatStat::attack, CombatStat::withAttack);
-    addAffineModifiers(result, effect, baseId, "defense", Attributes.ARMOR,
+    addAffineModifiers(result, tieredEffect, baseId, "defense", Attributes.ARMOR,
         CombatStat::defense, CombatStat::withDefense);
-    addAffineModifiers(result, effect, baseId, "resistance", Attributes.ARMOR_TOUGHNESS,
+    addAffineModifiers(result, tieredEffect, baseId, "resistance", Attributes.ARMOR_TOUGHNESS,
         CombatStat::resistance, CombatStat::withResistance);
-    addAttackSpeedModifier(result, effect, baseId);
+    addAttackSpeedModifier(result, tieredEffect, baseId);
     return result;
   }
 
@@ -590,6 +778,8 @@ public record CombatStat(
     private double attackSpeed;
     private double damageReduction;
     private double defenseIgnore;
+    private double enemyPhysicalDamageTakenBonus;
+    private double enemyMagicDamageTakenBonus;
     private double healingAndHealthRegenerationBonus;
     private double offensiveDefensiveSkillPointRegeneration;
     private double naturalSkillPointRegeneration;
@@ -602,8 +792,22 @@ public record CombatStat(
     private double friendlyStatusDurationReduction;
     private double enemyMovementSpeedReduction;
     private int enemyWeightIgnore;
+    private final ArrayList<ProfessionEffect> vanguardEffects;
+    private final ArrayList<ProfessionEffect> guardEffects;
+    private final ArrayList<ProfessionEffect> sniperEffects;
+    private final ArrayList<ProfessionEffect> casterEffects;
+    private final ArrayList<ProfessionEffect> defenderEffects;
+    private final ArrayList<ProfessionEffect> medicEffects;
+    private final ArrayList<ProfessionEffect> supporterEffects;
+    private final ArrayList<ProfessionEffect> specialistEffects;
     private int hope;
     private int originiumIngots;
+    private int actionPoints;
+    private int antiInterferenceIndex;
+    private int collapseValue;
+    private int mentalBurdenLimit;
+    private int thoughts;
+    private int candles;
     private int squadCapacity;
     private int deploymentLimit;
     private int initialDeploymentPoints;
@@ -619,6 +823,7 @@ public record CombatStat(
     private final ArrayList<PerSecondConditionalEffect> perSecondConditionalEffects;
     private final ArrayList<KillEffect> killEffects;
     private final ArrayList<EnemySpawnStatEffect> enemySpawnStatEffects;
+    private int collectibleEffectTier;
 
     private Builder(CombatStat source) {
       maxHealth = source.maxHealth;
@@ -628,6 +833,8 @@ public record CombatStat(
       attackSpeed = source.attackSpeed;
       damageReduction = source.damageReduction;
       defenseIgnore = source.defenseIgnore;
+      enemyPhysicalDamageTakenBonus = source.enemyPhysicalDamageTakenBonus;
+      enemyMagicDamageTakenBonus = source.enemyMagicDamageTakenBonus;
       healingAndHealthRegenerationBonus = source.healingAndHealthRegenerationBonus;
       offensiveDefensiveSkillPointRegeneration = source.offensiveDefensiveSkillPointRegeneration;
       naturalSkillPointRegeneration = source.naturalSkillPointRegeneration;
@@ -640,8 +847,22 @@ public record CombatStat(
       friendlyStatusDurationReduction = source.friendlyStatusDurationReduction;
       enemyMovementSpeedReduction = source.enemyMovementSpeedReduction;
       enemyWeightIgnore = source.enemyWeightIgnore;
+      vanguardEffects = new ArrayList<>(source.vanguardEffects);
+      guardEffects = new ArrayList<>(source.guardEffects);
+      sniperEffects = new ArrayList<>(source.sniperEffects);
+      casterEffects = new ArrayList<>(source.casterEffects);
+      defenderEffects = new ArrayList<>(source.defenderEffects);
+      medicEffects = new ArrayList<>(source.medicEffects);
+      supporterEffects = new ArrayList<>(source.supporterEffects);
+      specialistEffects = new ArrayList<>(source.specialistEffects);
       hope = source.hope;
       originiumIngots = source.originiumIngots;
+      actionPoints = source.actionPoints;
+      antiInterferenceIndex = source.antiInterferenceIndex;
+      collapseValue = source.collapseValue;
+      mentalBurdenLimit = source.mentalBurdenLimit;
+      thoughts = source.thoughts;
+      candles = source.candles;
       squadCapacity = source.squadCapacity;
       deploymentLimit = source.deploymentLimit;
       initialDeploymentPoints = source.initialDeploymentPoints;
@@ -657,21 +878,51 @@ public record CombatStat(
       perSecondConditionalEffects = new ArrayList<>(source.perSecondConditionalEffects);
       killEffects = new ArrayList<>(source.killEffects);
       enemySpawnStatEffects = new ArrayList<>(source.enemySpawnStatEffects);
+      collectibleEffectTier = source.collectibleEffectTier;
+    }
+
+    private ArrayList<ProfessionEffect> professionEffects(SkillProfession profession) {
+      return switch (profession) {
+        case VANGUARD -> vanguardEffects;
+        case GUARD -> guardEffects;
+        case SNIPER -> sniperEffects;
+        case CASTER -> casterEffects;
+        case DEFENDER -> defenderEffects;
+        case MEDIC -> medicEffects;
+        case SUPPORTER -> supporterEffects;
+        case SPECIALIST -> specialistEffects;
+      };
+    }
+
+    private void clearProfessionEffects() {
+      vanguardEffects.clear();
+      guardEffects.clear();
+      sniperEffects.clear();
+      casterEffects.clear();
+      defenderEffects.clear();
+      medicEffects.clear();
+      supporterEffects.clear();
+      specialistEffects.clear();
     }
 
     private CombatStat build() {
       return new CombatStat(maxHealth, attack, defense, resistance, attackSpeed,
-          damageReduction, defenseIgnore, healingAndHealthRegenerationBonus,
+          damageReduction, defenseIgnore, enemyPhysicalDamageTakenBonus,
+          enemyMagicDamageTakenBonus, healingAndHealthRegenerationBonus,
           offensiveDefensiveSkillPointRegeneration, naturalSkillPointRegeneration,
           trueDamageBonus, elementalDamageBonus, elementalDamageReduction,
           physicalDamageEvasionRate, magicDamageEvasionRate,
           enemyStatusDurationBonus, friendlyStatusDurationReduction,
           enemyMovementSpeedReduction, enemyWeightIgnore,
-          hope, originiumIngots, squadCapacity, deploymentLimit,
+          vanguardEffects, guardEffects, sniperEffects, casterEffects,
+          defenderEffects, medicEffects, supporterEffects, specialistEffects,
+          hope, originiumIngots, actionPoints, antiInterferenceIndex, collapseValue,
+          mentalBurdenLimit, thoughts, candles, squadCapacity, deploymentLimit,
           initialDeploymentPoints, keys, dice, light,
           commandExperienceMultiplier, hopePerNonCombatNode, originiumIngotsPerNonCombatNode,
           battleOriginiumIngotMultiplier, oneTimeFailureRecoveryObjectiveLife,
-          perSecondEffects, perSecondConditionalEffects, killEffects, enemySpawnStatEffects);
+          perSecondEffects, perSecondConditionalEffects, killEffects, enemySpawnStatEffects,
+          collectibleEffectTier);
     }
   }
 }

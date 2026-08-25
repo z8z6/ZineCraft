@@ -11,14 +11,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEST_ROOT = ROOT / "src/main/resources/zinecraft/ftbquests/quests"
-CATALOG_PATH = ROOT / "src/main/java/com/cxxcxx/zinecraft/core/item/ModCollectible.java"
+CATALOG_PATH = ROOT / "src/main/java/com/cxxcxx/zinecraft/core/registry/ModCollectible.java"
 CHAPTER_PATH = QUEST_ROOT / "chapters/collectibles.snbt"
 CHAPTER_ID = "434F4C4C45435449"
 QUEST_PREFIX = "C3"
 TASK_PREFIX = "C4"
 CATEGORY_QUEST_PREFIX = "C1"
 CATEGORY_TASK_PREFIX = "C2"
-EXPECTED_COUNT = 245
+EXPECTED_COUNT = 742
 ITEM_COLUMNS = 12
 
 
@@ -104,7 +104,7 @@ def to_display_name(path: str) -> str:
 def load_catalog() -> list[dict[str, str]]:
     source = CATALOG_PATH.read_text(encoding="utf-8")
     declaration = re.compile(
-        r"public static final CollectibleBuilder\s+[A-Z0-9_]+\s*=\s*collectible\((.*?)\n\s*\);",
+        r"(?:=\s*|return\s+)collectible\((.*?)\n\s*\);",
         re.DOTALL,
     )
     java_string = re.compile(r'"(?:\\.|[^"\\])*"')
@@ -114,19 +114,19 @@ def load_catalog() -> list[dict[str, str]]:
         arguments = match.group(1)
         strings = java_string.findall(arguments)
         rarity_match = rarity.search(arguments)
-        if len(strings) < 7 or rarity_match is None:
+        if len(strings) < 6 or rarity_match is None:
             raise ValueError("Malformed collectible Builder declaration")
-        values = [json.loads(value) for value in strings[:7]]
+        values = [json.loads(value) for value in strings[:6]]
         catalog.append(
             {
                 "path": values[0],
-                "orderId": values[1],
-                "zhCn": values[2],
+                "index": len(catalog) + 1,
+                "zhCn": values[1],
                 "enUs": to_display_name(values[0]),
-                "originalEffectZhCn": values[3],
-                "originalEffectEnUs": values[4],
-                "descriptionZhCn": values[5],
-                "descriptionEnUs": values[6],
+                "originalEffectZhCn": values[2],
+                "originalEffectEnUs": values[3],
+                "descriptionZhCn": values[4],
+                "descriptionEnUs": values[5],
                 "rarity": rarity_match.group(1),
             }
         )
@@ -170,7 +170,7 @@ def write_chapter(grouped: dict[str, list[dict[str, str]]]) -> None:
             )
         )
         for local_index, entry in enumerate(entries):
-            index = int(entry["orderId"][3:]) + 238 if entry["orderId"].startswith("PCS") else int(entry["orderId"])
+            index = entry["index"]
             x = float((local_index % ITEM_COLUMNS) * 2)
             item_y = y + float((local_index // ITEM_COLUMNS) * 2)
             quests.append(
@@ -229,15 +229,14 @@ def translation_lines(locale: str, grouped: dict[str, list[dict[str, str]]]) -> 
             )
         )
         for entry in entries:
-            index = int(entry["orderId"][3:]) + 238 if entry["orderId"].startswith("PCS") else int(entry["orderId"])
+            index = entry["index"]
             qid = quest_id(index)
             tid = task_id(index)
             name = entry["zhCn"] if zh else entry["enUs"]
             effect = entry["originalEffectZhCn"] if zh else entry["originalEffectEnUs"]
             description = entry["descriptionZhCn"] if zh else entry["descriptionEnUs"]
-            number = entry["orderId"]
             category_name = category.zh if zh else category.en
-            subtitle = f"No.{number} · {category_name}"
+            subtitle = category_name
             equip_note = (
                 "装备到任意饰品栏即可生效；Minecraft 实际效果请查看物品提示和能力面板。"
                 if zh

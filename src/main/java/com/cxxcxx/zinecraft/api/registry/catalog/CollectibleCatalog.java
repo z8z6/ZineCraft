@@ -19,12 +19,10 @@ import java.util.regex.Pattern;
 public final class CollectibleCatalog {
   private static final int ORIGINAL_EFFECT_FIRST_LINE_CHARACTERS = 24;
   private static final Pattern PATH_PATTERN = Pattern.compile("[a-z0-9_]+");
-  private static final Pattern ORDER_PATTERN = Pattern.compile("(?:[0-9]{3}|PCS[0-9]{2})");
 
   private final ItemCatalog items;
   private final TranslationCatalog translations;
   private final String namespace;
-  private final String seriesTranslationKey;
   private final String originalEffectLabelTranslationKey;
   private final String minecraftEffectLabelTranslationKey;
   private final List<CollectibleBuilder> mutableEntries = new ArrayList<>();
@@ -34,7 +32,6 @@ public final class CollectibleCatalog {
     this.items = Objects.requireNonNull(items, "items");
     this.translations = Objects.requireNonNull(translations, "translations");
     this.namespace = Objects.requireNonNull(namespace, "namespace");
-    this.seriesTranslationKey = "item." + namespace + ".collectible.series";
     this.originalEffectLabelTranslationKey = "item." + namespace + ".collectible.original_effect";
     this.minecraftEffectLabelTranslationKey = "item." + namespace + ".collectible.minecraft_effect";
     registerCommonTranslations();
@@ -43,9 +40,6 @@ public final class CollectibleCatalog {
   private static void validate(CollectibleBuilder builder) {
     if (!PATH_PATTERN.matcher(builder.path).matches()) {
       throw new IllegalArgumentException("藏品 ID 必须是 snake_case：" + builder.path);
-    }
-    if (!ORDER_PATTERN.matcher(builder.orderId).matches()) {
-      throw new IllegalArgumentException("藏品编号格式无效：" + builder.orderId);
     }
     requireText(builder.zhCn, "藏品中文名不能为空：" + builder.path);
     requireText(builder.enUs, "藏品英文名不能为空：" + builder.path);
@@ -64,9 +58,6 @@ public final class CollectibleCatalog {
   }
 
   private void registerCommonTranslations() {
-    translations.add(seriesTranslationKey,
-        "集成战略「傀影与猩红孤钻」 · No.%s",
-        "Integrated Strategies: Phantom & Crimson Solitaire · No.%s");
     translations.add(originalEffectLabelTranslationKey, "原效果：%s", "Original effect: %s");
     translations.add(minecraftEffectLabelTranslationKey, "装备效果：%s", "Equipped effect: %s");
     translations.add("curios.identifier.relic", "藏品", "Collectible");
@@ -78,6 +69,12 @@ public final class CollectibleCatalog {
     translations.add("menu.tabs.attribute.collectible_effects.objective_life", "目标生命：%s", "Objective Life: %s");
     translations.add("menu.tabs.attribute.collectible_effects.temporary_objective_life", "临时目标生命：%s", "Temporary Objective Life: %s");
     translations.add("menu.tabs.attribute.collectible_effects.originium_ingots", "源石锭：%s", "Originium Ingots: %s");
+    translations.add("menu.tabs.attribute.collectible_effects.action_points", "行动力：%s", "Action Points: %s");
+    translations.add("menu.tabs.attribute.collectible_effects.anti_interference", "抗干扰指数：%s", "Anti-Interference Index: %s");
+    translations.add("menu.tabs.attribute.collectible_effects.collapse", "坍缩值：%s", "Collapse: %s");
+    translations.add("menu.tabs.attribute.collectible_effects.mental_burden_limit", "负荷临界点：%s", "Mental Burden Limit: %s");
+    translations.add("menu.tabs.attribute.collectible_effects.thoughts", "思绪：%s", "Thoughts: %s");
+    translations.add("menu.tabs.attribute.collectible_effects.candles", "烛火：%s", "Candles: %s");
     translations.add("menu.tabs.attribute.collectible_effects.squad_capacity", "可携带干员：%s", "Squad Capacity: %s");
     translations.add("menu.tabs.attribute.collectible_effects.deployment_limit", "可部署人数：%s", "Deployment Limit: %s");
     translations.add("menu.tabs.attribute.collectible_effects.initial_deployment_points", "初始部署费用：%s", "Initial DP: %s");
@@ -124,7 +121,6 @@ public final class CollectibleCatalog {
             () -> new CollectibleItem(
                 builder,
                 namespace,
-                seriesTranslationKey,
                 originalEffectLabelTranslationKey,
                 minecraftEffectLabelTranslationKey
             ),

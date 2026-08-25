@@ -29,4 +29,12 @@ public interface CollectiblePower extends UnaryOperator<CombatStat> {
       return result;
     };
   }
+
+  /** 按 CombatStat 中的特殊条件档位选择一项效果；超出范围时使用最高档。 */
+  static CollectiblePower tiered(CollectiblePower... effects) {
+    CollectiblePower[] copied = effects.clone();
+    if (copied.length == 0) throw new IllegalArgumentException("多档藏品至少需要一档效果");
+    for (CollectiblePower effect : copied) Objects.requireNonNull(effect, "effect");
+    return stats -> copied[Math.min(stats.collectibleEffectTier(), copied.length - 1)].apply(stats);
+  }
 }

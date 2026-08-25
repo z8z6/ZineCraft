@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.api.combat;
 
 import com.cxxcxx.zinecraft.api.collection.CollectiblePower;
+import com.cxxcxx.zinecraft.api.skill.SkillProfession;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +30,64 @@ class CombatStatTest {
   @Test
   void identityEffectReturnsTheSameSnapshot() {
     assertSame(CombatStat.EMPTY, CollectiblePower.NONE.apply(CombatStat.EMPTY));
+  }
+
+  @Test
+  void tieredCollectibleEffectsFollowTheRuntimeSpecialCondition() {
+    CollectiblePower tiered = CollectiblePower.tiered(
+        stats -> stats.addAttackSpeed(1.0),
+        stats -> stats.addAttackSpeed(3.0),
+        stats -> stats.addAttackSpeed(5.0),
+        stats -> stats.addAttackSpeed(7.0)
+    );
+
+    assertEquals(101.0, tiered.apply(CombatStat.EMPTY
+        .withAttackSpeed(100.0)
+        .withCollectibleEffectTier(0)).attackSpeed());
+    assertEquals(105.0, tiered.apply(CombatStat.EMPTY
+        .withAttackSpeed(100.0)
+        .withCollectibleEffectTier(2)).attackSpeed());
+    assertEquals(107.0, tiered.apply(CombatStat.EMPTY
+        .withAttackSpeed(100.0)
+        .withCollectibleEffectTier(8)).attackSpeed());
+  }
+
+  @Test
+  void professionEffectsAreStoredSeparatelyAndResolveOnlyForTheRequestedSkillProfession() {
+    CombatStat registered = CombatStat.EMPTY
+        .withAttack(100.0)
+        .addProfessionEffect(SkillProfession.GUARD, stats -> stats.multiplyAttack(0.25))
+        .addProfessionEffect(SkillProfession.CASTER, stats -> stats.multiplyAttack(-0.05));
+
+    assertEquals(100.0, registered.attack());
+    assertEquals(125.0, registered.resolveProfession(SkillProfession.GUARD).attack());
+    assertEquals(95.0, registered.resolveProfession(SkillProfession.CASTER).attack());
+    assertEquals(100.0, registered.resolveProfession(SkillProfession.MEDIC).attack());
+  }
+
+  @Test
+  void resolvingProfessionConsumesOnlyOneSnapshotPass() {
+    CombatStat registered = CombatStat.EMPTY
+        .withAttack(100.0)
+        .addProfessionEffect(SkillProfession.GUARD, stats -> stats.multiplyAttack(0.50));
+
+    CombatStat resolved = registered.resolveProfession(SkillProfession.GUARD);
+
+    assertEquals(150.0, resolved.attack());
+    assertEquals(150.0, resolved.resolveProfession(SkillProfession.GUARD).attack());
+    assertEquals(0, resolved.guardEffects().size());
+  }
+
+  @Test
+  void professionEffectsCanApplyToAnAlreadyResolvedBaseWithoutGlobalStats() {
+    CombatStat registered = CombatStat.EMPTY
+        .multiplyAttack(0.25)
+        .addProfessionEffect(SkillProfession.GUARD, stats -> stats.multiplyAttack(0.50));
+    CombatStat alreadyResolvedBase = CombatStat.EMPTY.withAttack(125.0);
+
+    CombatStat result = registered.resolveProfession(SkillProfession.GUARD, alreadyResolvedBase);
+
+    assertEquals(187.5, result.attack());
   }
 
   @Test
@@ -69,6 +128,18 @@ class CombatStatTest {
     assertEquals(0.63, accumulated.defenseIgnore(), 1.0E-9);
     assertEquals(1.0, accumulated.addDamageReduction(1.0).limited().damageReduction());
     assertEquals(1.0, accumulated.addDefenseIgnore(1.0).limited().defenseIgnore());
+  }
+
+  @Test
+  void enemyDamageTakenUsesIndependentPhysicalAndMagicFinalMultipliers() {
+    CombatStat stats = CombatStat.EMPTY
+        .addEnemyPhysicalDamageTakenBonus(0.15)
+        .addEnemyPhysicalDamageTakenBonus(0.25)
+        .addEnemyMagicDamageTakenBonus(0.20);
+
+    assertEquals(1.40, stats.enemyDamageTakenMultiplier(CombatMitigationType.PHYSICAL), 1.0E-9);
+    assertEquals(1.20, stats.enemyDamageTakenMultiplier(CombatMitigationType.MAGIC), 1.0E-9);
+    assertEquals(1.0, stats.enemyDamageTakenMultiplier(CombatMitigationType.NONE), 1.0E-9);
   }
 
   @Test
@@ -156,6 +227,22 @@ class CombatStatTest {
 
     assertEquals(150.0, active.attackSpeed());
     assertEquals(100.0, inactive.attackSpeed());
+  }
+
+  @Test
+  void originiumIngotAttackSpeedUsesCompleteGroupsOfFive() {
+    CombatStat conditional = CombatStat.EMPTY
+        .withAttackSpeed(100.0)
+        .addPerSecondConditionalEffect(current -> current.addAttackSpeed(
+            Math.floorDiv(current.originiumIngots(), 5) * 3
+        ));
+
+    assertEquals(100.0, conditional.withOriginiumIngots(4)
+        .evaluatePerSecondConditionalEffects().attackSpeed());
+    assertEquals(103.0, conditional.withOriginiumIngots(5)
+        .evaluatePerSecondConditionalEffects().attackSpeed());
+    assertEquals(106.0, conditional.withOriginiumIngots(14)
+        .evaluatePerSecondConditionalEffects().attackSpeed());
   }
 
   @Test
