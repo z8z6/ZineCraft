@@ -1,54 +1,57 @@
-# Automatically build the project and run any configured tests for every push
-# and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defence
-# against bad commits.
+name: documentation
 
-name: build
-on: [pull_request, push]
+"on":
+  push:
+    paths:
+      - 'docs/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    paths:
+      - 'docs/**'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  build-docs:
+    name: Build documentation
     runs-on: ubuntu-24.04
     steps:
-      - name: checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v6
-      - name: setup jdk
-        uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-      - name: setup gradle
-        uses: gradle/actions/setup-gradle@v6
-      - name: make gradle wrapper executable
-        run: chmod +x ./gradlew
-      # Generated language/model data is intentionally ignored by Git. Keep these
-      # as separate invocations so a clean checkout exercises the real release order.
-      - name: generate data
-        run: ./gradlew runData --no-configuration-cache --console=plain
-      - name: build
-        run: ./gradlew build --no-configuration-cache --console=plain
-      - name: capture build artifacts
-        uses: actions/upload-artifact@v7
-        with:
-          name: Artifacts
-          path: build/libs/
 
-      - name: Generate Java Doc
-        run: ./gradlew javadoc --no-configuration-cache --console=plain
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
 
-      - name: Upload Documentation
+      - name: Install dependencies
+        working-directory: docs
+        run: npm ci
+
+      - name: Build documentation
+        working-directory: docs
+        run: npm run build
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: build/docs/javadoc
+          path: docs/dist
           name: github-pages-${{ github.run_id }}
 
   deploy-docs:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    name: Deploy documentation
+    needs: build-docs
+    if: github.event_name == 'push' && github.ref == 'refs/heads/neoforge'
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       pages: write

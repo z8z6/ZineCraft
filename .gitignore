@@ -35,6 +35,11 @@ src/main/generated/
 src/generated/**/*
 src/generated/resources/data/zinecraft/terra_layout/nations/
 
+# documentation site
+
+docs/node_modules/
+docs/dist/
+
 # java
 
 hs_err_*.log
