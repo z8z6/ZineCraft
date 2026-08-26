@@ -3,8 +3,26 @@ import ReactMarkdown from 'react-markdown'
 import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import '@fontsource/jetbrains-mono/400.css'
+import '@fontsource/jetbrains-mono/600.css'
+import '@fontsource/jetbrains-mono/700.css'
 import 'katex/dist/katex.min.css'
+import HighlightedCodeBlock from './components/HighlightedCodeBlock'
 import catalog from './data/catalog.json'
+import BuildingSelectionEmbed from './visualizations/BuildingSelectionEmbed'
+import {
+  CityBoundaryEmbed,
+  LayerRoadEmbed,
+  NationBoundaryEmbed,
+  ParcelPartitionEmbed,
+  RegionGrowthEmbed,
+  RoadCleanupEmbed,
+  RoadTileEmbed,
+  RuntimePlacementEmbed,
+} from './visualizations/CityAlgorithmsEmbed'
+import MermaidEmbed from './visualizations/MermaidEmbed'
+import RoadBfsEmbed from './visualizations/RoadBfsEmbed'
+import ZoomableImage from './visualizations/ZoomableImage'
 
 const guideModules = import.meta.glob('../guides/**/*.md', {
   eager: true,
@@ -571,9 +589,22 @@ function DocumentPage({ document }) {
               const resolved = resolveLink(href)
               return <a href={resolved} target={resolved.startsWith('http') ? '_blank' : undefined} rel="noreferrer">{children}</a>
             },
+            img: ({ src, alt, ...props }) => <ZoomableImage src={src} alt={alt} {...props} />,
             pre: ({ children }) => {
+              const language = children?.props?.className || ''
               const value = children?.props?.children?.toString?.().replace(/\n$/, '') || ''
-              return <div className="code-frame"><button onClick={() => copyCode(value)}>{copied === value ? '已复制' : '复制'}</button><pre>{children}</pre></div>
+              if (language.includes('language-mermaid')) return <MermaidEmbed chart={value} />
+              if (language.includes('language-nation-boundary-d3')) return <NationBoundaryEmbed />
+              if (language.includes('language-city-boundary-d3')) return <CityBoundaryEmbed />
+              if (language.includes('language-region-growth-d3')) return <RegionGrowthEmbed />
+              if (language.includes('language-layer-road-d3')) return <LayerRoadEmbed />
+              if (language.includes('language-road-bfs-d3')) return <RoadBfsEmbed />
+              if (language.includes('language-road-cleanup-d3')) return <RoadCleanupEmbed />
+              if (language.includes('language-parcel-partition-d3')) return <ParcelPartitionEmbed />
+              if (language.includes('language-building-selection-d3')) return <BuildingSelectionEmbed />
+              if (language.includes('language-road-tile-d3')) return <RoadTileEmbed />
+              if (language.includes('language-runtime-placement-d3')) return <RuntimePlacementEmbed />
+              return <HighlightedCodeBlock value={value} languageClass={language} copied={copied === value} onCopy={copyCode} />
             },
           }}
         >{document.content}</ReactMarkdown>
@@ -595,7 +626,11 @@ function SearchModal({ open, onClose }) {
 }
 
 function Footer() {
-  return <footer><div><img src="./icon.png" alt="" /><span><b>ZINECRAFT</b><small>UNOFFICIAL FAN PROJECT</small></span></div><p>《明日方舟》相关资料权利归鹰角网络所有。Minecraft 相关权利归 Mojang Studios 所有。</p><a href="#/">BACK TO TOP ↑</a></footer>
+  const backToTop = () => window.scrollTo({
+    top: 0,
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+  })
+  return <footer><div><img src="./icon.png" alt="" /><span><b>ZINECRAFT</b><small>UNOFFICIAL FAN PROJECT</small></span></div><p>《明日方舟》相关资料权利归鹰角网络所有。Minecraft 相关权利归 Mojang Studios 所有。</p><button type="button" onClick={backToTop}>BACK TO TOP ↑</button></footer>
 }
 
 export default function App() {

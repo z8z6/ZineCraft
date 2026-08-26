@@ -1,797 +1,850 @@
-# 国家、城市与 Region 如何生成
+# 添加国家、城市与 Region（移动地块区域）
 
-Zinecraft 的城市不是在世界中随机散布若干建筑，而是先离线计算一张确定性的泰拉布局，再由世界生成读取它。完整链路如下：
+Zinecraft 不会在区块生成时临场拼一座城市。它先在数据生成阶段计算完整布局，再把结果压缩成资源；游戏运行时只查询当前 Chunk（区块，即水平 `16×16` 方块的世界生成单元）应该放道路、楼梯还是建筑。
 
-![国家、城市与 Region 生成链路](./diagrams/terra-layout-generation.svg)
+读完这篇教程，你会知道：
 
-```text
-国家定位折线
-  -> 国家 Voronoi 边界
-    -> 国家内的城市 Voronoi 边界
-      -> 城市内按 Chunk 排列的移动地块（Region 实例）
-        -> 每个 Region 的四层道路、楼梯、Parcel 与建筑槽位
-          -> runData 导出的 gzip 布局资源
-            -> 新区块中的道路、楼梯和建筑结构
+- 国家定位折线怎样变成国界；
+- 城市相对坐标怎样变成城市边界；
+- Region（移动地块区域）类型怎样长成与 Chunk 对齐的矩形实例；
+- 一个 Region 的四层道路、楼梯、Parcel（建筑用地）和建筑怎样生成；
+- 哪些 Builder 字段已经参与计算，哪些仍只是元数据或预留 API；
+- 修改注册后怎样生成、检查并在新区块验收结果。
+
+名称、国家归属等设定事实必须来自项目指定的官方、PRTS 或游戏数据资料。本文讨论的坐标、边界和布局参数都是 Zinecraft 的玩法数据，不代表《明日方舟》官方世界坐标。
+
+## 1. 先建立完整生成流程
+
+```mermaid
+flowchart TD
+  A[ModNation<br/>国家定位折线] --> B{国家类型}
+  B -->|地表| C[折线 Voronoi 国界]
+  B -->|地下| D[固定正方形边界]
+  C --> E[ModCity<br/>城市点 Voronoi]
+  D --> E
+  E --> F[ModCityRegion<br/>Chunk 对齐矩形]
+  F --> G[四层道路与共享楼梯]
+  G --> H[Parcel 与建筑槽位]
+  H --> I[runData<br/>导出 schema v16 gzip]
+  I --> J[TerraLayoutResource<br/>启动时读取]
+  J --> K[MobilePlotStructure<br/>新区块查表放置]
 ```
 
-主要声明入口是 [ModNation.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModNation.java)、[ModCity.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModCity.java) 和 [ModCityRegion.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModCityRegion.java)。算法入口是 [TerraLayoutCalculator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/TerraLayoutCalculator.java)。
+这条链路有一个很重要的边界：
 
-## 为什么采用这套设计
+- **离线负责求解。** Voronoi、候选搜索、道路连通、Parcel 切分和建筑匹配都在 `runData` 中完成。
+- **运行时负责消费。** 世界生成只查询压缩布局，不重新执行上述算法。
 
-这条链路要同时解决四个彼此牵制的问题：
+这样可以得到可复现的全图布局，也能控制进服后的计算量。代价是上游数据影响范围较大：移动一个国家定位点，可能改变邻国边界；移动一座城市，可能改变同国其他城市；修改 Region 参数或随机调用顺序，也可能让后续地块整体漂移。
 
-1. **国家和城市必须铺满有限世界。** Voronoi 能从少量定位点自动得到无缝、不重叠的边界，并自然产生邻国和邻城关系。
-2. **移动城市要有“组装出来”的观感。** 城市内部不再继续切任意多边形，而是改用 Chunk 对齐的矩形移动地块，便于道路连接、结构 NBT 放置和区块级生成。
-3. **核心区、郊区要表达空间层次。** Region 的权重既参与类型选择，也参与目标半径评分，因此同一个参数可以让重要区域更常出现并更靠近核心。
-4. **世界生成不能临场求解全图。** Voronoi、候选搜索、道路连通和 Parcel 切分都在 `runData` 时完成；运行时只读取 gzip 并查询当前 Chunk，换取稳定结果和较低的进服开销。
+## 2. 三个层级不要混在一起
 
-代价也很明确：布局是全局计算的。移动一个国家站点可能改变邻国，移动一座城市可能改变同国其他城市；所以点位、ID 和随机源都应当视为需要谨慎维护的世界数据。
+本文保留源码中的英文类型名，方便搜索和对照实现。第一次阅读时，可以先把常用词记成下面这些直观含义。
 
-## 先理解 Voronoi
+### 2.1 核心术语速查
 
-![Voronoi 术语、几何含义与实现](./diagrams/terra-voronoi-explained.svg)
-
-### 基本术语
-
-Voronoi 图不是某种 Minecraft 专用算法。它解决的是一个几何问题：给定若干“距离参照物”，空间中的每一点应该归给哪个参照物？
-
-| 术语 | 本教程中的含义 |
-| --- | --- |
-| 裁剪域 `Ω` | 允许划分的外边界。国家阶段是 80,000×50,000 方块的泰拉核心矩形；城市阶段是所属国家的多边形。 |
-| 站点 `site` | 距离参照物。城市使用一个点；地表国家使用由一个或多个点组成的折线。 |
-| 距离函数 `d(p, site)` | 世界点 `p` 到站点的最短欧氏距离。站点类型不同，距离公式也不同。 |
-| Voronoi 单元 `Vᵢ` | 在 `Ω` 内，距离站点 `i` 不大于距离任何其他站点的全部点。 |
-| 等距线 `bisector` | 到两个站点距离相等的点集，也是两个单元的候选分界。点—点等距线是直线；涉及线段时可能出现抛物线段。 |
-| 邻接 `adjacency` | 两个最终单元共享一段边界。项目会把它导出为邻国或邻城 ID。 |
-
-对点站点 `sᵢ`，单元的定义是：
-
-$$
-V_i=\Omega\cap\bigcap_{j\ne i}H_{ij},
-\qquad
-H_{ij}=\left\{p\mid \lVert p-s_i\rVert\le\lVert p-s_j\rVert\right\}.
-$$
-
-把两边平方并展开，可以消去 `p·p`，得到一个线性半平面：
-
-$$
-(s_j-s_i)\cdot p\le
-\frac{\lVert s_j\rVert^2-\lVert s_i\rVert^2}{2}.
-$$
-
-这就是 [VoronoiDiagram.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/VoronoiDiagram.java) 的实现基础：每个站点先拿到完整裁剪域 `Ω`，再针对其他每个站点，用上述半平面逐次裁剪当前多边形。边与半平面边界相交时，交点参数为：
-
-$$
-\begin{aligned}
-t&=\frac{\operatorname{signedDistance}(\mathrm{start})}
-{\operatorname{signedDistance}(\mathrm{start})-\operatorname{signedDistance}(\mathrm{end})},\\
-\mathrm{intersection}&=\mathrm{start}+t(\mathrm{end}-\mathrm{start}).
-\end{aligned}
-$$
-
-例如，`s₁=(0,0)`、`s₂=(10,0)` 时：
-
-$$
-\begin{aligned}
-(10,0)\cdot(x,z)&\le\frac{100-0}{2},\\
-10x&\le50,\\
-x&\le5.
-\end{aligned}
-$$
-
-所以 `s₁` 的一侧是 `x≤5`，`s₂` 的一侧是 `x≥5`；再与 `Ω` 相交，就得到两个不会越界的单元。
-
-### 为什么国家使用折线站点
-
-若一个狭长国家只使用单点，单点只能表达“中心”，不能表达国家的大致走向。Zinecraft 因此把国家的多次 `position(...)` 连成折线 `L`，并采用点到整条折线的最短距离：
-
-$$
-d(p,L)^2=\min_k d\!\left(p,[a_k,b_k]\right)^2.
-$$
-
-点到一条线段 `[a,b]` 的实现是先求投影参数，再限制在线段内：
-
-$$
-\begin{aligned}
-t&=\operatorname{clamp}\!\left(
-\frac{(p-a)\cdot(b-a)}{\lVert b-a\rVert^2},0,1
-\right),\\
-d\!\left(p,[a,b]\right)^2&=\left\lVert p-\bigl(a+t(b-a)\bigr)\right\rVert^2.
-\end{aligned}
-$$
-
-`t=0` 表示最近点是端点 `a`，`t=1` 表示端点 `b`，`0<t<1` 表示最近点在线段内部。
-
-[PolylineVoronoiDiagram.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/PolylineVoronoiDiagram.java) 的实现步骤比点站点复杂：
-
-1. 取泰拉核心矩形的最长边作为尺度，把矩形和全部折线归一化到约 `[-0.5,0.5]`，减小 80,000×50,000 尺度带来的数值误差。
-2. 把每个折线顶点插入为 point site，再把相邻顶点插入为 line site。
-3. 由 jOpenVoronoi 生成 primitive face。一个国家可能拥有多个点面和线段面。
-4. 将每个 face 裁剪到核心矩形；曲线边只保留端点及 X/Z 极值点，不做固定步长采样。
-5. 根据 primitive 到哪条原折线距离为零判定 owner，再用 JTS `union` 合并同一国家的全部面。
-6. 若合并结果只有边界点相接，则串成不增加面积的弱简单边界；最后去掉重复点和共线点，并映回方块坐标。
-
-因此，国家边界不是把 `position(...)` 当多边形顶点连起来。真正的语义始终是“核心矩形内，到该国折线最近的全部位置”。
-
-## 先区分三个层级
-
-| 层级 | 声明内容 | 生成结果 |
+| 英文术语 | 中文说明 | 在本项目中的精确定义 |
 | --- | --- | --- |
-| 国家 `NationBuilder` | 国家 ID、定位折线、城市清单；地下国家还声明固定尺寸 | 泰拉核心矩形内的一块国家边界 |
-| 城市 `TerraCityBuilder` | 国家内相对位置、旋转、允许出现的 Region 类型和地块约束 | 国家边界内的一块城市边界，以及其中的若干移动地块 |
-| Region `TerraCityRegionBuilder` | 所属国家、权重、数量、地块尺寸、道路布局和建筑池 | 城市中的一个或多个矩形移动地块；每个实例都有四层内部布局 |
+| `Chunk` | 区块 | Minecraft 水平方向 `16×16` 方块的世界生成单元。本文的道路宽度、Region 尺寸和建筑占地通常都以 Chunk 计；Chunk 在竖直方向不是 16 格高的立方体。 |
+| `Region` | 移动地块区域 | 城市中的一个矩形移动地块实例。每个实例占用若干 Chunk，并固定包含动力、支持、生活、地表四层。`TerraCityRegionBuilder` 声明的是 Region 类型，生成器才把类型实例化为具体坐标。 |
+| `Parcel` / `BuildingParcel` | 建筑用地 | 道路确定后，从非道路 Chunk 中切出的矩形用地。地表每个 Parcel 必须精确匹配一个建筑占地；下三层当前通常退化为 `1×1` Chunk。 |
+| `UrbanBlock` | 街区连通块 | 对所有非道路 Chunk 做四邻域搜索得到的连通分量。它记录真实格数和外接矩形；外接矩形不等于分量内每个位置都一定可建。 |
+| `RoadGraph` | 道路图 | Region 某一层的道路数据，由道路节点和 `RoadEdge` 组成。校验器会把它光栅化为道路 Chunk，并检查整体连通。 |
+| `RoadEdge` | 道路边 | `RoadGraph` 中一段轴对齐的连续道路矩形。当前三种道路等级都固定为 1 Chunk 宽。 |
+| `RoadClass` | 道路等级 | `PRIMARY`、`SECONDARY`、`SERVICE` 三档道路优先级。当前等级影响排序和入口信息，不表示不同路宽。 |
+| `Entrance` / `RegionEntrance` | Region 出入口 | 城市级道路与某个 Region 边界相接的位置。只有地表层拥有外部 Entrance；地下三层经楼梯连接到地表。 |
+| `road_connections` | 临路连接面 | Parcel 与道路真实共享边的完整列表。每项记录世界方向、道路 ID 和道路等级；列表第一项兼作主入口。 |
+| `footprint` | 建筑占地 | 建筑模板在默认朝向下占用的 Chunk 宽和长。旋转后的 footprint 必须与 Parcel 尺寸精确相等，不是“能够放进去”即可。 |
+| `PlotSize` | Region 候选尺寸 | 一个 Region 矩形允许使用的 Chunk 宽和长。生成器会同时尝试声明方向及其旋转方向。 |
+| `CityGrid` | 城市 Chunk 栅格 | 把城市多边形转换成 `OUTSIDE`、`EMPTY`、`PLOT`、`ROAD` 等 Chunk 状态的计算模型；只有完整落在城市内的 Chunk 才可用。 |
+| `hub` | 本层道路枢纽 | `RegionLayoutGenerator` 为每一层选择的道路汇聚参考点。各层 hub 位于不同象限并带稳定随机扰动，因此不会简单复制道路。 |
+| `GRID` / `CONCENTRIC` / `RADIAL_GRID` | 网格 / 同心环 / 放射网格布局 | 当前真正实现的三种 Region 道路生成策略。枚举中的 `SPINE`、`CAMPUS`、`HYBRID` 尚不可使用。 |
+| `site` / `Voronoi site` | Voronoi 站点 | 用来比较距离的参照物。地表国家使用折线站点，城市使用点站点。 |
+| `cell` / `Voronoi cell` | Voronoi 单元 | 裁剪范围内离某个站点不比其他站点远的区域；国家单元形成国界，城市单元形成城市边界。它与 `CityGrid` 中的 Chunk 网格单元不是一回事。 |
+| `seed` | 随机种子 | 初始化伪随机序列的整数。相同输入和 seed 会复现结果，但修改 ID、实例顺序或随机调用次数仍会使后续布局变化。 |
+| `BFS` | 广度优先搜索 | 从一组起点逐层访问四邻域 Chunk 的算法。项目用它检查道路连通、提取 UrbanBlock，并计算到最近道路的距离场。 |
+| `Builder` | 声明构建器 | 用链式方法收集并校验注册参数的 Java 对象，例如 `NationBuilder`。Builder 中存在字段不代表生成算法已经读取它。 |
+| `Catalog` | 注册目录 | 保存、索引并交叉校验 Builder 的目录对象，例如 `NationCatalog`；它负责重复 ID、归属和未注册引用等检查。 |
+| `Jigsaw` | 拼图结构系统 | Minecraft 用模板池和连接点展开结构的机制。Region 地表建筑由已经注册的 Jigsaw 建筑候选生成。 |
+| `NBT` | Minecraft 二进制标签数据 | 保存结构模板方块、实体和连接信息的格式。数据生成可以引用 NBT，但不会替开发者自动搭建建筑内容。 |
+| `schema` | 数据格式版本 | 压缩布局资源的字段契约。当前运行时只接受 v16；不兼容的字段变化必须同步更新导出器、读取器与版本。 |
+| `gzip` | Gzip 压缩文件 | `runData` 输出布局 JSON 时使用的压缩封装，文件扩展名为 `.json.gz`。它是生成产物，不应手工维护。 |
+| `runData` | 数据生成任务 | NeoForge/Gradle 的离线数据生成流程；本项目会在其中计算并恢复 Terra 布局压缩资源。 |
+| `runtime` | 游戏运行时 | 模组已经加载并生成世界的阶段。本文也直接称“运行时”；此阶段读取布局并放置结构，不重新求解全图。 |
 
-`TerraCityRegionBuilder` 声明的是一种 Region 类型，不是一个固定坐标。除非使用 `unique()` 或把 `maxCount` 限制为 1，同一种类型可以在城市中生成多个实例。
+### 2.2 国家、城市与 Region 的数据层级
 
-## 1. 国家边界如何生成
+| 层级 | 你声明什么 | 生成器得到什么 |
+| --- | --- | --- |
+| 国家 `NationBuilder` | 稳定 ID、定位折线、城市清单；地下国家另有固定尺寸 | 泰拉核心矩形内的国家边界 |
+| 城市 `TerraCityBuilder` | 国家内相对位置、Region 类型和地块约束 | 国家边界内的城市边界、城市道路与 Region 实例 |
+| Region `TerraCityRegionBuilder` | 类型权重、数量、离散尺寸、地表道路类型和建筑池 | 一个或多个矩形移动地块，以及每个实例的四层内部布局 |
 
-地表国家在 [ModNation.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModNation.java) 中声明：
+`TerraCityRegionBuilder` 声明的是一种 Region **类型**，不是固定坐标。除非调用 `unique()`，同一类型可以在一座城市中出现多次。
+
+主要入口是：
+
+- [ModNation.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModNation.java)
+- [ModCity.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModCity.java)
+- [ModCityRegion.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModCityRegion.java)
+- [TerraLayoutCalculator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/TerraLayoutCalculator.java)
+
+## 3. 声明国家
+
+以炎为例，注册内容是真实存在的：
 
 ```java
-public static final NationBuilder EXAMPLE = Zinecraft.NATIONS
-    .nation("example", "示例国")
-    .position(-0.35, -0.20)
-    .position(-0.10, 0.15)
-    .cities(() -> List.of(ModCity.EXAMPLE_CITY))
+public static final NationBuilder YAN = Zinecraft.NATIONS.nation("yan", "炎")
+    .position(0.5991, -0.5472)
+    .position(0.8335, -0.5756)
+    .position(0.9080, -0.3661)
+    .position(0.7456, -0.2418)
+    .cities(() -> List.of(
+        ModCity.BAIZAO, ModCity.LUNGMEN, ModCity.JIANGQI,
+        ModCity.HSI, ModCity.OCHRE, ModCity.SPRING_CITY
+        // 其余城市略
+    ))
     .build();
 ```
 
-`position(x, z)` 接收相对泰拉核心矩形的归一化坐标。生成时，X、Z 分别乘以 `ModDimension.TERRA_CORE_HALF_SIZE_X` 和 `TERRA_CORE_HALF_SIZE_Z`，转换为方块坐标。多个点组成国家的定位折线；它们不是国家边界顶点。`PolylineVoronoiDiagram` 以所有地表国家的定位折线为站点，在泰拉核心矩形中计算互不重叠的国家 Voronoi 单元，单元外轮廓才是最终国家边界。
+### 3.1 `position(x, z)` 不是国界顶点
 
-当前泰拉核心矩形宽 80,000、长 50,000，因此半边长分别是 `Hₓ=40,000`、`H_z=25,000`。国家点位的换算公式是：
+每个国家点先从归一化坐标换算为方块坐标：
 
 $$
 \begin{aligned}
-\mathrm{worldX}&=\mathrm{relativeX}\times40{,}000,\\
-\mathrm{worldZ}&=\mathrm{relativeZ}\times25{,}000.
+x_{\mathrm{world}} &= x_{\mathrm{relative}} H_x,\\
+z_{\mathrm{world}} &= z_{\mathrm{relative}} H_z.
 \end{aligned}
 $$
 
-上例的两个点会变为：
+| 符号 | 中文含义 | 单位与范围 |
+| --- | --- | --- |
+| $x_{\mathrm{relative}}$ | 国家定位点的归一化 X 坐标 | 无单位，严格位于 $(-1,1)$ |
+| $z_{\mathrm{relative}}$ | 国家定位点的归一化 Z 坐标 | 无单位，严格位于 $(-1,1)$ |
+| $H_x$ | 泰拉核心矩形 X 方向半边长 | $40{,}000$ 方块 |
+| $H_z$ | 泰拉核心矩形 Z 方向半边长 | $25{,}000$ 方块 |
+| $x_{\mathrm{world}}$ | 换算后的世界 X 坐标 | 方块 |
+| $z_{\mathrm{world}}$ | 换算后的世界 Z 坐标 | 方块 |
 
-| 归一化点 | 世界方块点 |
-| --- | --- |
-| `(-0.35, -0.20)` | `(-14,000, -5,000)` |
-| `(-0.10, 0.15)` | `(-4,000, 3,750)` |
+例如炎的第一个点 `(0.5991, -0.5472)` 会换算为：
 
-两点之间的线段连同两个端点共同构成该国的距离站点。`TerraLayoutCalculator` 对所有非地下国家一次性计算折线 Voronoi，然后用 `PolygonAdjacencyCalculator` 比较最终多边形边界，写出 `neighboringNationIds`。
+$$
+\begin{aligned}
+x_{\mathrm{world}} &= 0.5991 \times 40{,}000 = 23{,}964,\\
+z_{\mathrm{world}} &= -0.5472 \times 25{,}000 = -13{,}680.
+\end{aligned}
+$$
 
-可以把两个国家的输入与输出想成：
+多个点会按声明顺序连成一条折线。生成器比较的是“世界位置到哪一条国家折线最近”，而不是把这些点首尾相连当作手写边界。
 
-```text
-输入：定位折线                         输出：到哪条折线更近就归哪个国家
+### 3.2 地表国家为什么使用折线 Voronoi
 
-┌────────────────────┐                ┌────────────────────┐
-│ A1────A2            │                │       国家 A       │
-│        ╲            │                │ A1────A2            │
-│         A3   B1     │      ──>       │        ╲···········│
-│              ╲      │                │         A3│ B1      │
-│               B2   │                │ 国家 A    │  ╲ 国家 B│
-└────────────────────┘                └────────────────────┘
-                                               ↑
-                                         Voronoi 分界
-```
+Voronoi 可以直观理解为：空间中的每一点都归给离它最近的站点。国家的站点是一条折线 $L$，点 $p$ 到折线的距离取各线段距离的最小值：
 
-使用折线而不是单点，是为了让狭长或弯曲国家可以表达“大致走向”。算法比较的是到整条折线的距离，所以增加一个折点会拉动附近分界，但不必手写并维护一整圈边界。
+$$
+d(p,L)^2 = \min_k d\!\left(p,[a_k,b_k]\right)^2.
+$$
 
-因此，增加或移动一个国家的定位点可能同时改变邻国边界。坐标是 Zinecraft 的玩法布局数据，不应当作官方世界坐标；国家名称、城市归属等资料事实则应以项目指定资料为准。
+| 符号 | 中文含义 | 单位 |
+| --- | --- | --- |
+| $p$ | 泰拉核心矩形内待归属的世界点 | 方块坐标 |
+| $L$ | 某个国家的完整定位折线 | 方块坐标序列 |
+| $k$ | 折线中线段的序号 | 无单位整数 |
+| $a_k$、$b_k$ | 第 $k$ 条线段的起点和终点 | 方块坐标 |
+| $d(p,[a_k,b_k])$ | 点 $p$ 到第 $k$ 条线段的最短欧氏距离 | 方块 |
+| $d(p,L)$ | 点 $p$ 到整条国家折线的最短距离 | 方块 |
 
-地下国家不参与地表 Voronoi。它使用定位折线的中点作为中心，再生成固定正方形：
+[PolylineVoronoiDiagram.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/PolylineVoronoiDiagram.java) 会把折线顶点和线段送入 Voronoi 计算，裁剪到 `80,000 × 50,000` 的泰拉核心矩形，再合并同一国家拥有的 primitive faces。最终多边形才是国家边界。
+
+![点站点与折线站点 Voronoi 的区别](./diagrams/terra-voronoi-explained.svg)
+
+这解释了两个常见现象：
+
+1. 增加一个折点会拉动附近国界，但不会要求你手写整圈边界。
+2. 两国是否相邻由最终多边形是否共享边界决定，不由注册顺序决定。
+
+### 3.3 地下国家走另一条路径
+
+杜林当前使用固定正方形：
 
 ```java
-public static final NationBuilder UNDERGROUND_EXAMPLE = Zinecraft.NATIONS
-    .nation("underground_example", "地下示例国")
-    .position(-0.60, 0.35)
+public static final NationBuilder DURIN = Zinecraft.NATIONS.nation("durin", "杜林")
+    .position(-0.6417, 0.3505)
     .underground()
     .size(2_000)
-    .cities(() -> List.of(ModCity.UNDERGROUND_CITY))
+    .cities(() -> List.of(ModCity.NEW_ZERUERTZA, ModCity.ORTZIMUGA))
     .build();
 ```
 
-`size(...)` 的单位是方块，且整个正方形必须位于泰拉核心矩形内。`cities(...)` 使用 `Supplier` 是为了延迟读取城市字段，保持国家、Region、城市之间的静态注册依赖顺序。
-
-地下国家中心也不是简单的顶点平均值。如果折线总长度为 `L`，`PolylineVoronoiDiagram.midpoint(...)` 沿折线累计长度，取弧长 `L/2` 所在位置。随后以 `size/2` 为半边长生成轴对齐正方形：
+地下国家不参与地表 Voronoi。生成器取定位折线的弧长中点作为中心，再以 `size / 2` 为半边长生成轴对齐正方形：
 
 $$
-\Omega_{\mathrm{underground}}=
-\left[\mathrm{centerX}-\frac{\mathrm{size}}2,\mathrm{centerX}+\frac{\mathrm{size}}2\right]
+\Omega_u =
+\left[c_{u,x}-\frac{s_u}{2},c_{u,x}+\frac{s_u}{2}\right]
 \times
-\left[\mathrm{centerZ}-\frac{\mathrm{size}}2,\mathrm{centerZ}+\frac{\mathrm{size}}2\right].
+\left[c_{u,z}-\frac{s_u}{2},c_{u,z}+\frac{s_u}{2}\right].
 $$
 
-这样做的意图是让地下国家拥有独立、确定的规划范围，同时不从地表国家手中“切走”面积。
-
-## 2. 城市边界如何生成
-
-城市在 [ModCity.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModCity.java) 中声明。项目现有辅助方法最终等价于：
-
-```java
-public static final TerraCityBuilder EXAMPLE_CITY = Zinecraft.CITIES
-    .city("示例城")
-    .id("example_city")
-    .enUs("Example City")
-    .position(0.10, -0.25)
-    .rotation(90) // 当前仅作为 rotation_degrees 元数据导出
-    .regions(
-        ModCityRegion.EXAMPLE_CORE,
-        ModCityRegion.EXAMPLE_SUBURB
-    )
-    .build();
-```
-
-城市的 `position(relativeX, relativeZ)` 是所属国家边界内的归一化布局坐标，不是世界方块坐标，也不是前一节的泰拉归一化坐标。`NormalizedVoronoiCalculator` 将相对坐标映射进国家多边形，再以同一国家的全部城市为站点切分城市 Voronoi 边界。
-
-### 归一化城市坐标怎样映射进国家
-
-[ConvexPolygonMapper.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/ConvexPolygonMapper.java) 使用“从国家中心向边界发射射线”的映射，而不是拿国家外接矩形做简单缩放。给定城市输入 `(u,v)∈[-1,1]²`：
-
-$$
-\begin{aligned}
-f&=\max(|u|,|v|),\\
-q&=(u/f,v/f) && (f>0),\\
-d&=R(\theta)q && \text{（旋转后的射线方向）},\\
-\lambda&=\text{射线 }\mathrm{center}+\lambda d\text{ 与国家边界的最近正向交点距离},\\
-\mathrm{site}&=\mathrm{center}+f\lambda d.
-\end{aligned}
-$$
-
-`f` 是输入在 L∞ 范数下离中心的比例：`f=0` 映射到国家中心，`f=1` 映射到对应方向的国家边界。这样即使国家不是矩形，`position(0.5,-0.25)` 仍表示“沿该方向走到边界距离的一半”。
-
-例如国家暂时近似为 `[-1000,1000]×[-500,500]`、中心为 `(0,0)`，输入 `(u,v)=(0.5,-0.25)`：
-
-$$
-\begin{aligned}
-f&=0.5,\\
-q&=(1,-0.5),\\
-\lambda&=1000 && \text{（射线先在 }x=1000\text{ 处命中边界）},\\
-\mathrm{site}&=(0,0)+0.5\times1000\times(1,-0.5)\\
-&=(500,-250).
-\end{aligned}
-$$
-
-当前 `TerraLayoutCalculator` 调用映射器时传入的旋转角固定为 `0.0`。`TerraCityBuilder.rotation(...)` 当前只会作为 `rotation_degrees` 元数据导出，并未参与城市站点映射、Region 地块生成或建筑旋转；不要用它修正实际布局方向。
-
-### 城市点站点怎样得到边界
-
-映射完成后，同一国家内的每座城市得到一个点站点。`VoronoiDiagram` 对第 `i` 座城市执行：
-
-```text
-polygon ← nationBoundary
-for each j ≠ i:
-    polygon ← clip(polygon, Hᵢⱼ)
-cityBoundaryᵢ ← polygon
-```
-
-因此只有一座城市时，它获得整个国家边界；有多座城市时，边界由所有城市点共同决定。移动 C1 不只改变 C1，也会移动它与 C2、C3 的等距线。最后再次计算共享边界，生成 `neighboringCityIds`。
-
-例如，同一个国家有三座城市时：
-
-```text
-国家边界                         城市 Voronoi 结果
-
-       ╭────────╮                     ╭────────╮
-    ╭──╯  C1 ·  ╰──╮               ╭──╯ C1 城区╲╰──╮
-   ╱          · C2  ╲             ╱──────────╲ C2  ╲
-  ╰──╮  C3 ·      ╭─╯            ╰──╮ C3 城区  ╲ ╭─╯
-     ╰────────────╯                  ╰────────────╯
-```
-
-这一级继续使用 Voronoi，是为了让增加城市时自动重新分配国家内部空间，并让城市边界完整覆盖国家，而不必为每座城市单独维护世界坐标范围。
-
-常用参数如下：
-
-| 调用 | 含义与约束 |
-| --- | --- |
-| `id(id)` | 稳定的 `lower_snake_case` 城市 ID。 |
-| `position(x, z)` | 城市在所属国家边界内的归一化相对位置。 |
-| `rotation(degrees)` | 当前仅导出为 0～359 度的元数据；尚未参与城市、Region 或建筑几何计算。 |
-| `regions(...)` | 该城市允许生成的 Region 类型；Region 必须属于同一个国家。 |
-| `plotCountRange(min, max)` | 城市内 Region 实例总数，默认 10～100。 |
-| `maxPlotCoverage(ratio)` | Region 占城市可用 Chunk 面积的上限，默认 0.45。 |
-| `roadWidthChunks(width)` | Region 之间的城市道路宽度，默认 1 Chunk。 |
-| `candidateCount(count)` | 每轮保留并评分的候选地块数量，默认 16。 |
-
-![城市 Region 与 Region 四层生成流程](./diagrams/terra-region-generation.svg)
-
-### 第一步：把城市多边形栅格化
-
-[CityGrid.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/CityGrid.java) 先计算多边形外接范围覆盖的 Chunk。一个 Chunk 只有以下五个采样点全部位于城市边界内，才记为 `EMPTY`：
-
-```text
-(minX,minZ)   (maxX,minZ)
-      +---------+
-      |    •    |  ← 中心
-      +---------+
-(minX,maxZ)   (maxX,maxZ)
-```
-
-点是否在多边形内使用射线奇偶规则；点恰好落在边上也算内部。只接纳完整 Chunk 的设计意图，是避免矩形 Region 或道路在斜城市边界处伸到邻城。
-
-设可用 Chunk 集合为 `G`，城市核心不是 Voronoi 站点本身，而是在 `G` 中重新寻找的“最大净空 Chunk 中心”：
-
-$$
-\mathrm{core}=\underset{c\in G}{\operatorname{arg\,max}}\;
-\operatorname{distanceToBoundary}\!\left(\operatorname{center}(c)\right).
-$$
-
-`distanceToBoundary` 是点到城市多边形所有边线段的最短欧氏距离。这使首个大型 Region 尽量放在城市最厚实的位置，而不是卡在狭角或紧贴边界。
-
-### 第二步：先满足每种 Region 的下限
-
-设城市允许的 Region 类型为 `T`。生成器先检查：
-
-$$
-\begin{aligned}
-\mathrm{mandatoryCount}&=\sum_{t\in T}\operatorname{minCount}(t),\\
-\mathrm{city.minPlotCount}&\ge\mathrm{mandatoryCount}.
-\end{aligned}
-$$
-
-随后按 `weight` 降序、ID 升序展开每种类型 `minCount` 次。每一个必选实例都必须找到合法候选；任何一个放不下都会返回 `MANDATORY_PLOTS_CANNOT_FIT`，而不是跳过它。
-
-### 第三步：为后续实例生成加权类型顺序
-
-达到所有 `minCount` 后，类型不是简单按注册顺序尝试，而是反复做不放回加权抽取。类型 `t` 当前已放置 `nₜ` 个时：
-
-$$
-\operatorname{remaining}(t)=
-\begin{cases}
-1,&\operatorname{maxCount}(t)=\infty,\\
-\max\!\left(1,\operatorname{maxCount}(t)-n_t\right),&\text{其他情况},
-\end{cases}
-$$
-
-$$
-\operatorname{effectiveWeight}(t)=
-\operatorname{clamp}\!\left(
-\operatorname{weight}(t)\operatorname{remaining}(t),
-1,\mathrm{Integer.MAX\_VALUE}
-\right).
-$$
-
-每轮以 `effectiveWeight` 为票数抽一个类型，移出临时候选集合，再抽下一个，形成本轮的尝试顺序。有限 `maxCount` 的类型在剩余名额较多时更容易靠前；`unique()` 会把有效 `maxCount` 压到 1。
-
-### 第四步：生成 Region 矩形候选
-
-`PlotSize(w,h)` 以 Chunk 为单位，生成器同时尝试 `w×h` 与 `h×w`。
-
-首个 Region 必须覆盖核心 Chunk。对于每个方向后的尺寸，生成器枚举所有能覆盖核心的左上角：
-
-$$
-\begin{aligned}
-\mathrm{offsetX}&\in[-w+1,0],\\
-\mathrm{offsetZ}&\in[-h+1,0],\\
-\mathrm{candidate.min}&=\mathrm{coreChunk}+(\mathrm{offsetX},\mathrm{offsetZ}).
-\end{aligned}
-$$
-
-后续 Region 从已有地块边缘扩张。默认 `candidateCount=K` 时：
-
-```text
-目标去重候选数 = 8K
-最大采样次数   = 16 × 8K = 128K
-```
-
-每次随机选择一个已有父地块、一个允许尺寸、四个方向之一和沿父地块边缘的偏移。新 Region 与父地块之间留出 `roadWidthChunks` 宽的道路矩形；二者在平行方向上的重叠长度就是 `interfaceLength`。若采样候选全部失败且城市尚未达到 `minPlotCount`，才退回到完整边缘枚举，优先保证下限可达。
-
-### 第五步：逐条拒绝非法候选
-
-候选按以下顺序过滤；第一条命中的原因会写入调试统计：
-
-| 拒绝原因 | 实现判断 |
-| --- | --- |
-| `OUTSIDE_CITY` | Region 或连接道路包含非完整城市 Chunk。 |
-| `OVERLAPS_PLOT` | Region 与已有 Region 相交，或连接道路穿过非父 Region。 |
-| `OVERLAPS_ROAD` | Region 自身覆盖已有城市道路。 |
-| `INVALID_ROAD_GAP` | Region 进入已有 Region 向外扩张 `roadWidthChunks` 后的保留带。 |
-| `NO_CONNECTION` | 非首个 Region 没有合法父地块连接。 |
-| `COVERAGE_LIMIT` | 接纳后的地块覆盖率超过 `maxPlotCoverage`。 |
-| `TYPE_MAX_COUNT` | 此类型已达到有效 `maxCount`。 |
-
-覆盖率只计算 Region 地块面积，不把城市道路算入分子：
-
-$$
-\mathrm{coverage}=
-\frac{\sum_{p\in\mathrm{plots}}\operatorname{areaChunks}(p)}
-{\operatorname{usableChunkArea}(\mathrm{city})}.
-$$
-
-### 第六步：打分并接纳最优候选
-
-合法候选先用稳定随机源打乱，再最多保留 `K=candidateCount` 个评分，防止总是偏向枚举顺序。设：
-
-$$
-\begin{aligned}
-R&=\max\!\left(1,\operatorname{hypot}(\mathrm{gridWidthChunks},\mathrm{gridLengthChunks})\right),\\
-d&=\frac{\operatorname{distance}(\mathrm{candidateCenter},\mathrm{cityCore})}{16},\\
-\widehat w&=
-\begin{cases}
-0.5,&w_{\max}=w_{\min},\\
-\dfrac{w-w_{\min}}{w_{\max}-w_{\min}},&\text{其他情况},
-\end{cases}\\
-r^*&=0.65R(1-\widehat w).
-\end{aligned}
-$$
-
-`r*` 是类型的目标半径。最高权重时 `ŵ=1`、`r*=0`，目标在核心；最低权重时 `ŵ=0`、`r*=0.65R`，目标偏外。四个评分分量为：
-
-$$
-\begin{aligned}
-\mathrm{centrality}&=1-\min\!\left(1,\frac{|d-r^*|}{R}\right),\\
-\mathrm{clearance}&=\min\!\left(1,
-\frac{\operatorname{distanceToCityBoundary}(\mathrm{candidateCenter})}{16R}\right),\\
-\mathrm{adjacency}&=\frac{\mathrm{interfaceLength}}
-{\max(\mathrm{candidateWidth},\mathrm{candidateLength})},\\
-\mathrm{compactness}&=\frac{\mathrm{totalPlotAreaAfterAccept}}
-{\mathrm{boundingBoxAreaOfAllPlotsAfterAccept}},\\
-\mathrm{score}&=4.0\,\mathrm{centrality}+2.0\,\mathrm{clearance}
-+1.5\,\mathrm{adjacency}+2.0\,\mathrm{compactness}.
-\end{aligned}
-$$
-
-这四项分别表达“符合类型的目标半径”“不要贴边”“与父地块有足够长的道路界面”“城市整体不要形成飞地”。权重不直接加到总分，而是改变目标半径。
-
-数值示例：设 `R=50`，核心区权重是本城最高权重，候选 `d=6`，距边界 80 方块，`interfaceLength=12`，尺寸 `16×12`，接纳后紧凑度 `0.72`：
-
-$$
-\begin{aligned}
-r^*&=0,\\
-\mathrm{centrality}&=1-\frac6{50}=0.88,\\
-\mathrm{clearance}&=\frac{80}{16\times50}=0.10,\\
-\mathrm{adjacency}&=\frac{12}{16}=0.75,\\
-\mathrm{compactness}&=0.72,\\
-\mathrm{score}&=4\times0.88+2\times0.10+1.5\times0.75+2\times0.72\\
-&=6.285.
-\end{aligned}
-$$
-
-接纳后，Region 矩形标记为 `PLOT`，连接带标记为 `ROAD`，并生成一条 `UrbanRoad(parentId,newId,area)`。循环直到达到 `maxPlotCount`、没有可选类型或没有类型能找到候选。`maxPlotCount` 是上限而非目标；最终只强制 `plots.size ≥ minPlotCount`。
-
-候选扩张可以简化为下图。`R0` 首先覆盖城市核心；`R1`、`R2` 只能贴着已有地块的边缘尝试，二者之间保留城市道路：
-
-```text
-图例：■ Region   = 城市道路   · 未占用 Chunk   ★ 城市核心
-
-初始                     第一次扩张                 后续扩张
-
-··········               ··········                ··■■■····
-···■■■···               ···■■■=■■·                ··■■■····
-···■★■···      ──>      ···■★■=■■·      ──>       ··===····
-···■■■···               ···■■■=■■·                ··■■■=■■·
-··········               ··········                ··■■■=■■·
-   R0                      R0   R1                   R2   R0 R1
-```
-
-如果必选 Region 放不下，或最终实例数达不到城市的 `minPlotCount`，数据生成会直接失败，而不是静默少生成。
-
-## 3. 声明 Region 类型
-
-Region 在 [ModCityRegion.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModCityRegion.java) 中注册：
-
-```java
-public static final TerraCityRegionBuilder EXAMPLE_CORE =
-    Zinecraft.CITY_REGIONS.region(ModNation.EXAMPLE, "示例城核心区")
-        .weight(100)
-        .regionLayout(RegionLayoutType.CONCENTRIC)
-        .plotSizes(
-            new PlotSize(40, 32),
-            new PlotSize(32, 32),
-            new PlotSize(32, 24)
-        )
-        .countRange(1, 1)
-        .unique()
-        .building(ModStructure.EXAMPLE_SHOP, 2, false)
-        .building(ModStructure.EXAMPLE_LANDMARK, 1, true)
-        .build();
-```
-
-| 调用 | 含义与约束 |
-| --- | --- |
-| `weight(value)` | 可选实例的选择权重，同时影响理想半径；权重越高越趋向城市核心。必须为正数。 |
-| `regionLayout(type)` | 地表层道路布局；当前只能使用 `GRID`、`CONCENTRIC`、`RADIAL_GRID`。 |
-| `plotSizes(...)` | 允许的矩形地块尺寸，单位为 Chunk；生成器也会尝试旋转尺寸。每项面积至少为 80 Chunk。 |
-| `countRange(min, max)` | 该类型在一座城市中的实例数范围；默认至少 1 个。 |
-| `unique()` | 把有效最大数量限制为 1，适合核心区或地标区。 |
-| `roadConfig(config)` | Region 内部道路参数。三类道路宽度目前都必须为 1 Chunk；`gridSpacingChunks` 已参与网格间距，`extraEdgeRatio/maxCandidateAttempts` 当前尚未被生成器消费。 |
-| `building(builder, weight, unique)` | 加入地表建筑候选；权重控制选择概率，`unique` 防止同一建筑在该 Region 重复。 |
-
-城市建筑必须先在 [ModStructure.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModStructure.java) 中以 `embeddedBuilding(...)` 等方式声明正确的 footprint 和真实入口面。独立建筑的制作方式参见 [添加结构](add-structure.md)。
-
-项目现有 `region(...)` 辅助方法还会自动加入国家商店，将核心区设为权重 100、郊区设为 30，并给核心区使用更大的 `PlotSize`。新增内容时优先复用这一入口；只有需求偏离默认规则时才展开 Builder 配置。
-
-## 4. 一个 Region 内部如何生成
-
-每个城市移动地块会交给 [RegionLayoutGenerator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/RegionLayoutGenerator.java)，生成固定四层：
-
-| 层 | 相对 Y | 内容 |
-| --- | ---: | --- |
-| `power` | 0 | 动力层道路与分层建筑 |
-| `support` | 16 | 支持层道路与分层建筑 |
-| `life` | 32 | 生活层道路与分层建筑 |
-| `surface` | 48 | 地表道路与 Region 建筑池中的建筑 |
-
-地表层使用注册时的 `regionLayout`。下三层分别使用独立的稳定随机源，从 `GRID`、`CONCENTRIC`、`RADIAL_GRID` 中选择布局；四层不会简单复制同一张道路图。
-
-### 4.1 从城市道路推导 Region Entrance
-
-城市级 `UrbanRoad` 记录相邻两个 Region 及道路矩形。`CityLayoutCalculator` 取道路矩形的方块中心，给道路两端分别增加 `CityRegionConnection(neighborId, point)`。
-
-进入 Region 生成器后：
-
-1. 把连接点除以 16 并向下取整，得到目标 Chunk。
-2. 计算它到 Region 北、南、西、东四条边的 Chunk 距离。
-3. 选择最近边；若相等，判断顺序是北 → 南 → 西 → 东。
-4. 把坐标限制到该边范围内，形成宽 1 Chunk 的 `RegionEntrance`。
-
-Entrance 的设计意图是把“Region 之间的城市道路”转换成“Region 内道路图的外部端口”。只有 `surface` 层拥有 Entrance；地下层通过楼梯与地表连通。
-
-### 4.2 中心、楼梯与分层 seed
-
-Region 本地中心先取矩形中心 Chunk。非 `CONCENTRIC` 类型会在 X/Z 各加入 `[-1,1]` 的稳定随机扰动，再限制在距边界至少 1 Chunk 的内部范围。
-
-四个共享楼梯以中心为基准分布在四个象限：
-
-$$
-\begin{aligned}
-\mathrm{offsetX}&=\max\!\left(2,\frac{\mathrm{regionWidth}}6\right),\\
-\mathrm{offsetZ}&=\max\!\left(2,\frac{\mathrm{regionLength}}6\right),\\
-\mathrm{stairs}&=\left\{
-(c_x-\mathrm{offsetX},c_z-\mathrm{offsetZ}),
-(c_x+\mathrm{offsetX},c_z-\mathrm{offsetZ}),\right.\\
-&\hspace{5.7em}\left.
-(c_x-\mathrm{offsetX},c_z+\mathrm{offsetZ}),
-(c_x+\mathrm{offsetX},c_z+\mathrm{offsetZ})
-\right\}.
-\end{aligned}
-$$
-
-坐标会限制在 Region 内圈；若限制后无法得到四个不同 Chunk，说明 Region 太小，直接失败。这里固定四象限的意图不是装饰，而是限制最坏步行距离，并避免整个四层交通依赖单一竖井。
-
-每个 Region 的 seed 由城市随机源、城市 ID、Region 类型 ID 和实例序号混合。每一层再混入层 ordinal：
-
-$$
-\mathrm{layerSeed}=\operatorname{mix}\!\left(
-\mathrm{regionSeed}\mathbin{\mathrm{XOR}}
-\bigl(\mathtt{0x9E3779B97F4A7C15}\times(\mathrm{layerOrdinal}+1)\bigr)
-\right).
-$$
-
-`mix` 还执行无符号右移、乘 `0xff51afd7ed558ccd` 和再次异或。目的不是加密，而是让相邻层的随机序列充分分离。下三层先用各自随机源独立抽取一种已实现布局；`surface` 固定使用 Region 注册的布局。
-
-### 4.3 每层 hub 为什么不同
-
-四层按 `POWER、SUPPORT、LIFE、SURFACE` 顺序分配西北、东北、西南、东南四个象限。设：
-
-$$
-\begin{aligned}
-\mathrm{distanceX}&=\max\!\left(1,\frac{\mathrm{width}}4\right),&
-\mathrm{jitterX}&\in[0,\mathrm{distanceX}),\\
-\mathrm{distanceZ}&=\max\!\left(1,\frac{\mathrm{length}}4\right),&
-\mathrm{jitterZ}&\in[0,\mathrm{distanceZ}),\\
-\mathrm{hub}&=\operatorname{clamp}\!\left(
-\mathrm{center}+\mathrm{quadrantSign}(\mathrm{distance}+\mathrm{jitter}),
-\mathrm{innerRegionBounds}\right).
-\end{aligned}
-$$
-
-即便两层偶然抽到同一种 `layoutType`，hub 象限与随机序列也不同，因此不会复制出完全相同的道路骨架。
-
-### 4.4 先建保证连通的强制主路
-
-单层生成总是从强制道路开始：
-
-1. 地表若有 Entrance，随机打乱后把第一个 Entrance 用正交折线连接到 hub；其余 Entrance 使用距离场接入最近既有道路。
-2. 地下层没有 Entrance，因此从 hub 接到 Region 西边界，保证道路图不是空图。
-3. 再把 Region center 与本层 hub 连接为 `PRIMARY`。
-
-正交连接若两个点不共 X/Z，会随机选择“先走 X”或“先走 Z”的肘点。所有道路边最终都是轴对齐矩形，且当前 `PRIMARY/SECONDARY/SERVICE` 宽度都严格为 1 Chunk。
-
-### 4.5 三种地表道路算法
-
-| 类型 | 当前实现 | 设计意图 |
+| 符号 | 中文含义 | 单位与约束 |
 | --- | --- | --- |
-| `GRID` | 从 Region 最小边开始，按 `gridSpacingChunks` 随机取间距；分别生成贯穿内圈的纵线和横线，并接到 hub。距已有平行道路 1 Chunk 内的候选线会跳过。 | 形成规则街区，同时避免相邻两条线制造无意义的双宽路。 |
-| `CONCENTRIC` | 初始 inset 随机为 3 或 4 Chunk；生成正交矩形环，每轮再增加 3 或 4。环的南边有 18% 概率留缺口，每个环从北边接到中心。 | 保留核心—环路层次，又避免每一环都机械闭合。 |
-| `RADIAL_GRID` | 统计 Entrance 已占方向，补主干直到至少有两个边界方向；再调用稀疏 GRID，每条候选网格线只有 72% 概率生成。 | 先建立从 hub 向外的放射骨架，再用较稀疏网格提供横向联系。 |
+| $\Omega_u$ | 地下国家的水平规划区域 | 方块坐标区域 |
+| $c_{u,x}$、$c_{u,z}$ | 地下国家定位折线弧长中点的世界坐标 | 方块 |
+| $s_u$ | `size(...)` 声明的地下国家正方形边长 | 正偶数，单位为方块 |
 
-`SPINE`、`CAMPUS`、`HYBRID` 虽然存在于枚举中，但 Builder 会拒绝注册，生成器也会抛错；它们不是“可以尝试但效果未完成”的布局。
+整个正方形必须留在泰拉核心矩形内，否则 `TerraLayoutCalculator` 会直接失败。
 
-### 4.6 用距离场接入楼梯并补齐可达性
-
-道路会被光栅化为 Road Chunk 集合 `R`。生成器从全部道路格同时开始四邻域 BFS，计算 Region 内每格到最近道路的曼哈顿距离：
-
-$$
-D(c)=\min_{r\in R}\left(|c_x-r_x|+|c_z-r_z|\right).
-$$
-
-接入一个楼梯或远端地块时，从起点反向行走，每一步随机选择一个满足 `D(next)=D(current)-1` 的相邻格，直到 `D=0`，再把路径中同方向连续格压成 `PRIMARY` 或 `SERVICE` 道路。
-
-所有楼梯接路后，可达性循环反复执行：
-
-```text
-while max D(c) > 1:
-    从 D 最大的格中随机选一个
-    沿 D 每步减 1 的最短梯度路径接入道路
+```nation-boundary-d3
+nation-boundary
 ```
 
-终止条件 `max D≤1` 等价于每个非道路 Chunk 至少有一个四邻域道路格，因此后续切出的 Parcel 一定有机会获得真实临路面。循环最多执行 Region Chunk 总数次；若仍不收敛则失败。
+### 3.4 国家注册的硬约束
 
-### 4.7 安全移除 2×2 道路块
+[NationCatalog.java](../../src/main/java/com/cxxcxx/zinecraft/api/registry/catalog/NationCatalog.java) 会检查：
 
-多条正交道路叠加后可能形成 2×2 实心道路。生成器反复扫描每个 2×2 方块，优先尝试删除道路度数较低的格，但必须同时满足：
+- 至少声明一个归一化定位点；
+- 每个坐标有限，且 X/Z 严格位于 `(-1, 1)`；
+- 折线不能有连续重复顶点；
+- 国家 ID 不能重复；
+- 地下国家尺寸必须是正偶数；
+- 地表国家不能声明固定尺寸。
 
-- 不是 Entrance 或楼梯保护格；
-- 删除后剩余道路通过四邻域 BFS 仍整体连通；
-- 删除后 Region 中每个非道路格仍至少邻接一个道路格。
+`cities(...)` 使用 `Supplier` 是为了延迟读取城市字段，避免静态注册顺序把国家、城市和 Region 绑成初始化环。
 
-每次只删一个格然后重新扫描，直到没有安全删除项。随后把连续横向/纵向 Road Chunk 重新压成 `RoadEdge`；若同一格叠加多个等级，保留优先级最高的 `RoadClass`。
+## 4. 声明城市
 
-### 4.8 从道路反推 UrbanBlock 与 Parcel
-
-道路图稳定后，对全部非道路 Chunk 做四邻域 BFS。每个连通分量成为一个 `UrbanBlock`，记录真实格数和外接矩形；道路把 Region 切成几个分量，就会得到几个 UrbanBlock。
-
-随后按稳定坐标顺序消耗每个 UrbanBlock 的剩余格：
-
-1. 仅在地表，先统计建筑池中 footprint 为 `2×2` 的 unique 建筑，为它们查找完整 `2×2` Parcel。
-2. 若建筑池存在面积为 2 Chunk 的中型商店，尝试 `1×2` 或 `2×1`；只有对应长边方向存在合法道路接触面才接受。
-3. 其他剩余格退化为 `1×1` Parcel。
-4. 下三层不分配地表建筑候选，因此当前 Parcel 切分为 `1×1`，运行时在每个非道路 Chunk 放相应分层模板。
-
-每个 Parcel 都查询相邻 `RoadEdge`，并按“道路等级降序 → 方向序 → roadId”排序生成完整 `road_connections`。设 Parcel 为半开矩形 `[x₀,x₁)×[z₀,z₁)`，例如北面真实接壤要求：
-
-```text
-overlap([x₀,x₁), roadXRange)
-AND road.maxZExclusive = z₀
-```
-
-南、西、东面使用对应的相等边界。不是“道路看起来很近”就算入口，必须共享至少一个 Chunk 宽的边。
-
-### 4.9 建筑如何匹配 Parcel
-
-`CityLayoutCalculator.buildingSlots(...)` 对地表每个 Parcel 执行：
-
-1. 由 Parcel 主临路方向计算模板旋转。
-2. 过滤已使用的 unique 建筑。
-3. 旋转建筑的 `footprintChunksX/Z`，要求与 Parcel 宽、长**精确相等**，不是只要放得下。
-4. 在兼容候选中按建筑权重抽取：
-
-$$
-P(\mathrm{building}=i)=\frac{w_i}{\sum_j w_j}.
-$$
-
-5. 把模板声明的本地 `connectionFaces` 按建筑旋转到世界方向，再与 Parcel 的 `road_connections` 求交；交集为空就失败。
-6. 记录 `CityRegionBuildingSlot`，并把 unique 建筑加入已使用集合。
-
-因此，为建筑新增门口时必须修改 `connectionFaces(...)`。只改 NBT 外观而不更新真实入口面，会在布局生成阶段得到“建筑模板没有朝向道路的真实入口”。
-
-### 4.10 道路构件怎样由四向掩码决定
-
-对道路 Chunk `c`，统一按北、东、南、西检查相邻道路；地表 Entrance 朝外的一面也算连接。方向位定义为：
-
-```text
-mask = (north ? 1 : 0)
-     | (east  ? 2 : 0)
-     | (south ? 4 : 0)
-     | (west  ? 8 : 0)
-```
-
-| 连接形态 | 构件 | 示例 mask |
-| --- | --- | ---: |
-| 无连接 | `isolated` | 0 |
-| 一个方向 | `end` | 1 |
-| 两个相反方向 | `straight` | 5 或 10 |
-| 两个相邻方向 | `corner` | 3、6、12、9 |
-| 三个方向 | `tee` | 7、14、13、11 |
-| 四个方向 | `cross` | 15 |
-
-[RegionLayout.roadTile(...)](../../src/main/java/com/cxxcxx/zinecraft/api/world/city/RegionLayout.java) 同时返回构件和相对标准朝向的旋转。导出器和 `MobilePlotStructure` 都调用这一套分类，不分别维护第二份路口判断。
-
-### 4.11 验证器不是可选的日志
-
-[RegionLayoutValidator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/RegionLayoutValidator.java) 会把以下条件当作硬错误：
-
-- 恰好存在 `power/support/life/surface` 四层，范围与 `buildingId` 正确；
-- 四层 `stairChunks` 列表完全相等，且每个楼梯都属于本层道路；
-- 地表每个 Entrance 都属于地表道路；
-- 每层道路通过四邻域 BFS 整体连通；
-- Parcel 在 Region 内、不与道路重叠，每个 `road_connection` 引用真实且等级一致的相邻 RoadEdge；
-- 道路与全部 Parcel 对 Region 每个 Chunk 实现不重不漏的全覆盖；
-- 地表每个 Parcel 恰好对应一个建筑，建筑不重叠、尺寸正确，且覆盖全部非道路 Chunk。
-
-这些校验解释了为什么生成器宁可在 `runData` 失败，也不会输出“差不多能用”的残缺布局。
-
-单层大致按“确定 hub → 接入地表 Region Entrance → 建主路与布局道路 → 接入楼梯 → 补可达支路 → 清理安全可删的 2×2 道路 → 划分 Parcel”的顺序生成。四层共享至少四个分散且垂直对齐的楼梯 Chunk，每层道路必须整体连通，每个 Parcel 必须真实临路。地表建筑根据 footprint、入口方向和 Parcel 尺寸分配到 `building_slots`。
-
-道路格最终被分类为 `isolated`、`end`、`straight`、`corner`、`tee` 或 `cross`，运行时据此选择和旋转对应 NBT。修改道路、Parcel、入口或四层模型时，必须同步检查生成器、验证器、导出器、读取器和运行时结构；不要只改 JSON 字段。
-
-四层不是四张互不相关的地图，而是“道路独立、竖向交通共享”：
-
-```text
-       Region Entrance
-              │
-surface +48  ─┼───┬────────  地表建筑、对外道路
-              │   │
-life    +32  ─┼─┐ └────────  生活层；独立道路图
-              │ │
-support +16  ─┼─┴──────────  支持层；独立道路图
-              │
-power    +0  ─┴────────────  动力层；独立道路图
-              ▲
-         同一 X/Z 的楼梯竖井（至少四组）
-```
-
-这种设计让地下三层可以有不同的空间节奏，同时仍保证任何建筑都能沿本层道路到楼梯，再到地表 Entrance。至少四组分散楼梯是为了避免单点失效和过长绕行；楼梯坐标必须在四层完全一致，否则运行时无法拼成连续竖井。
-
-## 5. 一个贯穿示例
-
-假设“示例国”只有“示例城”，城市允许一个核心区和若干郊区：
+龙门的实际声明通过 [ModCity.java](../../src/main/java/com/cxxcxx/zinecraft/core/registry/ModCity.java) 中的辅助方法完成：
 
 ```java
-// ModNation.java
-public static final NationBuilder EXAMPLE = Zinecraft.NATIONS
-    .nation("example", "示例国")
-    .position(0.20, -0.10)
-    .cities(() -> List.of(ModCity.EXAMPLE_CITY))
-    .build();
+public static final TerraCityBuilder LUNGMEN = city(
+    "lungmen",
+    0.406,
+    -0.109,
+    345,
+    "龙门",
+    ModCityRegion.LUNGMEN_CORE,
+    ModCityRegion.LUNGMEN_SUBURB
+);
+```
 
-// ModCityRegion.java
-public static final TerraCityRegionBuilder EXAMPLE_CORE =
-    Zinecraft.CITY_REGIONS.region(ModNation.EXAMPLE, "示例城核心区")
-        .weight(100)
-        .regionLayout(RegionLayoutType.CONCENTRIC)
-        .plotSizes(new PlotSize(32, 24))
-        .unique()
-        .building(ModStructure.EXAMPLE_LANDMARK, 1, true)
-        .build();
+辅助方法最终调用：
 
-public static final TerraCityRegionBuilder EXAMPLE_SUBURB =
-    Zinecraft.CITY_REGIONS.region(ModNation.EXAMPLE, "示例城郊区")
-        .weight(30)
-        .regionLayout(RegionLayoutType.RADIAL_GRID)
-        .plotSizes(new PlotSize(16, 12), new PlotSize(12, 8))
-        .countRange(1, 8)
-        .building(ModStructure.EXAMPLE_SHOP, 2, false)
-        .build();
-
-// ModCity.java
-public static final TerraCityBuilder EXAMPLE_CITY = Zinecraft.CITIES
-    .city("示例城")
-    .id("example_city")
-    .position(0.0, 0.0)
-    .rotation(90)
-    .plotCountRange(4, 7)
-    .maxPlotCoverage(0.45)
-    .regions(ModCityRegion.EXAMPLE_CORE, ModCityRegion.EXAMPLE_SUBURB)
+```java
+Zinecraft.CITIES.city(zhCn)
+    .id(id)
+    .enUs(TranslationCatalog.toDisplayName(id))
+    .position(relativeX, relativeZ)
+    .rotation(rotationDegrees)
+    .regions(regions)
     .build();
 ```
 
-这组配置的推导过程是：
+城市 ID 必须是稳定的英文 `snake_case`。修改 ID 会改变城市随机种子，也会改变导出资源中的引用；不要把它当显示文本随意调整。
 
-1. 示例国的定位点参与地表国家 Voronoi；因为只有一座城市，示例城取得整个国家边界。
-2. 核心区与郊区的默认 `minCount` 都是 1，所以生成器必须先各放一个；核心区 `unique()` 后最多也只有一个。
-3. 核心区权重 100，目标半径更靠近城市核心；郊区权重 30，更适合在外围候选中得分。
-4. 城市至少要放 4 个地块，因此两个必选地块完成后还要继续选择郊区，直到达到 4～7 个、候选耗尽或覆盖率达到 0.45。
-5. 核心区地表生成同心道路，郊区地表生成放射网格；它们的地下三层仍各自独立随机选择已实现的布局类型。
-6. `runData` 固化本次结果。进入新区块后，运行时不会再次做上述候选搜索，只按资源中记录的 Chunk 布局放置结构。
+### 4.1 城市相对坐标怎样映射进国家
 
-再代入一组假设数值检查约束。假设示例城有 5,000 个完整可用 Chunk，核心区选中 `32×24`，三个郊区都选中 `16×12`：
+城市坐标不是泰拉世界坐标。它先由 [ConvexPolygonMapper.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/ConvexPolygonMapper.java) 沿国家中心射线映射进国家多边形：
 
 $$
 \begin{aligned}
-A_{\mathrm{core}}&=32\times24=768\ \mathrm{Chunk},\\
-A_{\mathrm{suburbs}}&=3\times16\times12=576\ \mathrm{Chunk},\\
-A_{\mathrm{plots}}&=768+576=1344\ \mathrm{Chunk},\\
-\mathrm{coverage}&=\frac{1344}{5000}=0.2688.
+f &= \max(|u|,|v|),\\
+q &= (u/f,v/f),\\
+\lambda &= \operatorname{rayDistance}(c_n,q,\Omega_n),\\
+s_i &= c_n + f\lambda q.
 \end{aligned}
 $$
 
-`0.2688 < maxPlotCoverage(0.45)`，且地块数为 4，满足 `plotCountRange(4,7)`。若下一个候选会让覆盖率超过 0.45，它会被 `COVERAGE_LIMIT` 拒绝；若没有其他候选，城市可以停在 4～7 之间，不强求生成到 7。
+当 $f=0$ 时，映射结果直接是国家中心，不计算 $q$。
 
-对核心区候选，`weight=100` 若是本城最高权重，则目标半径 `r*=0`；郊区 `weight=30` 若是最低权重，则目标半径 `r*=0.65R`。这不保证每个郊区都在核心区外侧，但会在候选评分中形成明确偏好，最终结果还同时受边界余量、道路界面和紧凑度影响。
+| 符号 | 中文含义 | 单位与范围 |
+| --- | --- | --- |
+| $u$、$v$ | `position(relativeX, relativeZ)` 的城市相对坐标 | 无单位，严格位于 $(-1,1)$ |
+| $f$ | 城市离国家中心的归一化比例，采用 $L_\infty$ 范数 | 无单位，$[0,1)$ |
+| $q$ | 从国家中心出发的射线方向 | 无单位二维向量 |
+| $c_n$ | 国家多边形中心 | 方块坐标 |
+| $\Omega_n$ | 当前国家的边界多边形 | 方块坐标区域 |
+| $\lambda$ | 射线从中心到国家边界的最近正向距离 | 方块 |
+| $s_i$ | 映射后的第 $i$ 座城市 Voronoi 点站点 | 方块坐标 |
 
-## 6. 数据生成与运行时放置
+假设国家边界暂时近似为 `[-1000,1000] × [-500,500]`，中心为 `(0,0)`，城市输入是 `(u,v)=(0.5,-0.25)`：
 
-修改三个注册类后运行：
+$$
+\begin{aligned}
+f &= 0.5,\\
+q &= (1,-0.5),\\
+\lambda &= 1000,\\
+s_i &= (0,0)+0.5\times1000\times(1,-0.5)=(500,-250).
+\end{aligned}
+$$
+
+这里 $\lambda=1000$，因为射线先在 `x=1000` 处碰到边界。这个映射保留了“沿某方向走到边界距离多少比例”的语义，不会把不规则国家简单压进外接矩形。
+
+### 4.2 城市边界仍然由 Voronoi 决定
+
+同一国家的每座城市映射成一个点站点。对城市 $i$，点站点 Voronoi 单元定义为：
+
+$$
+V_i = \Omega_n \cap
+\left\{p \mid \lVert p-s_i\rVert \le \lVert p-s_j\rVert,\ \forall j\ne i\right\}.
+$$
+
+| 符号 | 中文含义 | 单位 |
+| --- | --- | --- |
+| $V_i$ | 第 $i$ 座城市最终获得的边界区域 | 方块坐标区域 |
+| $\Omega_n$ | 所属国家的边界多边形 | 方块坐标区域 |
+| $p$ | 国家边界内待归属的世界点 | 方块坐标 |
+| $i$、$j$ | 同一国家内两座不同城市的索引，且 $j\ne i$ | 无单位整数 |
+| $s_i$ | 第 $i$ 座城市的点站点 | 方块坐标 |
+| $s_j$ | 同国其他城市的点站点 | 方块坐标 |
+| $\lVert p-s_i\rVert$ | 点 $p$ 到城市 $i$ 站点的欧氏距离 | 方块 |
+
+只有一座城市时，它会取得整个国家边界。有多座城市时，移动其中一个站点会改变它与邻城的等距分界。最终共享边界由 [PolygonAdjacencyCalculator.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/PolygonAdjacencyCalculator.java) 转换为 `neighboringCityIds`。
+
+```city-boundary-d3
+city-boundary
+```
+
+### 4.3 `rotation(...)` 当前不会旋转布局
+
+这是容易误读的地方。`TerraLayoutCalculator` 调用城市映射器时传入的是固定 `0.0`，而不是 `TerraCityBuilder.rotationDegrees()`。当前 `rotation(...)`：
+
+- 会规范化到 `0～359` 度；
+- 会导出为 `rotation_degrees` 元数据；
+- **不会**旋转城市站点；
+- **不会**旋转 Region 地块；
+- **不会**决定建筑朝向。
+
+建筑旋转来自 Parcel 的主临路方向。不要用城市 `rotation(...)` 修正实际几何。
+
+## 5. 声明 Region 类型
+
+龙门目前有两种 Region：
+
+```java
+public static final TerraCityRegionBuilder LUNGMEN_CORE =
+    region(ModNation.YAN, "龙门核心区", RegionLayoutType.CONCENTRIC, ModStructure.YAN_SHOP)
+        .unique();
+
+public static final TerraCityRegionBuilder LUNGMEN_SUBURB =
+    region(ModNation.YAN, "龙门郊区", RegionLayoutType.RADIAL_GRID, ModStructure.YAN_SHOP);
+```
+
+项目辅助方法会统一补充默认策略：
+
+- 名称以“核心区”结尾时，`weight=100`，并允许 `40×32`、`32×32`、`32×24` Chunk；
+- 名称以“郊区”结尾时，`weight=30`，沿用 Builder 默认尺寸 `16×12`、`12×8`、`10×8` Chunk；
+- 自动加入国家普通商店和中型商店；
+- 额外传入的建筑以 unique 候选加入；
+- 核心区显式调用 `unique()`，因此最多出现一个实例。
+
+如果现有辅助方法能表达需求，优先复用它。需要偏离默认值时，再展开完整 Builder：
+
+```java
+Zinecraft.CITY_REGIONS.region(ModNation.YAN, "某城区")
+    .weight(50)
+    .regionLayout(RegionLayoutType.GRID)
+    .plotSizes(new PlotSize(16, 12), new PlotSize(12, 8))
+    .countRange(1, 4)
+    .roadConfig(RegionLayout.RoadConfig.DEFAULT)
+    .building(ModStructure.YAN_SHOP, 1, false)
+    .build();
+```
+
+### 5.1 Region 配置怎样影响结果
+
+| 配置 | 默认值 | 单位/约束 | 作用阶段 | 当前状态 |
+| --- | ---: | --- | --- | --- |
+| `weight` | `1` | 正整数 | 可选类型顺序、目标半径 | **参与计算** |
+| `regionLayout` | 无 | 必须显式声明；仅 `GRID`、`CONCENTRIC`、`RADIAL_GRID` 已实现 | 地表道路生成 | **参与计算** |
+| `plotSizes` | `16×12`、`12×8`、`10×8` | Chunk；每项面积至少 80 Chunk | 城市 Region 候选 | **参与计算** |
+| `countRange` | `1～Integer.MAX_VALUE` | 最小值至少 1，最大值不小于最小值 | 必选与可选实例数 | **参与计算** |
+| `unique` | `false` | 启用后有效最大数量不超过 1 | 类型数量限制 | **参与计算** |
+| `buildings` | 无 | 至少一个已注册城市建筑 | 地表 Parcel 建筑分配 | **参与计算** |
+| `buildingLayout` | `GridLayout.INSTANCE` | `Layout` | 导出与读取核对 | **仅导出元数据** |
+| `RoadConfig.gridSpacingChunks` | `3,4,5,6` | 每项至少 2 Chunk | GRID、RADIAL_GRID 道路间距 | **参与计算** |
+| `RoadConfig.extraEdgeRatio` | `0.35` | `[0,1]` | 尚未接入生成器 | **预留** |
+| `RoadConfig.maxCandidateAttempts` | `64` | 正整数 | 尚未接入生成器 | **预留** |
+
+三类 Region 内道路宽度目前都必须等于 `1` Chunk。`RoadConfig` 构造器会拒绝其他宽度。`SPINE`、`CAMPUS`、`HYBRID` 虽然存在于枚举中，但 Builder 和生成器都会拒绝；它们不是可试用布局。
+
+### 5.2 建筑池必须与 Parcel 契约一致
+
+Region 中的建筑来自已注册的城市 Jigsaw 建筑。布局阶段按下面的流程筛选：
+
+```mermaid
+flowchart TD
+  A[读取 Parcel 与主临路方向] --> B[旋转建筑 footprint]
+  B --> C{宽与长精确相等?}
+  C -->|否| X[淘汰候选]
+  C -->|是| D{unique 已使用?}
+  D -->|是| X
+  D -->|否| E[按声明权重抽取]
+  E --> F[旋转 connectionFaces]
+  F --> G{与真实 road_connections 相交?}
+  G -->|否| H[布局生成失败]
+  G -->|是| I[创建建筑槽位]
+```
+
+选择建筑 $i$ 的概率为：
+
+$$
+P_i = \frac{w_i}{\sum_{j\in\mathcal B} w_j}.
+$$
+
+| 符号 | 中文含义 | 单位与约束 |
+| --- | --- | --- |
+| $P_i$ | 兼容候选中选中建筑 $i$ 的概率 | 无单位，$[0,1]$ |
+| $i$、$j$ | 兼容建筑候选的索引 | 无单位整数 |
+| $w_i$ | 建筑 $i$ 的正整数权重 | 无单位 |
+| $\mathcal B$ | 已通过尺寸、unique 与入口过滤的建筑候选集合 | 建筑集合 |
+| $w_j$ | 集合 $\mathcal B$ 中建筑 $j$ 的权重 | 无单位 |
+
+只改 NBT 门的位置、不更新 `connectionFaces(...)`，会让数据生成报“建筑模板没有朝向道路的真实入口”。独立建筑制作流程见 [添加结构](add-structure.md)。
+
+## 6. 理解城市中的 Region 生长
+
+[MobileCityLayoutGenerator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/MobileCityLayoutGenerator.java) 不会把 Region 均匀撒进城市。它在 Chunk 栅格上从核心向外生长，并且每接受一个 Region 就同步占用连接道路。
+
+### 6.1 只使用完整落在城市内的 Chunk
+
+[CityGrid.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/CityGrid.java) 检查每个候选 Chunk 的四角和中心。五个点都在城市多边形内时，这个 Chunk 才进入可用集合 $G$。
+
+这样会主动放弃斜边附近的不完整 Chunk，避免矩形 Region 或道路越出城市 Voronoi 边界。
+
+城市核心不是城市 Voronoi 站点，而是可用 Chunk 中离边界最远的 Chunk 中心：
+
+$$
+c^* = \underset{c\in G}{\operatorname{arg\,max}}\;
+d\!\left(\operatorname{center}(c),\partial\Omega_c\right).
+$$
+
+| 符号 | 中文含义 | 单位 |
+| --- | --- | --- |
+| $G$ | 完整落在城市边界内的可用 Chunk 集合 | Chunk 集合 |
+| $c$ | 集合 $G$ 中的一个 Chunk | Chunk |
+| $\operatorname{center}(c)$ | Chunk $c$ 的方块中心点 | 方块坐标 |
+| $\Omega_c$ | 当前城市的 Voronoi 边界区域 | 方块坐标区域 |
+| $\partial\Omega_c$ | 城市多边形边界 | 方块坐标折线 |
+| $d(\cdot,\partial\Omega_c)$ | 点到城市各边线段的最短距离 | 方块 |
+| $c^*$ | 净空最大的城市核心 Chunk | Chunk |
+
+首个 Region 必须覆盖 $c^*$，因此大型核心区会尽量落在城市最厚实的位置，而不是卡在狭角。
+
+### 6.2 必选 Region 先放
+
+设城市允许的 Region 类型集合为 $T$。生成前必须满足：
+
+$$
+M = \sum_{t\in T} m_t
+\le N_{\min}.
+$$
+
+| 符号 | 中文含义 | 单位与约束 |
+| --- | --- | --- |
+| $T$ | 城市声明的 Region 类型集合 | 类型集合 |
+| $t$ | 集合中的一种 Region 类型 | 类型 |
+| $m_t$ | 类型 $t$ 的 `minCount` | 非负实例数；当前 Builder 要求至少 1 |
+| $M$ | 全部类型的必选实例总数 | Region 实例数 |
+| $N_{\min}$ | 城市 `minPlotCount` | Region 实例数 |
+
+生成器按 `weight` 降序、Region ID 升序展开每种类型的 `minCount`。任一必选实例找不到合法候选时，立即返回 `MANDATORY_PLOTS_CANNOT_FIT`，不会跳过它继续生成。
+
+达到类型下限后，生成器才进入可选循环。每轮根据类型权重和剩余名额生成一个不放回尝试顺序；`unique()` 类型因为有效上限为 1，不会再次进入候选集合。
+
+### 6.3 候选从已有地块边缘长出来
+
+首个 Region 会枚举所有能够覆盖核心 Chunk 的合法左上角。后续 Region 则执行：
+
+```mermaid
+flowchart TD
+  A[随机选择已有父 Region] --> B[随机选择允许尺寸]
+  B --> C[加入尺寸的旋转方向]
+  C --> D[随机选择北、南、西、东一侧]
+  D --> E[沿父 Region 边缘选择偏移]
+  E --> F[生成候选 Region 矩形]
+  F --> G[保留两块 Region 之间的城市道路]
+```
+
+默认 `candidateCount=K` 时，采样器最多收集 `8K` 个去重候选，最多尝试 `128K` 次。若采样失败且城市仍未达到 `minPlotCount`，生成器会退回完整边缘枚举，优先保证城市下限。
+
+候选依次通过以下过滤：
+
+| 拒绝原因 | 实际判断 |
+| --- | --- |
+| `OUTSIDE_CITY` | Region 或连接道路含有不可用 Chunk |
+| `OVERLAPS_PLOT` | Region 与既有 Region 相交，或道路穿过非父 Region |
+| `OVERLAPS_ROAD` | Region 覆盖既有城市道路 |
+| `INVALID_ROAD_GAP` | Region 侵入既有 Region 的道路保留带 |
+| `NO_CONNECTION` | 非首个 Region 没有合法父 Region |
+| `COVERAGE_LIMIT` | 接纳后的 Region 覆盖率超过城市上限 |
+| `TYPE_MAX_COUNT` | 该类型已达到有效最大数量 |
+
+覆盖率只把 Region 面积放进分子，不包括城市道路：
+
+$$
+\rho = \frac{\sum_{g\in\mathcal U} A_g}{A_G}.
+$$
+
+| 符号 | 中文含义 | 单位与范围 |
+| --- | --- | --- |
+| $\rho$ | 当前城市的 Region 覆盖率 | 无单位，$[0,1]$ |
+| $\mathcal U$ | 已接纳的 Region 实例集合 | Region 集合 |
+| $g$ | 一个已接纳 Region | Region |
+| $A_g$ | Region $g$ 的矩形面积 | Chunk |
+| $A_G$ | 城市可用 Chunk 总数 | Chunk |
+
+### 6.4 合法候选还要评分
+
+候选先用稳定随机源打乱，再截取最多 `candidateCount` 个。生成器对这批候选计算：
+
+$$
+\begin{aligned}
+\sigma &= 4C + 2B + 1.5A + 2Q,\\
+C &= 1-\min\!\left(1,\frac{|d-r^*|}{R}\right),\\
+r^* &= 0.65R(1-\widehat w),\\
+B &= \min\!\left(1,\frac{b}{16R}\right),\\
+A &= \frac{\ell}{\max(W_c,L_c)},\\
+Q &= \frac{A_{\mathrm{plots}}}{A_{\mathrm{bbox}}}.
+\end{aligned}
+$$
+
+| 符号 | 中文含义 | 单位与范围 |
+| --- | --- | --- |
+| $\sigma$ | 候选总分，越大越优先 | 无单位 |
+| $C$ | 候选中心与类型目标半径的匹配度 | 无单位，$[0,1]$ |
+| $B$ | 候选中心的边界净空分 | 无单位，$[0,1]$ |
+| $A$ | 候选与父 Region 的道路界面分 | 无单位，$[0,1]$ |
+| $Q$ | 接纳后所有 Region 的紧凑度 | 无单位，$(0,1]$ |
+| $d$ | 候选中心到城市核心的距离 | Chunk |
+| $r^*$ | 当前 Region 类型的目标半径 | Chunk |
+| $R$ | 城市 Chunk 外接范围对角线长度，最小取 1 | Chunk |
+| $\widehat w$ | Region 权重在本城最小值与最大值间的归一化结果 | 无单位，$[0,1]$；权重相同时取 0.5 |
+| $b$ | 候选中心到城市边界的最短距离 | 方块 |
+| $\ell$ | 候选与父 Region 平行相接的界面长度 | Chunk |
+| $W_c$、$L_c$ | 候选 Region 的宽和长 | Chunk |
+| $A_{\mathrm{plots}}$ | 接纳后全部 Region 的面积和 | Chunk |
+| $A_{\mathrm{bbox}}$ | 接纳后全部 Region 外接矩形面积 | Chunk |
+
+权重不会直接加到总分里，而是改变目标半径。最高权重类型的 $\widehat w=1$，所以 $r^*=0$，更偏向城市核心；最低权重类型的 $\widehat w=0$，所以 $r^*=0.65R$，更偏向外围。
+
+代入一个候选：
+
+```text
+R = 50 Chunk
+d = 6 Chunk
+最高权重，因此 r* = 0
+b = 80 方块
+界面长度 ℓ = 12 Chunk
+候选尺寸 W×L = 16×12 Chunk
+紧凑度 Q = 0.72
+```
+
+可得：
+
+$$
+\begin{aligned}
+C &= 1-\frac{6}{50}=0.88,\\
+B &= \frac{80}{16\times50}=0.10,\\
+A &= \frac{12}{16}=0.75,\\
+\sigma &= 4\times0.88+2\times0.10+1.5\times0.75+2\times0.72\\
+  &= 6.285.
+\end{aligned}
+$$
+
+接纳后，Region 矩形标记为 `PLOT`，连接带标记为 `ROAD`，并记录一条 `UrbanRoad`。循环在达到 `maxPlotCount`、没有可选类型或没有合法候选时结束。`maxPlotCount` 只是上限；最终必须达到 `minPlotCount`，否则报 `MINIMUM_PLOT_COUNT_CANNOT_FIT`。
+
+下面的 D3 动画只负责本章的城市内部 Region 生长。国家边界与城市边界已经分别放在第 3、4 章，不与 Region 候选混在同一时间轴。
+
+```region-growth-d3
+region-growth
+```
+
+动画中的几何坐标是便于阅读的缩小示例，不是 `runData` 的真实导出结果。算法契约保持不变：Chunk 必须完整落在城市内，Region 候选通过硬门槛后才比较 $\sigma$。
+
+## 7. 生成一个 Region 的四层布局
+
+[RegionLayoutGenerator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/RegionLayoutGenerator.java) 为每个 Region 实例固定生成四层：
+
+| 层 | 相对高度 | 非道路内容 |
+| --- | ---: | --- |
+| `power` | `+0` | 动力层通用构件 |
+| `support` | `+16` | 支持层通用构件 |
+| `life` | `+32` | 生活层通用构件 |
+| `surface` | `+48` | Region 建筑池中的地表建筑 |
+
+地表使用 Region 注册的 `regionLayout`。下三层分别使用独立稳定随机源，从 `GRID`、`CONCENTRIC`、`RADIAL_GRID` 中抽取布局。它们可以偶然抽中同一类型，但不会复用同一张道路图。
+
+### 7.1 四层共享楼梯，不共享道路
+
+生成器先确定 Region 中心，再在四个象限各放一个楼梯：
+
+$$
+\begin{aligned}
+o_x &= \max\!\left(2,\left\lfloor W_r/6\right\rfloor\right),\\
+o_z &= \max\!\left(2,\left\lfloor L_r/6\right\rfloor\right),\\
+\mathcal S &= \{(c_{r,x}-o_x,c_{r,z}-o_z),(c_{r,x}+o_x,c_{r,z}-o_z),\\
+  &\qquad(c_{r,x}-o_x,c_{r,z}+o_z),(c_{r,x}+o_x,c_{r,z}+o_z)\}.
+\end{aligned}
+$$
+
+| 符号 | 中文含义 | 单位 |
+| --- | --- | --- |
+| $W_r$、$L_r$ | Region 的 Chunk 宽和长 | Chunk |
+| $o_x$、$o_z$ | 楼梯相对中心的 X/Z 偏移 | Chunk |
+| $c_{r,x}$、$c_{r,z}$ | Region 本地中心的 Chunk 坐标 | Chunk 坐标 |
+| $\mathcal S$ | 四层共同使用的楼梯 Chunk 集合 | Chunk 集合 |
+
+楼梯坐标会限制到 Region 内圈。如果限制后不能得到四个互不相同的 Chunk，生成直接失败。每一层都把这四个点接入自己的道路，因此竖向交通对齐，而水平道路仍可保持不同节奏。
+
+### 7.2 单层道路按固定顺序收敛
+
+```mermaid
+flowchart TD
+  A[确定本层 hub] --> B{层级}
+  B -->|地表| C[Entrance 投影并接路]
+  B -->|地下| D[接向西边界]
+  C --> E[Region 中心连接 hub]
+  D --> E
+  E --> F{道路布局}
+  F -->|GRID| G[正交网格骨架]
+  F -->|CONCENTRIC| H[矩形环骨架]
+  F -->|RADIAL_GRID| I[放射主干与稀疏网格]
+  G --> J[四个楼梯接入最近道路]
+  H --> J
+  I --> J
+  J --> K[补充可达性支路]
+  K --> L[安全清理 2×2 道路块]
+  L --> M[重建 RoadGraph]
+  M --> N[切分 UrbanBlock 与 Parcel]
+```
+
+三种道路类型的当前行为：
+
+| 类型 | 当前算法 |
+| --- | --- |
+| `GRID` | 按 `gridSpacingChunks` 生成横纵网格，跳过紧邻已有平行道路的候选线 |
+| `CONCENTRIC` | 生成正交矩形环和接向中心的连接线，部分南侧环段会稳定随机留缺口 |
+| `RADIAL_GRID` | 先补足从 hub 指向边界的主干，再叠加生成概率较低的稀疏网格 |
+
+Region Entrance 来自城市级 `UrbanRoad` 的中心点。生成器把它投到 Region 最近边界；距离相同时按北、南、西、东的顺序选择。只有地表层拥有 Entrance，地下层通过楼梯到达地表。
+
+```layer-road-d3
+layer-road
+```
+
+### 7.3 距离场保证每个 Parcel 临路
+
+道路光栅记为集合 $\mathcal R$。从全部道路格同时做四邻域 BFS，可以得到任意 Chunk 到最近道路的曼哈顿距离：
+
+$$
+D(c)=\min_{r\in\mathcal R}\left(|c_x-r_x|+|c_z-r_z|\right).
+$$
+
+| 符号 | 中文含义 | 单位 |
+| --- | --- | --- |
+| $D(c)$ | Chunk $c$ 到最近道路的四邻域距离 | Chunk 步数 |
+| $c_x$、$c_z$ | 待检查 Chunk 的 X/Z 坐标 | Chunk 坐标 |
+| $\mathcal R$ | 本层全部道路 Chunk 集合 | Chunk 集合 |
+| $r$ | 集合中的一个道路 Chunk | Chunk |
+| $r_x$、$r_z$ | 道路 Chunk 的 X/Z 坐标 | Chunk 坐标 |
+
+接入楼梯或远端地块时，路径每一步都选择 `D(next)=D(current)-1` 的相邻格，直到碰到既有道路。之后生成器反复从最大距离格补 `SERVICE` 支路，直到 `max D(c) ≤ 1`。
+
+这个终止条件很实用：每个非道路 Chunk 至少有一面邻接道路，后续 Parcel 才能获得真实入口。
+
+下面的 D3 动画把源码中的两段决策拆开演示：先从全部道路 Chunk 同时扩展 BFS 距离场，再从最远 Chunk 逐格评估北、东、南、西四个接路方向。
+
+```road-bfs-d3
+road-bfs
+```
+
+这里的“评分”不是一条人为设计的加权公式。为了让动画能逐项显示，下面用 $w(n)\in\{0,1\}$ 等价表达源码的“过滤后等权随机”；Java 实现本身没有保存 `weight` 字段：
+
+```mermaid
+flowchart TD
+  A[枚举北、东、南、西相邻格 n] --> B{"D(n) = D(c) - 1?"}
+  B -->|否| C["等价权重 w(n) = 0"]
+  B -->|是| D["等价权重 w(n) = 1"]
+  D --> E[进入等权候选集合]
+  E --> F[稳定随机源抽取下一格]
+  F --> G{"已经到达 D = 0?"}
+  G -->|否| A
+  G -->|是| H[完成 SERVICE 支路]
+```
+
+所有权重为 1 的候选等概率抽取，概率为：
+
+$$
+P(n)=\frac{w(n)}{\sum_{u\in N_4(c)}w(u)}.
+$$
+
+| 符号 | 中文含义 | 单位 |
+| --- | --- | --- |
+| $c$ | 当前正在接路的 Chunk | Chunk |
+| $n$ | 当前格的一个候选相邻 Chunk | Chunk |
+| $N_4(c)$ | 当前格北、东、南、西四邻域的集合 | Chunk 集合 |
+| $D(c)$ | 当前格到最近既有道路的距离 | Chunk 步数 |
+| $D(n)$ | 候选相邻格到最近既有道路的距离 | Chunk 步数 |
+| $w(n)$ | 候选格参与随机抽取的权重；仅取 0 或 1 | 无量纲 |
+| $P(n)$ | 候选格在本步被选中的概率 | 概率 |
+| $u$ | 四邻域集合中用于求和的任一候选格 | Chunk |
+
+`RoadClass` 的 `PRIMARY=3`、`SECONDARY=2`、`SERVICE=1` 是另一套“道路重叠优先级”：多个 `RoadEdge`（道路边）覆盖同一 Chunk 时保留数值更高的等级。可达性补路固定为 `SERVICE`，所以这三个数不会参与上面的 BFS 方向抽取。
+
+如果页面脚本不可用，可以按静态规则阅读动画：绿色格是距离 0 的既有道路；其余格写入到最近道路的 $D$ 值；从最大 $D$ 开始，每一步只走向 $D-1$，直到回到绿色道路。
+
+### 7.4 2×2 道路块只能安全删除
+
+多条正交道路叠加后可能形成实心 `2×2` 道路块。删除一个道路格前必须同时满足：
+
+- 它不是 Entrance 或共享楼梯；
+- 删除后剩余道路仍通过四邻域连通；
+- 删除后每个非道路格仍至少邻接道路。
+
+生成器每次只删一个格，然后重新扫描。视觉简化不能破坏可达性。
+
+```road-cleanup-d3
+road-cleanup
+```
+
+### 7.5 从道路得到 Parcel 和建筑
+
+道路稳定后，生成器对非道路 Chunk 做四邻域 BFS。每个连通分量成为一个 `UrbanBlock`，再按稳定坐标顺序切成 Parcel：
+
+```mermaid
+flowchart TD
+  A[非道路 Chunk 四邻域 BFS] --> B[得到 UrbanBlock]
+  B --> C{是否为地表层?}
+  C -->|否| D[全部切成 1×1 Parcel]
+  C -->|是| E{存在未放置的 2×2 unique 建筑?}
+  E -->|是| F[优先切完整 2×2 Parcel]
+  E -->|否| G{建筑池存在面积 2 的模板?}
+  F --> G
+  G -->|是| H[尝试 1×2 或 2×1 Parcel]
+  G -->|否| I[剩余空间切成 1×1 Parcel]
+  H --> I
+```
+
+“临路”是严格的矩形面接触。以 Parcel 北面为例：
+
+```text
+Parcel 与道路的 X 区间有正长度重叠
+AND road.maxChunkZExclusive == parcel.minChunkZ
+```
+
+每个 Parcel 会记录所有真实接壤面 `road_connections`，并按道路等级、方向和道路 ID 稳定排序。列表第一项同时提供兼容字段 `road_facing` 与 `adjacent_road_id`；不要只维护兼容字段而漏掉完整入口列表。
+
+```parcel-partition-d3
+parcel-partition
+```
+
+建筑分配不是“挑一个能塞进 Parcel 的模板”。实际执行顺序如下：
+
+```mermaid
+flowchart TD
+  A[读取 Parcel 主临路方向] --> B[确定唯一 Rotation]
+  B --> C[计算旋转后的 footprint]
+  C --> D{与 Parcel 精确相等?}
+  D -->|否| X[淘汰候选]
+  D -->|是| E{unique 已使用?}
+  E -->|是| X
+  E -->|否| F[加入兼容候选集合]
+  F --> G[按 weight 稳定随机抽取]
+  G --> H[旋转模板 connectionFaces]
+  H --> I{存在真实临路入口?}
+  I -->|否| J[布局生成失败]
+  I -->|是| K[创建 CityRegionBuildingSlot]
+```
+
+```building-selection-d3
+building-selection
+```
+
+模板默认正面是南方（`SOUTH`），朝向映射固定为：
+
+| Parcel 主临路方向 | 模板旋转 |
+| --- | --- |
+| `SOUTH`（南） | `NONE`（不旋转） |
+| `WEST`（西） | `CLOCKWISE_90`（顺时针 90°） |
+| `NORTH`（北） | `CLOCKWISE_180`（顺时针 180°） |
+| `EAST`（东） | `COUNTERCLOCKWISE_90`（逆时针 90°） |
+
+建筑权重只在尺寸、unique 和入口约束都通过之后生效。若兼容集合为 $\mathcal B$，候选建筑 $i$ 的抽取概率为：
+
+$$
+P(i)=\frac{w_i}{\sum_{j\in\mathcal B}w_j}.
+$$
+
+| 符号 | 中文含义 | 单位 |
+| --- | --- | --- |
+| $\mathcal B$ | 当前 Parcel 的全部兼容建筑集合 | 建筑集合 |
+| $i$ | 正在计算概率的候选建筑 | 建筑 |
+| $j$ | 兼容集合中用于求和的任一建筑 | 建筑 |
+| $w_i$、$w_j$ | Region 注册时为建筑声明的正整数权重 | 无量纲 |
+| $P(i)$ | 候选建筑 $i$ 被抽中的概率 | 概率 |
+
+### 7.6 道路构件由一套分类器决定
+
+[RegionLayout.roadTile(...)](../../src/main/java/com/cxxcxx/zinecraft/api/world/city/RegionLayout.java) 按北、东、南、西检查连接。地表 Entrance 朝外的一面也算连接。
+
+| 连接形态 | 运行时模板 |
+| --- | --- |
+| 没有连接 | `isolated` |
+| 一个方向 | `end` |
+| 两个相反方向 | `straight` |
+| 两个相邻方向 | `corner` |
+| 三个方向 | `tee` |
+| 四个方向 | `cross` |
+
+分类结果同时返回模板旋转。导出器和 `MobilePlotStructure` 都使用同一个 `roadTile(...)`，不会各自维护第二套拐角判断。
+
+```road-tile-d3
+road-tile
+```
+
+### 7.7 校验器是生成契约的一部分
+
+[RegionLayoutValidator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/RegionLayoutValidator.java) 把以下条件当作硬错误：
+
+- 恰好存在 `power`、`support`、`life`、`surface` 四层；
+- 四层 Chunk 范围一致，楼梯列表完全相同；
+- 每层至少四个互不重叠的楼梯，并且楼梯属于本层道路；
+- 地表 Entrance 属于地表道路；
+- 每层道路整体连通；
+- Parcel 位于 Region 内，不与道路重叠；
+- 每个 `road_connection` 引用存在、等级一致且真实接壤的 RoadEdge；
+- 每层每个 Chunk 恰好属于道路或一个 Parcel；
+- 地表每个 Parcel 恰好对应一个建筑，建筑不重叠并覆盖全部非道路 Chunk。
+
+[RegionLayoutValidatorTest.java](../../src/test/java/com/cxxcxx/zinecraft/core/nation/RegionLayoutValidatorTest.java) 还覆盖了四层楼梯对齐、多入口面、非法接触面、单 Chunk 路宽和十字/端点道路分类。
+
+## 8. 核对城市 Builder 的真实状态
+
+| 配置 | 默认值 | 单位/约束 | 作用阶段 | 当前状态 |
+| --- | ---: | --- | --- | --- |
+| `id` | 无 | 英文 `snake_case`，全局唯一 | 注册、随机种子、资源引用 | **参与计算** |
+| `position` | `(0,0)` | 两轴严格位于 `(-1,1)` | 国家内城市站点映射 | **参与计算** |
+| `rotation` | `0` | 规范化到 `0～359` 度 | JSON 元数据 | **仅导出元数据** |
+| `regions` | 无 | 至少一个；必须与城市同国 | Region 类型集合 | **参与计算** |
+| `plotCountRange` | `10～100` | 最小值至少 1，最大值不小于最小值 | 城市 Region 总数 | **参与计算** |
+| `maxPlotCoverage` | `0.45` | 比例，位于 `(0,1]` | 候选过滤与最终校验 | **参与计算** |
+| `roadWidthChunks` | `1` | 正整数 Chunk | Region 间道路和保留带 | **参与计算** |
+| `candidateCount` | `16` | 正整数 | 每轮评分候选上限 | **参与计算** |
+| `regionLayout` | `GridLayout.INSTANCE` | `Layout` | 当前移动地块生成器未读取 | **预留** |
+| `slotCount` | `SLOTS_5` | `LayoutSlotCount` | 当前移动地块生成器未读取 | **预留** |
+
+城市注册和所有权检查还会保证：
+
+- 城市 ID 唯一，英文名非空；
+- 一座城市只能由一个国家声明；
+- 城市不能重复引用同一个 Region；
+- Region 必须已经注册，并与城市属于同一国家；
+- 一个 Region 不能被多座城市共用；
+- 每个注册城市和 Region 最终都必须被完整归属。
+
+## 9. 生成 schema v16 布局
+
+修改注册后，从仓库根目录运行：
 
 ```powershell
 .\gradlew.bat test -x generateTerraLayoutData --no-configuration-cache --console=plain
@@ -799,110 +852,148 @@ $$
 .\gradlew.bat build --no-configuration-cache --console=plain
 ```
 
-`runData` 会调用 `TerraLayoutDataExporter`，重新计算完整布局并写入：
+`runData` 会通过 [TerraLayoutDataExporter.java](../../src/main/java/com/cxxcxx/zinecraft/core/datagen/TerraLayoutDataExporter.java) 计算完整布局，并写出：
 
 ```text
 src/generated/resources/data/zinecraft/terra_layout/index.json.gz
 src/generated/resources/data/zinecraft/terra_layout/nations/<nation_id>.json.gz
 ```
 
-不要手工编辑这些 gzip。游戏启动时，[TerraLayoutResource.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/TerraLayoutResource.java) 会预加载布局；`MobilePlotStructurePlacement` 只在布局中属于移动地块的 Chunk 创建结构起点，`MobilePlotStructure` 再按层放置楼梯、道路、下层构件和地表建筑。
+不要直接编辑这些 gzip。它们是生成产物；应修改 Builder 或算法，再重新运行数据生成。
 
-### runData 实际执行什么
+当前资源必须满足 `schema_version == 16`。每个 Region 的权威分层数据位于 `region_layout.mobile_layers`。每层拥有自己的：
 
-`generateTerraLayoutData` 是独立 JavaExec，入口为 [TerraLayoutDataExporter.java](../../src/main/java/com/cxxcxx/zinecraft/core/datagen/TerraLayoutDataExporter.java)：
+- `layout_type`
+- `road_graph`
+- `urban_blocks`
+- `parcels`
+- `open_spaces`
+- `road_coverage`
+- `building_coverage`
+- `stair_chunks`
 
-1. 初始化 Minecraft bootstrap 环境和全部静态内容注册。
-2. 调用 `TerraLayoutCalculator.calculate(ModNation.ALL, 40_000, 25_000)`。
-3. 依次生成国家、城市、Region、四层道路、Parcel 与建筑槽位；任何校验异常都会使任务失败。
-4. 写出 schema v16 的 `index.json.gz` 与每国一个 `nations/<id>.json.gz`。
-5. 同时写验收 JSON；`generateTerraLayoutValidation` 可进一步调用脚本生成 SVG 验收地图。
-6. NeoForge `runData` 可能清理不属于普通 provider 的 gzip，因此任务结束时还会由 `restoreTerraLayoutData` 重新导出压缩布局。
+顶层地表兼容视图由 `surface` 层派生，不在 gzip 中重复保存。`road_junctions` 只显式记录 `corner`、`tee`、`cross`；直路、端点和孤立道路可由 RoadGraph 推导。
 
-索引保存泰拉尺寸、国家摘要和国家文件清单；国家文件保存本国边界、邻国、城市、Region 和 `mobile_layers`。v16 以每层 `mobile_layers` 为权威数据，Region 顶层的地表视图在 Java 中由 `surface` 派生，不在 gzip 中重复保存。
+### 9.1 稳定随机不等于布局永远不变
 
-### 稳定随机从哪里来
-
-每座城市的初始随机源只依赖稳定城市 ID：
+城市初始随机种子来自稳定城市 ID：
 
 ```text
 citySeed = unsigned(city.id().hashCode())
-cityRandom = new Random(citySeed)
 ```
 
-每个 Region 再混入 `regionSeedBase`、城市 ID、Region 类型 ID 和实例序号；每层继续混入 layer ordinal。由此可得：
+每个 Region 再混入城市 ID、Region 类型 ID 和实例序号；每层继续混入层序号。因此：
 
-- 同一代码、同一注册顺序和同一 ID 会复现相同布局；
-- 修改显示名但不改 ID，通常不会直接改变城市 seed；
-- 修改 ID、Region 数量/顺序、候选参数，或在既有稳定随机序列中插入一次额外随机调用，都可能让后续布局整体漂移。
+- 相同代码、注册顺序和 ID 会复现相同布局；
+- 只改显示名、保持 ID 不变，通常不会直接改变城市种子；
+- 修改 ID、Region 数量或顺序、候选参数，或者插入额外随机调用，都可能改变后续布局。
 
-“确定性”不表示布局永远不变，而是表示相同输入必然得到相同输出。
+评审布局变化时，要把生成资源 diff 当作世界数据迁移来审查，而不是普通文本噪声。
 
-### 游戏如何逐 Chunk 放置
+## 10. 理解运行时怎样放置
 
-`TerraLayoutResource.preload()` 启动时先读取 index，严格检查 index 和国家文件的 `schema_version==16`，再恢复 Builder 引用、道路图、Parcel 与建筑槽位。
+[TerraLayoutResource.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/TerraLayoutResource.java) 在启动时读取 index 和国家文件，并严格拒绝非 v16 数据。
 
-`MobilePlotStructurePlacement.isPlacementChunk(x,z)` 只查询 `TerraLayoutResource.mobilePlotRegion(x,z)`；若当前 Chunk 属于任意 Region，就创建一次 `mobile_plot` 结构起点。运行时基准高度为：
+[MobilePlotStructurePlacement.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/structure/MobilePlotStructurePlacement.java) 只检查当前 Chunk 是否属于任意 Region。命中后，[MobilePlotStructure.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/structure/MobilePlotStructure.java) 以地形基准高度加一作为 `baseY`：
 
 $$
-\begin{aligned}
-\mathrm{baseY}&=\mathrm{terrainProfile.groundY}+1,\\
-\mathrm{layerY}&=\mathrm{baseY}+16\times\mathrm{layerOrdinal},\\
-Y_{\mathrm{POWER}}&=\mathrm{baseY},\\
-Y_{\mathrm{SUPPORT}}&=\mathrm{baseY}+16,\\
-Y_{\mathrm{LIFE}}&=\mathrm{baseY}+32,\\
-Y_{\mathrm{SURFACE}}&=\mathrm{baseY}+48.
-\end{aligned}
+Y_k = Y_{\mathrm{base}} + 16k.
 $$
+
+| 符号 | 中文含义 | 单位与取值 |
+| --- | --- | --- |
+| $Y_k$ | 第 $k$ 层的世界放置高度 | 方块 Y 坐标 |
+| $Y_{\mathrm{base}}$ | `terrainProfile.groundY + 1` | 方块 Y 坐标 |
+| $k$ | 层序号 | `power=0`、`support=1`、`life=2`、`surface=3` |
+| $16$ | 每层固定高度 | 方块 |
 
 每个 Chunk、每层按以下优先级处理：
 
-1. 若是 `stairChunk`，放 `mobile_plot_stair`。楼梯优先于道路，因为它在布局中占用已接路的道路 Chunk。
-2. 否则若是道路，调用 `roadTile(...)` 选择 `isolated/end/straight/corner/tee/cross` 模板并旋转。
-3. 否则若是地下三层，放该层的 16×16×16 通用分层构件。
-4. 地表非道路 Chunk 不逐格放通用模板；只在建筑 `chunkArea.minChunkX/Z` 所在锚点展开对应 Jigsaw 建筑，并验证旋转后 footprint 没有越界。
+```mermaid
+flowchart TD
+  A[读取当前 Chunk 与层级] --> B{共享楼梯 Chunk?}
+  B -->|是| C[放置楼梯模板]
+  B -->|否| D{道路 Chunk?}
+  D -->|是| E[roadTile 选择并旋转道路模板]
+  D -->|否| F{地下三层?}
+  F -->|是| G[放置 16×16×16 通用分层构件]
+  F -->|否| H{建筑最小 Chunk 锚点?}
+  H -->|是| I[校验旋转 footprint 并展开 Jigsaw]
+  H -->|否| J[当前 Chunk 不展开地表建筑]
+```
 
-这就是“离线求解、在线查表”的边界：游戏不会在生成 Chunk 时重新跑 Voronoi、候选评分或 BFS。
+楼梯优先于道路，因为楼梯在布局上占用的是已接路的道路 Chunk。
 
-布局使用城市 ID 派生的稳定随机源，因此相同代码和输入会得到可复现结果。不过，调整国家点位、城市清单、Region 参数或随机调用顺序，都可能使较大范围的布局重新计算。已有世界中已经生成的区块不会自动重建，实际验收应使用固定种子和从未生成过的泰拉区块。
+```runtime-placement-d3
+runtime-placement
+```
 
-## 7. 哪些 Builder 字段当前真正生效
+已有世界中已经生成的区块不会自动重建。布局验收必须使用新世界，或固定种子下从未生成过的泰拉 Chunk。
 
-不要仅凭 Builder 存在某个方法，就假设当前生成器已经使用它：
+## 11. 一个完整的修改流程
 
-| 配置 | 当前状态 |
-| --- | --- |
-| `NationBuilder.position/cities/underground/size` | 已参与国家与城市布局。 |
-| `TerraCityBuilder.position` | 已参与城市站点映射。 |
-| `rotation` | 仅导出元数据；当前不旋转城市站点、Region 或建筑。 |
-| `plotCountRange/maxPlotCoverage/roadWidthChunks/candidateCount` | 已参与 `MobileCityLayoutGenerator`。 |
-| `TerraCityBuilder.regionLayout/slotCount` | 保留 API；当前移动地块生成器未读取。 |
-| Region `weight/regionLayout/plotSizes/countRange/unique/buildings` | 已参与 Region 选择、内部布局或建筑分配。 |
-| Region `buildingLayout` | 导出并在读取时核对，但当前 Parcel 切分不读取此 Layout 对象。 |
-| `RoadConfig` 三种宽度 | 已校验且当前必须全部为 1 Chunk。 |
-| `RoadConfig.gridSpacingChunks` | 已参与 GRID 与 RADIAL_GRID 间距。 |
-| `RoadConfig.extraEdgeRatio/maxCandidateAttempts` | 当前只在 `RoadConfig` 构造时校验并保存在 Builder；生成器与布局导出器都未读取。 |
+以“为龙门增加一种新的合法郊区建筑”为例：
 
-## 8. 推荐的新增顺序
+```mermaid
+flowchart TD
+  A[核对官方或 PRTS 名称与素材] --> B[注册 embedded building]
+  B --> C[配置 Jigsaw 池与 NBT]
+  C --> D[声明 footprint 与 connectionFaces]
+  D --> E[加入 LUNGMEN_SUBURB 建筑池]
+  E --> F[验证旋转后精确匹配 Parcel]
+  F --> G[运行测试与 runData]
+  G --> H{校验通过?}
+  H -->|否| I[定位尺寸、入口或 Region 约束]
+  I --> G
+  H -->|是| J[检查 gzip 体积与抽样 JSON]
+  J --> K[在未生成 Chunk 验收]
+```
 
-由于注册类之间通过延迟 Supplier 互相引用，实际修改时按依赖内容准备即可：
+如果要新增国家或城市，依赖顺序如下：
 
-1. 从 PRTS 等项目指定资料确认国家名、城市名、归属与可用原始素材；只把坐标和边界视为游戏化布局。
-2. 若需要新建筑，先完成城市结构 Builder、NBT、footprint 和入口面。
-3. 在 `ModNation` 增加国家基本声明，并让 `cities(...)` 保持延迟 Supplier。
-4. 在 `ModCityRegion` 增加该国家的 Region 类型和建筑池。
-5. 在 `ModCity` 增加城市，并引用同一国家的 Region。
-6. 回到国家的 `cities(...)` 清单加入所有城市。
-7. 运行测试和 `runData`，审查国家、城市与 Region 数量以及生成资源差异。
+```mermaid
+flowchart TD
+  A[准备城市建筑] --> B[声明国家基本信息]
+  B --> C[保留延迟 cities 回调]
+  C --> D[声明所属 Region]
+  D --> E[声明城市并引用 Region]
+  E --> F[回填国家城市清单]
+  F --> G[运行所有权校验与完整布局生成]
+```
 
-## 9. 验收清单
+## 12. 常见失败怎样定位
 
-- 国家 ID、城市 ID 稳定且唯一，城市和 Region 的国家归属一致。
-- 地表国家定位折线没有导致异常狭长或消失的 Voronoi 单元；地下国家边界未越界。
-- 每座城市都能容纳必选 Region，并达到 `plotCountRange` 下限和覆盖率约束。
-- 高权重核心区靠近城市核心，郊区分布和城市道路连接符合预期。
-- 每个 Region 恰有 `power`、`support`、`life`、`surface` 四层。
-- 四层楼梯坐标一致且至少四个；各层道路连通，地表 Entrance 接路，所有 Parcel 临路。
-- 建筑 footprint、旋转后入口和 `road_connections` 一致，没有建筑重叠或悬空。
-- `runData` 生成的布局 schema、gzip 体积和抽样内容正常。
-- 在新世界或未生成区块中验证最终结构；不要用旧区块判断新布局是否生效。
+| 现象 | 常见原因 | 先检查 |
+| --- | --- | --- |
+| `INVALID_CONFIGURATION` | 城市上下限、道路宽度或 Region 数量关系非法 | `plotCountRange`、各类型 `minCount`、`roadWidthChunks` |
+| `MANDATORY_PLOTS_CANNOT_FIT` | 某个必选 Region 太大或城市可用 Chunk 太少 | 城市边界、核心区尺寸、覆盖率上限 |
+| `MINIMUM_PLOT_COUNT_CANNOT_FIT` | 可选循环耗尽仍未达到城市下限 | `candidateCount`、尺寸集合、城市边界和道路间距 |
+| “Region 没有与 Parcel 尺寸匹配的建筑” | 建筑 footprint 与 Parcel 精确尺寸不一致 | footprint、旋转、建筑池尺寸覆盖 |
+| “建筑模板没有朝向道路的真实入口” | `connectionFaces` 旋转后不包含 Parcel 临路面 | NBT 门位置与 `connectionFaces(...)` |
+| “四层楼梯必须垂直对齐” | 分层模型或导入数据破坏共享楼梯列表 | `mobile_layers[*].stair_chunks` |
+| “Region RoadGraph 未整体连通” | 道路算法改动产生孤岛 | 强制主路、楼梯接路、2×2 清理 |
+| 代码改了但游戏里没变化 | 验收区块已经生成，或 gzip 没有重新导出 | `runData` 输出与新区块 |
+
+不要通过手改 gzip 绕过校验。校验失败通常说明 Builder、生成器、导出器、读取器或运行时契约之间出现了真实不一致。
+
+## 13. 验收清单
+
+- 国家 ID、城市 ID 稳定且唯一；名称和归属有资料依据。
+- 国家定位折线位于泰拉核心矩形内，没有连续重复点。
+- 城市与所有 Region 属于同一国家，且没有重复或遗漏归属。
+- 每种必选 Region 都能放下，城市达到 `minPlotCount` 且不超过覆盖率。
+- 高权重核心区总体靠内；郊区位置仍同时满足边界、道路界面和紧凑度。
+- 每个 Region 恰有四层；下三层道路独立，地表使用注册布局。
+- 四层楼梯坐标完全一致、至少四个，并分别属于本层道路。
+- 每层道路整体连通；每个 Parcel 至少有一个真实临路面。
+- 建筑 footprint、旋转、Parcel 尺寸与 `road_connections` 一致。
+- gzip 的 schema 为 v16，体积和关键数组数量没有异常增长。
+- 最终结构在固定种子的未生成泰拉 Chunk 中通过实机检查。
+
+## 14. 源码索引
+
+- 边界算法：[VoronoiDiagram.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/VoronoiDiagram.java)、[PolylineVoronoiDiagram.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/PolylineVoronoiDiagram.java)、[ConvexPolygonMapper.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/layout/ConvexPolygonMapper.java)
+- 城市生长：[CityGrid.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/CityGrid.java)、[CityCoreFinder.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/CityCoreFinder.java)、[MobileCityLayoutGenerator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/MobileCityLayoutGenerator.java)
+- Region 内部：[RegionLayout.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/city/RegionLayout.java)、[RegionLayoutGenerator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/RegionLayoutGenerator.java)、[RegionLayoutValidator.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/RegionLayoutValidator.java)
+- 导出与加载：[TerraLayoutDataExporter.java](../../src/main/java/com/cxxcxx/zinecraft/core/datagen/TerraLayoutDataExporter.java)、[TerraLayoutResource.java](../../src/main/java/com/cxxcxx/zinecraft/core/nation/TerraLayoutResource.java)
+- 世界放置：[MobilePlotStructurePlacement.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/structure/MobilePlotStructurePlacement.java)、[MobilePlotStructure.java](../../src/main/java/com/cxxcxx/zinecraft/api/world/structure/MobilePlotStructure.java)

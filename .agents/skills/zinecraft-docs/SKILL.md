@@ -1,6 +1,6 @@
 ---
 name: zinecraft-docs
-description: Add or revise Zinecraft developer tutorials in docs/guides from repository evidence, explaining design intent, actual algorithms, configuration, examples, formulas, diagrams, and verification. Use for tutorial and documentation work, not feature implementation or prompt-archive maintenance alone.
+description: Add or revise rigorous, approachable Zinecraft developer tutorials in docs/guides from repository evidence, using a Markdown-first visual system and escalating complex explanations to interactive or animated media only when justified. Use for tutorial and documentation work, not feature implementation or prompt-archive maintenance alone.
 ---
 
 # Zinecraft 教程文档
@@ -34,6 +34,22 @@ description: Add or revise Zinecraft developer tutorials in docs/guides from rep
 
 标题必须是唯一、面向任务的一级标题。避免把教程写成逐文件的代码导览，也不要复制大段源码；只保留帮助理解契约和扩展点的最小代码片段。
 
+口吻要亲切、直接、简洁，像在陪读者一起拆解一个真实问题。优先使用短句、主动语态和具体动词；先给直观解释，再给严格定义和证据。严谨不等于生硬：不要堆叠术语、空泛形容词或冗长铺垫，也不要用“显然”“很简单”跳过关键推理。每段只承担一个主要观点，结论附近给出源码、测试、公式或可复现实例作为依据。
+
+## 分配内容载体
+
+写作前先按教程的**有效讲解内容**制定约 `80% / 15% / 5%` 的载体预算。这里按读者理解一项知识所需的内容量估算，不按文件数、组件数或屏幕面积机械计数；在交付说明中简述实际分配。始终选择能讲清问题的最低复杂度载体：
+
+- **约 80%：Markdown + Mermaid + KaTeX。** 正文、表格、步骤、配置、常规流程图、状态图、时序图、类图和公式都留在 Markdown 中。这是默认层，能够用静态叙述或 Mermaid 讲清的内容不得升级成前端组件。
+- **约 15%：Vue + D3。** 只用于静态图难以说明的复杂算法，例如可拖动参数、逐轮迭代、空间几何、图搜索、缩放筛选或多个中间状态之间的联动。Vue 管理状态与讲解控件，D3 负责比例尺、布局、几何计算和数据绑定；组件必须使用真实算例或可追溯的示例数据。
+- **约 5%：GSAP / Motion Canvas。** 只用于确实依赖时间推进、镜头编排或高视觉表现才能显著提升理解的关键内容，例如算法阶段动画、复杂空间变换或教程开场的短演示。GSAP 适合页面内、可交互且可降级的动画；Motion Canvas 适合独立的时间轴演示。不要把装饰性转场、视差或发光效果计作知识内容。
+
+比例是整个教程或同一批教程的目标预算，不要求简单主题为了凑数强行加入 D3 或动画。若主题没有足够复杂的算法或高视觉需求，应把未使用份额留在 Markdown 层，并在交付说明中解释；不得降低内容严谨性来满足比例。反过来，超出 15% 或 5% 前必须说明 Markdown/Mermaid 为何不足。
+
+当前站点能力必须以 `docs/package.json` 和实际渲染代码为准。选用 Mermaid、pseudocode.js、Vue、D3、GSAP 或 Motion Canvas 前先确认对应依赖、Markdown 组件映射、挂载与构建链已经存在；不存在时，把最小化的站点集成作为该文档任务的明确独立变更并完成验证，不能提交浏览器无法渲染的围栏或组件。不得为了 Vue 可视化重写现有 React 文档壳；使用隔离挂载点或既有的组件注册机制，并在卸载时清理监听器、动画和画布资源。若用户只授权修改 Markdown 或 skill，记录能力缺口并停留在受支持的载体，不擅自扩展站点依赖。
+
+伪代码可使用 pseudocode.js，适合比具体 Java 实现更容易呈现算法意图的循环、分支和不变量。伪代码必须与真实调用顺序一致，保留失败路径，并在旁边链接实现；不要把伪代码写成项目已经存在的 API。若 pseudocode.js 未接入，则使用带语言标签的普通代码块作为可读降级。
+
 ## 解释算法
 
 首次使用 Voronoi、Delaunay、松弛、包围盒、拓扑、候选边等术语时，先用直观语言定义，再给数学表达。不要假设读者已经知道计算几何术语。
@@ -64,7 +80,7 @@ V_i=\left\{p\in\Omega\mid d(p,s_i)\le d(p,s_j),\ \forall j\ne i\right\}.
 $$
 ```
 
-公式后紧接符号表或逐项解释，不能只给公式。复杂推导使用 `aligned`、`cases` 或 `alignedat` 环境保持等号对齐；集合、范数、向量、上下标和分式使用标准 LaTeX 命令，不用 Unicode 上标或空格手工模拟排版。流程、伪代码、坐标图和目录树仍使用代码块或 SVG，不要硬塞进数学环境。涉及随机数时说明种子来源和确定性；涉及世界生成时说明既有世界、数据包重载和新生成区块各自是否受影响。
+公式后紧接中文符号表或逐项解释，不能只给公式。每个变量都要注明中文含义；适用时同时给出单位、取值范围、数据类型和坐标系。同一符号在全文保持同一含义，正文不要复用仅大小写不同但容易混淆的变量。复杂推导使用 `aligned`、`cases` 或 `alignedat` 环境保持等号对齐；集合、范数、向量、上下标和分式使用标准 LaTeX 命令，不用 Unicode 上标或空格手工模拟排版。流程和状态关系优先使用 Mermaid，伪代码可使用 pseudocode.js，公式不要承担流程图或目录树的职责。涉及随机数时说明种子来源和确定性；涉及世界生成时说明既有世界、数据包重载和新生成区块各自是否受影响。
 
 ## 记录配置的真实状态
 
@@ -87,19 +103,21 @@ $$
 
 明确区分手写文件与数据生成器产物。生成文件应修改其源配置并重新生成，不能指导读者直接维护生成结果。
 
-## 绘制有效的图
+## 绘制统一且有效的图
 
 当流程包含至少三个阶段、多个分支或难以用一段文字说明的空间关系时使用图示。图必须表达数据变化、判断、循环或空间关系，不能只是装饰性方框。
 
-当前教程站点解析 GFM 和 LaTeX，但不解析 Mermaid。复杂图使用原生 SVG：
+常规图优先使用 Mermaid，并选择最贴合关系的图型：流程用 flowchart，交互顺序用 sequenceDiagram，状态迁移用 stateDiagram，类型关系用 classDiagram。复杂算法的交互图才升级到 Vue + D3，需要时间编排且高度依赖视觉表现时才升级到 GSAP / Motion Canvas。截图和预渲染媒体只能作为降级或补充，不能替代可访问的文字解释。
 
-- 文件放在 `docs/public/diagrams/<descriptive-name>.svg`。
-- Markdown 中使用 `![准确的替代文字](./diagrams/<descriptive-name>.svg)`。
-- SVG 提供 `role="img"`、`<title>` 和 `<desc>`，使用 `viewBox`，保证窄屏缩放后仍可读。
-- 用箭头、编号、图例和一致的颜色区分阶段；颜色不是唯一的信息载体。
-- 空间算法应同时画“几何直觉图”和“数据流程图”，必要时用小坐标算例连接两者。
+所有图和交互组件遵循同一套视觉语言：
 
-小型关系可用表格或 ASCII 图，不必为每个概念创建 SVG。涉及明日方舟世界观的插画优先复用仓库指定来源，不用生成式图片代替原始资料。
+- 复用 `docs/src/styles.css` 已有的颜色、字体、间距和边框语义；若需要新增 token，在站点级 CSS 变量集中定义，不在每张图中发明一套颜色。
+- 固定语义映射，例如输入、处理、输出、警告和失败在全文使用相同颜色与线型；颜色不是唯一的信息载体，同时使用标签、图标、线型或形状。
+- 节点命名简短一致，箭头标明动作或数据，图例只在语义无法直接读出时出现；同一教程的坐标轴、单位、小数精度和动画速度保持一致。
+- 窄屏可读、键盘可操作、支持减少动态效果；交互内容提供静态摘要、准确的替代文字或等价数据表。动画不得阻挡阅读，并提供暂停、重播或逐步控制。
+- 空间算法同时交代“几何直觉”和“数据流程”，并用同一个带具体坐标的算例连接两者。
+
+小型关系可用表格，不必为每个概念创建图。确实需要独立 SVG、视频或画布回退产物时放入 `docs/public/diagrams/<descriptive-name>.*`，提供可访问名称和说明，并记录生成源。涉及明日方舟世界观的插画优先复用仓库指定来源，不用生成式图片代替原始资料。
 
 ## 接入教程站点
 
@@ -119,8 +137,9 @@ $$
 2. 列出需要回答的读者问题，并为每个关键结论找到源码或测试证据。
 3. 先写术语、总流程和算法阶段，再补配置与操作步骤，避免形成只有步骤、没有原理的教程。
 4. 为抽象阶段加入数字算例；为复杂流程或空间关系加入图示。
-5. 逐条回查字段读取点、默认值、单位、失败条件和链接目标，特别标记未接入的 API。
-6. 执行站点构建和静态检查；只有实现代码同时变化时才运行对应领域 skill 要求的 Java 或数据生成验证。
+5. 按载体预算复核：默认内容是否保持在 Markdown/Mermaid/KaTeX，D3 与动画是否各自有不可替代的教学目的和静态降级。
+6. 逐条回查字段读取点、默认值、单位、失败条件和链接目标，特别标记未接入的 API。
+7. 执行站点构建和静态检查；只有实现代码同时变化时才运行对应领域 skill 要求的 Java 或数据生成验证。
 
 ## 验证
 
@@ -139,8 +158,12 @@ npm run build -- --logLevel error
 - 源码链接、图片路径与示例中的注册 ID 均真实存在。
 - 公式在纯文本情况下可读，符号全部定义。
 - LaTeX 使用 KaTeX 支持的语法，构建日志中没有数学解析错误；长公式在窄屏下可以横向滚动。
+- Mermaid 与 pseudocode.js 围栏在构建后的页面中实际渲染，而不是退化为未知语言代码块；语法错误有可读的失败提示。
+- Vue + D3 组件的初始状态、参数边界、重置、键盘操作、窄屏布局和卸载清理正常，且无 JavaScript 控制台错误。
+- GSAP / Motion Canvas 内容支持 `prefers-reduced-motion`，可暂停或逐步查看，并具有不依赖动画的等价解释。
+- 全文图形使用一致的颜色、字体、语义映射、坐标系和单位；载体选择符合约 80% / 15% / 5% 的目标且没有为凑比例制造交互。
 - 文档没有声称未被消费的字段会影响算法。
 
 若 `npm run dev` 报 React effect 返回 Promise，检查 `docs/src/App.jsx` 中的 `useEffect`：effect 本身只能返回清理函数，异步工作应放在 effect 内定义的异步函数中再调用。修复站点代码属于独立变更，必须在交付说明中与教程内容分开列出。
 
-交付时简要列出新增或修改的教程与图、验证命令及结果、已有但与本任务无关的警告，以及尚未实际浏览器确认的部分。
+交付时简要列出新增或修改的教程与图、Markdown/交互/高视觉内容的大致占比及选择理由、验证命令及结果、已有但与本任务无关的警告，以及尚未实际浏览器确认的部分。
