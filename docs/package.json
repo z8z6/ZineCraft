@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "catalog": "node scripts/generate-catalog.mjs",
+    "guides:check": "node scripts/check-guide-coverage.mjs",
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run guides:check && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -9,6 +9,7 @@ import '@fontsource/jetbrains-mono/700.css'
 import 'katex/dist/katex.min.css'
 import HighlightedCodeBlock from './components/HighlightedCodeBlock'
 import catalog from './data/catalog.json'
+import guideMap from './data/guide-map.json'
 import BuildingSelectionEmbed from './visualizations/BuildingSelectionEmbed'
 import {
   CityBoundaryEmbed,
@@ -473,6 +474,7 @@ function CatalogPage({ initialCategory }) {
           <div className="catalog-grid">
             {visible.map((entry) => {
               const meta = catalogCategoryMeta[entry.type]
+              const guide = guideMap[entry.type]
               const texture = catalogTexture(entry)
               return <article className="catalog-card" key={`${entry.type}/${entry.id}`}>
                 <div className={`catalog-card__visual catalog-card__visual--${entry.type}`}>
@@ -482,7 +484,10 @@ function CatalogPage({ initialCategory }) {
                 <div className="catalog-card__body">
                   <p>{meta.label}</p><h2>{entry.name}</h2><code>zinecraft:{entry.id}</code>
                   {entry.description && <span>{entry.description}</span>}
-                  <a href={`https://github.com/z8z6/ZineCraft/blob/neoforge/src/main/java/com/cxxcxx/zinecraft/${entry.source}`} target="_blank" rel="noreferrer">查看注册源码 <Icon name="arrow" /></a>
+                  <div className="catalog-card__links">
+                    <a className="catalog-card__guide" href={documentHref(`guide/${guide.slug}`)}>开发教程 <Icon name="chevron" /></a>
+                    <a href={`https://github.com/z8z6/ZineCraft/blob/neoforge/src/main/java/com/cxxcxx/zinecraft/${entry.source}`} target="_blank" rel="noreferrer">注册源码 <Icon name="arrow" /></a>
+                  </div>
                 </div>
               </article>
             })}

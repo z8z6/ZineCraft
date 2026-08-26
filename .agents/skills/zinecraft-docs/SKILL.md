@@ -1,6 +1,6 @@
 ---
 name: zinecraft-docs
-description: Add or revise rigorous, approachable Zinecraft developer tutorials in docs/guides from repository evidence, using a Markdown-first visual system and escalating complex explanations to interactive or animated media only when justified. Use for tutorial and documentation work, not feature implementation or prompt-archive maintenance alone.
+description: Add or revise rigorous, approachable Zinecraft developer tutorials and registry-wide guide coverage in docs/guides from repository evidence, using a Markdown-first visual system and escalating complex explanations to interactive or animated media only when justified. Use for tutorial, catalog-to-guide mapping, and documentation coverage work; not feature implementation or prompt-archive maintenance alone.
 ---
 
 # Zinecraft 教程文档
@@ -128,6 +128,18 @@ $$
 - 源码链接沿用现有相对路径风格，并确认目标真实存在。站点会把指向 `src` 的链接转换为 GitHub 源码链接。
 - 本地命令从 `docs` 目录执行：`npm run dev` 用于交互预览，`npm run build` 用于完整构建。
 - 直接预览目标页时使用 `#/doc/guide/<category>/<slug>`，并检查刷新后仍能加载。
+
+## 覆盖整个注册目录
+
+当用户要求为“全部注册内容”“所有物品等”补齐教程时，按**注册类型覆盖**组织内容，不为数百个同构条目复制近似文章：
+
+1. 以 `docs/src/data/catalog.json` 的 `entries` 与 `totals` 为覆盖基线；该文件由 `docs/scripts/generate-catalog.mjs` 从生成资源和注册源码生成。不要只搜索 `ModItem` 后宣称已经覆盖全部注册内容。
+2. `docs/src/data/guide-map.json` 是注册类型到教程的唯一映射。每一种实际出现的 `entry.type` 都必须有映射，映射目标必须是存在的 `docs/guides/<category>/<slug>.md`。
+3. 每张图鉴卡片都应能同时到达注册源码与对应教程。领域教程讲共同注册契约、代表性示例、特殊分支、资源要求和验证方法；条目名称、ID 与实时数量留在图鉴中。
+4. 新增注册类型时，同步更新目录生成器、图鉴元数据、`guide-map.json` 和对应教程。若新类型尚无可靠教程，覆盖检查应失败，不能静默回退到通用页。
+5. 运行 `npm run guides:check`，确认目录中每个条目都获得有效教程映射。覆盖率必须是 `mapped entries / catalog entries = 100%`；报告总条目数、类型数和逐类型映射，而不只报告文件存在。
+
+注册总览教程应解释“条目 → 注册类型 → 领域教程 → 注册源码”的导航关系，并链接图鉴；它不能替代领域教程。一个类型横跨两种显著不同的实现路径时，例如普通音效与音乐唱片，应在同一领域页分别给出完整流程和当前实现状态。
 
 可参考 `docs/guides/overview/content-workflow.md` 的任务式表达，以及 `docs/guides/world/add-nation-city-region.md` 的算法、公式、算例和图示组织方式，但必须重新核对当前源码，不能把旧教程当成实现事实。
 

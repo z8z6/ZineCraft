@@ -1,0 +1,17 @@
+{
+  "biomes": { "label": "添加群系", "slug": "world/add-biome" },
+  "blocks": { "label": "添加方块", "slug": "block/add-block" },
+  "cities": { "label": "添加国家、城市与 Region", "slug": "world/add-nation-city-region" },
+  "collectibles": { "label": "添加集成战略藏品", "slug": "collectible/add-collectible" },
+  "dimensions": { "label": "添加维度与世界特征", "slug": "world/add-dimension" },
+  "effects": { "label": "添加战斗状态", "slug": "combat/add-mob-effect" },
+  "entities": { "label": "添加生物", "slug": "entity/add-entity" },
+  "features": { "label": "添加维度与世界特征", "slug": "world/add-dimension" },
+  "items": { "label": "添加普通物品", "slug": "item/add-item" },
+  "nations": { "label": "添加国家、城市与 Region", "slug": "world/add-nation-city-region" },
+  "regions": { "label": "添加国家、城市与 Region", "slug": "world/add-nation-city-region" },
+  "skills": { "label": "添加技能与武器", "slug": "skill/add-skill-and-weapon" },
+  "sounds": { "label": "添加声音与音乐唱片", "slug": "interface/add-sound-and-music-disc" },
+  "structures": { "label": "添加结构", "slug": "world/add-structure" },
+  "weapons": { "label": "添加技能与武器", "slug": "skill/add-skill-and-weapon" }
+}
