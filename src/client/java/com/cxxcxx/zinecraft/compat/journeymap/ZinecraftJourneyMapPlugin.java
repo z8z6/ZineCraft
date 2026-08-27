@@ -17,6 +17,7 @@ import journeymap.api.v2.client.model.ShapeProperties;
 import journeymap.api.v2.client.model.TextProperties;
 import journeymap.api.v2.common.JourneyMapPlugin;
 import journeymap.api.v2.common.event.ClientEventRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 
@@ -37,7 +38,7 @@ public final class ZinecraftJourneyMapPlugin implements IClientPlugin {
   };
 
   private static void onMappingEvent(IClientAPI api, MappingEvent event) {
-    if (event.getStage() == MappingEvent.Stage.MAPPING_STOPPED) {
+    if (event.getStage() == MappingEvent.Stage.MAPPING_STOPPED || !hasTerraDimension()) {
       api.removeAll(Zinecraft.MOD_ID);
       return;
     }
@@ -49,6 +50,11 @@ public final class ZinecraftJourneyMapPlugin implements IClientPlugin {
     } catch (RuntimeException exception) {
       Zinecraft.LOGGER.error("无法读取 JourneyMap 泰拉边界", exception);
     }
+  }
+
+  private static boolean hasTerraDimension() {
+    var connection = Minecraft.getInstance().getConnection();
+    return connection != null && connection.levels().contains(ModDimension.TERRA.levelKey());
   }
 
   private static void showNationBorders(IClientAPI api, TerraLayoutPlan plan) {

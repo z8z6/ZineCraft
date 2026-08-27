@@ -3,6 +3,8 @@ package com.cxxcxx.zinecraft.core.registry;
 import com.cxxcxx.zinecraft.api.registry.builder.ItemBuilder;
 import com.cxxcxx.zinecraft.core.Zinecraft;
 import net.minecraft.data.models.model.ModelTemplate;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -151,6 +153,25 @@ public final class ModItem {
   public static final ItemBuilder<Item> IBERIA_CHITIN_CLUSTER = food(
       "iberia_chitin_cluster",
       "伊比利亚甲壳质聚块", 6, 0.7f);
+
+  public static final ItemBuilder<Item> NIGHTSUN_GRASS_RATION = new ItemBuilder<>(
+      Zinecraft.ITEMS,
+      "nightsun_grass_ration",
+      "夜阳草口粮",
+      "Nightsun Grass Ration",
+      () -> new Item(new Item.Properties()
+          .rarity(Rarity.RARE)
+          .food(new FoodProperties.Builder()
+              .nutrition(4)
+              .saturationModifier(0.4f)
+              .alwaysEdible()
+              .effect(() -> new MobEffectInstance(
+                  MobEffects.NIGHT_VISION, MobEffectInstance.INFINITE_DURATION
+              ), 1.0f)
+              .build())),
+      null,
+      true
+  ).build();
 
   private static ItemBuilder<Item> item(String path, String zhCn) {
     return item(path, zhCn, Rarity.COMMON);

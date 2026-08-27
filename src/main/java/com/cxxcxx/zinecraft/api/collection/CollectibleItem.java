@@ -65,13 +65,14 @@ public final class CollectibleItem extends Item implements ICurioItem {
       ResourceLocation slotIdentifier,
       ItemStack stack
   ) {
+    var entity = slotContext.entity();
     ResourceLocation modifierId = ResourceLocation.fromNamespaceAndPath(
         namespace, "collectible/" + collectible.path
     );
     return CombatStat.toVanillaModifiers(
         collectible.power,
         modifierId,
-        CollectibleSpecialCondition.tier(slotContext.entity())
+        entity == null ? 0 : CollectibleSpecialCondition.tier(entity)
     );
   }
 

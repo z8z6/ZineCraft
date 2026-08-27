@@ -2,6 +2,7 @@ package com.cxxcxx.zinecraft.core.registry;
 
 import com.cxxcxx.zinecraft.api.registry.builder.CreativeTabBuilder;
 import com.cxxcxx.zinecraft.core.Zinecraft;
+import net.minecraft.world.item.Items;
 
 /**
  * 集中声明 Zinecraft 的全部创造模式页签。
@@ -17,6 +18,7 @@ public final class ModCreativeTab {
         .icon(ModItem.D32_STEEL)
         .includeCatalogItems()
         .includeCatalogBlocks()
+        .displayItems(output -> output.accept(Items.STRUCTURE_BLOCK))
         .build();
 
 
