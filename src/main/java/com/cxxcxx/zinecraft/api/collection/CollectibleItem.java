@@ -95,10 +95,22 @@ public final class CollectibleItem extends Item implements ICurioItem {
       var line = Component.translatable(getDescriptionId() + ".description." + index);
       if (!isTooltipPadding(line)) tooltip.add(line.withStyle(ChatFormatting.GRAY));
     }
+    ChatFormatting statusColor = switch (collectible.implementationStatus) {
+      case UNIMPLEMENTED -> ChatFormatting.RED;
+      case PARTIALLY_IMPLEMENTED -> ChatFormatting.YELLOW;
+      case FULLY_IMPLEMENTED -> ChatFormatting.GREEN;
+    };
+    tooltip.add(Component.translatable(
+        "item." + namespace + ".collectible.implementation_status",
+        Component.translatable(
+            "item." + namespace + ".collectible.implementation_status."
+                + collectible.implementationStatus.translationSuffix()
+        )
+    ).withStyle(statusColor));
     tooltip.add(Component.translatable(
         minecraftEffectLabelTranslationKey,
         Component.translatable(getDescriptionId() + ".minecraft_effect")
-    ).withStyle(ChatFormatting.GREEN));
+    ).withStyle(statusColor));
   }
 
   private static boolean isTooltipPadding(Component line) {

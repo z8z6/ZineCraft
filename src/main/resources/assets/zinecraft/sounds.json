@@ -17,6 +17,48 @@
       "zinecraft:stranger_think"
     ]
   },
+  "lifeflow": {
+    "subtitle": "sound.zinecraft.lifeflow",
+    "sounds": [
+      "zinecraft:lifeflow"
+    ]
+  },
+  "procurement_center": {
+    "subtitle": "sound.zinecraft.procurement_center",
+    "sounds": [
+      "zinecraft:procurement_center"
+    ]
+  },
+  "dabaixu": {
+    "subtitle": "sound.zinecraft.dabaixu",
+    "sounds": [
+      "zinecraft:dabaixu"
+    ]
+  },
+  "journey_ahead": {
+    "subtitle": "sound.zinecraft.journey_ahead",
+    "sounds": [
+      "zinecraft:journey_ahead"
+    ]
+  },
+  "humanity": {
+    "subtitle": "sound.zinecraft.humanity",
+    "sounds": [
+      "zinecraft:humanity"
+    ]
+  },
+  "as_i_see_it": {
+    "subtitle": "sound.zinecraft.as_i_see_it",
+    "sounds": [
+      "zinecraft:as_i_see_it"
+    ]
+  },
+  "escape_part_2": {
+    "subtitle": "sound.zinecraft.escape_part_2",
+    "sounds": [
+      "zinecraft:escape_part_2"
+    ]
+  },
   "engine": {
     "subtitle": "sound.zinecraft.engine",
     "sounds": [

@@ -89,17 +89,17 @@ public record CombatStat(
     int hope,
     /** 源石锭 */
     int originiumIngots,
-    /** 探索行动力的直接增量。 */
+    /** 探索行动力 */
     int actionPoints,
-    /** 抗干扰指数的直接增量。 */
+    /** 抗干扰指数 */
     int antiInterferenceIndex,
-    /** 坍缩值的直接增量。 */
+    /** 坍缩值 */
     int collapseValue,
-    /** 负荷临界点的直接增量。 */
+    /** 负荷临界点 */
     int mentalBurdenLimit,
-    /** 思绪数量的直接增量。 */
+    /** 思绪数量 */
     int thoughts,
-    /** 烛火数量的直接增量。 */
+    /** 烛火数量 */
     int candles,
     /** 编队可容纳干员数量的增量。 */
     int squadCapacity,
@@ -107,11 +107,11 @@ public record CombatStat(
     int deploymentLimit,
     /** 战斗开始时可用部署点数的增量。 */
     int initialDeploymentPoints,
-    /** 钥匙数量的直接增量。 */
+    /** 钥匙数量 */
     int keys,
-    /** 骰子数量的直接增量。 */
+    /** 骰子数量 */
     int dice,
-    /** 灯火值的直接增量。 */
+    /** 灯火值 */
     int light,
     /** 指挥经验获取倍率，以 1.0 为不变。 */
     double commandExperienceMultiplier,
@@ -121,7 +121,7 @@ public record CombatStat(
     int originiumIngotsPerNonCombatNode,
     /** 战斗结束时源石锭获取倍率，以 1.0 为不变。 */
     double battleOriginiumIngotMultiplier,
-    /** 单次探索中首次失败时恢复的保护目标生命值。 */
+    /** 受到致命伤害时一次性恢复的生命值。 */
     int oneTimeFailureRecoveryObjectiveLife,
     /** 每秒执行一次的能力函数，按藏品与函数的声明顺序触发。 */
     List<PerSecondEffect> perSecondEffects,

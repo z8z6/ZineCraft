@@ -39,6 +39,14 @@ class EffectAdaptationTest(unittest.TestCase):
         self.assertIn("addEnemyPhysicalDamageTakenBonus(0.3)", adaptation.java)
         self.assertIn("addEnemyMagicDamageTakenBonus(0.3)", adaptation.java)
 
+    def test_registered_fields_are_actual_implemented_effects(self) -> None:
+        adaptation = importer.adapt_effect("目标生命+2，希望+1")
+
+        self.assertEqual("implemented", adaptation.status)
+        self.assertTrue(adaptation.java.startswith("registeredRule("))
+        self.assertIn("addMaxHealth(2)", adaptation.java)
+        self.assertIn("hope(1)", adaptation.java)
+
 
 if __name__ == "__main__":
     unittest.main()

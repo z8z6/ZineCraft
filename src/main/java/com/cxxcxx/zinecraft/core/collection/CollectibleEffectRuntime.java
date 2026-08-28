@@ -1,6 +1,9 @@
 package com.cxxcxx.zinecraft.core.collection;
 
 import com.cxxcxx.zinecraft.api.collection.CollectibleCombatStats;
+import com.cxxcxx.zinecraft.api.collection.CollectibleItem;
+import com.cxxcxx.zinecraft.api.collection.CollectibleSpecialCondition;
+import com.cxxcxx.zinecraft.api.collection.network.CollectibleFailureRecoveryPayload;
 import com.cxxcxx.zinecraft.api.combat.CombatMitigationType;
 import com.cxxcxx.zinecraft.api.combat.CombatStat;
 import com.cxxcxx.zinecraft.api.combat.CombatStatusService;
@@ -11,8 +14,10 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,6 +26,10 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import top.theillusivec4.curios.api.CuriosApi;
+
+import java.util.Comparator;
 
 /** 将服务端战斗事件转发给藏品注册的触发函数。 */
 @EventBusSubscriber(modid = Zinecraft.MOD_ID)
@@ -127,6 +136,40 @@ public final class CollectibleEffectRuntime {
         .limited()
         .healingAndHealthRegenerationBonus();
     if (bonus > 0.0) event.setAmount((float) (event.getAmount() * (1.0 + bonus)));
+  }
+
+  /** 将登记的一次失败保护近似为不死图腾：取消死亡、恢复生命并销毁触发的藏品。 */
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
+  public static void onFatalDamage(LivingDeathEvent event) {
+    LivingEntity entity = event.getEntity();
+    if (entity.level().isClientSide || event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+      return;
+    }
+
+    CuriosApi.getCuriosInventory(entity).ifPresent(handler -> handler.findCurios(
+        stack -> recoveryHealth(entity, stack) > 0
+    ).stream().max(Comparator.comparingInt(slot -> recoveryHealth(entity, slot.stack())))
+        .ifPresent(slot -> {
+          int recoveryHealth = recoveryHealth(entity, slot.stack());
+          ItemStack activated = slot.stack().copyWithCount(1);
+          handler.setEquippedCurio(
+              slot.slotContext().identifier(),
+              slot.slotContext().index(),
+              ItemStack.EMPTY
+          );
+          entity.setHealth(Math.min((float) recoveryHealth, entity.getMaxHealth()));
+          event.setCanceled(true);
+          if (entity instanceof ServerPlayer player) {
+            PacketDistributor.sendToPlayer(player, new CollectibleFailureRecoveryPayload(activated));
+          }
+        }));
+  }
+
+  private static int recoveryHealth(LivingEntity entity, ItemStack stack) {
+    if (!(stack.getItem() instanceof CollectibleItem item)) return 0;
+    return item.collectible().power.apply(CombatStat.EMPTY.withCollectibleEffectTier(
+        CollectibleSpecialCondition.tier(entity)
+    )).oneTimeFailureRecoveryObjectiveLife();
   }
 
   /** 在死亡确认阶段执行击杀者装备藏品的击杀能力。 */

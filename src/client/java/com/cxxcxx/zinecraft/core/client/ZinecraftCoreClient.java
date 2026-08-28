@@ -1,10 +1,12 @@
 package com.cxxcxx.zinecraft.core.client;
 
 import com.cxxcxx.zinecraft.core.Zinecraft;
+import com.cxxcxx.zinecraft.core.client.collection.CollectiblePresentationController;
 import com.cxxcxx.zinecraft.core.client.entity.BlockbenchResidentModel;
 import com.cxxcxx.zinecraft.core.client.entity.ResidentHumanoidRenderer;
 import com.cxxcxx.zinecraft.core.client.entity.TerraCreatureModel;
 import com.cxxcxx.zinecraft.core.client.entity.TerraCreatureRenderer;
+import com.cxxcxx.zinecraft.core.client.music.TerraMusicController;
 import com.cxxcxx.zinecraft.core.client.ponder.ZinecraftPonderPlugin;
 import com.cxxcxx.zinecraft.core.client.weapon.WeaponPresentationController;
 import com.cxxcxx.zinecraft.core.registry.ModEntity;
@@ -36,6 +38,7 @@ public final class ZinecraftCoreClient {
 
   @SubscribeEvent
   public static void setup(FMLClientSetupEvent event) {
+    TerraMusicController.initialize();
     event.enqueueWork(() -> {
       EntityRenderers.register(ModEntity.SANKTA_FORMAL_RESIDENT.get(),
           context -> new ResidentHumanoidRenderer<>(context, SANKTA_RESIDENT_LAYER, SANKTA_RESIDENT_TEXTURE));
@@ -50,6 +53,7 @@ public final class ZinecraftCoreClient {
       EntityRenderers.register(ModEntity.PACKBEAST.get(), context -> new TerraCreatureRenderer(
           context, PACKBEAST_LAYER, Zinecraft.id("textures/entity/packbeast.png"), 0.8F));
       PonderIndex.addPlugin(ZinecraftPonderPlugin.INSTANCE);
+      CollectiblePresentationController.initialize();
       WeaponPresentationController.initialize();
     });
   }

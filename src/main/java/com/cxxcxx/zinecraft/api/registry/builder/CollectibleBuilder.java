@@ -1,6 +1,7 @@
 package com.cxxcxx.zinecraft.api.registry.builder;
 
 import com.cxxcxx.zinecraft.api.collection.CollectibleItem;
+import com.cxxcxx.zinecraft.api.collection.CollectibleImplementationStatus;
 import com.cxxcxx.zinecraft.api.collection.CollectiblePower;
 import com.cxxcxx.zinecraft.api.registry.catalog.CollectibleCatalog;
 import com.cxxcxx.zinecraft.api.registry.catalog.TranslationCatalog;
@@ -28,6 +29,7 @@ public final class CollectibleBuilder implements ItemLike {
   public String minecraftEffectZhCn;
   public String minecraftEffectEnUs;
   public CollectiblePower power;
+  public CollectibleImplementationStatus implementationStatus;
   public List<String> sourceRules = List.of();
   public Rarity rarity = Rarity.COMMON;
   public int originalEffectLineCount;
@@ -85,6 +87,13 @@ public final class CollectibleBuilder implements ItemLike {
     this.minecraftEffectZhCn = Objects.requireNonNull(zhCn, "藏品中文适配说明不能为空：" + path);
     this.minecraftEffectEnUs = Objects.requireNonNull(enUs, "藏品英文适配说明不能为空：" + path);
     this.power = Objects.requireNonNull(power, "藏品效果不能为空：" + path);
+    return this;
+  }
+
+  /** 标记原规则在当前服务端运行时中的实现完整度。 */
+  public CollectibleBuilder implementationStatus(CollectibleImplementationStatus status) {
+    ensureMutable();
+    this.implementationStatus = Objects.requireNonNull(status, "藏品实现状态不能为空：" + path);
     return this;
   }
 

@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core;
 
+import com.cxxcxx.zinecraft.api.collection.network.CollectiblePayloadTypes;
 import com.cxxcxx.zinecraft.api.registry.catalog.*;
 import com.cxxcxx.zinecraft.api.weapon.WeaponServerController;
 import com.cxxcxx.zinecraft.api.weapon.network.WeaponPayloadTypes;
@@ -72,6 +73,7 @@ public final class Zinecraft {
     FEATURES.register(modBus);
     STRUCTURES.register(modBus);
     WeaponStateComponents.register(modBus);
+    modBus.addListener(CollectiblePayloadTypes::register);
     modBus.addListener(WeaponPayloadTypes::register);
     modBus.addListener(this::commonSetup);
     modBus.addListener(ZinecraftDataGenerator::gatherData);

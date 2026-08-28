@@ -1,5 +1,6 @@
 package com.cxxcxx.zinecraft.core.registry;
 
+import com.cxxcxx.zinecraft.api.collection.CollectibleImplementationStatus;
 import com.cxxcxx.zinecraft.api.collection.CollectiblePower;
 import com.cxxcxx.zinecraft.api.combat.CombatStat;
 import com.cxxcxx.zinecraft.api.registry.builder.CollectibleBuilder;
@@ -23,7 +24,7 @@ public final class ModCollectible {
       "Immediately gain +2 Life Points and +1 Hope",
       "罗德岛办公室里的同款热水壶，有人经常大半夜用热水壶煮速食面吃，这种生活习惯不是很健康......",
       "Some people often use the hot water kettle in the Rhodes Island Office to cook instant noodles in the middle of the night. That's not a very healthy lifestyle...",
-      explorationRule("立即获得目标生命+2，希望+1", power -> power.addMaxHealth(2).hope(1)),
+      registeredRule("立即获得目标生命+2，希望+1", power -> power.addMaxHealth(2).hope(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder SPECIAL_SUPPRESSOR = collectible(
@@ -33,7 +34,7 @@ public final class ModCollectible {
       "Immediately gain +6 Life Points.",
       "罗德岛改良款抑制器，能够有效遏制感染造成的源石技艺失控。",
       "An enhanced suppressor developed by Rhodes Island that can better keep the infected from losing control of their Originium Arts.",
-      explorationRule("立即获得目标生命+6", power -> power.addMaxHealth(6)),
+      implementedRule("立即获得目标生命+6", power -> power.addMaxHealth(6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder STONE_GARGOYLE = collectible(
@@ -43,7 +44,7 @@ public final class ModCollectible {
       "Immediately gain +6 Life Points.",
       "一个手掌大小的雕像，听说是石像鬼们表示友好的造物。",
       "A palm-sized sculpture. Supposedly they are handmade gifts given out by the Gargoyles as a sign of friendship.",
-      explorationRule("立即获得目标生命+6", power -> power.addMaxHealth(6)),
+      implementedRule("立即获得目标生命+6", power -> power.addMaxHealth(6)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder VAMPIRES_BED = collectible(
@@ -53,7 +54,7 @@ public final class ModCollectible {
       "Immediately gain +8 Life Points.",
       "一副奢华的棺木，和古堡十分般配，华法琳说这就是刻板印象。",
       "A lavish-looking coffin that matches the castle's aesthetics well. However, Warfarin says this is merely a stereotype.",
-      explorationRule("立即获得目标生命+8", power -> power.addMaxHealth(8)),
+      implementedRule("立即获得目标生命+8", power -> power.addMaxHealth(8)),
       Rarity.RARE
   );
   public static final CollectibleBuilder PROOF_OF_LONGEVITY = collectible(
@@ -63,7 +64,7 @@ public final class ModCollectible {
       "Immediately gain +10 Life Points.",
       "一段树枝，枯荣一体；\n从枯萎处生长，从繁盛处枯萎。",
       "A tree branch that has withered and flourished. \nWhen it is withered, it grows anew. When it is thriving in its fullest, it fades away yet again.",
-      explorationRule("立即获得目标生命+10", power -> power.addMaxHealth(10)),
+      implementedRule("立即获得目标生命+10", power -> power.addMaxHealth(10)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder PRIED_OPEN_TOOLBOX = collectible(
@@ -73,7 +74,7 @@ public final class ModCollectible {
       "Hope +4",
       "剧团道具师的道具箱，从顶针到道具假人，一应物品应有尽有。",
       "The tool box of the troupe's prop master. From nails to dummy props, it has everything.",
-      explorationRule("希望+4", power -> power.hope(4)),
+      registeredRule("希望+4", power -> power.hope(4)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder ANTIQUATED_SHEET_MUSIC = collectible(
@@ -83,7 +84,7 @@ public final class ModCollectible {
       "Hope +4",
       "一张古旧的乐谱残章，上面的音符已经模糊不清，不知这首曲子讲述着怎样的故事。",
       "A tattered piece of sheet music. The notes can no longer be clearly read. No one knows for certain what story this piece was meant to tell.",
-      explorationRule("希望+4", power -> power.hope(4)),
+      registeredRule("希望+4", power -> power.hope(4)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder LETTER_OF_TERMINATION_CONTRACT = collectible(
@@ -93,7 +94,7 @@ public final class ModCollectible {
       "Hope +4",
       "只要拿到一个签名，就可以彻底摆脱这个剧团了。",
       "You can break free of this troupe with just one autograph.",
-      explorationRule("希望+4", power -> power.hope(4)),
+      registeredRule("希望+4", power -> power.hope(4)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder UNIVERSAL_KEY = collectible(
@@ -103,7 +104,7 @@ public final class ModCollectible {
       "Hope +6",
       "银质的老旧钥匙，可以用它打开任何一扇门。作为管理者，剧团管家自然要手握开启所有秘密的银钥。",
       "An old, silver key. It can open any door. As the keeper, the troupe's butler naturally needs a key that unlocks all the secrets here.",
-      explorationRule("希望+6", power -> power.hope(6)),
+      registeredRule("希望+6", power -> power.hope(6)),
       Rarity.RARE
   );
   public static final CollectibleBuilder BANSHEES_KISS = collectible(
@@ -113,7 +114,7 @@ public final class ModCollectible {
       "Hope +8",
       "外族人获得它时常常会展现出超越自身的勇气，但作为稀少的男性女妖，Logos对于这种东西已经见怪不怪了。",
       "Outsiders make extraordinary displays of bravery that far surpass their normal abilities. However, as one of the few male Banshees out there, this has become a far too common sight to Logos.",
-      explorationRule("希望+8", power -> power.hope(8)),
+      registeredRule("希望+8", power -> power.hope(8)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder ANTIQUE_COINS = collectible(
@@ -123,7 +124,7 @@ public final class ModCollectible {
       "Immediately adds +10 Originium Ingots.",
       "生锈的古代钱币，已经无法辨认年代，这东西在泰拉荒地上随处可见。",
       "An ancient, rusty coin, weathered to the point where one can no longer identify its age. Things like these are all too common throughout Terra's barrens.",
-      explorationRule("立即获得源石锭+10", power -> power.originiumIngots(10)),
+      registeredRule("立即获得源石锭+10", power -> power.originiumIngots(10)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder ACTORS_JEWELRY_BOX = collectible(
@@ -133,7 +134,7 @@ public final class ModCollectible {
       "Immediately adds +18 Originium Ingots.",
       "装满了各种碎裂首饰的盒子，年轻的主演佩戴着这些珠宝登台，然后从最高处纵身跃下。",
       "A box containing all kinds of shattered jewelries. The young lead actress wore these jewelries and stepped onto the stage, in the end falling from its highest point.",
-      explorationRule("立即获得源石锭+18", power -> power.originiumIngots(18)),
+      registeredRule("立即获得源石锭+18", power -> power.originiumIngots(18)),
       Rarity.RARE
   );
   public static final CollectibleBuilder FLAWLESS_JADESTONE = collectible(
@@ -143,7 +144,7 @@ public final class ModCollectible {
       "Immediately adds +25 Originium Ingots.",
       "即便城池三度因其而毁，它也依然光洁无瑕，无可挑剔。持有它的萨尔贡皇帝直至今日都没想好用什么珠宝与之相衬，只有争斗的硝烟永伴。",
       "Even though it thrice brought the city to ruins, it yet shines radiantly in its flawless form. Even today, the Sargon emperor in possession of the gem has yet to find another piece of jewelry matching its brilliance, leaving it with naught but gunsmoke for a companion.",
-      explorationRule("立即获得源石锭+25", power -> power.originiumIngots(25)),
+      registeredRule("立即获得源石锭+25", power -> power.originiumIngots(25)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder LAUGHING_JOKER = collectible(
@@ -313,7 +314,7 @@ public final class ModCollectible {
       "Gain +2 Originium Ingots upon entering a noncombat node.",
       "在罗德岛捡到的硬币，捡到一枚就能捡到很多枚。",
       "A coin picked up from Rhodes Island. If you find one, you're sure to be able to find many more.",
-      explorationRule("每进入一个非战斗节点，获得源石锭+2", power -> power.originiumIngotsPerNonCombatNode(2)),
+      registeredRule("每进入一个非战斗节点，获得源石锭+2", power -> power.originiumIngotsPerNonCombatNode(2)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder MASQUERADE_MASK = collectible(
@@ -323,7 +324,7 @@ public final class ModCollectible {
       "Gain +3 Originium Ingots upon entering a noncombat node.",
       "尊敬的客人，欢迎来到猩红剧团，接下来的演出一定会令您印象深刻。",
       "Esteemed guests, welcome to the Crimson Troupe. The performance we have in store for you tonight will be one to remember.",
-      explorationRule("每进入一个非战斗节点，获得源石锭+3", power -> power.originiumIngotsPerNonCombatNode(3)),
+      registeredRule("每进入一个非战斗节点，获得源石锭+3", power -> power.originiumIngotsPerNonCombatNode(3)),
       Rarity.RARE
   );
   public static final CollectibleBuilder SUPREME_RING = collectible(
@@ -333,7 +334,7 @@ public final class ModCollectible {
       "+50% Originium Ingot drops from battle.",
       "在莱塔尼亚的神话中，持戒者享有整片大地的财富，但也终将因贪婪毁灭。",
       "In Leithanian mythology, he who holds the ring enjoys the vast riches of the entire world, but greed will also be his undoing.",
-      explorationRule("战斗掉落的源石锭+50%", power -> power.battleOriginiumIngotMultiplier(1.5)),
+      registeredRule("战斗掉落的源石锭+50%", power -> power.battleOriginiumIngotMultiplier(1.5)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder VICTORIAN_SCRAP_MEDAL = collectible(
@@ -343,7 +344,7 @@ public final class ModCollectible {
       "Gain +20% Command EXP from battles",
       "推进之王临时设计并颁发给达格达的骑士勋章。材料很烂，但对达格达来说很有意义。",
       "A knight's medal that Siege threw together and awarded to Dagda on the spot. The materials used are pitiful, but it holds a lot of meaning to Dagda.",
-      explorationRule("战斗获得的指挥经验+20%", power -> power.commandExperienceMultiplier(1.2)),
+      registeredRule("战斗获得的指挥经验+20%", power -> power.commandExperienceMultiplier(1.2)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder LEITHANIAN_MEDAL_OF_HONOR = collectible(
@@ -353,7 +354,7 @@ public final class ModCollectible {
       "Gain +30% Command EXP from battles",
       "两位女皇很少同做一件事，为创造艺术的人授勋，这是其中一件。",
       "The twin empresses rarely do anything together, but conferring awards on those who create art is one such thing.",
-      explorationRule("战斗获得的指挥经验+30%", power -> power.commandExperienceMultiplier(1.3)),
+      registeredRule("战斗获得的指挥经验+30%", power -> power.commandExperienceMultiplier(1.3)),
       Rarity.RARE
   );
   public static final CollectibleBuilder RUSTED_IRON_HAMMER = collectible(
@@ -834,7 +835,7 @@ public final class ModCollectible {
       "Squad Size Limit +1",
       "一种来自乌萨斯的食物，吃起来有一股子浓烈的发酵味儿。就是酸。",
       "Food from Ursus with a strong, fermented taste. Quite sour.",
-      explorationRule("可携带干员+1", power -> power.squadCapacity(1)),
+      registeredRule("可携带干员+1", power -> power.squadCapacity(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder CRUCIBLE_CREAM_PUFF = collectible(
@@ -844,7 +845,7 @@ public final class ModCollectible {
       "Squad Size Limit +1",
       "行在苦路上的人们常常用这甘甜来抚慰心灵。",
       "Those who walk treacherous paths feast on this dessert to soothe their souls.",
-      explorationRule("可携带干员+1", power -> power.squadCapacity(1)),
+      registeredRule("可携带干员+1", power -> power.squadCapacity(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder IRON_BAGUETTE = collectible(
@@ -854,7 +855,7 @@ public final class ModCollectible {
       "Squad Size Limit +1",
       "坚硬的棍状面包，随身带上一根，既可以饱腹，又能够防身。",
       "A hard, rod-shaped bread. Always keep one on you. Not only does it fill you up, you can use it as a weapon to defend yourself.",
-      explorationRule("可携带干员+1", power -> power.squadCapacity(1)),
+      registeredRule("可携带干员+1", power -> power.squadCapacity(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder TEST_RUN_CHOCOLATE = collectible(
@@ -864,7 +865,7 @@ public final class ModCollectible {
       "Squad Size Limit +2",
       "只是将研发员个人偏爱的咸蛋黄与巧克力进行简单混合后的试制品，尚未达到能作为商品面世的水准。“还缺少酥脆的灵魂……”",
       "Just a test product a researcher threw together by tossing together their personal favorites, salted egg yolks and chocolate. Not yet suitable for the mass market. 'Still don't have that crispiness to them...'",
-      explorationRule("可携带干员+2", power -> power.squadCapacity(2)),
+      registeredRule("可携带干员+2", power -> power.squadCapacity(2)),
       Rarity.RARE
   );
   public static final CollectibleBuilder GAULISH_MACARONS = collectible(
@@ -874,7 +875,7 @@ public final class ModCollectible {
       "Squad Size Limit +2",
       "由于高卢圆饼的糖分高得吓人，部分店家推出了微缩版本以供顾客享用。",
       "With how much sugar there is in Gaulish macarons, some bakeries concocted these miniature treats for their customers' guilt-free enjoyment.",
-      explorationRule("可携带干员+2", power -> power.squadCapacity(2)),
+      registeredRule("可携带干员+2", power -> power.squadCapacity(2)),
       Rarity.RARE
   );
   public static final CollectibleBuilder VICTORIAN_CAKE = collectible(
@@ -884,7 +885,7 @@ public final class ModCollectible {
       "Squad Size Limit +3",
       "纪念我们常胜不败的皇帝！",
       "For our indomitable emperor!",
-      explorationRule("可携带干员+3", power -> power.squadCapacity(3)),
+      registeredRule("可携带干员+3", power -> power.squadCapacity(3)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder ROUTE_DIAGRAM = collectible(
@@ -894,7 +895,7 @@ public final class ModCollectible {
       "Deployment Limit +1",
       "一张干员亲手绘制的地图，附赠路线说明。除了书写者本人，没人看得懂。",
       "A hand-drawn map sketched out by an operator. Comes with explanations on the route, too. No one except its creator can decipher the map.",
-      explorationRule("可同时部署人数+1", power -> power.deploymentLimit(1)),
+      registeredRule("可同时部署人数+1", power -> power.deploymentLimit(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder DIM_LANTERN = collectible(
@@ -904,7 +905,7 @@ public final class ModCollectible {
       "Deployment Limit +1",
       "干员探险用的提灯，可以手提，也可以挂在背包上。\n明明在外面很亮，但在这里就不好使。",
       "A lantern used during explorations. Operators can either hold it or hang it from their bags.\nIt's very bright outside, but it's hardly usable in here.",
-      explorationRule("可同时部署人数+1", power -> power.deploymentLimit(1)),
+      registeredRule("可同时部署人数+1", power -> power.deploymentLimit(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder BRASS_COMPASS = collectible(
@@ -914,7 +915,7 @@ public final class ModCollectible {
       "Deployment Limit +2",
       "它总是指向同一个方向。但那到底是哪儿？",
       "It's always pointing at the same direction, but where is it pointing exactly?",
-      explorationRule("可同时部署人数+2", power -> power.deploymentLimit(2)),
+      registeredRule("可同时部署人数+2", power -> power.deploymentLimit(2)),
       Rarity.RARE
   );
   public static final CollectibleBuilder BROKE_MASK = collectible(
@@ -924,7 +925,7 @@ public final class ModCollectible {
       "Deployment Limit +2",
       "他戴上了面具。\n是他在说话还是面具在说话？",
       "He's wearing the mask.\nIs he the one who's speaking or is it the mask?",
-      explorationRule("可同时部署人数+2", power -> power.deploymentLimit(2)),
+      registeredRule("可同时部署人数+2", power -> power.deploymentLimit(2)),
       Rarity.RARE
   );
   public static final CollectibleBuilder BLANK_BUSINESS_CARD = collectible(
@@ -934,7 +935,7 @@ public final class ModCollectible {
       "+1 Squad Size Limit, +1 Deployment Limit.",
       "神秘的名片，以神秘方式记录着神秘杀手的联系方式。",
       "A mysterious card with the mysterious assassin's contact information written in most mysterious ways.",
-      explorationRule("可携带干员+1，可同时部署人数+1", power -> power.squadCapacity(1).deploymentLimit(1)),
+      registeredRule("可携带干员+1，可同时部署人数+1", power -> power.squadCapacity(1).deploymentLimit(1)),
       Rarity.RARE
   );
   public static final CollectibleBuilder DOLL_HOUSE = collectible(
@@ -944,7 +945,7 @@ public final class ModCollectible {
       "+10 Starting DP",
       "每个孩子都该有一套。",
       "All kids need at least one set.",
-      explorationRule("初始部署费用+10", power -> power.initialDeploymentPoints(10)),
+      registeredRule("初始部署费用+10", power -> power.initialDeploymentPoints(10)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder MINIATURE_STAGE_MODEL = collectible(
@@ -954,7 +955,7 @@ public final class ModCollectible {
       "+20 Starting DP",
       "红色的颜料未干。小心，别染红了手。",
       "The red paint has not dried yet. Careful. Don't get that paint on your hand.",
-      explorationRule("初始部署费用+20", power -> power.initialDeploymentPoints(20)),
+      registeredRule("初始部署费用+20", power -> power.initialDeploymentPoints(20)),
       Rarity.RARE
   );
   public static final CollectibleBuilder DREAMBIND_CASTLE_MODEL = collectible(
@@ -964,7 +965,7 @@ public final class ModCollectible {
       "+30 Starting DP",
       "你见过这里，你曾在古堡中游荡，但你现在将其捧在掌心。这一切到底都是真的，还是只是一场梦？",
       "You've seen this place, and you once wandered the castle, yet you now hold it in your hand. Is this real, or is it all a dream?",
-      explorationRule("初始部署费用+30", power -> power.initialDeploymentPoints(30)),
+      registeredRule("初始部署费用+30", power -> power.initialDeploymentPoints(30)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder BLUNT_CLAWS_ADVANCEMENT = collectible(
@@ -1455,7 +1456,7 @@ public final class ModCollectible {
       "Hope +2, Squad Size Limit +1",
       "女士优雅的丝巾，她的出现代表安全。",
       "A lady's elegant scarf. Her appearance is a sign that it is safe here.",
-      explorationRule("希望+2，可携带干员+1", power -> power.hope(2).squadCapacity(1)),
+      registeredRule("希望+2，可携带干员+1", power -> power.hope(2).squadCapacity(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder RED_BOW_TIE = collectible(
@@ -1465,7 +1466,7 @@ public final class ModCollectible {
       "Hope +2, Deployment Limit +1",
       "傀影送出的第一份礼物，Miss.Christine非常中意。",
       "The first present Phantom gave Miss.Christine. She is really fond of it.",
-      explorationRule("希望+2，可同时部署人数+1", power -> power.hope(2).deploymentLimit(1)),
+      registeredRule("希望+2，可同时部署人数+1", power -> power.hope(2).deploymentLimit(1)),
       Rarity.UNCOMMON
   );
   public static final CollectibleBuilder WEIRD_FLUTE = collectible(
@@ -1475,7 +1476,7 @@ public final class ModCollectible {
       "Hope +4, Squad Size Limit +1",
       "外形古怪的长笛，有人日夜将其吹响。",
       "A weird-looking flute. Someone plays it day in and day out.",
-      explorationRule("希望+4，可携带干员+1", power -> power.hope(4).squadCapacity(1)),
+      registeredRule("希望+4，可携带干员+1", power -> power.hope(4).squadCapacity(1)),
       Rarity.RARE
   );
   public static final CollectibleBuilder GLASS_BIRD = collectible(
@@ -1485,7 +1486,7 @@ public final class ModCollectible {
       "Hope +4, Squad Size Limit +1",
       "“在我的乐园里，这只小鸟会永远地歌唱下去。”",
       "'In this paradise of mine, the bird will sing forever and ever.'",
-      explorationRule("希望+4，可携带干员+1", power -> power.hope(4).squadCapacity(1)),
+      registeredRule("希望+4，可携带干员+1", power -> power.hope(4).squadCapacity(1)),
       Rarity.RARE
   );
   public static final CollectibleBuilder SOLO_MUSIC_BOX = collectible(
@@ -1495,7 +1496,7 @@ public final class ModCollectible {
       "Hope +4, Deployment Limit +1",
       "老旧的八音盒，打开之后音乐没有响起，盒子中央的小人也没有动。没有任何响动，无人跳舞。在与傀影对戏之前，女主演总是在后台痴痴地看着它。",
       "An old music box. The music does not play when the box is opened, nor does the figure inside show any signs it is about to move. There is not a peep, and no one is breaking out in dance. Before she begins her performances with Phantom, the lead actress stares blankly into the music box.",
-      explorationRule("希望+4，可同时部署人数+1", power -> power.hope(4).deploymentLimit(1)),
+      registeredRule("希望+4，可同时部署人数+1", power -> power.hope(4).deploymentLimit(1)),
       Rarity.RARE
   );
   public static final CollectibleBuilder ORIGINIUM_IRIS = collectible(
@@ -1505,7 +1506,7 @@ public final class ModCollectible {
       "Hope +6, Squad Size Limit +2",
       "极尽奢华的花朵，剧团长在谢幕时向主演献花的次数寥寥无几。",
       "A most extravagant bouquet of flowers. The troupe leader has handed flowers like these to the leads during countless curtain calls.",
-      explorationRule("希望+6，可携带干员+2", power -> power.hope(6).squadCapacity(2)),
+      registeredRule("希望+6，可携带干员+2", power -> power.hope(6).squadCapacity(2)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder PURE_GOLD_EXPEDITION = collectible(
@@ -1515,7 +1516,7 @@ public final class ModCollectible {
       "Hope +4, Squad Size Limit +1, Deployment Limit +1",
       "君王自荒地出发，集市在她的裙下如春芽萌发，财富之路连通高山密林，直到她消失在西方浪涛的边崖。——萨尔贡古老童话",
       "The regent departed from the wastelands, and markets rose from beneath her dress like sprouts budding in the spring. The road of prosperity connected high mountains and dense forests, following her until she disappeared beyond the cliffs overlooking the western waves. —Ancient Sargon Fairy Tale",
-      explorationRule("希望+4，可携带干员+1，可同时部署人数+1", power -> power.hope(4).squadCapacity(1).deploymentLimit(1)),
+      registeredRule("希望+4，可携带干员+1，可同时部署人数+1", power -> power.hope(4).squadCapacity(1).deploymentLimit(1)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder DURIN_OVERGROUND = collectible(
@@ -1525,7 +1526,7 @@ public final class ModCollectible {
       "Gain 1 Temporary Life Point at the beginning of each battle.",
       "从这本游记中，我们可以一窥地底人对于地表人的奇异见解。",
       "In this expedition account, we get a glimpse of how those who live underground see those who live on the surface.",
-      explorationRule("每场战斗获得1点临时目标生命值", power -> power.addMaxHealth(1)),
+      partialRule("每场战斗获得1点临时目标生命值", power -> power.addMaxHealth(1)),
       Rarity.RARE
   );
   public static final CollectibleBuilder GAULISH_TOPONYM_ORIGINS = collectible(
@@ -1535,7 +1536,7 @@ public final class ModCollectible {
       "Gain 2 Temporary Life Points at the beginning of each battle.",
       "薄绿从博士办公室里翻出来的古地名历史书，里面记载有克莱布拉松。",
       "A book of historical place names that Mint dug out of the Doctor's office. Calais-Blason is mentioned in the book.",
-      explorationRule("每场战斗获得2点临时目标生命值", power -> power.addMaxHealth(2)),
+      partialRule("每场战斗获得2点临时目标生命值", power -> power.addMaxHealth(2)),
       Rarity.RARE
   );
   public static final CollectibleBuilder ANCIENT_GAULISH_SILVER_COIN = collectible(
@@ -1795,7 +1796,7 @@ public final class ModCollectible {
       "For one time only during any battle prior to the final battle of the area, gain 1 Life Point and continue onto the next step instead of concluding the exploration upon mission failure",
       "只要到达不了新的循环，过错就还有机会挽回。",
       "As long as a new cycle has not been reached, there is still time to fix your mistakes.",
-      explorationRule("仅一次，在非区域最终战斗中失败时不结束探索，目标生命+1并继续下一步行动",
+      partialRule("仅一次，在非区域最终战斗中失败时不结束探索，目标生命+1并继续下一步行动",
           power -> power.oneTimeFailureRecoveryObjectiveLife(1)),
       Rarity.EPIC
   );
@@ -2113,7 +2114,7 @@ public final class ModCollectible {
       "Gain +1 Hope upon entering a noncombat node.",
       "只见其面容便能充满希望的确是件幸事——即使知晓其灾祸本质，亦是如此。",
       "It's a good thing that a glimpse of her face feels you with hope—and especially so if you knew of the disaster.",
-      explorationRule("每进入一个非战斗节点，获得希望+1", power -> power.hopePerNonCombatNode(1)),
+      registeredRule("每进入一个非战斗节点，获得希望+1", power -> power.hopePerNonCombatNode(1)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder BLADEMACE = collectible(
@@ -2167,7 +2168,7 @@ public final class ModCollectible {
       "+30% Originium Ingot drops from battle.",
       "一些古老的血魔家族还沿用旧时的繁琐礼节。他们交付出高昂的友谊，并不允许他人随意冒犯。",
       "Some old Vampire families are still concerned with formalities and etiquette. When they extend to others their exalted friendship, they do not allow it to be sullied.",
-      explorationRule("战斗掉落的源石锭+30%", power -> power.battleOriginiumIngotMultiplier(1.3)),
+      registeredRule("战斗掉落的源石锭+30%", power -> power.battleOriginiumIngotMultiplier(1.3)),
       Rarity.RARE
   );
   public static final CollectibleBuilder JET_BLACK_DANCE_SHOES = collectible(
@@ -2247,7 +2248,7 @@ public final class ModCollectible {
       "For one time only during any battle prior to the final battle of the area, gain 10 Life Points and continue onto the next step instead of concluding the exploration upon mission failure",
       "十五年前出版于维多利亚的传奇书籍，这本书简单地记述了作者对审美的理解，记载了大量文学、艺术、音乐相关的知识与历史。该书的内容涵盖古今，通俗易懂，被誉为“本世代的艺术大典”。然而据说该书的作者只是某个小剧团的剧团长，数年前被一个代号为“血钻”的刺客谋害。",
       "A legendary book published in Victoria fifteen years ago. The book describes the author's appreciation of aesthetics in simple terms, and it contains a comprehensive record of literary, artistic and musical knowledge and history. The book covers both the past and present and is an easy read, with many honoring it as the 'great art encyclopedia of our generation.' Yet it is rumored that the book's author was the leader of a certain small troupe and was murdered a few years ago by a hitman codenamed 'Blood Diamond.'",
-      explorationRule("仅一次，在非区域最终战斗中失败时不结束探索，目标生命+10并继续下一步行动",
+      partialRule("仅一次，在非区域最终战斗中失败时不结束探索，目标生命+10并继续下一步行动",
           power -> power.oneTimeFailureRecoveryObjectiveLife(10)),
       Rarity.EPIC
   );
@@ -2268,7 +2269,7 @@ public final class ModCollectible {
       "Immediately adds +11 Originium Ingots and +3 Hope",
       "这把剪刀被使用了太久太久，久到已经没有办法再剪断任何有形之物，久到能将许多无形束缚全部剪碎。",
       "This pair of scissors has been used for far, far too long. So long that it can no longer cut anything tangible, and so long that it can cut all things intangible to shreds.",
-      explorationRule("立即获得源石锭+11，希望+3", power -> power.originiumIngots(11).hope(3)),
+      registeredRule("立即获得源石锭+11，希望+3", power -> power.originiumIngots(11).hope(3)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder BLANK_SUICIDE_NOTE = collectible(
@@ -2328,7 +2329,7 @@ public final class ModCollectible {
       "Hope +3, leads the exploration toward a different conclusion",
       "这是第一场戏的落幕，是年轻人曾经为自己设计的第一个结局。在焚毁所有珍视之物的火焰之中，落魄的主人公蘸着仇敌的鲜血，写下复仇的最后一幕。",
       "The end of the first act, the first ending that the young man wrote for himself. In the midst of the fire that consumed all that he treasured, the hero sips his foe's blood and writes the last scene of his vendetta.",
-      explorationRule("希望+3，让探索走向不同的结局", power -> power.hope(3)),
+      partialRule("希望+3，让探索走向不同的结局", power -> power.hope(3)),
       Rarity.EPIC
   );
   public static final CollectibleBuilder TODAYS_MENU = collectible(
@@ -9682,7 +9683,14 @@ public final class ModCollectible {
     return new CollectibleBuilder(Zinecraft.COLLECTIBLES, path, zhCn)
         .originalEffect(originalEffectZhCn, originalEffectEnUs)
         .description(descriptionZhCn, descriptionEnUs)
-        .minecraftEffect(effect.zhCn(), effect.enUs(), effect.power())
+        .minecraftEffect(
+            effect.status() == CollectibleImplementationStatus.FULLY_IMPLEMENTED
+                ? originalEffectZhCn : effect.zhCn(),
+            effect.status() == CollectibleImplementationStatus.FULLY_IMPLEMENTED
+                ? originalEffectEnUs : effect.enUs(),
+            effect.power()
+        )
+        .implementationStatus(effect.status())
         .sourceRules(effect.sourceRules())
         .rarity(rarity)
         .build();
@@ -9738,24 +9746,24 @@ public final class ModCollectible {
 
   private static PowerDefinition sourceRule(String originalRule) {
     return effect(
-        "已登记原始探索规则；等待对应的节点、招募或部署系统触发",
-        "Original exploration rule registered; requires its matching node, recruitment or deployment system",
+        "未实现：等待对应的节点、招募、部署或战斗运行时",
+        "Not implemented: requires its matching node, recruitment, deployment, or combat runtime",
         CollectiblePower.NONE,
-        List.of(originalRule)
+        List.of(originalRule),
+        CollectibleImplementationStatus.UNIMPLEMENTED
     );
   }
 
-  private static PowerDefinition explorationRule(String originalRule, CollectiblePower power) {
-    return effect(
-        "已登记集成战略资源效果；由探索运行时消费",
-        "Integrated Strategies resource effect registered for the exploration runtime",
-        power,
-        List.of(originalRule)
-    );
+  /** 已登记的 CombatStat 字段即为实际效果，属于完全实现。 */
+  private static PowerDefinition registeredRule(String originalRule, CollectiblePower power) {
+    return effect(originalRule, originalRule, power);
   }
 
   private static PowerDefinition effect(String zhCn, String enUs, CollectiblePower power) {
-    return effect(zhCn, enUs, power, List.of());
+    return effect(
+        zhCn, enUs, power, List.of(),
+        CollectibleImplementationStatus.FULLY_IMPLEMENTED
+    );
   }
 
   private static PowerDefinition effect(
@@ -9764,7 +9772,24 @@ public final class ModCollectible {
       CollectiblePower power,
       List<String> sourceRules
   ) {
-    return new PowerDefinition(zhCn, enUs, power, List.copyOf(sourceRules));
+    return effect(
+        zhCn, enUs, power, sourceRules,
+        sourceRules.isEmpty()
+            ? CollectibleImplementationStatus.FULLY_IMPLEMENTED
+            : CollectibleImplementationStatus.PARTIALLY_IMPLEMENTED
+    );
+  }
+
+  private static PowerDefinition effect(
+      String zhCn,
+      String enUs,
+      CollectiblePower power,
+      List<String> sourceRules,
+      CollectibleImplementationStatus status
+  ) {
+    return new PowerDefinition(
+        zhCn, enUs, power, List.copyOf(sourceRules), status
+    );
   }
 
   private static CollectiblePower statSet(CollectiblePower... effects) {
@@ -9774,24 +9799,20 @@ public final class ModCollectible {
   /** 原规则已完整落地为运行时属性，不再在运行时解析 PRTS 文本。 */
   private static PowerDefinition implementedRule(String originalRule, CollectiblePower power) {
     return effect(
-        "已实现藏品原始规则中的可执行效果",
-        "Implements the executable effects from the original collectible rule",
+        originalRule,
+        originalRule,
         power
     );
-  }
-
-  /** 探索属性已登记，等待对应的集成战略探索结算运行时消费。 */
-  private static PowerDefinition registeredRule(String originalRule, CollectiblePower power) {
-    return explorationRule(originalRule, power);
   }
 
   /** 仅实现能够忠实映射的部分，其余原规则必须继续进入未实现清单。 */
   private static PowerDefinition partialRule(String originalRule, CollectiblePower power) {
     return effect(
-        "已实现原始规则中可忠实映射的部分；其余部分等待专用运行时",
-        "Implements the faithfully mapped portion; the remainder requires a dedicated runtime",
+        "部分实现：已执行可忠实映射的部分，其余部分等待专用运行时",
+        "Partially implemented: faithful mapped behavior is active; the remainder requires a dedicated runtime",
         power,
-        List.of(originalRule)
+        List.of(originalRule),
+        CollectibleImplementationStatus.PARTIALLY_IMPLEMENTED
     );
   }
 
@@ -9804,9 +9825,15 @@ public final class ModCollectible {
     if (tiers.length == 0) throw new IllegalArgumentException("多档藏品至少需要一档效果");
     CollectiblePower[] powers = new CollectiblePower[tiers.length];
     List<String> sourceRules = new java.util.ArrayList<>();
+    boolean allFullyImplemented = true;
+    boolean allUnimplemented = true;
     for (int index = 0; index < tiers.length; index++) {
       TierDefinition tier = tiers[index];
       powers[index] = tier.definition().power();
+      allFullyImplemented &= tier.definition().status()
+          == CollectibleImplementationStatus.FULLY_IMPLEMENTED;
+      allUnimplemented &= tier.definition().status()
+          == CollectibleImplementationStatus.UNIMPLEMENTED;
       if (tier.definition().sourceRules().isEmpty()) {
         sourceRules.add(tier.condition());
       } else {
@@ -9814,11 +9841,17 @@ public final class ModCollectible {
             sourceRules.add("【" + tier.condition() + "】" + rule));
       }
     }
+    CollectibleImplementationStatus status = allFullyImplemented
+        ? CollectibleImplementationStatus.FULLY_IMPLEMENTED
+        : allUnimplemented
+            ? CollectibleImplementationStatus.UNIMPLEMENTED
+            : CollectibleImplementationStatus.PARTIALLY_IMPLEMENTED;
     return effect(
         "根据集成战略运行时提供的特殊条件档位激活对应效果",
         "Activates the matching effect tier from the Integrated Strategies runtime condition",
         CollectiblePower.tiered(powers),
-        sourceRules
+        sourceRules,
+        status
     );
   }
 
@@ -9834,7 +9867,8 @@ public final class ModCollectible {
         definition.zhCn(),
         definition.enUs(),
         forProfession(profession, definition.power()),
-        definition.sourceRules()
+        definition.sourceRules(),
+        definition.status()
     );
   }
 
@@ -9878,7 +9912,13 @@ public final class ModCollectible {
         ))
     );
   }
-  private record PowerDefinition(String zhCn, String enUs, CollectiblePower power, List<String> sourceRules) {
+  private record PowerDefinition(
+      String zhCn,
+      String enUs,
+      CollectiblePower power,
+      List<String> sourceRules,
+      CollectibleImplementationStatus status
+  ) {
   }
 
   private record TierDefinition(String condition, PowerDefinition definition) {

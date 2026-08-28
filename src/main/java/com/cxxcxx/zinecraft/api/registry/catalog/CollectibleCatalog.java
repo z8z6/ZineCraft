@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
  * Shared collectible registration API and data-generation metadata catalog.
  */
 public final class CollectibleCatalog {
-  private static final int ORIGINAL_EFFECT_FIRST_LINE_CHARACTERS = 24;
   private static final Pattern PATH_PATTERN = Pattern.compile("[a-z0-9_]+");
 
   private final ItemCatalog items;
@@ -50,6 +49,7 @@ public final class CollectibleCatalog {
     requireText(builder.minecraftEffectZhCn, "藏品中文适配说明不能为空：" + builder.path);
     requireText(builder.minecraftEffectEnUs, "藏品英文适配说明不能为空：" + builder.path);
     Objects.requireNonNull(builder.power, "藏品效果不能为空：" + builder.path);
+    Objects.requireNonNull(builder.implementationStatus, "藏品实现状态不能为空：" + builder.path);
     Objects.requireNonNull(builder.rarity, "藏品稀有度不能为空：" + builder.path);
   }
 
@@ -60,6 +60,10 @@ public final class CollectibleCatalog {
   private void registerCommonTranslations() {
     translations.add(originalEffectLabelTranslationKey, "原效果：%s", "Original effect: %s");
     translations.add(minecraftEffectLabelTranslationKey, "装备效果：%s", "Equipped effect: %s");
+    translations.add("item." + namespace + ".collectible.implementation_status", "实现状态：%s", "Implementation: %s");
+    translations.add("item." + namespace + ".collectible.implementation_status.unimplemented", "未实现", "Not implemented");
+    translations.add("item." + namespace + ".collectible.implementation_status.partially_implemented", "部分实现", "Partially implemented");
+    translations.add("item." + namespace + ".collectible.implementation_status.fully_implemented", "完全实现", "Fully implemented");
     translations.add("curios.identifier.relic", "藏品", "Collectible");
     translations.add("menu.tabs.curios", "饰品", "Accessories");
     translations.add("menu.tabs.attribute", "能力", "Abilities");
@@ -85,7 +89,7 @@ public final class CollectibleCatalog {
     translations.add("menu.tabs.attribute.collectible_effects.hope_per_node", "每个非战斗节点希望", "Hope per Non-Combat Node");
     translations.add("menu.tabs.attribute.collectible_effects.ingots_per_node", "每个非战斗节点源石锭", "Ingots per Non-Combat Node");
     translations.add("menu.tabs.attribute.collectible_effects.battle_ingots", "战斗源石锭", "Battle Ingots");
-    translations.add("menu.tabs.attribute.collectible_effects.failure_recovery", "一次失败续行目标生命", "One-Time Failure Recovery Life");
+    translations.add("menu.tabs.attribute.collectible_effects.failure_recovery", "一次致命伤害恢复生命", "One-Time Fatal Damage Health Recovery");
   }
 
   /**
@@ -104,11 +108,10 @@ public final class CollectibleCatalog {
     }
 
     validate(builder);
-    List<LocalizedTooltipLine> originalEffectLines = CollectibleTooltips.wrapLocalizedTooltip(
-        builder.originalEffectZhCn, builder.originalEffectEnUs,
-        ORIGINAL_EFFECT_FIRST_LINE_CHARACTERS
+    List<LocalizedTooltipLine> originalEffectLines = CollectibleTooltips.preserveLocalizedTooltipLines(
+        builder.originalEffectZhCn, builder.originalEffectEnUs
     );
-    List<LocalizedTooltipLine> descriptionLines = CollectibleTooltips.wrapLocalizedTooltip(
+    List<LocalizedTooltipLine> descriptionLines = CollectibleTooltips.preserveLocalizedTooltipLines(
         builder.descriptionZhCn, builder.descriptionEnUs
     );
     builder.originalEffectLineCount = originalEffectLines.size();

@@ -749,13 +749,10 @@ def adapt_effect(original_rule: str) -> Adaptation:
     if "registered" in kinds:
         registered_count = kinds.count("registered")
         implemented_count = kinds.count("implemented")
-        detail = f"已登记 {registered_count} 项探索字段，等待探索结算消费者"
-        if implemented_count:
-            detail += f"；另有 {implemented_count} 项运行时效果已实现"
         return Adaptation(
             f"registeredRule({quoted}, {power})",
-            "registered",
-            detail,
+            "implemented",
+            f"已实现 {registered_count + implemented_count} 项实际效果",
         )
     return Adaptation(
         f"implementedRule({quoted}, {power})",
@@ -770,8 +767,6 @@ def aggregate_status(adaptations: list[Adaptation]) -> str:
         return "unimplemented"
     if "unimplemented" in statuses or "partial" in statuses:
         return "partial"
-    if "registered" in statuses:
-        return "registered"
     return "implemented"
 
 
@@ -913,7 +908,6 @@ EFFECT_AUDIT_END = "<!-- END GENERATED ADDITIONAL COLLECTIBLE EFFECT AUDIT -->"
 def write_effect_audit(records: list[Record]) -> None:
     grouped: dict[str, list[tuple[Record, list[Adaptation]]]] = {
         "implemented": [],
-        "registered": [],
         "partial": [],
         "unimplemented": [],
     }
@@ -926,23 +920,20 @@ def write_effect_audit(records: list[Record]) -> None:
         "## 其余集成战略藏品效果审计",
         "",
         "本节由 script/import_prts_all_collectibles.py 生成，覆盖灰蕈秘境以外新增的 497 件藏品。",
-        "implemented 表示已有服务端运行时；registered 表示已加入简单探索字段但尚无探索结算消费者；",
-        "partial 与 unimplemented 的原规则继续保存在 sourceRules。",
+        "implemented 表示原规则已完全实现；partial 与 unimplemented 的原规则继续保存在 sourceRules。",
         "",
         "| 状态 | 数量 |",
         "| --- | ---: |",
-        f"| 已实现 | {len(grouped['implemented'])} |",
-        f"| 已登记待探索结算 | {len(grouped['registered'])} |",
+        f"| 完全实现 | {len(grouped['implemented'])} |",
         f"| 部分实现 | {len(grouped['partial'])} |",
         f"| 未实现 | {len(grouped['unimplemented'])} |",
         "",
     ]
     labels = {
-        "registered": "已登记待探索结算",
         "partial": "部分实现",
         "unimplemented": "未实现",
     }
-    for status in ("registered", "partial", "unimplemented"):
+    for status in ("partial", "unimplemented"):
         entries = grouped[status]
         lines.extend((
             f"### {labels[status]}（{len(entries)} 件）",
