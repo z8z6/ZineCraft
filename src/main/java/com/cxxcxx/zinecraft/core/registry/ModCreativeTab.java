@@ -18,7 +18,13 @@ public final class ModCreativeTab {
         .icon(ModItem.D32_STEEL)
         .includeCatalogItems()
         .includeCatalogBlocks()
-        .displayItems(output -> output.accept(Items.STRUCTURE_BLOCK))
+        .displayItems(output -> {
+          output.accept(Items.STRUCTURE_BLOCK);
+          output.accept(Items.DEBUG_STICK);
+          output.accept(Items.BARRIER);
+          output.accept(Items.LIGHT);
+          output.accept(Items.STRUCTURE_VOID);
+        })
         .build();
 
 

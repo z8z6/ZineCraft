@@ -65,27 +65,27 @@ public final class CollectibleCatalog {
     translations.add("menu.tabs.attribute", "能力", "Abilities");
     translations.add("menu.tabs.attribute.collectible_effects", "藏品效果", "Collectible Effects");
     translations.add("menu.tabs.attribute.collectible_effects.none", "未装备具有探索效果的藏品", "No exploration-effect collectible equipped");
-    translations.add("menu.tabs.attribute.collectible_effects.hope", "希望：%s", "Hope: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.objective_life", "目标生命：%s", "Objective Life: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.temporary_objective_life", "临时目标生命：%s", "Temporary Objective Life: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.originium_ingots", "源石锭：%s", "Originium Ingots: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.action_points", "行动力：%s", "Action Points: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.anti_interference", "抗干扰指数：%s", "Anti-Interference Index: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.collapse", "坍缩值：%s", "Collapse: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.mental_burden_limit", "负荷临界点：%s", "Mental Burden Limit: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.thoughts", "思绪：%s", "Thoughts: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.candles", "烛火：%s", "Candles: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.squad_capacity", "可携带干员：%s", "Squad Capacity: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.deployment_limit", "可部署人数：%s", "Deployment Limit: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.initial_deployment_points", "初始部署费用：%s", "Initial DP: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.keys", "钥匙：%s", "Keys: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.dice", "骰子：%s", "Dice: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.light", "灯火：%s", "Light: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.command_experience", "指挥经验：%s", "Command EXP: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.hope_per_node", "每个非战斗节点希望：%s", "Hope per Non-Combat Node: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.ingots_per_node", "每个非战斗节点源石锭：%s", "Ingots per Non-Combat Node: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.battle_ingots", "战斗源石锭：%s", "Battle Ingots: %s");
-    translations.add("menu.tabs.attribute.collectible_effects.failure_recovery", "一次失败续行目标生命：%s", "One-Time Failure Recovery Life: %s");
+    translations.add("menu.tabs.attribute.collectible_effects.hope", "希望", "Hope");
+    translations.add("menu.tabs.attribute.collectible_effects.objective_life", "目标生命", "Objective Life");
+    translations.add("menu.tabs.attribute.collectible_effects.temporary_objective_life", "临时目标生命", "Temporary Objective Life");
+    translations.add("menu.tabs.attribute.collectible_effects.originium_ingots", "源石锭", "Originium Ingots");
+    translations.add("menu.tabs.attribute.collectible_effects.action_points", "行动力", "Action Points");
+    translations.add("menu.tabs.attribute.collectible_effects.anti_interference", "抗干扰指数", "Anti-Interference Index");
+    translations.add("menu.tabs.attribute.collectible_effects.collapse", "坍缩值", "Collapse");
+    translations.add("menu.tabs.attribute.collectible_effects.mental_burden_limit", "负荷临界点", "Mental Burden Limit");
+    translations.add("menu.tabs.attribute.collectible_effects.thoughts", "思绪", "Thoughts");
+    translations.add("menu.tabs.attribute.collectible_effects.candles", "烛火", "Candles");
+    translations.add("menu.tabs.attribute.collectible_effects.squad_capacity", "可携带干员", "Squad Capacity");
+    translations.add("menu.tabs.attribute.collectible_effects.deployment_limit", "可部署人数", "Deployment Limit");
+    translations.add("menu.tabs.attribute.collectible_effects.initial_deployment_points", "初始部署费用", "Initial DP");
+    translations.add("menu.tabs.attribute.collectible_effects.keys", "钥匙", "Keys");
+    translations.add("menu.tabs.attribute.collectible_effects.dice", "骰子", "Dice");
+    translations.add("menu.tabs.attribute.collectible_effects.light", "灯火", "Light");
+    translations.add("menu.tabs.attribute.collectible_effects.command_experience", "指挥经验", "Command EXP");
+    translations.add("menu.tabs.attribute.collectible_effects.hope_per_node", "每个非战斗节点希望", "Hope per Non-Combat Node");
+    translations.add("menu.tabs.attribute.collectible_effects.ingots_per_node", "每个非战斗节点源石锭", "Ingots per Non-Combat Node");
+    translations.add("menu.tabs.attribute.collectible_effects.battle_ingots", "战斗源石锭", "Battle Ingots");
+    translations.add("menu.tabs.attribute.collectible_effects.failure_recovery", "一次失败续行目标生命", "One-Time Failure Recovery Life");
   }
 
   /**

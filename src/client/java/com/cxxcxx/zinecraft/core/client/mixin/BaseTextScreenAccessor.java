@@ -6,9 +6,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 /** Accesses layout fields declared directly by L2Tabs BaseTextScreen. */
 @Mixin(targets = "dev.xkmc.l2tabs.tabs.contents.BaseTextScreen")
 public interface BaseTextScreenAccessor {
-  @Accessor("imageWidth")
-  int zinecraft_getImageWidth();
-
   @Accessor("leftPos")
   int zinecraft_getLeftPos();
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zinecraft Attribute Panel"
+  short_description: "Integrate Zinecraft stats into L2Tabs with Curios detail"
+  default_prompt: "Use $zinecraft-attribute-panel to add or revise a Zinecraft attribute-panel row and its Curios-style tooltip."
